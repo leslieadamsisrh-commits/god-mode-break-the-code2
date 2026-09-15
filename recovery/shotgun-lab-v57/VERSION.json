@@ -1,0 +1,12 @@
+{
+  "project": "GOD MODE: BREAK THE CODE",
+  "component": "Approved Shotgun Combat Lab",
+  "source_site_slug": "god-helmet-arcade",
+  "sites_version": 57,
+  "sites_version_id": "appgprj_6aa10bfef0d08191b2172ec84ff6bbaa~appgver_64f1050bd88c8191a90c86c46477ffb3",
+  "sites_source_commit": "26856cfce08fc778dd44d2a0a5648d0aae22c621",
+  "recovery_method": "Exact deployed static modules and referenced runtime assets retrieved from the Version 57 live deployment",
+  "scope": "shotgun-combat-lab and direct runtime dependencies",
+  "live_site_modified": false,
+  "recovered_at_utc": "2026-09-15T23:13:02Z"
+}
