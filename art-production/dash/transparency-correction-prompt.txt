@@ -1,0 +1,5 @@
+Use case: background-extraction.
+Asset type: six-frame transparent PNG game sprite sheet.
+Edit target: the supplied 1536 x 1024 six-pose heroine sheet.
+Single required correction: remove the checkerboard BACKGROUND and deliver a genuinely transparent RGBA PNG with alpha 0 in all empty background pixels. The checkerboard is a baked opaque texture in the source and is NOT transparency; eliminate it completely. Do not draw any replacement color, checkerboard, white backdrop or transparency simulation.
+Keep all six independently drawn heroine poses exactly unchanged: same face, armor, dark hair, cat-eared retro helmet, magenta tails, cyan battery backpack and cables, shotgun, colors, linework, body proportions, image size, 3x2 arrangement, viewpoint and pose locations. Preserve every hand, foot, full shotgun muzzle, fine hair tip, tail tip, anti-aliased silhouette and internal dark shading. No text or labels, no floor, no shadows. Output real alpha transparency around the isolated sprites.

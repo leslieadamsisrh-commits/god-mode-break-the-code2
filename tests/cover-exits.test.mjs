@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {APPROVED_MOVEMENT as M,attachCover,worldPoint} from '../experiments/shotgun-powered-duel/lab-cover-contact.js';
+import {beginCoverExit,planCoverExit,stepCoverExit,clearActorPoint} from '../experiments/shotgun-powered-duel/lab-cover-exits.js';
+function setup(angle=0,end=1){const cover={id:'test',x:1200,y:900,a:angle,w:250,h:64,hp:260},q=worldPoint(cover,end*115,49.5),p={...q,r:17,aim:1.34,vx:0,vy:0};attachCover(p,cover,0);return {p,cover,covers:[cover]};}
+test('approved movement values are unchanged',()=>assert.deepEqual(M,{speed:262,response:13,stopDrag:.002,slideSpeed:650,slideDuration:.70,slideDrag:.12,radius:17,artCell:250,groundAnchor:219,fixedStep:1/60}));
+test('forward corner exits stay clear at both ends over all 24 cover angles',()=>{
+ for(let d=0;d<24;d++)for(const end of [-1,1]){const {p,covers}=setup(d*Math.PI/12,end),{nx,ny}=p.coverAnchor,input={x:-nx,y:-ny};const start={x:p.x,y:p.y};assert.equal(beginCoverExit(p,.1,input.x,input.y,covers).kind,'dash');assert.equal(p.attached,null);let ticks=0;while(p.exit&&ticks++<60){stepCoverExit(p,input,1/60,.1+ticks/60,covers);assert.ok(clearActorPoint(p,p.x,p.y,covers),'tunneling at '+d);assert.equal(p.aim,1.34);}assert.equal(p.exit,null);assert.equal(p.exitEndReason,'complete');assert.ok((p.x-start.x)*nx+(p.y-start.y)*ny< -60);}
+});
+test('far or blocked forward exits stay attached',()=>{const {p,cover,covers}=setup();p.coverAnchor.offset=0;assert.equal(planCoverExit(p,0,-1,covers).kind,'blocked');p.coverAnchor.offset=115;covers.push({id:'block',x:1370,y:900,a:0,w:45,h:200,hp:100});assert.equal(beginCoverExit(p,0,0,-1,covers).kind,'blocked');assert.equal(p.attached,cover);});
+test('no-input kick and diagonal retreat preserve approved speed',()=>{for(const [x,y] of [[0,0],[1,1],[-1,1]]){const {p,covers}=setup();assert.equal(beginCoverExit(p,1,x,y,covers).kind,'kick');assert.ok(Math.abs(Math.hypot(p.vx,p.vy)-650)<1e-6);assert.equal(p.slideUntil,1.7);if(x)assert.equal(Math.sign(p.vx),Math.sign(x));assert.ok(p.vy>0);}});
+test('moving/destroyed cover and reversed input safely interrupt an upright exit',()=>{for(const reason of ['move','destroy','reverse']){const {p,cover,covers}=setup();beginCoverExit(p,0,0,-1,covers);if(reason==='move')cover.a=.1;if(reason==='destroy')cover.hp=0;stepCoverExit(p,{x:0,y:reason==='reverse'?1:-1},1/60,.02,covers);assert.equal(p.exit,null);assert.equal(p.attached,null);}});

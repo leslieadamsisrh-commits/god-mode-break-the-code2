@@ -1,0 +1,120 @@
+{
+  "file": "/workspace/scratch/012415e356df/charge-art/charge-d03-6frames-blue-key-source.png",
+  "size": [
+    1536,
+    1024
+  ],
+  "mode": "RGB",
+  "alpha_present": false,
+  "outer_10px_rail_colors": [
+    [
+      [
+        0,
+        7,
+        253
+      ],
+      9412
+    ],
+    [
+      [
+        0,
+        8,
+        253
+      ],
+      5933
+    ],
+    [
+      [
+        0,
+        6,
+        253
+      ],
+      5794
+    ],
+    [
+      [
+        0,
+        7,
+        252
+      ],
+      3101
+    ],
+    [
+      [
+        0,
+        6,
+        252
+      ],
+      3052
+    ]
+  ],
+  "outer_10px_rail_min_rgb": [
+    0,
+    4,
+    242
+  ],
+  "outer_10px_rail_max_rgb": [
+    2,
+    23,
+    255
+  ],
+  "pure_blue_pixels": 1,
+  "total_pixels": 1572864,
+  "approx_content_bounds": [
+    {
+      "frame": 0,
+      "approx_content_bbox_local": [
+        111,
+        22,
+        440,
+        497
+      ]
+    },
+    {
+      "frame": 1,
+      "approx_content_bbox_local": [
+        85,
+        24,
+        442,
+        497
+      ]
+    },
+    {
+      "frame": 2,
+      "approx_content_bbox_local": [
+        58,
+        89,
+        418,
+        496
+      ]
+    },
+    {
+      "frame": 3,
+      "approx_content_bbox_local": [
+        91,
+        20,
+        488,
+        477
+      ]
+    },
+    {
+      "frame": 4,
+      "approx_content_bbox_local": [
+        77,
+        13,
+        489,
+        477
+      ]
+    },
+    {
+      "frame": 5,
+      "approx_content_bbox_local": [
+        91,
+        19,
+        436,
+        477
+      ]
+    }
+  ],
+  "bounds_method": "Inspection only: background heuristic B>180, R<60, G<60; not used to edit pixels or saved as a matte."
+}

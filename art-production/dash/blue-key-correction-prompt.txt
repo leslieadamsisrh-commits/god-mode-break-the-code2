@@ -1,0 +1,6 @@
+Use case: precise-object-edit.
+Asset type: sprite sheet chroma-key source for a separately controlled transparency extraction workflow.
+Edit target: the supplied six-frame heroine sheet.
+Change ONLY the background. Replace every checkerboard background pixel outside the six character silhouettes with perfectly uniform pure saturated blue RGB(0,0,255), hex #0000FF. Background is one flat unshaded solid #0000FF color. No gradient, no texture, no pattern, no checkerboard, no shadow. No blue reflections or blue spill onto the character.
+Protect ALL character pixels and preserve the entire six-pose artwork exactly: same full anatomy, feet, hands, weapon, hair tips, magenta cloth tails, cyan segmented battery pack, cables and armor details. Preserve internal dark pixels, colors, linework, silhouette edges, pose, proportions, camera viewpoint, character scale and all frame positions. Do not delete, shrink, move, redraw, crop or erase any part of any sprite.
+Keep exact 1536 x 1024 canvas size, existing 3-column x 2-row grid of six distinct upright rightward dash/run poses. No extra content or labels. Return a clean flat pure-blue-background PNG; do not simulate transparency.

@@ -1,0 +1,16 @@
+{
+  "registrySha256": "2ab96dc3160b63f37ecc92f85e89c1ed7791839c042ce9f8d0d12bdc5984b1fa",
+  "frames": 984,
+  "families": 108,
+  "coordinateRecords": 941,
+  "visibleCoordinateRecords": 938,
+  "estimatedCoordinateRecords": 3,
+  "unresolvedRecords": 43,
+  "duplicateRecords": 0,
+  "missingFrameRecords": 0,
+  "sourceRuntimeHashesVerified": 108,
+  "sourceGridDimensionsVerified": 108,
+  "minimumRegisteredPointAlpha": 83,
+  "registrationKind": "new visual registration, not exact-original recovered metadata",
+  "reviewedTerminalEdgeRefinements": 85
+}

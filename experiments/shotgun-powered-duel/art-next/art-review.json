@@ -1,0 +1,228 @@
+[
+  {
+    "family": "dash",
+    "direction": 3,
+    "frames": [
+      {
+        "index": 0,
+        "sourceAnchor": [
+          258,
+          492
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          45,
+          43,
+          196,
+          222
+        ]
+      },
+      {
+        "index": 1,
+        "sourceAnchor": [
+          266,
+          496
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          41,
+          45,
+          200,
+          222
+        ]
+      },
+      {
+        "index": 2,
+        "sourceAnchor": [
+          289,
+          496
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          29,
+          45,
+          193,
+          222
+        ]
+      },
+      {
+        "index": 3,
+        "sourceAnchor": [
+          285,
+          470
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          42,
+          47,
+          216,
+          222
+        ]
+      },
+      {
+        "index": 4,
+        "sourceAnchor": [
+          268,
+          463
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          69,
+          50,
+          223,
+          222
+        ]
+      },
+      {
+        "index": 5,
+        "sourceAnchor": [
+          278,
+          478
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          55,
+          44,
+          214,
+          223
+        ]
+      }
+    ],
+    "sourceSha256": "38046f3e367da2f3b2719a58e4085d28ac0bbd4d054003897b9a01291b57e520",
+    "runtimeSha256": "9eb8dc0b5abc569fb8a7c7dd48878c8a4ed0a96fd443552b0d0c91ff6be26ad2",
+    "status": "provisional-extracted-needs-motion-review",
+    "method": "conservative-blue-chroma-key-no-component-removal",
+    "missingDirections": 23
+  },
+  {
+    "family": "charge",
+    "direction": 3,
+    "frames": [
+      {
+        "index": 0,
+        "sourceAnchor": [
+          298,
+          497
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          48,
+          27,
+          184,
+          222
+        ]
+      },
+      {
+        "index": 1,
+        "sourceAnchor": [
+          292,
+          497
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          40,
+          27,
+          188,
+          222
+        ]
+      },
+      {
+        "index": 2,
+        "sourceAnchor": [
+          287,
+          497
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          31,
+          53,
+          180,
+          221
+        ]
+      },
+      {
+        "index": 3,
+        "sourceAnchor": [
+          308,
+          477
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          36,
+          34,
+          200,
+          222
+        ]
+      },
+      {
+        "index": 4,
+        "sourceAnchor": [
+          302,
+          477
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          32,
+          31,
+          202,
+          222
+        ]
+      },
+      {
+        "index": 5,
+        "sourceAnchor": [
+          292,
+          477
+        ],
+        "runtimeAnchor": [
+          125,
+          219
+        ],
+        "bbox": [
+          42,
+          33,
+          185,
+          222
+        ]
+      }
+    ],
+    "sourceSha256": "3a48addc67416071be9c6cb2356e41c9014979592c584147660c0ff91a14e4a5",
+    "runtimeSha256": "3b29aa06f8a0f6d4d77e878cb0af9c09061aa81df7a1b6e320c01cfaabd9e7f4",
+    "status": "provisional-extracted-needs-motion-review",
+    "method": "conservative-blue-chroma-key-no-component-removal",
+    "missingDirections": 23
+  }
+]

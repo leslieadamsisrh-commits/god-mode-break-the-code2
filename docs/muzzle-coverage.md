@@ -1,0 +1,120 @@
+# New muzzle registration coverage
+
+This is new visual measurement of recovered runtime artwork, not recovery of the missing original pose data. Frame indices are zero-based and row-major using each manifest grid. Coordinates are within each 250 × 250 runtime cell.
+
+Reviewed 984 of 984 frames across 108 complete families. 941 records have coordinates. Classification counts: {'visible_measured': 746, 'visible_foreshortened': 192, 'occluded_unresolved': 43, 'estimated_occluded': 3}.
+
+Upper firing barrel tips were selected; the lower parallel tube and transparent smear are excluded. Visible coordinates have approximately 2-pixel visual uncertainty. Estimated/occluded values must remain labeled and must not be certified. Uninspected frames have no records or invented fallback coordinates.
+
+| Family | Reviewed / total | Coverage |
+|---|---:|---|
+| run | 24 / 24 | complete |
+| slide | 24 / 24 | complete |
+| run-d09 | 24 / 24 | complete |
+| run-d15 | 24 / 24 | complete |
+| run-d21 | 24 / 24 | complete |
+| slide-d09 | 12 / 12 | complete |
+| slide-d15 | 12 / 12 | complete |
+| slide-d21 | 12 / 12 | complete |
+| cover-d03 | 6 / 6 | complete |
+| cover-d09 | 6 / 6 | complete |
+| cover-d15 | 6 / 6 | complete |
+| cover-d21 | 6 / 6 | complete |
+| ready-d00 | 1 / 1 | complete |
+| ready-d02 | 1 / 1 | complete |
+| ready-d04 | 1 / 1 | complete |
+| ready-d05 | 1 / 1 | complete |
+| ready-d06 | 1 / 1 | complete |
+| ready-d07 | 1 / 1 | complete |
+| ready-d08 | 1 / 1 | complete |
+| ready-d09 | 1 / 1 | complete |
+| ready-d10 | 1 / 1 | complete |
+| ready-d12 | 1 / 1 | complete |
+| ready-d14 | 1 / 1 | complete |
+| ready-d18 | 1 / 1 | complete |
+| ready-d20 | 1 / 1 | complete |
+| ready-d21 | 1 / 1 | complete |
+| run-d06 | 24 / 24 | complete |
+| slide-d06 | 12 / 12 | complete |
+| run-d18 | 24 / 24 | complete |
+| slide-d18 | 12 / 12 | complete |
+| run-d00 | 12 / 12 | complete |
+| slide-d00 | 12 / 12 | complete |
+| run-d12 | 12 / 12 | complete |
+| slide-d12 | 12 / 12 | complete |
+| strafe-left-d06 | 12 / 12 | complete |
+| strafe-right-d06 | 12 / 12 | complete |
+| backpedal-d06 | 12 / 12 | complete |
+| cover-d06 | 12 / 12 | complete |
+| cover-d18 | 12 / 12 | complete |
+| cover-d00 | 6 / 6 | complete |
+| cover-d01 | 6 / 6 | complete |
+| cover-d02 | 6 / 6 | complete |
+| cover-d04 | 6 / 6 | complete |
+| cover-d08 | 6 / 6 | complete |
+| cover-d10 | 6 / 6 | complete |
+| cover-d11 | 6 / 6 | complete |
+| cover-d12 | 6 / 6 | complete |
+| backpedal-d18 | 12 / 12 | complete |
+| strafe-left-d18 | 12 / 12 | complete |
+| strafe-right-d18 | 12 / 12 | complete |
+| run-d07 | 12 / 12 | complete |
+| slide-d07 | 12 / 12 | complete |
+| run-d08 | 12 / 12 | complete |
+| slide-d08 | 12 / 12 | complete |
+| run-d19 | 12 / 12 | complete |
+| slide-d19 | 12 / 12 | complete |
+| run-d20 | 12 / 12 | complete |
+| slide-d20 | 12 / 12 | complete |
+| cover-d05 | 6 / 6 | complete |
+| cover-d13 | 6 / 6 | complete |
+| cover-d14 | 6 / 6 | complete |
+| cover-d22 | 6 / 6 | complete |
+| cover-d23 | 6 / 6 | complete |
+| run-d10 | 12 / 12 | complete |
+| slide-d10 | 12 / 12 | complete |
+| run-d01 | 12 / 12 | complete |
+| slide-d01 | 12 / 12 | complete |
+| run-d02 | 12 / 12 | complete |
+| slide-d02 | 12 / 12 | complete |
+| run-d13 | 12 / 12 | complete |
+| slide-d13 | 12 / 12 | complete |
+| run-d14 | 12 / 12 | complete |
+| slide-d14 | 12 / 12 | complete |
+| cover-d07 | 6 / 6 | complete |
+| cover-d16 | 6 / 6 | complete |
+| cover-d17 | 6 / 6 | complete |
+| cover-d19 | 6 / 6 | complete |
+| cover-d20 | 6 / 6 | complete |
+| run-d11 | 12 / 12 | complete |
+| slide-d11 | 12 / 12 | complete |
+| run-d04 | 12 / 12 | complete |
+| slide-d04 | 12 / 12 | complete |
+| run-d05 | 12 / 12 | complete |
+| slide-d05 | 12 / 12 | complete |
+| run-d16 | 12 / 12 | complete |
+| slide-d16 | 12 / 12 | complete |
+| run-d17 | 12 / 12 | complete |
+| slide-d17 | 12 / 12 | complete |
+| ready-d01 | 1 / 1 | complete |
+| ready-d03 | 1 / 1 | complete |
+| ready-d11 | 1 / 1 | complete |
+| ready-d13 | 1 / 1 | complete |
+| ready-d15 | 1 / 1 | complete |
+| ready-d16 | 1 / 1 | complete |
+| ready-d17 | 1 / 1 | complete |
+| ready-d19 | 1 / 1 | complete |
+| ready-d22 | 1 / 1 | complete |
+| ready-d23 | 1 / 1 | complete |
+| run-d22 | 12 / 12 | complete |
+| slide-d22 | 12 / 12 | complete |
+| run-d23 | 12 / 12 | complete |
+| slide-d23 | 12 / 12 | complete |
+| backpedal-d00 | 12 / 12 | complete |
+| backpedal-d12 | 12 / 12 | complete |
+| strafe-left-d00 | 12 / 12 | complete |
+| strafe-left-d12 | 12 / 12 | complete |
+| strafe-right-d00 | 12 / 12 | complete |
+| strafe-right-d12 | 12 / 12 | complete |
+
+Final validation: all 108 runtime hashes and grid dimensions match the manifest. All 984 frame records are unique and in range. 938 visible coordinate records, 3 explicitly estimated coordinates, and 43 unresolved null records. Terminal edge QA refined 85 points by 0.5–2.83 runtime pixels; all refined points were visually checked against the barrel.

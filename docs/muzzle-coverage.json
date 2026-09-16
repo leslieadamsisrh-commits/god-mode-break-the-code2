@@ -1,0 +1,1719 @@
+{
+  "registrationKind": "new measured reconstruction; not recovered exact original",
+  "manifestFamilies": 108,
+  "manifestFrames": 984,
+  "reviewedFrames": 984,
+  "coordinateRecords": 941,
+  "completeFamilies": 108,
+  "reviewClassifications": {
+    "visible_measured": 746,
+    "visible_foreshortened": 192,
+    "occluded_unresolved": 43,
+    "estimated_occluded": 3
+  },
+  "families": [
+    {
+      "familyId": "run",
+      "totalFrames": 24,
+      "reviewedFrames": 24,
+      "coverage": "complete",
+      "grid": [
+        6,
+        4
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide",
+      "totalFrames": 24,
+      "reviewedFrames": 24,
+      "coverage": "complete",
+      "grid": [
+        6,
+        4
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d09",
+      "totalFrames": 24,
+      "reviewedFrames": 24,
+      "coverage": "complete",
+      "grid": [
+        6,
+        4
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d15",
+      "totalFrames": 24,
+      "reviewedFrames": 24,
+      "coverage": "complete",
+      "grid": [
+        6,
+        4
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d21",
+      "totalFrames": 24,
+      "reviewedFrames": 24,
+      "coverage": "complete",
+      "grid": [
+        6,
+        4
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d09",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d15",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d21",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d03",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d09",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d15",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d21",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d00",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d02",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d04",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d05",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d06",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d07",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d08",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d09",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d10",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d12",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d14",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d18",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d20",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d21",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d06",
+      "totalFrames": 24,
+      "reviewedFrames": 24,
+      "coverage": "complete",
+      "grid": [
+        6,
+        4
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d06",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d18",
+      "totalFrames": 24,
+      "reviewedFrames": 24,
+      "coverage": "complete",
+      "grid": [
+        6,
+        4
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d18",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d00",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d00",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d12",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d12",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "strafe-left-d06",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "strafe-right-d06",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "backpedal-d06",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d06",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d18",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d00",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d01",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d02",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d04",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d08",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d10",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d11",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d12",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "backpedal-d18",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "strafe-left-d18",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "strafe-right-d18",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d07",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d07",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d08",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d08",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d19",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d19",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d20",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d20",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d05",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d13",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d14",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d22",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d23",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d10",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d10",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d01",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d01",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d02",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d02",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d13",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d13",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d14",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d14",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d07",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d16",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d17",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d19",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "cover-d20",
+      "totalFrames": 6,
+      "reviewedFrames": 6,
+      "coverage": "complete",
+      "grid": [
+        6,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d11",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d11",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d04",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d04",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d05",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d05",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d16",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d16",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d17",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d17",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d01",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d03",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d11",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d13",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d15",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d16",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d17",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d19",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d22",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "ready-d23",
+      "totalFrames": 1,
+      "reviewedFrames": 1,
+      "coverage": "complete",
+      "grid": [
+        1,
+        1
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d22",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d22",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "run-d23",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "slide-d23",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "backpedal-d00",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "backpedal-d12",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "strafe-left-d00",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "strafe-left-d12",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "strafe-right-d00",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    },
+    {
+      "familyId": "strafe-right-d12",
+      "totalFrames": 12,
+      "reviewedFrames": 12,
+      "coverage": "complete",
+      "grid": [
+        6,
+        2
+      ],
+      "runtimeCell": [
+        250,
+        250
+      ]
+    }
+  ],
+  "visibleCoordinateRecords": 938,
+  "estimatedFrames": [
+    {
+      "familyId": "cover-d03",
+      "frameIndex": 1
+    },
+    {
+      "familyId": "cover-d06",
+      "frameIndex": 1
+    },
+    {
+      "familyId": "cover-d06",
+      "frameIndex": 2
+    }
+  ],
+  "unresolvedFrames": [
+    {
+      "familyId": "ready-d18",
+      "frameIndex": 0
+    },
+    {
+      "familyId": "slide-d18",
+      "frameIndex": 3
+    },
+    {
+      "familyId": "slide-d18",
+      "frameIndex": 4
+    },
+    {
+      "familyId": "slide-d18",
+      "frameIndex": 5
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 0
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 1
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 2
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 3
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 4
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 5
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 6
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 7
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 8
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 9
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 10
+    },
+    {
+      "familyId": "slide-d19",
+      "frameIndex": 11
+    },
+    {
+      "familyId": "cover-d09",
+      "frameIndex": 1
+    },
+    {
+      "familyId": "cover-d10",
+      "frameIndex": 4
+    },
+    {
+      "familyId": "cover-d20",
+      "frameIndex": 4
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 0
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 1
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 2
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 3
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 4
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 5
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 6
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 7
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 8
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 9
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 10
+    },
+    {
+      "familyId": "backpedal-d18",
+      "frameIndex": 11
+    },
+    {
+      "familyId": "strafe-left-d18",
+      "frameIndex": 0
+    },
+    {
+      "familyId": "strafe-left-d18",
+      "frameIndex": 1
+    },
+    {
+      "familyId": "strafe-left-d18",
+      "frameIndex": 2
+    },
+    {
+      "familyId": "strafe-left-d18",
+      "frameIndex": 3
+    },
+    {
+      "familyId": "strafe-left-d18",
+      "frameIndex": 4
+    },
+    {
+      "familyId": "strafe-left-d18",
+      "frameIndex": 5
+    },
+    {
+      "familyId": "strafe-right-d18",
+      "frameIndex": 0
+    },
+    {
+      "familyId": "strafe-right-d18",
+      "frameIndex": 1
+    },
+    {
+      "familyId": "strafe-right-d18",
+      "frameIndex": 2
+    },
+    {
+      "familyId": "strafe-right-d18",
+      "frameIndex": 3
+    },
+    {
+      "familyId": "strafe-right-d18",
+      "frameIndex": 4
+    },
+    {
+      "familyId": "strafe-right-d18",
+      "frameIndex": 5
+    }
+  ],
+  "allRuntimeAssetHashesVerified": true,
+  "allFrameGridsVerified": true
+}

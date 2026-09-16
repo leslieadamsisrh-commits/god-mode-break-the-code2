@@ -1,0 +1,9 @@
+node_modules/
+.sites-runtime/
+test-output/
+*.log
+# Lossless originals and runtime art are stored in the verified split archive.
+recovery/shotgun-lab-v57/assets/**/*.png
+recovery/shotgun-lab-v57/assets/**/*.webp
+art-production/**/*.png
+experiments/shotgun-powered-duel/art-next/*.png

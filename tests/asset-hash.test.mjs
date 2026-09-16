@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createHash,randomBytes} from 'node:crypto';import {sha256} from '../experiments/shotgun-powered-duel/asset-hash.js';
+test('browser review hash matches Node SHA-256 across padding and image sizes',()=>{for(const n of [0,3,55,56,63,64,65,1024,150000]){const b=randomBytes(n);assert.equal(sha256(b),createHash('sha256').update(b).digest('hex'))}});
