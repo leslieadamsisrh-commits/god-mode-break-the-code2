@@ -1,0 +1,356 @@
+{
+  "schemaVersion": 1,
+  "id": "cover-idle-d04-v1",
+  "status": "generated-technical-review",
+  "action": "cover-attached-idle",
+  "uniqueDrawings": 6,
+  "sourceFrames": [
+    "sprites/source-art/cover/idle-d04-v1/C019.png",
+    "sprites/source-art/cover/idle-d04-v1/C020.png",
+    "sprites/source-art/cover/idle-d04-v1/C021.png",
+    "sprites/source-art/cover/idle-d04-v1/C022.png",
+    "sprites/source-art/cover/idle-d04-v1/C023.png",
+    "sprites/source-art/cover/idle-d04-v1/C024.png"
+  ],
+  "runtimePath": "sprites/heroine/shotgun/cover/idle-d04-v1.webp",
+  "runtimeRevision": "66e29870dd485a5b2e63cf9be364089efcb12b3a4de5fe3009a25228b55404b1",
+  "frames": [
+    {
+      "number": "C019",
+      "index": 0,
+      "beat": "neutral baseline",
+      "sourceFramePath": "sprites/source-art/cover/idle-d04-v1/C019.png",
+      "sourceFrameRevision": "2535f8a9df36e72487ce3571c4f83b69a8a0ac590185719b8928cd15339a7b78",
+      "viewpoint": {
+        "nominalDirection": 4,
+        "nominalYawDegrees": 60,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d04-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.47,
+      "runtimeOffset": [
+        0,
+        14
+      ],
+      "runtimeAlphaBounds": [
+        27,
+        35,
+        223,
+        223
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C020",
+      "index": 1,
+      "beat": "inhale",
+      "sourceFramePath": "sprites/source-art/cover/idle-d04-v1/C020.png",
+      "sourceFrameRevision": "3700207b54b9f1cceb68fc9a5a85c8538e6b06be3ae35ed15152ba3c81319808",
+      "viewpoint": {
+        "nominalDirection": 4,
+        "nominalYawDegrees": 60,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d04-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.47,
+      "runtimeOffset": [
+        0,
+        14
+      ],
+      "runtimeAlphaBounds": [
+        28,
+        35,
+        223,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C021",
+      "index": 2,
+      "beat": "inhale apex",
+      "sourceFramePath": "sprites/source-art/cover/idle-d04-v1/C021.png",
+      "sourceFrameRevision": "37c248ccd3a5b0f29f599efecd4d12e064653ae033dec6d88a0bec8fb619ee13",
+      "viewpoint": {
+        "nominalDirection": 4,
+        "nominalYawDegrees": 60,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d04-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.47,
+      "runtimeOffset": [
+        0,
+        14
+      ],
+      "runtimeAlphaBounds": [
+        28,
+        34,
+        223,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C022",
+      "index": 3,
+      "beat": "ease",
+      "sourceFramePath": "sprites/source-art/cover/idle-d04-v1/C022.png",
+      "sourceFrameRevision": "07b126fe6c7bb4836badb4c067e671074eb052914efde1979a2588d17c897e91",
+      "viewpoint": {
+        "nominalDirection": 4,
+        "nominalYawDegrees": 60,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d04-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.47,
+      "runtimeOffset": [
+        0,
+        14
+      ],
+      "runtimeAlphaBounds": [
+        27,
+        35,
+        223,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C023",
+      "index": 4,
+      "beat": "exhale",
+      "sourceFramePath": "sprites/source-art/cover/idle-d04-v1/C023.png",
+      "sourceFrameRevision": "5c2e30828f771e62980826831460249403eac087771429f77ac78c9d8ecf2b96",
+      "viewpoint": {
+        "nominalDirection": 4,
+        "nominalYawDegrees": 60,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d04-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.47,
+      "runtimeOffset": [
+        0,
+        14
+      ],
+      "runtimeAlphaBounds": [
+        28,
+        35,
+        223,
+        223
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C024",
+      "index": 5,
+      "beat": "seamless return",
+      "sourceFramePath": "sprites/source-art/cover/idle-d04-v1/C024.png",
+      "sourceFrameRevision": "54937955ee6c8a6669e44440221e691b91799a4cfca5fe9a38c4b6cb15ca12c5",
+      "viewpoint": {
+        "nominalDirection": 4,
+        "nominalYawDegrees": 60,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d04-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.47,
+      "runtimeOffset": [
+        0,
+        14
+      ],
+      "runtimeAlphaBounds": [
+        27,
+        35,
+        223,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    }
+  ],
+  "gameplayChanged": false,
+  "integrated": false,
+  "notes": [
+    "Six separately generated breathing phases; no mirrored or rotated directional reuse.",
+    "Ground anchor and family scale normalized without per-frame pose warping.",
+    "Angle and non-ground sockets remain nominal/estimated until in-engine verification."
+  ]
+}
