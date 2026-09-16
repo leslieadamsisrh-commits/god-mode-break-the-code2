@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
   "format": "ordinary gzip-compressed tar; no Base64",
-  "sourceCommit": "c1813ddb7945c675435f3820aad5d9e32c7f3728",
+  "sourceCommit": "84f70ac8acec1b0ce9428dd0d2a809463ea1f581",
   "archives": [
     {
       "path": "backups/current/completed-code.tar.gz",
-      "bytes": 254827,
-      "sha256": "50a86eba6b899ffcf0fef4525e07616f2ddc47de4fe6b7c3b06c32f9924743c2",
+      "bytes": 275180,
+      "sha256": "c4f4600b0fed8a279bfb69d12bbfccf9a3019bbea94395ecf5e1c51b17a1c3b8",
       "entries": [
         {
           "path": ".github/workflows/compact-backup.yml",
           "type": "file",
-          "bytes": 1556,
-          "sha256": "04b5ae5bae259bb752fb90c5045e9a9cfed1b751d5404e56732f81dc8c33b372"
+          "bytes": 1745,
+          "sha256": "666cc27a1f2cb69951b31238c20e97289d44ac8291161c9cb20d7c47db3fd4c0"
         },
         {
           "path": ".gitignore",
@@ -616,8 +616,44 @@
         {
           "path": "sprites/previews/identity-review.html",
           "type": "file",
-          "bytes": 3768,
-          "sha256": "7c0238b888a61a35a7cc228c7ad1ea2904c1305e831727bb7b227855eef3142c"
+          "bytes": 3040,
+          "sha256": "6d29ccc86204daaadc60e70cf15a9b1adea3f7abfd96fab9b8d6634cf1be7780"
+        },
+        {
+          "path": "sprites/previews/review-catalog.js",
+          "type": "file",
+          "bytes": 58086,
+          "sha256": "81f4f2680825c67dbea41995111dec47f2bf8f6699e502456c29dbcf92103c9a"
+        },
+        {
+          "path": "sprites/previews/review-gallery.css",
+          "type": "file",
+          "bytes": 4306,
+          "sha256": "cc85a89c37b16cb96bc96f7d69c5e8719eaae335ecbdb551cd4f74213398831d"
+        },
+        {
+          "path": "sprites/previews/review-gallery.js",
+          "type": "file",
+          "bytes": 12348,
+          "sha256": "706a7b16ec94dc7cffbe47193d2314df0f65411b29065596f75cfe53d62e8adf"
+        },
+        {
+          "path": "sprites/previews/review-model.js",
+          "type": "file",
+          "bytes": 2386,
+          "sha256": "61640e9f47149e91302e38828ce163d7aa8c162995d167304c4c1c09dde8e89d"
+        },
+        {
+          "path": "sprites/reviews/README.md",
+          "type": "file",
+          "bytes": 3870,
+          "sha256": "407230d79d452968f0c1584c32187e0e0a906465f5315543c872bdfa95e76eb7"
+        },
+        {
+          "path": "sprites/reviews/design-decisions.json",
+          "type": "file",
+          "bytes": 254,
+          "sha256": "0d7e652ff8827e4ca3728e1421d268d72ef1360a00f5ea2f1cf81e75ada61fd5"
         },
         {
           "path": "sprites/runtime-atlases/README.md",
@@ -662,6 +698,12 @@
           "sha256": "ca03c7a5939b068fc4ed24055b6719d7ca2ee28b3b7167741e61c13a1e3cc667"
         },
         {
+          "path": "tests/review-model.test.mjs",
+          "type": "file",
+          "bytes": 1890,
+          "sha256": "b8c2659a68a85d2e324d8d4f62ac7672f1a276fca7e55f1d401385d9b8bfbfb0"
+        },
+        {
           "path": "tests/sessions.test.mjs",
           "type": "file",
           "bytes": 2322,
@@ -672,6 +714,12 @@
           "type": "file",
           "bytes": 1652,
           "sha256": "7efe6f8f975a72caaeed13e2f8b22d13f57f6c5be00e56e1b6e111fe573a57d0"
+        },
+        {
+          "path": "tools/build-review-catalog.py",
+          "type": "file",
+          "bytes": 3402,
+          "sha256": "13a6e5ed019e9cbee08da7215082f0b7dfa1c2ae38c8ed97f2f1106cdb80df60"
         },
         {
           "path": "tools/compact-backup.py",
@@ -690,6 +738,12 @@
           "type": "file",
           "bytes": 2468,
           "sha256": "b09e2966d755254b09322e95ef3964a5e479aee3e5d23d65b47d03cd11eaf630"
+        },
+        {
+          "path": "tools/package-review-gallery.py",
+          "type": "file",
+          "bytes": 3855,
+          "sha256": "54a8459bdfc65a984bf3b70a99868ce6ed39a6d4acc9a0860ba2251c7234ca3a"
         },
         {
           "path": "tools/prepare-provisional-art.py",

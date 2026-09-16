@@ -1,0 +1,10 @@
+{
+  "path": "backups/current/GOD-MODE-Sprite-Review.zip",
+  "bytes": 52352567,
+  "sha256": "2680b5a0662993b08e4d37e2b5f1bd4d07951033d8f9bbc32bb07a9480062d79",
+  "referencePoses": 24,
+  "families": 121,
+  "files": 125,
+  "decodedAtStartup": "six ready images; no full-library preload",
+  "instructions": "Extract and open OPEN-GALLERY.html; choose assets folder to verify artwork and enable approvals."
+}
