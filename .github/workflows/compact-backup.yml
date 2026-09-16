@@ -1,0 +1,39 @@
+name: Save normal compact backup
+on:
+  push:
+    branches:
+      - development/shotgun-powered-duel-20260916
+      - god-mode-sprite-library
+    paths-ignore:
+      - backups/current/**
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: compact-backup-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  backup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Restore checksum-verified original assets
+        run: python3 tools/restore-checkpoint-art.py
+      - name: Package code and selected source art separately and test a clean restore
+        run: python3 tools/compact-backup.py build
+      - name: Commit and push normal binary archives
+        env:
+          BACKUP_BRANCH: ${{ github.ref_name }}
+        run: |
+          set -eu
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add backups/current/completed-code.tar.gz backups/current/sprite-source-assets.tar.gz backups/current/MANIFEST.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'backup: preserve completed source and selected sprite assets without caches'
+          git push origin "HEAD:refs/heads/$BACKUP_BRANCH"
+          test "$(git rev-parse HEAD)" = "$(git ls-remote origin "refs/heads/$BACKUP_BRANCH" | cut -f1)"

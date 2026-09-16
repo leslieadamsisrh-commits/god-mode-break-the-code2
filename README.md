@@ -1,5 +1,7 @@
 # GOD MODE: BREAK THE CODE — 2D Production Backups
 
+Latest isolated development work: [Shotgun checkpoint](docs/SHOTGUN-NEXT-CHECKPOINT.md) and [sprite-streaming follow-up](docs/SPRITE-STREAMING-CHECKPOINT.md). These experiments have not replaced the published Site.
+
 Private recovery repository for approved builds of the 2D GOD MODE: BREAK THE CODE game.
 
 - Live Site slug: `god-helmet-arcade`

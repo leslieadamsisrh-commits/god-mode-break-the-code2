@@ -1,0 +1,1518 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Same-frame fallback while full-resolution atlas loads; not new viewpoints",
+  "families": [
+    {
+      "id": "run",
+      "url": "art-streaming/run.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        4
+      ],
+      "frames": 24,
+      "sourceSha256": "df42282535b8b63b0c19dcb3a9aa9d96f82b01bb0d556911013097cae3ee60cf",
+      "sha256": "cf9357c25f1b78c53d4850f6eb849a65af99a91f753ec609df8306b82a68c60f",
+      "decodedBytes": 1500000,
+      "bytes": 254014
+    },
+    {
+      "id": "slide",
+      "url": "art-streaming/slide.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        4
+      ],
+      "frames": 24,
+      "sourceSha256": "78d1f97de0508c90a3f107d8743691c6b4fbc5d98be3bfc52342e62023ecd7a0",
+      "sha256": "4ba5ceb8ac6ce11f938fe7cbaae4a869135a3ad3ce9405a2f3605f4675d3cfe2",
+      "decodedBytes": 1500000,
+      "bytes": 221086
+    },
+    {
+      "id": "run-d09",
+      "url": "art-streaming/run-d09.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        4
+      ],
+      "frames": 24,
+      "sourceSha256": "f581ae9a18eeb1121e993c95d3d3ea377483ac7fc956ec2e5de3f2fa0c2ca1d6",
+      "sha256": "b3acd6af32b47720bcfed2d58a967c0d0282895b4c0cdaa3d72d2b4ec5594693",
+      "decodedBytes": 1500000,
+      "bytes": 260472
+    },
+    {
+      "id": "run-d15",
+      "url": "art-streaming/run-d15.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        4
+      ],
+      "frames": 24,
+      "sourceSha256": "6f0a9aae2162dfd38dc15c79ea6fd931da9921cb20e783dcc8c15a307de1c577",
+      "sha256": "2b5222178688fc74bd4ff1c498b39347dff4f85656c6d6e9c05689756214cb2d",
+      "decodedBytes": 1500000,
+      "bytes": 239914
+    },
+    {
+      "id": "run-d21",
+      "url": "art-streaming/run-d21.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        4
+      ],
+      "frames": 24,
+      "sourceSha256": "9302118c187162da4528966afb9a04b698d5846f9d5ef39c535f474b96917758",
+      "sha256": "c7e658e4878d832962723668e840530813659c5ba67030116aae88b23ce04e8c",
+      "decodedBytes": 1500000,
+      "bytes": 229874
+    },
+    {
+      "id": "slide-d09",
+      "url": "art-streaming/slide-d09.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "a21259dfc76527112bae5b61e816885fe93285d6674106cb3253b869fe1706b5",
+      "sha256": "530d92267b96a92754e34e10cfa5f036d7c7c834cd4937cf89bc8c8eccfb1361",
+      "decodedBytes": 750000,
+      "bytes": 121096
+    },
+    {
+      "id": "slide-d15",
+      "url": "art-streaming/slide-d15.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "3d489871a881cbcabc28cd94532fad121972c2c8028f312c7351899bd815dea6",
+      "sha256": "9e3fd44b4b4a28db76fc9c79bf01a2b12b21ccde55d6c7553049b7091c66757f",
+      "decodedBytes": 750000,
+      "bytes": 141680
+    },
+    {
+      "id": "slide-d21",
+      "url": "art-streaming/slide-d21.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "214c9ffc287ffa50c6491a3300d1d49253f9e9c98062f9abd164bd02a9aed185",
+      "sha256": "d73b37c6dd22b0bd65bb669cc6cebd9a1ee68e5fc3bd2264e2cb63d62bceb83a",
+      "decodedBytes": 750000,
+      "bytes": 131716
+    },
+    {
+      "id": "cover-d03",
+      "url": "art-streaming/cover-d03.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "7621fa823de70d5d1e862698410e3435e665f1797112e20a86053a11dcce41d9",
+      "sha256": "bfcfcaa08a70973abb4b5adcb9232f539ef4d240aac9fb851ad9988aabf0bf56",
+      "decodedBytes": 375000,
+      "bytes": 62238
+    },
+    {
+      "id": "cover-d09",
+      "url": "art-streaming/cover-d09.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "ff5804b3ab9267b043922d06a13171636ce7f0b348ec3b1720990d0090e507a8",
+      "sha256": "75d1fbfc0861488c686e63a0a5bf8a17586a97b4f4ee14ba345a3630af525805",
+      "decodedBytes": 375000,
+      "bytes": 56852
+    },
+    {
+      "id": "cover-d15",
+      "url": "art-streaming/cover-d15.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "5ba473afcd13b690d0a2cd927fcb5938d55eedee3ea2791b35457daae127487a",
+      "sha256": "ae55d1e439a052c346842af609586b84b654b06b42c2d16df440211d16906f68",
+      "decodedBytes": 375000,
+      "bytes": 52180
+    },
+    {
+      "id": "cover-d21",
+      "url": "art-streaming/cover-d21.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "1404e342030a9ffe68cdc63aa928953f3e700b9da113a42bd3ceb1eb1af5680c",
+      "sha256": "508d7eb219a171237ae8d37a61ed46c58e52f7a6a573eb334c1dc1c23509f4fc",
+      "decodedBytes": 375000,
+      "bytes": 52056
+    },
+    {
+      "id": "ready-d00",
+      "url": "art-streaming/ready-d00.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "737d0bc0767ff9536fcc3d16115b92fe6f903701988653c63ce62c5a8e5255f4",
+      "sha256": "ea3ae1fa178c90d0dbaa1e2fcbbf0b18694d99d3bd93fbea82b8d9ac9c29c798",
+      "decodedBytes": 62500,
+      "bytes": 11236
+    },
+    {
+      "id": "ready-d02",
+      "url": "art-streaming/ready-d02.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "607d43ab9a8071a11d23ee035cb4fc71a06e5b05a7b7c611c52e226721252332",
+      "sha256": "c312ab944ae75625f3ba96d9c962b837dedebd8a1dfa34bef8c66bafecdcb976",
+      "decodedBytes": 62500,
+      "bytes": 10984
+    },
+    {
+      "id": "ready-d04",
+      "url": "art-streaming/ready-d04.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "78c696cfb2da8ae447a7ac4e0452b84a508616d71c430ecbe55106ef8385484b",
+      "sha256": "a9257126e6366b19c706bcefb87599fbca5525c354992bde0391e29d61493991",
+      "decodedBytes": 62500,
+      "bytes": 10844
+    },
+    {
+      "id": "ready-d05",
+      "url": "art-streaming/ready-d05.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "893e88e741a43cbf75e8ee869782b91e777d08888d912a42ebf3e084dd79214b",
+      "sha256": "cd8285c480875ec1bbec8222254feb68e259c15d831e94e79ed742c66631fb07",
+      "decodedBytes": 62500,
+      "bytes": 9216
+    },
+    {
+      "id": "ready-d06",
+      "url": "art-streaming/ready-d06.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "796b6aa7372c8f7b4e59cb5b0c9899ac98e92a13d33adcdb6cbf8d759840a67a",
+      "sha256": "6190c50779f80c84ea01d0d7c182c57dd1beca015a4f3bb47051b5d2498fe95d",
+      "decodedBytes": 62500,
+      "bytes": 8478
+    },
+    {
+      "id": "ready-d07",
+      "url": "art-streaming/ready-d07.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "f1a99fdac4171944564c9f40d929e37d04396db7df6508a63355cd820e96ba97",
+      "sha256": "2229914e165f1eda890d5817a1079da512a913c1050008bad7f7d364420d17ea",
+      "decodedBytes": 62500,
+      "bytes": 10002
+    },
+    {
+      "id": "ready-d08",
+      "url": "art-streaming/ready-d08.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "e87c55ddb15916023298a9d08505ddbe8c5e043b60b67e052e6203cb7856057a",
+      "sha256": "15547b39605cb8dea9976b801ff7c4185021944a964a6ed6297580299725b835",
+      "decodedBytes": 62500,
+      "bytes": 10316
+    },
+    {
+      "id": "ready-d09",
+      "url": "art-streaming/ready-d09.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "bdeb279b78515ebed81ec587204464d5c56568bb20aee39993387d8fc9464068",
+      "sha256": "f06a87764f2b262957a9cedd536c1824d107651c662f5ce0399862b8dca8e34b",
+      "decodedBytes": 62500,
+      "bytes": 10200
+    },
+    {
+      "id": "ready-d10",
+      "url": "art-streaming/ready-d10.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "4d6eeb295695e186af39979bfc16b84a77c56923bb0151b29498527b24cbe1bf",
+      "sha256": "3188ae8c7a4af06a75f59f0fb23deee16967ee378cc5cce59905b39afaba112d",
+      "decodedBytes": 62500,
+      "bytes": 10134
+    },
+    {
+      "id": "ready-d12",
+      "url": "art-streaming/ready-d12.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "3b1e412b326a0c60e617f322cd4a96cd543de9334ec2cfbf7e8fb56a2b833ad9",
+      "sha256": "45f18157984016f524e1b2be9d2f0c845ace85fee3051826777e89fc021ef2af",
+      "decodedBytes": 62500,
+      "bytes": 10854
+    },
+    {
+      "id": "ready-d14",
+      "url": "art-streaming/ready-d14.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "14333741648226fd05191811553ba0a4e9e30784e58c4d166e3083c72b8e30b0",
+      "sha256": "8c79c6bfe9411127a4a174988af2aa7659f8451085fd5f1a225a16b8848fe43f",
+      "decodedBytes": 62500,
+      "bytes": 10002
+    },
+    {
+      "id": "ready-d18",
+      "url": "art-streaming/ready-d18.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "3a500c6112b9666d051487142e397ac729134c804093b73e537e4cc589d24cfd",
+      "sha256": "da45bdb4f32ace03fb81573c89c9932eaa8fd11a3de1ca02dbba4bafaa37f4cf",
+      "decodedBytes": 62500,
+      "bytes": 7988
+    },
+    {
+      "id": "ready-d20",
+      "url": "art-streaming/ready-d20.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "c8cb29652f683f798e282e2dd3ab5a8101d244418d167e0be662e40c6a4a5773",
+      "sha256": "d1c1d193a35bf2f36fe1a8fbecea9f67e3610a195e34ae7760691476d504a99d",
+      "decodedBytes": 62500,
+      "bytes": 8952
+    },
+    {
+      "id": "ready-d21",
+      "url": "art-streaming/ready-d21.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "e3426ff5f845a17fb014640dded025eee1e11167eda152754961d1cac930b8ae",
+      "sha256": "0c7dd834d008bedfcde942f37d7643386f337c94c5d3891d14ddd0001ce9bd1b",
+      "decodedBytes": 62500,
+      "bytes": 9394
+    },
+    {
+      "id": "run-d06",
+      "url": "art-streaming/run-d06.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        4
+      ],
+      "frames": 24,
+      "sourceSha256": "4fa4a7a902601fd51abec9af59bf893a8a5afb52c916996c2ce0088acedbd218",
+      "sha256": "79e8a6d4db179b80579ad03f088889b561b1e55771f8720d861beec8d8bc2db6",
+      "decodedBytes": 1500000,
+      "bytes": 239310
+    },
+    {
+      "id": "slide-d06",
+      "url": "art-streaming/slide-d06.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "0becadb722a2aa34866f637773f68af4c0adf7ab7856277d41dca41b47075cf3",
+      "sha256": "05f62a4a9ec789fe9039a0ee99d3df470de283946e6bb6a47278ac7f9044d967",
+      "decodedBytes": 750000,
+      "bytes": 125918
+    },
+    {
+      "id": "run-d18",
+      "url": "art-streaming/run-d18.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        4
+      ],
+      "frames": 24,
+      "sourceSha256": "bb8c298f7edbd1898fe1a14914d7157f313738d0f78974b1f9d32dadf916a1a2",
+      "sha256": "679a5f33b3910ef4d4c7fcbd3ed2fddf4a350b6aa5b5e0a10ee5fa589d0c0f2d",
+      "decodedBytes": 1500000,
+      "bytes": 217534
+    },
+    {
+      "id": "slide-d18",
+      "url": "art-streaming/slide-d18.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "df72dc3f9d9ba360bd06e3b5e1b6b3db9d07cc95480a6e9a9f8add774ef53c4e",
+      "sha256": "d9a0ec5e7ef7cf18fd114703096dd6166e19dd266948e8d4326b92d42d31088a",
+      "decodedBytes": 750000,
+      "bytes": 122240
+    },
+    {
+      "id": "run-d00",
+      "url": "art-streaming/run-d00.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "sha256": "49a31e132827e560bc25aa739f439a69a0190ce0d57a5c2ac802e2c38beba8d3",
+      "decodedBytes": 750000,
+      "bytes": 119684
+    },
+    {
+      "id": "slide-d00",
+      "url": "art-streaming/slide-d00.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "33975943af900001bf73d2deb6a88fd6c4193573a1fd2e02a7d3bb4900404f1d",
+      "sha256": "f4eaba2c5b501f98eee6fdcbaac1708c377010ab93596007ac8161495f959014",
+      "decodedBytes": 750000,
+      "bytes": 120928
+    },
+    {
+      "id": "run-d12",
+      "url": "art-streaming/run-d12.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "33412eecd560f8a05cf186f73d55de694776f1184fc92427d82afa203b2fb760",
+      "sha256": "be4a8e8038772edac37698eb11aebe478c7c953bef429b8d0157be2a54d56365",
+      "decodedBytes": 750000,
+      "bytes": 125146
+    },
+    {
+      "id": "slide-d12",
+      "url": "art-streaming/slide-d12.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "b44340c3ab3a2ba2276bbd4aff4aeb546b66b2755a7382d4fa0f88a387c90eb6",
+      "sha256": "6c56128f1967100b46c595ebfc282fa4e76056da0db06f3fbbc626bf289eafbd",
+      "decodedBytes": 750000,
+      "bytes": 124530
+    },
+    {
+      "id": "strafe-left-d06",
+      "url": "art-streaming/strafe-left-d06.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "3ae40b3df81d0f5b0e2318b8298cfea94345a859ff13c50eb596537083de25a3",
+      "sha256": "e19e3b8fe55f4ef2cbbcb90662db334e5fc1732e36c03cf7d737e64052e19ef7",
+      "decodedBytes": 750000,
+      "bytes": 123912
+    },
+    {
+      "id": "strafe-right-d06",
+      "url": "art-streaming/strafe-right-d06.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "35ce94834767b4c7e6448b81f337a0ec3c28b74c443535002804e2e8412273f8",
+      "sha256": "2f719c15de6363b1abe509a0a4fe46a57e91c5fc106e9861f299ba36fb07705f",
+      "decodedBytes": 750000,
+      "bytes": 124830
+    },
+    {
+      "id": "backpedal-d06",
+      "url": "art-streaming/backpedal-d06.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "f738c8d805237c6b8961eabc4bb354e93118c1ab6a20474a1754cda26356f644",
+      "sha256": "20830ffa70354a7bb9921f15515ba2cb5056d04f94679b29aa01ae6bf6de3ddd",
+      "decodedBytes": 750000,
+      "bytes": 107014
+    },
+    {
+      "id": "cover-d06",
+      "url": "art-streaming/cover-d06.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "8b8939bd2fc2c6d902f765fd1b14456441fcb6f18a0907dc129ca4ce0cc80a67",
+      "sha256": "1efb28527cb2a7ad6856f4ef151b5e98969c6d6a95e1e160d7ae63093bba617a",
+      "decodedBytes": 750000,
+      "bytes": 128600
+    },
+    {
+      "id": "cover-d18",
+      "url": "art-streaming/cover-d18.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "40d25044567d4bd35cc38488f7747d2cb9ad3cec0e945e18cc38f2701dc1fcec",
+      "sha256": "d077d551e4327f92fae1259d7c637759d27ec1c471558582a48faae68dcf4d48",
+      "decodedBytes": 750000,
+      "bytes": 125344
+    },
+    {
+      "id": "cover-d00",
+      "url": "art-streaming/cover-d00.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "17ca9182a928435c809c9c9026ddc0636de5e52964fc4598bdc8030165aac44c",
+      "sha256": "f894a65e4d55dc3a9a3c265a7f38cc7263aebff73ea068b193048dcec7b5863b",
+      "decodedBytes": 375000,
+      "bytes": 62400
+    },
+    {
+      "id": "cover-d01",
+      "url": "art-streaming/cover-d01.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "85db3bd8c5894aa027342f9e86c7718d0cb8755bb795d489e6a5057dac8d2203",
+      "sha256": "f816463765410561d3c64500a0a2edfa3cfcb6b0de031ed0c8a9f6ad3e16e1ca",
+      "decodedBytes": 375000,
+      "bytes": 69742
+    },
+    {
+      "id": "cover-d02",
+      "url": "art-streaming/cover-d02.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "7d001909d402bca70751d3b517adbcc3d9783dc320ba634fe2964bae63ea692e",
+      "sha256": "2ef592945d214cbea57df11cc90a1ba3e060352160434bf64d9ff22a537066ca",
+      "decodedBytes": 375000,
+      "bytes": 69366
+    },
+    {
+      "id": "cover-d04",
+      "url": "art-streaming/cover-d04.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "c9bf8eb74fc44972518e73fbf8ab744a6471ea46bc3c7d7e329da0ce8fbc6bd2",
+      "sha256": "2fb2c530a543645a4406662d16b9cf0883ec3c353557b48461a4589650ad2ae1",
+      "decodedBytes": 375000,
+      "bytes": 69996
+    },
+    {
+      "id": "cover-d08",
+      "url": "art-streaming/cover-d08.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "59797a313e55759e65283f7e8dcd6db358ffc44267a590c8d204209e4ad2268a",
+      "sha256": "262ef3a39dbe03a1f803df65f5456e266b57a6e96f54922222d9b8b9f60e76b0",
+      "decodedBytes": 375000,
+      "bytes": 71540
+    },
+    {
+      "id": "cover-d10",
+      "url": "art-streaming/cover-d10.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "128dfacb9d2968cc64f2172de6b7a6a2c78be3d1f908d626be7ea1cd94f0616f",
+      "sha256": "cf677045c2973dcff2342f3ced548414704bdb1f2a3d6f35b1275644fb146728",
+      "decodedBytes": 375000,
+      "bytes": 69090
+    },
+    {
+      "id": "cover-d11",
+      "url": "art-streaming/cover-d11.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "1810cd8550423864fc7a6667b63872e285cc2ca433e05e57f74a117e1b9e42a4",
+      "sha256": "5c28cd2cb1928bb5adf8bf243490b99460ecb711d79ff52e3bd4c70060a37fec",
+      "decodedBytes": 375000,
+      "bytes": 64156
+    },
+    {
+      "id": "cover-d12",
+      "url": "art-streaming/cover-d12.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "656d3cb708cf85064037a9d5f983c85af9247dd4c66f44e534533c4538415dbc",
+      "sha256": "638f90fb689436dd89d921a50ab82688f1105f31c72700b9ffc1e0c4f700d8ec",
+      "decodedBytes": 375000,
+      "bytes": 62124
+    },
+    {
+      "id": "backpedal-d18",
+      "url": "art-streaming/backpedal-d18.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "91374a132c0986ca2baf500adff2ac241099f200134a6b2ca8b6c6cf4fe1b363",
+      "sha256": "b0845af0496290169e315e554577c909c48aebc58db0525aa91cb1774a38224b",
+      "decodedBytes": 750000,
+      "bytes": 112944
+    },
+    {
+      "id": "strafe-left-d18",
+      "url": "art-streaming/strafe-left-d18.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "1938d2e9bfce16407c883473627b0f3e7f357d9aba74dbac2dc6ea1153c50839",
+      "sha256": "208dd0abee95364ac7cb202b74703bcc0ea0403b53ee0013e2597bdbabc67ce7",
+      "decodedBytes": 750000,
+      "bytes": 119512
+    },
+    {
+      "id": "strafe-right-d18",
+      "url": "art-streaming/strafe-right-d18.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "7e292f04a6a87f5b23ba5eb4cacb858c438aceeec508df9ba46001f08cc940eb",
+      "sha256": "128707b96415489ae5a06ea7660c4b6c94d0defb32cab1ff41b9dfb639eb7df3",
+      "decodedBytes": 750000,
+      "bytes": 119124
+    },
+    {
+      "id": "run-d07",
+      "url": "art-streaming/run-d07.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "898065972830aa98147f4f05b5a073ce652fda186ecfcc6008a02faf9fa7bde9",
+      "sha256": "9a32709729ffa7da21fca13aa6d7fdaa1e8b313d5f3d45173ba2fe2a8a26258f",
+      "decodedBytes": 750000,
+      "bytes": 124242
+    },
+    {
+      "id": "slide-d07",
+      "url": "art-streaming/slide-d07.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "c7f23d2e31b5025dcb071f6ad3de91987549cca9a9415ab6ddf0824dc880e561",
+      "sha256": "ba5494c6d62e0c9c0a720da1fffe99a5008e0761088b322009d5a81bbd3a0e2a",
+      "decodedBytes": 750000,
+      "bytes": 136842
+    },
+    {
+      "id": "run-d08",
+      "url": "art-streaming/run-d08.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "0af33e4981a9e81ff86454ccfb43cb6d8a5af4544feb16b8901957ba0f6a3807",
+      "sha256": "d8f4b560a0e1390002119b2c9cf8ee901b8dfde79c885e65badaaeadbaa03e83",
+      "decodedBytes": 750000,
+      "bytes": 132878
+    },
+    {
+      "id": "slide-d08",
+      "url": "art-streaming/slide-d08.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "2a115619370787fea4ec51ede7b32f6d4ba79aec896548d08cb6c44c62efefa3",
+      "sha256": "3236d53d0e13e6f159afc9411905ff7179528a826952e97e2851d58dbddfff5d",
+      "decodedBytes": 750000,
+      "bytes": 149108
+    },
+    {
+      "id": "run-d19",
+      "url": "art-streaming/run-d19.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "561312902d8b244a14def982c0e3f6a3a8832c2e42862966ec4c17e5d61c46ce",
+      "sha256": "ec7ad719784cb897568fb25aa9f4843f31bf22b2c7099b4ad733800530ec7ab5",
+      "decodedBytes": 750000,
+      "bytes": 115278
+    },
+    {
+      "id": "slide-d19",
+      "url": "art-streaming/slide-d19.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "9e979c46a0834b5aafcbad09b6def41d03b9877380a6bf2446d147c762df1d71",
+      "sha256": "b7a8085ff17d1212ab6f1a7dd2808935a1597ee34dc0dbeb15781b4d4b2e2b1d",
+      "decodedBytes": 750000,
+      "bytes": 126104
+    },
+    {
+      "id": "run-d20",
+      "url": "art-streaming/run-d20.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "b4465140c7b643347c8a660550e4ca008c3829df2aa4b7a4870572b9022721e5",
+      "sha256": "5d6f3b6a15e4004d2922917d5d3137db66848ca12f898fcb8488a5f6c0465833",
+      "decodedBytes": 750000,
+      "bytes": 115716
+    },
+    {
+      "id": "slide-d20",
+      "url": "art-streaming/slide-d20.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "5966f6bc9667a46751aeafef8c3ce770708513bdafb86108b5d970ded9db5bde",
+      "sha256": "d708bea07b3a464c9655fc2bcb6f4516af99ed17ad5466c625a75f85bf3c668c",
+      "decodedBytes": 750000,
+      "bytes": 126216
+    },
+    {
+      "id": "cover-d05",
+      "url": "art-streaming/cover-d05.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "b992d4cbd3288b12cc2874d04b37bbc8ce8cfec4e173bdbe60cca99588ca5e74",
+      "sha256": "452e288a64d701cb4482e788048381f065eda03626cf326fb89c08654b197b99",
+      "decodedBytes": 375000,
+      "bytes": 70096
+    },
+    {
+      "id": "cover-d13",
+      "url": "art-streaming/cover-d13.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "338a35ed79fea22e193f9c4b7d571506bbe83d3fd37f2f80d8f0954c40804bbc",
+      "sha256": "e81a9f84ffabfd02e9e7457f1af7cc5b8a4cadd1596f6f94c91afc7e2d32e626",
+      "decodedBytes": 375000,
+      "bytes": 61510
+    },
+    {
+      "id": "cover-d14",
+      "url": "art-streaming/cover-d14.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "2f16664e54810ff388f1de975781119a06ec660edb7312e4b9d857677e18e196",
+      "sha256": "57fe69b662ecaab23d747e59e0fe81f20dffcd2955153f7818b5d88aeb03e3fe",
+      "decodedBytes": 375000,
+      "bytes": 61766
+    },
+    {
+      "id": "cover-d22",
+      "url": "art-streaming/cover-d22.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "135b4660f8fff5345416191dfaf395c0d2b48b6eea21ae59d186edb70ebec50a",
+      "sha256": "f573493a3ab5ef10aa23e90b0ac7349faf0a044a06958e77c91dc33acda52bfb",
+      "decodedBytes": 375000,
+      "bytes": 61288
+    },
+    {
+      "id": "cover-d23",
+      "url": "art-streaming/cover-d23.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "72cf8dd8ac4556732cc2f056e63133466ff126d31e9838bf51a19a134e676229",
+      "sha256": "88c782838e3d2c0121307b8a71a7bf91d65b1edda00809798719b1cbbfe87a14",
+      "decodedBytes": 375000,
+      "bytes": 64708
+    },
+    {
+      "id": "run-d10",
+      "url": "art-streaming/run-d10.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "912b0bb6b5e0fd964e60a3e7dcbc1a373fea54b5e551f6f1d7e64b8836c12c42",
+      "sha256": "f72eba33287d7ec4f195153121d06b5b81328db60440c62dbe46e8a611e13e89",
+      "decodedBytes": 750000,
+      "bytes": 142442
+    },
+    {
+      "id": "slide-d10",
+      "url": "art-streaming/slide-d10.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "2d0e87be29d51fa0ac30842cb9acd15626df7d7f73585cd55c672a1db01d66fe",
+      "sha256": "b75a77071e3c80f22ec6b5938bd9744b0658019e37b5717f294a7dfba98d8f1e",
+      "decodedBytes": 750000,
+      "bytes": 144020
+    },
+    {
+      "id": "run-d01",
+      "url": "art-streaming/run-d01.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "17b8d95ba3c5f9a2024d48d2ad05aa3732e093056378e75ac2f53d0e3bd11637",
+      "sha256": "e733bf38f1b359947f5e650d24ff3f1c6e392f6c919b45d5614e3f5be2a4b3d2",
+      "decodedBytes": 750000,
+      "bytes": 115306
+    },
+    {
+      "id": "slide-d01",
+      "url": "art-streaming/slide-d01.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "4716f55b5e98049715f53e1041c78a86bf14b503248012323ff74bf728f8d4bf",
+      "sha256": "189cf299bed300e1eecb7aa9427798652b58c78ced74c6fa7b7237a9e6784237",
+      "decodedBytes": 750000,
+      "bytes": 124326
+    },
+    {
+      "id": "run-d02",
+      "url": "art-streaming/run-d02.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "1e3a393fee050618e2b3f1b88a7228a0ae1415020d428e4b8978adf029d179f8",
+      "sha256": "073616962ebad319821590db8b9fb10de378bdfc5d7a74373c054645146c1197",
+      "decodedBytes": 750000,
+      "bytes": 129956
+    },
+    {
+      "id": "slide-d02",
+      "url": "art-streaming/slide-d02.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "8083616cb204b1acf38ccdb0c64a9811d4fcdfd00972230a95be865a528b19bb",
+      "sha256": "6adc4e2067e2612f5fc8410001c2e4b08e19128348987a3b3d4264249f21fc45",
+      "decodedBytes": 750000,
+      "bytes": 138984
+    },
+    {
+      "id": "run-d13",
+      "url": "art-streaming/run-d13.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "74040e7d96c6c8b6610317bbef93e97dc5fae5754bef1b17683cf94f89913d22",
+      "sha256": "89d9a7c42b114c67a8b781d74bc5ca4d1f8a7e1b8884ee117b20a4d699d49a1e",
+      "decodedBytes": 750000,
+      "bytes": 124936
+    },
+    {
+      "id": "slide-d13",
+      "url": "art-streaming/slide-d13.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "b249177604dcdd14be1618a6eb6d6aea55baff6c31e7b0331ea6124409e89084",
+      "sha256": "1ba9ad23ae44b8dfbc5b6f9af1c04f3af5c2c75564c080857b4409c5ae69a250",
+      "decodedBytes": 750000,
+      "bytes": 124654
+    },
+    {
+      "id": "run-d14",
+      "url": "art-streaming/run-d14.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "86cf8a3707bea81d9f4b95a21736f8e4ea58f2a1a8f9af65a8cefe2912f7aea8",
+      "sha256": "0ab25a6c478eea161d4dd2fccf7a96a59bf79afbd9cc91daaff3ad8cacdc9979",
+      "decodedBytes": 750000,
+      "bytes": 135802
+    },
+    {
+      "id": "slide-d14",
+      "url": "art-streaming/slide-d14.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "6e37fd0061e7bfd3c832dedc70fc507560554262d76f71b0e4182d32644c9ed7",
+      "sha256": "5e2cb383ffd2bb22603f5db0835677056f230db68594899374a3785aa26e1f38",
+      "decodedBytes": 750000,
+      "bytes": 127814
+    },
+    {
+      "id": "cover-d07",
+      "url": "art-streaming/cover-d07.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "c69bcfc5e4bb51a61d2aef34684f8610fbcb5833c45a32c3a06a27fbcb41b307",
+      "sha256": "1f438af4d189d9ff26b91bc539f08b0f88e5a063354509e6f52e745286e3f81a",
+      "decodedBytes": 375000,
+      "bytes": 81622
+    },
+    {
+      "id": "cover-d16",
+      "url": "art-streaming/cover-d16.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "e000ef4d5539ee96ef34b34c89c4573a84938d7c6fde8d705cf248a9d1982d6d",
+      "sha256": "a902b0f07fca9ec13ce2ffa9ea41d18b4119b67bab58c59f7dfca1e907e3f98f",
+      "decodedBytes": 375000,
+      "bytes": 59096
+    },
+    {
+      "id": "cover-d17",
+      "url": "art-streaming/cover-d17.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "e566f0bb4f508e40e1435322fbf6c76ac07df047ff0cab192e0b1db47b58ecf1",
+      "sha256": "ad83daee4696d1ced7b9166857d70f9ddf3305710b7c20b370c9f37c2a849230",
+      "decodedBytes": 375000,
+      "bytes": 58092
+    },
+    {
+      "id": "cover-d19",
+      "url": "art-streaming/cover-d19.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "59aa2bff1e21c4baae87ca732beab6c07a53f98e491d92e0cdfb0fd50795df88",
+      "sha256": "9da88ee882a49f29205768ecfaa499130b7cf252206436c2ac1d199878eee5bd",
+      "decodedBytes": 375000,
+      "bytes": 61684
+    },
+    {
+      "id": "cover-d20",
+      "url": "art-streaming/cover-d20.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        1
+      ],
+      "frames": 6,
+      "sourceSha256": "05665b3ea4a7577a9997c9fbbeb370a53a3d3b4cb70e9237b3d5b61bd6d39537",
+      "sha256": "fbd87a9e0eced047cfc932f969db5b0aab2ae7bbf9592e29d7134e36108ff2ed",
+      "decodedBytes": 375000,
+      "bytes": 63796
+    },
+    {
+      "id": "run-d11",
+      "url": "art-streaming/run-d11.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "5381213e24995c0681e737b6663a150cb08779463020e5e6d5fe666174b495cf",
+      "sha256": "fc56fc6146b1ebdc526d5b664961adfba8f8113e90a5ab48c8320edf46eba5bc",
+      "decodedBytes": 750000,
+      "bytes": 135696
+    },
+    {
+      "id": "slide-d11",
+      "url": "art-streaming/slide-d11.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "12b4bd6e54d61648de4f03554701d16b7d3e164ce482bbcf49a8f421a2486861",
+      "sha256": "95a78189bcd08a48dbb4fbf7c8eacdba697300ebef892c895e0e799c7921e0da",
+      "decodedBytes": 750000,
+      "bytes": 142020
+    },
+    {
+      "id": "run-d04",
+      "url": "art-streaming/run-d04.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "7293ef50b94cb60f7158c4d79a8d2283c7b3998454653fee8fdb9d359843ff57",
+      "sha256": "9b318b79c909fbf359a65e7123b34d56017489b15ecdaf96f5d998977ebf130e",
+      "decodedBytes": 750000,
+      "bytes": 134178
+    },
+    {
+      "id": "slide-d04",
+      "url": "art-streaming/slide-d04.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "caf0505489becce13d39bbcd6d213ca592ad40f8c98ce319e328e4213a689313",
+      "sha256": "fbfc7c1f668154a6543fc872f64092bdb3e9edf945f663d0477f05ab6158f4f2",
+      "decodedBytes": 750000,
+      "bytes": 150302
+    },
+    {
+      "id": "run-d05",
+      "url": "art-streaming/run-d05.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "02adac2c2350f71ae9cc1ab2e0b7b900b9e93e46b7989d1290db7613608560fe",
+      "sha256": "a2fa5aabcc455542fb4ee84cb7beaed55f3bc711f09b1b3087894bf9a2e3e855",
+      "decodedBytes": 750000,
+      "bytes": 127060
+    },
+    {
+      "id": "slide-d05",
+      "url": "art-streaming/slide-d05.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "dfa70fcae7aba0969e5d63c5284b310af272966604e38188770edc1d7bd7dcaa",
+      "sha256": "9ac4db63c762ca667ddf8556d4d40d9b7e0850fa188416affb7e85500a9d6d58",
+      "decodedBytes": 750000,
+      "bytes": 142760
+    },
+    {
+      "id": "run-d16",
+      "url": "art-streaming/run-d16.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "b85026cbbe245bdc9252afbfd3d6b0122eb18da05f3ccb95ae932e2b393f9160",
+      "sha256": "8b6db9711b6d8148ec6450524377f3995c3155b000238d103a37f0a8ab3952b4",
+      "decodedBytes": 750000,
+      "bytes": 116126
+    },
+    {
+      "id": "slide-d16",
+      "url": "art-streaming/slide-d16.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "23574eae807400f2d9fb463315a10cea0767407af7f494326dd1c8b6791c2baa",
+      "sha256": "1226cb9c6d14b2616e012ab3e02e521418d3bbfe5da801a244a71b72a59c4dc1",
+      "decodedBytes": 750000,
+      "bytes": 120190
+    },
+    {
+      "id": "run-d17",
+      "url": "art-streaming/run-d17.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "0a72555f9837220f01900385093afed7ca905a174d86c2893a2f52171b870b4f",
+      "sha256": "b5822b1211add07657eafeeeeb3114b807c353c684599b334ee06fe1096f78c7",
+      "decodedBytes": 750000,
+      "bytes": 122468
+    },
+    {
+      "id": "slide-d17",
+      "url": "art-streaming/slide-d17.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "312a4c80e1e89f4abbd6d6cb8d9ee054f47f26a92ed83d2b0bb05fbbca62116c",
+      "sha256": "5e8da93e4f197fac86e3cf8205d554c51b8420541b5aa0c355530a1a881207ec",
+      "decodedBytes": 750000,
+      "bytes": 125768
+    },
+    {
+      "id": "ready-d01",
+      "url": "art-streaming/ready-d01.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "9611088452b4f8c875bc7789f45e3a9a9ebe3dc5f861ae241dcdbb05a63f72f8",
+      "sha256": "ed1c318e14b5f2b7f7a6e7bfc22ec68af0445ed83014a519bd9f83ca349f1a00",
+      "decodedBytes": 62500,
+      "bytes": 11026
+    },
+    {
+      "id": "ready-d03",
+      "url": "art-streaming/ready-d03.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "106eda954cc04ccddfaadd85cb5b623e61c9adcb88fc7a1ab1f23ca22556b11d",
+      "sha256": "9cf003e580aee469494ed96c5e1327cad250dbb1121afa47f1f69804222645e9",
+      "decodedBytes": 62500,
+      "bytes": 11282
+    },
+    {
+      "id": "ready-d11",
+      "url": "art-streaming/ready-d11.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "8fc6a6bb21977c5c5e482aff66a0ecb8841b428b5483073eabffac595469eb21",
+      "sha256": "6bf2705ee9473e5870540524f05ecc6f712a2d3bd91f0b1518b4ce899489ca42",
+      "decodedBytes": 62500,
+      "bytes": 10130
+    },
+    {
+      "id": "ready-d13",
+      "url": "art-streaming/ready-d13.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "ce7a61c7764550eaf817ed20fc042e1e66dff7bc0c07c9139c26a2f1ccbc357b",
+      "sha256": "7348bbc66f2afcee2424a1b46fcb159a5cb61b202d70088bc6b2147ae3421e7b",
+      "decodedBytes": 62500,
+      "bytes": 10358
+    },
+    {
+      "id": "ready-d15",
+      "url": "art-streaming/ready-d15.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "2eaabd45fc6bfbbf10919d2acbb764a3269bc6043a1186d0ce345360be238de9",
+      "sha256": "a5eaa0929de1fac89fc1fc74246ce4dbceff75b42c3ec08df11a7f7dcdfb2dd3",
+      "decodedBytes": 62500,
+      "bytes": 9684
+    },
+    {
+      "id": "ready-d16",
+      "url": "art-streaming/ready-d16.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "67c29953d212a466f54fbb7c590b160e7ee0224248202fdf675875a462b8e4c7",
+      "sha256": "7657a122960690365857c61237c453458abc201cdcc11ee57bd85b20dc1ced4f",
+      "decodedBytes": 62500,
+      "bytes": 9510
+    },
+    {
+      "id": "ready-d17",
+      "url": "art-streaming/ready-d17.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "a1960a55f77f16afa7d3203dc13496df96ed002cb70baf836f57b4ed79006855",
+      "sha256": "eb6b247e03ab7b1fabe5d825d6fdbb9aab9a69ab91c8040f7c150dd82d280e2d",
+      "decodedBytes": 62500,
+      "bytes": 9178
+    },
+    {
+      "id": "ready-d19",
+      "url": "art-streaming/ready-d19.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "042fe291bb4eeacde091dea76e9192ef76f47cabc1ffc274ca5ff5cf59cbe59d",
+      "sha256": "4bcc4d16381d519e2ece149346a507a52033bc264218b1330a1137676c16cb21",
+      "decodedBytes": 62500,
+      "bytes": 8354
+    },
+    {
+      "id": "ready-d22",
+      "url": "art-streaming/ready-d22.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "62523cfa090bab1fbced5535c479ec0bb1e59f56247049a772b6cc3539935f70",
+      "sha256": "59ece57da22f068ee338c841cda05febe6737beb46a9102d4cff3911af9ed4b1",
+      "decodedBytes": 62500,
+      "bytes": 9452
+    },
+    {
+      "id": "ready-d23",
+      "url": "art-streaming/ready-d23.webp",
+      "cell": 125,
+      "grid": [
+        1,
+        1
+      ],
+      "frames": 1,
+      "sourceSha256": "4225a5f537b4c21117f84fbfd79e8fa7163d45d9b3fbac2ca895ef1015deb414",
+      "sha256": "2de48297fca6c0d596f60cdc98547d9cbe63c41d79179279f44daf5c68db5d82",
+      "decodedBytes": 62500,
+      "bytes": 8906
+    },
+    {
+      "id": "run-d22",
+      "url": "art-streaming/run-d22.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "552f7b1533eaa446be8dd8e23532b11a086175245de7478d6c182364b2c7b5ad",
+      "sha256": "8a5cc542ab8ce54eda998d0d53cb915bf843015af3c7ba3a1a1e9257df5a3fed",
+      "decodedBytes": 750000,
+      "bytes": 118942
+    },
+    {
+      "id": "slide-d22",
+      "url": "art-streaming/slide-d22.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "8fd31401aa2a5d63596a8750507c15928ceffd752b4371bb2bef6cc31947290f",
+      "sha256": "12efd43d890112ba3dc2b0d1f14150935ff5d932addf2ebb386dbe01c7064e83",
+      "decodedBytes": 750000,
+      "bytes": 127742
+    },
+    {
+      "id": "run-d23",
+      "url": "art-streaming/run-d23.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "83391d1b798adde8198584d0dac74b6380596b180c00127fe785152594b58aee",
+      "sha256": "48c26c9d32b4ed928b8eff5d9783711df5fc2c9b796367f831bf0068f486a135",
+      "decodedBytes": 750000,
+      "bytes": 126664
+    },
+    {
+      "id": "slide-d23",
+      "url": "art-streaming/slide-d23.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "c2fc2064c3723265463df65a3ca6e8b44295c056b2a09211f937c7f1c784c80b",
+      "sha256": "d40201f8a893d9b26376f3590f666a92175d6e0550bfed8c9fcf40cb3ce7f480",
+      "decodedBytes": 750000,
+      "bytes": 128154
+    },
+    {
+      "id": "backpedal-d00",
+      "url": "art-streaming/backpedal-d00.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "d56339b22d919cf810f830205d2abb8481af796e05bcbb41f1889f900298272e",
+      "sha256": "13aa29950681c8e4659987c00d55cf203695118eb7ced5e5de64f7e2aebed45f",
+      "decodedBytes": 750000,
+      "bytes": 109188
+    },
+    {
+      "id": "backpedal-d12",
+      "url": "art-streaming/backpedal-d12.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "572deae25f0eb55656ed7b41e2a7844c6063ff6aa0514c267962c0d3a12d70cf",
+      "sha256": "59b5a737ecd8b6dbcb5309bb694d81200e6ec156be349ca6799c8154ac596582",
+      "decodedBytes": 750000,
+      "bytes": 119200
+    },
+    {
+      "id": "strafe-left-d00",
+      "url": "art-streaming/strafe-left-d00.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "b9906bdd2f1a8ce545126b432c0ade9afe17c316f7bac54b45fb9c4c37e4eec7",
+      "sha256": "f64acab57fde61483824606ae4d2d516d7ed87ada2bc5ef3d4fc145e44c59c92",
+      "decodedBytes": 750000,
+      "bytes": 108470
+    },
+    {
+      "id": "strafe-left-d12",
+      "url": "art-streaming/strafe-left-d12.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "e6240f4c481f844d4050a84d868a457826a8d638aae7304baf10e96c60306df5",
+      "sha256": "c3d6a88bf1fc8aa5c2361d2680f55eb3731974e19ee1f4f71010efa5baa6e03f",
+      "decodedBytes": 750000,
+      "bytes": 118772
+    },
+    {
+      "id": "strafe-right-d00",
+      "url": "art-streaming/strafe-right-d00.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "8675e4ae7e38dc3413248b0925ab2ca6379216311e09a8e28768e8d1cbea2f51",
+      "sha256": "4a4db3d740871f115bead5d7e7363e3def4893144882daba142f4b24549e764c",
+      "decodedBytes": 750000,
+      "bytes": 111082
+    },
+    {
+      "id": "strafe-right-d12",
+      "url": "art-streaming/strafe-right-d12.webp",
+      "cell": 125,
+      "grid": [
+        6,
+        2
+      ],
+      "frames": 12,
+      "sourceSha256": "61d3ee43b7f25a03336f360ba6632b8651323cded29e615bd319ba182680de37",
+      "sha256": "1f4a00907a70a54065a15caa147c1f3c31713426516b2a873a69622807e5fa09",
+      "decodedBytes": 750000,
+      "bytes": 118298
+    }
+  ]
+}
