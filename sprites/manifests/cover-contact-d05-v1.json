@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 1,
+  "id": "cover-contact-d05-v1",
+  "status": "generated-technical-review",
+  "action": "cover-contact",
+  "uniqueDrawings": 6,
+  "sourceRevision": "4159e72c24ec67de46db0033b95880034f7f002ede9bec1346e3a6f0a807e5c3",
+  "repositorySourceLayout": "six lossless 512x512 PNG cells; reassemble in frame order as a 3x2 atlas",
+  "runtimePath": "sprites/heroine/shotgun/cover/contact-d05-v1.webp",
+  "runtimeRevision": "cadb4d8309e49ac855334dee11d329423185aea49cd330fb1926116d1beac7c8",
+  "frames": [
+    {
+      "number": "C025",
+      "index": 0,
+      "beat": "slide braking",
+      "sourceFramePath": "sprites/source-art/cover/contact-d05-v1/C025.png",
+      "sourceFrameRevision": "2acdd08e87c76e959baee590d9acc300f90f4d28f94498a958c6bdd41d79d7e7",
+      "viewpoint": {
+        "nominalDirection": 5,
+        "nominalYawDegrees": 75,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d05-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.43,
+      "runtimeOffset": [
+        8,
+        11
+      ],
+      "runtimeAlphaBounds": [
+        18,
+        85,
+        228,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C026",
+      "index": 1,
+      "beat": "boot plant",
+      "sourceFramePath": "sprites/source-art/cover/contact-d05-v1/C026.png",
+      "sourceFrameRevision": "17f17cf743472c8c23bdfb15655cc34f3fbe125714070929b13c1f9ee7e501c1",
+      "viewpoint": {
+        "nominalDirection": 5,
+        "nominalYawDegrees": 75,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d05-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.43,
+      "runtimeOffset": [
+        21,
+        11
+      ],
+      "runtimeAlphaBounds": [
+        21,
+        45,
+        232,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C027",
+      "index": 2,
+      "beat": "shoulder contact",
+      "sourceFramePath": "sprites/source-art/cover/contact-d05-v1/C027.png",
+      "sourceFrameRevision": "b0eb948985815914d1594738ef3ce46a43f90603ea7b9c87b39c48b9a8c8941b",
+      "viewpoint": {
+        "nominalDirection": 5,
+        "nominalYawDegrees": 75,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d05-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.43,
+      "runtimeOffset": [
+        11,
+        15
+      ],
+      "runtimeAlphaBounds": [
+        30,
+        41,
+        219,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C028",
+      "index": 3,
+      "beat": "impact absorption",
+      "sourceFramePath": "sprites/source-art/cover/contact-d05-v1/C028.png",
+      "sourceFrameRevision": "d81d7d305677cfc93b007f3b36c5f2850ddd14ad7ec81dc6fa61d2f9d5f64c7a",
+      "viewpoint": {
+        "nominalDirection": 5,
+        "nominalYawDegrees": 75,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d05-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.43,
+      "runtimeOffset": [
+        7,
+        32
+      ],
+      "runtimeAlphaBounds": [
+        28,
+        57,
+        223,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C029",
+      "index": 4,
+      "beat": "settling",
+      "sourceFramePath": "sprites/source-art/cover/contact-d05-v1/C029.png",
+      "sourceFrameRevision": "7d1956bbb078dc512e99f43d9606eae0fc3d63b89ccecc18a233861157626256",
+      "viewpoint": {
+        "nominalDirection": 5,
+        "nominalYawDegrees": 75,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d05-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.43,
+      "runtimeOffset": [
+        5,
+        33
+      ],
+      "runtimeAlphaBounds": [
+        32,
+        44,
+        217,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    },
+    {
+      "number": "C030",
+      "index": 5,
+      "beat": "attached stance",
+      "sourceFramePath": "sprites/source-art/cover/contact-d05-v1/C030.png",
+      "sourceFrameRevision": "a64b2113ebb7d599b2c932a8ef1d71d25742d25d16115295cc2d5d0583567908",
+      "viewpoint": {
+        "nominalDirection": 5,
+        "nominalYawDegrees": 75,
+        "status": "nominal-awaiting-angle-verification"
+      },
+      "coverFacingDirection": "camera-relative-behind-left-estimated",
+      "travelAlongCover": null,
+      "aimDirection": "screen-right-d05-estimated",
+      "runtimeAnchor": [
+        125,
+        219
+      ],
+      "sourceToRuntimeScale": 0.43,
+      "runtimeOffset": [
+        12,
+        32
+      ],
+      "runtimeAlphaBounds": [
+        31,
+        42,
+        218,
+        222
+      ],
+      "sockets": {
+        "ground": {
+          "xy": [
+            125,
+            219
+          ],
+          "status": "registered"
+        },
+        "muzzle": {
+          "xy": null,
+          "status": "awaiting-registration"
+        },
+        "triggerHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "supportHand": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        },
+        "coverContact": {
+          "xy": null,
+          "status": "estimated-not-certified"
+        }
+      }
+    }
+  ],
+  "gameplayChanged": false,
+  "integrated": false,
+  "notes": [
+    "Independently generated; no mirrored, rotated or transformed directional reuse.",
+    "Identity and four cyan battery segments visually present.",
+    "Angle and non-ground sockets remain nominal/estimated until in-engine verification."
+  ]
+}
