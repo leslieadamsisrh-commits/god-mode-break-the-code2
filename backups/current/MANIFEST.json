@@ -1,0 +1,1313 @@
+{
+  "schemaVersion": 1,
+  "format": "ordinary gzip-compressed tar; no Base64",
+  "sourceCommit": "96e757566d983f33f824111ebfda1573c82168a5",
+  "archives": [
+    {
+      "path": "backups/current/completed-code.tar.gz",
+      "bytes": 212202,
+      "sha256": "ec537030e8ee66bdc5a6c3b7e16fcf9283de8e8415e796d4503ce7d7be63d110",
+      "entries": [
+        {
+          "path": ".github/workflows/compact-backup.yml",
+          "type": "file",
+          "bytes": 1556,
+          "sha256": "04b5ae5bae259bb752fb90c5045e9a9cfed1b751d5404e56732f81dc8c33b372"
+        },
+        {
+          "path": ".gitignore",
+          "type": "file",
+          "bytes": 337,
+          "sha256": "ebb91d1b86ac9aa9fcd3974487593c2ede313a5676496fccfad33171dedf29e4"
+        },
+        {
+          "path": "README.md",
+          "type": "file",
+          "bytes": 905,
+          "sha256": "f92eb7be26df28e7616f419009540a6d4bd1e4ae08b7521bfa06090a6dd8e03c"
+        },
+        {
+          "path": "art-production/charge/blue-key-edit-prompt.txt",
+          "type": "file",
+          "bytes": 1406,
+          "sha256": "d5d2d6a1fbe533f6bd8b569388be4e738d42240edd8ad26aec9f6360b76c38a0"
+        },
+        {
+          "path": "art-production/charge/blue-key-inspection.json",
+          "type": "file",
+          "bytes": 1663,
+          "sha256": "c80106dc31320ca10494475332fdfb563c8b3c0ca4c4f528d6769fa818c01908"
+        },
+        {
+          "path": "art-production/charge/generation-prompt.txt",
+          "type": "file",
+          "bytes": 4135,
+          "sha256": "f620dda54dc0b041b69c0e163d4ceef9b8340d0c4bbdf403d84c8994ffae21d4"
+        },
+        {
+          "path": "art-production/charge/inspection-notes.md",
+          "type": "file",
+          "bytes": 4847,
+          "sha256": "d6f2255bcca4f31e53ed7d4fa8542e664512e35f9ea6df66fb0bc24d2029762f"
+        },
+        {
+          "path": "art-production/charge/transparency-edit-prompt.txt",
+          "type": "file",
+          "bytes": 1000,
+          "sha256": "a363c50a834557aab17f81e6642412848bbf20fb37597ba4532b29ff18139eb2"
+        },
+        {
+          "path": "art-production/dash/blue-key-correction-prompt.txt",
+          "type": "file",
+          "bytes": 1186,
+          "sha256": "2bb4cd318ea5b16bdfa862208e941d8f4ac76ed397ae18db4d00b88624007b3d"
+        },
+        {
+          "path": "art-production/dash/generation-prompt.txt",
+          "type": "file",
+          "bytes": 4123,
+          "sha256": "d1de00c380ef681b9011b69f999e5483abdde7740a5fc670537cafaa7e8fa3da"
+        },
+        {
+          "path": "art-production/dash/inspection.md",
+          "type": "file",
+          "bytes": 4949,
+          "sha256": "23724966e82e125e0039b7d8bedc4599b48e46bed20bae397edb59394f5d95c3"
+        },
+        {
+          "path": "art-production/dash/transparency-correction-prompt.txt",
+          "type": "file",
+          "bytes": 1001,
+          "sha256": "c6ff24817bfbdc43f9e87ed2424208ed1d05ef73345267cb8f990e72d28f7855"
+        },
+        {
+          "path": "backups/version-57/BACKUP_MANIFEST.json",
+          "type": "file",
+          "bytes": 1107,
+          "sha256": "c8803a6ad1daf51dedd79fd239f478e563b5c79e48792f7a4e34cbaa89410736"
+        },
+        {
+          "path": "backups/version-57/RESTORE.md",
+          "type": "file",
+          "bytes": 1398,
+          "sha256": "bff9bd12c983a5af9c606ab6ac7227100b0b9164e58dfa103e5790504eb93183"
+        },
+        {
+          "path": "docs/MASTER-PROMPT.md",
+          "type": "file",
+          "bytes": 16242,
+          "sha256": "df2ba0fac1f1fba520ec556ab172eae45c5dbf908eb530fd268914d4e12539e7"
+        },
+        {
+          "path": "docs/SHOTGUN-NEXT-CHECKPOINT.md",
+          "type": "file",
+          "bytes": 6571,
+          "sha256": "ee5920b1897e0f85d90aa471e1a4fead1312fffe01e7308ba27ba549dd2ef98c"
+        },
+        {
+          "path": "docs/SPRITE-FIRST-MASTER-PROMPT.md",
+          "type": "file",
+          "bytes": 12276,
+          "sha256": "c09cef61cbcaa8a232df040cf7942302f5d01e6bac4e4fa232b6c302b19290e8"
+        },
+        {
+          "path": "docs/SPRITE-STREAMING-CHECKPOINT.md",
+          "type": "file",
+          "bytes": 2442,
+          "sha256": "614af24de1f08ff25b0410f33b7218992301305ebb6e9ff9a73817c8764d2324"
+        },
+        {
+          "path": "docs/muzzle-coverage.json",
+          "type": "file",
+          "bytes": 28376,
+          "sha256": "3d374df21245472336d6d8ab878561b3c58a47d73ac22740ab687eb8a95ce275"
+        },
+        {
+          "path": "docs/muzzle-coverage.md",
+          "type": "file",
+          "bytes": 4909,
+          "sha256": "7b26e5e4ba26174cce7ebd08683c83b021960cc9ff1ba55dc9af35a2cafd861f"
+        },
+        {
+          "path": "docs/muzzle-registration.json",
+          "type": "file",
+          "bytes": 470595,
+          "sha256": "2ab96dc3160b63f37ecc92f85e89c1ed7791839c042ce9f8d0d12bdc5984b1fa"
+        },
+        {
+          "path": "docs/muzzle-validation.json",
+          "type": "file",
+          "bytes": 548,
+          "sha256": "16e2617288ed80f90948a7c06dfd6a96c461178d36261c9b679bb04ec71816c3"
+        },
+        {
+          "path": "docs/pose-recovery-status.json",
+          "type": "file",
+          "bytes": 188,
+          "sha256": "9701d507d604fd2f265268542d1690da838343ab4c0debeb66c32a29dd7e3171"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/CHECKSUMS.sha256",
+          "type": "file",
+          "bytes": 18085,
+          "sha256": "8f3f94b2c1bf44f903aab630eae63ab4334556547af6670feee435ae2d624698"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/PORTING_CONTRACT.md",
+          "type": "file",
+          "bytes": 1095,
+          "sha256": "8749212392c851af6c279deb738384c9eaf7c1fc3ab61648bb9d1b6688488d43"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/README.md",
+          "type": "file",
+          "bytes": 1870,
+          "sha256": "978aa23bf5f521c80822b3a1353c6dc0c7ce816512835318d48e86f8c7667731"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/VERSION.json",
+          "type": "file",
+          "bytes": 604,
+          "sha256": "0da51d34391a3c55b3c768dec6432151c348cbd74ef1d0516438f577dda3eb13"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/art-next/art-review.json",
+          "type": "file",
+          "bytes": 3873,
+          "sha256": "c2d541ea542015f09c965e47d99dfe68df44489883a4a642b48fa41c8159698f"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/art-streaming/manifest.json",
+          "type": "file",
+          "bytes": 42591,
+          "sha256": "5e0c1872db763cb67d37382d18bb24da43fb1e74db7bb2fb550259d4422ad3c1"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/asset-hash.js",
+          "type": "file",
+          "bytes": 1302,
+          "sha256": "672cf53600d1cbf4af9ee31f91c397f12b0478a7aa42c4bdbc64df7da9937bfa"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/assets",
+          "type": "symlink",
+          "target": "../../recovery/shotgun-lab-v57/assets"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/atlas-cache.js",
+          "type": "file",
+          "bytes": 2750,
+          "sha256": "4952640f05238e603cc286dddb45cd9ff368006c825d406e935ca2e79469637c"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/combat-lab-effects.js",
+          "type": "file",
+          "bytes": 6772,
+          "sha256": "5725434a01e30e61e2a7aac933f0f5e80340a009573911445ce0054509607ed6"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/combat-lab-space.js",
+          "type": "file",
+          "bytes": 3099,
+          "sha256": "4388e196f07a992f809effb1af9ad063a2271929dc1efbd904915c9d07038799"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/frame-inspector.html",
+          "type": "file",
+          "bytes": 3193,
+          "sha256": "511371b794a2ec4a42282f417662148d332b9b638dd345eb1f244dec817aecf7"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/frame-inspector.js",
+          "type": "file",
+          "bytes": 6033,
+          "sha256": "50322788cb8600f5bb5d56ddfa4557a7fc3ec2951a2f5f916f74b3d4ca2d5dfb"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-combat-rules.js",
+          "type": "file",
+          "bytes": 13376,
+          "sha256": "c469c24c8add09c4fe4aea9d8ffc63a89b0af063d23445466853485f6572364a"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-cover-contact.js",
+          "type": "file",
+          "bytes": 4513,
+          "sha256": "bf9cac92f1b441f12a03a8734e6ab3e3de47b4663ccdb220008cd11725f08d7b"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-cover-exits.js",
+          "type": "file",
+          "bytes": 5228,
+          "sha256": "faa0ed65d38b842060817ea19c73761e17f241a9921f3f0e9721222773773682"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-cover-visibility.js",
+          "type": "file",
+          "bytes": 921,
+          "sha256": "ae974edbe9ec9a03d4f846bf18c39ad4da58d2c65390874d4e2a53ac58a85f79"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-pistol-sockets.js",
+          "type": "file",
+          "bytes": 7564,
+          "sha256": "3c3edeac18cc42cf495cc6938e26271d7124b75bcddbd9bf1c1f884b55a2fc83"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-pose-data.js",
+          "type": "file",
+          "bytes": 134285,
+          "sha256": "f8a8fbd2a5c655b8a066659f055fe7ec193aa274823e1edf9914fe9402736c40"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-pose.js",
+          "type": "file",
+          "bytes": 3698,
+          "sha256": "afff946ccb1e478996f7d4802425f8dd7e5ae37fabe200e41bff9328ad9fa10e"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-psychic-cover.js",
+          "type": "file",
+          "bytes": 5930,
+          "sha256": "97b0df4d3b56086a98883baa4a7228e537dc7dae5a5815af09c874885ba2a490"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-public.js",
+          "type": "file",
+          "bytes": 2386,
+          "sha256": "33ced183dc400319567c32a60dcfd1b7da5ea750ea377b75d9be27c338bd0fa3"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-session-manager.js",
+          "type": "file",
+          "bytes": 3137,
+          "sha256": "5fa90975f4d7d6300e992928b0aedddbad745e9a272cff8a91a64c51e34a6fb7"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/lab-shotgun-burst.js",
+          "type": "file",
+          "bytes": 1276,
+          "sha256": "9e710b4555baf8ee1db8ede9ea4f6c732be21507f0b7b9a559453a9733958b32"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/movement-lab.css",
+          "type": "file",
+          "bytes": 1533,
+          "sha256": "e21f83b9cf606addf82d75a7576f7d82d978b1038b264b3aaf6dcb788546361f"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/shotgun-art.js",
+          "type": "file",
+          "bytes": 1968,
+          "sha256": "c5c3fa9b8d89b12ca2a6b7d80dca56c9adf08336138f4a9b6592bc3a40146280"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/shotgun-combat-art.js",
+          "type": "file",
+          "bytes": 4682,
+          "sha256": "3c30ba7417836bbda1152ae25dc46710b5e5f727e6db026a96f5db354c3cb82c"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/shotgun-combat-lab.css",
+          "type": "file",
+          "bytes": 3794,
+          "sha256": "aac7b60e93e478e38cad429981b1ace7e52307f3a712225902bdc1f35dcf2e41"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/shotgun-combat-lab.html",
+          "type": "file",
+          "bytes": 5327,
+          "sha256": "6fe6029ee5aecbf54fb1b5d5db8a74bae460a1cba94259e3c693ff94efdfd8ca"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/shotgun-combat-lab.js",
+          "type": "file",
+          "bytes": 28180,
+          "sha256": "4667c801bac9f7dd06194d895fa89afa4927633c9b45cb414eab1fad0e05b982"
+        },
+        {
+          "path": "package.json",
+          "type": "file",
+          "bytes": 203,
+          "sha256": "bcde96c06c60160902261be8ee56c277d8a0177ef9086239eddf6ec15894d705"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/CHECKSUMS.sha256",
+          "type": "file",
+          "bytes": 18085,
+          "sha256": "8f3f94b2c1bf44f903aab630eae63ab4334556547af6670feee435ae2d624698"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/PORTING_CONTRACT.md",
+          "type": "file",
+          "bytes": 1095,
+          "sha256": "8749212392c851af6c279deb738384c9eaf7c1fc3ab61648bb9d1b6688488d43"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/README.md",
+          "type": "file",
+          "bytes": 1870,
+          "sha256": "978aa23bf5f521c80822b3a1353c6dc0c7ce816512835318d48e86f8c7667731"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/RESTORE-NOTES.md",
+          "type": "file",
+          "bytes": 798,
+          "sha256": "12fb76c9e5eb05c85ef6acf8ad443be5de39482ab7ac1682f7d7cfe6b457bd56"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/VERSION.json",
+          "type": "file",
+          "bytes": 604,
+          "sha256": "0da51d34391a3c55b3c768dec6432151c348cbd74ef1d0516438f577dda3eb13"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/manifest.json",
+          "type": "file",
+          "bytes": 134356,
+          "sha256": "a8713acde8185e80019e168171af13ff940165876b8b73d0fce4fc4821e7a6a8"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/combat-lab-effects.js",
+          "type": "file",
+          "bytes": 6772,
+          "sha256": "5725434a01e30e61e2a7aac933f0f5e80340a009573911445ce0054509607ed6"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/combat-lab-space.js",
+          "type": "file",
+          "bytes": 3026,
+          "sha256": "936a761ca9a4b1571ee206cceca4431bbd56a2d1933211b74533320e48fb989d"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/lab-combat-rules.js",
+          "type": "file",
+          "bytes": 11952,
+          "sha256": "62fd6f63169df41d8dcba1284a45ecf452027e7a25347f65f0c0c252bd49b423"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/lab-cover-contact.js",
+          "type": "file",
+          "bytes": 4513,
+          "sha256": "bf9cac92f1b441f12a03a8734e6ab3e3de47b4663ccdb220008cd11725f08d7b"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/lab-cover-visibility.js",
+          "type": "file",
+          "bytes": 921,
+          "sha256": "ae974edbe9ec9a03d4f846bf18c39ad4da58d2c65390874d4e2a53ac58a85f79"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/lab-pistol-sockets.js",
+          "type": "file",
+          "bytes": 7564,
+          "sha256": "3c3edeac18cc42cf495cc6938e26271d7124b75bcddbd9bf1c1f884b55a2fc83"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/lab-pose-data.js",
+          "type": "file",
+          "bytes": 134285,
+          "sha256": "f8a8fbd2a5c655b8a066659f055fe7ec193aa274823e1edf9914fe9402736c40"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/lab-pose.js",
+          "type": "file",
+          "bytes": 3526,
+          "sha256": "06ae6f68af6792029e190d76e849c6f00c1c459b6c5a9706fc63d526c0c7fc8a"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/lab-psychic-cover.js",
+          "type": "file",
+          "bytes": 5930,
+          "sha256": "97b0df4d3b56086a98883baa4a7228e537dc7dae5a5815af09c874885ba2a490"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/lab-public.js",
+          "type": "file",
+          "bytes": 2187,
+          "sha256": "5bfb39741e46d0ca6a7e775dad59ec3d939fd85ed2d383c94e670f25b0eaf84b"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/movement-lab.css",
+          "type": "file",
+          "bytes": 1533,
+          "sha256": "e21f83b9cf606addf82d75a7576f7d82d978b1038b264b3aaf6dcb788546361f"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/shotgun-art.js",
+          "type": "file",
+          "bytes": 1968,
+          "sha256": "c5c3fa9b8d89b12ca2a6b7d80dca56c9adf08336138f4a9b6592bc3a40146280"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/shotgun-combat-art.js",
+          "type": "file",
+          "bytes": 2738,
+          "sha256": "f9a087fc10d2600ea34b08b18a8dfc243b37709029a07f3292e0f7357206609f"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/shotgun-combat-lab.css",
+          "type": "file",
+          "bytes": 3794,
+          "sha256": "aac7b60e93e478e38cad429981b1ace7e52307f3a712225902bdc1f35dcf2e41"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/shotgun-combat-lab.html",
+          "type": "file",
+          "bytes": 6435,
+          "sha256": "abc4cb190fb1c90bbaf74c1e013f6fcee839c20b6c5070c65761bac661a06a2b"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/shotgun-combat-lab.js",
+          "type": "file",
+          "bytes": 27738,
+          "sha256": "8749a7197dd08170f28d407ed7360f53ed15abb5212bffd1fd66c3e81d6dee2d"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/tools/fetch-verified-assets.mjs",
+          "type": "file",
+          "bytes": 1226,
+          "sha256": "64475defd7c74f3be3cf165db6cd808c991194b1ee041c7ea8f42e6597b2b10e"
+        },
+        {
+          "path": "tests/asset-hash.test.mjs",
+          "type": "file",
+          "bytes": 423,
+          "sha256": "e431535c92f9f9c0184c9abf7634c2f14119c71c108b28436952cd577b0792db"
+        },
+        {
+          "path": "tests/atlas-cache.test.mjs",
+          "type": "file",
+          "bytes": 2862,
+          "sha256": "08a8529b198be48b35a47344392f8fe8a4641fef09e3412fd6a51c4b28a13641"
+        },
+        {
+          "path": "tests/burst.test.mjs",
+          "type": "file",
+          "bytes": 2581,
+          "sha256": "40e2c597ba580231a399c26dd012c5b2fb33d46bb9c5f50fcebf7f4aa0b09a3d"
+        },
+        {
+          "path": "tests/cover-exits.test.mjs",
+          "type": "file",
+          "bytes": 2471,
+          "sha256": "33e3f1c450c0477addc6eecab5196992a12766a1984070a4813d6c44bdf9a881"
+        },
+        {
+          "path": "tests/movement-parity.test.mjs",
+          "type": "file",
+          "bytes": 1202,
+          "sha256": "ca03c7a5939b068fc4ed24055b6719d7ca2ee28b3b7167741e61c13a1e3cc667"
+        },
+        {
+          "path": "tests/sessions.test.mjs",
+          "type": "file",
+          "bytes": 2322,
+          "sha256": "8cb2b09e8c0bf748f96bc896794c4a06ee2c4a7fc430c1e0715c5faa7c38166f"
+        },
+        {
+          "path": "tools/build-recovered-pose-data.mjs",
+          "type": "file",
+          "bytes": 1652,
+          "sha256": "7efe6f8f975a72caaeed13e2f8b22d13f57f6c5be00e56e1b6e111fe573a57d0"
+        },
+        {
+          "path": "tools/compact-backup.py",
+          "type": "file",
+          "bytes": 8500,
+          "sha256": "20192315e53bc3b95126065264f787cfde25b2e08f75beea874264a539d739d4"
+        },
+        {
+          "path": "tools/lab-dev-server.mjs",
+          "type": "file",
+          "bytes": 2468,
+          "sha256": "b09e2966d755254b09322e95ef3964a5e479aee3e5d23d65b47d03cd11eaf630"
+        },
+        {
+          "path": "tools/prepare-provisional-art.py",
+          "type": "file",
+          "bytes": 2992,
+          "sha256": "f995d2b5125a1032c99596473ce7a3a15a37c3ab99565c4d2c6b40af1bb55184"
+        },
+        {
+          "path": "tools/prepare-streaming-atlases.py",
+          "type": "file",
+          "bytes": 1908,
+          "sha256": "bac9651dd8c85e2dbd46ebf0972030ebb8fd0384922510b99511c698b3ad2abd"
+        },
+        {
+          "path": "tools/restore-checkpoint-art.py",
+          "type": "file",
+          "bytes": 2070,
+          "sha256": "f75d73a841c86a0bd7f665ee249b5d70e0583d3e6a1d27d01d81fca311352699"
+        },
+        {
+          "path": "tools/verify-recovery.mjs",
+          "type": "file",
+          "bytes": 695,
+          "sha256": "38d8ec8326dbccff9918f0a93823d7bf4a33a915f160389d8686b99d23aa5f92"
+        },
+        {
+          "path": "tools/verify-streaming-atlases.py",
+          "type": "file",
+          "bytes": 966,
+          "sha256": "5492ddb1758143ccf2ea1f9d15cbc9c54e58323e9007ac98f04790402f0bd984"
+        }
+      ]
+    },
+    {
+      "path": "backups/current/sprite-source-assets.tar.gz",
+      "bytes": 55591030,
+      "sha256": "25c3e59ee5977b32f091f396ab56112f746fd2a06bdcad9724440b1092dcdbe4",
+      "entries": [
+        {
+          "path": "art-production/charge/charge-d03-6frames-blue-key-source.png",
+          "type": "file",
+          "bytes": 1787825,
+          "sha256": "3a48addc67416071be9c6cb2356e41c9014979592c584147660c0ff91a14e4a5"
+        },
+        {
+          "path": "art-production/dash/upright-dash-front-right-v3-blue-key-source.png",
+          "type": "file",
+          "bytes": 1726851,
+          "sha256": "38046f3e367da2f3b2719a58e4085d28ac0bbd4d054003897b9a01291b57e520"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/art-next/charge-d03-6frames.png",
+          "type": "file",
+          "bytes": 259893,
+          "sha256": "3b29aa06f8a0f6d4d77e878cb0af9c09061aa81df7a1b6e320c01cfaabd9e7f4"
+        },
+        {
+          "path": "experiments/shotgun-powered-duel/art-next/dash-d03-6frames.png",
+          "type": "file",
+          "bytes": 242660,
+          "sha256": "9eb8dc0b5abc569fb8a7c7dd48878c8a4ed0a96fd443552b0d0c91ff6be26ad2"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/lab.png",
+          "type": "file",
+          "bytes": 3377266,
+          "sha256": "398eb0158732cfa69134d884dc3a3343202a36d59b1c79cf8ddcf80f824dc979"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/movement-lab/hero-run-pistol-24-front-right-v1.png",
+          "type": "file",
+          "bytes": 1632553,
+          "sha256": "d44e7dd36bf95da24a412f329edc1b92e4c939228fa64f185cb609bbe6460d48"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/movement-lab/hero-run-pistol-24-rear-right-v1.png",
+          "type": "file",
+          "bytes": 1525752,
+          "sha256": "09c6e093ce819cc983826540b906132e5f1ad0f098687caf97ad754a3de328c7"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/movement-lab/hero-slide-cover-pistol-24-front-right-v1.png",
+          "type": "file",
+          "bytes": 1497327,
+          "sha256": "e6f40e45d35e47b6b1a9b71c4559513ecef60f4b9dddf493fb8ef0901a934465"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/movement-lab/hero-slide-cover-pistol-24-rear-right-v1.png",
+          "type": "file",
+          "bytes": 1519667,
+          "sha256": "09ed29b745c8119294f2c3fb1c6cd90baa6d2c131aa8da9e21acd6e7fe7e0851"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/movement-lab/hero-weapons-pistol-24-front-right-v1.png",
+          "type": "file",
+          "bytes": 1600199,
+          "sha256": "66755598247ab0f56ae6f2188d928c08b3ce4afeae3a9a8ddd12252f75a8b837"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/movement-lab/hero-weapons-pistol-24-rear-right-v1.png",
+          "type": "file",
+          "bytes": 1588145,
+          "sha256": "d283713986311788e73acad685ddbb70b66b7fd63246e82f3d4135541241e15e"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/backpedal-d00.webp",
+          "type": "file",
+          "bytes": 366958,
+          "sha256": "d56339b22d919cf810f830205d2abb8481af796e05bcbb41f1889f900298272e"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/backpedal-d06.webp",
+          "type": "file",
+          "bytes": 361786,
+          "sha256": "f738c8d805237c6b8961eabc4bb354e93118c1ab6a20474a1754cda26356f644"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/backpedal-d12.webp",
+          "type": "file",
+          "bytes": 394546,
+          "sha256": "572deae25f0eb55656ed7b41e2a7844c6063ff6aa0514c267962c0d3a12d70cf"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/backpedal-d18.webp",
+          "type": "file",
+          "bytes": 378766,
+          "sha256": "91374a132c0986ca2baf500adff2ac241099f200134a6b2ca8b6c6cf4fe1b363"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d00.webp",
+          "type": "file",
+          "bytes": 206312,
+          "sha256": "17ca9182a928435c809c9c9026ddc0636de5e52964fc4598bdc8030165aac44c"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d01.webp",
+          "type": "file",
+          "bytes": 229798,
+          "sha256": "85db3bd8c5894aa027342f9e86c7718d0cb8755bb795d489e6a5057dac8d2203"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d02.webp",
+          "type": "file",
+          "bytes": 229462,
+          "sha256": "7d001909d402bca70751d3b517adbcc3d9783dc320ba634fe2964bae63ea692e"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d03.webp",
+          "type": "file",
+          "bytes": 205980,
+          "sha256": "7621fa823de70d5d1e862698410e3435e665f1797112e20a86053a11dcce41d9"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d04.webp",
+          "type": "file",
+          "bytes": 231630,
+          "sha256": "c9bf8eb74fc44972518e73fbf8ab744a6471ea46bc3c7d7e329da0ce8fbc6bd2"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d05.webp",
+          "type": "file",
+          "bytes": 233332,
+          "sha256": "b992d4cbd3288b12cc2874d04b37bbc8ce8cfec4e173bdbe60cca99588ca5e74"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d06.webp",
+          "type": "file",
+          "bytes": 436776,
+          "sha256": "8b8939bd2fc2c6d902f765fd1b14456441fcb6f18a0907dc129ca4ce0cc80a67"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d07.webp",
+          "type": "file",
+          "bytes": 269492,
+          "sha256": "c69bcfc5e4bb51a61d2aef34684f8610fbcb5833c45a32c3a06a27fbcb41b307"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d08.webp",
+          "type": "file",
+          "bytes": 237312,
+          "sha256": "59797a313e55759e65283f7e8dcd6db358ffc44267a590c8d204209e4ad2268a"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d09.webp",
+          "type": "file",
+          "bytes": 189828,
+          "sha256": "ff5804b3ab9267b043922d06a13171636ce7f0b348ec3b1720990d0090e507a8"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d10.webp",
+          "type": "file",
+          "bytes": 229252,
+          "sha256": "128dfacb9d2968cc64f2172de6b7a6a2c78be3d1f908d626be7ea1cd94f0616f"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d11.webp",
+          "type": "file",
+          "bytes": 208886,
+          "sha256": "1810cd8550423864fc7a6667b63872e285cc2ca433e05e57f74a117e1b9e42a4"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d12.webp",
+          "type": "file",
+          "bytes": 202202,
+          "sha256": "656d3cb708cf85064037a9d5f983c85af9247dd4c66f44e534533c4538415dbc"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d13.webp",
+          "type": "file",
+          "bytes": 203130,
+          "sha256": "338a35ed79fea22e193f9c4b7d571506bbe83d3fd37f2f80d8f0954c40804bbc"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d14.webp",
+          "type": "file",
+          "bytes": 204094,
+          "sha256": "2f16664e54810ff388f1de975781119a06ec660edb7312e4b9d857677e18e196"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d15.webp",
+          "type": "file",
+          "bytes": 173882,
+          "sha256": "5ba473afcd13b690d0a2cd927fcb5938d55eedee3ea2791b35457daae127487a"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d16.webp",
+          "type": "file",
+          "bytes": 195598,
+          "sha256": "e000ef4d5539ee96ef34b34c89c4573a84938d7c6fde8d705cf248a9d1982d6d"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d17.webp",
+          "type": "file",
+          "bytes": 192272,
+          "sha256": "e566f0bb4f508e40e1435322fbf6c76ac07df047ff0cab192e0b1db47b58ecf1"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d18.webp",
+          "type": "file",
+          "bytes": 423602,
+          "sha256": "40d25044567d4bd35cc38488f7747d2cb9ad3cec0e945e18cc38f2701dc1fcec"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d19.webp",
+          "type": "file",
+          "bytes": 203792,
+          "sha256": "59aa2bff1e21c4baae87ca732beab6c07a53f98e491d92e0cdfb0fd50795df88"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d20.webp",
+          "type": "file",
+          "bytes": 212512,
+          "sha256": "05665b3ea4a7577a9997c9fbbeb370a53a3d3b4cb70e9237b3d5b61bd6d39537"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d21.webp",
+          "type": "file",
+          "bytes": 173570,
+          "sha256": "1404e342030a9ffe68cdc63aa928953f3e700b9da113a42bd3ceb1eb1af5680c"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d22.webp",
+          "type": "file",
+          "bytes": 203966,
+          "sha256": "135b4660f8fff5345416191dfaf395c0d2b48b6eea21ae59d186edb70ebec50a"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d23.webp",
+          "type": "file",
+          "bytes": 214806,
+          "sha256": "72cf8dd8ac4556732cc2f056e63133466ff126d31e9838bf51a19a134e676229"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d00.webp",
+          "type": "file",
+          "bytes": 34556,
+          "sha256": "737d0bc0767ff9536fcc3d16115b92fe6f903701988653c63ce62c5a8e5255f4"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d01.webp",
+          "type": "file",
+          "bytes": 33440,
+          "sha256": "9611088452b4f8c875bc7789f45e3a9a9ebe3dc5f861ae241dcdbb05a63f72f8"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d02.webp",
+          "type": "file",
+          "bytes": 34110,
+          "sha256": "607d43ab9a8071a11d23ee035cb4fc71a06e5b05a7b7c611c52e226721252332"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d03.webp",
+          "type": "file",
+          "bytes": 34906,
+          "sha256": "106eda954cc04ccddfaadd85cb5b623e61c9adcb88fc7a1ab1f23ca22556b11d"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d04.webp",
+          "type": "file",
+          "bytes": 33566,
+          "sha256": "78c696cfb2da8ae447a7ac4e0452b84a508616d71c430ecbe55106ef8385484b"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d05.webp",
+          "type": "file",
+          "bytes": 30526,
+          "sha256": "893e88e741a43cbf75e8ee869782b91e777d08888d912a42ebf3e084dd79214b"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d06.webp",
+          "type": "file",
+          "bytes": 28002,
+          "sha256": "796b6aa7372c8f7b4e59cb5b0c9899ac98e92a13d33adcdb6cbf8d759840a67a"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d07.webp",
+          "type": "file",
+          "bytes": 33438,
+          "sha256": "f1a99fdac4171944564c9f40d929e37d04396db7df6508a63355cd820e96ba97"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d08.webp",
+          "type": "file",
+          "bytes": 34396,
+          "sha256": "e87c55ddb15916023298a9d08505ddbe8c5e043b60b67e052e6203cb7856057a"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d09.webp",
+          "type": "file",
+          "bytes": 33820,
+          "sha256": "bdeb279b78515ebed81ec587204464d5c56568bb20aee39993387d8fc9464068"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d10.webp",
+          "type": "file",
+          "bytes": 33494,
+          "sha256": "4d6eeb295695e186af39979bfc16b84a77c56923bb0151b29498527b24cbe1bf"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d11.webp",
+          "type": "file",
+          "bytes": 30898,
+          "sha256": "8fc6a6bb21977c5c5e482aff66a0ecb8841b428b5483073eabffac595469eb21"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d12.webp",
+          "type": "file",
+          "bytes": 35796,
+          "sha256": "3b1e412b326a0c60e617f322cd4a96cd543de9334ec2cfbf7e8fb56a2b833ad9"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d13.webp",
+          "type": "file",
+          "bytes": 33638,
+          "sha256": "ce7a61c7764550eaf817ed20fc042e1e66dff7bc0c07c9139c26a2f1ccbc357b"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d14.webp",
+          "type": "file",
+          "bytes": 32484,
+          "sha256": "14333741648226fd05191811553ba0a4e9e30784e58c4d166e3083c72b8e30b0"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d15.webp",
+          "type": "file",
+          "bytes": 31668,
+          "sha256": "2eaabd45fc6bfbbf10919d2acbb764a3269bc6043a1186d0ce345360be238de9"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d16.webp",
+          "type": "file",
+          "bytes": 31020,
+          "sha256": "67c29953d212a466f54fbb7c590b160e7ee0224248202fdf675875a462b8e4c7"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d17.webp",
+          "type": "file",
+          "bytes": 29974,
+          "sha256": "a1960a55f77f16afa7d3203dc13496df96ed002cb70baf836f57b4ed79006855"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d18.webp",
+          "type": "file",
+          "bytes": 26128,
+          "sha256": "3a500c6112b9666d051487142e397ac729134c804093b73e537e4cc589d24cfd"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d19.webp",
+          "type": "file",
+          "bytes": 27512,
+          "sha256": "042fe291bb4eeacde091dea76e9192ef76f47cabc1ffc274ca5ff5cf59cbe59d"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d20.webp",
+          "type": "file",
+          "bytes": 29384,
+          "sha256": "c8cb29652f683f798e282e2dd3ab5a8101d244418d167e0be662e40c6a4a5773"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d21.webp",
+          "type": "file",
+          "bytes": 30846,
+          "sha256": "e3426ff5f845a17fb014640dded025eee1e11167eda152754961d1cac930b8ae"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d22.webp",
+          "type": "file",
+          "bytes": 31342,
+          "sha256": "62523cfa090bab1fbced5535c479ec0bb1e59f56247049a772b6cc3539935f70"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d23.webp",
+          "type": "file",
+          "bytes": 29216,
+          "sha256": "4225a5f537b4c21117f84fbfd79e8fa7163d45d9b3fbac2ca895ef1015deb414"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d00.webp",
+          "type": "file",
+          "bytes": 402918,
+          "sha256": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d01.webp",
+          "type": "file",
+          "bytes": 390096,
+          "sha256": "17b8d95ba3c5f9a2024d48d2ad05aa3732e093056378e75ac2f53d0e3bd11637"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d02.webp",
+          "type": "file",
+          "bytes": 436950,
+          "sha256": "1e3a393fee050618e2b3f1b88a7228a0ae1415020d428e4b8978adf029d179f8"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d04.webp",
+          "type": "file",
+          "bytes": 455124,
+          "sha256": "7293ef50b94cb60f7158c4d79a8d2283c7b3998454653fee8fdb9d359843ff57"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d05.webp",
+          "type": "file",
+          "bytes": 432596,
+          "sha256": "02adac2c2350f71ae9cc1ab2e0b7b900b9e93e46b7989d1290db7613608560fe"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d06.webp",
+          "type": "file",
+          "bytes": 812502,
+          "sha256": "4fa4a7a902601fd51abec9af59bf893a8a5afb52c916996c2ce0088acedbd218"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d07.webp",
+          "type": "file",
+          "bytes": 418994,
+          "sha256": "898065972830aa98147f4f05b5a073ce652fda186ecfcc6008a02faf9fa7bde9"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d08.webp",
+          "type": "file",
+          "bytes": 448766,
+          "sha256": "0af33e4981a9e81ff86454ccfb43cb6d8a5af4544feb16b8901957ba0f6a3807"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d09.webp",
+          "type": "file",
+          "bytes": 883864,
+          "sha256": "f581ae9a18eeb1121e993c95d3d3ea377483ac7fc956ec2e5de3f2fa0c2ca1d6"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d10.webp",
+          "type": "file",
+          "bytes": 472956,
+          "sha256": "912b0bb6b5e0fd964e60a3e7dcbc1a373fea54b5e551f6f1d7e64b8836c12c42"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d11.webp",
+          "type": "file",
+          "bytes": 446924,
+          "sha256": "5381213e24995c0681e737b6663a150cb08779463020e5e6d5fe666174b495cf"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d12.webp",
+          "type": "file",
+          "bytes": 414760,
+          "sha256": "33412eecd560f8a05cf186f73d55de694776f1184fc92427d82afa203b2fb760"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d13.webp",
+          "type": "file",
+          "bytes": 412694,
+          "sha256": "74040e7d96c6c8b6610317bbef93e97dc5fae5754bef1b17683cf94f89913d22"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d14.webp",
+          "type": "file",
+          "bytes": 452834,
+          "sha256": "86cf8a3707bea81d9f4b95a21736f8e4ea58f2a1a8f9af65a8cefe2912f7aea8"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d15.webp",
+          "type": "file",
+          "bytes": 810238,
+          "sha256": "6f0a9aae2162dfd38dc15c79ea6fd931da9921cb20e783dcc8c15a307de1c577"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d16.webp",
+          "type": "file",
+          "bytes": 394398,
+          "sha256": "b85026cbbe245bdc9252afbfd3d6b0122eb18da05f3ccb95ae932e2b393f9160"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d17.webp",
+          "type": "file",
+          "bytes": 409584,
+          "sha256": "0a72555f9837220f01900385093afed7ca905a174d86c2893a2f52171b870b4f"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d18.webp",
+          "type": "file",
+          "bytes": 728576,
+          "sha256": "bb8c298f7edbd1898fe1a14914d7157f313738d0f78974b1f9d32dadf916a1a2"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d19.webp",
+          "type": "file",
+          "bytes": 387804,
+          "sha256": "561312902d8b244a14def982c0e3f6a3a8832c2e42862966ec4c17e5d61c46ce"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d20.webp",
+          "type": "file",
+          "bytes": 390522,
+          "sha256": "b4465140c7b643347c8a660550e4ca008c3829df2aa4b7a4870572b9022721e5"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d21.webp",
+          "type": "file",
+          "bytes": 778288,
+          "sha256": "9302118c187162da4528966afb9a04b698d5846f9d5ef39c535f474b96917758"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d22.webp",
+          "type": "file",
+          "bytes": 407230,
+          "sha256": "552f7b1533eaa446be8dd8e23532b11a086175245de7478d6c182364b2c7b5ad"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d23.webp",
+          "type": "file",
+          "bytes": 426736,
+          "sha256": "83391d1b798adde8198584d0dac74b6380596b180c00127fe785152594b58aee"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run.webp",
+          "type": "file",
+          "bytes": 857308,
+          "sha256": "df42282535b8b63b0c19dcb3a9aa9d96f82b01bb0d556911013097cae3ee60cf"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d00.webp",
+          "type": "file",
+          "bytes": 402620,
+          "sha256": "33975943af900001bf73d2deb6a88fd6c4193573a1fd2e02a7d3bb4900404f1d"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d01.webp",
+          "type": "file",
+          "bytes": 419636,
+          "sha256": "4716f55b5e98049715f53e1041c78a86bf14b503248012323ff74bf728f8d4bf"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d02.webp",
+          "type": "file",
+          "bytes": 468940,
+          "sha256": "8083616cb204b1acf38ccdb0c64a9811d4fcdfd00972230a95be865a528b19bb"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d04.webp",
+          "type": "file",
+          "bytes": 507216,
+          "sha256": "caf0505489becce13d39bbcd6d213ca592ad40f8c98ce319e328e4213a689313"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d05.webp",
+          "type": "file",
+          "bytes": 483666,
+          "sha256": "dfa70fcae7aba0969e5d63c5284b310af272966604e38188770edc1d7bd7dcaa"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d06.webp",
+          "type": "file",
+          "bytes": 424546,
+          "sha256": "0becadb722a2aa34866f637773f68af4c0adf7ab7856277d41dca41b47075cf3"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d07.webp",
+          "type": "file",
+          "bytes": 459000,
+          "sha256": "c7f23d2e31b5025dcb071f6ad3de91987549cca9a9415ab6ddf0824dc880e561"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d08.webp",
+          "type": "file",
+          "bytes": 497302,
+          "sha256": "2a115619370787fea4ec51ede7b32f6d4ba79aec896548d08cb6c44c62efefa3"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d09.webp",
+          "type": "file",
+          "bytes": 406944,
+          "sha256": "a21259dfc76527112bae5b61e816885fe93285d6674106cb3253b869fe1706b5"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d10.webp",
+          "type": "file",
+          "bytes": 479440,
+          "sha256": "2d0e87be29d51fa0ac30842cb9acd15626df7d7f73585cd55c672a1db01d66fe"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d11.webp",
+          "type": "file",
+          "bytes": 468206,
+          "sha256": "12b4bd6e54d61648de4f03554701d16b7d3e164ce482bbcf49a8f421a2486861"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d12.webp",
+          "type": "file",
+          "bytes": 411786,
+          "sha256": "b44340c3ab3a2ba2276bbd4aff4aeb546b66b2755a7382d4fa0f88a387c90eb6"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d13.webp",
+          "type": "file",
+          "bytes": 412660,
+          "sha256": "b249177604dcdd14be1618a6eb6d6aea55baff6c31e7b0331ea6124409e89084"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d14.webp",
+          "type": "file",
+          "bytes": 427826,
+          "sha256": "6e37fd0061e7bfd3c832dedc70fc507560554262d76f71b0e4182d32644c9ed7"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d15.webp",
+          "type": "file",
+          "bytes": 471672,
+          "sha256": "3d489871a881cbcabc28cd94532fad121972c2c8028f312c7351899bd815dea6"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d16.webp",
+          "type": "file",
+          "bytes": 407344,
+          "sha256": "23574eae807400f2d9fb463315a10cea0767407af7f494326dd1c8b6791c2baa"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d17.webp",
+          "type": "file",
+          "bytes": 424232,
+          "sha256": "312a4c80e1e89f4abbd6d6cb8d9ee054f47f26a92ed83d2b0bb05fbbca62116c"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d18.webp",
+          "type": "file",
+          "bytes": 408482,
+          "sha256": "df72dc3f9d9ba360bd06e3b5e1b6b3db9d07cc95480a6e9a9f8add774ef53c4e"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d19.webp",
+          "type": "file",
+          "bytes": 420614,
+          "sha256": "9e979c46a0834b5aafcbad09b6def41d03b9877380a6bf2446d147c762df1d71"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d20.webp",
+          "type": "file",
+          "bytes": 426868,
+          "sha256": "5966f6bc9667a46751aeafef8c3ce770708513bdafb86108b5d970ded9db5bde"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d21.webp",
+          "type": "file",
+          "bytes": 443618,
+          "sha256": "214c9ffc287ffa50c6491a3300d1d49253f9e9c98062f9abd164bd02a9aed185"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d22.webp",
+          "type": "file",
+          "bytes": 433592,
+          "sha256": "8fd31401aa2a5d63596a8750507c15928ceffd752b4371bb2bef6cc31947290f"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d23.webp",
+          "type": "file",
+          "bytes": 429460,
+          "sha256": "c2fc2064c3723265463df65a3ca6e8b44295c056b2a09211f937c7f1c784c80b"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide.webp",
+          "type": "file",
+          "bytes": 743726,
+          "sha256": "78d1f97de0508c90a3f107d8743691c6b4fbc5d98be3bfc52342e62023ecd7a0"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/strafe-left-d00.webp",
+          "type": "file",
+          "bytes": 363088,
+          "sha256": "b9906bdd2f1a8ce545126b432c0ade9afe17c316f7bac54b45fb9c4c37e4eec7"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/strafe-left-d06.webp",
+          "type": "file",
+          "bytes": 422954,
+          "sha256": "3ae40b3df81d0f5b0e2318b8298cfea94345a859ff13c50eb596537083de25a3"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/strafe-left-d12.webp",
+          "type": "file",
+          "bytes": 395042,
+          "sha256": "e6240f4c481f844d4050a84d868a457826a8d638aae7304baf10e96c60306df5"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/strafe-left-d18.webp",
+          "type": "file",
+          "bytes": 402522,
+          "sha256": "1938d2e9bfce16407c883473627b0f3e7f357d9aba74dbac2dc6ea1153c50839"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/strafe-right-d00.webp",
+          "type": "file",
+          "bytes": 374668,
+          "sha256": "8675e4ae7e38dc3413248b0925ab2ca6379216311e09a8e28768e8d1cbea2f51"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/strafe-right-d06.webp",
+          "type": "file",
+          "bytes": 420280,
+          "sha256": "35ce94834767b4c7e6448b81f337a0ec3c28b74c443535002804e2e8412273f8"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/strafe-right-d12.webp",
+          "type": "file",
+          "bytes": 391986,
+          "sha256": "61d3ee43b7f25a03336f360ba6632b8651323cded29e615bd319ba182680de37"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/strafe-right-d18.webp",
+          "type": "file",
+          "bytes": 398392,
+          "sha256": "7e292f04a6a87f5b23ba5eb4cacb858c438aceeec508df9ba46001f08cc940eb"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-refinement/ground-effects.png",
+          "type": "file",
+          "bytes": 648506,
+          "sha256": "4581238ac2458cccf969824e74ff5b9a7de3ec593fd0d35e14d68435f28108f9"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-refinement/manga-expression.png",
+          "type": "file",
+          "bytes": 424431,
+          "sha256": "38296d22237a48b928269ef7a22b29eebb1c80da4d2224f178e1afebe3fc90c1"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-v57/barrier-chunks-natural-4x2-128.png",
+          "type": "file",
+          "bytes": 152175,
+          "sha256": "dc34a2ae292ce382a1179e73a64d9f0b971fc09cd8f8f6a053861eff2882b55e"
+        },
+        {
+          "path": "recovery/shotgun-lab-v57/assets/shotgun-v57/barrier-surfaces-natural.png",
+          "type": "file",
+          "bytes": 3622053,
+          "sha256": "833e86dd7efff6d6d138cd39ea70501b2ebc7ff2bdeaaa780b556f70a5297c45"
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    "generated 125px streaming caches",
+    "dependencies",
+    "previous backup archives",
+    "rejected source attempts",
+    "duplicate proof sheets",
+    "reproducible extracted masters"
+  ],
+  "restore": "Extract both tar.gz files into the same directory. Run npm run verify and npm test. Generate streaming caches only for the saved experiment."
+}
