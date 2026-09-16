@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "format": "ordinary gzip-compressed tar; no Base64",
-  "sourceCommit": "ec239d7d3cc4a4addd0abfd300e3b26524cbdd0d",
+  "sourceCommit": "6069be2a81897fd5fdef4400adef6df152888ab7",
   "archives": [
     {
       "path": "backups/current/completed-code.tar.gz",
-      "bytes": 335629,
-      "sha256": "c8440d98b3aa37a029b380acbfdd7dc16c2ea73b14dc6ebabdf3c3fca225e515",
+      "bytes": 337727,
+      "sha256": "ad80da609cb19b3d962a938130ca09d9b406fa5db92dcfb71954c27addef1278",
       "entries": [
         {
           "path": ".github/workflows/compact-backup.yml",
@@ -604,8 +604,8 @@
         {
           "path": "sprites/manifests/batch-03-cover-contact.json",
           "type": "file",
-          "bytes": 19322,
-          "sha256": "dcfa36d2de16947faf578f4ecb6a4fb3541a993905a7b77d28b74c3254060611"
+          "bytes": 20040,
+          "sha256": "8a5daae6b12c5319da438b1c4c51a10635e02bd6b162b1b0ff40d7d8b7211c62"
         },
         {
           "path": "sprites/manifests/existing-asset-inventory.json",
@@ -676,8 +676,8 @@
         {
           "path": "sprites/reviews/COVER-GENERATION-PROMPTS.md",
           "type": "file",
-          "bytes": 7418,
-          "sha256": "3669526d21186b9dabe1176c489707df4cb1efdd348c6160beb3f595507fb700"
+          "bytes": 9990,
+          "sha256": "2cc27f1a89e109225cab0955d63f5309c7c9aacee493af1ec5bb10eac515bc57"
         },
         {
           "path": "sprites/reviews/README.md",
@@ -696,6 +696,12 @@
           "type": "file",
           "bytes": 22430,
           "sha256": "a95ab5ee181da2b67f5da4901dc780c5d3fab88f7abbd464202bf6fb9b4165a1"
+        },
+        {
+          "path": "sprites/reviews/cover-c001-c012-design-approval.json",
+          "type": "file",
+          "bytes": 2606,
+          "sha256": "1309a81ff0e5290bd3cf92620598f0a126ebae48b7e8bf7881e818e08b6010da"
         },
         {
           "path": "sprites/reviews/cover-metrics.json",
