@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "format": "ordinary gzip-compressed tar; no Base64",
-  "sourceCommit": "8e696da472f63b155591bc51870738fa076b0986",
+  "sourceCommit": "cb37f6c146dfdc973db8dd7bc82347ffb2981c20",
   "archives": [
     {
       "path": "backups/current/completed-code.tar.gz",
-      "bytes": 733683,
-      "sha256": "43c01f46926cde3f169792d4c4bf78480956008eb4a7d693a26e4ae144bcf7ad",
+      "bytes": 1012127,
+      "sha256": "ecb0ef84fe98eac8589c064f2f6e79a2db8a8c6d8ba93d3f56777a0ab65d072a",
       "entries": [
         {
           "path": ".github/workflows/compact-backup.yml",
@@ -620,6 +620,12 @@
           "sha256": "5f5fd97f93667eb2952d9568c73dfb5c6dc3c7750040b2421233ec7a51bef40a"
         },
         {
+          "path": "sprites/manifests/cover-contact-d06-v1.json",
+          "type": "file",
+          "bytes": 9000,
+          "sha256": "b8b7319f0a393e0e3360f4e59d42157021a231ebd3c93903edc63b505397413f"
+        },
+        {
           "path": "sprites/manifests/cover-idle-d04-v1.json",
           "type": "file",
           "bytes": 9172,
@@ -630,6 +636,12 @@
           "type": "file",
           "bytes": 9172,
           "sha256": "71b50b3e77f3322709fb2ce0ca8bdd3b7a4d6fee4aaaa907bba3cdf686de10a5"
+        },
+        {
+          "path": "sprites/manifests/cover-idle-d06-v1.json",
+          "type": "file",
+          "bytes": 9171,
+          "sha256": "b20bdc5f2cdb27119ce6a459187ea535e415aeab820c1b673fac3a98bac3b22e"
         },
         {
           "path": "sprites/manifests/existing-asset-inventory.json",
@@ -674,6 +686,12 @@
           "sha256": "3efe74dcdaa67b8655ada0fecbeb1b1b74e2553288d386cf095481618630c6c6"
         },
         {
+          "path": "sprites/previews/contact-d06-v1/contact-d06.gif",
+          "type": "file",
+          "bytes": 130491,
+          "sha256": "005ed41234ba174cb563f741ceb4f8affec56d55928ea62635d459c23009746f"
+        },
+        {
           "path": "sprites/previews/identity-review.html",
           "type": "file",
           "bytes": 4545,
@@ -690,6 +708,12 @@
           "type": "file",
           "bytes": 0,
           "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "sprites/previews/idle-d06-v1/idle-d06.gif",
+          "type": "file",
+          "bytes": 153845,
+          "sha256": "24a3491fe9764678a2893e2f87698d2bcb99ba9f37fcb30fe1aa7e18fb439eaf"
         },
         {
           "path": "sprites/previews/review-catalog.js",
@@ -738,6 +762,12 @@
           "type": "file",
           "bytes": 1091,
           "sha256": "4e73f54ba766f1472d5a59520b47db5b2b86b2bb701f04959620203eac40f96c"
+        },
+        {
+          "path": "sprites/reviews/COVER-D06-DIRECTIONAL-PAIR.md",
+          "type": "file",
+          "bytes": 1279,
+          "sha256": "b77ea7ca0ebdc441ced5635dde814e50cb05bc02d1d1bb6424048b83bf31e577"
         },
         {
           "path": "sprites/reviews/COVER-GENERATION-PROMPTS.md",
