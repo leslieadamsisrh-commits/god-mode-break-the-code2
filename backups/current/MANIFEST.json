@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "format": "ordinary gzip-compressed tar; no Base64",
-  "sourceCommit": "96e757566d983f33f824111ebfda1573c82168a5",
+  "sourceCommit": "c1813ddb7945c675435f3820aad5d9e32c7f3728",
   "archives": [
     {
       "path": "backups/current/completed-code.tar.gz",
-      "bytes": 212202,
-      "sha256": "ec537030e8ee66bdc5a6c3b7e16fcf9283de8e8415e796d4503ce7d7be63d110",
+      "bytes": 254827,
+      "sha256": "50a86eba6b899ffcf0fef4525e07616f2ddc47de4fe6b7c3b06c32f9924743c2",
       "entries": [
         {
           "path": ".github/workflows/compact-backup.yml",
@@ -23,8 +23,8 @@
         {
           "path": "README.md",
           "type": "file",
-          "bytes": 905,
-          "sha256": "f92eb7be26df28e7616f419009540a6d4bd1e4ae08b7521bfa06090a6dd8e03c"
+          "bytes": 1608,
+          "sha256": "4f0b67396717ed87aedc5bc47476dc98e79ca2513c70d240794435b70749eeb2"
         },
         {
           "path": "art-production/charge/blue-key-edit-prompt.txt",
@@ -109,6 +109,12 @@
           "type": "file",
           "bytes": 12276,
           "sha256": "c09cef61cbcaa8a232df040cf7942302f5d01e6bac4e4fa232b6c302b19290e8"
+        },
+        {
+          "path": "docs/SPRITE-FIRST-PASS-REPORT.md",
+          "type": "file",
+          "bytes": 4641,
+          "sha256": "2076f1867898ecd0173bc9a3764064916a09ea0f021f8892048be6ce5fbc33e4"
         },
         {
           "path": "docs/SPRITE-STREAMING-CHECKPOINT.md",
@@ -326,6 +332,24 @@
           "sha256": "4667c801bac9f7dd06194d895fa89afa4927633c9b45cb414eab1fad0e05b982"
         },
         {
+          "path": "god-mode-combat-core/BASELINE.md",
+          "type": "file",
+          "bytes": 1917,
+          "sha256": "5ddd6f63461b5bf6162963089a93e7a5ab26ce0c2173f3ca05aaddcd7e44e052"
+        },
+        {
+          "path": "god-mode-sprite-integration/IMPORT-CONTRACT.md",
+          "type": "file",
+          "bytes": 1260,
+          "sha256": "6a6ea9d640dcb9370d5f06b20ed87f229013bd59f94781136e0701ad17828fa2"
+        },
+        {
+          "path": "god-mode-sprite-library/README.md",
+          "type": "file",
+          "bytes": 975,
+          "sha256": "ed9d21710055a9e61ba94d107a3fe21ae28dd4765109002495ceb4c8ea38ab4e"
+        },
+        {
           "path": "package.json",
           "type": "file",
           "bytes": 203,
@@ -470,6 +494,144 @@
           "sha256": "64475defd7c74f3be3cf165db6cd808c991194b1ee041c7ea8f42e6597b2b10e"
         },
         {
+          "path": "sprites/README.md",
+          "type": "file",
+          "bytes": 2363,
+          "sha256": "1a58b40734abf058ecb469ca7c813e4116668415b5b136dc363aa9665573aa93"
+        },
+        {
+          "path": "sprites/effects/README.md",
+          "type": "file",
+          "bytes": 234,
+          "sha256": "4e9c9547eb253276149589dd739dfef8b935d3481d723661bfd3449c672e5913"
+        },
+        {
+          "path": "sprites/enemies/README.md",
+          "type": "file",
+          "bytes": 210,
+          "sha256": "1cb99a90f8642e7ba1cb72bd92985c9d0aa561481b372f9624510317eab8d216"
+        },
+        {
+          "path": "sprites/heroine/assault-rifle/README.md",
+          "type": "file",
+          "bytes": 224,
+          "sha256": "c696d2cbe4ee09e1cf8d3afdbfaba5d4155db08fea9fe3b0ebc465cdddd57829"
+        },
+        {
+          "path": "sprites/heroine/damage-reactions/README.md",
+          "type": "file",
+          "bytes": 227,
+          "sha256": "2ce735836744731ae7ca1ad07ac8f8fa56757891c6c813e6bbee87ecde89aaeb"
+        },
+        {
+          "path": "sprites/heroine/finishers/README.md",
+          "type": "file",
+          "bytes": 220,
+          "sha256": "316dbda76e7d74ff280bf2ece9155b87990c3b58db35fdabfc64c48fb17066a8"
+        },
+        {
+          "path": "sprites/heroine/handgun/README.md",
+          "type": "file",
+          "bytes": 309,
+          "sha256": "5c679cc49d429c936ff8b1e20de1b456dc5f830ad3fa7f8c6a82bd329b9e191d"
+        },
+        {
+          "path": "sprites/heroine/melee-gauntlet/README.md",
+          "type": "file",
+          "bytes": 225,
+          "sha256": "2a28ba5f9e25d0835ad1a4126e3715172a35d34dbc3eadfdca446bfe3e67f8e2"
+        },
+        {
+          "path": "sprites/heroine/psychic-powers/README.md",
+          "type": "file",
+          "bytes": 225,
+          "sha256": "ca40c743a53967567b0f64c043d66cb52cc34bc8ce49ff8e9dd3c544e515cc86"
+        },
+        {
+          "path": "sprites/heroine/rocket-launcher/README.md",
+          "type": "file",
+          "bytes": 226,
+          "sha256": "3e56d0709e3c2997ba025ea0671dd64624508893bc15ff36839f3d39dc0b0282"
+        },
+        {
+          "path": "sprites/heroine/shared/README.md",
+          "type": "file",
+          "bytes": 217,
+          "sha256": "948642bb6c486aad48b4876e800e2d9fb1f46e69c5b507f8ebd5149508a4c540"
+        },
+        {
+          "path": "sprites/heroine/shield/README.md",
+          "type": "file",
+          "bytes": 217,
+          "sha256": "1fb95ed547f878f2b136fed65d7b0c3c5c6a96e139a50eb1e896ef8c964beae2"
+        },
+        {
+          "path": "sprites/heroine/shotgun/README.md",
+          "type": "file",
+          "bytes": 274,
+          "sha256": "363403d34d3914e447d3f53082175ca6791a1b9930fd842171019f02e33083e6"
+        },
+        {
+          "path": "sprites/heroine/sniper-rail/README.md",
+          "type": "file",
+          "bytes": 222,
+          "sha256": "c62c23c5bc7a2b02d662c1bd258aa320e10112464d6adad0f6e75c01bd970a79"
+        },
+        {
+          "path": "sprites/heroine/unarmed/README.md",
+          "type": "file",
+          "bytes": 218,
+          "sha256": "6c823607591dd9e987858ba9aeff30b06f9146373d5d4ccbc10a2f843634d2dd"
+        },
+        {
+          "path": "sprites/manifests/ANCHOR-STANDARD.md",
+          "type": "file",
+          "bytes": 1683,
+          "sha256": "720e2bc15e6c771b2cbf5a7faae94d053edde48ddee8452baad01722d689bf02"
+        },
+        {
+          "path": "sprites/manifests/batch-01-identity.json",
+          "type": "file",
+          "bytes": 29454,
+          "sha256": "66f41f51f419ea9aa405751aec0dea07820182a60178aa5c0ea1a8edb5adc3a9"
+        },
+        {
+          "path": "sprites/manifests/existing-asset-inventory.json",
+          "type": "file",
+          "bytes": 174662,
+          "sha256": "38c812ecb446c9a18e83f3f51f129c030ff4ef5201ef08e19f6e10773942dddb"
+        },
+        {
+          "path": "sprites/manifests/inventory-summary.json",
+          "type": "file",
+          "bytes": 727,
+          "sha256": "76500e337b55d71cb37e6f14b95e432db614b698de850720ef9bce75ea3842ff"
+        },
+        {
+          "path": "sprites/manifests/production-queue.json",
+          "type": "file",
+          "bytes": 5407,
+          "sha256": "9565d783bae247e6f5e63b771febc732862a7126346e98bd8ca31cdeaf252ceb"
+        },
+        {
+          "path": "sprites/previews/identity-review.html",
+          "type": "file",
+          "bytes": 3768,
+          "sha256": "7c0238b888a61a35a7cc228c7ad1ea2904c1305e831727bb7b227855eef3142c"
+        },
+        {
+          "path": "sprites/runtime-atlases/README.md",
+          "type": "file",
+          "bytes": 418,
+          "sha256": "5cc3e4c4d60cdf08380b1d32644a33fb8744a0531fa70bde1fee6583c006b663"
+        },
+        {
+          "path": "sprites/source-art/README.md",
+          "type": "file",
+          "bytes": 452,
+          "sha256": "f2b42e96adb4ecf240f09c3f802b4e7f835a7f9eb17e813a63fc38dd8c36d24f"
+        },
+        {
           "path": "tests/asset-hash.test.mjs",
           "type": "file",
           "bytes": 423,
@@ -516,6 +678,12 @@
           "type": "file",
           "bytes": 8500,
           "sha256": "20192315e53bc3b95126065264f787cfde25b2e08f75beea874264a539d739d4"
+        },
+        {
+          "path": "tools/inventory-sprites.py",
+          "type": "file",
+          "bytes": 7935,
+          "sha256": "bac76afb5f50c33d9e4e9f7434282c852eb7022ae85b2994ef6cb2895e234673"
         },
         {
           "path": "tools/lab-dev-server.mjs",
