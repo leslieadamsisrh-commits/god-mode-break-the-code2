@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "format": "ordinary gzip-compressed tar; no Base64",
-  "sourceCommit": "5f16e6f158fb547da28a1d659f81d2f7d6611eaa",
+  "sourceCommit": "e19619c7b306743cdd56922abccf317b7dd42391",
   "archives": [
     {
       "path": "backups/current/completed-code.tar.gz",
-      "bytes": 602223,
-      "sha256": "92ad29f3ce64a432ecfbc5bf161293ec8bdbfaced5e6df20c41fe4954d34e78b",
+      "bytes": 732328,
+      "sha256": "3f106ad756063b21fee2e4e07d36068b959e7c0f7d305a9e25e672a4894c3a31",
       "entries": [
         {
           "path": ".github/workflows/compact-backup.yml",
@@ -614,6 +614,12 @@
           "sha256": "d61f7d56dc578dc40e471f20ef8d22d24fc5d6c89377e31c514c08188b7dfb5d"
         },
         {
+          "path": "sprites/manifests/cover-contact-d05-v1.json",
+          "type": "file",
+          "bytes": 9043,
+          "sha256": "5f5fd97f93667eb2952d9568c73dfb5c6dc3c7750040b2421233ec7a51bef40a"
+        },
+        {
           "path": "sprites/manifests/cover-idle-d04-v1.json",
           "type": "file",
           "bytes": 9172,
@@ -656,6 +662,12 @@
           "sha256": "ececb472b3ad4afd0ecf09770a73725333f11d942da79323f09f3c2ee4b83bbc"
         },
         {
+          "path": "sprites/previews/contact-d05-v1/contact-d05.gif",
+          "type": "file",
+          "bytes": 131245,
+          "sha256": "3efe74dcdaa67b8655ada0fecbeb1b1b74e2553288d386cf095481618630c6c6"
+        },
+        {
           "path": "sprites/previews/identity-review.html",
           "type": "file",
           "bytes": 4545,
@@ -692,6 +704,12 @@
           "sha256": "baf39350f0e0b3f455a677bb4b1544b32085ecfc883d0fc547ffaf4e438a317b"
         },
         {
+          "path": "sprites/reviews/AUTONOMOUS-SHOTGUN-SPRITE-PRODUCTION-DIRECTIVE.md",
+          "type": "file",
+          "bytes": 5801,
+          "sha256": "610798349165830fe441bd2c347879b7c69a7ce2092f7a04e04d1806fc62dc1e"
+        },
+        {
           "path": "sprites/reviews/COVER-CONTACT-FIRST-PASS.md",
           "type": "file",
           "bytes": 4286,
@@ -702,6 +720,12 @@
           "type": "file",
           "bytes": 2080,
           "sha256": "1d46e334ac7de3e61c03eb9a5910b7de2af30a1d89ae0fbc0234ec1b3f9ad594"
+        },
+        {
+          "path": "sprites/reviews/COVER-D05-PRODUCTION.md",
+          "type": "file",
+          "bytes": 1091,
+          "sha256": "4e73f54ba766f1472d5a59520b47db5b2b86b2bb701f04959620203eac40f96c"
         },
         {
           "path": "sprites/reviews/COVER-GENERATION-PROMPTS.md",
