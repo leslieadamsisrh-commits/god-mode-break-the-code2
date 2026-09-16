@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": 1,
-  "status": "reference-selection-ready-for-review-not-final-model-lock",
+  "status": "user-approved-standing-designs-animation-and-angle-registration-separate",
   "angleConvention": "0 right,90 toward viewer,180 left,270 away. Nominal studies; exact 15-degree yaw is not certified.",
   "identityBasis": "latest approved recovered Shotgun Lab; art is reused unchanged",
   "sourceManifestSha256": "a8713acde8185e80019e168171af13ff940165876b8b73d0fce4fc4821e7a6a8",
@@ -45,8 +45,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d01",
@@ -87,8 +88,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d02",
@@ -129,8 +131,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d03",
@@ -171,8 +174,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d04",
@@ -213,8 +217,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d05",
@@ -255,8 +260,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d06",
@@ -297,8 +303,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d07",
@@ -339,8 +346,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d08",
@@ -381,8 +389,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d09",
@@ -423,8 +432,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d10",
@@ -465,8 +475,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d11",
@@ -507,8 +518,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d12",
@@ -549,8 +561,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d13",
@@ -591,8 +604,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d14",
@@ -633,8 +647,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d15",
@@ -675,8 +690,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d16",
@@ -717,8 +733,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d17",
@@ -759,8 +776,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d18",
@@ -798,8 +816,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d19",
@@ -840,8 +859,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d20",
@@ -882,8 +902,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d21",
@@ -924,8 +945,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d22",
@@ -966,8 +988,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     },
     {
       "assetId": "heroine-shotgun-reference-ready-d23",
@@ -1008,8 +1031,9 @@
         "actorRadiusWorldUnits": 17,
         "boundsInImagePixels": null
       },
-      "reviewStatus": "pending-identity-and-exact-angle-review",
-      "automatedIssues": []
+      "reviewStatus": "user-approved-design",
+      "automatedIssues": [],
+      "angleReviewStatus": "nominal-unverified"
     }
   ],
   "blockers": [
@@ -1017,5 +1041,6 @@
     "Original full-resolution masters are missing for most views.",
     "Backpack segment count, cable layout and limb proportions require a shared turnaround check.",
     "Hand/weapon and cover-contact anchors remain unregistered; null is intentional."
-  ]
+  ],
+  "approvalRecord": "sprites/reviews/standing-approval.json"
 }

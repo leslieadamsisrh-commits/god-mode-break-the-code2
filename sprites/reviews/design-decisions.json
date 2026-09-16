@@ -1,6 +1,223 @@
 {
   "schemaVersion": 1,
   "catalogId": "god-mode-individual-review-20260916",
-  "records": [],
-  "note": "Awaiting user decisions. Exported browser reviews can be imported and committed here. No automatic GitHub credential is exposed to this gallery."
+  "records": [
+    {
+      "familyId": "ready-d00",
+      "frame": 0,
+      "revision": "737d0bc0767ff9536fcc3d16115b92fe6f903701988653c63ce62c5a8e5255f4",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d01",
+      "frame": 0,
+      "revision": "9611088452b4f8c875bc7789f45e3a9a9ebe3dc5f861ae241dcdbb05a63f72f8",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d02",
+      "frame": 0,
+      "revision": "607d43ab9a8071a11d23ee035cb4fc71a06e5b05a7b7c611c52e226721252332",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d03",
+      "frame": 0,
+      "revision": "106eda954cc04ccddfaadd85cb5b623e61c9adcb88fc7a1ab1f23ca22556b11d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d04",
+      "frame": 0,
+      "revision": "78c696cfb2da8ae447a7ac4e0452b84a508616d71c430ecbe55106ef8385484b",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d05",
+      "frame": 0,
+      "revision": "893e88e741a43cbf75e8ee869782b91e777d08888d912a42ebf3e084dd79214b",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d06",
+      "frame": 0,
+      "revision": "796b6aa7372c8f7b4e59cb5b0c9899ac98e92a13d33adcdb6cbf8d759840a67a",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d07",
+      "frame": 0,
+      "revision": "f1a99fdac4171944564c9f40d929e37d04396db7df6508a63355cd820e96ba97",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d08",
+      "frame": 0,
+      "revision": "e87c55ddb15916023298a9d08505ddbe8c5e043b60b67e052e6203cb7856057a",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d09",
+      "frame": 0,
+      "revision": "bdeb279b78515ebed81ec587204464d5c56568bb20aee39993387d8fc9464068",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d10",
+      "frame": 0,
+      "revision": "4d6eeb295695e186af39979bfc16b84a77c56923bb0151b29498527b24cbe1bf",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d11",
+      "frame": 0,
+      "revision": "8fc6a6bb21977c5c5e482aff66a0ecb8841b428b5483073eabffac595469eb21",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d12",
+      "frame": 0,
+      "revision": "3b1e412b326a0c60e617f322cd4a96cd543de9334ec2cfbf7e8fb56a2b833ad9",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d13",
+      "frame": 0,
+      "revision": "ce7a61c7764550eaf817ed20fc042e1e66dff7bc0c07c9139c26a2f1ccbc357b",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d14",
+      "frame": 0,
+      "revision": "14333741648226fd05191811553ba0a4e9e30784e58c4d166e3083c72b8e30b0",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d15",
+      "frame": 0,
+      "revision": "2eaabd45fc6bfbbf10919d2acbb764a3269bc6043a1186d0ce345360be238de9",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d16",
+      "frame": 0,
+      "revision": "67c29953d212a466f54fbb7c590b160e7ee0224248202fdf675875a462b8e4c7",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d17",
+      "frame": 0,
+      "revision": "a1960a55f77f16afa7d3203dc13496df96ed002cb70baf836f57b4ed79006855",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d18",
+      "frame": 0,
+      "revision": "3a500c6112b9666d051487142e397ac729134c804093b73e537e4cc589d24cfd",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d19",
+      "frame": 0,
+      "revision": "042fe291bb4eeacde091dea76e9192ef76f47cabc1ffc274ca5ff5cf59cbe59d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d20",
+      "frame": 0,
+      "revision": "c8cb29652f683f798e282e2dd3ab5a8101d244418d167e0be662e40c6a4a5773",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d21",
+      "frame": 0,
+      "revision": "e3426ff5f845a17fb014640dded025eee1e11167eda152754961d1cac930b8ae",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d22",
+      "frame": 0,
+      "revision": "62523cfa090bab1fbced5535c479ec0bb1e59f56247049a772b6cc3539935f70",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "ready-d23",
+      "frame": 0,
+      "revision": "4225a5f537b4c21117f84fbfd79e8fa7163d45d9b3fbac2ca895ef1015deb414",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
+      "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    }
+  ],
+  "note": "All 24 standing-reference designs approved by the user. Running designs and animation are awaiting review."
 }

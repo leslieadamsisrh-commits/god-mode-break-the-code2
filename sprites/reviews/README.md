@@ -10,7 +10,7 @@ The library exposes 121 existing image assets with 1,152 inspectable frame cells
 
 Approve, Revise, Reject, Save note and Reset act on one frame, one review kind and one actual image hash. Design and animation decisions are separate; integration approval is not available. Revise and Reject require notes. Image-byte mismatch disables approval. Changed revisions cannot inherit old approval. Invalid imports are rejected atomically and older exports cannot overwrite newer notes.
 
-Browser choices are device-local. Export `GOD-MODE-design-reviews.json` and attach it in the conversation to persist decisions to this repository. The saved `design-decisions.json` is currently empty: the user has not approved any first-pass designs. Browser testing uses temporary sample decisions, which are reset and never committed as user approvals.
+Browser choices are device-local. Export `GOD-MODE-design-reviews.json` and attach it in the conversation to persist decisions to this repository. The saved `design-decisions.json` contains the user's 24 standing-design approvals, bound to their actual image revisions. The exact conversational approval is recorded in `standing-approval.json`. Browser testing uses temporary sample decisions, which are reset and never committed as user approvals.
 
 Natural-language responses use the same reference numbers: “Approve 1–6; revise 7: fix the backpack.” Before saving a conversational decision, map its number through `review-catalog.js` and retain the source revision, frame and review kind. Rebuild the catalog after updating the saved ledger; it imports that seed alongside newer device-local records.
 
@@ -20,10 +20,21 @@ The source and packaged gallery were checked in the browser: image verification,
 
 The gallery decodes only six reference images or one selected family at a time; obsolete fetches are aborted and old canvas/image references released. No full-library preload, source-master download, runtime gameplay change, or live game publication occurs. Generated image duplicates and streaming caches are excluded from the download. No new drawings were generated.
 
-## Decisions requested
+## Batch 2 — running review
 
-1. Compare references 1–4: their body turns are very similar despite different nominal angle labels. Confirm which designs to retain while exact-angle spacing is refined later.
-2. Compare front reference 7 with rear reference 19 and nearby views: check helmet shape, body proportions, battery assembly and cable routing for a single consistent heroine.
-3. Mark specific views Approve, Revise or Reject. Existing muzzle uncertainty and missing original high-resolution sheets remain technical gaps; approving the appearance does not certify those measurements.
+The user approved all 24 standing designs and authorized the next batch. This does not certify the turning animation, exact yaw, running frames, muzzle registration or integration.
 
-Stop after this first-pass design review. Do not generate Batch 2 or integrate sprites into combat before the user approves the reference designs.
+The updated gallery opens on `run-d00`, frames 0–5 (R001–R006); Next frames shows frames 6–11 (R007–R012). Running direction selects among the 24 existing nominal directions. The batch contains 360 original frames: six 24-frame sheets and eighteen 12-frame sheets. `Watch this direction` opens the single-family sequence player. Each six-card group shares one decoded sheet; nothing else is preloaded.
+
+`batch-02-running.json` binds every R-number to a family, original frame and SHA-256. Both approval types remain separate. The running cards record design decisions; the sequence viewer also supports animation decisions.
+
+### Review priorities
+
+- Side `run-d00` frame 3 dips below surrounding poses; review body registration and pose continuity.
+- Rear `run-d18` frames 3, 5 and 17 dip or vary in scale. Do not approve the whole animation just because its design matches.
+- Inspect alternating foot contacts, the raised shotgun and last-to-first loop transition. Some neighboring poses are similar.
+- All direction labels remain nominal; image availability is not certification of 24 exact camera angles.
+
+`python tools/render-running-review.py` reproduces twelve individually padded frame proofs and six motion GIFs under `test-output/running-review`. These display the source cells in their original order at uniform 80 ms inspection timing. No anchors, proportions, image content or gameplay timing are changed. The source images, manifests and script are saved; reproducible proofs are excluded from compact backups to avoid image duplication.
+
+Stop for the user's running review before generating replacements or integrating artwork. Preserve the approved standing designs and combat build.
