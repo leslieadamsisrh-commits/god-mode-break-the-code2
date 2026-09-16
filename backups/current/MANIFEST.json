@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "format": "ordinary gzip-compressed tar; no Base64",
-  "sourceCommit": "73aefda6587a05eb6dcf5da093467a809e822460",
+  "sourceCommit": "5f16e6f158fb547da28a1d659f81d2f7d6611eaa",
   "archives": [
     {
       "path": "backups/current/completed-code.tar.gz",
-      "bytes": 461178,
-      "sha256": "a807d73f67e61394f42c637ed2519f850b9efccf291c49cc8a9a01ba17ce50e5",
+      "bytes": 602223,
+      "sha256": "92ad29f3ce64a432ecfbc5bf161293ec8bdbfaced5e6df20c41fe4954d34e78b",
       "entries": [
         {
           "path": ".github/workflows/compact-backup.yml",
@@ -614,6 +614,12 @@
           "sha256": "d61f7d56dc578dc40e471f20ef8d22d24fc5d6c89377e31c514c08188b7dfb5d"
         },
         {
+          "path": "sprites/manifests/cover-idle-d04-v1.json",
+          "type": "file",
+          "bytes": 9172,
+          "sha256": "99607cc788640ff853ba9eb7750bf773c6883d29627dd60034a0104353cb1176"
+        },
+        {
           "path": "sprites/manifests/existing-asset-inventory.json",
           "type": "file",
           "bytes": 174662,
@@ -656,6 +662,12 @@
           "sha256": "d9be5928704e3e69b4ff305292e6de966726c7e75a10200036eddf7cb5b22763"
         },
         {
+          "path": "sprites/previews/idle-d04-v1/idle-d04.gif",
+          "type": "file",
+          "bytes": 144043,
+          "sha256": "18cafd33a846fc69e3a1ba09ec5f84e013fcb31588188fd8663eb95289bf9380"
+        },
+        {
           "path": "sprites/previews/review-catalog.js",
           "type": "file",
           "bytes": 285187,
@@ -696,6 +708,12 @@
           "type": "file",
           "bytes": 9990,
           "sha256": "2cc27f1a89e109225cab0955d63f5309c7c9aacee493af1ec5bb10eac515bc57"
+        },
+        {
+          "path": "sprites/reviews/COVER-IDLE-D04-PRODUCTION.md",
+          "type": "file",
+          "bytes": 1613,
+          "sha256": "072d3646c3a23102b6762163460cec27b40db73774706ba4dda8ab0edfbff884"
         },
         {
           "path": "sprites/reviews/README.md",
