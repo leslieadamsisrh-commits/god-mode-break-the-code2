@@ -25,6 +25,8 @@ jobs:
         run: python3 tools/restore-checkpoint-art.py
       - name: Package code and selected source art separately and test a clean restore
         run: python3 tools/compact-backup.py build
+      - name: Package the isolated sprite review gallery
+        run: python3 tools/package-review-gallery.py
       - name: Commit and push normal binary archives
         env:
           BACKUP_BRANCH: ${{ github.ref_name }}
@@ -32,7 +34,7 @@ jobs:
           set -eu
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add backups/current/completed-code.tar.gz backups/current/sprite-source-assets.tar.gz backups/current/MANIFEST.json
+          git add backups/current/completed-code.tar.gz backups/current/sprite-source-assets.tar.gz backups/current/MANIFEST.json backups/current/GOD-MODE-Sprite-Review.zip backups/current/REVIEW-PACKAGE.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'backup: preserve completed source and selected sprite assets without caches'
           git push origin "HEAD:refs/heads/$BACKUP_BRANCH"
