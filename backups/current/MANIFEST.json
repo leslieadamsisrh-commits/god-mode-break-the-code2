@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "format": "ordinary gzip-compressed tar; no Base64",
-  "sourceCommit": "bc9fd7d5058cef863d5fcb4113010aa5476c2195",
+  "sourceCommit": "ec239d7d3cc4a4addd0abfd300e3b26524cbdd0d",
   "archives": [
     {
       "path": "backups/current/completed-code.tar.gz",
-      "bytes": 308842,
-      "sha256": "44afb71574d77abbd4570449d0786a2d2b6f572680c987297ef94e62154d632b",
+      "bytes": 335629,
+      "sha256": "c8440d98b3aa37a029b380acbfdd7dc16c2ea73b14dc6ebabdf3c3fca225e515",
       "entries": [
         {
           "path": ".github/workflows/compact-backup.yml",
@@ -598,8 +598,14 @@
         {
           "path": "sprites/manifests/batch-02-running.json",
           "type": "file",
-          "bytes": 73866,
-          "sha256": "1088a95e83a8fd9af73e338404720188b18d36226c222ddff0e39384fbf4a8c7"
+          "bytes": 73911,
+          "sha256": "b11d2242be480de284f1e57cc2e7cee904fef147955ca8f6c5999756844e690b"
+        },
+        {
+          "path": "sprites/manifests/batch-03-cover-contact.json",
+          "type": "file",
+          "bytes": 19322,
+          "sha256": "dcfa36d2de16947faf578f4ecb6a4fb3541a993905a7b77d28b74c3254060611"
         },
         {
           "path": "sprites/manifests/existing-asset-inventory.json",
@@ -634,14 +640,14 @@
         {
           "path": "sprites/previews/identity-review.html",
           "type": "file",
-          "bytes": 3985,
-          "sha256": "2098981e31ea66821deb5151b5941791eeb0d1cbd43d6b0f924b479cd9d1da9e"
+          "bytes": 4545,
+          "sha256": "d9be5928704e3e69b4ff305292e6de966726c7e75a10200036eddf7cb5b22763"
         },
         {
           "path": "sprites/previews/review-catalog.js",
           "type": "file",
-          "bytes": 156790,
-          "sha256": "fa9e27db055244ffbf3717f917aa4375e72b2b81164df8f271ac4d73df882f7c"
+          "bytes": 285187,
+          "sha256": "771b5103cf9b17169d7928a7e1e1495bd6c1d2117e36d4c16e68de40bb6cff6f"
         },
         {
           "path": "sprites/previews/review-gallery.css",
@@ -652,14 +658,26 @@
         {
           "path": "sprites/previews/review-gallery.js",
           "type": "file",
-          "bytes": 15520,
-          "sha256": "5115cc8d920e7d6e774c2f81f53098628062e842a7356da44d1ee85a00fb5c98"
+          "bytes": 20410,
+          "sha256": "5f69459223ba610813f656d87f5f99de5a8883e9789df70b0415c1ad4ba28721"
         },
         {
           "path": "sprites/previews/review-model.js",
           "type": "file",
           "bytes": 2602,
           "sha256": "baf39350f0e0b3f455a677bb4b1544b32085ecfc883d0fc547ffaf4e438a317b"
+        },
+        {
+          "path": "sprites/reviews/COVER-CONTACT-FIRST-PASS.md",
+          "type": "file",
+          "bytes": 4286,
+          "sha256": "ac5c9219bc3c104c97cd9c327574eca2d2563de6d4b65d7364e4a069eeaf58a4"
+        },
+        {
+          "path": "sprites/reviews/COVER-GENERATION-PROMPTS.md",
+          "type": "file",
+          "bytes": 7418,
+          "sha256": "3669526d21186b9dabe1176c489707df4cb1efdd348c6160beb3f595507fb700"
         },
         {
           "path": "sprites/reviews/README.md",
@@ -674,10 +692,28 @@
           "sha256": "fb2312d6c636ba768cee2818b987250c41fe0799f0ea51e948c406a78ae956c8"
         },
         {
+          "path": "sprites/reviews/cover-asset-audit.json",
+          "type": "file",
+          "bytes": 22430,
+          "sha256": "a95ab5ee181da2b67f5da4901dc780c5d3fab88f7abbd464202bf6fb9b4165a1"
+        },
+        {
+          "path": "sprites/reviews/cover-metrics.json",
+          "type": "file",
+          "bytes": 214,
+          "sha256": "547634e35a484447227ba227287e6a4ede10fde9a398b2a27ea81ba6930cba28"
+        },
+        {
           "path": "sprites/reviews/design-decisions.json",
           "type": "file",
-          "bytes": 15020,
-          "sha256": "00fad1d6016981ee143dae011b78aebc7168bfb75cac3a1b7c2eb1ead9a58131"
+          "bytes": 143598,
+          "sha256": "596739f6dd90b3087bf9509a278ed20ac83aadbcb15861dcfbb0ef949c753bed"
+        },
+        {
+          "path": "sprites/reviews/movement-baseline-approval.json",
+          "type": "file",
+          "bytes": 144225,
+          "sha256": "d48dd367cb26d18f538e5ad26d53808c7ec2d75da4460b8dccfcd5bc2a576d42"
         },
         {
           "path": "sprites/reviews/running-design-approval.json",
@@ -728,6 +764,12 @@
           "sha256": "33e3f1c450c0477addc6eecab5196992a12766a1984070a4813d6c44bdf9a881"
         },
         {
+          "path": "tests/cover-review-checkpoint.test.mjs",
+          "type": "file",
+          "bytes": 1684,
+          "sha256": "25f80f0c137be092ec3ae0a7293bbf78ca2e305a8db90fac91c9bfd2d07dd277"
+        },
+        {
           "path": "tests/movement-parity.test.mjs",
           "type": "file",
           "bytes": 1202,
@@ -754,14 +796,14 @@
         {
           "path": "tools/build-review-catalog.py",
           "type": "file",
-          "bytes": 4292,
-          "sha256": "9d1658d5768f4e07c3cdb5e315aaba82d44c1421de7ee5564548dbcd10d4e002"
+          "bytes": 4844,
+          "sha256": "34ee5eae8ab938bb641dcbd7cbcbb353a2a484e7e091c7f169c9ba6905ba7016"
         },
         {
           "path": "tools/compact-backup.py",
           "type": "file",
-          "bytes": 8500,
-          "sha256": "20192315e53bc3b95126065264f787cfde25b2e08f75beea874264a539d739d4"
+          "bytes": 9139,
+          "sha256": "54aac760ac0a7d0898281ec1407e08a61f119fc4634da884741e701875d9f7ab"
         },
         {
           "path": "tools/inventory-sprites.py",
@@ -778,8 +820,14 @@
         {
           "path": "tools/package-review-gallery.py",
           "type": "file",
-          "bytes": 3968,
-          "sha256": "04ebab5706a91851a53811c3febfdc5b0976486776e47ddd617da7fb5283bce5"
+          "bytes": 4016,
+          "sha256": "8e30a3d425bc6c3eb11dd4851f2ef01c1b3e0da7cc0edfe7ece042f3ba2e6b8f"
+        },
+        {
+          "path": "tools/prepare-cover-review.py",
+          "type": "file",
+          "bytes": 7365,
+          "sha256": "bafa0d70b93d39b641b3f1668e1d6a6492efe2177ccea6c1700a0b5cb0f92621"
         },
         {
           "path": "tools/prepare-provisional-art.py",
@@ -827,8 +875,8 @@
     },
     {
       "path": "backups/current/sprite-source-assets.tar.gz",
-      "bytes": 55591030,
-      "sha256": "25c3e59ee5977b32f091f396ab56112f746fd2a06bdcad9724440b1092dcdbe4",
+      "bytes": 58771205,
+      "sha256": "b2764128291deb83ce9ff1492188f95f75d5b8d14b9bf0d314727ceb87034a36",
       "entries": [
         {
           "path": "art-production/charge/charge-d03-6frames-blue-key-source.png",
@@ -1567,6 +1615,30 @@
           "type": "file",
           "bytes": 3622053,
           "sha256": "833e86dd7efff6d6d138cd39ea70501b2ebc7ff2bdeaaa780b556f70a5297c45"
+        },
+        {
+          "path": "sprites/heroine/shotgun/cover/contact-d03-v1.webp",
+          "type": "file",
+          "bytes": 208942,
+          "sha256": "f13ae649e651a925b89d4ec59d1d43163ef27a99fc6af3da1a69f35a056ed5c3"
+        },
+        {
+          "path": "sprites/heroine/shotgun/cover/idle-d03-v1.webp",
+          "type": "file",
+          "bytes": 211196,
+          "sha256": "d0d774edbd0fb06ab9bfeb42c36a6ebe3395349c838f92e93c0bd5080fda9db1"
+        },
+        {
+          "path": "sprites/source-art/cover/contact-d03-v1.webp",
+          "type": "file",
+          "bytes": 1327984,
+          "sha256": "612a6f821fd155c2be1db2c28212a676370db41b4c38057d958a99f1beef1ae6"
+        },
+        {
+          "path": "sprites/source-art/cover/idle-d03-v1.webp",
+          "type": "file",
+          "bytes": 1430912,
+          "sha256": "eb5b2f13773e7e492ac979931f198a5e56470321eb7fcd8968640b10a982e717"
         }
       ]
     }
