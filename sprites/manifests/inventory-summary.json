@@ -1,0 +1,25 @@
+{
+  "sourceImageFilesInventoried": 135,
+  "uniqueImageHashes": 135,
+  "exactDuplicateFileGroups": 0,
+  "duplicateFilesBeyondFirst": 0,
+  "runtimeFamilies": 108,
+  "runtimeFrames": 984,
+  "sourceMastersMissing": 108,
+  "unreadableImages": 0,
+  "framesWithAutomatedFlags": 0,
+  "identicalFrameGroups": 0,
+  "inventoryCategories": {
+    "rejected-source-attempt": 4,
+    "selected-source-master": 2,
+    "provisional-runtime-study": 2,
+    "reproducible-proof-or-extraction": 8,
+    "approved-runtime-dependency": 119
+  },
+  "batch1ReferenceFramesReused": 24,
+  "batch1FramesCreated": 0,
+  "batch1FramesRepaired": 0,
+  "newDirectionalDrawings": 0,
+  "visuallyApprovedByThisAudit": 0,
+  "certifiedComplete24DirectionFamilies": 0
+}

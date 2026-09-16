@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GOD MODE — Character identity review</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#e8eff6;background:#0b101b;color-scheme:dark}body{max-width:1200px;margin:32px auto;padding:0 20px}h1{font-size:32px;margin-bottom:8px}p{line-height:1.6;color:#b6c3d5}.tag{color:#71ffe3;text-transform:uppercase;font-size:12px;letter-spacing:2px}button{border:1px solid #59677b;border-radius:8px;background:#182132;color:#fff;padding:10px 14px;cursor:pointer}nav{display:flex;gap:12px;margin:24px 0}#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}figure{margin:0;border:1px solid #303d50;border-radius:12px;overflow:hidden}canvas{display:block;width:250px;height:250px;margin:auto}figcaption{padding:12px;font-size:13px;line-height:1.6;background:#141e2c}.error{color:#ff91b9}a{color:#71ffe3}footer{margin:24px 0}
+</style>
+<div class="tag">GOD MODE / Sprite Library / Batch 01</div>
+<h1>Character identity — 24 existing view studies</h1>
+<p>Compare the heroine’s proportions, helmet, backpack, cables, and shotgun around the turn. These are reused drawings from the approved lab. The numbered angles are nominal studies; this page does not certify exact yaw or complete animation.</p>
+<nav><button data-bg="dark">Dark</button><button data-bg="light">Light</button><button data-bg="checker">Checkerboard</button></nav>
+<p id="status">Loading reference metadata…</p><section id="grid"></section>
+<footer><a href="../manifests/batch-01-identity.json">Reference manifest</a> · <a href="../manifests/inventory-summary.json">Inventory counts</a> · <a href="../../god-mode-sprite-library/README.md">Scope and remaining checks</a></footer>
+<script type="module">
+const grid=document.querySelector('#grid'),status=document.querySelector('#status');let background='dark';const loaded=[];
+function draw({canvas,image,frame}){const c=canvas.getContext('2d');c.fillStyle=background==='light'?'#f0f1f4':'#182333';c.fillRect(0,0,250,250);if(background==='checker'){for(let y=0;y<250;y+=10)for(let x=0;x<250;x+=10){c.fillStyle=(x/10+y/10)%2?'#aeb7c5':'#dde2e9';c.fillRect(x,y,10,10)}}c.drawImage(image,0,0,250,250);c.strokeStyle='#00c6af';c.beginPath();c.moveTo(112,219);c.lineTo(138,219);c.moveTo(125,213);c.lineTo(125,225);c.stroke();if(frame.muzzlePosition){c.strokeStyle='#ff69b6';c.beginPath();c.arc(...frame.muzzlePosition,4,0,Math.PI*2);c.stroke()}}
+for(const b of document.querySelectorAll('button'))b.addEventListener('click',()=>{background=b.dataset.bg;loaded.forEach(draw)});
+try{const response=await fetch('../manifests/batch-01-identity.json');if(!response.ok)throw Error('Reference manifest unavailable');const manifest=await response.json();status.textContent='24 reused reference poses · 0 new drawings · exact angles and equipment consistency await review';for(const frame of manifest.frames){const figure=document.createElement('figure'),canvas=document.createElement('canvas'),caption=document.createElement('figcaption');canvas.width=canvas.height=250;caption.textContent=`Direction ${String(frame.directionIndex).padStart(2,'0')} · nominal ${frame.nominalYawDegrees}° — ${frame.muzzleStatus}. Ground cross: inherited anchor. Pink ring: measured muzzle when available.`;figure.append(canvas,caption);grid.append(figure);const image=new Image();image.onload=()=>{const view={canvas,image,frame};loaded.push(view);draw(view)};image.onerror=()=>{caption.className='error';caption.textContent+=' Asset unavailable: restore the art backup first.'};image.src='../../'+frame.runtimeAtlasAssignment}}
+catch(error){status.className='error';status.textContent=error.message}
+</script></html>

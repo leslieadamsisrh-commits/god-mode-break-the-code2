@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "currentBatch": 1,
+  "integrationEnabled": false,
+  "nextGate": "Review Batch 1 identity before starting Batch 2",
+  "required": [
+    {
+      "group": "identity",
+      "batch": 1,
+      "actions": [
+        "model-sheet",
+        "proportions",
+        "equipment",
+        "palette",
+        "directional-identity"
+      ],
+      "status": "review-preparation",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "locomotion",
+      "batch": 2,
+      "actions": [
+        "idle",
+        "breathing",
+        "turn",
+        "transition"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "movement",
+      "batch": 3,
+      "actions": [
+        "start",
+        "run",
+        "sprint",
+        "brake",
+        "stop",
+        "upright-dash",
+        "dodge"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "slide",
+      "batch": 4,
+      "actions": [
+        "entry",
+        "travel",
+        "impact",
+        "recovery",
+        "interrupted"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "cover",
+      "batch": 5,
+      "actions": [
+        "contact",
+        "attached-idle",
+        "lateral-travel",
+        "turn",
+        "aim-away",
+        "aim-over",
+        "aim-left-edge",
+        "aim-right-edge",
+        "pop-fire",
+        "return",
+        "retreat",
+        "diagonal-exit",
+        "advance-around-edge"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "shotgun",
+      "batch": 6,
+      "actions": [
+        "matter-gather",
+        "orbit",
+        "wireframe",
+        "assembly",
+        "scan",
+        "solidify",
+        "ready",
+        "aim",
+        "fire",
+        "recoil",
+        "muzzle-flash",
+        "recovery",
+        "reload",
+        "dissolve",
+        "weapon-transition"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "remaining-firearms",
+      "batch": 7,
+      "actions": [
+        "handgun",
+        "assault-rifle",
+        "sniper-rail",
+        "rocket-launcher"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "defense-time",
+      "batch": 8,
+      "actions": [
+        "shield",
+        "parry",
+        "slow-time"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "psychic",
+      "batch": 9,
+      "actions": [
+        "charge",
+        "Grip",
+        "generated-cover",
+        "Unmake",
+        "Orbit",
+        "Pinball",
+        "Matter-Storm"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "melee",
+      "batch": 10,
+      "actions": [
+        "palm-strike",
+        "backhand",
+        "heavy-punch",
+        "cover-chunk-strike"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "reactions",
+      "batch": 11,
+      "actions": [
+        "hit",
+        "stagger",
+        "knockdown",
+        "recovery",
+        "defeat",
+        "finishers"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    },
+    {
+      "group": "opponents-effects",
+      "batch": 12,
+      "actions": [
+        "enemy-identities",
+        "projectiles",
+        "impacts",
+        "surface-damage",
+        "environment-materials",
+        "victory"
+      ],
+      "status": "not-completed",
+      "directionsRequired": 24,
+      "directionalFramesRequired": null,
+      "note": "Animation frame count must be specified per action; 24 angles are not 24 animation frames."
+    }
+  ]
+}
