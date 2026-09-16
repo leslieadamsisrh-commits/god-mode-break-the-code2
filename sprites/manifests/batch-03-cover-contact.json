@@ -4,7 +4,7 @@
   "id": "shotgun-cover-contact-review",
   "nominalDirection": 3,
   "title": "First front-right contact and attached idle",
-  "status": "awaiting-design-and-animation-review",
+  "status": "design-approved-animation-validation-pending",
   "uniqueDrawings": 12,
   "requiredDirections": 24,
   "candidateDirections": 1,
@@ -400,7 +400,9 @@
       "status": "generated-registered-awaiting-user-review",
       "integration": "not-integrated",
       "reviewTiming": "Inspection only. Existing contact window remains 0.22 seconds.",
-      "animationRevision": "ecfcdac189a5dcf20460d2ab31040181affa9a71feb8bc3db8a4f70fd989d86b"
+      "animationRevision": "ecfcdac189a5dcf20460d2ab31040181affa9a71feb8bc3db8a4f70fd989d86b",
+      "designStatus": "approved-exact-revisions",
+      "animationStatus": "awaiting-technical-validation"
     },
     {
       "id": "cover-idle-d03-v1",
@@ -638,28 +640,28 @@
             "muzzle": {
               "xy": [
                 200,
-                112.0
+                112
               ],
               "status": "visible-tip-registration-awaiting-in-game-validation"
             },
             "triggerHand": {
               "xy": [
                 140,
-                122.0
+                122
               ],
               "status": "estimated-not-certified"
             },
             "supportHand": {
               "xy": [
                 169,
-                121.0
+                121
               ],
               "status": "estimated-not-certified"
             },
             "coverContact": {
               "xy": [
                 115,
-                120.0
+                120
               ],
               "status": "estimated-shoulder-plane-not-game-verified"
             }
@@ -760,28 +762,28 @@
             "muzzle": {
               "xy": [
                 199,
-                112.0
+                112
               ],
               "status": "visible-tip-registration-awaiting-in-game-validation"
             },
             "triggerHand": {
               "xy": [
                 139,
-                122.0
+                122
               ],
               "status": "estimated-not-certified"
             },
             "supportHand": {
               "xy": [
                 168,
-                121.0
+                121
               ],
               "status": "estimated-not-certified"
             },
             "coverContact": {
               "xy": [
                 114,
-                120.0
+                120
               ],
               "status": "estimated-shoulder-plane-not-game-verified"
             }
@@ -792,11 +794,18 @@
       "status": "generated-registered-awaiting-user-review",
       "integration": "not-integrated",
       "reviewTiming": "Inspection only. Existing contact window remains 0.22 seconds.",
-      "animationRevision": "c1d42fa9e7b44504a091e9f351e6e2e9649f0199d759f257b4f4f169dd52fbb2"
+      "animationRevision": "c1d42fa9e7b44504a091e9f351e6e2e9649f0199d759f257b4f4f169dd52fbb2",
+      "designStatus": "approved-exact-revisions",
+      "animationStatus": "awaiting-technical-validation"
     }
   ],
-  "nextGate": "Approve this direction before traversal, peeking, firing, exits or 23 other directions.",
+  "nextGate": "Validate d03 registration, equipment consistency, foot placement, and contact-to-idle handoff; repair technical defects without redesign; then generate the first six missing contact/idle viewpoints.",
   "sourceMethod": "Built-in image generation; RGB blue-key output; authorized deterministic alpha extraction.",
   "originalArtworkChanged": false,
-  "gameplayChanged": false
+  "gameplayChanged": false,
+  "designApprovedDirections": 1,
+  "animationApprovedDirections": 0,
+  "approvalRecord": "sprites/reviews/cover-c001-c012-design-approval.json",
+  "approvalScope": "Visual design of C001-C012 only; no animation, socket, collision, aiming, pacing, networking, integration, or performance certification.",
+  "validationStatus": "contact-to-idle registration and handoff pending technical validation"
 }
