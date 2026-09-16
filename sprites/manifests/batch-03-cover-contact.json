@@ -1,0 +1,802 @@
+{
+  "schemaVersion": 1,
+  "batch": 3,
+  "id": "shotgun-cover-contact-review",
+  "nominalDirection": 3,
+  "title": "First front-right contact and attached idle",
+  "status": "awaiting-design-and-animation-review",
+  "uniqueDrawings": 12,
+  "requiredDirections": 24,
+  "candidateDirections": 1,
+  "approvedDirections": 0,
+  "families": [
+    {
+      "id": "cover-contact-d03-v1",
+      "action": "cover-contact",
+      "direction": 3,
+      "registeredYawDegrees": null,
+      "sourcePath": "sprites/source-art/cover/contact-d03-v1.webp",
+      "sourceRevision": "612a6f821fd155c2be1db2c28212a676370db41b4c38057d958a99f1beef1ae6",
+      "path": "sprites/heroine/shotgun/cover/contact-d03-v1.webp",
+      "revision": "f13ae649e651a925b89d4ec59d1d43163ef27a99fc6af3da1a69f35a056ed5c3",
+      "cell": [
+        250,
+        250
+      ],
+      "grid": [
+        3,
+        2
+      ],
+      "frames": 6,
+      "frameRecords": [
+        {
+          "number": "C001",
+          "index": 0,
+          "beat": "slide braking",
+          "sourceAnchor": [
+            300,
+            461
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.4296875,
+          "offset": [
+            -4,
+            21
+          ],
+          "alphaBounds": [
+            10,
+            112,
+            216,
+            224
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                200,
+                149.5
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                140,
+                159.5
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                169,
+                158.5
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                115,
+                157.5
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C002",
+          "index": 1,
+          "beat": "boot plant",
+          "sourceAnchor": [
+            293,
+            457
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.4296875,
+          "offset": [
+            -1,
+            23
+          ],
+          "alphaBounds": [
+            20,
+            76,
+            200,
+            224
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                196,
+                115.3
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                136,
+                125.3
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                165,
+                124.3
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                111,
+                123.3
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C003",
+          "index": 2,
+          "beat": "shoulder contact",
+          "sourceAnchor": [
+            289,
+            457
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.4296875,
+          "offset": [
+            1,
+            23
+          ],
+          "alphaBounds": [
+            23,
+            72,
+            196,
+            224
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                192,
+                112.8
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                132,
+                122.8
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                161,
+                121.8
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                107,
+                120.8
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C004",
+          "index": 3,
+          "beat": "impact absorption",
+          "sourceAnchor": [
+            304,
+            415
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.4296875,
+          "offset": [
+            -6,
+            41
+          ],
+          "alphaBounds": [
+            22,
+            79,
+            204,
+            224
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                200,
+                119.5
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                140,
+                129.5
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                169,
+                128.5
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                115,
+                127.5
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C005",
+          "index": 4,
+          "beat": "settling",
+          "sourceAnchor": [
+            290,
+            415
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.4296875,
+          "offset": [
+            0,
+            41
+          ],
+          "alphaBounds": [
+            21,
+            76,
+            201,
+            224
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                197,
+                115.7
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                137,
+                125.7
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                166,
+                124.7
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                112,
+                123.7
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C006",
+          "index": 5,
+          "beat": "attached stance",
+          "sourceAnchor": [
+            290,
+            415
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.4296875,
+          "offset": [
+            0,
+            41
+          ],
+          "alphaBounds": [
+            21,
+            71,
+            196,
+            224
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                192,
+                112.4
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                132,
+                122.4
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                161,
+                121.4
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                107,
+                120.4
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        }
+      ],
+      "previewDurationMs": 90,
+      "status": "generated-registered-awaiting-user-review",
+      "integration": "not-integrated",
+      "reviewTiming": "Inspection only. Existing contact window remains 0.22 seconds.",
+      "animationRevision": "ecfcdac189a5dcf20460d2ab31040181affa9a71feb8bc3db8a4f70fd989d86b"
+    },
+    {
+      "id": "cover-idle-d03-v1",
+      "action": "cover-idle",
+      "direction": 3,
+      "registeredYawDegrees": null,
+      "sourcePath": "sprites/source-art/cover/idle-d03-v1.webp",
+      "sourceRevision": "eb5b2f13773e7e492ac979931f198a5e56470321eb7fcd8968640b10a982e717",
+      "path": "sprites/heroine/shotgun/cover/idle-d03-v1.webp",
+      "revision": "d0d774edbd0fb06ab9bfeb42c36a6ebe3395349c838f92e93c0bd5080fda9db1",
+      "cell": [
+        250,
+        250
+      ],
+      "grid": [
+        3,
+        2
+      ],
+      "frames": 6,
+      "frameRecords": [
+        {
+          "number": "C007",
+          "index": 0,
+          "beat": "ready breath",
+          "sourceAnchor": [
+            278,
+            457
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.384765625,
+          "offset": [
+            18,
+            43
+          ],
+          "alphaBounds": [
+            29,
+            72,
+            204,
+            223
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                200,
+                112.9
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                140,
+                122.9
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                169,
+                121.9
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                115,
+                120.9
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C008",
+          "index": 1,
+          "beat": "inhale",
+          "sourceAnchor": [
+            278,
+            458
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.384765625,
+          "offset": [
+            18,
+            43
+          ],
+          "alphaBounds": [
+            29,
+            69,
+            204,
+            224
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                200,
+                112.2
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                140,
+                122.2
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                169,
+                121.2
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                115,
+                120.2
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C009",
+          "index": 2,
+          "beat": "inhale apex",
+          "sourceAnchor": [
+            278,
+            458
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.384765625,
+          "offset": [
+            18,
+            43
+          ],
+          "alphaBounds": [
+            26,
+            70,
+            203,
+            224
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                199,
+                112.2
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                139,
+                122.2
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                168,
+                121.2
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                114,
+                120.2
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C010",
+          "index": 3,
+          "beat": "ease",
+          "sourceAnchor": [
+            278,
+            452
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.384765625,
+          "offset": [
+            18,
+            45
+          ],
+          "alphaBounds": [
+            29,
+            69,
+            204,
+            223
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                200,
+                112.0
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                140,
+                122.0
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                169,
+                121.0
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                115,
+                120.0
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C011",
+          "index": 4,
+          "beat": "exhale",
+          "sourceAnchor": [
+            278,
+            452
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.384765625,
+          "offset": [
+            18,
+            45
+          ],
+          "alphaBounds": [
+            29,
+            69,
+            204,
+            223
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                200,
+                111.8
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                140,
+                121.8
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                169,
+                120.8
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                115,
+                119.8
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        },
+        {
+          "number": "C012",
+          "index": 5,
+          "beat": "return",
+          "sourceAnchor": [
+            278,
+            452
+          ],
+          "runtimeAnchor": [
+            125,
+            219
+          ],
+          "sourceToRuntimeScale": 0.384765625,
+          "offset": [
+            18,
+            45
+          ],
+          "alphaBounds": [
+            29,
+            69,
+            203,
+            223
+          ],
+          "sockets": {
+            "ground": {
+              "xy": [
+                125,
+                219
+              ],
+              "status": "registered"
+            },
+            "muzzle": {
+              "xy": [
+                199,
+                112.0
+              ],
+              "status": "visible-tip-registration-awaiting-in-game-validation"
+            },
+            "triggerHand": {
+              "xy": [
+                139,
+                122.0
+              ],
+              "status": "estimated-not-certified"
+            },
+            "supportHand": {
+              "xy": [
+                168,
+                121.0
+              ],
+              "status": "estimated-not-certified"
+            },
+            "coverContact": {
+              "xy": [
+                114,
+                120.0
+              ],
+              "status": "estimated-shoulder-plane-not-game-verified"
+            }
+          }
+        }
+      ],
+      "previewDurationMs": 160,
+      "status": "generated-registered-awaiting-user-review",
+      "integration": "not-integrated",
+      "reviewTiming": "Inspection only. Existing contact window remains 0.22 seconds.",
+      "animationRevision": "c1d42fa9e7b44504a091e9f351e6e2e9649f0199d759f257b4f4f169dd52fbb2"
+    }
+  ],
+  "nextGate": "Approve this direction before traversal, peeking, firing, exits or 23 other directions.",
+  "sourceMethod": "Built-in image generation; RGB blue-key output; authorized deterministic alpha extraction.",
+  "originalArtworkChanged": false,
+  "gameplayChanged": false
+}

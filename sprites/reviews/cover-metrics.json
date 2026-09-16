@@ -1,0 +1,9 @@
+{
+  "runtimeDecodedBytesEach": 1500000,
+  "flowDecodedBytes": 9000000,
+  "runtimeBytes": 420138,
+  "minimumAlphaPaddingPixels": 10,
+  "uniqueDrawings": 12,
+  "hardwareFPS": null,
+  "inGameIntegration": "pending"
+}

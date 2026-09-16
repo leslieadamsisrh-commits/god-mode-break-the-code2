@@ -40,7 +40,17 @@ if registration:
 for ref in running['items']:
     item=next(i for i in items if i['id']==ref['familyId'])
     assert ref['revision']==item['revision'] and 0<=ref['frame']<item['frames']
+coverPath=ROOT/'sprites/manifests/batch-03-cover-contact.json'
+cover=json.loads(coverPath.read_text()) if coverPath.exists() else None
+if cover:
+    for f in cover['families']:
+        add(f['id'],f['path'],'heroine','shotgun',f['action'],f['direction'],f['cell'],f['grid'],f['frames'],f['status'])
+        assert items[-1]['revision']==f['revision']
+        items[-1]['animationRevision']=f['animationRevision']
+        items[-1]['frameRecords']=f['frameRecords']
+        items[-1]['previewDurationMs']=f['previewDurationMs']
 data={'schemaVersion':1,'catalogId':'god-mode-individual-review-20260916','references':refs,'families':items,'runningBatch':running,'runningRegistration':{'correctedFrames':registration['correctedFrames'],'sourceFrames':registration['sourceFrames']} if registration else None}
+data['coverBatch']=cover
 target=ROOT/'sprites/previews/review-catalog.js';target.write_text('window.GM_REVIEW_DATA='+json.dumps(data,separators=(',',':'))+';\n')
 ledger=ROOT/'sprites/reviews/design-decisions.json'
 if not ledger.exists():

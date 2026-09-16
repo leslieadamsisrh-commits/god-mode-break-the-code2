@@ -53,6 +53,16 @@ def art_paths():
             result.add(path.relative_to(ROOT).as_posix())
     if len(result) != 123:
         raise SystemExit('Expected 119 recovered images plus four retained art sources/runtime studies')
+    cover_manifest=ROOT/'sprites/manifests/batch-03-cover-contact.json'
+    if cover_manifest.exists():
+        for family in json.loads(cover_manifest.read_text())['families']:
+            for key,revision in [('sourcePath','sourceRevision'),('path','revision')]:
+                relative=family[key]
+                if not relative.startswith('sprites/') or '..' in Path(relative).parts:
+                    raise SystemExit('Invalid review asset path')
+                if digest((ROOT/relative).read_bytes())!=family[revision]:
+                    raise SystemExit('Cover image changed: '+relative)
+                result.add(relative)
     return sorted(result)
 
 def record(path):

@@ -3,7 +3,7 @@
   "batch": 2,
   "id": "shotgun-running-review",
   "title": "Shotgun running \u2014 existing artwork review",
-  "status": "running-design-approved-registration-refinement-awaiting-animation-review",
+  "status": "displayed-movement-approved-integration-pending",
   "defaultFamily": "run-d00",
   "previewDurationMs": 80,
   "previewTiming": "Original frame order and uniform inspection timing retained. Revised placement translates only selected outlier frames; no scaling, new drawings or gameplay timing changes.",
@@ -2570,5 +2570,6 @@
     "Some adjacent body/leg poses remain similar; verify both alternating steps and wraparound loop in motion.",
     "All direction labels are nominal; appearance approval does not certify exact 15-degree orientation."
   ],
-  "registrationManifest": "sprites/manifests/running-registration-v1.json"
+  "registrationManifest": "sprites/manifests/running-registration-v1.json",
+  "approvalRecord": "sprites/reviews/movement-baseline-approval.json"
 }
