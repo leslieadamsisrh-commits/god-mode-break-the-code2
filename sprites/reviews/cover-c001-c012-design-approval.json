@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "cover-c001-c012-design-approval",
+  "recordedDate": "2026-09-16",
+  "approvedBy": "Leslie Paul Adams II",
+  "baselineCommit": "7357f0faf7bf9678d0855f81c214a26ab4677cc0",
+  "scope": {
+    "approvalType": "visual-design-only",
+    "frameNumbers": [
+      "C001",
+      "C002",
+      "C003",
+      "C004",
+      "C005",
+      "C006",
+      "C007",
+      "C008",
+      "C009",
+      "C010",
+      "C011",
+      "C012"
+    ],
+    "nominalViewpoint": {
+      "direction": 3,
+      "degrees": 45,
+      "verificationStatus": "nominal-awaiting-angle-verification"
+    },
+    "preserves": [
+      "recognizable adult heroine",
+      "dark hair",
+      "cat-eared helmet",
+      "tactical armor",
+      "magenta coat tails",
+      "connected cables",
+      "four illuminated cyan backpack segments",
+      "dark manga artwork",
+      "braced cover stance"
+    ]
+  },
+  "boundFamilies": [
+    {
+      "id": "cover-contact-d03-v1",
+      "action": "cover-contact",
+      "sourcePath": "sprites/source-art/cover/contact-d03-v1.webp",
+      "sourceRevision": "612a6f821fd155c2be1db2c28212a676370db41b4c38057d958a99f1beef1ae6",
+      "runtimePath": "sprites/heroine/shotgun/cover/contact-d03-v1.webp",
+      "runtimeRevision": "f13ae649e651a925b89d4ec59d1d43163ef27a99fc6af3da1a69f35a056ed5c3",
+      "animationRevision": "ecfcdac189a5dcf20460d2ab31040181affa9a71feb8bc3db8a4f70fd989d86b"
+    },
+    {
+      "id": "cover-idle-d03-v1",
+      "action": "cover-idle",
+      "sourcePath": "sprites/source-art/cover/idle-d03-v1.webp",
+      "sourceRevision": "eb5b2f13773e7e492ac979931f198a5e56470321eb7fcd8968640b10a982e717",
+      "runtimePath": "sprites/heroine/shotgun/cover/idle-d03-v1.webp",
+      "runtimeRevision": "d0d774edbd0fb06ab9bfeb42c36a6ebe3395349c838f92e93c0bd5080fda9db1",
+      "animationRevision": "c1d42fa9e7b44504a091e9f351e6e2e9649f0199d759f257b4f4f169dd52fbb2"
+    }
+  ],
+  "explicitlyNotApproved": [
+    "animation timing or pacing",
+    "contact-to-idle handoff",
+    "collision",
+    "aiming behavior",
+    "socket coordinates",
+    "cover plane or barrier occlusion",
+    "gameplay integration",
+    "networking",
+    "performance or 60 FPS"
+  ],
+  "productionAuthorization": "Continue routine directional contact and attached-idle batches within the approved design. Present the first direction of each later action for review before directional expansion.",
+  "notes": "Approval preserves exact recorded image revisions. Technical repairs may correct defects without redesigning approved artwork. Character, barrier, debris, and energy remain separate layers."
+}
