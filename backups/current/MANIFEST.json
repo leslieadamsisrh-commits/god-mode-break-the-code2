@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "format": "ordinary gzip-compressed tar; no Base64",
-  "sourceCommit": "6069be2a81897fd5fdef4400adef6df152888ab7",
+  "sourceCommit": "73aefda6587a05eb6dcf5da093467a809e822460",
   "archives": [
     {
       "path": "backups/current/completed-code.tar.gz",
-      "bytes": 337727,
-      "sha256": "ad80da609cb19b3d962a938130ca09d9b406fa5db92dcfb71954c27addef1278",
+      "bytes": 461178,
+      "sha256": "a807d73f67e61394f42c637ed2519f850b9efccf291c49cc8a9a01ba17ce50e5",
       "entries": [
         {
           "path": ".github/workflows/compact-backup.yml",
@@ -608,6 +608,12 @@
           "sha256": "8a5daae6b12c5319da438b1c4c51a10635e02bd6b162b1b0ff40d7d8b7211c62"
         },
         {
+          "path": "sprites/manifests/cover-contact-d04-v1.json",
+          "type": "file",
+          "bytes": 9812,
+          "sha256": "d61f7d56dc578dc40e471f20ef8d22d24fc5d6c89377e31c514c08188b7dfb5d"
+        },
+        {
           "path": "sprites/manifests/existing-asset-inventory.json",
           "type": "file",
           "bytes": 174662,
@@ -636,6 +642,12 @@
           "type": "file",
           "bytes": 68717,
           "sha256": "bfe1911ebef119c1a5c339b1c064772d7402dd357001f32c3835d8cf6baa497b"
+        },
+        {
+          "path": "sprites/previews/contact-d04-v1/contact-d04.gif",
+          "type": "file",
+          "bytes": 123164,
+          "sha256": "ececb472b3ad4afd0ecf09770a73725333f11d942da79323f09f3c2ee4b83bbc"
         },
         {
           "path": "sprites/previews/identity-review.html",
@@ -672,6 +684,12 @@
           "type": "file",
           "bytes": 4286,
           "sha256": "ac5c9219bc3c104c97cd9c327574eca2d2563de6d4b65d7364e4a069eeaf58a4"
+        },
+        {
+          "path": "sprites/reviews/COVER-D04-PRODUCTION.md",
+          "type": "file",
+          "bytes": 2080,
+          "sha256": "1d46e334ac7de3e61c03eb9a5910b7de2af30a1d89ae0fbc0234ec1b3f9ad594"
         },
         {
           "path": "sprites/reviews/COVER-GENERATION-PROMPTS.md",
