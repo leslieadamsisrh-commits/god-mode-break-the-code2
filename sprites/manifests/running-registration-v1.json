@@ -1,0 +1,3795 @@
+{
+  "schemaVersion": 1,
+  "method": "Targeted integer Y translation of whole frames. Backpack/torso landmark outliers are registered between adjacent valid phases. Small existing bob is retained. No foot-bound normalization, scaling, stretching, pixel interpolation, reordering or new artwork.",
+  "scope": "isolated Sprite Library only",
+  "sourceFrames": 360,
+  "correctedFrames": 51,
+  "families": [
+    {
+      "familyId": "run-d00",
+      "sourceRevision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "animationRevision": "ff193ef6b635693869b531031c768054b2da314e8d370f0c17cddf62049718a0",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -19
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -18
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 3,
+          "offset": [
+            0,
+            -19
+          ],
+          "originalBackpackY": 113.0,
+          "registeredBackpackY": 94.0,
+          "sourceAlphaBounds": [
+            41,
+            62,
+            219,
+            221
+          ],
+          "registeredAlphaBounds": [
+            41,
+            43,
+            219,
+            202
+          ],
+          "visibleCyanPixels": 189,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 6,
+          "offset": [
+            0,
+            -3
+          ],
+          "originalBackpackY": 103.0,
+          "registeredBackpackY": 100.0,
+          "sourceAlphaBounds": [
+            35,
+            54,
+            223,
+            222
+          ],
+          "registeredAlphaBounds": [
+            35,
+            51,
+            223,
+            219
+          ],
+          "visibleCyanPixels": 192,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 8,
+          "offset": [
+            0,
+            -18
+          ],
+          "originalBackpackY": 117.0,
+          "registeredBackpackY": 99.0,
+          "sourceAlphaBounds": [
+            34,
+            66,
+            212,
+            222
+          ],
+          "registeredAlphaBounds": [
+            34,
+            48,
+            212,
+            204
+          ],
+          "visibleCyanPixels": 199,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          91.0,
+          94.0,
+          94.0,
+          113.0,
+          94.0,
+          94.0,
+          103.0,
+          100.5,
+          117.0,
+          97.0,
+          99.0,
+          99.0
+        ],
+        "registeredBackpackY": [
+          91.0,
+          94.0,
+          94.0,
+          94.0,
+          94.0,
+          94.0,
+          100.0,
+          100.5,
+          99.0,
+          97.0,
+          99.0,
+          99.0
+        ],
+        "outlierThreshold": 108.0,
+        "maxAdjacentBackpackJumpBefore": 20.0,
+        "maxAdjacentBackpackJumpAfter": 8.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d01",
+      "sourceRevision": "17b8d95ba3c5f9a2024d48d2ad05aa3732e093056378e75ac2f53d0e3bd11637",
+      "animationRevision": "02357e7846aff2dd7ca37d18c0f5ff39f2d8ac0331817cefef43bff2374814cc",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -9
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 4,
+          "offset": [
+            0,
+            -9
+          ],
+          "originalBackpackY": 110.0,
+          "registeredBackpackY": 101.0,
+          "sourceAlphaBounds": [
+            46,
+            61,
+            204,
+            222
+          ],
+          "registeredAlphaBounds": [
+            46,
+            52,
+            204,
+            213
+          ],
+          "visibleCyanPixels": 169,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          99.0,
+          98.0,
+          100.0,
+          101.0,
+          110.0,
+          101.0,
+          98.0,
+          98.0,
+          98.0,
+          101.0,
+          104.5,
+          99.0
+        ],
+        "registeredBackpackY": [
+          99.0,
+          98.0,
+          100.0,
+          101.0,
+          101.0,
+          101.0,
+          98.0,
+          98.0,
+          98.0,
+          101.0,
+          104.5,
+          99.0
+        ],
+        "outlierThreshold": 107.5,
+        "maxAdjacentBackpackJumpBefore": 9.0,
+        "maxAdjacentBackpackJumpAfter": 5.5
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d02",
+      "sourceRevision": "1e3a393fee050618e2b3f1b88a7228a0ae1415020d428e4b8978adf029d179f8",
+      "animationRevision": "640b3e177882a516fbca6bd1fe17f97cb85a2cb839716d6bd59c174e39f8afe4",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -12
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 3,
+          "offset": [
+            0,
+            -3
+          ],
+          "originalBackpackY": 96.0,
+          "registeredBackpackY": 93.0,
+          "sourceAlphaBounds": [
+            47,
+            40,
+            203,
+            221
+          ],
+          "registeredAlphaBounds": [
+            47,
+            37,
+            203,
+            218
+          ],
+          "visibleCyanPixels": 173,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 10,
+          "offset": [
+            0,
+            -12
+          ],
+          "originalBackpackY": 101.0,
+          "registeredBackpackY": 89.0,
+          "sourceAlphaBounds": [
+            40,
+            47,
+            210,
+            221
+          ],
+          "registeredAlphaBounds": [
+            40,
+            35,
+            210,
+            209
+          ],
+          "visibleCyanPixels": 159,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          86.0,
+          86.0,
+          87.0,
+          96.0,
+          89.0,
+          85.0,
+          89.0,
+          95.0,
+          88.0,
+          94.0,
+          101.0,
+          84.0
+        ],
+        "registeredBackpackY": [
+          86.0,
+          86.0,
+          87.0,
+          93.0,
+          89.0,
+          85.0,
+          89.0,
+          95.0,
+          88.0,
+          94.0,
+          89.0,
+          84.0
+        ],
+        "outlierThreshold": 96.5,
+        "maxAdjacentBackpackJumpBefore": 17.0,
+        "maxAdjacentBackpackJumpAfter": 7.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run",
+      "sourceRevision": "df42282535b8b63b0c19dcb3a9aa9d96f82b01bb0d556911013097cae3ee60cf",
+      "animationRevision": "e6dc22213be774ba88059f0f28371c379211f00b3fcf5f0abf2553d211008f67",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -10
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -20
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -11
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 7,
+          "offset": [
+            0,
+            -10
+          ],
+          "originalBackpackY": 107.0,
+          "registeredBackpackY": 97.0,
+          "sourceAlphaBounds": [
+            35,
+            52,
+            218,
+            221
+          ],
+          "registeredAlphaBounds": [
+            35,
+            42,
+            218,
+            211
+          ],
+          "visibleCyanPixels": 178,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 19,
+          "offset": [
+            0,
+            -20
+          ],
+          "originalBackpackY": 115.0,
+          "registeredBackpackY": 95.0,
+          "sourceAlphaBounds": [
+            33,
+            61,
+            219,
+            221
+          ],
+          "registeredAlphaBounds": [
+            33,
+            41,
+            219,
+            201
+          ],
+          "visibleCyanPixels": 171,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 21,
+          "offset": [
+            0,
+            -11
+          ],
+          "originalBackpackY": 106.0,
+          "registeredBackpackY": 95.0,
+          "sourceAlphaBounds": [
+            40,
+            52,
+            221,
+            221
+          ],
+          "registeredAlphaBounds": [
+            40,
+            41,
+            221,
+            210
+          ],
+          "visibleCyanPixels": 174,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          93.0,
+          94.0,
+          96.0,
+          91.5,
+          93.0,
+          94.0,
+          94.0,
+          107.0,
+          100.0,
+          97.0,
+          92.0,
+          93.0,
+          97.0,
+          97.0,
+          97.5,
+          93.0,
+          93.0,
+          94.0,
+          94.0,
+          115.0,
+          95.0,
+          106.0,
+          95.5,
+          95.0
+        ],
+        "registeredBackpackY": [
+          93.0,
+          94.0,
+          96.0,
+          91.5,
+          93.0,
+          94.0,
+          94.0,
+          97.0,
+          100.0,
+          97.0,
+          92.0,
+          93.0,
+          97.0,
+          97.0,
+          97.5,
+          93.0,
+          93.0,
+          94.0,
+          94.0,
+          95.0,
+          95.0,
+          95.0,
+          95.5,
+          95.0
+        ],
+        "outlierThreshold": 102.5,
+        "maxAdjacentBackpackJumpBefore": 21.0,
+        "maxAdjacentBackpackJumpAfter": 5.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d04",
+      "sourceRevision": "7293ef50b94cb60f7158c4d79a8d2283c7b3998454653fee8fdb9d359843ff57",
+      "animationRevision": "f4806d6567fc4b17cfd9ca89473b568a3d701c5dd512ff590980769b096b4039",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -36
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -16
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 3,
+          "offset": [
+            0,
+            -36
+          ],
+          "originalBackpackY": 117.0,
+          "registeredBackpackY": 81.0,
+          "sourceAlphaBounds": [
+            50,
+            60,
+            200,
+            221
+          ],
+          "registeredAlphaBounds": [
+            50,
+            24,
+            200,
+            185
+          ],
+          "visibleCyanPixels": 154,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 9,
+          "offset": [
+            0,
+            -16
+          ],
+          "originalBackpackY": 97.0,
+          "registeredBackpackY": 81.0,
+          "sourceAlphaBounds": [
+            54,
+            37,
+            196,
+            222
+          ],
+          "registeredAlphaBounds": [
+            54,
+            21,
+            196,
+            206
+          ],
+          "visibleCyanPixels": 128,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          82.0,
+          84.0,
+          82.0,
+          117.0,
+          80.0,
+          81.0,
+          83.0,
+          86.0,
+          83.0,
+          97.0,
+          80.0,
+          84.0
+        ],
+        "registeredBackpackY": [
+          82.0,
+          84.0,
+          82.0,
+          81.0,
+          80.0,
+          81.0,
+          83.0,
+          86.0,
+          83.0,
+          81.0,
+          80.0,
+          84.0
+        ],
+        "outlierThreshold": 91.0,
+        "maxAdjacentBackpackJumpBefore": 37.0,
+        "maxAdjacentBackpackJumpAfter": 4.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d05",
+      "sourceRevision": "02adac2c2350f71ae9cc1ab2e0b7b900b9e93e46b7989d1290db7613608560fe",
+      "animationRevision": "2f944bea0db0a4c1592576d673f08a6544bc2e4a3940c35be17dfbfcc550193c",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -16
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -4
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -15
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 4,
+          "offset": [
+            0,
+            -16
+          ],
+          "originalBackpackY": 104.0,
+          "registeredBackpackY": 88.0,
+          "sourceAlphaBounds": [
+            52,
+            47,
+            198,
+            221
+          ],
+          "registeredAlphaBounds": [
+            52,
+            31,
+            198,
+            205
+          ],
+          "visibleCyanPixels": 96,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 7,
+          "offset": [
+            0,
+            -4
+          ],
+          "originalBackpackY": 94.0,
+          "registeredBackpackY": 90.0,
+          "sourceAlphaBounds": [
+            52,
+            38,
+            198,
+            221
+          ],
+          "registeredAlphaBounds": [
+            52,
+            34,
+            198,
+            217
+          ],
+          "visibleCyanPixels": 102,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 10,
+          "offset": [
+            0,
+            -15
+          ],
+          "originalBackpackY": 101.0,
+          "registeredBackpackY": 86.0,
+          "sourceAlphaBounds": [
+            47,
+            45,
+            203,
+            222
+          ],
+          "registeredAlphaBounds": [
+            47,
+            30,
+            203,
+            207
+          ],
+          "visibleCyanPixels": 116,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          86.0,
+          88.0,
+          88.0,
+          89.0,
+          104.0,
+          87.0,
+          85.0,
+          94.0,
+          86.0,
+          86.0,
+          101.0,
+          86.0
+        ],
+        "registeredBackpackY": [
+          86.0,
+          88.0,
+          88.0,
+          89.0,
+          88.0,
+          87.0,
+          85.0,
+          90.0,
+          86.0,
+          86.0,
+          86.0,
+          86.0
+        ],
+        "outlierThreshold": 95.5,
+        "maxAdjacentBackpackJumpBefore": 17.0,
+        "maxAdjacentBackpackJumpAfter": 5.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d06",
+      "sourceRevision": "4fa4a7a902601fd51abec9af59bf893a8a5afb52c916996c2ce0088acedbd218",
+      "animationRevision": "f52be3df322659ff04904c29517725c96652230e527274b0db00eb5a4feddd38",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -18
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -29
+        ],
+        [
+          0,
+          -16
+        ],
+        [
+          0,
+          -21
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 9,
+          "offset": [
+            0,
+            -18
+          ],
+          "originalBackpackY": 108.0,
+          "registeredBackpackY": 90.0,
+          "sourceAlphaBounds": [
+            48,
+            48,
+            195,
+            222
+          ],
+          "registeredAlphaBounds": [
+            48,
+            30,
+            195,
+            204
+          ],
+          "visibleCyanPixels": 98,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 19,
+          "offset": [
+            0,
+            -29
+          ],
+          "originalBackpackY": 118.0,
+          "registeredBackpackY": 89.0,
+          "sourceAlphaBounds": [
+            41,
+            57,
+            187,
+            221
+          ],
+          "registeredAlphaBounds": [
+            41,
+            28,
+            187,
+            192
+          ],
+          "visibleCyanPixels": 89,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 20,
+          "offset": [
+            0,
+            -16
+          ],
+          "originalBackpackY": 106.0,
+          "registeredBackpackY": 90.0,
+          "sourceAlphaBounds": [
+            33,
+            45,
+            183,
+            221
+          ],
+          "registeredAlphaBounds": [
+            33,
+            29,
+            183,
+            205
+          ],
+          "visibleCyanPixels": 93,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 21,
+          "offset": [
+            0,
+            -21
+          ],
+          "originalBackpackY": 111.0,
+          "registeredBackpackY": 90.0,
+          "sourceAlphaBounds": [
+            49,
+            51,
+            197,
+            221
+          ],
+          "registeredAlphaBounds": [
+            49,
+            30,
+            197,
+            200
+          ],
+          "visibleCyanPixels": 97,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          90.0,
+          90.0,
+          90.0,
+          94.0,
+          93.0,
+          93.0,
+          89.5,
+          90.0,
+          88.0,
+          108.0,
+          91.0,
+          90.0,
+          87.0,
+          89.0,
+          90.0,
+          90.0,
+          88.0,
+          91.0,
+          88.0,
+          118.0,
+          106.0,
+          111.0,
+          91.0,
+          91.5
+        ],
+        "registeredBackpackY": [
+          90.0,
+          90.0,
+          90.0,
+          94.0,
+          93.0,
+          93.0,
+          89.5,
+          90.0,
+          88.0,
+          90.0,
+          91.0,
+          90.0,
+          87.0,
+          89.0,
+          90.0,
+          90.0,
+          88.0,
+          91.0,
+          88.0,
+          89.0,
+          90.0,
+          90.0,
+          91.0,
+          91.5
+        ],
+        "outlierThreshold": 98.0,
+        "maxAdjacentBackpackJumpBefore": 30.0,
+        "maxAdjacentBackpackJumpAfter": 4.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d07",
+      "sourceRevision": "898065972830aa98147f4f05b5a073ce652fda186ecfcc6008a02faf9fa7bde9",
+      "animationRevision": "bf869186b252c531a04cd366250b5d988c274af5d64acf013c2f8dc3a892c94a",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -8
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -24
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 3,
+          "offset": [
+            0,
+            -8
+          ],
+          "originalBackpackY": 97.0,
+          "registeredBackpackY": 89.0,
+          "sourceAlphaBounds": [
+            68,
+            45,
+            215,
+            221
+          ],
+          "registeredAlphaBounds": [
+            68,
+            37,
+            215,
+            213
+          ],
+          "visibleCyanPixels": 142,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 9,
+          "offset": [
+            0,
+            -24
+          ],
+          "originalBackpackY": 110.0,
+          "registeredBackpackY": 86.0,
+          "sourceAlphaBounds": [
+            61,
+            59,
+            218,
+            221
+          ],
+          "registeredAlphaBounds": [
+            61,
+            35,
+            218,
+            197
+          ],
+          "visibleCyanPixels": 137,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          85.0,
+          88.0,
+          87.0,
+          97.0,
+          91.0,
+          86.0,
+          83.0,
+          86.0,
+          84.0,
+          110.0,
+          88.0,
+          86.0
+        ],
+        "registeredBackpackY": [
+          85.0,
+          88.0,
+          87.0,
+          89.0,
+          91.0,
+          86.0,
+          83.0,
+          86.0,
+          84.0,
+          86.0,
+          88.0,
+          86.0
+        ],
+        "outlierThreshold": 94.5,
+        "maxAdjacentBackpackJumpBefore": 26.0,
+        "maxAdjacentBackpackJumpAfter": 5.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d08",
+      "sourceRevision": "0af33e4981a9e81ff86454ccfb43cb6d8a5af4544feb16b8901957ba0f6a3807",
+      "animationRevision": "ac0f5e2d72d4c88e83b761e8f6b66bd8b7c766b486943cd5f01cb785db9827cb",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -12
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -10
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 3,
+          "offset": [
+            0,
+            -12
+          ],
+          "originalBackpackY": 94.5,
+          "registeredBackpackY": 82.5,
+          "sourceAlphaBounds": [
+            50,
+            44,
+            215,
+            221
+          ],
+          "registeredAlphaBounds": [
+            50,
+            32,
+            215,
+            209
+          ],
+          "visibleCyanPixels": 138,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 9,
+          "offset": [
+            0,
+            -10
+          ],
+          "originalBackpackY": 95.0,
+          "registeredBackpackY": 85.0,
+          "sourceAlphaBounds": [
+            46,
+            42,
+            216,
+            221
+          ],
+          "registeredAlphaBounds": [
+            46,
+            32,
+            216,
+            211
+          ],
+          "visibleCyanPixels": 145,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          82.0,
+          87.0,
+          82.0,
+          94.5,
+          84.0,
+          82.0,
+          83.0,
+          85.0,
+          82.0,
+          95.0,
+          87.5,
+          82.0
+        ],
+        "registeredBackpackY": [
+          82.0,
+          87.0,
+          82.0,
+          82.5,
+          84.0,
+          82.0,
+          83.0,
+          85.0,
+          82.0,
+          85.0,
+          87.5,
+          82.0
+        ],
+        "outlierThreshold": 91.5,
+        "maxAdjacentBackpackJumpBefore": 13.0,
+        "maxAdjacentBackpackJumpAfter": 5.5
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d09",
+      "sourceRevision": "f581ae9a18eeb1121e993c95d3d3ea377483ac7fc956ec2e5de3f2fa0c2ca1d6",
+      "animationRevision": "32427ec632febc8d6654775a94ce7450c8b9d0b012c63891acb7fed0d00f6abb",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [],
+      "measurements": {
+        "backpackY": [
+          92.0,
+          95.0,
+          94.5,
+          91.0,
+          94.0,
+          89.0,
+          93.0,
+          91.0,
+          94.0,
+          90.0,
+          89.0,
+          88.0,
+          86.0,
+          91.0,
+          93.0,
+          92.5,
+          93.0,
+          87.0,
+          90.0,
+          91.0,
+          98.0,
+          94.0,
+          90.0,
+          89.0
+        ],
+        "registeredBackpackY": [
+          92.0,
+          95.0,
+          94.5,
+          91.0,
+          94.0,
+          89.0,
+          93.0,
+          91.0,
+          94.0,
+          90.0,
+          89.0,
+          88.0,
+          86.0,
+          91.0,
+          93.0,
+          92.5,
+          93.0,
+          87.0,
+          90.0,
+          91.0,
+          98.0,
+          94.0,
+          90.0,
+          89.0
+        ],
+        "outlierThreshold": 99.0,
+        "maxAdjacentBackpackJumpBefore": 7.0,
+        "maxAdjacentBackpackJumpAfter": 7.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d10",
+      "sourceRevision": "912b0bb6b5e0fd964e60a3e7dcbc1a373fea54b5e551f6f1d7e64b8836c12c42",
+      "animationRevision": "c14d2a57ba99a0dc9bdbaef5cb458285109fbab139416d070e56646c76306d56",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -4
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 3,
+          "offset": [
+            0,
+            -4
+          ],
+          "originalBackpackY": 94.0,
+          "registeredBackpackY": 90.0,
+          "sourceAlphaBounds": [
+            35,
+            43,
+            220,
+            221
+          ],
+          "registeredAlphaBounds": [
+            35,
+            39,
+            220,
+            217
+          ],
+          "visibleCyanPixels": 162,
+          "reason": "visual-loop-review target"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          85.0,
+          84.0,
+          84.0,
+          94.0,
+          89.0,
+          86.0,
+          82.0,
+          89.0,
+          86.0,
+          89.0,
+          90.0,
+          82.0
+        ],
+        "registeredBackpackY": [
+          85.0,
+          84.0,
+          84.0,
+          90.0,
+          89.0,
+          86.0,
+          82.0,
+          89.0,
+          86.0,
+          89.0,
+          90.0,
+          82.0
+        ],
+        "outlierThreshold": 94.0,
+        "maxAdjacentBackpackJumpBefore": 10.0,
+        "maxAdjacentBackpackJumpAfter": 8.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d11",
+      "sourceRevision": "5381213e24995c0681e737b6663a150cb08779463020e5e6d5fe666174b495cf",
+      "animationRevision": "3cc810fd6ecf9696f1fd5f614dce34eb624be7a01d95ffbaba097098001895ab",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [],
+      "measurements": {
+        "backpackY": [
+          87.0,
+          89.0,
+          87.0,
+          92.0,
+          90.0,
+          89.0,
+          89.5,
+          89.0,
+          90.0,
+          87.0,
+          90.0,
+          88.0
+        ],
+        "registeredBackpackY": [
+          87.0,
+          89.0,
+          87.0,
+          92.0,
+          90.0,
+          89.0,
+          89.5,
+          89.0,
+          90.0,
+          87.0,
+          90.0,
+          88.0
+        ],
+        "outlierThreshold": 97.0,
+        "maxAdjacentBackpackJumpBefore": 5.0,
+        "maxAdjacentBackpackJumpAfter": 5.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d12",
+      "sourceRevision": "33412eecd560f8a05cf186f73d55de694776f1184fc92427d82afa203b2fb760",
+      "animationRevision": "06393ae9308ac40f304cc9d1b87c291611f0edbe004749ada03a164d1bb5b0c9",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [],
+      "measurements": {
+        "backpackY": [
+          93.5,
+          93.0,
+          93.0,
+          101.0,
+          97.0,
+          92.0,
+          96.0,
+          96.0,
+          98.0,
+          101.0,
+          100.0,
+          99.0
+        ],
+        "registeredBackpackY": [
+          93.5,
+          93.0,
+          93.0,
+          101.0,
+          97.0,
+          92.0,
+          96.0,
+          96.0,
+          98.0,
+          101.0,
+          100.0,
+          99.0
+        ],
+        "outlierThreshold": 104.625,
+        "maxAdjacentBackpackJumpBefore": 8.0,
+        "maxAdjacentBackpackJumpAfter": 8.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d13",
+      "sourceRevision": "74040e7d96c6c8b6610317bbef93e97dc5fae5754bef1b17683cf94f89913d22",
+      "animationRevision": "513831634efa8c15809439d5cbd1e07cff1f1b919962e01a8e12b7271fc909b3",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -28
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -21
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 4,
+          "offset": [
+            0,
+            -28
+          ],
+          "originalBackpackY": 119.0,
+          "registeredBackpackY": 91.0,
+          "sourceAlphaBounds": [
+            36,
+            66,
+            209,
+            222
+          ],
+          "registeredAlphaBounds": [
+            36,
+            38,
+            209,
+            194
+          ],
+          "visibleCyanPixels": 189,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 10,
+          "offset": [
+            0,
+            -21
+          ],
+          "originalBackpackY": 111.0,
+          "registeredBackpackY": 90.0,
+          "sourceAlphaBounds": [
+            38,
+            61,
+            219,
+            221
+          ],
+          "registeredAlphaBounds": [
+            38,
+            40,
+            219,
+            200
+          ],
+          "visibleCyanPixels": 192,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          93.0,
+          93.0,
+          89.5,
+          90.0,
+          119.0,
+          91.0,
+          92.0,
+          92.0,
+          88.0,
+          87.0,
+          111.0,
+          93.0
+        ],
+        "registeredBackpackY": [
+          93.0,
+          93.0,
+          89.5,
+          90.0,
+          91.0,
+          91.0,
+          92.0,
+          92.0,
+          88.0,
+          87.0,
+          90.0,
+          93.0
+        ],
+        "outlierThreshold": 100.0,
+        "maxAdjacentBackpackJumpBefore": 29.0,
+        "maxAdjacentBackpackJumpAfter": 4.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d14",
+      "sourceRevision": "86cf8a3707bea81d9f4b95a21736f8e4ea58f2a1a8f9af65a8cefe2912f7aea8",
+      "animationRevision": "6a70cca05d80ab1c3712205c65d5f9b16def2fb105564eb7d4992394f7b06324",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -27
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -26
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 4,
+          "offset": [
+            0,
+            -27
+          ],
+          "originalBackpackY": 112.0,
+          "registeredBackpackY": 85.0,
+          "sourceAlphaBounds": [
+            35,
+            60,
+            217,
+            221
+          ],
+          "registeredAlphaBounds": [
+            35,
+            33,
+            217,
+            194
+          ],
+          "visibleCyanPixels": 203,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 10,
+          "offset": [
+            0,
+            -26
+          ],
+          "originalBackpackY": 111.0,
+          "registeredBackpackY": 85.0,
+          "sourceAlphaBounds": [
+            35,
+            61,
+            217,
+            222
+          ],
+          "registeredAlphaBounds": [
+            35,
+            35,
+            217,
+            196
+          ],
+          "visibleCyanPixels": 198,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          90.0,
+          92.0,
+          89.0,
+          83.0,
+          112.0,
+          87.0,
+          87.0,
+          88.0,
+          85.0,
+          83.0,
+          111.0,
+          88.0
+        ],
+        "registeredBackpackY": [
+          90.0,
+          92.0,
+          89.0,
+          83.0,
+          85.0,
+          87.0,
+          87.0,
+          88.0,
+          85.0,
+          83.0,
+          85.0,
+          88.0
+        ],
+        "outlierThreshold": 96.0,
+        "maxAdjacentBackpackJumpBefore": 29.0,
+        "maxAdjacentBackpackJumpAfter": 6.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d15",
+      "sourceRevision": "6f0a9aae2162dfd38dc15c79ea6fd931da9921cb20e783dcc8c15a307de1c577",
+      "animationRevision": "6f692e1a042a0e58a4fe39e1649e43c8cad2c3c9db714ce1fd13eb9190a6d736",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -7
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -7
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -6
+        ],
+        [
+          0,
+          -7
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 8,
+          "offset": [
+            0,
+            -7
+          ],
+          "originalBackpackY": 111.0,
+          "registeredBackpackY": 104.0,
+          "sourceAlphaBounds": [
+            39,
+            57,
+            200,
+            221
+          ],
+          "registeredAlphaBounds": [
+            39,
+            50,
+            200,
+            214
+          ],
+          "visibleCyanPixels": 211,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 11,
+          "offset": [
+            0,
+            -7
+          ],
+          "originalBackpackY": 107.0,
+          "registeredBackpackY": 100.0,
+          "sourceAlphaBounds": [
+            39,
+            53,
+            204,
+            221
+          ],
+          "registeredAlphaBounds": [
+            39,
+            46,
+            204,
+            214
+          ],
+          "visibleCyanPixels": 218,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 14,
+          "offset": [
+            0,
+            -6
+          ],
+          "originalBackpackY": 107.0,
+          "registeredBackpackY": 101.0,
+          "sourceAlphaBounds": [
+            38,
+            54,
+            202,
+            221
+          ],
+          "registeredAlphaBounds": [
+            38,
+            48,
+            202,
+            215
+          ],
+          "visibleCyanPixels": 235,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 15,
+          "offset": [
+            0,
+            -7
+          ],
+          "originalBackpackY": 108.0,
+          "registeredBackpackY": 101.0,
+          "sourceAlphaBounds": [
+            52,
+            54,
+            217,
+            221
+          ],
+          "registeredAlphaBounds": [
+            52,
+            47,
+            217,
+            214
+          ],
+          "visibleCyanPixels": 235,
+          "reason": "visual-loop-review target"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          104.0,
+          107.0,
+          107.0,
+          103.0,
+          100.0,
+          99.0,
+          105.0,
+          100.0,
+          111.0,
+          104.0,
+          103.0,
+          107.0,
+          96.0,
+          97.0,
+          107.0,
+          108.0,
+          95.0,
+          94.0,
+          95.0,
+          94.0,
+          93.0,
+          97.0,
+          97.0,
+          98.0
+        ],
+        "registeredBackpackY": [
+          104.0,
+          107.0,
+          107.0,
+          103.0,
+          100.0,
+          99.0,
+          105.0,
+          100.0,
+          104.0,
+          104.0,
+          103.0,
+          100.0,
+          96.0,
+          97.0,
+          101.0,
+          101.0,
+          95.0,
+          94.0,
+          95.0,
+          94.0,
+          93.0,
+          97.0,
+          97.0,
+          98.0
+        ],
+        "outlierThreshold": 111.25,
+        "maxAdjacentBackpackJumpBefore": 13.0,
+        "maxAdjacentBackpackJumpAfter": 6.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d16",
+      "sourceRevision": "b85026cbbe245bdc9252afbfd3d6b0122eb18da05f3ccb95ae932e2b393f9160",
+      "animationRevision": "c935b70e253018b350ef2336b5811dcdfa159f186e5599f45d00d847b1480656",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -32
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 4,
+          "offset": [
+            0,
+            -32
+          ],
+          "originalBackpackY": 123.0,
+          "registeredBackpackY": 91.0,
+          "sourceAlphaBounds": [
+            54,
+            69,
+            206,
+            221
+          ],
+          "registeredAlphaBounds": [
+            54,
+            37,
+            206,
+            189
+          ],
+          "visibleCyanPixels": 190,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          93.0,
+          94.0,
+          89.5,
+          91.0,
+          123.0,
+          90.0,
+          94.0,
+          94.0,
+          93.0,
+          93.0,
+          101.5,
+          99.0
+        ],
+        "registeredBackpackY": [
+          93.0,
+          94.0,
+          89.5,
+          91.0,
+          91.0,
+          90.0,
+          94.0,
+          94.0,
+          93.0,
+          93.0,
+          101.5,
+          99.0
+        ],
+        "outlierThreshold": 101.5,
+        "maxAdjacentBackpackJumpBefore": 33.0,
+        "maxAdjacentBackpackJumpAfter": 8.5
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d17",
+      "sourceRevision": "0a72555f9837220f01900385093afed7ca905a174d86c2893a2f52171b870b4f",
+      "animationRevision": "7a2389f8c1a1644e47946f2e26d3ee5079e31d4a7648eef633cb3ccf5ef3268f",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -14
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -9
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 4,
+          "offset": [
+            0,
+            -14
+          ],
+          "originalBackpackY": 103.0,
+          "registeredBackpackY": 89.0,
+          "sourceAlphaBounds": [
+            54,
+            51,
+            182,
+            221
+          ],
+          "registeredAlphaBounds": [
+            54,
+            37,
+            182,
+            207
+          ],
+          "visibleCyanPixels": 194,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 10,
+          "offset": [
+            0,
+            -9
+          ],
+          "originalBackpackY": 100.0,
+          "registeredBackpackY": 91.0,
+          "sourceAlphaBounds": [
+            48,
+            44,
+            217,
+            221
+          ],
+          "registeredAlphaBounds": [
+            48,
+            35,
+            217,
+            212
+          ],
+          "visibleCyanPixels": 231,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          83.0,
+          84.0,
+          85.0,
+          89.0,
+          103.0,
+          89.0,
+          89.0,
+          87.0,
+          85.0,
+          91.0,
+          100.0,
+          91.0
+        ],
+        "registeredBackpackY": [
+          83.0,
+          84.0,
+          85.0,
+          89.0,
+          89.0,
+          89.0,
+          89.0,
+          87.0,
+          85.0,
+          91.0,
+          91.0,
+          91.0
+        ],
+        "outlierThreshold": 97.0,
+        "maxAdjacentBackpackJumpBefore": 14.0,
+        "maxAdjacentBackpackJumpAfter": 8.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d18",
+      "sourceRevision": "bb8c298f7edbd1898fe1a14914d7157f313738d0f78974b1f9d32dadf916a1a2",
+      "animationRevision": "828673c1a4f879a0b01efc5643d400aea455ec3fefc93d0a9a0ba80ffb27c1c0",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -13
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -20
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -39
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 3,
+          "offset": [
+            0,
+            -13
+          ],
+          "originalBackpackY": 99.0,
+          "registeredBackpackY": 86.0,
+          "sourceAlphaBounds": [
+            63,
+            45,
+            189,
+            221
+          ],
+          "registeredAlphaBounds": [
+            63,
+            32,
+            189,
+            208
+          ],
+          "visibleCyanPixels": 187,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 5,
+          "offset": [
+            0,
+            -20
+          ],
+          "originalBackpackY": 106.0,
+          "registeredBackpackY": 86.0,
+          "sourceAlphaBounds": [
+            51,
+            53,
+            175,
+            221
+          ],
+          "registeredAlphaBounds": [
+            51,
+            33,
+            175,
+            201
+          ],
+          "visibleCyanPixels": 208,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 17,
+          "offset": [
+            0,
+            -39
+          ],
+          "originalBackpackY": 124.0,
+          "registeredBackpackY": 85.0,
+          "sourceAlphaBounds": [
+            37,
+            69,
+            189,
+            222
+          ],
+          "registeredAlphaBounds": [
+            37,
+            30,
+            189,
+            183
+          ],
+          "visibleCyanPixels": 211,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          87.0,
+          86.0,
+          85.0,
+          99.0,
+          87.0,
+          106.0,
+          84.0,
+          84.0,
+          84.0,
+          86.0,
+          86.0,
+          86.0,
+          82.0,
+          83.0,
+          83.0,
+          86.0,
+          85.0,
+          124.0,
+          85.0,
+          84.0,
+          89.0,
+          87.0,
+          85.0,
+          86.0
+        ],
+        "registeredBackpackY": [
+          87.0,
+          86.0,
+          85.0,
+          86.0,
+          87.0,
+          86.0,
+          84.0,
+          84.0,
+          84.0,
+          86.0,
+          86.0,
+          86.0,
+          82.0,
+          83.0,
+          83.0,
+          86.0,
+          85.0,
+          85.0,
+          85.0,
+          84.0,
+          89.0,
+          87.0,
+          85.0,
+          86.0
+        ],
+        "outlierThreshold": 94.0,
+        "maxAdjacentBackpackJumpBefore": 39.0,
+        "maxAdjacentBackpackJumpAfter": 5.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d19",
+      "sourceRevision": "561312902d8b244a14def982c0e3f6a3a8832c2e42862966ec4c17e5d61c46ce",
+      "animationRevision": "bc80da3fbe46964eeb6b3e9b13eeaf4d2bf4ec8c3134f602c8154e88ed5df009",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -9
+        ],
+        [
+          0,
+          -16
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -17
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 4,
+          "offset": [
+            0,
+            -9
+          ],
+          "originalBackpackY": 97.0,
+          "registeredBackpackY": 88.0,
+          "sourceAlphaBounds": [
+            54,
+            40,
+            186,
+            221
+          ],
+          "registeredAlphaBounds": [
+            54,
+            31,
+            186,
+            212
+          ],
+          "visibleCyanPixels": 231,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 5,
+          "offset": [
+            0,
+            -16
+          ],
+          "originalBackpackY": 105.0,
+          "registeredBackpackY": 89.0,
+          "sourceAlphaBounds": [
+            52,
+            48,
+            183,
+            221
+          ],
+          "registeredAlphaBounds": [
+            52,
+            32,
+            183,
+            205
+          ],
+          "visibleCyanPixels": 228,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 11,
+          "offset": [
+            0,
+            -17
+          ],
+          "originalBackpackY": 103.0,
+          "registeredBackpackY": 86.0,
+          "sourceAlphaBounds": [
+            47,
+            46,
+            185,
+            221
+          ],
+          "registeredAlphaBounds": [
+            47,
+            29,
+            185,
+            204
+          ],
+          "visibleCyanPixels": 237,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          86.0,
+          87.0,
+          89.0,
+          88.0,
+          97.0,
+          105.0,
+          89.0,
+          88.0,
+          87.0,
+          91.0,
+          86.0,
+          103.0
+        ],
+        "registeredBackpackY": [
+          86.0,
+          87.0,
+          89.0,
+          88.0,
+          88.0,
+          89.0,
+          89.0,
+          88.0,
+          87.0,
+          91.0,
+          86.0,
+          86.0
+        ],
+        "outlierThreshold": 96.5,
+        "maxAdjacentBackpackJumpBefore": 17.0,
+        "maxAdjacentBackpackJumpAfter": 5.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d20",
+      "sourceRevision": "b4465140c7b643347c8a660550e4ca008c3829df2aa4b7a4870572b9022721e5",
+      "animationRevision": "8561d7f80ffdf3660898325de4a019b48888e77bdc42bd5873d645ca900e2015",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -20
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 11,
+          "offset": [
+            0,
+            -20
+          ],
+          "originalBackpackY": 108.0,
+          "registeredBackpackY": 88.0,
+          "sourceAlphaBounds": [
+            44,
+            52,
+            185,
+            221
+          ],
+          "registeredAlphaBounds": [
+            44,
+            32,
+            185,
+            201
+          ],
+          "visibleCyanPixels": 245,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          88.5,
+          89.0,
+          89.0,
+          89.0,
+          89.0,
+          96.0,
+          89.0,
+          89.0,
+          88.0,
+          92.0,
+          87.0,
+          108.0
+        ],
+        "registeredBackpackY": [
+          88.5,
+          89.0,
+          89.0,
+          89.0,
+          89.0,
+          96.0,
+          89.0,
+          89.0,
+          88.0,
+          92.0,
+          87.0,
+          88.0
+        ],
+        "outlierThreshold": 97.0,
+        "maxAdjacentBackpackJumpBefore": 21.0,
+        "maxAdjacentBackpackJumpAfter": 7.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d21",
+      "sourceRevision": "9302118c187162da4528966afb9a04b698d5846f9d5ef39c535f474b96917758",
+      "animationRevision": "08ce66fb64d6937cbf82f68d00c438250d04384234a470f83a9cfbf8cd025ccf",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -6
+        ],
+        [
+          0,
+          -10
+        ],
+        [
+          0,
+          -17
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -8
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -4
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 8,
+          "offset": [
+            0,
+            -6
+          ],
+          "originalBackpackY": 100.0,
+          "registeredBackpackY": 94.0,
+          "sourceAlphaBounds": [
+            42,
+            47,
+            202,
+            222
+          ],
+          "registeredAlphaBounds": [
+            42,
+            41,
+            202,
+            216
+          ],
+          "visibleCyanPixels": 242,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 9,
+          "offset": [
+            0,
+            -10
+          ],
+          "originalBackpackY": 108.0,
+          "registeredBackpackY": 98.0,
+          "sourceAlphaBounds": [
+            39,
+            56,
+            206,
+            221
+          ],
+          "registeredAlphaBounds": [
+            39,
+            46,
+            206,
+            211
+          ],
+          "visibleCyanPixels": 251,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 10,
+          "offset": [
+            0,
+            -17
+          ],
+          "originalBackpackY": 113.0,
+          "registeredBackpackY": 96.0,
+          "sourceAlphaBounds": [
+            38,
+            61,
+            204,
+            221
+          ],
+          "registeredAlphaBounds": [
+            38,
+            44,
+            204,
+            204
+          ],
+          "visibleCyanPixels": 221,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 12,
+          "offset": [
+            0,
+            -8
+          ],
+          "originalBackpackY": 104.0,
+          "registeredBackpackY": 96.0,
+          "sourceAlphaBounds": [
+            46,
+            55,
+            201,
+            221
+          ],
+          "registeredAlphaBounds": [
+            46,
+            47,
+            201,
+            213
+          ],
+          "visibleCyanPixels": 205,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 20,
+          "offset": [
+            0,
+            -4
+          ],
+          "originalBackpackY": 104.0,
+          "registeredBackpackY": 100.0,
+          "sourceAlphaBounds": [
+            46,
+            55,
+            200,
+            222
+          ],
+          "registeredAlphaBounds": [
+            46,
+            51,
+            200,
+            218
+          ],
+          "visibleCyanPixels": 199,
+          "reason": "visual-loop-review target"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          96.0,
+          95.0,
+          95.0,
+          90.0,
+          90.0,
+          91.0,
+          87.0,
+          88.0,
+          100.0,
+          108.0,
+          113.0,
+          89.0,
+          104.0,
+          100.0,
+          101.0,
+          101.0,
+          93.0,
+          94.0,
+          91.0,
+          96.0,
+          104.0,
+          96.0,
+          98.0,
+          99.0
+        ],
+        "registeredBackpackY": [
+          96.0,
+          95.0,
+          95.0,
+          90.0,
+          90.0,
+          91.0,
+          87.0,
+          88.0,
+          94.0,
+          98.0,
+          96.0,
+          89.0,
+          96.0,
+          100.0,
+          101.0,
+          101.0,
+          93.0,
+          94.0,
+          91.0,
+          96.0,
+          100.0,
+          96.0,
+          98.0,
+          99.0
+        ],
+        "outlierThreshold": 108.5,
+        "maxAdjacentBackpackJumpBefore": 24.0,
+        "maxAdjacentBackpackJumpAfter": 8.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d22",
+      "sourceRevision": "552f7b1533eaa446be8dd8e23532b11a086175245de7478d6c182364b2c7b5ad",
+      "animationRevision": "773af57a0f603c470c68385e4f35113224a6df21e961d2c5d090ce612b333b94",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -25
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -10
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 5,
+          "offset": [
+            0,
+            -25
+          ],
+          "originalBackpackY": 116.0,
+          "registeredBackpackY": 91.0,
+          "sourceAlphaBounds": [
+            30,
+            62,
+            205,
+            221
+          ],
+          "registeredAlphaBounds": [
+            30,
+            37,
+            205,
+            196
+          ],
+          "visibleCyanPixels": 205,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 11,
+          "offset": [
+            0,
+            -10
+          ],
+          "originalBackpackY": 104.0,
+          "registeredBackpackY": 94.0,
+          "sourceAlphaBounds": [
+            37,
+            50,
+            192,
+            222
+          ],
+          "registeredAlphaBounds": [
+            37,
+            40,
+            192,
+            212
+          ],
+          "visibleCyanPixels": 223,
+          "reason": "isolated low-torso registration outlier"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          95.0,
+          94.0,
+          95.0,
+          91.0,
+          91.0,
+          116.0,
+          91.0,
+          92.0,
+          90.0,
+          95.0,
+          94.0,
+          104.0
+        ],
+        "registeredBackpackY": [
+          95.0,
+          94.0,
+          95.0,
+          91.0,
+          91.0,
+          91.0,
+          91.0,
+          92.0,
+          90.0,
+          95.0,
+          94.0,
+          94.0
+        ],
+        "outlierThreshold": 102.0,
+        "maxAdjacentBackpackJumpBefore": 25.0,
+        "maxAdjacentBackpackJumpAfter": 5.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    },
+    {
+      "familyId": "run-d23",
+      "sourceRevision": "83391d1b798adde8198584d0dac74b6380596b180c00127fe785152594b58aee",
+      "animationRevision": "e0e6a19bbfc32ef0ebf81a0bce1468a0102fda50bd3550f52e34db3eee363989",
+      "offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          -18
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -15
+        ]
+      ],
+      "corrections": [
+        {
+          "frame": 4,
+          "offset": [
+            0,
+            -3
+          ],
+          "originalBackpackY": 101.0,
+          "registeredBackpackY": 98.0,
+          "sourceAlphaBounds": [
+            37,
+            48,
+            218,
+            221
+          ],
+          "registeredAlphaBounds": [
+            37,
+            45,
+            218,
+            218
+          ],
+          "visibleCyanPixels": 211,
+          "reason": "visual-loop-review target"
+        },
+        {
+          "frame": 5,
+          "offset": [
+            0,
+            -18
+          ],
+          "originalBackpackY": 117.0,
+          "registeredBackpackY": 99.0,
+          "sourceAlphaBounds": [
+            39,
+            64,
+            217,
+            221
+          ],
+          "registeredAlphaBounds": [
+            39,
+            46,
+            217,
+            203
+          ],
+          "visibleCyanPixels": 205,
+          "reason": "isolated low-torso registration outlier"
+        },
+        {
+          "frame": 11,
+          "offset": [
+            0,
+            -15
+          ],
+          "originalBackpackY": 109.0,
+          "registeredBackpackY": 94.0,
+          "sourceAlphaBounds": [
+            33,
+            58,
+            213,
+            221
+          ],
+          "registeredAlphaBounds": [
+            33,
+            43,
+            213,
+            206
+          ],
+          "visibleCyanPixels": 192,
+          "reason": "visual-loop-review target"
+        }
+      ],
+      "measurements": {
+        "backpackY": [
+          88.0,
+          94.0,
+          93.0,
+          92.0,
+          101.0,
+          117.0,
+          102.0,
+          101.0,
+          98.0,
+          105.0,
+          97.0,
+          109.0
+        ],
+        "registeredBackpackY": [
+          88.0,
+          94.0,
+          93.0,
+          92.0,
+          98.0,
+          99.0,
+          102.0,
+          101.0,
+          98.0,
+          105.0,
+          97.0,
+          94.0
+        ],
+        "outlierThreshold": 113.25,
+        "maxAdjacentBackpackJumpBefore": 21.0,
+        "maxAdjacentBackpackJumpAfter": 8.0
+      },
+      "reviewStatus": "registration-candidate-awaiting-animation-review"
+    }
+  ]
+}

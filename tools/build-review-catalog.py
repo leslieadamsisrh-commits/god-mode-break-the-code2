@@ -29,10 +29,18 @@ for number,f in enumerate(batch['frames'],1):
     assert item['revision']==f['sourceVersion']
     refs.append({'number':number,'familyId':item['id'],'assetId':f['assetId'],'frame':f['frameNumber'],'revision':item['revision']})
 running=json.loads((ROOT/'sprites/manifests/batch-02-running.json').read_text())
+registrationPath=ROOT/'sprites/manifests/running-registration-v1.json'
+registration=json.loads(registrationPath.read_text()) if registrationPath.exists() else None
+if registration:
+    for reg in registration['families']:
+        item=next(i for i in items if i['id']==reg['familyId'])
+        assert reg['sourceRevision']==item['revision'] and len(reg['offsets'])==item['frames']
+        item['registration']=reg
+        item['animationRevision']=reg['animationRevision']
 for ref in running['items']:
     item=next(i for i in items if i['id']==ref['familyId'])
     assert ref['revision']==item['revision'] and 0<=ref['frame']<item['frames']
-data={'schemaVersion':1,'catalogId':'god-mode-individual-review-20260916','references':refs,'families':items,'runningBatch':running}
+data={'schemaVersion':1,'catalogId':'god-mode-individual-review-20260916','references':refs,'families':items,'runningBatch':running,'runningRegistration':{'correctedFrames':registration['correctedFrames'],'sourceFrames':registration['sourceFrames']} if registration else None}
 target=ROOT/'sprites/previews/review-catalog.js';target.write_text('window.GM_REVIEW_DATA='+json.dumps(data,separators=(',',':'))+';\n')
 ledger=ROOT/'sprites/reviews/design-decisions.json'
 if not ledger.exists():

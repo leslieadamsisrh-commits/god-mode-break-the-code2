@@ -217,7 +217,115 @@
       "status": "approved",
       "notes": "User approved all 24 standing reference designs in the conversation. Animation, exact-angle registration and integration remain separate.",
       "updatedAt": "2026-09-16T03:30:41.498169+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 0,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 1,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 2,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 3,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 4,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 5,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 6,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 7,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 8,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 9,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 10,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
+    },
+    {
+      "familyId": "run-d00",
+      "frame": 11,
+      "revision": "bf16673c9d389f4c56838bd9d15aeb1f957d861211e0460cc22dc4c30240ca0d",
+      "kind": "design",
+      "status": "approved",
+      "notes": "User approved the displayed running design/artwork; requested correction of dipping and motion continuity. This is design approval only.",
+      "updatedAt": "2026-09-16T03:57:19.283580+00:00"
     }
   ],
-  "note": "All 24 standing-reference designs approved by the user. Running designs and animation are awaiting review."
+  "note": "Standing designs and the twelve individually displayed side-run designs approved. Running style accepted; animation remains under revision and unseen frames are not blanket-approved."
 }

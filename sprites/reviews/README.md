@@ -10,7 +10,7 @@ The library exposes 121 existing image assets with 1,152 inspectable frame cells
 
 Approve, Revise, Reject, Save note and Reset act on one frame, one review kind and one actual image hash. Design and animation decisions are separate; integration approval is not available. Revise and Reject require notes. Image-byte mismatch disables approval. Changed revisions cannot inherit old approval. Invalid imports are rejected atomically and older exports cannot overwrite newer notes.
 
-Browser choices are device-local. Export `GOD-MODE-design-reviews.json` and attach it in the conversation to persist decisions to this repository. The saved `design-decisions.json` contains the user's 24 standing-design approvals, bound to their actual image revisions. The exact conversational approval is recorded in `standing-approval.json`. Browser testing uses temporary sample decisions, which are reset and never committed as user approvals.
+Browser choices are device-local. Export `GOD-MODE-design-reviews.json` and attach it in the conversation to persist decisions to this repository. The saved `design-decisions.json` contains the user's 24 standing-design approvals and twelve individually reviewed running-design approvals, bound to their actual image revisions. The exact conversational approval is recorded in `standing-approval.json`. Browser testing uses temporary sample decisions, which are reset and never committed as user approvals.
 
 Natural-language responses use the same reference numbers: “Approve 1–6; revise 7: fix the backpack.” Before saving a conversational decision, map its number through `review-catalog.js` and retain the source revision, frame and review kind. Rebuild the catalog after updating the saved ledger; it imports that seed alongside newer device-local records.
 
@@ -35,6 +35,10 @@ The updated gallery opens on `run-d00`, frames 0–5 (R001–R006); Next frames 
 - Inspect alternating foot contacts, the raised shotgun and last-to-first loop transition. Some neighboring poses are similar.
 - All direction labels remain nominal; image availability is not certification of 24 exact camera angles.
 
-`python tools/render-running-review.py` reproduces twelve individually padded frame proofs and six motion GIFs under `test-output/running-review`. These display the source cells in their original order at uniform 80 ms inspection timing. No anchors, proportions, image content or gameplay timing are changed. The source images, manifests and script are saved; reproducible proofs are excluded from compact backups to avoid image duplication.
+`python tools/render-running-review.py` reproduces twelve individually padded frame proofs and six motion GIFs under `test-output/running-refined`. These display the source cells in their original order at uniform 80 ms inspection timing. The refined version applies the saved vertical registration offsets; no proportions, original image content or gameplay timing are changed. The source images, manifests and script are saved; reproducible proofs are excluded from compact backups to avoid image duplication.
 
 Stop for the user's running review before generating replacements or integrating artwork. Preserve the approved standing designs and combat build.
+
+## Running refinement update
+
+See `RUNNING-REFINEMENT.md` for the 51 frame-placement corrections, measurements and limits. Use the gallery's Frame placement control to compare original and revised registration. Design approval remains bound to the original image; animation approval also includes the registration revision.
