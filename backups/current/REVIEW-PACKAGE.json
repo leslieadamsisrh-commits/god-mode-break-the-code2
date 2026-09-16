@@ -1,10 +1,10 @@
 {
   "path": "backups/current/GOD-MODE-Sprite-Review.zip",
-  "bytes": 52352567,
-  "sha256": "2680b5a0662993b08e4d37e2b5f1bd4d07951033d8f9bbc32bb07a9480062d79",
+  "bytes": 52360261,
+  "sha256": "305336fe7f1fa7b6070021b51de204c0b92d54f70eb62a47afa43d1157084873",
   "referencePoses": 24,
   "families": 121,
   "files": 125,
-  "decodedAtStartup": "six ready images; no full-library preload",
+  "decodedAtStartup": "one running sheet shared by six frame cards; no full-library preload",
   "instructions": "Extract and open OPEN-GALLERY.html; choose assets folder to verify artwork and enable approvals."
 }
