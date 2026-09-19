@@ -28,32 +28,35 @@ bots.forEach(b=>{if(b.hp<=0)return;b.cool--;let a=Math.atan2(player.y-b.y,player
 shots.forEach(s=>{s.x+=s.vx;s.y+=s.vy;s.life--;if(s.enemy&&d(s,player)<20){s.life=0;if(player.parry){s.enemy=false;s.life=45;s.vx*=-1.4;s.vy*=-1.4;player.combo++}else if(!player.shield)player.hp-=7}else if(!s.enemy)bots.forEach(b=>{if(b.hp>0&&d(s,b)<20){b.hp-=8;s.life=0;player.combo++}})});shots=shots.filter(s=>s.life>0);fx.forEach(f=>{f.r+=3;f.life--});fx=fx.filter(f=>f.life>0);player.battery=clamp(player.battery+.05,0,100);if(player.hp<=0)reset();pressed={}}
 function line(a,b,w=5,col="#ff58b7"){ctx.strokeStyle=col;ctx.lineWidth=w;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
 function drawSkeleton(o,isPlayer=true){
- const P=iso(o.x,o.y),aim=isPlayer?Math.atan2(mouse.y-H/2,mouse.x-W/2):Math.atan2(player.y-o.y,player.x-o.x);
- const slide=isPlayer&&o.slide>0,roadie=isPlayer&&o.roadie,lean=isPlayer?(o.coverLean||0):0,spd=Math.min(1,len(o.vx,o.vy)/5),ph=o.phase||t*.08,stride=Math.sin(ph)*20*spd,S=isPlayer?1.45:1;
- const fx=Math.cos(aim),fy=Math.sin(aim),sx=-fy,sy=fx;
- let pelvis={x:P.x-fx*(slide?16:0),y:P.y-(slide?8:30)*S};
- let lumbar={x:pelvis.x+fx*(slide?12:lean*7),y:pelvis.y-(slide?8:17)*S};
- let rib={x:lumbar.x+fx*(slide?15:lean*10),y:lumbar.y-(slide?7:(roadie?15:20))*S};
- let neck={x:rib.x+fx*(slide?7:lean*5),y:rib.y-(slide?5:10)*S};
- let head={x:neck.x+fx*(slide?10:lean*7),y:neck.y-(slide?8:13)*S};
- line(pelvis,lumbar,12,isPlayer?"#ff3ca8":"#ff9348");line(lumbar,rib,11,isPlayer?"#ff67bd":"#ff9348");line(rib,neck,8,isPlayer?"#ff9bd5":"#ffb06b");
- ctx.fillStyle=isPlayer?"#ffe6f5":"#ffd1ad";ctx.beginPath();ctx.arc(head.x,head.y,isPlayer?16:10,0,7);ctx.fill();
- if(isPlayer){line({x:head.x-7,y:head.y-9},{x:head.x-11,y:head.y-23},3,"#35eaff");line({x:head.x+7,y:head.y-9},{x:head.x+11,y:head.y-23},3,"#35eaff")}
- const shoulderTw=lean*13+(roadie?4:0),LS={x:rib.x+sx*14*S+fx*shoulderTw,y:rib.y+sy*7},RS={x:rib.x-sx*14*S+fx*shoulderTw*.65,y:rib.y-sy*7};
- for(const [sh,side] of [[LS,1],[RS,-1]]){let elbow={x:sh.x+fx*(22+lean*9)+sx*side*5,y:sh.y+fy*(17+lean*7)+sy*side*3},hand={x:elbow.x+fx*22,y:elbow.y+fy*18};line(sh,elbow,8,isPlayer?"#ff55b5":"#ff9b55");line(elbow,hand,7,isPlayer?"#ff83ca":"#ffb071");ctx.fillStyle="#35eaff";ctx.beginPath();ctx.arc(hand.x,hand.y,5,0,7);ctx.fill()}
- let gun0={x:rib.x+fx*32,y:rib.y+fy*24},gun1={x:gun0.x+fx*55,y:gun0.y+fy*55};line(gun0,gun1,7,"#eaffff");
- let legPhase=roadie?stride*1.15:stride, crouch=roadie?8:0;
- let LH={x:pelvis.x+sx*8,y:pelvis.y+crouch},RH={x:pelvis.x-sx*8,y:pelvis.y+crouch},LK,LF,RK,RF;
- if(slide){LK={x:LH.x+fx*24,y:LH.y+15};LF={x:LK.x+fx*34,y:LK.y+10};RK={x:RH.x-fx*10,y:RH.y+19};RF={x:RK.x-fx*17+sx*6,y:RK.y+18}}
- else{LK={x:LH.x+fx*legPhase*.28,y:LH.y+25*S};LF={x:LK.x+fx*legPhase,y:LK.y+29*S};RK={x:RH.x-fx*legPhase*.28,y:RH.y+25*S};RF={x:RK.x-fx*legPhase,y:RK.y+29*S}}
- for(const [h,k,f] of [[LH,LK,LF],[RH,RK,RF]]){line(h,k,10,isPlayer?"#ff8bce":"#ffad69");line(k,f,9,isPlayer?"#ffb2df":"#ffc08c");line({x:f.x-6,y:f.y},{x:f.x+10,y:f.y},5,"#bffaff")}
- if(isPlayer){ctx.fillStyle="#35eaff";ctx.font="bold 13px Arial";ctx.fillText("JADE",P.x-20,P.y+36)}
+ const P=iso(o.x,o.y),aim=isPlayer?Math.atan2(mouse.y-H/2,mouse.x-W/2):Math.atan2(player.y-o.y,player.x-o.x),slide=isPlayer&&o.slide>0,roadie=isPlayer&&o.roadie,lean=isPlayer?(o.coverLean||0):0,spd=Math.min(1,len(o.vx,o.vy)/5),ph=o.phase||t*.08,S=isPlayer?1.55:1;
+ const F={x:Math.cos(aim),y:Math.sin(aim)},R={x:-F.y,y:F.x},stride=Math.sin(ph)*22*spd,step=Math.cos(ph)*8*spd;
+ const J={}; J.root={x:P.x-F.x*(slide?20:0),y:P.y-(slide?8:32)*S};
+ J.pelvis={x:J.root.x+F.x*(slide?8:0),y:J.root.y-(slide?2:5)};
+ J.sp1={x:J.pelvis.x+F.x*(slide?10:lean*5),y:J.pelvis.y-(slide?7:13)*S};
+ J.sp2={x:J.sp1.x+F.x*(slide?10:lean*6),y:J.sp1.y-(slide?6:(roadie?10:14))*S};
+ J.sp3={x:J.sp2.x+F.x*(slide?8:lean*7),y:J.sp2.y-(slide?5:13)*S};
+ J.neck={x:J.sp3.x+F.x*(slide?5:lean*4),y:J.sp3.y-8*S};
+ J.head={x:J.neck.x+F.x*(slide?9:lean*6),y:J.neck.y-14*S};
+ const twist=lean*15+(roadie?5:0),shoulderW=15*S;
+ J.lClav={x:J.sp3.x+R.x*shoulderW+F.x*twist,y:J.sp3.y+R.y*8};
+ J.rClav={x:J.sp3.x-R.x*shoulderW+F.x*twist*.65,y:J.sp3.y-R.y*8};
+ for(const side of ["l","r"]){const sign=side==="l"?1:-1,sh=J[side+"Clav"];J[side+"Elbow"]={x:sh.x+F.x*(23+lean*10)+R.x*sign*7,y:sh.y+F.y*(18+lean*7)+R.y*sign*4};J[side+"Wrist"]={x:J[side+"Elbow"].x+F.x*22,y:J[side+"Elbow"].y+F.y*18};J[side+"Hand"]={x:J[side+"Wrist"].x+F.x*7,y:J[side+"Wrist"].y+F.y*6}}
+ const crouch=roadie?10:0;J.lHip={x:J.pelvis.x+R.x*8,y:J.pelvis.y+crouch};J.rHip={x:J.pelvis.x-R.x*8,y:J.pelvis.y+crouch};
+ if(slide){J.lKnee={x:J.lHip.x+F.x*27,y:J.lHip.y+14};J.lAnkle={x:J.lKnee.x+F.x*32,y:J.lKnee.y+10};J.lToe={x:J.lAnkle.x+F.x*13,y:J.lAnkle.y};J.rKnee={x:J.rHip.x-F.x*12+R.x*4,y:J.rHip.y+20};J.rAnkle={x:J.rKnee.x-F.x*18,y:J.rKnee.y+17};J.rToe={x:J.rAnkle.x+F.x*10,y:J.rAnkle.y}}
+ else{J.lKnee={x:J.lHip.x+F.x*stride*.3,y:J.lHip.y+27*S-step*.15};J.lAnkle={x:J.lKnee.x+F.x*stride,y:J.lKnee.y+29*S+step*.2};J.lToe={x:J.lAnkle.x+F.x*13,y:J.lAnkle.y};J.rKnee={x:J.rHip.x-F.x*stride*.3,y:J.rHip.y+27*S+step*.15};J.rAnkle={x:J.rKnee.x-F.x*stride,y:J.rKnee.y+29*S-step*.2};J.rToe={x:J.rAnkle.x+F.x*13,y:J.rAnkle.y}}
+ const bone=(u,v,w,c)=>line(J[u],J[v],w,c);bone("root","pelvis",13,"#ff2f9e");bone("pelvis","sp1",12,"#ff46ac");bone("sp1","sp2",11,"#ff62bb");bone("sp2","sp3",10,"#ff7fc8");bone("sp3","neck",8,"#ff9bd4");
+ ctx.fillStyle=isPlayer?"#ffe7f6":"#ffd3b1";ctx.beginPath();ctx.arc(J.head.x,J.head.y,isPlayer?17:10,0,7);ctx.fill();
+ if(isPlayer){line({x:J.head.x-8,y:J.head.y-10},{x:J.head.x-12,y:J.head.y-25},3,"#35eaff");line({x:J.head.x+8,y:J.head.y-10},{x:J.head.x+12,y:J.head.y-25},3,"#35eaff")}
+ for(const side of ["l","r"]){bone(side+"Clav",side+"Elbow",9,isPlayer?"#ff54b5":"#ff9a55");bone(side+"Elbow",side+"Wrist",8,isPlayer?"#ff76c4":"#ffae6b");bone(side+"Wrist",side+"Hand",6,"#35eaff")}
+ for(const side of ["l","r"]){bone(side+"Hip",side+"Knee",11,isPlayer?"#ff88cc":"#ffad69");bone(side+"Knee",side+"Ankle",10,isPlayer?"#ffa9dc":"#ffc08c");bone(side+"Ankle",side+"Toe",6,"#bffaff")}
+ let grip={x:(J.lHand.x+J.rHand.x)/2,y:(J.lHand.y+J.rHand.y)/2},muzzle={x:grip.x+F.x*58,y:grip.y+F.y*58};line(grip,muzzle,7,"#efffff");
+ if(isPlayer){ctx.fillStyle="#35eaff";ctx.font="bold 13px Arial";ctx.fillText("JADE // 24-POINT RIG",P.x-58,P.y+42)}
 }
 function draw(){ctx.fillStyle="#050912";ctx.fillRect(0,0,W,H);ctx.fillStyle="#0b1722";ctx.fillRect(0,80,W,H-80);ctx.strokeStyle="#173346";for(let y=-260;y<330;y+=50){let a=iso(-600,y),b=iso(600,y);line(a,b,1,"#173346")}for(let x=-600;x<650;x+=50){let a=iso(x,-300),b=iso(x,350);line(a,b,1,"#173346")}
 ctx.fillStyle="#101827";for(let i=0;i<12;i++){let x=i*W/11,h=30+(i%4)*18;ctx.fillRect(x,80-h,65,h)}ctx.fillStyle="#ff168c";ctx.font="bold 16px Arial";ctx.fillText("DIMENSION 33 // WAR GAMES",24,112);
 for(const r of cover){let a=iso(r.x,r.y),b=iso(r.x+r.w,r.y),c=iso(r.x+r.w,r.y+r.h),dd=iso(r.x,r.y+r.h);ctx.fillStyle="#17313d";ctx.strokeStyle="#35eaff";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.lineTo(c.x,c.y);ctx.lineTo(dd.x,dd.y);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle="#0b202a";ctx.beginPath();ctx.moveTo(dd.x,dd.y);ctx.lineTo(c.x,c.y);ctx.lineTo(c.x,c.y+26);ctx.lineTo(dd.x,dd.y+26);ctx.closePath();ctx.fill();ctx.stroke()}
 let center=iso(0,0);ctx.strokeStyle="#ff168c";ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(center.x,center.y,85,48,0,0,7);ctx.stroke();
 shots.forEach(s=>{let q=iso(s.x,s.y,18);ctx.fillStyle=s.enemy?"#ff6a3d":"#35eaff";ctx.beginPath();ctx.arc(q.x,q.y,4,0,7);ctx.fill()});fx.forEach(f=>{let q=iso(f.x,f.y);ctx.strokeStyle="#ff28a8";ctx.beginPath();ctx.arc(q.x,q.y,f.r,0,7);ctx.stroke()});
-bots.forEach(b=>{if(b.hp>0)drawSkeleton(b,false)});drawSkeleton(player,true);stats.innerHTML="v2.3 RE-ENGINEERED 14-JOINT RIG<br>STATE "+player.moveState+"<br>RIG pelvis · lumbar · ribcage · neck · head · shoulders · elbows · hands · knees · feet<br>"+"<br>HP "+Math.ceil(player.hp)+"<br>BATTERY "+Math.ceil(player.battery)+"%<br>COMBO "+player.combo+"<br>"+player.coverState;requestAnimationFrame(loop)}
+bots.forEach(b=>{if(b.hp>0)drawSkeleton(b,false)});drawSkeleton(player,true);stats.innerHTML="v2.8 24-POINT ARTICULATED RIG<br>STATE "+player.moveState+"<br>RIG root · pelvis · spine1/2/3 · clavicles · elbows · wrists · hands · hips · knees · ankles · toes<br>"+"<br>HP "+Math.ceil(player.hp)+"<br>BATTERY "+Math.ceil(player.battery)+"%<br>COMBO "+player.combo+"<br>"+player.coverState;requestAnimationFrame(loop)}
 function loop(){tick();draw()}loop();
 })();
