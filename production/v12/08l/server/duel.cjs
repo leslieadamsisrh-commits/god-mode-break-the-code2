@@ -1,5 +1,5 @@
 'use strict';
-// The eight vendor modules are exact 08K bytes. Only orchestration is new.
+// Vendor movement/action modules are exact 08K bytes. Only orchestration is new.
 const Core=require('../public/vendor/core.js');
 const Stance=require('../public/vendor/stance-registration.js');
 const Gate=require('../public/slide-gate.js');
