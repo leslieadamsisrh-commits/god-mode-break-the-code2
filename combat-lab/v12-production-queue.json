@@ -39,13 +39,13 @@
       "order": 5,
       "id": "baseball-slide",
       "directions": 24,
-      "status": "ACTIVE_PRODUCTION"
+      "status": "KEYS_LOCKED"
     },
     {
       "order": 6,
       "id": "cover-entry-impact-settle",
       "directions": 24,
-      "status": "QUEUED"
+      "status": "ACTIVE_PRODUCTION"
     },
     {
       "order": 7,
@@ -66,6 +66,6 @@
       "status": "QUEUED"
     }
   ],
-  "activeBatch": "baseball-slide",
-  "nextBatch": "cover-entry-impact-settle"
+  "activeBatch": "cover-entry-impact-settle",
+  "nextBatch": "cover-shimmy"
 }
