@@ -1,0 +1,18 @@
+{
+ "batch":"V12-08K",
+ "status":"LOCAL_STANCE_REGISTRATION_CANDIDATE_DELIVERED",
+ "base":"49b3e984aba59c277963ebceeceaa25021797a68",
+ "verificationCommit":"8741b17f76fd836edab10275583535e800d3877f",
+ "libraryDirectory":"/GOD MODE/V12/08K/Stance Registration/",
+ "delivery":[
+  {"file":"JADE_V12_08K_Playable_Training_Lab.html","bytes":20797286,"sha256":"9453589344e0cdee0787bcbe417107219b963eef82817f8972ea2fb5a7564c0b","library_file_id":"libfile_90ce40716e3c81918f0fd12f21a62175","saveStatus":"succeeded"},
+  {"file":"JADE_V12_08K_Stance_Registration.zip","bytes":16826714,"sha256":"42754eefe6e0da6f37384e962cf271eae5b9de50285e92b62cb66bc59ef38640","library_file_id":"libfile_21c6bd4cec5c8191b1f9ab6e71abc39e","saveStatus":"succeeded","zipFiles":171,"zipIntegrityVerified":true},
+  {"file":"JADE_V12_08K_Playable_Demo.mp4","bytes":307002,"sha256":"f347debc98e0fa445697bd8b4a37e2ed77a335a85759956d41da19b70dbf4327","library_file_id":"libfile_2f8e61c6cd54819185c75de8ee453464","saveStatus":"succeeded"},
+  {"file":"JADE_V12_08K_Actual_Preview.png","bytes":287507,"sha256":"559477d481a17b7e2fe3b677df5b380afc64d2c4260a1818dec014c63819a42a","library_file_id":"libfile_dbb798f8f98081918f1f4074d9dcdf44","saveStatus":"succeeded"},
+  {"file":"JADE_V12_08K_DELIVERY_MANIFEST.json","library_file_id":"libfile_b3e82c5f3f588191bb4b34f6bf076cab","saveStatus":"succeeded"}
+ ],
+ "verification":{"nodeAssertions":132,"browserChecks":25,"unchangedImages":115,"newDrawings":0,"headingRequests":96,"missingDraws":0,"registrationOffComparisonTicks":3000,"registrationOnNoCombatComparisonTicks":3000,"physicalControllerTested":false,"multiplayerTested":false,"hostedDeploymentVerified":false,"method":"Exact standalone HTML via Playwright set_content in Chromium 144.0.7559.96. Five automated test processes, not autonomous AI artists."},
+ "demo":{"seconds":8,"frames":120,"fps":15,"resolution":[1440,1000],"method":"Actual browser screenshots with scripted four-fixed-tick advances, not hand-played or a performance benchmark."},
+ "storageBoundary":"GitHub stores stance-registration.js, manual landmarks, fingerprinted integration edits, assembler, verification report and these receipts. Complete assembled source, image binaries, tests and video are in the ZIP and Library. No new Vercel release or installed GitHub runtime binaries is claimed.",
+ "remaining":"Candidate stance origin is not solved anatomy. Far-foot differences, recovered/final registration, full shoulder raise, recoil/retract, and final 360 art remain unfinished. Enabled final-art muzzle origins intentionally change with the new drawing origin; old movement reference remains untouched. Older multiplayer client code was found, but no compatible match service or current two-player session is verified."
+}
