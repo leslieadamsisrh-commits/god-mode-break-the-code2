@@ -77,9 +77,11 @@ function draw(){
  const ps=toScreen(p.x,p.y);g.save();g.translate(ps.x-p.x,ps.y-p.y);
  if(p.cover){g.strokeStyle=p.coverEdge?'#ff9df0':'#fff36a';g.lineWidth=4;g.beginPath();g.arc(p.x,p.y,23,0,Math.PI*2);g.stroke();const tx=-p.cover.ny,ty=p.cover.nx;g.beginPath();g.moveTo(p.x,p.y);g.lineTo(p.x+tx*32,p.y+ty*32);g.stroke()}
  const aim=Math.atan2(mouse.y-p.y,mouse.x-p.x),bodyAim=p.cover?Math.atan2(-p.cover.ny,-p.cover.nx):aim;
- const bx=p.x,by=p.y-18,fxa=Math.cos(bodyAim),fya=Math.sin(bodyAim),sxa=-fya,sya=fxa;
- const hipX=bx,hipY=by,neckX=bx+fxa*3,neckY=by-24+fya*3,headX=bx+fxa*5,headY=by-36+fya*3;
- const lShouldX=neckX+sxa*9,lShouldY=neckY+sya*5,rShouldX=neckX-sxa*9,rShouldY=neckY-sya*5;
+ const slidePose=p.slide>0,impactPose=p.settle>0,peekPose=p.cover&&p.coverEdge;
+ const weight=slidePose?1:impactPose?.75:peekPose?.45:0;
+ const bx=p.x,by=p.y-(slidePose?5:18),fxa=Math.cos(bodyAim),fya=Math.sin(bodyAim),sxa=-fya,sya=fxa;
+ const hipX=bx-fxa*(slidePose?11:0),hipY=by+(slidePose?7:0),neckX=bx+fxa*(slidePose?15:3),neckY=by-(slidePose?10:24)+fya*3,headX=neckX+fxa*(slidePose?10:2),headY=neckY-(slidePose?9:12)+fya*2;
+ const shoulderTwist=(peekPose?p.peek*8*p.peekSide:0)+(impactPose?5:0),lShouldX=neckX+sxa*(9+shoulderTwist*.25)+fxa*shoulderTwist,lShouldY=neckY+sya*5,rShouldX=neckX-sxa*(9-shoulderTwist*.15)+fxa*shoulderTwist*.65,rShouldY=neckY-sya*5;
  const ax=Math.cos(aim),ay=Math.sin(aim),perpX=-ay,perpY=ax;
  const lElbowX=lShouldX+ax*11+perpX*3,lElbowY=lShouldY+ay*11+perpY*3,rElbowX=rShouldX+ax*10-perpX*2,rElbowY=rShouldY+ay*10-perpY*2;
  const lHandX=lElbowX+ax*11,lHandY=lElbowY+ay*11,rHandX=rElbowX+ax*13,rHandY=rElbowY+ay*13;
@@ -87,10 +89,12 @@ function draw(){
  const psx=p.cover?-p.cover.ny:0,psy=p.cover?p.cover.nx:0;
  const muzzleX=(lHandX+rHandX)/2+ax*23+psx*peekShift,muzzleY=(lHandY+rHandY)/2+ay*23+psy*peekShift;
  const moveMag=Math.min(1,Math.hypot(p.vx,p.vy)/5),stride=Math.sin(t*.35)*12*moveMag,legDir=Math.atan2(p.vy,p.vx),lfx=Math.cos(legDir),lfy=Math.sin(legDir);
- const lkX=hipX+sxa*6+lfx*stride*.35,lkY=hipY+16+sya*3+lfy*stride*.18,rkX=hipX-sxa*6-lfx*stride*.35,rkY=hipY+16-sya*3-lfy*stride*.18;
- const lFootX=lkX+lfx*stride*.55+sxa*2,lFootY=lkY+17+lfy*stride*.25,rFootX=rkX-lfx*stride*.55-sxa*2,rFootY=rkY+17-lfy*stride*.25;
+ let lkX,lkY,rkX,rkY,lFootX,lFootY,rFootX,rFootY;
+ if(slidePose){lkX=hipX+fxa*15+sxa*5;lkY=hipY+8;rkX=hipX-fxa*8-sxa*5;rkY=hipY+12;lFootX=lkX+fxa*22;lFootY=lkY+5;rFootX=rkX-fxa*12+sxa*3;rFootY=rkY+13;}
+ else{lkX=hipX+sxa*6+lfx*stride*.35;lkY=hipY+16+sya*3+lfy*stride*.18;rkX=hipX-sxa*6-lfx*stride*.35;rkY=hipY+16-sya*3-lfy*stride*.18;lFootX=lkX+lfx*stride*.55+sxa*2;lFootY=lkY+17+lfy*stride*.25;rFootX=rkX-lfx*stride*.55-sxa*2;rFootY=rkY+17-lfy*stride*.25;}
  g.lineCap='round';g.strokeStyle='#ff8bd0';g.lineWidth=7;g.beginPath();g.moveTo(hipX,hipY);g.lineTo(neckX,neckY);g.stroke();
  g.strokeStyle='#f48ac5';g.lineWidth=5;for(const leg of [[hipX+sxa*5,hipY,lkX,lkY,lFootX,lFootY],[hipX-sxa*5,hipY,rkX,rkY,rFootX,rFootY]]){g.beginPath();g.moveTo(leg[0],leg[1]);g.lineTo(leg[2],leg[3]);g.lineTo(leg[4],leg[5]);g.stroke()}g.fillStyle='#35eaff';for(const j of [[lkX,lkY],[rkX,rkY],[lFootX,lFootY],[rFootX,rFootY]]){g.beginPath();g.arc(j[0],j[1],3,0,Math.PI*2);g.fill()}
+ if(impactPose){g.strokeStyle='#fff36a';g.lineWidth=3;g.beginPath();g.arc(hipX,hipY,20+(7-p.settle)*3,0,Math.PI*2);g.stroke();}
  g.strokeStyle='#ff4eb1';g.lineWidth=5;for(const pts of [[lShouldX,lShouldY,lElbowX,lElbowY,lHandX,lHandY],[rShouldX,rShouldY,rElbowX,rElbowY,rHandX,rHandY]]){g.beginPath();g.moveTo(pts[0],pts[1]);g.lineTo(pts[2],pts[3]);g.lineTo(pts[4],pts[5]);g.stroke()}
  g.fillStyle='#ffc4e7';g.beginPath();g.arc(headX,headY,8,0,Math.PI*2);g.fill();g.strokeStyle='#ff4eb1';g.lineWidth=2;g.beginPath();g.moveTo(headX-5,headY-7);g.lineTo(headX-8,headY-14);g.moveTo(headX+5,headY-7);g.lineTo(headX+8,headY-14);g.stroke();g.strokeStyle='#35eaff';g.lineWidth=2;g.beginPath();g.moveTo(headX,headY);g.lineTo(headX+ax*10,headY+ay*10);g.stroke();
  g.fillStyle='#35eaff';for(const h of [[lHandX,lHandY],[rHandX,rHandY]]){g.beginPath();g.arc(h[0],h[1],4,0,Math.PI*2);g.fill()}
