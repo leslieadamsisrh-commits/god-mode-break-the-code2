@@ -28,11 +28,11 @@ bots.forEach(b=>{if(b.hp<=0)return;b.cool--;let a=Math.atan2(player.y-b.y,player
 shots.forEach(s=>{s.x+=s.vx;s.y+=s.vy;s.life--;if(s.enemy&&d(s,player)<20){s.life=0;if(player.parry){s.enemy=false;s.life=45;s.vx*=-1.4;s.vy*=-1.4;player.combo++}else if(!player.shield)player.hp-=7}else if(!s.enemy)bots.forEach(b=>{if(b.hp>0&&d(s,b)<20){b.hp-=8;s.life=0;player.combo++}})});shots=shots.filter(s=>s.life>0);fx.forEach(f=>{f.r+=3;f.life--});fx=fx.filter(f=>f.life>0);player.battery=clamp(player.battery+.05,0,100);if(player.hp<=0)reset();pressed={}}
 function line(a,b,w=5,col="#ff58b7"){ctx.strokeStyle=col;ctx.lineWidth=w;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
 function drawSkeleton(o,isPlayer=true){
- const P=iso(o.x,o.y),pose=isPlayer?poseSeq()[poseIndex]:null,poseDrop=pose?.pelvisDrop||0,posePitch=pose?.spinePitch||0,aim=isPlayer?Math.atan2(mouse.y-H/2,mouse.x-W/2):Math.atan2(player.y-o.y,player.x-o.x),slide=isPlayer&&o.slide>0,roadie=isPlayer&&o.roadie,lean=isPlayer?(o.coverLean||0):0,spd=Math.min(1,len(o.vx,o.vy)/5),ph=o.phase||t*.08,S=isPlayer?1.6:1;
+ const P=iso(o.x,o.y),pose=isPlayer?poseSeq()[poseIndex]:null,poseDrop=pose?.pelvisDrop||0,posePitch=pose?.spinePitch||0,poseHip=pose?.hipShift||0,poseShoulder=pose?.shoulderLag||0,aim=isPlayer?Math.atan2(mouse.y-H/2,mouse.x-W/2):Math.atan2(player.y-o.y,player.x-o.x),slide=isPlayer&&o.slide>0,roadie=isPlayer&&o.roadie,lean=isPlayer?(o.coverLean||0):0,spd=Math.min(1,len(o.vx,o.vy)/5),ph=o.phase||t*.08,S=isPlayer?1.6:1;
  const F={x:Math.cos(aim),y:Math.sin(aim)},R={x:-F.y,y:F.x},drop=isPlayer?((o.crouch||0)*18+(o.coverDrop||0)*12+(o.impact||0)*1.1):0,cycle=Math.sin(ph),cycle2=Math.cos(ph),stride=cycle*24*spd;
  const J={},j=(n,x,y)=>J[n]={x,y},bone=(a,b,w,c)=>line(J[a],J[b],w,c),dot=(n,r,c)=>{ctx.fillStyle=c;ctx.beginPath();ctx.arc(J[n].x,J[n].y,r,0,7);ctx.fill()};
  const hipDrop=(1-Math.abs(cycle))*5*spd+(roadie?7:0)+(isPlayer?poseDrop*.35:0),lateral=cycle2*5*spd,forward=roadie?10:slide?20:0;
- j("root",P.x+R.x*lateral-F.x*forward,P.y-(slide?7:34)*S+hipDrop+drop);j("sacrum",J.root.x,J.root.y-5);
+ j("root",P.x+R.x*(lateral+poseHip)-F.x*forward,P.y-(slide?7:34)*S+hipDrop+drop);j("sacrum",J.root.x,J.root.y-5);
  j("pelvisL",J.sacrum.x+R.x*9,J.sacrum.y+R.y*4);j("pelvisR",J.sacrum.x-R.x*9,J.sacrum.y-R.y*4);
  const counter=-cycle*5*spd,poseFold=isPlayer?posePitch*.28:0,impactFold=isPlayer?(o.impact||0)*1.4:0,spineLean=(roadie?18:slide?30:lean*15+impactFold)+poseFold;
  j("lumbar1",J.sacrum.x+F.x*spineLean*.22,J.sacrum.y-(slide?7:(12-(isPlayer?(o.crouch||0)*3:0)))*S);
@@ -41,7 +41,7 @@ function drawSkeleton(o,isPlayer=true){
  j("thoracic2",J.thoracic1.x+F.x*spineLean*.18+R.x*counter*.25,J.thoracic1.y-(slide?5:10)*S);
  j("sternum",J.thoracic2.x+F.x*spineLean*.12+R.x*counter*.3,J.thoracic2.y-(slide?4:9)*S);
  j("neckBase",J.sternum.x+F.x*lean*3,J.sternum.y-7*S);j("neckTop",J.neckBase.x+F.x*lean*3,J.neckBase.y-7*S);j("head",J.neckTop.x+F.x*lean*5,J.neckTop.y-13*S);
- const clavTw=lean*15+cycle*4*spd,SW=15*S;j("clavL",J.sternum.x+R.x*SW+F.x*clavTw,J.sternum.y+R.y*7);j("clavR",J.sternum.x-R.x*SW+F.x*clavTw*.65,J.sternum.y-R.y*7);
+ const clavTw=lean*15+cycle*4*spd+poseShoulder,SW=15*S;j("clavL",J.sternum.x+R.x*SW+F.x*clavTw,J.sternum.y+R.y*7);j("clavR",J.sternum.x-R.x*SW+F.x*clavTw*.65,J.sternum.y-R.y*7);
  j("shoulderL",J.clavL.x+R.x*5,J.clavL.y+R.y*3);j("shoulderR",J.clavR.x-R.x*5,J.clavR.y-R.y*3);
  for(const side of ["L","R"]){const sg=side==="L"?1:-1,sh=J["shoulder"+side];j("upperArm"+side,sh.x+F.x*(12+lean*5)+R.x*sg*5,sh.y+F.y*(10+lean*4)+R.y*sg*3);j("elbow"+side,sh.x+F.x*(25+lean*10)+R.x*sg*7,sh.y+F.y*(20+lean*7)+R.y*sg*4);j("forearm"+side,J["elbow"+side].x+F.x*12,J["elbow"+side].y+F.y*10);j("wrist"+side,J["forearm"+side].x+F.x*12,J["forearm"+side].y+F.y*10);j("hand"+side,J["wrist"+side].x+F.x*7,J["wrist"+side].y+F.y*6)}
  j("hipL",J.pelvisL.x,J.pelvisL.y+4);j("hipR",J.pelvisR.x,J.pelvisR.y+4);
@@ -60,6 +60,6 @@ ctx.fillStyle="#101827";for(let i=0;i<12;i++){let x=i*W/11,h=30+(i%4)*18;ctx.fil
 for(const r of cover){let a=iso(r.x,r.y),b=iso(r.x+r.w,r.y),c=iso(r.x+r.w,r.y+r.h),dd=iso(r.x,r.y+r.h);ctx.fillStyle="#17313d";ctx.strokeStyle="#35eaff";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.lineTo(c.x,c.y);ctx.lineTo(dd.x,dd.y);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle="#0b202a";ctx.beginPath();ctx.moveTo(dd.x,dd.y);ctx.lineTo(c.x,c.y);ctx.lineTo(c.x,c.y+26);ctx.lineTo(dd.x,dd.y+26);ctx.closePath();ctx.fill();ctx.stroke()}
 let center=iso(0,0);ctx.strokeStyle="#ff168c";ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(center.x,center.y,85,48,0,0,7);ctx.stroke();
 shots.forEach(s=>{let q=iso(s.x,s.y,18);ctx.fillStyle=s.enemy?"#ff6a3d":"#35eaff";ctx.beginPath();ctx.arc(q.x,q.y,4,0,7);ctx.fill()});fx.forEach(f=>{let q=iso(f.x,f.y);ctx.strokeStyle="#ff28a8";ctx.beginPath();ctx.arc(q.x,q.y,f.r,0,7);ctx.stroke()});
-bots.forEach(b=>{if(b.hp>0)drawSkeleton(b,false)});drawSkeleton(player,true);stats.innerHTML="v4.1 POSE PLAYER + COVER MOTION LAB<br>STATE "+player.moveState+"<br>RIG pelvis shift · segmented spine · counter-rotation · clavicles · arm chains · planted gait · ankles · toes<br>"+"<br>HP "+Math.ceil(player.hp)+"<br>BATTERY "+Math.ceil(player.battery)+"%<br>COMBO "+player.combo+"<br>"+player.coverState;requestAnimationFrame(loop)}
+bots.forEach(b=>{if(b.hp>0)drawSkeleton(b,false)});drawSkeleton(player,true);stats.innerHTML="v4.2 WEIGHT-SHIFT POSE ENGINE<br>STATE "+player.moveState+"<br>RIG pelvis shift · segmented spine · counter-rotation · clavicles · arm chains · planted gait · ankles · toes<br>"+"<br>HP "+Math.ceil(player.hp)+"<br>BATTERY "+Math.ceil(player.battery)+"%<br>COMBO "+player.combo+"<br>"+player.coverState;requestAnimationFrame(loop)}
 function loop(){tick();draw()}loop();
 })();
