@@ -9,7 +9,7 @@ onkeyup=e=>keys[e.key.toLowerCase()]=0;
 c.onmousemove=e=>{mouse.x=e.clientX;mouse.y=e.clientY};c.onmousedown=()=>mouse.down=true;c.onmouseup=()=>mouse.down=false;
 function worldBlocks(){return blocks.map(b=>({x:W/2+b[0],y:H/2+b[1],w:b[2],h:b[3]}))}
 function reset(){
- p={x:W*.5,y:H*.72,vx:0,vy:0,r:16,hp:100,b:100,slide:0,slideCd:0,pin:0,pinCd:0,shield:false,parry:0,cover:null,coverState:'FREE',coverEdge:false,coverSpeed:0,settle:0,combo:0,melee:0,shotCd:0,grip:null};
+ p={x:W*.5,y:H*.72,vx:0,vy:0,r:16,hp:100,b:100,slide:0,slideCd:0,pin:0,pinCd:0,shield:false,parry:0,cover:null,coverState:'FREE',coverEdge:false,coverSpeed:0,settle:0,peek:0,peekSide:0,combo:0,melee:0,shotCd:0,grip:null};
  bots=[{x:W*.25,y:H*.3,hp:100,kind:0,cool:20,vx:0,vy:0},{x:W*.75,y:H*.32,hp:100,kind:1,cool:40,vx:0,vy:0}];
  shots=[];fx=[];blocks=[[-170,-85,120,34],[55,-90,130,34],[-300,70,135,34],[165,80,135,34],[-70,135,140,30],[-410,-20,55,180],[355,-20,55,180]];
 }
@@ -30,7 +30,7 @@ function fireShotgun(){if(p.shotCd||p.cover&&keys.s)return;p.shotCd=18;const a=M
 function enemyFire(b,a){shots.push({x:b.x,y:b.y,vx:Math.cos(a)*7,vy:Math.sin(a)*7,life:90,enemy:true,dmg:7})}
 function aimedBot(max=260){let best=null,score=1e9;const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);for(const b of bots){if(b.hp<=0)continue;const d=dist(p.x,p.y,b.x,b.y);if(d>max)continue;const da=Math.abs(Math.atan2(Math.sin(Math.atan2(b.y-p.y,b.x-p.x)-a),Math.cos(Math.atan2(b.y-p.y,b.x-p.x)-a)));const s=da*180+d*.15;if(da<.65&&s<score){score=s;best=b}}return best}
 function tick(){
- t++;p.shotCd=Math.max(0,p.shotCd-1);p.slideCd=Math.max(0,p.slideCd-1);p.pinCd=Math.max(0,p.pinCd-1);p.parry=Math.max(0,p.parry-1);p.melee=Math.max(0,p.melee-1);
+ t++;p.shotCd=Math.max(0,p.shotCd-1);p.peek=Math.max(0,p.peek-.12);p.slideCd=Math.max(0,p.slideCd-1);p.pinCd=Math.max(0,p.pinCd-1);p.parry=Math.max(0,p.parry-1);p.melee=Math.max(0,p.melee-1);
  let dx=(keys.d?1:0)-(keys.a?1:0),dy=(keys.s?1:0)-(keys.w?1:0),mag=Math.hypot(dx,dy)||1;
  if(pressed.shift&&Math.hypot(dx,dy)&&!p.slideCd&&!p.cover){p.slide=18;p.slideCd=28;const q=Math.max(7,Math.hypot(p.vx,p.vy));p.vx=dx/mag*q*1.35;p.vy=dy/mag*q*1.35;fx.push({x:p.x,y:p.y,r:8,life:12,type:'slide'})}
  if(pressed.e&&p.b>3){p.parry=8;fx.push({x:p.x,y:p.y,r:22,life:10,type:'parry'})}
@@ -52,7 +52,8 @@ function tick(){
  if(p.pin)p.pin--;
  let vmax=p.pin?16:p.slide?11:6.2,q=Math.hypot(p.vx,p.vy);if(q>vmax){p.vx*=vmax/q;p.vy*=vmax/q}
  p.x=clamp(p.x+p.vx,22,W-22);p.y=clamp(p.y+p.vy,110,H-28);magnetCover();resolve(p,true);
- if(mouse.down&&p.shotCd===0){if(p.cover&&p.coverEdge)p.coverState='PEEK / POP-FIRE';fireShotgun();}
+ if(p.cover&&p.coverEdge){const tx=-p.cover.ny,ty=p.cover.nx,aimDot=Math.cos(Math.atan2(mouse.y-p.y,mouse.x-p.x))*tx+Math.sin(Math.atan2(mouse.y-p.y,mouse.x-p.x))*ty;p.peekSide=aimDot<0?-1:1;if(Math.abs(aimDot)>.18){p.peek=Math.min(1,p.peek+.18);p.coverState=p.peekSide<0?'CORNER PEEK LEFT':'CORNER PEEK RIGHT';}}
+ if(mouse.down&&p.shotCd===0){if(p.cover&&p.coverEdge){p.peek=1;p.coverState='POP-FIRE';}fireShotgun();}
  if(pressed.f){p.melee=10;const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);for(const b of bots){if(b.hp>0&&dist(p.x,p.y,b.x,b.y)<78){const toward=Math.cos(Math.atan2(b.y-p.y,b.x-p.x)-a);if(toward>.2){b.hp-=24;b.vx+=Math.cos(a)*7;b.vy+=Math.sin(a)*7;p.combo++;fx.push({x:b.x,y:b.y,r:15,life:14,type:'melee'})}}}}
  if(keys.q&&p.b>0){if(!p.grip||p.grip.hp<=0)p.grip=aimedBot();if(p.grip){const a=Math.atan2(mouse.y-p.y,mouse.x-p.x),tx=p.x+Math.cos(a)*125,ty=p.y+Math.sin(a)*125;p.grip.x+=(tx-p.grip.x)*.13;p.grip.y+=(ty-p.grip.y)*.13;p.grip.vx*=.5;p.grip.vy*=.5;p.b-=.12;fx.push({x:p.grip.x,y:p.grip.y,r:20,life:2,type:'grip'})}}else if(p.grip){const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);p.grip.vx=Math.cos(a)*11;p.grip.vy=Math.sin(a)*11;p.grip=null}
  for(const b of bots){if(b.hp<=0)continue;b.cool--;b.x+=b.vx;b.y+=b.vy;b.vx*=.88;b.vy*=.88;resolve(b,false);const a=Math.atan2(p.y-b.y,p.x-b.x),d=dist(p.x,p.y,b.x,b.y);
@@ -80,12 +81,15 @@ function draw(){
  const ax=Math.cos(aim),ay=Math.sin(aim),perpX=-ay,perpY=ax;
  const lElbowX=lShouldX+ax*11+perpX*3,lElbowY=lShouldY+ay*11+perpY*3,rElbowX=rShouldX+ax*10-perpX*2,rElbowY=rShouldY+ay*10-perpY*2;
  const lHandX=lElbowX+ax*11,lHandY=lElbowY+ay*11,rHandX=rElbowX+ax*13,rHandY=rElbowY+ay*13;
- const muzzleX=(lHandX+rHandX)/2+ax*23,muzzleY=(lHandY+rHandY)/2+ay*23;
+ const peekShift=p.cover&&p.coverEdge?p.peek*12*p.peekSide:0;
+ const psx=p.cover?-p.cover.ny:0,psy=p.cover?p.cover.nx:0;
+ const muzzleX=(lHandX+rHandX)/2+ax*23+psx*peekShift,muzzleY=(lHandY+rHandY)/2+ay*23+psy*peekShift;
  g.lineCap='round';g.strokeStyle='#ff8bd0';g.lineWidth=7;g.beginPath();g.moveTo(hipX,hipY);g.lineTo(neckX,neckY);g.stroke();
  g.strokeStyle='#ff4eb1';g.lineWidth=5;for(const pts of [[lShouldX,lShouldY,lElbowX,lElbowY,lHandX,lHandY],[rShouldX,rShouldY,rElbowX,rElbowY,rHandX,rHandY]]){g.beginPath();g.moveTo(pts[0],pts[1]);g.lineTo(pts[2],pts[3]);g.lineTo(pts[4],pts[5]);g.stroke()}
  g.fillStyle='#ffc4e7';g.beginPath();g.arc(headX,headY,7,0,Math.PI*2);g.fill();g.strokeStyle='#35eaff';g.lineWidth=2;g.beginPath();g.moveTo(headX,headY);g.lineTo(headX+ax*10,headY+ay*10);g.stroke();
  g.fillStyle='#35eaff';for(const h of [[lHandX,lHandY],[rHandX,rHandY]]){g.beginPath();g.arc(h[0],h[1],4,0,Math.PI*2);g.fill()}
- g.strokeStyle='#d9fbff';g.lineWidth=4;g.beginPath();g.moveTo((lHandX+rHandX)/2,(lHandY+rHandY)/2);g.lineTo(muzzleX,muzzleY);g.stroke();
+ g.strokeStyle='#d9fbff';g.lineWidth=4;g.beginPath();g.moveTo((lHandX+rHandX)/2+psx*peekShift,(lHandY+rHandY)/2+psy*peekShift);g.lineTo(muzzleX,muzzleY);g.stroke();
+ if(p.cover&&p.coverEdge){g.strokeStyle='#ffef72';g.lineWidth=2;g.beginPath();g.moveTo(headX,headY);g.lineTo(headX+psx*peekShift,headY+psy*peekShift);g.stroke();g.fillStyle='#fff';g.beginPath();g.arc(headX+psx*peekShift,headY+psy*peekShift,3,0,Math.PI*2);g.fill();}
  g.fillStyle=p.shield?'#66eaff':'#ff1d9c';g.globalAlpha=.45;g.beginPath();g.arc(p.x,p.y,p.r,0,Math.PI*2);g.fill();g.globalAlpha=1;
  if(p.shield){g.strokeStyle=p.parry?'#fff':'#55eaff';g.lineWidth=p.parry?6:3;g.beginPath();g.arc(p.x,p.y,28,0,Math.PI*2);g.stroke()}
  g.strokeStyle='#ff69c5';g.lineWidth=2;g.beginPath();g.moveTo(p.x,p.y);g.lineTo(mouse.x,mouse.y);g.stroke();
