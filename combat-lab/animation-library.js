@@ -32,6 +32,13 @@ ROADIE_RUN:{loop:true,poses:[{name:"CONTACT_L",t:0,drop:16,hip:-7,torso:8},{name
 PIVOT_90:{loop:false,poses:[{name:"LOAD",t:0},{name:"PLANT",t:.25},{name:"HIP_TURN",t:.5},{name:"CHEST_FOLLOW",t:.75},{name:"EXIT",t:1}]},
 PIVOT_180:{loop:false,poses:[{name:"BRAKE",t:0},{name:"DROP",t:.2},{name:"PLANT",t:.4},{name:"HIP_REVERSE",t:.62},{name:"TORSO_CATCH",t:.82},{name:"DRIVE",t:1}]}},
 traversal:{MANTLE:{loop:false,poses:[{name:"LOAD",t:0},{name:"HANDS_PLANT",t:.25},{name:"HIP_RISE",t:.5},{name:"LEGS_CLEAR",t:.75},{name:"LAND",t:1}]}},
-combat:{SHOTGUN_POP:{loop:false,poses:[{name:"READY",t:0},{name:"PRESENT",t:.35},{name:"FIRE",t:.55},{name:"RECOIL",t:.7},{name:"RECOVER",t:1}]}},
+combat:{
+SHOTGUN_READY:{loop:false,poses:[{name:"LOW_READY",t:0,duck:10,gun:0,head:0},{name:"SHOULDER_RISE",t:.2,duck:8,gun:.25,head:.15},{name:"CHEEK_WELD",t:.42,duck:6,gun:.55,head:.38},{name:"SIGHT_ALIGN",t:.68,duck:4,gun:.8,head:.7},{name:"AIM_READY",t:1,duck:3,gun:1,head:1}]},
+SHOTGUN_POP:{loop:false,poses:[{name:"READY",t:0,gun:1,head:1,recoil:0},{name:"PRESENT",t:.28,gun:1.08,head:1,recoil:0},{name:"FIRE",t:.48,gun:1.1,head:.96,recoil:.2},{name:"RECOIL",t:.62,gun:.9,head:.78,recoil:1},{name:"RECOVER",t:.82,gun:.95,head:.9,recoil:.35},{name:"READY",t:1,gun:1,head:1,recoil:0}]},
+SHOTGUN_DUCK:{loop:false,poses:[{name:"AIM",t:0,duck:3},{name:"HEAD_DROP",t:.22,duck:12},{name:"SHOULDER_FOLD",t:.45,duck:20},{name:"LOW_HOLD",t:.72,duck:26},{name:"RETURN",t:1,duck:3}]},
+RIFLE_READY:{loop:false,poses:[{name:"LOW",t:0},{name:"STOCK_UP",t:.3},{name:"CHEEK",t:.55},{name:"AIM",t:1}]},
+HANDGUN_READY:{loop:false,poses:[{name:"LOW",t:0},{name:"ELBOW_UP",t:.35},{name:"PRESENT",t:.7},{name:"AIM",t:1}]},
+SNIPER_READY:{loop:false,poses:[{name:"LOW",t:0},{name:"STOCK_PLANT",t:.3},{name:"CHEEK_WELD",t:.6},{name:"SCOPE_ALIGN",t:1}]}
+},
 psychic:{PINBALL:{loop:false,poses:[{name:"LOAD",t:0},{name:"LAUNCH",t:.25},{name:"FLIGHT",t:.55},{name:"IMPACT",t:.78},{name:"REDIRECT",t:1}]}}
 }};
