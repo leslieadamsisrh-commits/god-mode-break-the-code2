@@ -1,0 +1,61 @@
+{
+  "core.js": {
+    "beforeSha256": "19c912d6c377bdf66047e03f3a263522b6e0f9deb8c3b6caaa7f2d2ac23ea73f",
+    "afterSha256": "8be1b47d9515cbf9418c063bc2caf3879e11d1a8177ba08c360ee64bde65da48",
+    "replacements": [
+      {"before":"class World{","after":"class World{\n socket(p=this.p,which=\"muzzle\"){return sampleSocket(p,which);}"},
+      {"before":":sampleSocket(p),breech=","after":":this.socket(p),breech="},
+      {"before":":sampleSocket(p,'breech');","after":":this.socket(p,'breech');"},
+      {"before":"socket:sampleSocket(this.p)","after":"socket:this.socket(this.p)"}
+    ]
+  },
+  "app.js": {
+    "beforeSha256":"a6ae3248d8cdf0001fd2b5b8c1533bcbb8fe9960c4afa1bef30b980919b5f855",
+    "afterSha256":"b2b0e2f191d44a838426239f885adbafaa557a0a559a62205c0f17a22071808a",
+    "replacements":[
+      {"before":"Flow=window.JadeFlow,Route=","after":"Flow=window.JadeFlow,Stance=window.JadeStance,Route="},
+      {"before":"let world=new Flow.World()","after":"let world=new Stance.World()"},
+      {"before":"poseRouting:true};","after":"poseRouting:true,stanceRegistration:true,stanceMarks:false};"},
+      {"before":"for(const id of ['finalArt'","after":"$('stanceRegistration').onchange=e=>{settings.stanceRegistration=e.target.checked;world.setRegistration(e.target.checked);traceKey='';draw();};\nfor(const id of ['stanceMarks','finalArt'"},
+      {"before":"anchor:f.ground,scale:C.ART_SCALE","after":"poseIndex:actor.pose,anchor:Stance.anchor(actor.pose,settings.stanceRegistration),scale:C.ART_SCALE"},
+      {"before":"lastFrame=frame;lastDrawable=frame;","after":"lastFrame=frame;lastDrawable=frame;\n if(frame.final&&settings.stanceMarks){const m=Stance.screenLandmarks(frame,o,zoom);for(const [key,color] of [['pelvis','#ffca67'],['nearFoot','#64e8bd'],['farFoot','#64e8bd'],['stance','#ff84bf']]){const q=m[key];line({x:q.x-5,y:q.y},{x:q.x+5,y:q.y},color,2);line({x:q.x,y:q.y-5},{x:q.x,y:q.y+5},color,2);text(key+' (candidate)',q.x+8,q.y-6,9,color);}line(m.nearFoot,m.farFoot,'#64e8bd88');}"},
+      {"before":"frame.id+'|'+frame.file+'|'","after":"frame.id+'|'+frame.anchor.join(',')+'|'+frame.file+'|'"},
+      {"before":"poseRouting:settings.poseRouting,flow:","after":"stanceRegistration:settings.stanceRegistration,poseRouting:settings.poseRouting,flow:"},
+      {"before":"FINAL JADE / original pose anchors; larger transition remains unfinished","after":"FINAL JADE / stance origin is a candidate; source pixels and size unchanged"},
+      {"before":"const m=C.sampleSocket(p),M=","after":"const m=world.socket(p),M="},
+      {"before":"text('V12 · 08J / CONTINUOUS CHARACTER DISPLAY'","after":"text('V12 · 08K / STANCE REGISTRATION TEST'"},
+      {"before":"Ready fallback resident · action-aware cover preserved · no new drawings · final Jade: one view","after":"Stance origin / shared muzzle transform · source images unchanged · one final-art view"},
+      {"before":"actionReadout();inspector();}","after":"actionReadout();inspector();const st=lastFrame?.final?Stance.screenLandmarks(lastFrame,point(p.x,p.y),zoom):null;const sm=point(world.socket(p).x,world.socket(p).y,world.socket(p).z);$('stanceStatus').textContent=(settings.stanceRegistration?'08K candidate center':'08J foot-origin comparison')+(st?'\\nSOURCE ORIGIN '+lastFrame.anchor.join(',')+' / muzzle projection gap '+Math.hypot(st.muzzle.x-sm.x,st.muzzle.y-sm.y).toFixed(3)+'px':'\\nRecovered artwork: archived anchors unchanged')+'\\nManual pelvis / feet marks. Far-foot motion still needs drawings.';}"},
+      {"before":"settings:{...settings},finalArt:","after":"registration:{enabled:settings.stanceRegistration,sourceAnchor:lastFrame?.anchor||null,landmarks:lastFrame?.final?Stance.screenLandmarks(lastFrame,point(world.p.x,world.p.y),zoom):null},settings:{...settings},finalArt:"},
+      {"before":"if('flowMode' in s)world.setFlow(!!s.flowMode);","after":"if('flowMode' in s)world.setFlow(!!s.flowMode);if('stanceRegistration' in s){world.setRegistration(!!s.stanceRegistration);traceKey='';}"},
+      {"before":"build:'V12-08J'","after":"build:'V12-08K'"},
+      {"before":"'Jade-V12-08J-events.json'","after":"'Jade-V12-08K-events.json'"},
+      {"before":"'Jade-08J-gameplay.webm'","after":"'Jade-08K-gameplay.webm'"}
+    ]
+  },
+  "index.html": {
+    "beforeSha256":"79212f82d7d07b29f32224bf41ae8599d3fc7823354a7a6d0e19e00010b3245b",
+    "afterSha256":"c300eb4a0e3261e1e0fef296fe008fedee36cf7cc1e990d23da2be3e5b2a7909",
+    "replacements":[
+      {"before":"pose lab 08J","after":"pose lab 08K"},
+      {"before":"TRAINING LAB / V12 · 08J","after":"TRAINING LAB / V12 · 08K"},
+      {"before":"CONTINUOUS CHARACTER DISPLAY","after":"STANCE ORIGIN / SHARED MUZZLE"},
+      {"before":"<pre id=\"assetStatus\"","after":"<pre id=\"stanceStatus\" aria-live=\"polite\"></pre><pre id=\"assetStatus\""},
+      {"before":"<label><input id=\"finalArt\"","after":"<label><input id=\"stanceRegistration\" type=\"checkbox\" checked> 08K stance center (off = 08J foot-origin)</label><label><input id=\"stanceMarks\" type=\"checkbox\"> Show candidate pelvis / both feet</label><label><input id=\"finalArt\""},
+      {"before":"<script src=\"cover-metadata.js\">","after":"<script src=\"stance-registration.js\"></script><script src=\"cover-metadata.js\">"}
+    ]
+  },
+  "style.css": {
+    "beforeSha256":"a2e8295ef8fbcede414edf4a36b279070731e70df70458e920a6f39abca5d163",
+    "afterSha256":"b86a83a1f05887aaba4cd191e0bd86a47695bcd4eb9acb19d5e0aeaa61435eda",
+    "replacements":[{"before":"#assetStatus{","after":"#stanceStatus{font-size:10px;white-space:pre-wrap;padding:8px;color:#efbdd9;border:1px solid #693d62;}\n#assetStatus{"}]
+  },
+  "tools/build_standalone.py": {
+    "beforeSha256":"e0b4c9ff35357fa95cfa706feab3f14226adce2a4378bee107198fae9be66f26",
+    "afterSha256":"2cc8853b1a12c327bad4788a8b86a2b884e7679981dceaf7de5f2411025e762d",
+    "replacements":[
+      {"before":"'motion-flow.js','cover-metadata.js'","after":"'motion-flow.js','stance-registration.js','cover-metadata.js'"},
+      {"before":"JADE_V12_08J_Playable_Training_Lab.html","after":"JADE_V12_08K_Playable_Training_Lab.html"}
+    ]
+  }
+}
