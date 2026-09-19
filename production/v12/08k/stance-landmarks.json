@@ -1,0 +1,10 @@
+{
+ "schema":1,"batch":"08K","scope":"one supported final-design cover view; provisional stance-origin experiment",
+ "visualReferenceSha256":"fff8eeb8fcc3ef1ff3a830684c1ac5aac5f8f142cb3ed92283e8b6ec59d49e89",
+ "poses":{
+  "K01":{"file":"assets/final/K01.png","sha256":"2ff35d3c8f6663f3c51ef11a8f5f4e7dcc4a5eaa085d4a94c719a6bd73cc19bc","sourceSize":[620,809],"legacyFootOrigin":[125,790],"candidateStanceOrigin":[300,790],"landmarks":{"pelvis":[300,433],"nearFoot":[125,790],"farFoot":[455,756]},"status":"MANUALLY_MARKED_CANDIDATE","note":"Translation only. Ground Y and source scale unchanged. Far-foot pose spread remains; no anatomy correction claimed."},
+  "K02":{"file":"assets/final/K02.png","sha256":"435a882af1a4fd906a4857592176860c6a67eb235cfcc5cb8ec7ea56437e110b","sourceSize":[640,809],"legacyFootOrigin":[145,790],"candidateStanceOrigin":[320,790],"landmarks":{"pelvis":[320,433],"nearFoot":[145,790],"farFoot":[475,756]},"status":"MANUALLY_MARKED_CANDIDATE","note":"Translation only. Ground Y and source scale unchanged. Far-foot pose spread remains; no anatomy correction claimed."},
+  "K03":{"file":"assets/final/K03.png","sha256":"8370e561b7b9b4f5495e6793b1a32821b03ed0cf7f8f8ec617c67a4f12c4a77a","sourceSize":[684,809],"legacyFootOrigin":[163,790],"candidateStanceOrigin":[340,790],"landmarks":{"pelvis":[340,433],"nearFoot":[163,790],"farFoot":[596,767]},"status":"MANUALLY_MARKED_CANDIDATE","note":"Translation only. Ground Y and source scale unchanged. Far-foot pose spread remains; no anatomy correction claimed."}
+ },
+ "rules":["Source pixels unchanged","No scale change","No mirror or invented views","Same origin used by draw and socket","Landmarks are manual candidates, not a validated skeletal rig"]
+}
