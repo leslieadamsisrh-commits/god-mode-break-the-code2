@@ -1,0 +1,18 @@
+{
+  "source": {
+    "repository": "leslieadamsisrh-commits/god-mode-break-the-code2",
+    "ref": "approved/shotgun-lab-v57",
+    "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/manifest.json",
+    "gitBlob": "d17ded5aa7edff0f2184c8c91fa92d3666511c96",
+    "selectorPath": "recovery/shotgun-lab-v57/lab-pose.js",
+    "selectorGitBlob": "9115105949813bb0424640c9ee68ce0760c062a3",
+    "extraction": "Cover metadata transcribed from inspected connector line ranges; not a complete raw manifest copy."
+  },
+  "basicDirections": [0,1,2,4,5,7,8,10,11,12,13,14,16,17,19,20,22,23],
+  "legacyDirections": [3,9,15,21],
+  "extendedDirections": [6,18],
+  "kickAnchorOverrides": {"11":[216,336],"12":[194,336]},
+  "basic": {"contact":[0,1],"brace":1,"lateral":[],"peek":2,"fire":3,"return":4,"kick":5,"recovery":1},
+  "legacy": {"contact":[0,1],"brace":2,"lateral":[],"peek":3,"fire":4,"return":2,"kick":5,"recovery":2},
+  "extended": {"contact":[0,1,2],"brace":4,"lateral":[5,6],"peek":7,"fire":8,"return":9,"kick":10,"recovery":11}
+}
