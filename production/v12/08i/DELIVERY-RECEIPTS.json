@@ -1,0 +1,32 @@
+{
+  "batch":"V12-08I",
+  "status":"LOCAL_PLAYABLE_COVER_ROUTING_DELIVERED",
+  "reportCommit":"1908c7c63ef3563481244fe7eccfd62891cc8f2d",
+  "routerCommit":"93f238462ab8c3c821a979034283d851c6689af0",
+  "assemblerCommit":"d2b34b43d749fa295dd2a293da39316ca7fb979f",
+  "libraryDirectory":"/GOD MODE/V12/08I/Cover Pose Routing/",
+  "delivery":[
+    {"file":"JADE_V12_08I_Playable_Training_Lab.html","bytes":20785077,"sha256":"e8363bfa668d692f190d1df8626b452108b2bd0190631fe4d7d648d788e752a1","library_file_id":"libfile_dd331112707c8191bd959af9b400f7f6","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08I_Cover_Pose_Routing.zip","bytes":17252403,"sha256":"d927b2ed25498af69f5df4a666fde135c88470edb841a77268cda007a4383c14","library_file_id":"libfile_e4dc2d7a65d481919c20da7da975d4b3","saveStatus":"succeeded","zipFiles":168,"zipIntegrityVerified":true},
+    {"file":"JADE_V12_08I_Playable_Demo.mp4","bytes":265743,"sha256":"4e0e01b06e5de922f39940c6cc51d70baeb687ad3309352c3c1fc3b29a7bd380","library_file_id":"libfile_d8ed3b3b75ec8191a2a1c2319c4a05ed","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08I_Actual_Preview.png","bytes":279722,"sha256":"650ef5fa954d0ccaf4ea9816960f781f04730cd3385c0c6c0abeb307f6c9202b","library_file_id":"libfile_5d676a3940048191b29c8fc7ad9596f1","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08I_Routing_Comparison.png","bytes":200864,"sha256":"e9a0e6f0360da015c68985e81afabe6382789b4f7e3d0656b2a9c1aaaf6518f7","library_file_id":"libfile_6fadfb5d5c7481918de78edff2a06e1c","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08I_DELIVERY_MANIFEST.json","library_file_id":"libfile_52579d489fc48191bf9403666d8fd652","saveStatus":"succeeded"}
+  ],
+  "verification":{
+    "nodeAssertionsPassed":101,
+    "browserContentChecksPassed":28,
+    "identityAssertionsPassed":5,
+    "unchangedImageFilesVerified":115,
+    "observerIsolationPairedTicks":8800,
+    "browser":"Chromium 144.0.7559.96",
+    "method":"Exact standalone HTML via Playwright set_content; file navigation blocked by environment policy. DOM controls and synthetic standard-gamepad input. No physical controller, hosted URL, target-PC FPS or real-time benchmark.",
+    "newDrawings":0,
+    "08HCoreOrMovementChanged":false,
+    "originalGameChanged":false,
+    "newVercelDeployment":false
+  },
+  "capture":{"seconds":7.2,"frames":108,"fps":15,"resolution":[1440,1000],"method":"Controlled accumulated-travel reproduction fixture followed by scripted inputs. Actual browser screenshots, not hand-played or real-time footage."},
+  "remaining":"Final-design Jade still supports one corner view using three source poses. Larger shoulder raise, recoil/retract, adjacent HD views, final/recovered alignment and current provisional muzzle sockets remain unfinished. Missing lateral artwork is labeled instead of cycling unrelated poses.",
+  "storageBoundary":"GitHub contains the implementation module, source metadata, verified reconstruction recipe, report and receipts. Complete application, image binaries, tests and evidence are in the saved ZIP and Library. The binary images are not claimed installed into GitHub runtime paths or Vercel. Automatic deployment remains disabled."
+}
