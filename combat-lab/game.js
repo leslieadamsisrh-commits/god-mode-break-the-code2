@@ -1,6 +1,6 @@
 (()=>{
 const c=document.getElementById('game'),g=c.getContext('2d'),stats=document.getElementById('stats');
-let W,H,t=0,keys={},pressed={},mouse={x:0,y:0,down:false},p,bots,shots,blocks,fx;
+let W,H,t=0,keys={},pressed={},mouse={x:0,y:0,down:false},padPrev={},p,bots,shots,blocks,fx;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b,c,d)=>Math.hypot(a-c,b-d);
 function resize(){W=c.width=innerWidth*devicePixelRatio;H=c.height=innerHeight*devicePixelRatio;g.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);W=innerWidth;H=innerHeight}
 addEventListener('resize',resize);resize();
@@ -29,10 +29,11 @@ function magnetCover(){if(!p.slide||p.cover)return;let best=null,bd=999;for(cons
 function fireShotgun(){if(p.shotCd||p.cover&&keys.s)return;p.shotCd=18;const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);for(let i=0;i<7;i++){const aa=a+(i-3)*.035+(Math.random()-.5)*.025;shots.push({x:p.x,y:p.y,vx:Math.cos(aa)*13,vy:Math.sin(aa)*13,life:20,enemy:false,dmg:8})}p.vx-=Math.cos(a)*.7;p.vy-=Math.sin(a)*.7;fx.push({x:p.x+Math.cos(a)*25,y:p.y+Math.sin(a)*25,r:7,life:8,type:'shot'})}
 function enemyFire(b,a){shots.push({x:b.x,y:b.y,vx:Math.cos(a)*7,vy:Math.sin(a)*7,life:90,enemy:true,dmg:7})}
 function aimedBot(max=260){let best=null,score=1e9;const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);for(const b of bots){if(b.hp<=0)continue;const d=dist(p.x,p.y,b.x,b.y);if(d>max)continue;const da=Math.abs(Math.atan2(Math.sin(Math.atan2(b.y-p.y,b.x-p.x)-a),Math.cos(Math.atan2(b.y-p.y,b.x-p.x)-a)));const s=da*180+d*.15;if(da<.65&&s<score){score=s;best=b}}return best}
+function pollPad(){const gp=navigator.getGamepads&&navigator.getGamepads()[0];if(!gp)return;const dz=v=>Math.abs(v)<.18?0:v,lx=dz(gp.axes[0]||0),ly=dz(gp.axes[1]||0),rx=dz(gp.axes[2]||0),ry=dz(gp.axes[3]||0);keys.a=lx<-.2;keys.d=lx>.2;keys.w=ly<-.2;keys.s=ly>.2;if(Math.hypot(rx,ry)>.25){mouse.x=p.x+rx*260;mouse.y=p.y+ry*260}const map={0:'f',1:' ',2:'q',3:'e',4:'q',5:'e',6:'shift',7:'mouse',8:'r'};for(const [i,k] of Object.entries(map)){const down=!!gp.buttons[+i]?.pressed;if(down&&!padPrev[i])pressed[k]=1;if(k==='mouse')mouse.down=down;else keys[k]=down;padPrev[i]=down}}
 function tick(){
- t++;p.shotCd=Math.max(0,p.shotCd-1);p.peek=Math.max(0,p.peek-.12);p.slideCd=Math.max(0,p.slideCd-1);p.pinCd=Math.max(0,p.pinCd-1);p.parry=Math.max(0,p.parry-1);p.melee=Math.max(0,p.melee-1);
+ pollPad();t++;p.shotCd=Math.max(0,p.shotCd-1);p.peek=Math.max(0,p.peek-.12);p.slideCd=Math.max(0,p.slideCd-1);p.pinCd=Math.max(0,p.pinCd-1);p.parry=Math.max(0,p.parry-1);p.melee=Math.max(0,p.melee-1);
  let dx=(keys.d?1:0)-(keys.a?1:0),dy=(keys.s?1:0)-(keys.w?1:0),mag=Math.hypot(dx,dy)||1;
- if(pressed.shift&&Math.hypot(dx,dy)&&!p.slideCd&&!p.cover){p.slide=18;p.slideCd=28;const q=Math.max(7,Math.hypot(p.vx,p.vy));p.vx=dx/mag*q*1.35;p.vy=dy/mag*q*1.35;fx.push({x:p.x,y:p.y,r:8,life:12,type:'slide'})}
+ if((pressed.shift||keys.shift)&&Math.hypot(dx,dy)&&!p.slideCd&&!p.cover){p.slide=18;p.slideCd=28;const q=Math.max(7,Math.hypot(p.vx,p.vy));p.vx=dx/mag*q*1.35;p.vy=dy/mag*q*1.35;fx.push({x:p.x,y:p.y,r:8,life:12,type:'slide'})}
  if(pressed.e&&p.b>3){p.parry=8;fx.push({x:p.x,y:p.y,r:22,life:10,type:'parry'})}
  p.shield=keys.e&&p.b>0;if(p.shield)p.b-=.10;
  if(pressed[' ']&&p.cover){const r=p.cover.r,nx=p.cover.nx,ny=p.cover.ny;p.x+=-nx*46;p.y+=-ny*46;p.vx=-nx*8;p.vy=-ny*8;p.cover=null;p.coverState='VAULT EXIT';p.coverSpeed=0;p.b=Math.max(0,p.b-3);fx.push({x:p.x,y:p.y,r:18,life:16,type:'vault'});}else if(pressed[' ']&&p.b>=10&&!p.pinCd){const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);p.cover=null;p.coverState='PINBALL EXIT';p.pin=24;p.pinCd=30;p.vx=Math.cos(a)*15;p.vy=Math.sin(a)*15;p.b-=10;fx.push({x:p.x,y:p.y,r:14,life:18,type:'pin'})}
