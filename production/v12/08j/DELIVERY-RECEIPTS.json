@@ -1,0 +1,32 @@
+{
+  "batch": "V12-08J",
+  "status": "LOCAL_PLAYABLE_DISPLAY_REPAIR_DELIVERED",
+  "base": "03b2639e1fb1a1943358718c2211284f9b153b67",
+  "verificationCommit": "3005ae19da511160fb76da04b947ca7161bb74a7",
+  "libraryDirectory": "/GOD MODE/V12/08J/Continuous Character/",
+  "delivery": [
+    {"file":"JADE_V12_08J_Playable_Training_Lab.html","bytes":20792673,"sha256":"129dff4cf3a0835b04c3e0098414b00f6190d8818723b43a73d8989d27e3ce1d","library_file_id":"libfile_00580eac9df88191b15a770769d3f765","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08J_Continuous_Character.zip","bytes":17083394,"sha256":"5b2fd8fa40de1434df9ec473298469a30fefd3306ec86114e24a2217ec4221a0","library_file_id":"libfile_e737c20d568881919ff511731e1ac77c","saveStatus":"succeeded","zipFiles":167,"zipIntegrityVerified":true},
+    {"file":"JADE_V12_08J_Playable_Demo.mp4","bytes":514316,"sha256":"03e236957c79e64d4848ef9ee20dabe6901f1d579b03f869a05eb022c84a5136","library_file_id":"libfile_d0e24a4c59148191b63dad546e8e8d5b","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08J_Actual_Preview.png","bytes":282978,"sha256":"f1517d3ca8dd00f3a44472eec5f262f90effdb25df98b4d57c86a4dc46ac0135","library_file_id":"libfile_9eeea5cc22c48191a45b71ed57b882c8","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08J_DELIVERY_MANIFEST.json","library_file_id":"libfile_9868bdb5292c8191a18e882e1ddef52a","saveStatus":"succeeded"}
+  ],
+  "verification": {
+    "nodeChecksPassed":117,
+    "browserChecksPassed":31,
+    "imageFilesVerified":115,
+    "newDrawings":0,
+    "originalGameplayChanged":false,
+    "newDeploymentVerified":false,
+    "physicalControllerTested":false,
+    "normalBrowserErrors":0,
+    "oldMissingDrawsIn96HeadingRequests":25,
+    "newMissingDrawsIn96HeadingRequests":0,
+    "newMissingDrawsIn96FamilyRequests":0,
+    "simulationComparisonTicks":2400,
+    "method":"Exact standalone via Playwright set_content in Chromium 144.0.7559.96; file URL blocked. Rapid request counts are controlled diagnostics, not user-gameplay percentages."
+  },
+  "demo":{"seconds":8,"fps":15,"frames":120,"resolution":[1440,1000],"method":"Scripted fixed-step inputs, actual browser screenshots; not hand-played or real-time performance."},
+  "storageBoundary":"GitHub stores the residency module, fingerprinted integration edits, assembler, report and receipts. Complete assembled code, all image binaries, tests and captures are in the verified ZIP and Library. No new Vercel deployment or installation of image binaries in the GitHub runtime is claimed.",
+  "remaining":"Temporary ready-pose fallback can still produce visual pops. Final-design coverage remains one corner view with three original poses; authored shoulder raise/recoil/retract, body registration and 360 coverage remain unfinished. Five automated test lanes ran, not autonomous AI agents."
+}
