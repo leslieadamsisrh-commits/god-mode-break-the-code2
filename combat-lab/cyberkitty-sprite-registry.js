@@ -1,0 +1,20 @@
+window.CYBERKITTY_SPRITE_REGISTRY={
+version:"8.0",
+designAuthority:"Original approved Cyber Kitty / Jade psychic warrior. Do not redesign.",
+sourceBranch:"approved/shotgun-lab-v57",
+atlasRoot:"recovery/shotgun-lab-v57/assets/movement-lab/",
+weapons:{
+shotgun:{
+run:{front:"hero-run-shotgun-24-front-right-v1.png",rear:"hero-run-shotgun-24-rear-right-v1.png"},
+slide:{front:"hero-slide-cover-shotgun-24-front-right-v1.png",rear:"hero-slide-cover-shotgun-24-rear-right-v1.png"},
+idle:{front:"hero-transition-shotgun-24-front-right-v1.png",rear:"hero-transition-shotgun-24-rear-right-v1.png"},
+fire:{front:"hero-weapons-shotgun-24-right-v2.png",rear:"hero-weapons-shotgun-24-rear-right-v1.png"},
+cover:{right:"hero-cover-shotgun-24-shuffle-popfire-right-v1.png",left:"hero-cover-shotgun-24-shuffle-popfire-left-v1.png"}
+},
+pistol:{
+run:{front:"hero-run-pistol-24-front-right-v1.png",rear:"hero-run-pistol-24-rear-right-v1.png"},
+slide:{front:"hero-slide-cover-pistol-24-front-right-v1.png",rear:"hero-slide-cover-pistol-24-rear-right-v1.png"},
+fire:{front:"hero-weapons-pistol-24-front-right-v1.png",rear:"hero-weapons-pistol-24-rear-right-v1.png"}
+}},
+rules:{runtimeCell:[250,250],groundAnchor:219,directions:24,status:"RECOVERED_ASSET_NAMES_VERIFIED"}
+};
