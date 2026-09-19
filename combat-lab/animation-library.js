@@ -15,6 +15,8 @@ SLIDE_TO_COVER:{loop:false,poses:[
 {name:"SETTLE",t:.95,rootY:31,pelvisDrop:30,spinePitch:30,leadLeg:14,trailTuck:30},
 {name:"ATTACHED_READY",t:1,rootY:28,pelvisDrop:28,spinePitch:20,leadLeg:10,trailTuck:25}
 ]},
+COVER_SHIMMY:{loop:true,poses:[{name:"PLANT_L",t:0},{name:"CENTER",t:.25},{name:"PLANT_R",t:.5},{name:"CENTER",t:.75},{name:"LOOP",t:1}]},
+CORNER_WRAP:{loop:false,poses:[{name:"CORNER_STOP",t:0},{name:"HEAD_CHECK",t:.18},{name:"OUTSIDE_FOOT_PLANT",t:.34},{name:"PELVIS_PIVOT",t:.52},{name:"SPINE_FOLLOW",t:.68},{name:"SHOULDER_CLEAR",t:.82},{name:"REATTACH",t:1}]},
 CORNER_PEEK:{loop:false,poses:[
 {name:"ATTACHED",t:0,rootY:28,pelvisDrop:28,spinePitch:20,lean:0},
 {name:"HEAD_PEEK",t:.2,rootY:28,pelvisDrop:28,spinePitch:21,lean:.18},
@@ -25,7 +27,10 @@ CORNER_PEEK:{loop:false,poses:[
 {name:"POP_FIRE",t:1,rootY:28,pelvisDrop:28,spinePitch:24,lean:1}
 ]}
 },
-locomotion:{ROADIE_RUN:{loop:true,poses:[{name:"CONTACT_L",t:0},{name:"PASS_L",t:.25},{name:"CONTACT_R",t:.5},{name:"PASS_R",t:.75},{name:"LOOP",t:1}]}},
+locomotion:{
+ROADIE_RUN:{loop:true,poses:[{name:"CONTACT_L",t:0,drop:16,hip:-7,torso:8},{name:"PASS_L",t:.25,drop:12,hip:0,torso:-4},{name:"CONTACT_R",t:.5,drop:16,hip:7,torso:-8},{name:"PASS_R",t:.75,drop:12,hip:0,torso:4},{name:"LOOP",t:1,drop:16,hip:-7,torso:8}]},
+PIVOT_90:{loop:false,poses:[{name:"LOAD",t:0},{name:"PLANT",t:.25},{name:"HIP_TURN",t:.5},{name:"CHEST_FOLLOW",t:.75},{name:"EXIT",t:1}]},
+PIVOT_180:{loop:false,poses:[{name:"BRAKE",t:0},{name:"DROP",t:.2},{name:"PLANT",t:.4},{name:"HIP_REVERSE",t:.62},{name:"TORSO_CATCH",t:.82},{name:"DRIVE",t:1}]}},
 traversal:{MANTLE:{loop:false,poses:[{name:"LOAD",t:0},{name:"HANDS_PLANT",t:.25},{name:"HIP_RISE",t:.5},{name:"LEGS_CLEAR",t:.75},{name:"LAND",t:1}]}},
 combat:{SHOTGUN_POP:{loop:false,poses:[{name:"READY",t:0},{name:"PRESENT",t:.35},{name:"FIRE",t:.55},{name:"RECOIL",t:.7},{name:"RECOVER",t:1}]}},
 psychic:{PINBALL:{loop:false,poses:[{name:"LOAD",t:0},{name:"LAUNCH",t:.25},{name:"FLIGHT",t:.55},{name:"IMPACT",t:.78},{name:"REDIRECT",t:1}]}}
