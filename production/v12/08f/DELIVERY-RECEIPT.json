@@ -1,0 +1,50 @@
+{
+  "batch": "V12-08F",
+  "status": "LOCAL_PLAYABLE_INTEGRATION_DELIVERED",
+  "sourceCheckpoint": "8787c274d4ecd89c8ab4676b708bc7bf01e3be97",
+  "protectedBranch": "combat-lab-system08",
+  "protectedBranchObservedHead": "14f59620f2776485eb25f44bfdcfec05d401962b",
+  "libraryFolder": "/GOD MODE/V12/08F/Playable Integration",
+  "libraryDirectoryId": "6aae9dddf4c48191a2ee5ea338c4780e",
+  "files": [
+    {
+      "name": "JADE_V12_08F_Playable_Integration.zip",
+      "bytes": 18625257,
+      "sha256": "bd2bb5f15543d71f546c078147ce0fec170fe0e7e9db4f7cf901906f05be8cfa",
+      "library_file_id": "libfile_46506992e62c8191aeddf6e2918d17ad",
+      "file_id": "file_00000000f56c81fd9e4b0f55e57363a0",
+      "contents": "143 files: source, 111 runtime image files, approved reference, tests/results, screenshots, video, manifests and packager. ZIP and per-file hashes verified."
+    },
+    {
+      "name": "JADE_V12_08F_Playable_Training_Lab.html",
+      "bytes": 16759206,
+      "sha256": "f88662515a7c29c45f8fdfccd79597a3c814bdaeb269786e75a599bb298d413b",
+      "library_file_id": "libfile_77f0b50e69cc81919453eca1b1306f36",
+      "file_id": "file_00000000e81481fd852c0c78b0e63d3a",
+      "contents": "Self-contained playable prototype, runtime images embedded, no remote asset requests."
+    },
+    {
+      "name": "JADE_V12_08F_Playable_Demo.mp4",
+      "bytes": 717449,
+      "sha256": "c0dc84a107dba262ed9444c50a8f635938068dd028e0599945b3c04e6ad59437",
+      "library_file_id": "libfile_a51f73f9c8d48191a49e9456fca5d88b",
+      "file_id": "file_00000000213081fdabd5902915cc2679",
+      "contents": "13-second 1440x1000 H.264, 15fps; actual browser simulation screenshots with scripted fixed-step input, not hand-played or hosted footage."
+    },
+    {
+      "name": "JADE_V12_08F_Actual_Preview.png",
+      "bytes": 260819,
+      "sha256": "2d22df1aa59bd4d6bf54e841626753726c83a1c72712cf1a2372442c49534ad8",
+      "library_file_id": "libfile_7ab529cad150819194d9c27c3bff37f9",
+      "file_id": "file_000000002cfc81fd8e63b26bc35d2748",
+      "contents": "Actual local prototype screenshot."
+    }
+  ],
+  "checks": {"simulationTestsPassed":17,"browserContentTestsPassed":18,"imageFilesVerified":111},
+  "artScope": "3 reused native final-design poses in one corner view; 108 recovered atlas derivatives for other states; zero new drawings. Final animation and sockets remain incomplete/provisional.",
+  "testBoundary": "Headless Chromium 144.0.7559.96; exact standalone document executed using set_content because file navigation is blocked by environment policy. DOM keyboard/mouse and synthetic gamepad tested, not physical Xbox or target-machine frame pacing.",
+  "newImageBinariesCommittedToGitHub": false,
+  "newDeploymentVerified": false,
+  "parallelAgentsLaunched": false,
+  "librarySaveConfirmed": true
+}
