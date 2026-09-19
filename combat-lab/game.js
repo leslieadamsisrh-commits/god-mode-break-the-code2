@@ -25,6 +25,7 @@ function resolve(o,allowCover=false){
   if(o===p&&p.pin>0){const vd=o.vx*nx+o.vy*ny;o.vx-=2*vd*nx;o.vy-=2*vd*ny;o.vx*=1.04;o.vy*=1.04;fx.push({x:q.nx,y:q.ny,r:10,life:16,type:'pin'})}
  }
 }
+function magnetCover(){if(!p.slide||p.cover)return;let best=null,bd=999;for(const r of worldBlocks()){const nx=clamp(p.x,r.x,r.x+r.w),ny=clamp(p.y,r.y,r.y+r.h),d=dist(p.x,p.y,nx,ny);if(d<p.r+30&&d<bd){let dx=p.x-nx,dy=p.y-ny,dm=Math.hypot(dx,dy)||1,nxv=dx/dm,nyv=dy/dm;const toward=-(p.vx*nxv+p.vy*nyv);if(toward>2.2){best={r,nx:nxv,ny:nyv,px:nx,py:ny};bd=d}}}if(best){p.x=best.px+best.nx*(p.r+1);p.y=best.py+best.ny*(p.r+1);p.cover={r:best.r,nx:best.nx,ny:best.ny};p.slide=0;p.vx=0;p.vy=0;fx.push({x:p.x,y:p.y,r:16,life:22,type:'cover'})}}
 function fireShotgun(){if(p.shotCd||p.cover&&keys.s)return;p.shotCd=18;const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);for(let i=0;i<7;i++){const aa=a+(i-3)*.035+(Math.random()-.5)*.025;shots.push({x:p.x,y:p.y,vx:Math.cos(aa)*13,vy:Math.sin(aa)*13,life:20,enemy:false,dmg:8})}p.vx-=Math.cos(a)*.7;p.vy-=Math.sin(a)*.7;fx.push({x:p.x+Math.cos(a)*25,y:p.y+Math.sin(a)*25,r:7,life:8,type:'shot'})}
 function enemyFire(b,a){shots.push({x:b.x,y:b.y,vx:Math.cos(a)*7,vy:Math.sin(a)*7,life:90,enemy:true,dmg:7})}
 function aimedBot(max=260){let best=null,score=1e9;const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);for(const b of bots){if(b.hp<=0)continue;const d=dist(p.x,p.y,b.x,b.y);if(d>max)continue;const da=Math.abs(Math.atan2(Math.sin(Math.atan2(b.y-p.y,b.x-p.x)-a),Math.cos(Math.atan2(b.y-p.y,b.x-p.x)-a)));const s=da*180+d*.15;if(da<.65&&s<score){score=s;best=b}}return best}
@@ -42,7 +43,7 @@ function tick(){
  if(p.slide){p.slide--;p.vx*=.975;p.vy*=.975}
  if(p.pin)p.pin--;
  let vmax=p.pin?16:p.slide?11:6.2,q=Math.hypot(p.vx,p.vy);if(q>vmax){p.vx*=vmax/q;p.vy*=vmax/q}
- p.x=clamp(p.x+p.vx,22,W-22);p.y=clamp(p.y+p.vy,110,H-28);resolve(p,true);
+ p.x=clamp(p.x+p.vx,22,W-22);p.y=clamp(p.y+p.vy,110,H-28);magnetCover();resolve(p,true);
  if(mouse.down&&p.shotCd===0)fireShotgun();
  if(pressed.f){p.melee=10;const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);for(const b of bots){if(b.hp>0&&dist(p.x,p.y,b.x,b.y)<78){const toward=Math.cos(Math.atan2(b.y-p.y,b.x-p.x)-a);if(toward>.2){b.hp-=24;b.vx+=Math.cos(a)*7;b.vy+=Math.sin(a)*7;p.combo++;fx.push({x:b.x,y:b.y,r:15,life:14,type:'melee'})}}}}
  if(keys.q&&p.b>0){if(!p.grip||p.grip.hp<=0)p.grip=aimedBot();if(p.grip){const a=Math.atan2(mouse.y-p.y,mouse.x-p.x),tx=p.x+Math.cos(a)*125,ty=p.y+Math.sin(a)*125;p.grip.x+=(tx-p.grip.x)*.13;p.grip.y+=(ty-p.grip.y)*.13;p.grip.vx*=.5;p.grip.vy*=.5;p.b-=.12;fx.push({x:p.grip.x,y:p.grip.y,r:20,life:2,type:'grip'})}}else if(p.grip){const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);p.grip.vx=Math.cos(a)*11;p.grip.vy=Math.sin(a)*11;p.grip=null}
@@ -67,7 +68,7 @@ function draw(){
  g.fillStyle=p.shield?'#66eaff':'#ff1d9c';g.beginPath();g.arc(p.x,p.y,p.r,0,Math.PI*2);g.fill();
  if(p.shield){g.strokeStyle=p.parry?'#fff':'#55eaff';g.lineWidth=p.parry?6:3;g.beginPath();g.arc(p.x,p.y,28,0,Math.PI*2);g.stroke()}
  g.strokeStyle='#ff69c5';g.lineWidth=2;g.beginPath();g.moveTo(p.x,p.y);g.lineTo(mouse.x,mouse.y);g.stroke();
- stats.innerHTML='HP '+Math.ceil(p.hp)+'<br>BATTERY '+Math.ceil(p.b)+'%<br>COMBO '+p.combo+(p.cover?'<br>COVER LOCK':'');
+ stats.innerHTML='HP '+Math.ceil(p.hp)+'<br>BATTERY '+Math.ceil(p.b)+'%<br>COMBO '+p.combo+(p.cover?'<br>COVER LOCK — STRAFE / AIM / FIRE':'');
  requestAnimationFrame(loop);
 }
 function loop(){tick();draw()}loop();
