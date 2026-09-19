@@ -9,7 +9,7 @@ onkeyup=e=>keys[e.key.toLowerCase()]=0;
 c.onmousemove=e=>{mouse.x=e.clientX;mouse.y=e.clientY};c.onmousedown=()=>mouse.down=true;c.onmouseup=()=>mouse.down=false;
 const ISO_Y=.68,ISO_SKEW=.16;function toScreen(wx,wy,z=0){return{x:wx+(wy-H/2)*ISO_SKEW,y:105+(wy-105)*ISO_Y-z}}function worldBlocks(){return blocks.map(b=>({x:W/2+b[0],y:H/2+b[1],w:b[2],h:b[3]}))}
 function reset(){
- p={x:W*.5,y:H*.72,vx:0,vy:0,r:16,hp:100,b:100,slide:0,slideCd:0,pin:0,pinCd:0,shield:false,parry:0,cover:null,coverState:'FREE',coverEdge:false,coverSpeed:0,settle:0,peek:0,peekSide:0,combo:0,melee:0,shotCd:0,grip:null};
+ p={x:W*.5,y:H*.72,vx:0,vy:0,r:16,hp:100,b:100,slide:0,slideCd:0,pin:0,pinCd:0,shield:false,parry:0,cover:null,coverState:'FREE',coverEdge:false,coverSpeed:0,settle:0,peek:0,peekSide:0,posePhase:0,combo:0,melee:0,shotCd:0,grip:null};
  bots=[{x:W*.25,y:H*.3,hp:100,kind:0,cool:20,vx:0,vy:0},{x:W*.75,y:H*.32,hp:100,kind:1,cool:40,vx:0,vy:0}];
  shots=[];fx=[];blocks=[[-170,-85,120,34],[55,-90,130,34],[-300,70,135,34],[165,80,135,34],[-70,135,140,30],[-410,-20,55,180],[355,-20,55,180]];
 }
@@ -31,7 +31,7 @@ function enemyFire(b,a){shots.push({x:b.x,y:b.y,vx:Math.cos(a)*7,vy:Math.sin(a)*
 function aimedBot(max=260){let best=null,score=1e9;const a=Math.atan2(mouse.y-p.y,mouse.x-p.x);for(const b of bots){if(b.hp<=0)continue;const d=dist(p.x,p.y,b.x,b.y);if(d>max)continue;const da=Math.abs(Math.atan2(Math.sin(Math.atan2(b.y-p.y,b.x-p.x)-a),Math.cos(Math.atan2(b.y-p.y,b.x-p.x)-a)));const s=da*180+d*.15;if(da<.65&&s<score){score=s;best=b}}return best}
 function pollPad(){const gp=navigator.getGamepads&&navigator.getGamepads()[0];if(!gp)return;const dz=v=>Math.abs(v)<.18?0:v,lx=dz(gp.axes[0]||0),ly=dz(gp.axes[1]||0),rx=dz(gp.axes[2]||0),ry=dz(gp.axes[3]||0);keys.a=lx<-.2;keys.d=lx>.2;keys.w=ly<-.2;keys.s=ly>.2;if(Math.hypot(rx,ry)>.25){mouse.x=p.x+rx*260;mouse.y=p.y+ry*260}const map={0:'f',1:' ',2:'q',3:'e',4:'q',5:'e',6:'shift',7:'mouse',8:'r'};for(const [i,k] of Object.entries(map)){const down=!!gp.buttons[+i]?.pressed;if(down&&!padPrev[i])pressed[k]=1;if(k==='mouse')mouse.down=down;else keys[k]=down;padPrev[i]=down}}
 function tick(){
- pollPad();t++;p.shotCd=Math.max(0,p.shotCd-1);p.peek=Math.max(0,p.peek-.12);p.slideCd=Math.max(0,p.slideCd-1);p.pinCd=Math.max(0,p.pinCd-1);p.parry=Math.max(0,p.parry-1);p.melee=Math.max(0,p.melee-1);
+ pollPad();t++;p.posePhase+=Math.min(.55,Math.hypot(p.vx,p.vy)*.08);p.shotCd=Math.max(0,p.shotCd-1);p.peek=Math.max(0,p.peek-.12);p.slideCd=Math.max(0,p.slideCd-1);p.pinCd=Math.max(0,p.pinCd-1);p.parry=Math.max(0,p.parry-1);p.melee=Math.max(0,p.melee-1);
  let dx=(keys.d?1:0)-(keys.a?1:0),dy=(keys.s?1:0)-(keys.w?1:0),mag=Math.hypot(dx,dy)||1;
  if((pressed.shift||keys.shift)&&Math.hypot(dx,dy)&&!p.slideCd&&!p.cover){p.slide=18;p.slideCd=28;const q=Math.max(7,Math.hypot(p.vx,p.vy));p.vx=dx/mag*q*1.35;p.vy=dy/mag*q*1.35;fx.push({x:p.x,y:p.y,r:8,life:12,type:'slide'})}
  if(pressed.e&&p.b>3){p.parry=8;fx.push({x:p.x,y:p.y,r:22,life:10,type:'parry'})}
@@ -78,23 +78,23 @@ function draw(){
  if(p.cover){g.strokeStyle=p.coverEdge?'#ff9df0':'#fff36a';g.lineWidth=4;g.beginPath();g.arc(p.x,p.y,23,0,Math.PI*2);g.stroke();const tx=-p.cover.ny,ty=p.cover.nx;g.beginPath();g.moveTo(p.x,p.y);g.lineTo(p.x+tx*32,p.y+ty*32);g.stroke()}
  const aim=Math.atan2(mouse.y-p.y,mouse.x-p.x),bodyAim=p.cover?Math.atan2(-p.cover.ny,-p.cover.nx):aim;
  const slidePose=p.slide>0,impactPose=p.settle>0,peekPose=p.cover&&p.coverEdge;
- const weight=slidePose?1:impactPose?.75:peekPose?.45:0;
- const bx=p.x,by=p.y-(slidePose?5:18),fxa=Math.cos(bodyAim),fya=Math.sin(bodyAim),sxa=-fya,sya=fxa;
+ const weight=slidePose?1:impactPose?.75:peekPose?.45:0,runBob=!slidePose&&!p.cover?Math.abs(Math.sin(p.posePhase))*3:0;
+ const bx=p.x,by=p.y-(slidePose?5:18)-runBob,fxa=Math.cos(bodyAim),fya=Math.sin(bodyAim),sxa=-fya,sya=fxa;
  const hipX=bx-fxa*(slidePose?11:0),hipY=by+(slidePose?7:0),neckX=bx+fxa*(slidePose?15:3),neckY=by-(slidePose?10:24)+fya*3,headX=neckX+fxa*(slidePose?10:2),headY=neckY-(slidePose?9:12)+fya*2;
- const shoulderTwist=(peekPose?p.peek*8*p.peekSide:0)+(impactPose?5:0),lShouldX=neckX+sxa*(9+shoulderTwist*.25)+fxa*shoulderTwist,lShouldY=neckY+sya*5,rShouldX=neckX-sxa*(9-shoulderTwist*.15)+fxa*shoulderTwist*.65,rShouldY=neckY-sya*5;
+ const shoulderTwist=(peekPose?p.peek*11*p.peekSide:0)+(impactPose?7:0)+(slidePose?4:Math.sin(p.posePhase)*2*moveMag),lShouldX=neckX+sxa*(9+shoulderTwist*.25)+fxa*shoulderTwist,lShouldY=neckY+sya*5,rShouldX=neckX-sxa*(9-shoulderTwist*.15)+fxa*shoulderTwist*.65,rShouldY=neckY-sya*5;
  const ax=Math.cos(aim),ay=Math.sin(aim),perpX=-ay,perpY=ax;
  const lElbowX=lShouldX+ax*11+perpX*3,lElbowY=lShouldY+ay*11+perpY*3,rElbowX=rShouldX+ax*10-perpX*2,rElbowY=rShouldY+ay*10-perpY*2;
  const lHandX=lElbowX+ax*11,lHandY=lElbowY+ay*11,rHandX=rElbowX+ax*13,rHandY=rElbowY+ay*13;
  const peekShift=p.cover&&p.coverEdge?p.peek*12*p.peekSide:0;
  const psx=p.cover?-p.cover.ny:0,psy=p.cover?p.cover.nx:0;
  const muzzleX=(lHandX+rHandX)/2+ax*23+psx*peekShift,muzzleY=(lHandY+rHandY)/2+ay*23+psy*peekShift;
- const moveMag=Math.min(1,Math.hypot(p.vx,p.vy)/5),stride=Math.sin(t*.35)*12*moveMag,legDir=Math.atan2(p.vy,p.vx),lfx=Math.cos(legDir),lfy=Math.sin(legDir);
+ const moveMag=Math.min(1,Math.hypot(p.vx,p.vy)/5),stride=Math.sin(p.posePhase)*15*moveMag,legDir=Math.atan2(p.vy,p.vx),lfx=Math.cos(legDir),lfy=Math.sin(legDir);
  let lkX,lkY,rkX,rkY,lFootX,lFootY,rFootX,rFootY;
  if(slidePose){lkX=hipX+fxa*15+sxa*5;lkY=hipY+8;rkX=hipX-fxa*8-sxa*5;rkY=hipY+12;lFootX=lkX+fxa*22;lFootY=lkY+5;rFootX=rkX-fxa*12+sxa*3;rFootY=rkY+13;}
  else{lkX=hipX+sxa*6+lfx*stride*.35;lkY=hipY+16+sya*3+lfy*stride*.18;rkX=hipX-sxa*6-lfx*stride*.35;rkY=hipY+16-sya*3-lfy*stride*.18;lFootX=lkX+lfx*stride*.55+sxa*2;lFootY=lkY+17+lfy*stride*.25;rFootX=rkX-lfx*stride*.55-sxa*2;rFootY=rkY+17-lfy*stride*.25;}
  g.lineCap='round';g.strokeStyle='#ff8bd0';g.lineWidth=7;g.beginPath();g.moveTo(hipX,hipY);g.lineTo(neckX,neckY);g.stroke();
- g.strokeStyle='#f48ac5';g.lineWidth=5;for(const leg of [[hipX+sxa*5,hipY,lkX,lkY,lFootX,lFootY],[hipX-sxa*5,hipY,rkX,rkY,rFootX,rFootY]]){g.beginPath();g.moveTo(leg[0],leg[1]);g.lineTo(leg[2],leg[3]);g.lineTo(leg[4],leg[5]);g.stroke()}g.fillStyle='#35eaff';for(const j of [[lkX,lkY],[rkX,rkY],[lFootX,lFootY],[rFootX,rFootY]]){g.beginPath();g.arc(j[0],j[1],3,0,Math.PI*2);g.fill()}
- if(impactPose){g.strokeStyle='#fff36a';g.lineWidth=3;g.beginPath();g.arc(hipX,hipY,20+(7-p.settle)*3,0,Math.PI*2);g.stroke();}
+ g.strokeStyle='#f48ac5';g.lineWidth=5;for(const leg of [[hipX+sxa*5,hipY,lkX,lkY,lFootX,lFootY],[hipX-sxa*5,hipY,rkX,rkY,rFootX,rFootY]]){g.beginPath();g.moveTo(leg[0],leg[1]);g.lineTo(leg[2],leg[3]);g.lineTo(leg[4],leg[5]);g.stroke()}g.strokeStyle='#a6f7ff';g.lineWidth=3;g.beginPath();g.moveTo(lFootX-4,lFootY);g.lineTo(lFootX+7,lFootY);g.moveTo(rFootX-4,rFootY);g.lineTo(rFootX+7,rFootY);g.stroke();g.fillStyle='#35eaff';for(const j of [[lkX,lkY],[rkX,rkY],[lFootX,lFootY],[rFootX,rFootY]]){g.beginPath();g.arc(j[0],j[1],3,0,Math.PI*2);g.fill()}
+ if(slidePose){g.strokeStyle='#ffef72';g.lineWidth=2;g.beginPath();g.moveTo(hipX,hipY+8);g.lineTo(lFootX,lFootY);g.stroke();}if(impactPose){g.strokeStyle='#fff36a';g.lineWidth=3;g.beginPath();g.arc(hipX,hipY,20+(7-p.settle)*3,0,Math.PI*2);g.stroke();}
  g.strokeStyle='#ff4eb1';g.lineWidth=5;for(const pts of [[lShouldX,lShouldY,lElbowX,lElbowY,lHandX,lHandY],[rShouldX,rShouldY,rElbowX,rElbowY,rHandX,rHandY]]){g.beginPath();g.moveTo(pts[0],pts[1]);g.lineTo(pts[2],pts[3]);g.lineTo(pts[4],pts[5]);g.stroke()}
  g.fillStyle='#ffc4e7';g.beginPath();g.arc(headX,headY,8,0,Math.PI*2);g.fill();g.strokeStyle='#ff4eb1';g.lineWidth=2;g.beginPath();g.moveTo(headX-5,headY-7);g.lineTo(headX-8,headY-14);g.moveTo(headX+5,headY-7);g.lineTo(headX+8,headY-14);g.stroke();g.strokeStyle='#35eaff';g.lineWidth=2;g.beginPath();g.moveTo(headX,headY);g.lineTo(headX+ax*10,headY+ay*10);g.stroke();
  g.fillStyle='#35eaff';for(const h of [[lHandX,lHandY],[rHandX,rHandY]]){g.beginPath();g.arc(h[0],h[1],4,0,Math.PI*2);g.fill()}
