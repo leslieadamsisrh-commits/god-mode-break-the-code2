@@ -1,0 +1,31 @@
+{
+  "batch": "V12-08G",
+  "status": "LOCAL_PLAYABLE_ACTION_ITERATION_DELIVERED",
+  "recoveredCheckpoint": "2e9323d3c95a6aa8935e3762eb8cde638d902434",
+  "verificationReportCommit": "db384e67bcf85a6360dd6b4bff7e122f4a03a25e",
+  "actionTestsCommit": "ff56cd5c2f49ec2c710d16df09d1a812847d166e",
+  "libraryDirectory": "/GOD MODE/V12/08G/Playable Action Iteration/",
+  "delivery": [
+    {"file":"JADE_V12_08G_Playable_Training_Lab.html","bytes":20751824,"sha256":"936ed25eb51017bd5d94b612c1a5246357536597101f2419198dbe6bf69e6025","library_file_id":"libfile_76450ef993748191b214e46d06dd7814","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08G_Action_Iteration.zip","bytes":18263767,"sha256":"8c99242c26ab7c9e5abd694dafbb6d51f244d7fb1e21a7745db3c91312059c3d","library_file_id":"libfile_421fa131e0c0819187374a631bf882a0","saveStatus":"succeeded","zipFiles":150,"zipIntegrityVerified":true},
+    {"file":"JADE_V12_08G_Playable_Demo.mp4","bytes":879533,"sha256":"2180d3d56e488a6afd215b1ac2ee614d62eebc420a66159e5b68ba3ecad748e7","library_file_id":"libfile_fa192418b264819180edcc165c10ff7c","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08G_Actual_Preview.png","bytes":272227,"sha256":"cd83512a37c798f2bde21426eee49c6ef23eaf016e1d0d13452b6c2588b32026","library_file_id":"libfile_8aa43fc4b1588191a8c7e506761bb7b6","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08G_DELIVERY_MANIFEST.json","library_file_id":"libfile_eaada8446d9c8191ba783201e7151cae","saveStatus":"succeeded"}
+  ],
+  "verification": {
+    "nodeChecksPassed": 34,
+    "browserChecksPassed": 35,
+    "imageFilesVerified": 115,
+    "browser": "Chromium 144.0.7559.96",
+    "method": "Standalone document via Playwright set_content. DOM keyboard/mouse and synthetic standard-gamepad checks; not physical Xbox or hosted-URL testing.",
+    "newDrawings": 0,
+    "approvedSourcePosesReused": 3,
+    "derivedStudyImagesReused": 4,
+    "fullAnimationComplete": false,
+    "originalGameplayChanged": false,
+    "newDeploymentVerified": false
+  },
+  "demo": {"seconds":13,"frames":195,"fps":15,"resolution":[1440,1000],"method":"Actual browser screenshots with scripted four-fixed-tick advances. Not hand-played footage or a real-time performance benchmark."},
+  "storageBoundary": "GitHub contains the controller/reconstruction recipe, action tests, verification report and delivery receipts. Complete assembled source, images, test evidence, video and standalone HTML are in the verified ZIP and Library. Image binaries are not asserted installed in the GitHub runtime or Vercel.",
+  "remaining": "One supported final-design cover view; missing authored full shoulder raise/recoil/retract. Original edge fringe and provisional sockets remain. Recovered locomotion handles unsupported states. No autonomous agents launched. Vercel auto-deployment remains disabled on the isolated branch."
+}
