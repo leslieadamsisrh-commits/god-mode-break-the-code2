@@ -45,13 +45,13 @@
       "order": 6,
       "id": "cover-entry-impact-settle",
       "directions": 24,
-      "status": "ACTIVE_PRODUCTION"
+      "status": "KEYS_LOCKED"
     },
     {
       "order": 7,
       "id": "cover-shimmy",
       "directions": 24,
-      "status": "QUEUED"
+      "status": "ACTIVE_PRODUCTION"
     },
     {
       "order": 8,
@@ -66,6 +66,6 @@
       "status": "QUEUED"
     }
   ],
-  "activeBatch": "cover-entry-impact-settle",
-  "nextBatch": "cover-shimmy"
+  "activeBatch": "cover-shimmy",
+  "nextBatch": "peek-popfire"
 }
