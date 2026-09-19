@@ -29,3 +29,10 @@ RUN 360. 24 directions. Preserve the existing movement timing exactly. Build lar
 
 ## GLOBAL GAME ART AUTHORITY
 This Jade design and rendering standard is the permanent visual authority for the entire game. All Jade animation families, characters, enemies, environments, props, generated cover, effects and cinematics must inhabit the same high-detail late-80s/90s manga/cyberpunk visual universe. Progress sheets may scale art down for review only. No downstream production lane may redesign Jade or lower the approved detail/scale target.
+
+
+## MANDATORY BATCH VISUAL REPORT
+Every meaningful sprite-production batch must produce a visual progress/contact sheet after its production specification is established. The sheet is a review artifact only and may scale Jade down to show multiple poses; it never changes the locked large in-game scale. Each sheet must preserve the final Jade design and show the batch pose chain, key detail checks, status, and next batch. Engineering status in GitHub is authoritative over decorative status text inside generated review art.
+
+## FIVE-LANE REVIEW — PERMANENT
+Every batch is reviewed through five parallel lanes: IDENTITY, BIOMECHANICS, CONTINUITY, GAMEPLAY, and RENDER. The final promotion decision remains centralized: any failed lane blocks promotion. These are review lanes, not permission to reinterpret the design.
