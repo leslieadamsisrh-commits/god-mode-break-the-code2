@@ -21,19 +21,19 @@
       "order": 2,
       "id": "start-accelerate",
       "directions": 24,
-      "status": "ACTIVE"
+      "status": "ACTIVE_PRODUCTION"
     },
     {
       "order": 3,
       "id": "brake-stop",
       "directions": 24,
-      "status": "QUEUED"
+      "status": "ACTIVE_PRODUCTION"
     },
     {
       "order": 4,
       "id": "pivot-turn",
       "directions": 24,
-      "status": "QUEUED"
+      "status": "ACTIVE_PRODUCTION"
     },
     {
       "order": 5,
@@ -66,6 +66,6 @@
       "status": "QUEUED"
     }
   ],
-  "activeBatch": "start-accelerate",
-  "nextBatch": "brake-stop"
+  "activeBatch": "locomotion-transitions-02-04",
+  "nextBatch": "baseball-slide"
 }
