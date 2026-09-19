@@ -25,3 +25,7 @@ Final gatekeeper rule: a frame failing any lane remains experimental and cannot 
 
 ## First production family
 RUN 360. 24 directions. Preserve the existing movement timing exactly. Build large high-detail source frames first; derive runtime atlases only after visual and mechanical validation.
+
+
+## GLOBAL GAME ART AUTHORITY
+This Jade design and rendering standard is the permanent visual authority for the entire game. All Jade animation families, characters, enemies, environments, props, generated cover, effects and cinematics must inhabit the same high-detail late-80s/90s manga/cyberpunk visual universe. Progress sheets may scale art down for review only. No downstream production lane may redesign Jade or lower the approved detail/scale target.
