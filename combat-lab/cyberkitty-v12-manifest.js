@@ -1,0 +1,15 @@
+window.CYBERKITTY_V12={
+version:"12.0",golden:"ba742b10",directions:24,cell:[250,250],groundAnchor:219,twistLimitDeg:145,
+lockedMotion:{speed:262,response:13,stopDrag:.002,slideSpeed:650,slideDuration:.70,radius:17,fixedStep:1/60},
+families:[
+{id:"ready360",status:"recovered-runtime",views:24},
+{id:"run360",status:"recovered-runtime",views:24},
+{id:"slide360",status:"recovered-runtime",views:24},
+{id:"cover360",status:"recovered-runtime",views:24},
+{id:"strafe",status:"partial-recovered"},
+{id:"backpedal",status:"partial-recovered"},
+{id:"start-brake-pivot",status:"production-required"},
+{id:"cover-impact-settle",status:"production-required"},
+{id:"shimmy-peek-popfire",status:"production-required"},
+{id:"corner-wrap-exit",status:"production-required"}
+]};
