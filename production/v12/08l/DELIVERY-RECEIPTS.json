@@ -1,0 +1,39 @@
+{
+  "batch": "V12-08L",
+  "status": "CLIENT_SERVER_PROTOTYPE_LOCAL_VERIFICATION",
+  "base": "08ee11ad0132b9c25d469d08beb83fc209836df1",
+  "branch": "v12-08l-private-mixed-art-duel",
+  "verificationCommit": "0fce6ea5e0058afc91107196cf756cd4a65d1993",
+  "serverCommit": "78b38c9932759128fdd0767319ab4bdf9c9c6389",
+  "duelCommit": "180d5ac231c0dec28a7e2e79a70c02595dde15ee",
+  "recoveryCommit": "06386e80e5991c5b04d7ad41c50f1f8a6cd3eaea",
+  "libraryDirectory": "/GOD MODE/V12/08L/Private Mixed Art Duel/",
+  "delivery": [
+    {"file":"JADE_V12_08L_Private_Duel.zip","bytes":16553410,"sha256":"872f2dd976e3fdc96f288dd49139afbb859657c676541eeefc36b736088aeea4","library_file_id":"libfile_d5e93ebe1f68819198466f41b9b97d57","saveStatus":"succeeded","zipFiles":168,"zipIntegrityVerified":true},
+    {"file":"JADE_V12_08L_Actual_Preview.png","bytes":188956,"sha256":"b768e00135634e12ec7998b58f7af4f61b5563d851eada1ac09d203d4183e695","library_file_id":"libfile_5a765d07c69081919ebe54fc3fc244c9","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08L_Server_State_Replay.mp4","bytes":271741,"sha256":"7c6b99a711fe585d086c7b0f3583946e8cfe1573e0544c0f947a24b119751f1e","library_file_id":"libfile_ad9cf949a3188191a2f7ab84f29a86fa","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08L_DELIVERY_MANIFEST.json","library_file_id":"libfile_17c3e9b000288191862285b52b1e812b","saveStatus":"succeeded"}
+  ],
+  "verification": {
+    "slideUnitTestsPassed":9,
+    "matchUnitTestsPassed":9,
+    "realNetworkScenarioChecksPassed":25,
+    "agreedServerSnapshots":54,
+    "browserContentChecksPassed":16,
+    "imageFilesVerifiedUnchanged":115,
+    "vendorFilesVerifiedUnchanged":10,
+    "parallelAutomatedTestLanes":5,
+    "autonomousAiAgentsLaunched":0,
+    "newDrawings":0,
+    "physicalControllerTested":false,
+    "twoPhysicalDevicesTested":false,
+    "nativeBrowserToServerEndToEndTested":false,
+    "newDeploymentVerified":false,
+    "realNetworkMethod":"Two independent Node HTTP clients with separate sessions and actual SSE streams on loopback. Join, movement, shots/damage, round/rematch, disconnect/rejoin and access checks.",
+    "browserMethod":"Two Chromium contexts via set_content with MOCKED fetch/EventSource/sessionStorage. Exact application source, DOM controls, synthetic controller and server-state replay. No administrator browser restrictions bypassed.",
+    "recoveryTest":"restore_08l.py verified the package SHA and per-file hashes, restored all 168 files into a new directory, then npm test passed all 19 Node subtests. No dependency installation required."
+  },
+  "capture":{"seconds":4,"fps":15,"frames":60,"method":"Actual browser screenshots replaying captured server states, with documentary labels. Not live browser networking, human play or a performance benchmark."},
+  "storageBoundary":"GitHub stores selected duel/server source, slide guard, exact package restore script, report and receipts. The complete client/server code, all images, tests, launchers and evidence are in the verified package and Library. The repository subset alone is not a complete deployable game. No new Vercel deployment.",
+  "remaining":"Native browser-to-server test, two actual computers, private HTTPS hosting, latency and feel validation. Final Jade still has only three source poses for one supported corner view; authored motion and full directional coverage remain unfinished."
+}
