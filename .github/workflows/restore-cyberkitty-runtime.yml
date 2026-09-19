@@ -1,0 +1,35 @@
+name: Restore Cyber Kitty Runtime
+on:
+  workflow_dispatch:
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: god-mode-sprite-library
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore verified artwork archive
+        run: python tools/restore-checkpoint-art.py
+      - name: Verify required runtime families
+        run: |
+          test -d recovery/shotgun-lab-v57/assets/shotgun-complete/runtime
+          test -f recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d00.webp
+          test -f recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d00.webp
+          test -f recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d00.webp
+          test -f recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d00.webp
+      - name: Package deployable runtime subset
+        run: |
+          mkdir -p /tmp/cyberkitty-runtime
+          cp recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/{run,slide,cover,ready}-d*.webp /tmp/cyberkitty-runtime/
+          cp recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/strafe-*.webp /tmp/cyberkitty-runtime/ 2>/dev/null || true
+          cp recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/backpedal-*.webp /tmp/cyberkitty-runtime/ 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cyberkitty-runtime-v10
+          path: /tmp/cyberkitty-runtime
