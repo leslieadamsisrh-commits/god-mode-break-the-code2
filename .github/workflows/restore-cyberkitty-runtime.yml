@@ -1,0 +1,27 @@
+name: Restore Cyber Kitty Runtime
+on:
+  workflow_dispatch:
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: god-mode-sprite-library
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore verified artwork
+        run: python tools/restore-checkpoint-art.py
+      - name: Verify Cyber Kitty runtime
+        run: |
+          test -f recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/run-d00.webp
+          test -f recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/slide-d00.webp
+          test -f recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/cover-d00.webp
+          test -f recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/ready-d00.webp
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cyberkitty-runtime-v10
+          path: recovery/shotgun-lab-v57/assets/shotgun-complete/runtime/
