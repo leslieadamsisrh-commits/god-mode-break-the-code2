@@ -1,0 +1,21 @@
+{
+  "batch":"V12-08H",
+  "status":"LOCAL_PLAYABLE_MOVEMENT_FLOW_DELIVERED",
+  "branch":"v12-08h-movement-art-flow",
+  "moduleCommit":"caf8a53ea92e6f2f7fd9036dde20cde38aa84afe",
+  "assemblerCommit":"2283a68b2c5d1d9d1b2482372d00e26f4b3cbdef",
+  "verificationReportCommit":"03dc1a5d28290b8d46569bffad4e19838c7f9782",
+  "libraryDirectory":"/GOD MODE/V12/08H/Movement Art Flow/",
+  "files":[
+    {"file":"JADE_V12_08H_Playable_Training_Lab.html","bytes":20762452,"sha256":"b681b6248055a0ecbf7e68bc8f075d2cf423a37f639ec345da986a08818178ae","library_file_id":"libfile_3c11eb82ffbc8191a4893c172ee4f23c","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08H_Movement_Flow.zip","bytes":17858286,"sha256":"3e874f9a9e929cd87d11969f0ea2d4ffce55c01570654ff56a198d69e4b6e53a","library_file_id":"libfile_835f9a677a3c819187eb1998bcd81daf","saveStatus":"succeeded","zipFiles":156,"zipIntegrityVerified":true},
+    {"file":"JADE_V12_08H_Playable_Demo.mp4","bytes":477332,"sha256":"c4fb827d0d49cb4a6ba750063ba53abec2dad4af6eb1d43528635b0ad9c88d48","library_file_id":"libfile_acf4c0ea0e448191bdc50b957f6bc462","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08H_Actual_Preview.png","bytes":274421,"sha256":"9325e66f05fd81331498c93d18504baa9a1348b7b2c87dfba2d4bbf52ee8de96","library_file_id":"libfile_907de9b6aa5c8191a88e60f7c23c11a6","saveStatus":"succeeded"},
+    {"file":"JADE_V12_08H_DELIVERY_MANIFEST.json","library_file_id":"libfile_b5da03ed1c8081918d68c2fd84928f2c","saveStatus":"succeeded"}
+  ],
+  "verification":{"nodeChecksPassed":67,"browserContentChecksPassed":23,"identityChecksPassed":6,"imageFilesVerified":115,"browser":"Chromium 144.0.7559.96","method":"Standalone contents executed with Playwright set_content; DOM keyboard/pointer and synthetic standard-controller values. No physical Xbox, hosted URL or target-PC performance verification."},
+  "video":{"seconds":7.2,"frames":108,"fps":15,"resolution":[1440,1000],"method":"Completed prefix of actual browser screenshots with scripted four-fixed-tick inputs; not hand-played or real-time benchmark."},
+  "boundaries":{"newDrawings":0,"unchangedImagesFrom08G":115,"finalDesignViews":1,"finalDesignSourcePoses":3,"optionalDerivedStudies":4,"originalRuntimeChanged":false,"fullAnimationComplete":false,"newDeploymentVerified":false,"independentAutonomousAgentsLaunched":0},
+  "storageBoundary":"GitHub holds motion module, exact-source assembly recipe, report and these receipts. Complete assembled code, images, tests, video and standalone are in the verified ZIP and Library. No claim of new binary installation or Vercel deployment. Isolated branch retains disabled Git auto-deployment.",
+  "next":"Review analog movement, weighted shimmy and explicit corner wrapping against 08G. Produce the missing authored shoulder raise/recoil/retract in the same playable interaction; preserve approved identity."
+}
