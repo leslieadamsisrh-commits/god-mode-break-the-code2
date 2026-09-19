@@ -1,71 +1,34 @@
 {
   "version": "12.0",
-  "status": "production-started",
+  "status": "design-reference-production",
   "movementAuthority": "ba742b10",
   "visualAuthority": "JADE FINAL VISUAL LOCK",
-  "reviewLanes": [
-    "identity",
-    "biomechanics",
-    "continuity",
-    "gameplay",
-    "render"
-  ],
+  "visualReferenceSha256": "fff8eeb8fcc3ef1ff3a830684c1ac5aac5f8f142cb3ed92283e8b6ec59d49e89",
+  "reviewLanes": ["identity", "biomechanics", "continuity", "gameplay", "render"],
+  "statusNote": "Earlier KEYS_LOCKED labels record visual-direction approval, not exported HD frame completion. Directions are targets, not a verified exported-view count. Recovered runtime art is distinct from final-design V12 artwork.",
   "families": [
-    {
-      "order": 1,
-      "id": "run-360",
-      "directions": 24,
-      "status": "VISUAL_PRODUCTION"
-    },
-    {
-      "order": 2,
-      "id": "start-accelerate",
-      "directions": 24,
-      "status": "ACTIVE_PRODUCTION"
-    },
-    {
-      "order": 3,
-      "id": "brake-stop",
-      "directions": 24,
-      "status": "ACTIVE_PRODUCTION"
-    },
-    {
-      "order": 4,
-      "id": "pivot-turn",
-      "directions": 24,
-      "status": "ACTIVE_PRODUCTION"
-    },
-    {
-      "order": 5,
-      "id": "baseball-slide",
-      "directions": 24,
-      "status": "KEYS_LOCKED"
-    },
-    {
-      "order": 6,
-      "id": "cover-entry-impact-settle",
-      "directions": 24,
-      "status": "KEYS_LOCKED"
-    },
-    {
-      "order": 7,
-      "id": "cover-shimmy",
-      "directions": 24,
-      "status": "ACTIVE_PRODUCTION"
-    },
-    {
-      "order": 8,
-      "id": "peek-popfire",
-      "directions": 24,
-      "status": "QUEUED"
-    },
-    {
-      "order": 9,
-      "id": "corner-wrap-exit",
-      "directions": 24,
-      "status": "QUEUED"
-    }
+    {"order":1,"id":"run-360","directions":24,"status":"VISUAL_PRODUCTION"},
+    {"order":2,"id":"start-accelerate","directions":24,"status":"ACTIVE_PRODUCTION"},
+    {"order":3,"id":"brake-stop","directions":24,"status":"ACTIVE_PRODUCTION"},
+    {"order":4,"id":"pivot-turn","directions":24,"status":"ACTIVE_PRODUCTION"},
+    {"order":5,"id":"baseball-slide","directions":24,"status":"KEYS_LOCKED"},
+    {"order":6,"id":"cover-entry-impact-settle","directions":24,"status":"KEYS_LOCKED"},
+    {"order":7,"id":"cover-shimmy","directions":24,"status":"VISUAL_REVIEW_PENDING"},
+    {"order":8,"id":"peek-popfire","directions":24,"status":"SPECIFICATION_READY","firstPass":"one side / one view / six large key-pose illustrations"},
+    {"order":9,"id":"corner-wrap-exit","directions":24,"status":"QUEUED"}
   ],
-  "activeBatch": "cover-shimmy",
-  "nextBatch": "peek-popfire"
+  "activeBatch": "peek-popfire",
+  "concurrentReview": "cover-shimmy",
+  "nextBatch": "corner-wrap-exit",
+  "mandatoryVisualReport": true,
+  "reportLabels": ["CONCEPT REVIEW", "EXPORTED FRAMES", "RUNTIME CAPTURE"],
+  "currentBatchGateResults": {"identity":"pending","biomechanics":"pending","continuity":"pending","gameplay":"pending","render":"pending"},
+  "latestAudit": {
+    "base": "d1b5c5f6a4e3cfc57d5030a24d2204ee0e9f949b",
+    "comparison": "The first 14 commits after the initial final-design lock changed only Markdown specifications and the production queue; no new final-design HD image files or gameplay-code changes appeared in that comparison.",
+    "completedWorkThisPass": "Pinned approved source fingerprint; strengthened required image/report rules; created Batch 08 specification; separated review status from runtime completion.",
+    "newHdRuntimeExportsVerified": false,
+    "newGameplayIntegrationVerified": false,
+    "newDeploymentVerified": false
+  }
 }
