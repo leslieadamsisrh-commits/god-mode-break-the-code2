@@ -1,0 +1,18 @@
+{
+  "version":"12.0",
+  "status":"production-started",
+  "movementAuthority":"ba742b10",
+  "visualAuthority":"JADE FINAL VISUAL LOCK",
+  "reviewLanes":["identity","biomechanics","continuity","gameplay","render"],
+  "families":[
+    {"order":1,"id":"run-360","directions":24,"status":"ACTIVE"},
+    {"order":2,"id":"start-accelerate","directions":24,"status":"QUEUED"},
+    {"order":3,"id":"brake-stop","directions":24,"status":"QUEUED"},
+    {"order":4,"id":"pivot-turn","directions":24,"status":"QUEUED"},
+    {"order":5,"id":"baseball-slide","directions":24,"status":"QUEUED"},
+    {"order":6,"id":"cover-entry-impact-settle","directions":24,"status":"QUEUED"},
+    {"order":7,"id":"cover-shimmy","directions":24,"status":"QUEUED"},
+    {"order":8,"id":"peek-popfire","directions":24,"status":"QUEUED"},
+    {"order":9,"id":"corner-wrap-exit","directions":24,"status":"QUEUED"}
+  ]
+}
