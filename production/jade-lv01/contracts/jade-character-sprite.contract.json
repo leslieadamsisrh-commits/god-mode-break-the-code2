@@ -1,0 +1,33 @@
+{
+  "id": "jade-lv01-character-sprite-contract",
+  "version": 1,
+  "design_authority": {
+    "file": "ChatGPT Image Sep 19, 2026, 11_37_12 PM.png",
+    "sha256": "39375b8abfd668b750cc041c5cd78db474f359f43428bd9a585396e62b579854"
+  },
+  "character_export": {
+    "format": "PNG",
+    "transparent_background": true,
+    "one_character_only": true,
+    "cover_baked_into_character": false,
+    "floor_baked_into_character": false,
+    "ground_shadow_baked_into_character": false,
+    "dust_baked_into_character": false,
+    "muzzle_flash_baked_into_character": false,
+    "visor_fx_baked_into_character": false,
+    "ui_baked_into_character": false,
+    "typography_baked_into_character": false
+  },
+  "cover_rule": {
+    "cover_is_separate_runtime_asset": true,
+    "character_may_contact_invisible_cover_plane_in_sprite": true,
+    "character_sprite_must_not_contain_cover_pixels": true,
+    "slide_to_cover_sequence": "character slides toward independently rendered cover; impact/contact is conveyed by pose only"
+  },
+  "playable_first": {
+    "placeholder_art_allowed": true,
+    "placeholder_must_be_labeled": true,
+    "final_uploaded_frame_replaces_placeholder_by_role": true,
+    "gameplay_must_not_wait_for_polish": true
+  }
+}
