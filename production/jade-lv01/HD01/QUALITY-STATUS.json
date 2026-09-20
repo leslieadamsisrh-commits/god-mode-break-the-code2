@@ -1,0 +1,18 @@
+{
+  "request":"LV01-HD01-A01",
+  "status":"QUALITY_HOLD",
+  "generationAttempts":2,
+  "acceptedNewSprites":0,
+  "attempts":[
+    {"file":"a_detailed_high_resolution_concept_design_sheet_p.png","sha256":"846e6f2f4faf10820a6ffb85294096e42a788b5920e3a3df411472732fb1a0c7","size":[1222,1287],"alphaExtrema":[21,252],"fullyTransparentPixels":0,"decision":"REJECTED"},
+    {"file":"a_wide_high_detail_infographic_character_design_b.png","sha256":"f7d420590036c0e019d585fb05b5ff222e29368183cc4783a1767d85a4334427","size":[1536,1024],"alphaExtrema":[23,252],"fullyTransparentPixels":0,"decision":"REJECTED"}
+  ],
+  "failedGates":["Requested one large isolated character, received presentation boards","Newly depicted outfit/emblem and rendering do not preserve approved manga Jade","No fully transparent background","Printed locked/progress claims are not verified status"],
+  "approvedReferenceUnchanged":{"file":"cyber_kitty_god_mode_character_sheet.png","sha256":"66a50a4d81ae00524d5c18dd453ccb97aa29e0c9692a9385145c47feeb380e6e","library_file_id":"libfile_396c992119c48191a10ce531b8d4aa31"},
+  "approvedPoseBoardUnchanged":{"file":"jade_cyberpunk_sprite_production_sheet.png","sha256":"2a88ffc90917ac2605187f3466289e74be9ad27f2bb6343e1b830684e1554d28","library_file_id":"libfile_59f3dd03e87c81919a96eaedd44a3bb6"},
+  "workCompleted":"Verified 08N continuation and 08L networking boundary, pinned new user-approved design and queued movement sets; saved approved images in Library. Attempted A01 twice; both rejected.",
+  "runtimeChanged":false,
+  "newDeployment":false,
+  "autoWorkersLaunched":false,
+  "next":"Do not treat either rejected board as a new design lock or completed sprites. The next art task remains one source-bound, full-body, transparent A01 candidate; reference designs and baseline game remain unchanged."
+}
