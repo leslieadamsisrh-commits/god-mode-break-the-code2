@@ -1,0 +1,25 @@
+{
+  "batch": "B05",
+  "status": "PARTIAL_ACCEPT_CE05_CE03_QUALITY_HOLD",
+  "authority_sha256": "39375b8abfd668b750cc041c5cd78db474f359f43428bd9a585396e62b579854",
+  "accepted": {
+    "id": "LV01-B05-CE05",
+    "sha256": "62352e395e2f638c890b0e144ea28df7623d45901a858c4a2cbb9bbf0df67049",
+    "dimensions": [1024,1536],
+    "library_file_id": "libfile_644c2c4dfd248191bb4f2ebb8ec7e6eb"
+  },
+  "qa_library_file_id": "libfile_3e18c352512881918899414047ba3906",
+  "registration_library_file_id": "libfile_936d978e805881919a3dcb0ae6e39778",
+  "progress_library_file_id": "libfile_2283a7ee18c88191bfc909ead04fae9f",
+  "ce03_rejections_library_file_id": "libfile_850c9d8238308191975d97808fd1bb48",
+  "package": {
+    "sha256": "b713427121fb752cbc0bc3e2e85a1670d9cf48cefd94077acbe4e5a899879a74",
+    "library_file_id": "libfile_fd440dd4c350819193cf5d40fdc5e8e0"
+  },
+  "github_report_commit": "0b5f4caa3f4c12d433e79d0ace50c6b61f6d691b",
+  "ce03_status": "QUALITY_HOLD",
+  "ce08_status": "BLOCKED",
+  "animation_validation": false,
+  "runtime_integration": false,
+  "deployment": false
+}
