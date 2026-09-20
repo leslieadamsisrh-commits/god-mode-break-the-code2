@@ -1,0 +1,18 @@
+{
+  "batch": "B03",
+  "request": "B03-S01 single character-only slide-entry candidate",
+  "decision": "REJECTED_NOT_PROMOTED",
+  "acceptedNewSprites": 0,
+  "file": "wide_high_detail_game_art_sprite_sheet_asset_sh.png",
+  "sha256": "a562ad3bac559c78aa94f09c872ab1f84b0a30911e0593dcac5b07bc0f63ec84",
+  "actualDimensions": [1536, 1024],
+  "mode": "RGBA",
+  "alphaExtrema": [2, 252],
+  "fullyTransparentPixels": 0,
+  "reason": "Returned multi-panel poster rather than requested single large transparent sprite; changed emblem; generated completion claims are not evidence.",
+  "approvedB02CatalogUnaffected": true,
+  "approvedDesignUnchanged": true,
+  "runtimeChanged": false,
+  "newDeployment": false,
+  "next": "Do not promote or treat this poster as a new design authority. B03 still needs one acceptable character-only drawing. B02 reference catalog, code and backups remain complete as documented in fc1223e8."
+}
