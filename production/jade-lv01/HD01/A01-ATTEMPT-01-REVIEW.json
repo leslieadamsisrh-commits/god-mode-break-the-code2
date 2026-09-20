@@ -1,0 +1,17 @@
+{
+  "request":"LV01-HD01-A01",
+  "attempt":1,
+  "status":"REJECTED_NOT_A_PRODUCTION_SPRITE",
+  "file":"a_detailed_high_resolution_concept_design_sheet_p.png",
+  "sha256":"846e6f2f4faf10820a6ffb85294096e42a788b5920e3a3df411472732fb1a0c7",
+  "actualDimensions":[1222,1287],
+  "mode":"RGBA",
+  "alphaExtrema":[21,252],
+  "fullyTransparentPixels":0,
+  "failures":["Multi-panel presentation board, not one isolated full-body character","Material identity/style drift from the approved manga/cel Jade","Changed outfit and emblem","No transparent exterior; requested source canvas not delivered","Printed locked/progress claims are not production evidence"],
+  "designAuthorityUnchanged":"66a50a4d81ae00524d5c18dd453ccb97aa29e0c9692a9385145c47feeb380e6e",
+  "acceptedNewSprites":0,
+  "newRuntimeIntegration":false,
+  "newDeployment":false,
+  "note":"This rejection report is committed; image bytes are not claimed installed in the GitHub runtime. Do not promote, slice as final sprites, or adopt the depicted redesign."
+}
