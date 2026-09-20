@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {"id":"run","title":"Run / Full Locomotion","file":"sources/jade_cyberpunk_run_cycle_sprite_sheet.png","sha256":"a71ddb854395d170a8bb2fc5f5c56ab87fc3149a4b14e853547c3ed48ea0d8c5","dimensions":[1448,1086],"mode":"RGB","columns":[[4,240],[244,482],[487,722],[727,963],[968,1204],[1208,1443]],"rows":[[92,254],[258,430],[434,608],[612,794]],"printedPositionsPerPanel":4,"printedCountsVerifiedAsSeparateFrames":false,"designReferenceAccepted":true,"runtimeReady":false},
+    {"id":"slide","title":"Spacewalk Slide / Baseball Slide","file":"sources/jade_s_24_direction_cyberpunk_slide_sheet.png","sha256":"3db5464cdefedc9522da8b3d471a9a0d534bd8158118eae60b1f29dbe8c8be7a","dimensions":[1448,1086],"mode":"RGB","columns":[[5,242],[246,481],[486,722],[726,963],[967,1204],[1208,1443]],"rows":[[95,264],[268,450],[454,632],[637,816]],"printedPositionsPerPanel":5,"printedCountsVerifiedAsSeparateFrames":false,"designReferenceAccepted":true,"runtimeReady":false}
+  ],
+  "sourceAngleConvention":"Printed labels only: 0 South, 90 East, 180 North, 270 West; exact yaw and engine mapping unverified.",
+  "authority":{"file":"sources/JADE-user-approved-master.png","sha256":"39375b8abfd668b750cc041c5cd78db474f359f43428bd9a585396e62b579854","dimensions":[1536,1024],"kind":"USER_UPLOADED_MASTER_REFERENCE","runtimeSprite":false},
+  "aliases":{"run":"Latest visual poster B03; does not overwrite historical production/jade-lv01/B03 records","slide":"Latest visual poster B04","next":"B05 / Cover Entry / Attach"}
+}
