@@ -1,0 +1,67 @@
+{
+  "designId": "JADE-LV01",
+  "operation": "Preserve exact source artwork and reaffirm final design",
+  "sources": [
+    {
+      "id": "MASTER-LV01",
+      "originalFilename": "ChatGPT Image Sep 19, 2026, 11_37_12 PM.png",
+      "file": "sources/JADE_MASTER_39375b8a.png",
+      "role": "CANONICAL_USER_APPROVED_DESIGN",
+      "sha256": "39375b8abfd668b750cc041c5cd78db474f359f43428bd9a585396e62b579854",
+      "size": [1536, 1024],
+      "mode": "RGBA",
+      "fullyTransparentPixels": 0
+    },
+    {
+      "id": "COVER-ENTRY-REFERENCE",
+      "originalFilename": "jade_cyberpunk_cover_entry_sprite_sheet.png",
+      "file": "sources/COVER_ENTRY_REFERENCE_63905956.png",
+      "role": "COMPOSITE_REFERENCE_ONLY",
+      "sha256": "6390595615b723eed20ba46a243e831391a15db9e88399b9d6709412b667c782",
+      "size": [1448, 1086],
+      "mode": "RGB",
+      "fullyTransparentPixels": 0
+    },
+    {
+      "id": "COVER-MECHANICS-REFERENCE",
+      "originalFilename": "jade_cyberpunk_sprite_production_sheet.png",
+      "file": "sources/COVER_MECHANICS_REFERENCE_a7705f72.png",
+      "role": "COMPOSITE_REFERENCE_ONLY",
+      "sha256": "a7705f725f06840ed48e808a9523edc07cb31c100b7554f486d6da68eea283df",
+      "size": [1672, 941],
+      "mode": "RGB",
+      "fullyTransparentPixels": 0
+    }
+  ],
+  "fileCheck": "All three sources are fully opaque. They are not transparent runtime sprites.",
+  "visualCheck": {
+    "entrySheet": "Cover, floor, labels and character share one flattened illustration.",
+    "mechanicsSheet": "The main pose rows do not visibly include a wall immediately behind the figure. However, text, grid, ground effects and muzzle flashes remain in the flattened RGB board; a separate cover example is also drawn on this same board.",
+    "printedClaims": "ASSET SEPARATION VERIFIED and GAME IMPLEMENTATION READY on the generated sheet are not valid file or animation certification.",
+    "revisionName": "Printed LV02/BATCH 02-A/B labels do not create a second approved heroine; JADE-LV01 master remains authoritative."
+  },
+  "nameCollision": "Latest cover mechanics uses the same source filename as the earlier idle/ready board. Unique aliases and SHA-256 identify this version; earlier reference hashes and archives remain preserved.",
+  "nextAsset": {
+    "id": "LV01-B05-C01",
+    "action": "cover-entry-attach",
+    "pose": "Compression / low settle",
+    "scope": "One character-only pose at the approved three-quarter view. No wall, floor, shadow, labels or firing effects baked into character. Next related keys are contact and attached ready; completed key set is not claimed.",
+    "status": "PENDING_TRANSPARENT_CHARACTER_EXPORT",
+    "masterSourceSha256": "39375b8abfd668b750cc041c5cd78db474f359f43428bd9a585396e62b579854",
+    "targetNativeCanvas": [1024, 1536],
+    "deliveredNativeCanvas": null,
+    "requires": ["identity", "biomechanics", "continuity", "gameplay-registration", "render-transparency"]
+  },
+  "currentPass": {
+    "newDrawings": 0,
+    "newTransparentSprites": 0,
+    "gameplayChanged": false,
+    "deployed": false,
+    "autonomousAgentsLaunched": false
+  },
+  "continuation": {
+    "localBaseline": "v12-08n-art-first",
+    "networkPrototype": "v12-08l-private-mixed-art-duel",
+    "artBranch": "jade-lv01-hd-sprite-production"
+  }
+}
