@@ -1,0 +1,1360 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "leslieadamsisrh-commits/god-mode-break-the-code2",
+    "ref": "approved/shotgun-lab-v57",
+    "path": "recovery/shotgun-lab-v57/assets/shotgun-complete/manifest.json",
+    "gitBlob": "d17ded5aa7edff0f2184c8c91fa92d3666511c96",
+    "selectorPath": "recovery/shotgun-lab-v57/lab-pose.js",
+    "selectorGitBlob": "9115105949813bb0424640c9ee68ce0760c062a3",
+    "extraction": "Cover metadata transcribed from inspected connector line ranges; not a complete raw manifest copy."
+  },
+  "families": {
+    "cover:0": {
+      "id": "cover-d00",
+      "direction": 0,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "17ca9182a928435c809c9c9026ddc0636de5e52964fc4598bdc8030165aac44c",
+      "runtimeFile": "assets/recovered/cover-d00.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "f894a65e4d55dc3a9a3c265a7f38cc7263aebff73ea068b193048dcec7b5863b",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:1": {
+      "id": "cover-d01",
+      "direction": 1,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "85db3bd8c5894aa027342f9e86c7718d0cb8755bb795d489e6a5057dac8d2203",
+      "runtimeFile": "assets/recovered/cover-d01.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "f816463765410561d3c64500a0a2edfa3cfcb6b0de031ed0c8a9f6ad3e16e1ca",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:2": {
+      "id": "cover-d02",
+      "direction": 2,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "7d001909d402bca70751d3b517adbcc3d9783dc320ba634fe2964bae63ea692e",
+      "runtimeFile": "assets/recovered/cover-d02.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "2ef592945d214cbea57df11cc90a1ba3e060352160434bf64d9ff22a537066ca",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:3": {
+      "id": "cover-d03",
+      "direction": 3,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": null,
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 2,
+        "lateral": [],
+        "peek": 3,
+        "fire": 4,
+        "return": 2,
+        "kick": 5,
+        "recovery": 2
+      },
+      "roleSource": "ARCHIVED_SELECTOR_FALLBACK",
+      "sourceRuntimeSha256": "7621fa823de70d5d1e862698410e3435e665f1797112e20a86053a11dcce41d9",
+      "runtimeFile": "assets/recovered/cover-d03.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "bfcfcaa08a70973abb4b5adcb9232f539ef4d240aac9fb851ad9988aabf0bf56",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:4": {
+      "id": "cover-d04",
+      "direction": 4,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "c9bf8eb74fc44972518e73fbf8ab744a6471ea46bc3c7d7e329da0ce8fbc6bd2",
+      "runtimeFile": "assets/recovered/cover-d04.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "2fb2c530a543645a4406662d16b9cf0883ec3c353557b48461a4589650ad2ae1",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:5": {
+      "id": "cover-d05",
+      "direction": 5,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "b992d4cbd3288b12cc2874d04b37bbc8ce8cfec4e173bdbe60cca99588ca5e74",
+      "runtimeFile": "assets/recovered/cover-d05.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "452e288a64d701cb4482e788048381f065eda03626cf326fb89c08654b197b99",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:6": {
+      "id": "cover-d06",
+      "direction": 6,
+      "totalFrames": 12,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        2
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": null,
+      "roles": {
+        "contact": [
+          0,
+          1,
+          2
+        ],
+        "brace": 4,
+        "lateral": [
+          5,
+          6
+        ],
+        "peek": 7,
+        "fire": 8,
+        "return": 9,
+        "kick": 10,
+        "recovery": 11
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "8b8939bd2fc2c6d902f765fd1b14456441fcb6f18a0907dc129ca4ce0cc80a67",
+      "runtimeFile": "assets/recovered/cover-d06.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "1efb28527cb2a7ad6856f4ef151b5e98969c6d6a95e1e160d7ae63093bba617a",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:7": {
+      "id": "cover-d07",
+      "direction": 7,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "c69bcfc5e4bb51a61d2aef34684f8610fbcb5833c45a32c3a06a27fbcb41b307",
+      "runtimeFile": "assets/recovered/cover-d07.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "1f438af4d189d9ff26b91bc539f08b0f88e5a063354509e6f52e745286e3f81a",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:8": {
+      "id": "cover-d08",
+      "direction": 8,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "59797a313e55759e65283f7e8dcd6db358ffc44267a590c8d204209e4ad2268a",
+      "runtimeFile": "assets/recovered/cover-d08.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "262ef3a39dbe03a1f803df65f5456e266b57a6e96f54922222d9b8b9f60e76b0",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:9": {
+      "id": "cover-d09",
+      "direction": 9,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": null,
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 2,
+        "lateral": [],
+        "peek": 3,
+        "fire": 4,
+        "return": 2,
+        "kick": 5,
+        "recovery": 2
+      },
+      "roleSource": "ARCHIVED_SELECTOR_FALLBACK",
+      "sourceRuntimeSha256": "ff5804b3ab9267b043922d06a13171636ce7f0b348ec3b1720990d0090e507a8",
+      "runtimeFile": "assets/recovered/cover-d09.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "75d1fbfc0861488c686e63a0a5bf8a17586a97b4f4ee14ba345a3630af525805",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:10": {
+      "id": "cover-d10",
+      "direction": 10,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "128dfacb9d2968cc64f2172de6b7a6a2c78be3d1f908d626be7ea1cd94f0616f",
+      "runtimeFile": "assets/recovered/cover-d10.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "cf677045c2973dcff2342f3ced548414704bdb1f2a3d6f35b1275644fb146728",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:11": {
+      "id": "cover-d11",
+      "direction": 11,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          216,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "1810cd8550423864fc7a6667b63872e285cc2ca433e05e57f74a117e1b9e42a4",
+      "runtimeFile": "assets/recovered/cover-d11.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "5c28cd2cb1928bb5adf8bf243490b99460ecb711d79ff52e3bd4c70060a37fec",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:12": {
+      "id": "cover-d12",
+      "direction": 12,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          194,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "656d3cb708cf85064037a9d5f983c85af9247dd4c66f44e534533c4538415dbc",
+      "runtimeFile": "assets/recovered/cover-d12.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "638f90fb689436dd89d921a50ab82688f1105f31c72700b9ffc1e0c4f700d8ec",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:13": {
+      "id": "cover-d13",
+      "direction": 13,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "338a35ed79fea22e193f9c4b7d571506bbe83d3fd37f2f80d8f0954c40804bbc",
+      "runtimeFile": "assets/recovered/cover-d13.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "e81a9f84ffabfd02e9e7457f1af7cc5b8a4cadd1596f6f94c91afc7e2d32e626",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:14": {
+      "id": "cover-d14",
+      "direction": 14,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "2f16664e54810ff388f1de975781119a06ec660edb7312e4b9d857677e18e196",
+      "runtimeFile": "assets/recovered/cover-d14.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "57fe69b662ecaab23d747e59e0fe81f20dffcd2955153f7818b5d88aeb03e3fe",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:15": {
+      "id": "cover-d15",
+      "direction": 15,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": null,
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 2,
+        "lateral": [],
+        "peek": 3,
+        "fire": 4,
+        "return": 2,
+        "kick": 5,
+        "recovery": 2
+      },
+      "roleSource": "ARCHIVED_SELECTOR_FALLBACK",
+      "sourceRuntimeSha256": "5ba473afcd13b690d0a2cd927fcb5938d55eedee3ea2791b35457daae127487a",
+      "runtimeFile": "assets/recovered/cover-d15.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "ae55d1e439a052c346842af609586b84b654b06b42c2d16df440211d16906f68",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:16": {
+      "id": "cover-d16",
+      "direction": 16,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "e000ef4d5539ee96ef34b34c89c4573a84938d7c6fde8d705cf248a9d1982d6d",
+      "runtimeFile": "assets/recovered/cover-d16.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "a902b0f07fca9ec13ce2ffa9ea41d18b4119b67bab58c59f7dfca1e907e3f98f",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:17": {
+      "id": "cover-d17",
+      "direction": 17,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "e566f0bb4f508e40e1435322fbf6c76ac07df047ff0cab192e0b1db47b58ecf1",
+      "runtimeFile": "assets/recovered/cover-d17.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "ad83daee4696d1ced7b9166857d70f9ddf3305710b7c20b370c9f37c2a849230",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:18": {
+      "id": "cover-d18",
+      "direction": 18,
+      "totalFrames": 12,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        2
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": null,
+      "roles": {
+        "contact": [
+          0,
+          1,
+          2
+        ],
+        "brace": 4,
+        "lateral": [
+          5,
+          6
+        ],
+        "peek": 7,
+        "fire": 8,
+        "return": 9,
+        "kick": 10,
+        "recovery": 11
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "40d25044567d4bd35cc38488f7747d2cb9ad3cec0e945e18cc38f2701dc1fcec",
+      "runtimeFile": "assets/recovered/cover-d18.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "d077d551e4327f92fae1259d7c637759d27ec1c471558582a48faae68dcf4d48",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:19": {
+      "id": "cover-d19",
+      "direction": 19,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "59aa2bff1e21c4baae87ca732beab6c07a53f98e491d92e0cdfb0fd50795df88",
+      "runtimeFile": "assets/recovered/cover-d19.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "9da88ee882a49f29205768ecfaa499130b7cf252206436c2ac1d199878eee5bd",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:20": {
+      "id": "cover-d20",
+      "direction": 20,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "05665b3ea4a7577a9997c9fbbeb370a53a3d3b4cb70e9237b3d5b61bd6d39537",
+      "runtimeFile": "assets/recovered/cover-d20.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "fbd87a9e0eced047cfc932f969db5b0aab2ae7bbf9592e29d7134e36108ff2ed",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:21": {
+      "id": "cover-d21",
+      "direction": 21,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": null,
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 2,
+        "lateral": [],
+        "peek": 3,
+        "fire": 4,
+        "return": 2,
+        "kick": 5,
+        "recovery": 2
+      },
+      "roleSource": "ARCHIVED_SELECTOR_FALLBACK",
+      "sourceRuntimeSha256": "1404e342030a9ffe68cdc63aa928953f3e700b9da113a42bd3ceb1eb1af5680c",
+      "runtimeFile": "assets/recovered/cover-d21.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "508d7eb219a171237ae8d37a61ed46c58e52f7a6a573eb334c1dc1c23509f4fc",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:22": {
+      "id": "cover-d22",
+      "direction": 22,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "135b4660f8fff5345416191dfaf395c0d2b48b6eea21ae59d186edb70ebec50a",
+      "runtimeFile": "assets/recovered/cover-d22.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "f573493a3ab5ef10aa23e90b0ac7349faf0a044a06958e77c91dc33acda52bfb",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    },
+    "cover:23": {
+      "id": "cover-d23",
+      "direction": 23,
+      "totalFrames": 6,
+      "sourceCell": [
+        384,
+        384
+      ],
+      "grid": [
+        6,
+        1
+      ],
+      "anchor": [
+        192,
+        336
+      ],
+      "frameAnchors": [
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ],
+        [
+          192,
+          336
+        ]
+      ],
+      "roles": {
+        "contact": [
+          0,
+          1
+        ],
+        "brace": 1,
+        "lateral": [],
+        "peek": 2,
+        "fire": 3,
+        "return": 4,
+        "kick": 5,
+        "recovery": 1
+      },
+      "roleSource": "ARCHIVED_MANIFEST",
+      "sourceRuntimeSha256": "72cf8dd8ac4556732cc2f056e63133466ff126d31e9838bf51a19a134e676229",
+      "runtimeFile": "assets/recovered/cover-d23.webp",
+      "runtimeCell": 125,
+      "runtimeSha256": "88c782838e3d2c0121307b8a71a7bf91d65b1edda00809798719b1cbbfe87a14",
+      "muzzleStatus": "NOT_RECOVERED_IN_THIS_PASS; current simulation sockets unchanged"
+    }
+  }
+}

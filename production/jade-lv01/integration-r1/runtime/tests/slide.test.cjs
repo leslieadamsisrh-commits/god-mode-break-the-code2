@@ -1,0 +1,13 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict');
+const {Duel,InputMailbox,NEUTRAL}=require('../source/duel.cjs');
+const Core=require('../public/vendor/core.js'),Gate=require('../public/slide-gate.js');
+test('legal slide preserves K velocity, decay and duration',()=>{const a=Core.actor(0,290),b=Core.actor(0,290);for(let i=0;i<60;i++){const v={x:1,y:0,slide:i===0};Core.freeMotion(a,v,Core.DT);Core.freeMotion(b,Gate.evaluate(b,v).input,Core.DT);assert.deepEqual(a,b);}});
+test('mashing cannot restart timer or inject speed',()=>{const a=Core.actor(),b=Core.actor();let blocked=0;for(let i=0;i<40;i++){Core.freeMotion(a,{x:1,y:0,slide:i===0},Core.DT);const g=Gate.evaluate(b,{x:1,y:0,slide:i%2===0});if(g.blocked)blocked++;Core.freeMotion(b,g.input,Core.DT);assert.equal(a.slide,b.slide);assert.equal(a.vx,b.vx);}assert.ok(blocked>10);});
+test('fresh post-slide input is legal without arbitrary cooldown',()=>assert.equal(Gate.evaluate(Core.actor(),{slide:true}).input.slide,true));
+test('cover kick and wrap-cancel remain legal contextual choices',()=>{for(const p of [{cover:{id:'a'},slide:.3},{cornerTravel:{},slide:0}])assert.equal(Gate.evaluate(p,{slide:true}).blocked,false);});
+test('kick follow-through cannot restart a ground slide',()=>assert.equal(Gate.evaluate({kick:.1},{slide:true}).blocked,true));
+test('held network button produces one edge',()=>{const m=new InputMailbox();m.accept({seq:0,...NEUTRAL},0);let n=0;for(let i=1;i<80;i++){assert.ok(m.accept({seq:i,...NEUTRAL,slide:true},i*10));if(m.take(i*10).slide)n++;}assert.equal(n,1);});
+test('connect and stale-input timeout require neutral before action',()=>{const m=new InputMailbox();m.accept({seq:0,...NEUTRAL,slide:true},0);assert.equal(m.take(0).slide,false);m.accept({seq:1,...NEUTRAL},10);m.accept({seq:2,...NEUTRAL,slide:true},20);assert.equal(m.take(20).slide,true);m.take(1000);m.accept({seq:3,...NEUTRAL,slide:true},1001);assert.equal(m.take(1001).slide,false);});
+test('rejected presses do not queue later slides',()=>{const d=new Duel();d.begin();for(let n=0;n<42;n++)d.advance([{x:1,y:0,slide:n%2===0},{}]);for(let n=0;n<20;n++)d.advance([{},{}]);assert.ok(d.players[0].slide<=0);assert.ok(d.stats.rejectedSlides>10);});
+test('slide contact attaches and next kick releases',()=>{const d=new Duel();d.begin();d.players[0].x=-45;d.players[0].y=60;d.advance([{x:0,y:-1,slide:true},{}]);for(let n=0;n<15&&!d.players[0].cover;n++)d.advance([{x:0,y:-1},{}]);assert.ok(d.players[0].cover);d.advance([{slide:true},{}]);assert.equal(d.players[0].cover,null);assert.ok(d.players[0].kick>0);});

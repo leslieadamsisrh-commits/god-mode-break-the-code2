@@ -1,0 +1,7 @@
+{
+  "name": "jade-08m-couch-art-lab",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/slide.test.cjs tests/match.test.cjs tests/local.test.cjs"
+  }
+}

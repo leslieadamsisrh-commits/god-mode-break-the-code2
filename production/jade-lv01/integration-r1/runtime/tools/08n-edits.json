@@ -1,0 +1,186 @@
+{
+  "public/couch.js": {
+    "baseSha256": "f96d9d7157c6df8860e06f3fbbe5a8d9c024885022e54bfc03008d4285c73d52",
+    "outputSha256": "2faba3e7c9d7757a7de354469ef394a2c5e3d8142f7f6c8e11c984b6c29196b5",
+    "edits": [
+      {
+        "start": 210,
+        "end": 210,
+        "text": ",F=window.JadeFixture"
+      },
+      {
+        "start": 579,
+        "end": 579,
+        "text": ",fixtureInfo=null"
+      },
+      {
+        "start": 2053,
+        "end": 2053,
+        "text": ";fixtureInfo=null"
+      },
+      {
+        "start": 4342,
+        "end": 4344,
+        "text": "`P${fixtu"
+      },
+      {
+        "start": 4345,
+        "end": 4345,
+        "text": "eInfo.slo"
+      },
+      {
+        "start": 4346,
+        "end": 4346,
+        "text": "+1} ${fixtureInfo.kind}"
+      },
+      {
+        "start": 4357,
+        "end": 4366,
+        "text": "`"
+      },
+      {
+        "start": 6297,
+        "end": 6297,
+        "text": "function setupFixture(kind='corner') {\n if(!loaded)return;\n clear();\n const slot=F.seat($('inspectSeat').value,$('mode').value);\n fixtureInfo=F.setup(world,slot,kind);\n inspection=true;lastAims=fixtureInfo.aims.slice();\n const instruction=kind==='corner'?'Aim right with LT / right mouse, then fire.':'Two stationary players are aligned. Aim right and tap fire.';\n pause('P'+(slot+1)+' '+kind+' fixture. '+instruction);\n note('fixture_setup',{slot,kind,controlsUnchanged:true});render();\n}\n"
+      },
+      {
+        "start": 6322,
+        "end": 6335,
+        "text": "s"
+      },
+      {
+        "start": 6338,
+        "end": 6369,
+        "text": ""
+      },
+      {
+        "start": 6370,
+        "end": 6683,
+        "text": "F"
+      },
+      {
+        "start": 6689,
+        "end": 6719,
+        "text": "('"
+      },
+      {
+        "start": 6728,
+        "end": 6728,
+        "text": "\n$('lineOfFi"
+      },
+      {
+        "start": 6730,
+        "end": 6730,
+        "text": "').o"
+      },
+      {
+        "start": 6731,
+        "end": 6734,
+        "text": "click="
+      },
+      {
+        "start": 6736,
+        "end": 6738,
+        "text": "=>setupFixture('clear-shot')"
+      },
+      {
+        "start": 6793,
+        "end": 6794,
+        "text": "N"
+      },
+      {
+        "start": 6968,
+        "end": 6968,
+        "text": ",fixtureInfo"
+      },
+      {
+        "start": 7136,
+        "end": 7137,
+        "text": "N"
+      },
+      {
+        "start": 8863,
+        "end": 8863,
+        "text": "ixtureInfo,f"
+      },
+      {
+        "start": 9039,
+        "end": 9039,
+        "text": "e,setupFixtur"
+      },
+      {
+        "start": 9251,
+        "end": 9251,
+        "text": "$('lineOfFire').disabled=false;"
+      }
+    ]
+  },
+  "public/index.html": {
+    "baseSha256": "054f6315b5a458c133093e119da949830908495cc6773d1f218b3308f49107ad",
+    "outputSha256": "ae304d80d92581257116bf928e369877a45b6e91b96e015fb7fd4b6d2e4421b6",
+    "edits": [
+      {
+        "start": 147,
+        "end": 148,
+        "text": "N"
+      },
+      {
+        "start": 316,
+        "end": 317,
+        "text": "N"
+      },
+      {
+        "start": 1603,
+        "end": 1603,
+        "text": " open"
+      },
+      {
+        "start": 1627,
+        "end": 1627,
+        "text": " \u2014 choose the character you control"
+      },
+      {
+        "start": 1636,
+        "end": 1636,
+        "text": "><label>Inspection seat<select id=\"inspectSeat\"><option value=\"controller\">Controller seat (P2 with keyboard + pad)</option><option value=\"0\">Player 1</option><option value=\"1\">Player 2</option></select></label><p class=\"small\">Setup resets the round and pauses. Click Resume to keep this scene. Controls never switch seats automatically.</p"
+      },
+      {
+        "start": 1674,
+        "end": 1674,
+        "text": "selected "
+      },
+      {
+        "start": 1688,
+        "end": 1688,
+        "text": "</button><button id=\"lineOfFire\" class=\"secondary\" disabled>Set up clear-shot check"
+      },
+      {
+        "start": 3236,
+        "end": 3236,
+        "text": "fixture-setup.js\"></script><script src=\""
+      }
+    ]
+  },
+  "public/render.js": {
+    "baseSha256": "dafff760395d8793a950db86c6c5ac68d92f92e7cb2328868f96aebeaab796a0",
+    "outputSha256": "b97fa58e3bc7d06d6d8bef10c196e7edb2788b0f2449cf306781a2f4cce37315",
+    "edits": [
+      {
+        "start": 9287,
+        "end": 9288,
+        "text": "N"
+      }
+    ]
+  },
+  "tools/build_standalone.py": {
+    "baseSha256": "138f4d1da49f037ec0ccdb7a8e2bc8b212de8ec89fcf7a8d6e8e57542e44bad5",
+    "outputSha256": "9b4b225417fdd35ee3386c15930f8eb4dd36ae8f550ccd83d414d7e2c07d8887",
+    "edits": [
+      {
+        "start": 892,
+        "end": 893,
+        "text": "N"
+      }
+    ]
+  }
+}

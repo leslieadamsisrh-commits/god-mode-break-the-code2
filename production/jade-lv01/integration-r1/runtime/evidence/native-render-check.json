@@ -1,0 +1,97 @@
+{
+  "method": "native Canvas, actual game renderer and decoded source images; not a browser playtest",
+  "errors": [],
+  "shots": [
+    {
+      "file": "evidence/01-cover-contact.png",
+      "frame": {
+        "id": "B05-CE03",
+        "label": "FINAL JADE / B05 CE03 / CONTACT / PLAYABLE-KEY",
+        "final": true,
+        "availability": "exact"
+      }
+    },
+    {
+      "file": "evidence/02-attached-ready.png",
+      "frame": {
+        "id": "B06-B06A",
+        "label": "FINAL JADE / B06 B06A / ATTACHED-IDLE / PLAYABLE-KEY",
+        "final": true,
+        "availability": "exact"
+      }
+    },
+    {
+      "file": "evidence/03-left-shimmy.png",
+      "frame": {
+        "id": "B06-B06B",
+        "label": "FINAL JADE / B06 B06B / SHIMMY-LEFT / PLAYABLE-KEY",
+        "final": true,
+        "availability": "exact"
+      }
+    },
+    {
+      "file": "evidence/04-right-shimmy-placeholder.png",
+      "frame": {
+        "id": "B06-B06C_PLACEHOLDER",
+        "label": "FINAL JADE / B06 B06C_PLACEHOLDER / SHIMMY-RIGHT-PLACEHOLDER / PLACEHOLDER",
+        "final": true,
+        "availability": "placeholder"
+      }
+    },
+    {
+      "file": "evidence/05-north-facing-fallback.png",
+      "frame": {
+        "id": "cover-d12-f1",
+        "label": "RECOVERED / COVER / view 12 / BRACE / slot 1",
+        "final": false,
+        "availability": "exact"
+      }
+    },
+    {
+      "file": "evidence/06-corner-firing-legacy.png",
+      "frame": {
+        "id": "K03",
+        "label": "FINAL JADE / K03 / original source pose",
+        "final": true,
+        "availability": "exact"
+      }
+    }
+  ],
+  "renderer": {
+    "counts": {
+      "draws": 12,
+      "missing": 0,
+      "fallback": 1
+    },
+    "residency": {
+      "requested": 59,
+      "decoded": 59,
+      "evictions": 0,
+      "failures": 0,
+      "pinnedTotal": 59,
+      "pinnedReady": 59,
+      "dynamicReady": 0,
+      "dynamicLimit": 20,
+      "active": "assets/recovered/ready-d12.webp",
+      "loading": 0,
+      "queued": 0,
+      "decodedPixelBytes": 50993456
+    },
+    "frames": [
+      {
+        "id": "K03",
+        "label": "FINAL JADE / K03 / original source pose",
+        "final": true,
+        "availability": "exact"
+      },
+      {
+        "id": "ready-d12-f0",
+        "label": "RECOVERED / READY / view 12",
+        "final": false,
+        "availability": "exact"
+      }
+    ],
+    "ready": true,
+    "slot": 0
+  }
+}

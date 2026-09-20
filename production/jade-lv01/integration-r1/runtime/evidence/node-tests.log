@@ -1,0 +1,55 @@
+B05 fast selector: 6 assertions passed
+✔ tests/b05-fast.test.cjs (117.701336ms)
+B06 fast selector: 6 assertions passed
+✔ tests/b06-fast.test.cjs (143.686757ms)
+✔ duel hit creates authoritative damage plus transient reaction metadata (1.962918ms)
+✔ enemy projectile creates hit reaction without changing damage amount (2.062199ms)
+✔ exact principal directions stay exact (1.371184ms)
+✔ missing run/slide d03 use nearest explicit placeholder (0.452965ms)
+✔ controller inspection picks P2 in keyboard-pad mode (0.985801ms)
+✔ explicit seats remain explicit; two pads default to P1 (0.537333ms)
+✔ reject invalid settings before resetting match (1.941075ms)
+✔ P1 corner fixture selects the requested actor and restores simulation pointer (0.567107ms)
+✔ P1 clear-shot fixture damages the actual opponent (6.897061ms)
+✔ P2 corner fixture selects the requested actor and restores simulation pointer (0.16503ms)
+✔ P2 clear-shot fixture damages the actual opponent (4.65435ms)
+✔ one-view cover keys defer to correct-facing art on north, side and other barriers (9.314969ms)
+✔ aim, fire and retract do not get covered by a low-ready shimmy key (3.559263ms)
+✔ slide-to-cover setup drives original collision through compression, contact and settle (9.914736ms)
+✔ cover-entry fixture works for either seat and retains the authoritative player pointer (3.475225ms)
+✔ renderer routes actual files through supported keys, fallbacks and corner shots without missing draws (21.985982ms)
+✔ one keyboard and one controller route to different seats (1.495632ms)
+✔ two controllers bind actual indices, not array positions (0.152601ms)
+✔ two controllers fire independently (0.176016ms)
+✔ new device does not hijack disconnected slot (0.187423ms)
+✔ swapping controllers explicitly reverses assignments (0.157768ms)
+✔ partial analog movement stays below full speed (0.181124ms)
+✔ nonfinite axes neutralized; aim remembered at rest (0.163828ms)
+✔ neutral input rearm after pause prevents held slide/fire (0.362298ms)
+✔ browser wrapper preserves 08L duel methods across 3600 mixed input ticks (1761.128888ms)
+✔ two independent input slots (3.131526ms)
+✔ reject forged health, position, malformed values (0.616182ms)
+✔ duplicate and stale sequence rejection (0.40337ms)
+✔ one shot event creates seven owned pellets; cooldown enforced (0.757856ms)
+✔ opponent damage, round end, score and reset (3.176544ms)
+✔ cover intercepts a swept pellet before opponent (14.923862ms)
+✔ stance socket available to both human players (0.411051ms)
+✔ lobby does not simulate before start (0.439415ms)
+✔ diagonal intent normalized and multiple edges bounded (0.58204ms)
+✔ legal slide preserves K velocity, decay and duration (3.750683ms)
+✔ mashing cannot restart timer or inject speed (0.761632ms)
+✔ fresh post-slide input is legal without arbitrary cooldown (0.274065ms)
+✔ cover kick and wrap-cancel remain legal contextual choices (0.291601ms)
+✔ kick follow-through cannot restart a ground slide (0.269337ms)
+✔ held network button produces one edge (2.150402ms)
+✔ connect and stale-input timeout require neutral before action (0.401647ms)
+✔ rejected presses do not queue later slides (12.429789ms)
+✔ slide contact attaches and next kick releases (1.792821ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1963.329664
