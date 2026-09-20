@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "visualRevision": "JADE-LV01",
+  "localBuildBase": "2b26f46217147c974afbab7326ece7122c311c08",
+  "localBuildBranch": "v12-08n-art-first",
+  "networkPrototypeBranch": "v12-08l-private-mixed-art-duel",
+  "masterLock": "production/jade-lv01/MASTER-LOCK.md",
+  "masterLockCommit": "c8a642a7ca1f16173ce6febf6bcd6093642e158e",
+  "scope": "Art production. No new gameplay build or deployment.",
+  "approvedReferences": [
+    {"file":"cyber_kitty_god_mode_character_sheet.png","sha256":"66a50a4d81ae00524d5c18dd453ccb97aa29e0c9692a9385145c47feeb380e6e","dimensions":[1536,1024],"kind":"APPROVED_DESIGN_COMPOSITE","transparent":false},
+    {"file":"jade_cyberpunk_sprite_production_sheet.png","sha256":"2a88ffc90917ac2605187f3466289e74be9ad27f2bb6343e1b830684e1554d28","dimensions":[1672,941],"kind":"APPROVED_POSE_REFERENCE_COMPOSITE","transparent":false}
+  ],
+  "activeRequest":"LV01-HD01-A01",
+  "firstSet":{"id":"HD01","status":"DRAWING_REQUEST_READY","keys":[
+    {"id":"LV01-HD01-A01","pose":"neutral low-ready, supported three-quarter right view","status":"REQUEST_READY"},
+    {"id":"LV01-HD01-A02","pose":"same-view breathing/weight-load continuation","status":"QUEUED_AFTER_A01_REVIEW"},
+    {"id":"LV01-HD01-A03","pose":"same-view combat-ready weight set","status":"QUEUED_AFTER_A01_REVIEW"}
+  ]},
+  "families":[
+    {"id":"HD01","name":"Idle and ready","motion":"Neutral, subtle breathing, weight load, combat-ready settle"},
+    {"id":"HD02","name":"Low cover brace and contact","motion":"Body drop, shoulder/forearm contact, pelvis/knee compression, equipment settle"},
+    {"id":"HD03","name":"Right corner peek and weapon raise","motion":"Edge stop, head check, ribcage lean, shoulder/elbow/wrist clearance, stock/cheek alignment, muzzle clear"},
+    {"id":"HD04","name":"Fire, recoil and retract","motion":"Aim hold, discharge pose, weapon kick, arm/shoulder absorption, recovery, deliberate tuck to brace"},
+    {"id":"HD05","name":"Left corner and over-cover views","motion":"Side-correct left peek; top rise, planted hands as applicable, center/left/right aim, tuck; no mirroring shortcuts"},
+    {"id":"HD06","name":"Locomotion and pivots","motion":"Start/load, acceleration, two-step run cycle, brake plant, compression, stop, turn/pivot and recovery"},
+    {"id":"HD07","name":"Baseball/spacewalk slide","motion":"Run plant, pelvis drop, lead leg extension, trailing leg tuck, travel, brake, kneeling recovery and return"},
+    {"id":"HD08","name":"Slide into cover","motion":"Approach, anticipatory tuck, contact, impact compression, hair/coat/cable overshoot, low attached settle"},
+    {"id":"HD09","name":"Cover shimmy and reversal","motion":"Left/right load, inside foot plant, pelvis travel, outside foot catch, brake, reversal and hard edge stop"},
+    {"id":"HD10","name":"Corner wrap and exits","motion":"Planted pivot, coordinated foot/hip/shoulder turn around both sides, reattach, kick-away, detach and move; vault only with separate mechanic validation"},
+    {"id":"HD11","name":"Independent aim and weapon handling","motion":"Strafe, backpedal, lower-body reposition with agreed aim limits; shotgun first, then pistol/AR/sniper grip, recoil and matter-materialization/dissolve variants"},
+    {"id":"HD12","name":"Psychic abilities and equipment response","motion":"Charge, shield/parry, grip/throw, cover generation/movement, gauntlet strike, orbit, pinball and unmake; code, emoji, battery and effects are separate layers"},
+    {"id":"HD13","name":"Combat reactions and resets","motion":"Hit absorption, stagger, recovery, knockdown/death, finisher and respawn appropriate to each validated mechanic"}
+  ],
+  "directionPolicy":"First validate the needed view/action in 08N. Then expand that family to the planned 24 nominal 15-degree views without mirror-swapping asymmetry. No completed 360 coverage asserted.",
+  "firstPlayableReplacement":"HD01-HD04 at the supported corner, before the full library is finished; recovered art stays labeled elsewhere.",
+  "reviewResponsibilities":["identity","biomechanics","continuity","gameplay_registration","render_transparency"],
+  "runtimeExportsVerified":[],
+  "runtimeIntegrated":[],
+  "deploymentVerified":false,
+  "workersLaunched":false,
+  "note":"Targets and drawing requests are not completed exports. This queue is the pre-generation checkpoint. Update only with actual file and test evidence."
+}
