@@ -1,0 +1,16 @@
+{
+  "status": "ANIMATION_VALIDATION_HOLD",
+  "timingSource": {
+    "baseline": "v12-08n-art-first",
+    "slideDurationSeconds": 0.70,
+    "coverImpactSeconds": 0.18,
+    "preContactFixedTimer": null
+  },
+  "requiredInbetweens": [
+    {"id":"IB-PRE","between":"CE05->CE03","timing":"event/proximity-driven","status":"NOT_AUTHORED"},
+    {"id":"IB-RET","between":"CE03->CE08","timing":"inside existing 0.18s COVER IMPACT window","status":"NOT_AUTHORED"}
+  ],
+  "animationValidation": false,
+  "integration": false,
+  "deployment": false
+}
