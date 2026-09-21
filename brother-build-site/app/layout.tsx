@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "GOD MODE: Arcade Brother Build",
-  description: "Private two-player online GOD MODE combat vertical slice.",
+  description: "Bot-enabled online GOD MODE combat lab with instant brother drop-in.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

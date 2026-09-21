@@ -41,7 +41,7 @@ export async function POST(request:Request){
     }
     if(action==="join"){
       const id=clean(body.room,8),code=clean(body.code,6),guestToken=token(),row=await read(id);if(!row||row.join_code!==code)throw new Error("Wrong room code");
-      const state=await mutate(id,s=>{if(s.players.length===2)throw new Error("Room is full");joinGame(s,clean(body.name)||"Player 2",guestToken);});
+      const state=await mutate(id,s=>{if(s.players.length===2&&!s.players.some(p=>p.bot))throw new Error("Room is full");joinGame(s,clean(body.name)||"Player 2",guestToken);});
       return json({room:id,token:guestToken,slot:1,state:safeState(state)});
     }
     const id=clean(body.room,8),t=String(body.token||"");
