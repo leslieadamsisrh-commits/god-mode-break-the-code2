@@ -1,0 +1,37 @@
+{
+  "runtimeFiles": 122,
+  "currentDesignUniqueExports": 4,
+  "recordErrors": [],
+  "changedExistingImages": [],
+  "changedProtectedSimulationFiles": [],
+  "protectedFiles": {
+    "public/vendor/core.js": "164d33537c118ecc95239f2b6889c2cacb5bc636ba4200a894e15de10f504a5e",
+    "public/duel-browser.js": "35b12e787e02f1b5151e7d24fdb586a4fcf2ebcaa00c088420e0b7d3f685f1d6",
+    "source/duel.cjs": "7285785b65cbbf49e66e4eacf93038a52727a2ebdbe01e864e81173fabfc142e",
+    "public/local-input.js": "33963bbdf58a0a55ea95ae9bee9bbaff199bee32ca587a34c7eeabf08460f675",
+    "public/slide-gate.js": "0218a89508b355794dd8adb052b6d2de05f1e1761db5a1c749a4bc93a554da03",
+    "public/vendor/action-controller.js": "1ee3cb5820a24384d57f4c50140c0ce3b2c8478f17bccbd61917a395daa1359d",
+    "public/vendor/motion-flow.js": "fd1eccc05157ee339cf7b3dbfd05a31be2b2918f0b447bd93f4a9726880e74aa",
+    "public/vendor/stance-registration.js": "1c157e2ea1d79be9e7306cd584c797659722d04e0b72ab9dcb829ec9fe36b818",
+    "public/vendor/cover-router.js": "86bcec0a47b8134dcf4b2083c9d1b58a97be17684aa7fd54a2f7e9bfd099c831"
+  },
+  "batch17": {
+    "byteRecheck": "not performed; recover the original board using the handoff source ID",
+    "presentationPanels": 7,
+    "printedClaim": 204,
+    "verifiedCurrentDesignSpriteCount": 4,
+    "status": "OPAQUE_REFERENCE_ONLY; no individual C193-C204 exports located in recovered package or inspected GitHub art tree"
+  },
+  "newCandidates": [],
+  "newAcceptedExports": 0,
+  "newTechnicalCutoutExports": 0,
+  "reviewCandidateFiles": [
+    "assets/b06-r3/B06C-right-step.png",
+    "assets/b06-r3/B06L-left-step.png",
+    "assets/b06-r3/B06P-passing.png"
+  ],
+  "artworkApproval": "LV01 authority preserved; current exports inherited as accepted keys",
+  "animationValidation": "existing CE08 knee-down pose held through supported travel; new push-drag animation pending",
+  "integration": "R4: CE08 held knee-down stance; cover scale multiplier 1.35 with slider; original combat unchanged; R3 candidates retained only for comparison",
+  "deployment": false
+}
