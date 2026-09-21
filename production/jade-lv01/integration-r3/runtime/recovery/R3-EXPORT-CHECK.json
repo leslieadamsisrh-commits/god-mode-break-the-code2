@@ -1,0 +1,71 @@
+[
+  {
+    "file": "B06C-right-step.png",
+    "dimensions": [
+      1312,
+      1199
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 914069,
+    "alphaBounds": [
+      19,
+      78,
+      1300,
+      1140
+    ],
+    "sourceSHA256": "0e9097fe209b94737b0ceba6e62dc9934683ce18e5993b31eca4674c03d46f2a",
+    "helmetMatch": {
+      "offset": [
+        0,
+        0
+      ],
+      "correlation": 0.9999999999999991
+    }
+  },
+  {
+    "file": "B06L-left-step.png",
+    "dimensions": [
+      1312,
+      1199
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 862873,
+    "alphaBounds": [
+      17,
+      93,
+      1288,
+      1133
+    ],
+    "sourceSHA256": "5374ed190b4d583787d6003c4ea835bb034affa3b661251b88aaeb4ee682e1eb",
+    "helmetMatch": {
+      "offset": [
+        268,
+        21
+      ],
+      "correlation": 0.8252807270985716
+    }
+  },
+  {
+    "file": "B06P-passing.png",
+    "dimensions": [
+      1312,
+      1199
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 950898,
+    "alphaBounds": [
+      18,
+      78,
+      1032,
+      1079
+    ],
+    "sourceSHA256": "fb0c13da1dc92e47678817e1494e8c164633c5142e19d4a36b33bb2de7bd33bc",
+    "helmetMatch": {
+      "offset": [
+        0,
+        0
+      ],
+      "correlation": 0.9742660295344812
+    }
+  }
+]
