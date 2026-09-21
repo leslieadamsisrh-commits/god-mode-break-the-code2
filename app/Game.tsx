@@ -12,7 +12,7 @@ type Calibration = {
   cameraPitch:number; perspective:number; playerShadow:number; coverShadow:number; crowdScale:number; balconyScale:number;
 };
 const DEFAULT_CALIBRATION: Calibration = {
-  playerScale:1, generatedCoverScale:1.1, fixedCoverScale:1.05, matterScale:1, propScale:1,
+  playerScale:1.04, generatedCoverScale:.86, fixedCoverScale:.9, matterScale:.92, propScale:1,
   arenaScale:1, foregroundDepth:1, middleDepth:1, backgroundDepth:1, cameraZoom:1,
   cameraPitch:1, perspective:1, playerShadow:1, coverShadow:1, crowdScale:1, balconyScale:1,
 };
@@ -122,6 +122,7 @@ export default function Game() {
       <div className="mobile-actions"><button onPointerDown={() => touchAction("slide")}>SLIDE</button><button onPointerDown={() => touchAction("melee")}>HIT</button><button onPointerDown={() => touchAction("pinball")}>PINBALL</button></div>
     </div><aside className="panel">
       {connected ? <><div className="round-line"><span>{hud.mode === "solo" ? "SOLO SANDBOX" : `ROUND ${hud.round}`}</span><b>{hud.mode === "solo" ? "∞" : `${hud.players[0]?.score || 0} : ${hud.players[1]?.score || 0}`}</b></div>{hud.players.map((p: any, i: number) => <div className={`player-card p${i}`} key={i}><div><span>{p.name}{p.bot ? " · CPU" : i === hud.slot ? " · YOU" : ""}</span><strong>{Math.ceil(p.hp)} HP</strong></div><Meter value={p.hp} kind="hp" /><div className="battery-row"><span>BATTERY</span><span>{Math.ceil(p.battery)}%</span></div><Meter value={p.battery} kind="battery" /></div>)}{invite && <button onClick={copy}>COPY BROTHER DROP-IN LINK</button>}{hud.mode !== "solo" && <button className="primary" disabled={hud.phase === "playing"} onClick={start}>{hud.phase === "finished" ? botActive ? "INSTANT REMATCH VS BOT" : "REQUEST BROTHER REMATCH" : "ROUND LIVE"}</button>}</> : <div className="signal-card"><span className="kicker">MISSION</span><h3>SLIDE. BUILD.<br />GRIP THE COVER.<br />BREAK THE CODE.</h3><p>Version 57 movement, Jade’s recovered directional sprites, and the Dimension 33 arena layer are ready.</p></div>}
+      {connected && hud.mode === "solo" && <button className="primary" onClick={start}>RESET NO-BOT SANDBOX</button>}
       <div className="controls"><h3>DUAL GLOVE COMMANDS</h3><Control k="WASD" v="move" /><Control k="MOUSE / RT" v="aim + shotgun" /><Control k="SHIFT / A" v="baseball slide" /><Control k="E / LB" v="shield" /><Control k="Q / Y" v="Grip matter / generated cover" /><Control k="Q again" v="release psychic hold" /><Control k="R / D-PAD →" v="throw matter" /><Control k="B / X" v="generate chunky cover" /><Control k="F / RB" v="power glove" /><Control k="C / D-PAD ←" v="heavy strike" /><Control k="O / D-PAD ↑" v="Orbit" /><Control k="P / D-PAD ↓" v="launch Orbit" /><Control k="SPACE / B" v="Pinball" /><Control k="X / LT" v="slow field" /></div>
     </aside></section>
   </main>;
@@ -151,10 +152,11 @@ function drawArena(g: CanvasRenderingContext2D, t: number, s: any, q: Calibratio
   if(ruins){const drift=Math.sin(t*.075)*5*q.backgroundDepth;g.save();g.globalAlpha=.97;g.drawImage(ruins,-26+drift,-5,1052,592*q.backgroundDepth);g.restore();}
   if(architecture){
     const crowdBob=Math.sin(t*3.6)*1.5+crowdReactionNew*Math.sin(t*17)*4.5;
-    g.save();g.translate(500,150);g.scale(q.crowdScale,q.middleDepth);g.translate(-500,-150);g.globalCompositeOperation="screen";g.globalAlpha=.86;g.drawImage(architecture,0,crowdBob,1000,563);g.restore();
-    const bw=250*q.balconyScale,bh=141*q.balconyScale;g.save();g.globalCompositeOperation="screen";g.globalAlpha=.10+crowdReactionNew*.16;g.shadowColor="#ff2f9d";g.shadowBlur=28+crowdReactionNew*22;g.drawImage(architecture,355,35,315,255,500-bw/2,18+Math.sin(t*.8)*2,bw,bh);g.restore();
+    g.save();g.translate(500,132);g.scale(q.crowdScale,q.middleDepth);g.translate(-500,-132);g.globalCompositeOperation="screen";g.globalAlpha=.8;g.drawImage(architecture,-35,-70+crowdBob,1070,602);g.restore();
+    const bw=294*q.balconyScale,bh=184*q.balconyScale;g.save();g.globalCompositeOperation="screen";g.globalAlpha=.28+crowdReactionNew*.17;g.shadowColor="#ff2f9d";g.shadowBlur=28+crowdReactionNew*22;g.drawImage(architecture,520,0,560,410,500-bw/2,5+Math.sin(t*.8)*2,bw,bh);g.restore();
   }
-  if(board){const scale=q.arenaScale,w=1000*scale,h=563*scale*q.foregroundDepth;g.save();g.drawImage(board,500-w/2,122,w,h);g.restore();}
+  if(board){const scale=q.arenaScale,w=1000*scale,h=500*scale*q.foregroundDepth;g.save();g.drawImage(board,0,145,board.width,board.height-145,500-w/2,137,w,h);g.restore();}
+  if(architecture){const bob=Math.sin(t*3.6)*1.5+crowdReactionNew*Math.sin(t*17)*4;g.save();g.globalCompositeOperation="screen";g.globalAlpha=.83;g.drawImage(architecture,0,70,390,830,0,110+bob,154*q.crowdScale,430*q.middleDepth);g.drawImage(architecture,1210,70,390,830,846,110-bob,154*q.crowdScale,430*q.middleDepth);g.restore();}
   g.save();g.globalAlpha=.15+.12*crowdReactionNew;g.globalCompositeOperation="screen";for(let n=0;n<8;n++){const x=78+n*122,y=112+(n%2)*18;g.fillStyle=n%2?"#ff3f9c":"#55eef2";g.beginPath();g.arc(x,y+Math.sin(t*5+n)*3,3+crowdReactionNew*3,0,Math.PI*2);g.fill();}g.restore();
   g.fillStyle="#05070dcc";g.fillRect(355,151,290,31);g.strokeStyle="#ff45a5";g.strokeRect(360,155,280,22);g.fillStyle="#fff";g.font="900 14px Arial";g.textAlign="center";g.fillText(s?.phase==="finished"?"THE ARENA LIVES":"DIMENSION 33 // WAR GAMES",500,171);g.textAlign="left";
   return;
@@ -181,27 +183,26 @@ function drawArena(g: CanvasRenderingContext2D, t: number, s: any, q: Calibratio
 }
 
 function drawForegroundOcclusion(g:CanvasRenderingContext2D,t:number,q:Calibration){
-  const board=concepts.get("warBoard");if(!board)return;const scale=q.arenaScale,w=1000*scale,h=563*scale*q.foregroundDepth,x=500-w/2,y=122,sourceY=Math.floor(board.height*.73);g.save();g.globalAlpha=.92;g.drawImage(board,0,sourceY,board.width,board.height-sourceY,x,y+h*.73,w,h*.27);g.globalCompositeOperation="screen";g.globalAlpha=.14;g.fillStyle="#ff3f9c";g.fillRect(0,607+Math.sin(t*2)*2,1000,5);g.restore();
+  const board=concepts.get("warBoard");if(!board)return;const scale=q.arenaScale,w=1000*scale,h=500*scale*q.foregroundDepth,x=500-w/2,y=137,sourceY=Math.floor(board.height*.72);g.save();g.globalAlpha=.94;g.drawImage(board,0,sourceY,board.width,board.height-sourceY,x,y+h*.72,w,h*.28);g.globalCompositeOperation="screen";g.globalAlpha=.14;g.fillStyle="#ff3f9c";g.fillRect(0,607+Math.sin(t*2)*2,1000,5);g.restore();
 }
 
 function cover(g: CanvasRenderingContext2D, c: any, q: Calibration) {
-  const ratio=c.maxHp?c.hp/c.maxHp:0, depth=.76+(c.y/620)*.34*q.perspective, visualScale=c.generated?q.generatedCoverScale:q.fixedCoverScale, width=Math.max(108,c.w*1.35)*depth*visualScale, center=c.x+c.w/2,base=c.y+c.h;
-  g.save();g.fillStyle="#000a";g.beginPath();g.ellipse(center,base+9,width*.38,16*depth*q.coverShadow,-.04,0,Math.PI*2);g.fill();g.translate(center,base);g.scale(visualScale,visualScale);g.translate(-center,-base);drawConstructedCover(g,c,depth,c.generated,ratio);g.restore();
+  const ratio=c.maxHp?c.hp/c.maxHp:0, depth=.84+(c.y-208)/320*.16*q.perspective, visualScale=c.generated?q.generatedCoverScale:q.fixedCoverScale, width=c.w*depth*visualScale, center=c.x+c.w/2,base=c.y+c.h;
+  g.save();g.fillStyle="#000b";g.beginPath();g.ellipse(center,base+8,width*.42,12*depth*q.coverShadow,-.03,0,Math.PI*2);g.fill();drawConstructedCover(g,c,depth*visualScale,c.generated,ratio);g.restore();
 }
 
 function drawConstructedCover(g: CanvasRenderingContext2D, c: any, depth: number, generated=true, ratio=1) {
-  const progress = 1 - Math.max(0, Math.min(1, c.build || 0)), blockW = c.w / 3, baseY = c.y + c.h;
-  for (let row = 0; row < 2; row++) for (let col = 0; col < 3; col++) {
-    const n = row * 3 + col, reveal = Math.max(0, Math.min(1, progress * 1.7 - n * .12)); if (reveal <= 0) continue;
-    const bw = blockW - 2, bh = 24 * depth, lift = (1 - reveal) * (76 + n * 9), x = c.x + col * blockW, y = baseY - row * bh - bh - lift, ex = 8 * depth, ey = -7 * depth;
-    g.globalAlpha = .35 + reveal * .65; g.fillStyle = generated?(row ? "#536471" : "#657784"):(row?"#5d5862":"#746b70"); g.strokeStyle = "#080b10"; g.lineWidth = 2; g.fillRect(x, y, bw, bh); g.strokeRect(x, y, bw, bh);
-    g.fillStyle = generated?"#8799a3":"#95898c"; g.beginPath(); g.moveTo(x, y); g.lineTo(x + ex, y + ey); g.lineTo(x + bw + ex, y + ey); g.lineTo(x + bw, y); g.closePath(); g.fill(); g.stroke();
-    g.fillStyle = generated?"#2b3d48":"#40373d"; g.beginPath(); g.moveTo(x + bw, y); g.lineTo(x + bw + ex, y + ey); g.lineTo(x + bw + ex, y + bh + ey); g.lineTo(x + bw, y + bh); g.closePath(); g.fill(); g.stroke();
-    g.strokeStyle = n % 2 ? "#ff48a1" : "#60eff2"; g.globalAlpha = .55 * reveal; g.beginPath(); g.moveTo(x + 6, y + bh * .66); g.lineTo(x + bw - 8, y + bh * .48); g.stroke();
-    if (progress < 1) { g.fillStyle = n % 2 ? "#ff48a1" : "#60eff2"; for (let q = 0; q < 2; q++) { const a = n + q * Math.PI; g.fillRect(x + bw / 2 + Math.cos(a) * (24 + lift * .14), y + Math.sin(a) * 16, 4, 4); } }
+  const progress=1-Math.max(0,Math.min(1,c.build||0)),damageRow=ratio>.67?0:ratio>.34?1:ratio>0?2:3,column=generated?0:Math.abs(c.art||0)%8,sprite=scenery[damageRow]?.[column]||scenery[damageRow]?.[0],baseY=c.y+c.h;
+  const targetW=c.w*depth,targetH=Math.max(58,c.w*.57)*depth,x=c.x+c.w/2-targetW/2,y=baseY-targetH;
+  if(sprite){
+    if(generated&&progress<.98){
+      for(let part=0;part<3;part++){const reveal=Math.max(0,Math.min(1,progress*1.65-part*.18));if(!reveal)continue;const sw=sprite.width/3,dw=targetW/3+1,lift=(1-reveal)*(64+part*13);g.save();g.globalAlpha=.3+reveal*.7;g.shadowColor=part%2?"#ff4da7":"#62eff1";g.shadowBlur=14;g.drawImage(sprite,part*sw,0,sw,sprite.height,x+part*targetW/3,y-lift,dw,targetH);g.restore();}
+      g.save();g.globalCompositeOperation="screen";for(let n=0;n<9;n++){const a=n*Math.PI*2/9+progress*5,r=24+(1-progress)*34;g.fillStyle=n%2?"#ff4da7":"#62eff1";g.fillRect(c.x+c.w/2+Math.cos(a)*r,c.y+c.h/2+Math.sin(a)*r*.48,3,3);}g.restore();
+    }else{g.drawImage(sprite,x,y,targetW,targetH);}
+  }else{
+    g.fillStyle=generated?"#6f7d82":"#796f69";g.strokeStyle="#0a0c10";g.lineWidth=3;g.fillRect(x,y,targetW,targetH);g.strokeRect(x,y,targetW,targetH);
   }
-  g.globalAlpha = 1; g.strokeStyle = generated?"#6cf9ff":"#ff55aa"; g.shadowColor = g.strokeStyle; g.shadowBlur = generated?14:7; g.lineWidth = 2; g.strokeRect(c.x - 3, baseY - 49 * depth, c.w + 8 * depth, 50 * depth); g.shadowBlur = 0;
-  if(ratio<.67){g.strokeStyle="#1a1118";g.lineWidth=3;for(let n=0;n<(ratio<.34?6:3);n++){const x=c.x+16+n*23,y=baseY-42*depth+(n%2)*8;g.beginPath();g.moveTo(x,y);g.lineTo(x+10,y+9);g.lineTo(x+4,y+18);g.stroke();}}
+  if(ratio>0){g.strokeStyle=generated?"#67f4f1":"#ff58aa";g.globalAlpha=generated?.62:.34;g.lineWidth=2;g.beginPath();g.moveTo(x+targetW*.12,y+targetH*.62);g.lineTo(x+targetW*.88,y+targetH*.54);g.stroke();g.globalAlpha=1;}
 }
 
 function matter(g: CanvasRenderingContext2D, m: any, q: Calibration) {
