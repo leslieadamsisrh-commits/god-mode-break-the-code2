@@ -1,0 +1,196 @@
+{
+  "selected": [
+    "R3-PASS",
+    "R3-LEFT",
+    "R3-RIGHT"
+  ],
+  "method": "native Canvas, actual game renderer and decoded source images; not a browser playtest",
+  "errors": [],
+  "shots": [
+    {
+      "file": "evidence/01-cover-contact.png",
+      "frame": {
+        "id": "B05-CE03",
+        "label": "FINAL JADE / B05 CE03 / CONTACT / PLAYABLE-KEY",
+        "final": true,
+        "availability": "exact",
+        "scale": 0.105,
+        "anchor": [
+          650,
+          1178
+        ],
+        "rect": [
+          0,
+          0,
+          1312,
+          1199
+        ]
+      }
+    },
+    {
+      "file": "evidence/02-attached-ready.png",
+      "frame": {
+        "id": "R3-PASS",
+        "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+        "final": true,
+        "availability": "review-candidate",
+        "scale": 0.1,
+        "anchor": [
+          620,
+          1075
+        ],
+        "rect": [
+          0,
+          0,
+          1312,
+          1199
+        ]
+      }
+    },
+    {
+      "file": "evidence/03-left-crouch-candidate.png",
+      "frame": {
+        "id": "R3-PASS",
+        "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+        "final": true,
+        "availability": "review-candidate",
+        "scale": 0.1,
+        "anchor": [
+          620,
+          1075
+        ],
+        "rect": [
+          0,
+          0,
+          1312,
+          1199
+        ]
+      }
+    },
+    {
+      "file": "evidence/04-right-crouch-candidate.png",
+      "frame": {
+        "id": "R3-PASS",
+        "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+        "final": true,
+        "availability": "review-candidate",
+        "scale": 0.1,
+        "anchor": [
+          620,
+          1075
+        ],
+        "rect": [
+          0,
+          0,
+          1312,
+          1199
+        ]
+      }
+    },
+    {
+      "file": "evidence/05-north-facing-fallback.png",
+      "frame": {
+        "id": "cover-d12-f1",
+        "label": "RECOVERED / COVER / view 12 / BRACE / slot 1",
+        "final": false,
+        "availability": "exact",
+        "scale": 1.76,
+        "anchor": [
+          62.5,
+          109.375
+        ],
+        "rect": [
+          125,
+          0,
+          125,
+          125
+        ]
+      }
+    },
+    {
+      "file": "evidence/06-corner-firing-legacy.png",
+      "frame": {
+        "id": "K03",
+        "label": "FINAL JADE / K03 / original source pose",
+        "final": true,
+        "availability": "exact",
+        "scale": 0.205,
+        "anchor": [
+          340,
+          790
+        ],
+        "rect": [
+          0,
+          0,
+          684,
+          809
+        ]
+      }
+    }
+  ],
+  "renderer": {
+    "counts": {
+      "draws": 212,
+      "missing": 0,
+      "fallback": 103
+    },
+    "residency": {
+      "requested": 64,
+      "decoded": 64,
+      "evictions": 0,
+      "failures": 0,
+      "pinnedTotal": 64,
+      "pinnedReady": 64,
+      "dynamicReady": 0,
+      "dynamicLimit": 20,
+      "active": "assets/recovered/ready-d12.webp",
+      "loading": 0,
+      "queued": 0,
+      "decodedPixelBytes": 71370512
+    },
+    "frames": [
+      {
+        "id": "R3-PASS",
+        "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+        "final": true,
+        "availability": "review-candidate",
+        "scale": 0.1,
+        "anchor": [
+          620,
+          1075
+        ],
+        "rect": [
+          0,
+          0,
+          1312,
+          1199
+        ]
+      },
+      {
+        "id": "ready-d12-f0",
+        "label": "RECOVERED / READY / view 12",
+        "final": false,
+        "availability": "exact",
+        "scale": 1.76,
+        "anchor": [
+          62.5,
+          109.5
+        ],
+        "rect": [
+          0,
+          0,
+          125,
+          125
+        ]
+      }
+    ],
+    "ready": true,
+    "slot": 0,
+    "presentation": {
+      "calibrated": true,
+      "coverMotion": true,
+      "crouchCycle": true,
+      "followSeat": null
+    }
+  }
+}

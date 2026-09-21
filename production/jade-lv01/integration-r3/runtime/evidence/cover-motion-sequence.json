@@ -1,0 +1,2202 @@
+[
+  {
+    "tick": 0,
+    "x": -46.23781327716112,
+    "vx": -74.26879662966721,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 1,
+    "x": -48.36255852405214,
+    "vx": -127.48471481346087,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 2,
+    "x": -51.12281829760351,
+    "vx": -165.6155864130821,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 3,
+    "x": -54.3384441278315,
+    "vx": -192.93754981367957,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 4,
+    "x": -57.880353995440814,
+    "vx": -212.5145920565588,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 5,
+    "x": -61.65605659197427,
+    "vx": -226.54215579200746,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 6,
+    "x": -65.59927899896637,
+    "vx": -236.59334441952586,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 7,
+    "x": -69.66253459529347,
+    "vx": -243.795335779626,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 8,
+    "x": -73.81179773008712,
+    "vx": -248.95578808761965,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 9,
+    "x": -78.02268795913746,
+    "vx": -252.65341374301988,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 10,
+    "x": -82.27773593080238,
+    "vx": -255.30287829989507,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 11,
+    "x": -86.5644243076549,
+    "vx": -257.2013026111517,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 12,
+    "x": -90.8737840255036,
+    "vx": -258.5615830709215,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 13,
+    "x": -95.19938846902873,
+    "vx": -259.53626661150827,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 14,
+    "x": -99.53663276713273,
+    "vx": -260.23465788623963,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 15,
+    "x": -102.30218183206486,
+    "vx": -165.93294389592748,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 16,
+    "x": -104.06557377055685,
+    "vx": -105.80351630951964,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 17,
+    "x": -105.18996211288224,
+    "vx": -67.46330053952315,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 18,
+    "x": -105.90690377330425,
+    "vx": -43.01649962532032,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 19,
+    "x": -106.36404595905978,
+    "vx": -27.428531145331696,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 20,
+    "x": -106.65553268599142,
+    "vx": -17.489203615898088,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 21,
+    "x": -106.84139282890712,
+    "vx": -11.15160857494193,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 22,
+    "x": -106.95990248829462,
+    "vx": -7.11057956324974,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 23,
+    "x": -107.03546758335919,
+    "vx": -4.5339057038744865,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 24,
+    "x": -107.08365001525235,
+    "vx": -2.8909459135889035,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 25,
+    "x": -107.11437249024101,
+    "vx": -1.8433484993202112,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 26,
+    "x": -107.13396200518129,
+    "vx": -1.1753708964163159,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 27,
+    "x": -107.14645283138383,
+    "vx": -0.7494495721519622,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 28,
+    "x": -107.15441733380757,
+    "vx": -0.4778701454249844,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 29,
+    "x": -107.15949572476661,
+    "vx": -0.3047034575425608,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 30,
+    "x": -107.16273384980704,
+    "vx": -0.19428750242562648,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 31,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 32,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 33,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 34,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 35,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 36,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 37,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 38,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 39,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 40,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 41,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 42,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 43,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 44,
+    "x": -107.16273384980704,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 45,
+    "x": -105.92492057264592,
+    "vx": 74.26879662966721,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 46,
+    "x": -103.8001753257549,
+    "vx": 127.48471481346087,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 47,
+    "x": -101.03991555220354,
+    "vx": 165.6155864130821,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 48,
+    "x": -97.82428972197555,
+    "vx": 192.93754981367957,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 49,
+    "x": -94.28237985436623,
+    "vx": 212.5145920565588,
+    "frame": {
+      "id": "R3-RIGHT",
+      "label": "CROUCHED MOVEMENT / R3-RIGHT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 50,
+    "x": -90.50667725783276,
+    "vx": 226.54215579200746,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 51,
+    "x": -86.56345485084067,
+    "vx": 236.59334441952586,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 52,
+    "x": -82.50019925451357,
+    "vx": 243.795335779626,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 53,
+    "x": -78.35093611971992,
+    "vx": 248.95578808761965,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 54,
+    "x": -74.14004589066958,
+    "vx": 252.65341374301988,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 55,
+    "x": -69.88499791900466,
+    "vx": 255.30287829989507,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 56,
+    "x": -65.59830954215214,
+    "vx": 257.2013026111517,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 57,
+    "x": -61.288949824303444,
+    "vx": 258.5615830709215,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 58,
+    "x": -56.96334538077831,
+    "vx": 259.53626661150827,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 59,
+    "x": -52.62610108267431,
+    "vx": 260.23465788623963,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 60,
+    "x": -49.86055201774219,
+    "vx": 165.93294389592748,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 61,
+    "x": -48.097160079250195,
+    "vx": 105.80351630951964,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 62,
+    "x": -46.972771736924805,
+    "vx": 67.46330053952315,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 63,
+    "x": -46.255830076502804,
+    "vx": 43.01649962532032,
+    "frame": {
+      "id": "R3-LEFT",
+      "label": "CROUCHED MOVEMENT / R3-LEFT / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        888,
+        1096
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 64,
+    "x": -45.798687890747274,
+    "vx": 27.428531145331696,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 65,
+    "x": -45.50720116381564,
+    "vx": 17.489203615898088,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 66,
+    "x": -45.321341020899936,
+    "vx": 11.15160857494193,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 67,
+    "x": -45.20283136151244,
+    "vx": 7.11057956324974,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 68,
+    "x": -45.12726626644786,
+    "vx": 4.5339057038744865,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 69,
+    "x": -45.079083834554716,
+    "vx": 2.8909459135889035,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 70,
+    "x": -45.048361359566044,
+    "vx": 1.8433484993202112,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 71,
+    "x": -45.02877184462577,
+    "vx": 1.1753708964163159,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 72,
+    "x": -45.01628101842324,
+    "vx": 0.7494495721519622,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 73,
+    "x": -45.008316515999496,
+    "vx": 0.4778701454249844,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 74,
+    "x": -45.003238125040454,
+    "vx": 0.3047034575425608,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 75,
+    "x": -45.00000000000003,
+    "vx": 0.19428750242562648,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 76,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 77,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 78,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 79,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 80,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 81,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 82,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 83,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 84,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 85,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 86,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 87,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 88,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 89,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 90,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 91,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 92,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 93,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 94,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 95,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 96,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 97,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 98,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  },
+  {
+    "tick": 99,
+    "x": -45.00000000000003,
+    "vx": 0,
+    "frame": {
+      "id": "R3-PASS",
+      "label": "CROUCHED MOVEMENT / R3-PASS / REVIEW CANDIDATE",
+      "final": true,
+      "availability": "review-candidate",
+      "scale": 0.1,
+      "anchor": [
+        620,
+        1075
+      ],
+      "rect": [
+        0,
+        0,
+        1312,
+        1199
+      ]
+    }
+  }
+]

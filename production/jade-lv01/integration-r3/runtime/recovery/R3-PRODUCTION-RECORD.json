@@ -1,0 +1,73 @@
+{
+  "checkpoint": "B11 Crouch Test R3",
+  "date": "2026-09-21 UTC",
+  "parentCommit": "976bee10d71f72d5853c17948299c20e5672dbde",
+  "artStageCommit": "17cd02a093eeccbdb950d6cab9847379a15466ed",
+  "buildSHA256": "c0e48c629100125f12b30ded146add2a84e68013b69ce93775125c2cf5bffd65",
+  "originalImageFiles": 119,
+  "newCandidateCutouts": 3,
+  "totalImageFiles": 122,
+  "inheritedCurrentDesignExports": 4,
+  "newUserApprovedExports": 0,
+  "artworkApproval": "pending for all three R3 files; prior design approval preserved",
+  "animationValidation": "three poses / four playback slots, one supported view, real travel driven; not final continuity",
+  "tests": {
+    "nodePassed": 54,
+    "nodeFailed": 0,
+    "nativeScenes": 6,
+    "nativeMotionSteps": 100,
+    "nativeMissingDraws": 0,
+    "browserCertified": false,
+    "physicalControllerCertified": false
+  },
+  "presentation": {
+    "cycle": [
+      "PASS",
+      "RIGHT",
+      "PASS",
+      "LEFT"
+    ],
+    "cycleDistance": 96,
+    "scale": 0.1,
+    "anchors": {
+      "RIGHT": [
+        620,
+        1075
+      ],
+      "PASS": [
+        620,
+        1075
+      ],
+      "LEFT": [
+        888,
+        1096
+      ]
+    },
+    "headAlignment": "helmet patch correlation recorded in R3-EXPORT-CHECK.json; anchors compensate canvas translation",
+    "registrationLimit": "manual first pass; foot locking, pelvis/hand/muzzle continuity and hair fringe still need visual review"
+  },
+  "tools": {
+    "poseEditing": "built-in image generation, edit mode with image references",
+    "cutoutExport": "Adobe background removal; actual RGBA alpha verified"
+  },
+  "promptBriefsNotVerbatim": {
+    "RIGHT": "Preserve the locked Jade design, upper body, asymmetric gear and shotgun; author a low screen-right crouched step as a complete isolated sprite.",
+    "PASS": "Use the right-step reference; preserve upper body and size; bring the boots underneath the low crouched pelvis for the passing pose.",
+    "LEFT": "Use the passing pose and existing left-step reference; extend the opposite step without mirroring asymmetric equipment; preserve locked design."
+  },
+  "sourceGenerationFiles": [
+    "exec-9973ad79-57ef-4e40-a15e-bd3aa235fd44.png",
+    "exec-746bc2d3-1cae-4c4f-b18d-388996aeff28.png",
+    "exec-d9ac167a-10aa-4be8-92cf-04115c703452.png"
+  ],
+  "knownLimitations": [
+    "Only station south-face / right-facing cover is supported.",
+    "New poses pending user approval, with broad steps and no extra in-betweens.",
+    "Residual pale/magenta hair-edge fringe requires close review.",
+    "Firing/aiming/recoil/corner travel and other directions still use older art; size/style jumps remain.",
+    "K01/K02/K03 and their muzzle sockets unchanged.",
+    "Live browser and physical controller not certified; UI checks use a minimal DOM harness.",
+    "Batch17 204/100% remains unverified; no completion percentage inferred."
+  ],
+  "deployment": false
+}
