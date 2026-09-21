@@ -15,6 +15,8 @@
 - `Dual Power Glove Command HUD` — live left-psionic/right-construct command HUD texture and hierarchy.
 - `Neon Training Lab: Jade's Psychic Assault` — right training-lab projection and playable floor/prop language.
 - Chunky six-block psychic cover construct with staged vertical assembly, extrusion, cracks, and cyan/magenta matter accents.
+- Approved Dimension 33 high-definition arena reference — fractured Golden Gate skyline, stacked spectator bridges, moving crowd tiers, floating Lizard Baron throne, neon-reflective combat board, and arcade broadcast framing.
+- Live 16-control arena calibration layer for player, cover, debris, prop, depth, zoom, pitch, perspective, shadow, crowd, and balcony scale.
 
 ## C — gameplay-proven next high-detail families
 

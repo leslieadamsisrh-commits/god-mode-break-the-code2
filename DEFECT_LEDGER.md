@@ -20,7 +20,8 @@
 
 - Version 57 ready/run/slide/cover directional atlases are embedded; unsupported actions still fall back to the nearest readable approved family.
 - Peek, recoil, melee, Grip, Orbit, shield, hit, and defeat rely partly on VFX/readable pose changes rather than complete bespoke frame families.
-- The Dimension 33 arena is a first playable depth pass based on the four supplied concepts, not the final multi-level war-games map.
+- The Dimension 33 arena now uses the approved high-definition Golden Gate/Lizard Baron reference with layered motion and live scale calibration, but remains a single-board 2.5D arena rather than the final multi-level war-games map.
+- Crowd motion is grouped and event-reactive for browser performance; spectators are not individually simulated.
 
 ## Future polish
 

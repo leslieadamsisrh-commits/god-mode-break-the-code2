@@ -6,6 +6,35 @@ type Session = { room: string; code?: string; token: string; slot: number };
 const EMPTY = { x: 0, y: 0, aim: 0, fire: false, shield: false, slide: false, melee: false, heavy: false, grip: false, throwMatter: false, cover: false, orbit: false, launchOrbit: false, pinball: false, slow: false };
 const controlMap: Record<string, keyof typeof EMPTY> = { ShiftLeft: "slide", ShiftRight: "slide", KeyF: "melee", KeyC: "heavy", KeyQ: "grip", KeyR: "throwMatter", KeyB: "cover", KeyO: "orbit", KeyP: "launchOrbit", Space: "pinball", KeyX: "slow" };
 
+type Calibration = {
+  playerScale:number; generatedCoverScale:number; fixedCoverScale:number; matterScale:number; propScale:number;
+  arenaScale:number; foregroundDepth:number; middleDepth:number; backgroundDepth:number; cameraZoom:number;
+  cameraPitch:number; perspective:number; playerShadow:number; coverShadow:number; crowdScale:number; balconyScale:number;
+};
+const DEFAULT_CALIBRATION: Calibration = {
+  playerScale:1, generatedCoverScale:1.1, fixedCoverScale:1.05, matterScale:1, propScale:1,
+  arenaScale:1, foregroundDepth:1, middleDepth:1, backgroundDepth:1, cameraZoom:1,
+  cameraPitch:1, perspective:1, playerShadow:1, coverShadow:1, crowdScale:1, balconyScale:1,
+};
+const CALIBRATION_FIELDS: {key:keyof Calibration;label:string;min:number;max:number;step:number}[] = [
+  {key:"playerScale",label:"PLAYER SPRITES",min:.65,max:1.55,step:.05},
+  {key:"generatedCoverScale",label:"GENERATED COVER",min:.65,max:1.65,step:.05},
+  {key:"fixedCoverScale",label:"FIXED COVER",min:.65,max:1.65,step:.05},
+  {key:"matterScale",label:"DEBRIS / MATTER",min:.6,max:1.8,step:.05},
+  {key:"propScale",label:"ENVIRONMENT PROPS",min:.7,max:1.5,step:.05},
+  {key:"arenaScale",label:"ARENA FLOOR",min:.8,max:1.25,step:.025},
+  {key:"foregroundDepth",label:"FOREGROUND DEPTH",min:.65,max:1.5,step:.05},
+  {key:"middleDepth",label:"MIDDLE-GROUND DEPTH",min:.65,max:1.5,step:.05},
+  {key:"backgroundDepth",label:"BACKGROUND DEPTH",min:.65,max:1.5,step:.05},
+  {key:"cameraZoom",label:"CAMERA ZOOM",min:.82,max:1.3,step:.02},
+  {key:"cameraPitch",label:"CAMERA PITCH",min:.76,max:1.18,step:.02},
+  {key:"perspective",label:"PERSPECTIVE",min:.6,max:1.5,step:.05},
+  {key:"playerShadow",label:"PLAYER SHADOW",min:.5,max:1.8,step:.05},
+  {key:"coverShadow",label:"COVER SHADOW",min:.5,max:1.8,step:.05},
+  {key:"crowdScale",label:"CROWD SCALE",min:.7,max:1.45,step:.05},
+  {key:"balconyScale",label:"BALCONY SCALE",min:.7,max:1.45,step:.05},
+];
+
 const jade = new Map<string, HTMLImageElement>();
 const concepts = new Map<string, HTMLImageElement>();
 const scenery: HTMLCanvasElement[][] = [];
@@ -25,7 +54,7 @@ function preloadArt() {
   const atlas = new Image();
   atlas.onload = () => buildScenery(atlas);
   atlas.src = "/assets/environment/cover-destruction-atlas.png";
-  for (const [key, file] of Object.entries({ arena: "arena-blueprint.webp", war: "war-games-blueprint.webp", gloves: "dual-glove-hud.webp", lab: "training-lab.webp" })) {
+  for (const [key, file] of Object.entries({ arena: "arena-blueprint.webp", war: "war-games-blueprint.webp", gloves: "dual-glove-hud.webp", lab: "training-lab.webp", dimension33: "dimension33-reference.webp" })) {
     const image = new Image(); image.onload = () => concepts.set(key, image); image.src = `/assets/concepts/${file}`;
   }
 }
@@ -55,6 +84,8 @@ function buildScenery(atlas: HTMLImageElement) {
 export default function Game() {
   const canvas = useRef<HTMLCanvasElement>(null), session = useRef<Session | null>(null), state = useRef<any>(null), slot = useRef(0), seq = useRef(0), keys = useRef<Record<string, boolean>>({}), edges = useRef<Record<string, boolean>>({}), mouse = useRef({ x: 500, y: 310, down: false }), running = useRef(false);
   const [name, setName] = useState("Les"), [room, setRoom] = useState(""), [code, setCode] = useState(""), [status, setStatus] = useState("OFFLINE"), [error, setError] = useState(""), [invite, setInvite] = useState(""), [hud, setHud] = useState<any>(null);
+  const [calibration, setCalibration] = useState<Calibration>(DEFAULT_CALIBRATION), [calibrationOpen, setCalibrationOpen] = useState(false), [calibrationNote, setCalibrationNote] = useState("");
+  const calibrationRef = useRef<Calibration>(DEFAULT_CALIBRATION);
 
   const post = useCallback(async (body: any) => { const r = await fetch("/api/game", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), v = await r.json(); if (!r.ok) throw Error(v.error || "Request failed"); return v; }, []);
   const accept = useCallback((v: any) => { if (v.state) { state.current = v.state; slot.current = v.slot; setHud({ phase: v.state.phase, mode: v.state.mode, round: v.state.round, winner: v.state.winner, players: v.state.players, slot: v.slot }); setStatus("LINKED"); } }, []);
@@ -63,23 +94,30 @@ export default function Game() {
   const start = async () => { if (!session.current) return; try { accept(await post({ action: state.current?.phase === "finished" ? "rematch" : "start", ...session.current })); } catch (e: any) { setError(e.message); } };
   const copy = async () => { if (!invite) return; try { if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(invite); else throw Error("clipboard unavailable"); } catch { const box = document.createElement("textarea"); box.value = invite; box.style.position = "fixed"; box.style.opacity = "0"; document.body.appendChild(box); box.select(); document.execCommand("copy"); box.remove(); } setStatus("DROP-IN LINK COPIED"); };
 
-  useEffect(() => { preloadArt(); }, []);
+  useEffect(() => { preloadArt(); try { const saved = JSON.parse(localStorage.getItem("god_mode_dimension33_calibration") || "null"); if (saved) { const next = {...DEFAULT_CALIBRATION,...saved}; calibrationRef.current = next; setCalibration(next); } } catch {} }, []);
+  useEffect(() => { calibrationRef.current = calibration; }, [calibration]);
   useEffect(() => { try { const q = new URLSearchParams(location.search), qRoom = q.get("room") || "", qCode = q.get("code") || "", guest = q.get("guest") === "1", saved = JSON.parse(sessionStorage.getItem("god_mode_session") || "null"); setRoom(qRoom); setCode(qCode); if (!guest && saved?.room && (!qRoom || saved.room === qRoom)) { session.current = saved; slot.current = saved.slot; running.current = true; if (saved.code) setInvite(`${location.origin}/?room=${saved.room}&code=${saved.code}&guest=1`); } } catch { } }, []);
   useEffect(() => { const kd = (e: KeyboardEvent) => { if ((e.target as HTMLElement)?.tagName === "INPUT") return; if (["Space", "ShiftLeft", "ShiftRight"].includes(e.code)) e.preventDefault(); if (!keys.current[e.code]) edges.current[e.code] = true; keys.current[e.code] = true; }; const ku = (e: KeyboardEvent) => { keys.current[e.code] = false; }; addEventListener("keydown", kd); addEventListener("keyup", ku); return () => { removeEventListener("keydown", kd); removeEventListener("keyup", ku); }; }, []);
   useEffect(() => { let stopped = false; const tick = async () => { if (stopped) return; if (running.current && session.current) { try { const s = session.current, u = new URL("/api/game", location.origin); u.searchParams.set("room", s.room); u.searchParams.set("token", s.token); const r = await fetch(u, { cache: "no-store" }), v = await r.json(); if (!r.ok) throw Error(v.error); accept(v); } catch { setStatus("RECONNECTING"); } } setTimeout(tick, 90); }; tick(); return () => { stopped = true; }; }, [accept]);
   useEffect(() => { const timer = setInterval(async () => { const s = session.current, game = state.current; if (!s || game?.phase !== "playing") return; const p = game.players[slot.current], i: any = { ...EMPTY }; i.x = (keys.current.KeyD ? 1 : 0) - (keys.current.KeyA ? 1 : 0); i.y = (keys.current.KeyS ? 1 : 0) - (keys.current.KeyW ? 1 : 0); i.aim = Math.atan2(mouse.current.y - p.y, mouse.current.x - p.x); i.fire = mouse.current.down; i.shield = !!keys.current.KeyE; for (const [key, action] of Object.entries(controlMap)) i[action] = !!edges.current[key]; edges.current = {}; let pad: Gamepad | undefined; try { pad = [...navigator.getGamepads()].find(Boolean) as Gamepad | undefined; } catch { } if (pad) { const dz = (v: number) => Math.abs(v) < .2 ? 0 : v; i.x = dz(pad.axes[0] || 0); i.y = dz(pad.axes[1] || 0); const rx = dz(pad.axes[2] || 0), ry = dz(pad.axes[3] || 0); if (rx || ry) i.aim = Math.atan2(ry, rx); i.slide ||= pad.buttons[0]?.pressed; i.pinball ||= pad.buttons[1]?.pressed; i.cover ||= pad.buttons[2]?.pressed; i.grip ||= pad.buttons[3]?.pressed; i.shield ||= pad.buttons[4]?.pressed; i.melee ||= pad.buttons[5]?.pressed; i.slow ||= pad.buttons[6]?.pressed; i.fire ||= pad.buttons[7]?.pressed; i.orbit ||= pad.buttons[12]?.pressed; i.launchOrbit ||= pad.buttons[13]?.pressed; i.throwMatter ||= pad.buttons[15]?.pressed; i.heavy ||= pad.buttons[14]?.pressed; } try { accept(await post({ action: "input", ...s, seq: ++seq.current, input: i })); } catch { setStatus("RECONNECTING"); } }, 66); return () => clearInterval(timer); }, [accept, post]);
-  useEffect(() => { let frame = 0; const loop = () => { draw(canvas.current, state.current, slot.current); frame = requestAnimationFrame(loop); }; frame = requestAnimationFrame(loop); return () => cancelAnimationFrame(frame); }, []);
+  useEffect(() => { let frame = 0; const loop = () => { draw(canvas.current, state.current, slot.current, calibrationRef.current); frame = requestAnimationFrame(loop); }; frame = requestAnimationFrame(loop); return () => cancelAnimationFrame(frame); }, []);
 
-  const point = (e: React.PointerEvent) => { const c = canvas.current; if (!c) return; const r = c.getBoundingClientRect(); mouse.current.x = (e.clientX - r.left) / r.width * 1000; mouse.current.y = (e.clientY - r.top) / r.height * 620; };
+  const point = (e: React.PointerEvent) => { const c = canvas.current; if (!c) return; const r = c.getBoundingClientRect(), rawX = (e.clientX - r.left) / r.width * 1000, rawY = (e.clientY - r.top) / r.height * 620, q = calibrationRef.current; mouse.current.x = (rawX - 500) / q.cameraZoom + 500; mouse.current.y = (rawY - 310) / (q.cameraZoom * q.cameraPitch) + 310; };
   const touchAction = (action: keyof typeof EMPTY) => { const key = Object.keys(controlMap).find(k => controlMap[k] === action) || action; edges.current[key] = true; };
   const connected = !!hud, botActive = !!hud?.players?.some((p: any) => p.bot), mePlayer = hud?.players?.[hud?.slot || 0];
+  const saveCalibration = () => { localStorage.setItem("god_mode_dimension33_calibration", JSON.stringify(calibration)); setCalibrationNote("CALIBRATION SAVED"); setTimeout(() => setCalibrationNote(""), 1400); };
+  const loadCalibration = () => { try { const saved = JSON.parse(localStorage.getItem("god_mode_dimension33_calibration") || "null"); const next = {...DEFAULT_CALIBRATION,...(saved || {})}; calibrationRef.current = next; setCalibration(next); setCalibrationNote(saved ? "CALIBRATION LOADED" : "NO SAVE — DEFAULTS LOADED"); } catch { setCalibrationNote("SAVE COULD NOT BE READ"); } };
+  const resetCalibration = () => { calibrationRef.current = DEFAULT_CALIBRATION; setCalibration(DEFAULT_CALIBRATION); setCalibrationNote("CURRENT DEFAULTS RESTORED"); };
+  const copyCalibration = async () => { const text = JSON.stringify(calibration, null, 2); try { await navigator.clipboard.writeText(text); setCalibrationNote("VALUES COPIED"); } catch { setCalibrationNote(text); } };
 
   return <main className="game-shell">
     <header className="topbar"><div><span className="kicker">GOD MODE: BREAK THE CODE</span><h1>ARCADE BROTHER BUILD</h1></div><div className={`net ${status !== "LINKED" ? "warn" : ""}`}><i />{status}</div></header>
     <section className="play-layout"><div className="arena-wrap">
       <canvas ref={canvas} className="arena" width="1400" height="868" tabIndex={0} onPointerMove={point} onPointerDown={e => { point(e); mouse.current.down = true; (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); }} onPointerUp={() => mouse.current.down = false} onPointerCancel={() => mouse.current.down = false} />
-      {!connected && <div className="lobby-card"><span className="stamp">BUILD R3 · VERSION 57 MOVEMENT · ARENA DEPTH</span><h2>{room ? "TAKE OVER THE BOT" : "ENTER DIMENSION 33"}</h2><p>{room ? "Your brother is already fighting the Rift Hunter. Join this room and take over its combat slot instantly." : "The approved weighted slide and cover movement are back. Choose a live bot fight or an empty sandbox for movement and matter testing."}</p><label>CALLSIGN<input value={name} onChange={e => setName(e.target.value)} maxLength={24} /></label>{room && <div className="room-fields"><label>ROOM<input value={room} onChange={e => setRoom(e.target.value.toUpperCase())} /></label><label>CODE<input value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ""))} /></label></div>}{room ? <button className="primary" onClick={join}>JOIN & TAKE OVER</button> : <div className="mode-grid"><button className="primary" onClick={() => create("bot")}>PRACTICE VS BOT<br/><small>BROTHER CAN DROP IN</small></button><button onClick={() => create("solo")}>SOLO SANDBOX<br/><small>NO BOT</small></button></div>}{room && <button className="text-btn" onClick={() => { setRoom(""); setCode(""); history.replaceState(null, "", "/"); }}>Start my own session</button>}{error && <p className="error">{error}</p>}</div>}
+      {!connected && <div className="lobby-card"><span className="stamp">BUILD R4 · VERSION 57 MOVEMENT · DIMENSION 33</span><h2>{room ? "TAKE OVER THE BOT" : "ENTER DIMENSION 33"}</h2><p>{room ? "Your brother is already fighting the Rift Hunter. Join this room and take over its combat slot instantly." : "The approved weighted slide and cover movement are back. Choose a live bot fight or an empty sandbox for movement and matter testing."}</p><label>CALLSIGN<input value={name} onChange={e => setName(e.target.value)} maxLength={24} /></label>{room && <div className="room-fields"><label>ROOM<input value={room} onChange={e => setRoom(e.target.value.toUpperCase())} /></label><label>CODE<input value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ""))} /></label></div>}{room ? <button className="primary" onClick={join}>JOIN & TAKE OVER</button> : <div className="mode-grid"><button className="primary" onClick={() => create("bot")}>PRACTICE VS BOT<br/><small>BROTHER CAN DROP IN</small></button><button onClick={() => create("solo")}>SOLO SANDBOX<br/><small>NO BOT</small></button></div>}{room && <button className="text-btn" onClick={() => { setRoom(""); setCode(""); history.replaceState(null, "", "/"); }}>Start my own session</button>}{error && <p className="error">{error}</p>}</div>}
       {connected && <div className={`match-banner ${botActive ? "bot" : ""}`}>{hud.phase === "finished" ? (hud.winner === null ? "DRAW" : `${hud.players[hud.winner].name} WINS`) : hud.mode === "solo" ? "SOLO SANDBOX // NO BOT // TEST EVERYTHING" : botActive ? "RIFT HUNTER ACTIVE // BROTHER CAN DROP IN" : "BROTHER LINK ACTIVE // BREAK THE CODE"}</div>}
+      <button className="calibration-toggle" onClick={() => setCalibrationOpen(v => !v)}>{calibrationOpen ? "CLOSE CALIBRATION" : "ARENA CALIBRATION"}</button>
+      {calibrationOpen && <div className="calibration-panel"><div className="calibration-head"><div><span>DIMENSION 33</span><b>LIVE SCALE LAB</b></div><button onClick={() => setCalibrationOpen(false)} aria-label="Close calibration panel">×</button></div><p>Visual tuning only. Multiplayer coordinates and Version 57 movement remain untouched.</p><div className="calibration-scroll">{CALIBRATION_FIELDS.map(field => <label className="calibration-row" key={field.key}><span>{field.label}<output>{calibration[field.key].toFixed(2)}</output></span><input type="range" min={field.min} max={field.max} step={field.step} value={calibration[field.key]} onChange={e => setCalibration(v => ({...v,[field.key]:Number(e.target.value)}))}/></label>)}</div><div className="calibration-actions"><button onClick={resetCalibration}>RESET DEFAULTS</button><button onClick={saveCalibration}>SAVE</button><button onClick={loadCalibration}>LOAD</button><button onClick={copyCalibration}>COPY VALUES</button></div>{calibrationNote && <div className="calibration-note">{calibrationNote}</div>}</div>}
       {connected && <div className="command-hud"><div className="glove left"><span>LEFT GLOVE // PSIONIC</span><b>{mePlayer?.gripCoverId ? "COVER HELD" : mePlayer?.gripId ? "MATTER HELD" : mePlayer?.orbitIds?.length ? `ORBIT ×${mePlayer.orbitIds.length}` : mePlayer?.shield ? "FIELD ACTIVE" : "FIELD READY"}</b></div><div className="reticle">◇</div><div className="glove right"><span>RIGHT GLOVE // CONSTRUCT</span><b>SHOTGUN · COVER READY</b></div></div>}
       <div className="mobile-actions"><button onPointerDown={() => touchAction("slide")}>SLIDE</button><button onPointerDown={() => touchAction("melee")}>HIT</button><button onPointerDown={() => touchAction("pinball")}>PINBALL</button></div>
     </div><aside className="panel">
@@ -92,74 +130,75 @@ export default function Game() {
 function Meter({ value, kind }: { value: number; kind: string }) { return <div className={`meter ${kind}`}><i style={{ width: `${Math.max(0, value)}%` }} /></div>; }
 function Control({ k, v }: { k: string; v: string }) { return <div className="control"><kbd>{k}</kbd><span>{v}</span></div>; }
 
-function draw(canvas: HTMLCanvasElement | null, s: any, me: number) {
+function draw(canvas: HTMLCanvasElement | null, s: any, me: number, q: Calibration) {
   if (!canvas) return; const g = canvas.getContext("2d")!, W = canvas.width, H = canvas.height, sx = W / 1000, sy = H / 620;
-  g.setTransform(sx, 0, 0, sy, 0, 0); g.clearRect(0, 0, 1000, 620); drawArena(g, s?.time || 0);
+  g.setTransform(sx, 0, 0, sy, 0, 0); g.clearRect(0, 0, 1000, 620); drawArena(g, s?.time || 0, s, q);
   if (!s) { g.fillStyle = "#57e3e7aa"; g.font = "700 18px monospace"; g.fillText("DIMENSION 33 // BOT SIGNAL READY", 35, 585); return; }
-  const sorted = [...(s.covers || []).map((c: any) => ({ y: c.y + c.h, draw: () => cover(g, c) })), ...(s.matter || []).map((m: any) => ({ y: m.y, draw: () => matter(g, m) })), ...(s.players || []).map((p: any, i: number) => ({ y: p.y, draw: () => fighter(g, p, i, me, s.time) }))].sort((a, b) => a.y - b.y);
+  g.save(); g.translate(500,310); g.scale(q.cameraZoom,q.cameraZoom*q.cameraPitch); g.translate(-500,-310);
+  const sorted = [...(s.covers || []).map((c: any) => ({ y: c.y + c.h, draw: () => cover(g, c, q) })), ...(s.matter || []).map((m: any) => ({ y: m.y, draw: () => matter(g, m, q) })), ...(s.players || []).map((p: any, i: number) => ({ y: p.y, draw: () => fighter(g, p, i, me, s.time, q) }))].sort((a, b) => a.y - b.y);
   sorted.forEach(x => x.draw());
   for (const sh of s.shots || []) { g.strokeStyle = sh.owner === me ? "#b9ffff" : "#ff5ca8"; g.shadowColor = g.strokeStyle; g.shadowBlur = 12; g.lineWidth = 4; g.beginPath(); g.moveTo(sh.x, sh.y); g.lineTo(sh.x - sh.vx * .032, sh.y - sh.vy * .032); g.stroke(); g.shadowBlur = 0; }
   for (const f of s.fx || []) effect(g, f);
-  g.fillStyle = "#b5d9df"; g.font = "700 13px monospace"; g.fillText(`HAIGHT COMBAT LAB // ${s.build}`, 22, 596);
-}
-
-function drawArena(g: CanvasRenderingContext2D, t: number) {
-  const sky = g.createLinearGradient(0, 0, 0, 620); sky.addColorStop(0, "#090815"); sky.addColorStop(.34, "#17182b"); sky.addColorStop(1, "#071019"); g.fillStyle = sky; g.fillRect(0, 0, 1000, 620);
-  g.fillStyle = "#05080f"; for (let x = -20; x < 1050; x += 52) { const h = 55 + ((x * 17) % 105 + 105) % 105; g.fillRect(x, 112 - h, 42, h); g.fillStyle = x % 104 ? "#ff3d9a55" : "#44eff055"; g.fillRect(x + 8, 100 - h, 3, 8); g.fillRect(x + 25, 82 - h, 3, 5); g.fillStyle = "#05080f"; }
-  g.fillStyle = "#111925"; g.fillRect(0, 103, 1000, 82); g.fillStyle = "#1b2632"; g.fillRect(0, 108, 1000, 9);
-  for (let x = 15; x < 1000; x += 96) { g.fillStyle = "#263746"; g.fillRect(x, 116, 58, 48); g.fillStyle = x % 192 ? "#f52f9155" : "#43e8ef55"; g.fillRect(x + 7, 124, 44, 5); g.strokeStyle = "#080d15"; g.strokeRect(x, 116, 58, 48); }
-  const leftProjection = concepts.get("war"), rightProjection = concepts.get("lab");
-  if (leftProjection) { g.save(); g.globalAlpha = .38; g.drawImage(leftProjection, 0, 0, leftProjection.width, leftProjection.height, 24, 112, 280, 58); g.restore(); }
-  if (rightProjection) { g.save(); g.globalAlpha = .38; g.drawImage(rightProjection, 0, 0, rightProjection.width, rightProjection.height, 696, 112, 280, 58); g.restore(); }
-  g.fillStyle = "#080d15"; g.fillRect(353, 121, 294, 48); g.strokeStyle = "#ff3d9a"; g.lineWidth = 2; g.strokeRect(362, 128, 276, 33); g.fillStyle = "#ff5bad"; g.font = "900 18px Arial"; g.textAlign = "center"; g.fillText("DIMENSION 33 // WAR GAMES", 500, 151); g.textAlign = "left";
-  g.fillStyle = "#0b111a"; g.fillRect(0, 169, 1000, 18); g.fillStyle = "#314252"; for (let x = 8; x < 1000; x += 68) { g.fillRect(x, 154, 7, 42); g.fillRect(x + 34, 163, 28, 5); }
-  const floor = g.createLinearGradient(0, 175, 0, 620); floor.addColorStop(0, "#263441"); floor.addColorStop(1, "#101821"); g.fillStyle = floor; g.beginPath(); g.moveTo(0, 185); g.lineTo(1000, 185); g.lineTo(1000, 620); g.lineTo(0, 620); g.fill();
-  g.strokeStyle = "#101821"; g.lineWidth = 1; for (let y = 205; y < 620; y += 38) { g.beginPath(); g.moveTo(0, y); g.lineTo(1000, y); g.stroke(); } for (let x = -100; x < 1100; x += 82) { g.beginPath(); g.moveTo(500 + (x - 500) * .28, 185); g.lineTo(x, 620); g.stroke(); }
-  g.fillStyle = "#090f17"; g.beginPath(); g.ellipse(500, 352, 175, 77, 0, 0, Math.PI * 2); g.fill(); g.strokeStyle = "#f13c9877"; g.lineWidth = 5; g.beginPath(); g.ellipse(500, 352, 144, 61, 0, 0, Math.PI * 2); g.stroke(); g.strokeStyle = "#57edf077"; g.lineWidth = 2; g.beginPath(); g.ellipse(500, 352, 112, 47, 0, 0, Math.PI * 2); g.stroke();
-  const floorProjection = concepts.get("arena"); if (floorProjection) { g.save(); g.globalAlpha = .12; g.drawImage(floorProjection, 0, 0, floorProjection.width, floorProjection.height, 408, 326, 184, 52); g.restore(); }
-  g.fillStyle = "#bb246844"; g.beginPath(); g.moveTo(0, 310); g.lineTo(1000, 310); g.lineTo(1000, 371); g.lineTo(0, 371); g.fill();
-  g.strokeStyle = "#67edf055"; g.setLineDash([42, 28]); g.lineWidth = 4; g.beginPath(); g.moveTo(0, 340); g.lineTo(1000, 340); g.stroke(); g.setLineDash([]);
-  g.fillStyle = "#050910"; g.fillRect(18, 196, 168, 58); g.fillRect(814, 196, 168, 58); g.strokeStyle = "#2ddce3"; g.strokeRect(18, 196, 168, 58); g.strokeStyle = "#ff3d9a"; g.strokeRect(814, 196, 168, 58); g.font = "800 12px monospace"; g.fillStyle = "#55f1f2"; g.fillText("MIND OVER MATTER", 30, 228); g.fillStyle = "#ff55aa"; g.fillText("KILL · CREATE · OBEY", 829, 228);
-  g.globalAlpha = .24 + Math.sin(t * 2.5) * .05; g.fillStyle = "#ff3d9a"; g.fillRect(361, 128, 278, 34); g.globalAlpha = 1;
-}
-
-function cover(g: CanvasRenderingContext2D, c: any) {
-  const ratio = c.maxHp ? c.hp / c.maxHp : 0, stage = c.hp <= 0 ? 3 : ratio > .66 ? 0 : ratio > .33 ? 1 : 2, col = Number.isInteger(c.art) ? c.art % 8 : 0, image = scenery[stage]?.[col];
-  const depth = .78 + (c.y / 620) * .3, width = Math.max(108, c.w * 1.35) * depth, height = width;
-  g.save(); g.fillStyle = "#0008"; g.beginPath(); g.ellipse(c.x + c.w / 2, c.y + c.h + 8, width * .36, 15 * depth, -.04, 0, Math.PI * 2); g.fill();
-  if (c.generated && c.hp > 0) { drawConstructedCover(g, c, depth); }
-  else if (image) { g.imageSmoothingEnabled = true; g.imageSmoothingQuality = "high"; g.drawImage(image, c.x + c.w / 2 - width / 2, c.y + c.h + 18 - height, width, height); }
-  else { const h = 46 * depth; g.fillStyle = c.generated ? "#244b56" : "#67727b"; g.strokeStyle = c.generated ? "#67eff0" : "#f05aa8"; g.lineWidth = 3; g.fillRect(c.x, c.y - h + c.h, c.w, h); g.strokeRect(c.x, c.y - h + c.h, c.w, h); }
   g.restore();
+  g.fillStyle = "#b5d9df"; g.font = "700 13px monospace"; g.fillText(`DIMENSION 33 // ${s.build}`, 22, 596);
 }
 
-function drawConstructedCover(g: CanvasRenderingContext2D, c: any, depth: number) {
+function drawArena(g: CanvasRenderingContext2D, t: number, s: any, q: Calibration) {
+  const sky = g.createLinearGradient(0, 0, 0, 620); sky.addColorStop(0, "#070512"); sky.addColorStop(.22, "#2a1236"); sky.addColorStop(.48, "#a62d6d"); sky.addColorStop(1, "#071019"); g.fillStyle = sky; g.fillRect(0, 0, 1000, 620);
+  const reference = concepts.get("dimension33"), crowdReaction = s?.phase === "finished" ? 1 : (s?.fx || []).some((f:any) => ["heavy","matter-hit","break","pinball","shot-hit"].includes(f.type)) ? .72 : 0;
+  if (reference) {
+    g.save(); g.globalAlpha = .94; const drift = Math.sin(t*.08)*4*q.backgroundDepth; g.drawImage(reference,0,0,reference.width,Math.floor(reference.height*.58),-18+drift,-8,1036,300*q.backgroundDepth); g.restore();
+    const crowdBob = Math.sin(t*4.2)*2.2 + crowdReaction*Math.sin(t*18)*5;
+    g.save(); g.globalAlpha=.9; g.drawImage(reference,0,170,510,360,-18,70+crowdBob,340*q.crowdScale,205*q.middleDepth); g.drawImage(reference,1026,170,510,360,678,70-crowdBob,340*q.crowdScale,205*q.middleDepth); g.restore();
+    const bw=330*q.balconyScale,bh=205*q.balconyScale; g.save(); g.shadowColor="#ff2f9d"; g.shadowBlur=22+crowdReaction*18; g.drawImage(reference,500,45,540,430,500-bw/2,20+Math.sin(t*.7)*2,bw,bh); g.restore();
+  }
+  g.fillStyle="#050710dd"; g.fillRect(0,164,1000,32); g.strokeStyle="#ff3e9b"; g.lineWidth=3; g.beginPath(); g.moveTo(0,190); g.lineTo(1000,190); g.stroke();
+  const crowdBase=150, crowdPulse=1+crowdReaction*.45; for(let band=0;band<3;band++){const y=crowdBase-band*20; for(let x=8+(band%2)*9;x<1000;x+=18){const bob=Math.sin(t*(2.2+band*.3)+x*.11)*2*crowdPulse; g.fillStyle=(x+band*13)%54<18?"#ff4ca9cc":"#6ef4f2bb"; g.beginPath(); g.arc(x,y+bob,2.3+band*.25,0,Math.PI*2); g.fill(); g.strokeStyle="#0b0a12"; g.lineWidth=2; g.beginPath(); g.moveTo(x,y+3+bob); g.lineTo(x,y+11+bob-crowdReaction*4); g.stroke(); if(crowdReaction>.2&&x%54===8){g.strokeStyle="#ffdf8b";g.beginPath();g.moveTo(x,y+5+bob);g.lineTo(x-5,y-4+bob);g.moveTo(x,y+5+bob);g.lineTo(x+5,y-4+bob);g.stroke();}}}
+  g.fillStyle="#070b12"; for(let x=0;x<1000;x+=74){g.fillRect(x,158,8,45);g.fillRect(x+8,174,45,5);}
+  const floor = g.createLinearGradient(0, 178, 0, 620); floor.addColorStop(0, "#293747"); floor.addColorStop(.58, "#151b27"); floor.addColorStop(1, "#090d14"); g.fillStyle = floor; g.beginPath(); g.moveTo(80-(q.arenaScale-1)*120,190); g.lineTo(920+(q.arenaScale-1)*120,190); g.lineTo(1060,620); g.lineTo(-60,620); g.closePath(); g.fill();
+  g.save(); g.globalAlpha=.36; const glow=g.createLinearGradient(0,190,0,620); glow.addColorStop(0,"#ff4c9c22");glow.addColorStop(.52,"#36ecf022");glow.addColorStop(1,"#ff3d9428");g.fillStyle=glow;g.fillRect(0,190,1000,430);g.restore();
+  g.strokeStyle = "#050a11cc"; g.lineWidth = 1; for (let y = 214; y < 620; y += 39) { g.beginPath(); g.moveTo(0, y); g.lineTo(1000, y); g.stroke(); } for (let x = -110; x < 1110; x += 76) { g.beginPath(); g.moveTo(500 + (x - 500) * .22/q.perspective, 190); g.lineTo(x, 620); g.stroke(); }
+  g.fillStyle="#090c14";g.beginPath();g.ellipse(500,350,210*q.arenaScale,92*q.arenaScale,0,0,Math.PI*2);g.fill();g.strokeStyle="#ff3a9caa";g.lineWidth=7;g.beginPath();g.ellipse(500,350,181*q.arenaScale,78*q.arenaScale,0,0,Math.PI*2);g.stroke();g.strokeStyle="#5cf3f2aa";g.lineWidth=2;g.beginPath();g.ellipse(500,350,140*q.arenaScale,59*q.arenaScale,0,0,Math.PI*2);g.stroke();
+  const floorProjection=concepts.get("arena");if(floorProjection){g.save();g.globalAlpha=.14;g.drawImage(floorProjection,402,319,196,60);g.restore();}
+  for(let n=0;n<10;n++){const x=65+n*103,y=235+(n%3)*118,w=54*q.propScale;g.fillStyle=n%2?"#ff3e9917":"#54eff019";g.fillRect(x,y,w,6);g.fillStyle="#d9f8ff18";g.fillRect(x+6,y+7,w*.55,2);}
+  g.fillStyle="#070910ee";g.fillRect(18,202,170,56);g.fillRect(812,202,170,56);g.strokeStyle="#4deef2";g.strokeRect(18,202,170,56);g.strokeStyle="#ff46a3";g.strokeRect(812,202,170,56);g.font="800 12px monospace";g.fillStyle="#60f5f5";g.fillText("MIND OVER MATTER",30,234);g.fillStyle="#ff5aad";g.fillText("ALL WORLDS · ONE ARENA",824,234);
+  g.fillStyle="#05070d";g.fillRect(355,166,290,33);g.strokeStyle="#ff45a5";g.strokeRect(360,170,280,24);g.fillStyle="#fff";g.font="900 15px Arial";g.textAlign="center";g.fillText("DIMENSION 33 // WAR GAMES",500,188);g.textAlign="left";
+  g.save();g.globalAlpha=.25*q.foregroundDepth;g.fillStyle="#ff2990";g.beginPath();g.ellipse(170,540,130,18,0,0,Math.PI*2);g.ellipse(825,470,105,14,0,0,Math.PI*2);g.fill();g.fillStyle="#49eef0";g.beginPath();g.ellipse(610,565,155,16,0,0,Math.PI*2);g.fill();g.restore();
+}
+
+function cover(g: CanvasRenderingContext2D, c: any, q: Calibration) {
+  const ratio=c.maxHp?c.hp/c.maxHp:0, depth=.76+(c.y/620)*.34*q.perspective, visualScale=c.generated?q.generatedCoverScale:q.fixedCoverScale, width=Math.max(108,c.w*1.35)*depth*visualScale, center=c.x+c.w/2,base=c.y+c.h;
+  g.save();g.fillStyle="#000a";g.beginPath();g.ellipse(center,base+9,width*.38,16*depth*q.coverShadow,-.04,0,Math.PI*2);g.fill();g.translate(center,base);g.scale(visualScale,visualScale);g.translate(-center,-base);drawConstructedCover(g,c,depth,c.generated,ratio);g.restore();
+}
+
+function drawConstructedCover(g: CanvasRenderingContext2D, c: any, depth: number, generated=true, ratio=1) {
   const progress = 1 - Math.max(0, Math.min(1, c.build || 0)), blockW = c.w / 3, baseY = c.y + c.h;
   for (let row = 0; row < 2; row++) for (let col = 0; col < 3; col++) {
     const n = row * 3 + col, reveal = Math.max(0, Math.min(1, progress * 1.7 - n * .12)); if (reveal <= 0) continue;
     const bw = blockW - 2, bh = 24 * depth, lift = (1 - reveal) * (76 + n * 9), x = c.x + col * blockW, y = baseY - row * bh - bh - lift, ex = 8 * depth, ey = -7 * depth;
-    g.globalAlpha = .35 + reveal * .65; g.fillStyle = row ? "#59616c" : "#68717b"; g.strokeStyle = "#0a0d12"; g.lineWidth = 2; g.fillRect(x, y, bw, bh); g.strokeRect(x, y, bw, bh);
-    g.fillStyle = "#858b94"; g.beginPath(); g.moveTo(x, y); g.lineTo(x + ex, y + ey); g.lineTo(x + bw + ex, y + ey); g.lineTo(x + bw, y); g.closePath(); g.fill(); g.stroke();
-    g.fillStyle = "#343c47"; g.beginPath(); g.moveTo(x + bw, y); g.lineTo(x + bw + ex, y + ey); g.lineTo(x + bw + ex, y + bh + ey); g.lineTo(x + bw, y + bh); g.closePath(); g.fill(); g.stroke();
+    g.globalAlpha = .35 + reveal * .65; g.fillStyle = generated?(row ? "#536471" : "#657784"):(row?"#5d5862":"#746b70"); g.strokeStyle = "#080b10"; g.lineWidth = 2; g.fillRect(x, y, bw, bh); g.strokeRect(x, y, bw, bh);
+    g.fillStyle = generated?"#8799a3":"#95898c"; g.beginPath(); g.moveTo(x, y); g.lineTo(x + ex, y + ey); g.lineTo(x + bw + ex, y + ey); g.lineTo(x + bw, y); g.closePath(); g.fill(); g.stroke();
+    g.fillStyle = generated?"#2b3d48":"#40373d"; g.beginPath(); g.moveTo(x + bw, y); g.lineTo(x + bw + ex, y + ey); g.lineTo(x + bw + ex, y + bh + ey); g.lineTo(x + bw, y + bh); g.closePath(); g.fill(); g.stroke();
     g.strokeStyle = n % 2 ? "#ff48a1" : "#60eff2"; g.globalAlpha = .55 * reveal; g.beginPath(); g.moveTo(x + 6, y + bh * .66); g.lineTo(x + bw - 8, y + bh * .48); g.stroke();
     if (progress < 1) { g.fillStyle = n % 2 ? "#ff48a1" : "#60eff2"; for (let q = 0; q < 2; q++) { const a = n + q * Math.PI; g.fillRect(x + bw / 2 + Math.cos(a) * (24 + lift * .14), y + Math.sin(a) * 16, 4, 4); } }
   }
-  g.globalAlpha = 1; g.strokeStyle = "#6cf9ff"; g.shadowColor = "#6cf9ff"; g.shadowBlur = 14; g.lineWidth = 2; g.strokeRect(c.x - 3, baseY - 49 * depth, c.w + 8 * depth, 50 * depth); g.shadowBlur = 0;
+  g.globalAlpha = 1; g.strokeStyle = generated?"#6cf9ff":"#ff55aa"; g.shadowColor = g.strokeStyle; g.shadowBlur = generated?14:7; g.lineWidth = 2; g.strokeRect(c.x - 3, baseY - 49 * depth, c.w + 8 * depth, 50 * depth); g.shadowBlur = 0;
+  if(ratio<.67){g.strokeStyle="#1a1118";g.lineWidth=3;for(let n=0;n<(ratio<.34?6:3);n++){const x=c.x+16+n*23,y=baseY-42*depth+(n%2)*8;g.beginPath();g.moveTo(x,y);g.lineTo(x+10,y+9);g.lineTo(x+4,y+18);g.stroke();}}
 }
 
-function matter(g: CanvasRenderingContext2D, m: any) {
-  const depth = .78 + m.y / 620 * .3; g.save(); g.translate(m.x, m.y); g.rotate((m.x + m.y) * .02); g.scale(depth, depth); g.fillStyle = m.kind === "metal" ? "#426f8a" : "#81716b"; g.strokeStyle = m.orbitBy !== null ? "#f653b1" : m.heldBy !== null ? "#61edf0" : "#d5d2cf"; g.shadowColor = g.strokeStyle; g.shadowBlur = m.orbitBy !== null || m.heldBy !== null ? 15 : 0; g.lineWidth = 3; g.beginPath(); for (let i = 0; i < 7; i++) { const a = i * Math.PI * 2 / 7, r = m.r * (i % 2 ? .72 : 1); i ? g.lineTo(Math.cos(a) * r, Math.sin(a) * r) : g.moveTo(Math.cos(a) * r, Math.sin(a) * r); } g.closePath(); g.fill(); g.stroke(); g.restore();
+function matter(g: CanvasRenderingContext2D, m: any, q: Calibration) {
+  const depth = (.78 + m.y / 620 * .3*q.perspective)*q.matterScale; g.save(); g.translate(m.x, m.y); g.rotate((m.x + m.y) * .02); g.scale(depth, depth); g.fillStyle = m.kind === "metal" ? "#426f8a" : "#81716b"; g.strokeStyle = m.orbitBy !== null ? "#f653b1" : m.heldBy !== null ? "#61edf0" : "#d5d2cf"; g.shadowColor = g.strokeStyle; g.shadowBlur = m.orbitBy !== null || m.heldBy !== null ? 15 : 0; g.lineWidth = 3; g.beginPath(); for (let i = 0; i < 7; i++) { const a = i * Math.PI * 2 / 7, r = m.r * (i % 2 ? .72 : 1); i ? g.lineTo(Math.cos(a) * r, Math.sin(a) * r) : g.moveTo(Math.cos(a) * r, Math.sin(a) * r); } g.closePath(); g.fill(); g.stroke(); g.restore();
 }
 
-function fighter(g: CanvasRenderingContext2D, p: any, i: number, me: number, t: number) {
+function fighter(g: CanvasRenderingContext2D, p: any, i: number, me: number, t: number, q: Calibration) {
   const color = i === 0 ? "#ff4aa5" : "#56eef0", speed = Math.hypot(p.vx || 0, p.vy || 0), family = p.coverId ? "cover" : (p.slide > 0 || p.pinball > 0 || p.knock > .32) ? "slide" : speed > 34 ? "run" : "ready";
   const angle = family === "slide" && Number.isFinite(p.slideFacing) ? p.slideFacing : family === "run" && speed > 55 ? Math.atan2(p.vy, p.vx) : p.aim || 0;
   const direction = ((Math.round(angle / (Math.PI * 2) * 24) % 24) + 24) % 24;
   const image = jade.get(`${family}-${direction}`) || jade.get(`ready-${direction}`), cell = 125, frames = image ? Math.max(1, Math.floor(image.width / cell) * Math.floor(image.height / cell)) : 1;
   let frame = family === "ready" ? 0 : Math.floor(t * (family === "run" ? 10 : 7)) % frames;
   if (family === "slide" && p.slide > 0) frame = Math.min(frames - 1, Math.max(0, Math.floor((1 - p.slide / .7) * frames)));
-  const cols = Math.max(1, Math.floor((image?.width || cell) / cell)), depth = .72 + p.y / 620 * .34, scale = depth * 1.02, sx = (frame % cols) * cell, sy = Math.floor(frame / cols) * cell;
-  g.save(); g.fillStyle = "#0009"; g.beginPath(); g.ellipse(p.x, p.y + 7, 31 * depth, 10 * depth, 0, 0, Math.PI * 2); g.fill();
+  const cols = Math.max(1, Math.floor((image?.width || cell) / cell)), depth = .72 + p.y / 620 * .34*q.perspective, scale = depth * 1.02*q.playerScale, sx = (frame % cols) * cell, sy = Math.floor(frame / cols) * cell;
+  g.save(); g.fillStyle = "#0009"; g.beginPath(); g.ellipse(p.x, p.y + 7, 31 * depth*q.playerShadow, 10 * depth*q.playerShadow, 0, 0, Math.PI * 2); g.fill();
   if (p.shield) { const pulse = 1 + Math.sin(t * 18) * .04; g.strokeStyle = color; g.shadowColor = color; g.shadowBlur = 20; g.lineWidth = 5; g.globalAlpha = .78; g.beginPath(); g.ellipse(p.x, p.y - 34 * depth, 42 * pulse * depth, 62 * pulse * depth, 0, 0, Math.PI * 2); g.stroke(); g.globalAlpha = 1; g.shadowBlur = 0; }
   if (image) { g.globalAlpha = p.hp <= 0 ? .38 : 1; g.imageSmoothingEnabled = false; g.drawImage(image, sx, sy, cell, cell, p.x - 62.5 * scale, p.y - 109.5 * scale, cell * scale, cell * scale); }
   else { g.translate(p.x, p.y); g.fillStyle = "#151923"; g.strokeStyle = color; g.lineWidth = 3; g.beginPath(); g.moveTo(-16, 10); g.lineTo(-11, -44); g.lineTo(13, -44); g.lineTo(18, 10); g.closePath(); g.fill(); g.stroke(); }

@@ -40,7 +40,7 @@ export function newGame(hostName:string,hostToken:string,now=Date.now(),mode:"bo
   [[120,120,"metal"],[850,110,"stone"],[100,510,"stone"],[880,500,"metal"],[490,105,"stone"],[510,540,"metal"]].forEach(([x,y,kind],i)=>matter.push({id:"m"+i,x:x as number,y:y as number,vx:0,vy:0,r:14,kind:kind as "metal"|"stone",heldBy:null,orbitBy:null,life:999}));
   const players=[player(180,310,0,hostName,hostToken)];
   if(mode==="bot")players.push(player(820,310,Math.PI,"RIFT HUNTER","",true));
-  return{build:"BROTHER-BUILD-R3-ARENA-DEPTH",mode,phase:"playing",round:1,winner:null,createdAt:now,lastAt:now,time:0,players,covers,matter,shots:[],fx:[]};
+  return{build:"BROTHER-BUILD-R4-DIMENSION-33",mode,phase:"playing",round:1,winner:null,createdAt:now,lastAt:now,time:0,players,covers,matter,shots:[],fx:[]};
 }
 
 export function joinGame(s:GameState,name:string,token:string){
