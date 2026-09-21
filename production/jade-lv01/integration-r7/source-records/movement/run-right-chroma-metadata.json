@@ -1,0 +1,181 @@
+{
+  "sourceFile": "run-right-chroma-candidate-v1.png",
+  "sourceSize": [
+    1774,
+    887
+  ],
+  "sourceMode": "RGB",
+  "status": "chroma-keyed candidate art; not native alpha; not validated animation",
+  "sha256": "407ff9a2042c0b156f5b96497861cda0433e0894bfc5e6d006d08ba160702ee5",
+  "backgroundDominantRGB": [
+    4,
+    249,
+    4
+  ],
+  "backgroundExactUniform": false,
+  "pixelDataUnmodified": true,
+  "keyPredicateForBoundsOnly": "g >= 180 && r <= 90 && b <= 90 && g-r >= 100 && g-b >= 100",
+  "keyPredicateNotFinalRuntimeApproval": true,
+  "boundsDerivation": "Read-only color classification, local foreground connected components with 8+ pixels. Bounds include hair and equipment. Source rectangles are intentionally uneven to avoid clipping the lower-left gun. Threshold may intersect green battery pixels; battery protection and edge rendering need visual runtime verification.",
+  "frames": [
+    {
+      "frame": 1,
+      "sourceRegionLTRB": [
+        0,
+        0,
+        465,
+        450
+      ],
+      "visualBoundsLTRB": [
+        42,
+        19,
+        416,
+        437
+      ],
+      "boundsWidth": 374,
+      "boundsHeight": 418,
+      "candidateKeyPixels": 129376,
+      "foregroundPixelCountAfterTinyComponentExclusion": 79865
+    },
+    {
+      "frame": 2,
+      "sourceRegionLTRB": [
+        465,
+        0,
+        915,
+        450
+      ],
+      "visualBoundsLTRB": [
+        503,
+        18,
+        887,
+        437
+      ],
+      "boundsWidth": 384,
+      "boundsHeight": 419,
+      "candidateKeyPixels": 128068,
+      "foregroundPixelCountAfterTinyComponentExclusion": 74426
+    },
+    {
+      "frame": 3,
+      "sourceRegionLTRB": [
+        915,
+        0,
+        1325,
+        450
+      ],
+      "visualBoundsLTRB": [
+        929,
+        18,
+        1287,
+        435
+      ],
+      "boundsWidth": 358,
+      "boundsHeight": 417,
+      "candidateKeyPixels": 114630,
+      "foregroundPixelCountAfterTinyComponentExclusion": 69859
+    },
+    {
+      "frame": 4,
+      "sourceRegionLTRB": [
+        1325,
+        0,
+        1774,
+        450
+      ],
+      "visualBoundsLTRB": [
+        1340,
+        16,
+        1759,
+        414
+      ],
+      "boundsWidth": 419,
+      "boundsHeight": 398,
+      "candidateKeyPixels": 124499,
+      "foregroundPixelCountAfterTinyComponentExclusion": 77544
+    },
+    {
+      "frame": 5,
+      "sourceRegionLTRB": [
+        0,
+        450,
+        465,
+        887
+      ],
+      "visualBoundsLTRB": [
+        19,
+        458,
+        454,
+        873
+      ],
+      "boundsWidth": 435,
+      "boundsHeight": 415,
+      "candidateKeyPixels": 118880,
+      "foregroundPixelCountAfterTinyComponentExclusion": 84318
+    },
+    {
+      "frame": 6,
+      "sourceRegionLTRB": [
+        465,
+        450,
+        915,
+        887
+      ],
+      "visualBoundsLTRB": [
+        510,
+        458,
+        892,
+        873
+      ],
+      "boundsWidth": 382,
+      "boundsHeight": 415,
+      "candidateKeyPixels": 123510,
+      "foregroundPixelCountAfterTinyComponentExclusion": 73140
+    },
+    {
+      "frame": 7,
+      "sourceRegionLTRB": [
+        915,
+        450,
+        1325,
+        887
+      ],
+      "visualBoundsLTRB": [
+        944,
+        458,
+        1314,
+        873
+      ],
+      "boundsWidth": 370,
+      "boundsHeight": 415,
+      "candidateKeyPixels": 105989,
+      "foregroundPixelCountAfterTinyComponentExclusion": 73180
+    },
+    {
+      "frame": 8,
+      "sourceRegionLTRB": [
+        1325,
+        450,
+        1774,
+        887
+      ],
+      "visualBoundsLTRB": [
+        1352,
+        458,
+        1762,
+        861
+      ],
+      "boundsWidth": 410,
+      "boundsHeight": 403,
+      "candidateKeyPixels": 117865,
+      "foregroundPixelCountAfterTinyComponentExclusion": 78344
+    }
+  ],
+  "observations": [
+    "Eight existing adult Jade poses and shotgun positions retained visually.",
+    "Background is near chroma green with slight RGB variation, not exactly #00FF00.",
+    "Green/cyan battery bands remain visibly present.",
+    "Passing-pose similarity, stride alternation and registration limitations from original candidate remain.",
+    "Do not mirror: equipment and coat are asymmetric."
+  ]
+}

@@ -1,0 +1,700 @@
+{
+  "schemaVersion": 1,
+  "assetFile": "jade-cover-peek-fire-candidate-v3-chroma.png",
+  "assetAbsolutePath": "/workspace/scratch/213405134e9a/sprite-work/cover/jade-cover-peek-fire-candidate-v3-chroma.png",
+  "sha256": "eafc750c24d7e16c44c9288f20c16afab9015ac86de8162533ce48938d659389",
+  "sourceSize": {
+    "width": 1774,
+    "height": 887
+  },
+  "sourceFormat": "RGB PNG with green chroma backdrop, not native alpha",
+  "family": "cover-peek-fire-recoil-right",
+  "approvalStatus": "candidate-not-approved",
+  "coordinateSystem": "All *Source coordinates are original full-sheet pixels, top-left origin, x right, y down. All bounds are half-open. *Local coordinates are source-relative to sourceBounds.",
+  "measurementMethod": {
+    "silhouette": "Read-only color segmentation: background if G > 160 and G-R > 65 and G-B > 65. Eight large connected components identify bodies. Tiny disconnected hair details can exist inside bounds.",
+    "groundRoot": "Midpoint of measured rear and forward sole contact centers in bottom 8 pixels; ground y is exclusive silhouette lower edge. This is a foot-ground anchor, not a measured pelvis joint.",
+    "muzzle": "Rightmost foreground edge center in each body component. Approximate tip may include 1-2px fringe.",
+    "helmet": "Manual visual bounds estimate; includes ears, shell, visor and near earpiece. Not biometric validation."
+  },
+  "notes": [
+    "Do not split into fixed 4x2 uniform cells: frame 4 helmet starts at y439, above nominal second-row y443.5.",
+    "Only frames 0 and 4 overlap as bounding rectangles at y439..440. Their clip polygons separate the helmet-tip pixels at x228..231 from frame 0 sole pixels.",
+    "The first lower-row helmet is very close to preceding upper-row soles, so retain supplied source polygons.",
+    "No asset pixels were altered while creating this metadata.",
+    "Battery has green/cyan content. Renderer should key backdrop conservatively and preserve enclosed equipment.",
+    "Frame timing, anatomy/identity acceptance and in-game animation continuity remain unvalidated."
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "state": "low-attached-ready",
+      "facing": "right",
+      "sourceBounds": {
+        "x": 28,
+        "y": 118,
+        "width": 389,
+        "height": 322,
+        "convention": "half-open pixel rectangle"
+      },
+      "clipPolygonSource": [
+        [
+          28,
+          118
+        ],
+        [
+          417,
+          118
+        ],
+        [
+          417,
+          440
+        ],
+        [
+          240,
+          440
+        ],
+        [
+          240,
+          439
+        ],
+        [
+          220,
+          439
+        ],
+        [
+          220,
+          440
+        ],
+        [
+          28,
+          440
+        ]
+      ],
+      "groundRootSource": [
+        211.5,
+        440
+      ],
+      "groundRootLocal": [
+        183.5,
+        322
+      ],
+      "feet": [
+        {
+          "soleXRange": [
+            97,
+            157
+          ],
+          "groundContact": [
+            126.5,
+            440
+          ]
+        },
+        {
+          "soleXRange": [
+            246,
+            348
+          ],
+          "groundContact": [
+            296.5,
+            440
+          ]
+        }
+      ],
+      "muzzleTipSource": [
+        417,
+        245.0
+      ],
+      "muzzleTipLocal": [
+        389,
+        127.0
+      ],
+      "muzzleMeasurement": "center of rightmost 3-pixel foreground edge; approximate weapon tip, no muzzle flash",
+      "helmetApproxSourceBounds": {
+        "x": 245,
+        "y": 125,
+        "width": 96,
+        "height": 122
+      },
+      "helmetMeasurement": "visual estimate including cat ears, shell, ear hardware and visor; approx +/- 8px",
+      "opaqueForegroundPixelsMainComponent": 74348,
+      "artStatus": "candidate-not-approved"
+    },
+    {
+      "index": 1,
+      "state": "rise",
+      "facing": "right",
+      "sourceBounds": {
+        "x": 489,
+        "y": 27,
+        "width": 373,
+        "height": 413,
+        "convention": "half-open pixel rectangle"
+      },
+      "clipPolygonSource": [
+        [
+          489,
+          27
+        ],
+        [
+          862,
+          27
+        ],
+        [
+          862,
+          440
+        ],
+        [
+          489,
+          440
+        ]
+      ],
+      "groundRootSource": [
+        652.8,
+        440
+      ],
+      "groundRootLocal": [
+        163.8,
+        413
+      ],
+      "feet": [
+        {
+          "soleXRange": [
+            528,
+            591
+          ],
+          "groundContact": [
+            559.0,
+            440
+          ]
+        },
+        {
+          "soleXRange": [
+            694,
+            800
+          ],
+          "groundContact": [
+            746.5,
+            440
+          ]
+        }
+      ],
+      "muzzleTipSource": [
+        862,
+        148.5
+      ],
+      "muzzleTipLocal": [
+        373,
+        121.5
+      ],
+      "muzzleMeasurement": "center of rightmost 3-pixel foreground edge; approximate weapon tip, no muzzle flash",
+      "helmetApproxSourceBounds": {
+        "x": 679,
+        "y": 31,
+        "width": 96,
+        "height": 138
+      },
+      "helmetMeasurement": "visual estimate including cat ears, shell, ear hardware and visor; approx +/- 8px",
+      "opaqueForegroundPixelsMainComponent": 83806,
+      "artStatus": "candidate-not-approved"
+    },
+    {
+      "index": 2,
+      "state": "aimed",
+      "facing": "right",
+      "sourceBounds": {
+        "x": 927,
+        "y": 4,
+        "width": 379,
+        "height": 436,
+        "convention": "half-open pixel rectangle"
+      },
+      "clipPolygonSource": [
+        [
+          927,
+          4
+        ],
+        [
+          1306,
+          4
+        ],
+        [
+          1306,
+          440
+        ],
+        [
+          927,
+          440
+        ]
+      ],
+      "groundRootSource": [
+        1095.5,
+        440
+      ],
+      "groundRootLocal": [
+        168.5,
+        436
+      ],
+      "feet": [
+        {
+          "soleXRange": [
+            946,
+            1015
+          ],
+          "groundContact": [
+            980.0,
+            440
+          ]
+        },
+        {
+          "soleXRange": [
+            1160,
+            1263
+          ],
+          "groundContact": [
+            1211.0,
+            440
+          ]
+        }
+      ],
+      "muzzleTipSource": [
+        1306,
+        115.5
+      ],
+      "muzzleTipLocal": [
+        379,
+        111.5
+      ],
+      "muzzleMeasurement": "center of rightmost 3-pixel foreground edge; approximate weapon tip, no muzzle flash",
+      "helmetApproxSourceBounds": {
+        "x": 1089,
+        "y": 5,
+        "width": 97,
+        "height": 141
+      },
+      "helmetMeasurement": "visual estimate including cat ears, shell, ear hardware and visor; approx +/- 8px",
+      "opaqueForegroundPixelsMainComponent": 82868,
+      "artStatus": "candidate-not-approved"
+    },
+    {
+      "index": 3,
+      "state": "recoil-compression",
+      "facing": "right",
+      "sourceBounds": {
+        "x": 1357,
+        "y": 30,
+        "width": 398,
+        "height": 410,
+        "convention": "half-open pixel rectangle"
+      },
+      "clipPolygonSource": [
+        [
+          1357,
+          30
+        ],
+        [
+          1755,
+          30
+        ],
+        [
+          1755,
+          440
+        ],
+        [
+          1357,
+          440
+        ]
+      ],
+      "groundRootSource": [
+        1557.5,
+        440
+      ],
+      "groundRootLocal": [
+        200.5,
+        410
+      ],
+      "feet": [
+        {
+          "soleXRange": [
+            1441,
+            1507
+          ],
+          "groundContact": [
+            1473.5,
+            440
+          ]
+        },
+        {
+          "soleXRange": [
+            1590,
+            1694
+          ],
+          "groundContact": [
+            1641.5,
+            440
+          ]
+        }
+      ],
+      "muzzleTipSource": [
+        1755,
+        138.5
+      ],
+      "muzzleTipLocal": [
+        398,
+        108.5
+      ],
+      "muzzleMeasurement": "center of rightmost 3-pixel foreground edge; approximate weapon tip, no muzzle flash",
+      "helmetApproxSourceBounds": {
+        "x": 1525,
+        "y": 36,
+        "width": 97,
+        "height": 134
+      },
+      "helmetMeasurement": "visual estimate including cat ears, shell, ear hardware and visor; approx +/- 8px",
+      "opaqueForegroundPixelsMainComponent": 83072,
+      "artStatus": "candidate-not-approved"
+    },
+    {
+      "index": 4,
+      "state": "recovery",
+      "facing": "right",
+      "sourceBounds": {
+        "x": 27,
+        "y": 439,
+        "width": 390,
+        "height": 432,
+        "convention": "half-open pixel rectangle"
+      },
+      "clipPolygonSource": [
+        [
+          27,
+          440
+        ],
+        [
+          220,
+          440
+        ],
+        [
+          220,
+          439
+        ],
+        [
+          240,
+          439
+        ],
+        [
+          240,
+          440
+        ],
+        [
+          417,
+          440
+        ],
+        [
+          417,
+          871
+        ],
+        [
+          27,
+          871
+        ]
+      ],
+      "groundRootSource": [
+        201.2,
+        871
+      ],
+      "groundRootLocal": [
+        174.2,
+        432
+      ],
+      "feet": [
+        {
+          "soleXRange": [
+            50,
+            119
+          ],
+          "groundContact": [
+            84.0,
+            871
+          ]
+        },
+        {
+          "soleXRange": [
+            265,
+            373
+          ],
+          "groundContact": [
+            318.5,
+            871
+          ]
+        }
+      ],
+      "muzzleTipSource": [
+        417,
+        545.5
+      ],
+      "muzzleTipLocal": [
+        390,
+        106.5
+      ],
+      "muzzleMeasurement": "center of rightmost 3-pixel foreground edge; approximate weapon tip, no muzzle flash",
+      "helmetApproxSourceBounds": {
+        "x": 202,
+        "y": 439,
+        "width": 96,
+        "height": 134
+      },
+      "helmetMeasurement": "visual estimate including cat ears, shell, ear hardware and visor; approx +/- 8px",
+      "opaqueForegroundPixelsMainComponent": 86067,
+      "artStatus": "candidate-not-approved"
+    },
+    {
+      "index": 5,
+      "state": "lower",
+      "facing": "right",
+      "sourceBounds": {
+        "x": 488,
+        "y": 505,
+        "width": 378,
+        "height": 365,
+        "convention": "half-open pixel rectangle"
+      },
+      "clipPolygonSource": [
+        [
+          488,
+          505
+        ],
+        [
+          866,
+          505
+        ],
+        [
+          866,
+          870
+        ],
+        [
+          488,
+          870
+        ]
+      ],
+      "groundRootSource": [
+        645.0,
+        870
+      ],
+      "groundRootLocal": [
+        157.0,
+        365
+      ],
+      "feet": [
+        {
+          "soleXRange": [
+            528,
+            597
+          ],
+          "groundContact": [
+            562.0,
+            870
+          ]
+        },
+        {
+          "soleXRange": [
+            678,
+            779
+          ],
+          "groundContact": [
+            728.0,
+            870
+          ]
+        }
+      ],
+      "muzzleTipSource": [
+        866,
+        701.0
+      ],
+      "muzzleTipLocal": [
+        378,
+        196.0
+      ],
+      "muzzleMeasurement": "center of rightmost 3-pixel foreground edge; approximate weapon tip, no muzzle flash",
+      "helmetApproxSourceBounds": {
+        "x": 678,
+        "y": 512,
+        "width": 96,
+        "height": 134
+      },
+      "helmetMeasurement": "visual estimate including cat ears, shell, ear hardware and visor; approx +/- 8px",
+      "opaqueForegroundPixelsMainComponent": 76768,
+      "artStatus": "candidate-not-approved"
+    },
+    {
+      "index": 6,
+      "state": "low-ready",
+      "facing": "right",
+      "sourceBounds": {
+        "x": 916,
+        "y": 544,
+        "width": 393,
+        "height": 325,
+        "convention": "half-open pixel rectangle"
+      },
+      "clipPolygonSource": [
+        [
+          916,
+          544
+        ],
+        [
+          1309,
+          544
+        ],
+        [
+          1309,
+          869
+        ],
+        [
+          916,
+          869
+        ]
+      ],
+      "groundRootSource": [
+        1096.0,
+        869
+      ],
+      "groundRootLocal": [
+        180.0,
+        325
+      ],
+      "feet": [
+        {
+          "soleXRange": [
+            976,
+            1035
+          ],
+          "groundContact": [
+            1005.0,
+            869
+          ]
+        },
+        {
+          "soleXRange": [
+            1136,
+            1239
+          ],
+          "groundContact": [
+            1187.0,
+            869
+          ]
+        }
+      ],
+      "muzzleTipSource": [
+        1309,
+        696.5
+      ],
+      "muzzleTipLocal": [
+        393,
+        152.5
+      ],
+      "muzzleMeasurement": "center of rightmost 3-pixel foreground edge; approximate weapon tip, no muzzle flash",
+      "helmetApproxSourceBounds": {
+        "x": 1139,
+        "y": 548,
+        "width": 97,
+        "height": 135
+      },
+      "helmetMeasurement": "visual estimate including cat ears, shell, ear hardware and visor; approx +/- 8px",
+      "opaqueForegroundPixelsMainComponent": 75167,
+      "artStatus": "candidate-not-approved"
+    },
+    {
+      "index": 7,
+      "state": "small-weight-shift",
+      "facing": "right",
+      "sourceBounds": {
+        "x": 1375,
+        "y": 539,
+        "width": 382,
+        "height": 329,
+        "convention": "half-open pixel rectangle"
+      },
+      "clipPolygonSource": [
+        [
+          1375,
+          539
+        ],
+        [
+          1757,
+          539
+        ],
+        [
+          1757,
+          868
+        ],
+        [
+          1375,
+          868
+        ]
+      ],
+      "groundRootSource": [
+        1559.8,
+        868
+      ],
+      "groundRootLocal": [
+        184.8,
+        329
+      ],
+      "feet": [
+        {
+          "soleXRange": [
+            1441,
+            1507
+          ],
+          "groundContact": [
+            1473.5,
+            868
+          ]
+        },
+        {
+          "soleXRange": [
+            1593,
+            1700
+          ],
+          "groundContact": [
+            1646.0,
+            867
+          ]
+        }
+      ],
+      "muzzleTipSource": [
+        1757,
+        698.5
+      ],
+      "muzzleTipLocal": [
+        382,
+        159.5
+      ],
+      "muzzleMeasurement": "center of rightmost 3-pixel foreground edge; approximate weapon tip, no muzzle flash",
+      "helmetApproxSourceBounds": {
+        "x": 1576,
+        "y": 545,
+        "width": 98,
+        "height": 134
+      },
+      "helmetMeasurement": "visual estimate including cat ears, shell, ear hardware and visor; approx +/- 8px",
+      "opaqueForegroundPixelsMainComponent": 75075,
+      "artStatus": "candidate-not-approved"
+    }
+  ],
+  "polygonValidation": [
+    {
+      "frame": 0,
+      "mainBodyPixelsExcluded": 0,
+      "neighborBodyPixelsIncluded": 0,
+      "pass": true
+    },
+    {
+      "frame": 4,
+      "mainBodyPixelsExcluded": 0,
+      "neighborBodyPixelsIncluded": 0,
+      "pass": true
+    }
+  ]
+}

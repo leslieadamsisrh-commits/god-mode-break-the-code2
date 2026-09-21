@@ -1,0 +1,42 @@
+{
+  "public/vendor/core.js": {
+    "baselineSha256": "164d33537c118ecc95239f2b6889c2cacb5bc636ba4200a894e15de10f504a5e",
+    "currentSha256": "164d33537c118ecc95239f2b6889c2cacb5bc636ba4200a894e15de10f504a5e",
+    "unchanged": true
+  },
+  "public/vendor/action-controller.js": {
+    "baselineSha256": "1ee3cb5820a24384d57f4c50140c0ce3b2c8478f17bccbd61917a395daa1359d",
+    "currentSha256": "1ee3cb5820a24384d57f4c50140c0ce3b2c8478f17bccbd61917a395daa1359d",
+    "unchanged": true
+  },
+  "public/vendor/motion-flow.js": {
+    "baselineSha256": "fd1eccc05157ee339cf7b3dbfd05a31be2b2918f0b447bd93f4a9726880e74aa",
+    "currentSha256": "fd1eccc05157ee339cf7b3dbfd05a31be2b2918f0b447bd93f4a9726880e74aa",
+    "unchanged": true
+  },
+  "public/vendor/stance-registration.js": {
+    "baselineSha256": "1c157e2ea1d79be9e7306cd584c797659722d04e0b72ab9dcb829ec9fe36b818",
+    "currentSha256": "1c157e2ea1d79be9e7306cd584c797659722d04e0b72ab9dcb829ec9fe36b818",
+    "unchanged": true
+  },
+  "public/slide-gate.js": {
+    "baselineSha256": "0218a89508b355794dd8adb052b6d2de05f1e1761db5a1c749a4bc93a554da03",
+    "currentSha256": "0218a89508b355794dd8adb052b6d2de05f1e1761db5a1c749a4bc93a554da03",
+    "unchanged": true
+  },
+  "public/duel-browser.js": {
+    "baselineSha256": "35b12e787e02f1b5151e7d24fdb586a4fcf2ebcaa00c088420e0b7d3f685f1d6",
+    "currentSha256": "35b12e787e02f1b5151e7d24fdb586a4fcf2ebcaa00c088420e0b7d3f685f1d6",
+    "unchanged": true
+  },
+  "public/local-input.js": {
+    "baselineSha256": "33963bbdf58a0a55ea95ae9bee9bbaff199bee32ca587a34c7eeabf08460f675",
+    "currentSha256": "33963bbdf58a0a55ea95ae9bee9bbaff199bee32ca587a34c7eeabf08460f675",
+    "unchanged": true
+  },
+  "source/duel.cjs": {
+    "baselineSha256": "7285785b65cbbf49e66e4eacf93038a52727a2ebdbe01e864e81173fabfc142e",
+    "currentSha256": "7285785b65cbbf49e66e4eacf93038a52727a2ebdbe01e864e81173fabfc142e",
+    "unchanged": true
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "file": "/workspace/scratch/213405134e9a/sprite-work/movement/run-right-candidate-v1.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "sha256": "dc47679836287fb631cc215bf0f899cd22c82d8d98ea6a2ddff4fdaf6bf7269e",
+    "hasAlpha": false,
+    "status": "rejected for runtime: opaque baked checkerboard",
+    "transparentPixelCount": 0
+  },
+  {
+    "file": "/workspace/scratch/213405134e9a/sprite-work/movement/run-right-alpha-correction-attempt.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "sha256": "ac440452567faa65b28a36cf2b9c0b0dc8a2e142e9d53bd68d9b21d1d60c1de9",
+    "hasAlpha": false,
+    "status": "rejected for runtime: opaque baked checkerboard",
+    "transparentPixelCount": 0
+  }
+]

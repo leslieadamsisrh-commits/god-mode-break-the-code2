@@ -1,0 +1,1468 @@
+{
+  "method": "Real source scripts, real PNG/WebP decoding, native Canvas 2D and runtime simulation. No browser/DOM event/physical controller certification.",
+  "checks": [
+    {
+      "name": "All 24 candidates decoded with actual native Canvas",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Every frame contains visible pixels",
+      "passed": true
+    },
+    {
+      "name": "Every candidate is free of strong low-blue green matte pixels",
+      "passed": true,
+      "detail": [
+        {
+          "id": "RUN-01",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 18
+        },
+        {
+          "id": "RUN-02",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 12
+        },
+        {
+          "id": "RUN-03",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 4
+        },
+        {
+          "id": "RUN-04",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 5
+        },
+        {
+          "id": "RUN-05",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 16
+        },
+        {
+          "id": "RUN-06",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 7
+        },
+        {
+          "id": "RUN-07",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 22
+        },
+        {
+          "id": "RUN-08",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 9
+        },
+        {
+          "id": "SLIDE-01",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 16
+        },
+        {
+          "id": "SLIDE-02",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 17
+        },
+        {
+          "id": "SLIDE-03",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 37
+        },
+        {
+          "id": "SLIDE-04",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 43
+        },
+        {
+          "id": "SLIDE-05",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 3
+        },
+        {
+          "id": "SLIDE-06",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 34
+        },
+        {
+          "id": "SLIDE-07",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 8
+        },
+        {
+          "id": "SLIDE-08",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 9
+        },
+        {
+          "id": "COVER-01",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 6
+        },
+        {
+          "id": "COVER-02",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 6
+        },
+        {
+          "id": "COVER-03",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 29
+        },
+        {
+          "id": "COVER-04",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 29
+        },
+        {
+          "id": "COVER-05",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 9
+        },
+        {
+          "id": "COVER-06",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 13
+        },
+        {
+          "id": "COVER-07",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 4
+        },
+        {
+          "id": "COVER-08",
+          "lowBlueMatte": 0,
+          "highBlueColoredPixels": 4
+        }
+      ]
+    },
+    {
+      "name": "All eight run poses selected through rightward travel",
+      "passed": true,
+      "detail": [
+        "RUN-01",
+        "RUN-02",
+        "RUN-03",
+        "RUN-04",
+        "RUN-05",
+        "RUN-06",
+        "RUN-07",
+        "RUN-08"
+      ]
+    },
+    {
+      "name": "Slide selectors reach all eight phases including settle",
+      "passed": true,
+      "detail": [
+        "SLIDE-01",
+        "SLIDE-02",
+        "SLIDE-03",
+        "SLIDE-04",
+        "SLIDE-05",
+        "SLIDE-06",
+        "SLIDE-07",
+        "SLIDE-08"
+      ]
+    },
+    {
+      "name": "Unsupported run headings return fallback",
+      "passed": true,
+      "detail": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "name": "strafe retains fallback",
+      "passed": true
+    },
+    {
+      "name": "backpedal retains fallback",
+      "passed": true
+    },
+    {
+      "name": "corner-wrap retains fallback",
+      "passed": true
+    },
+    {
+      "name": "hit reaction retains fallback",
+      "passed": true
+    },
+    {
+      "name": "Actual slide and braking trajectory reaches all eight slide candidates",
+      "passed": true,
+      "detail": [
+        "SLIDE-01",
+        "SLIDE-02",
+        "SLIDE-03",
+        "SLIDE-04",
+        "SLIDE-05",
+        "SLIDE-06",
+        "SLIDE-07",
+        "SLIDE-08"
+      ]
+    },
+    {
+      "name": "Actual slide does not insert run pose during recovery",
+      "passed": true
+    },
+    {
+      "name": "Cover idle reaches ready and both weight-shift keys",
+      "passed": true,
+      "detail": [
+        "COVER-01",
+        "COVER-07",
+        "COVER-01",
+        "COVER-08"
+      ]
+    },
+    {
+      "name": "Free aiming keeps baseline fallback instead of resizing candidate",
+      "passed": true
+    },
+    {
+      "name": "Actual supported-corner successful shot selects recoil",
+      "passed": true,
+      "detail": {
+        "frame": "COVER-04",
+        "events": [
+          {
+            "tick": 1,
+            "t": 0.0167,
+            "type": "shot",
+            "id": 1,
+            "pellets": 7,
+            "origin": {
+              "x": 112.5,
+              "y": -5,
+              "z": 118.285,
+              "status": "candidate-stance-final-socket"
+            },
+            "pose": "K03",
+            "player": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "P1 shot does not animate P2 recoil",
+      "passed": true,
+      "detail": "SLIDE-08"
+    },
+    {
+      "name": "Successful shot enters recovery",
+      "passed": true
+    },
+    {
+      "name": "Blocked muzzle does not produce recoil",
+      "passed": true,
+      "detail": {
+        "frame": "SLIDE-08",
+        "blocked": 1,
+        "events": [
+          {
+            "tick": 1,
+            "t": 0.0167,
+            "type": "blocked_muzzle",
+            "x": 27,
+            "y": 0,
+            "player": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bank observation/selection does not mutate simulation actor",
+      "passed": true
+    },
+    {
+      "name": "Actual renderer draws candidate without exception",
+      "passed": true
+    },
+    {
+      "name": "Renderer does not mutate authoritative snapshot",
+      "passed": true
+    },
+    {
+      "name": "Turning candidates off restores baseline art",
+      "passed": true,
+      "detail": {
+        "id": "ready-d0-f0",
+        "label": "RECOVERED / READY / view 0",
+        "final": false,
+        "availability": "exact",
+        "scale": 1.76,
+        "anchor": [
+          62.5,
+          109.5
+        ],
+        "rect": [
+          0,
+          0,
+          125,
+          125
+        ]
+      }
+    },
+    {
+      "name": "Actual renderer inspects all 24 candidates",
+      "passed": true
+    },
+    {
+      "name": "Aimed right-corner sprite muzzle matches authoritative socket",
+      "passed": true,
+      "detail": {
+        "frame": "COVER-02",
+        "distance": 0,
+        "drawn": {
+          "x": 699.452,
+          "y": 360.13779999999997
+        },
+        "want": {
+          "x": 699.452,
+          "y": 360.13779999999997
+        },
+        "scale": 0.4057804459691252
+      }
+    },
+    {
+      "name": "Actual supported-corner hip-fire recoil barrel matches authoritative socket",
+      "passed": true,
+      "detail": {
+        "frame": "COVER-04",
+        "distance": 0
+      }
+    }
+  ],
+  "findings": [
+    "Broader green-dominance diagnostic retains 3–43 high-blue pixels per frame after despill; these are preserved colored art, not near-pure green background. Fine warm edge color remains and native alpha masters are still pending."
+  ],
+  "frames": [
+    {
+      "id": "RUN-01",
+      "width": 465,
+      "height": 450,
+      "opaquePixels": 79553,
+      "preservedGreenPixels": 18,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        42,
+        19,
+        415,
+        436
+      ],
+      "anchor": [
+        224,
+        437
+      ],
+      "muzzle": [
+        416,
+        187
+      ]
+    },
+    {
+      "id": "RUN-02",
+      "width": 450,
+      "height": 450,
+      "opaquePixels": 74112,
+      "preservedGreenPixels": 12,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        39,
+        18,
+        421,
+        436
+      ],
+      "anchor": [
+        240,
+        437
+      ],
+      "muzzle": [
+        422,
+        180
+      ]
+    },
+    {
+      "id": "RUN-03",
+      "width": 410,
+      "height": 450,
+      "opaquePixels": 69578,
+      "preservedGreenPixels": 4,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        14,
+        18,
+        371,
+        434
+      ],
+      "anchor": [
+        205,
+        435
+      ],
+      "muzzle": [
+        372,
+        187
+      ]
+    },
+    {
+      "id": "RUN-04",
+      "width": 449,
+      "height": 450,
+      "opaquePixels": 77194,
+      "preservedGreenPixels": 5,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        15,
+        16,
+        433,
+        413
+      ],
+      "anchor": [
+        225,
+        436
+      ],
+      "muzzle": [
+        434,
+        180
+      ]
+    },
+    {
+      "id": "RUN-05",
+      "width": 465,
+      "height": 437,
+      "opaquePixels": 83985,
+      "preservedGreenPixels": 16,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        20,
+        8,
+        453,
+        422
+      ],
+      "anchor": [
+        240,
+        423
+      ],
+      "muzzle": [
+        454,
+        183
+      ]
+    },
+    {
+      "id": "RUN-06",
+      "width": 450,
+      "height": 437,
+      "opaquePixels": 72910,
+      "preservedGreenPixels": 7,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        45,
+        8,
+        426,
+        422
+      ],
+      "anchor": [
+        239,
+        423
+      ],
+      "muzzle": [
+        427,
+        176
+      ]
+    },
+    {
+      "id": "RUN-07",
+      "width": 410,
+      "height": 437,
+      "opaquePixels": 72871,
+      "preservedGreenPixels": 22,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        29,
+        8,
+        398,
+        422
+      ],
+      "anchor": [
+        220,
+        423
+      ],
+      "muzzle": [
+        399,
+        183
+      ]
+    },
+    {
+      "id": "RUN-08",
+      "width": 449,
+      "height": 437,
+      "opaquePixels": 78004,
+      "preservedGreenPixels": 9,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        27,
+        8,
+        436,
+        410
+      ],
+      "anchor": [
+        225,
+        423
+      ],
+      "muzzle": [
+        437,
+        174
+      ]
+    },
+    {
+      "id": "SLIDE-01",
+      "width": 405,
+      "height": 347,
+      "opaquePixels": 65919,
+      "preservedGreenPixels": 16,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        6,
+        6,
+        397,
+        340
+      ],
+      "anchor": [
+        222,
+        341
+      ],
+      "muzzle": [
+        394,
+        136
+      ]
+    },
+    {
+      "id": "SLIDE-02",
+      "width": 494,
+      "height": 309,
+      "opaquePixels": 67736,
+      "preservedGreenPixels": 17,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        6,
+        6,
+        487,
+        302
+      ],
+      "anchor": [
+        256,
+        303
+      ],
+      "muzzle": [
+        417,
+        116
+      ]
+    },
+    {
+      "id": "SLIDE-03",
+      "width": 512,
+      "height": 281,
+      "opaquePixels": 66884,
+      "preservedGreenPixels": 37,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        6,
+        6,
+        505,
+        273
+      ],
+      "anchor": [
+        251,
+        275
+      ],
+      "muzzle": [
+        440,
+        126
+      ]
+    },
+    {
+      "id": "SLIDE-04",
+      "width": 446,
+      "height": 303,
+      "opaquePixels": 66969,
+      "preservedGreenPixels": 43,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        7,
+        6,
+        439,
+        296
+      ],
+      "anchor": [
+        217,
+        297
+      ],
+      "muzzle": [
+        430,
+        129
+      ]
+    },
+    {
+      "id": "SLIDE-05",
+      "width": 428,
+      "height": 307,
+      "opaquePixels": 65829,
+      "preservedGreenPixels": 3,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        6,
+        6,
+        421,
+        300
+      ],
+      "anchor": [
+        243,
+        301
+      ],
+      "muzzle": [
+        418,
+        135
+      ]
+    },
+    {
+      "id": "SLIDE-06",
+      "width": 449,
+      "height": 333,
+      "opaquePixels": 73450,
+      "preservedGreenPixels": 34,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        6,
+        6,
+        442,
+        325
+      ],
+      "anchor": [
+        193,
+        327
+      ],
+      "muzzle": [
+        439,
+        128
+      ]
+    },
+    {
+      "id": "SLIDE-07",
+      "width": 425,
+      "height": 370,
+      "opaquePixels": 72709,
+      "preservedGreenPixels": 8,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        6,
+        6,
+        418,
+        363
+      ],
+      "anchor": [
+        227,
+        364
+      ],
+      "muzzle": [
+        415,
+        160
+      ]
+    },
+    {
+      "id": "SLIDE-08",
+      "width": 414,
+      "height": 372,
+      "opaquePixels": 76667,
+      "preservedGreenPixels": 9,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 0,
+      "alphaBounds": [
+        6,
+        6,
+        407,
+        365
+      ],
+      "anchor": [
+        201,
+        366
+      ],
+      "muzzle": [
+        405,
+        125
+      ]
+    },
+    {
+      "id": "COVER-01",
+      "width": 389,
+      "height": 322,
+      "opaquePixels": 74544,
+      "preservedGreenPixels": 6,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 121,
+      "alphaBounds": [
+        0,
+        0,
+        388,
+        321
+      ],
+      "anchor": [
+        183.5,
+        322
+      ],
+      "muzzle": [
+        389,
+        127
+      ]
+    },
+    {
+      "id": "COVER-02",
+      "width": 373,
+      "height": 413,
+      "opaquePixels": 84023,
+      "preservedGreenPixels": 6,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 122,
+      "alphaBounds": [
+        0,
+        0,
+        372,
+        412
+      ],
+      "anchor": [
+        163.79999999999995,
+        413
+      ],
+      "muzzle": [
+        373,
+        121.5
+      ]
+    },
+    {
+      "id": "COVER-03",
+      "width": 379,
+      "height": 436,
+      "opaquePixels": 83135,
+      "preservedGreenPixels": 29,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 117,
+      "alphaBounds": [
+        0,
+        0,
+        378,
+        435
+      ],
+      "anchor": [
+        168.5,
+        436
+      ],
+      "muzzle": [
+        379,
+        111.5
+      ]
+    },
+    {
+      "id": "COVER-04",
+      "width": 398,
+      "height": 410,
+      "opaquePixels": 83357,
+      "preservedGreenPixels": 29,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 124,
+      "alphaBounds": [
+        0,
+        0,
+        397,
+        409
+      ],
+      "anchor": [
+        200.5,
+        410
+      ],
+      "muzzle": [
+        398,
+        108.5
+      ]
+    },
+    {
+      "id": "COVER-05",
+      "width": 390,
+      "height": 432,
+      "opaquePixels": 86327,
+      "preservedGreenPixels": 9,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 108,
+      "alphaBounds": [
+        0,
+        0,
+        389,
+        431
+      ],
+      "anchor": [
+        174.2,
+        432
+      ],
+      "muzzle": [
+        390,
+        106.5
+      ]
+    },
+    {
+      "id": "COVER-06",
+      "width": 378,
+      "height": 365,
+      "opaquePixels": 77011,
+      "preservedGreenPixels": 13,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 120,
+      "alphaBounds": [
+        0,
+        0,
+        377,
+        364
+      ],
+      "anchor": [
+        157,
+        365
+      ],
+      "muzzle": [
+        378,
+        196
+      ]
+    },
+    {
+      "id": "COVER-07",
+      "width": 393,
+      "height": 325,
+      "opaquePixels": 75393,
+      "preservedGreenPixels": 4,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 97,
+      "alphaBounds": [
+        0,
+        0,
+        392,
+        324
+      ],
+      "anchor": [
+        180,
+        325
+      ],
+      "muzzle": [
+        393,
+        152.5
+      ]
+    },
+    {
+      "id": "COVER-08",
+      "width": 382,
+      "height": 329,
+      "opaquePixels": 75342,
+      "preservedGreenPixels": 4,
+      "lowBlueGreenPixels": 0,
+      "borderPixels": 56,
+      "alphaBounds": [
+        0,
+        0,
+        381,
+        328
+      ],
+      "anchor": [
+        184.79999999999995,
+        329
+      ],
+      "muzzle": [
+        382,
+        159.5
+      ]
+    }
+  ],
+  "scenes": [
+    "scene-free-ready.png",
+    "scene-run.png",
+    "scene-slide.png",
+    "scene-cover-aim.png",
+    "scene-hip-fire.png"
+  ],
+  "bank": {
+    "loaded": true,
+    "frameCount": 24,
+    "seenInGameplay": [],
+    "keying": [
+      {
+        "sheet": "RUN",
+        "removedPixels": 965331,
+        "preservedGreenDominantPixels": 20395,
+        "despilledPixels": 16860,
+        "totalPixels": 1573538
+      },
+      {
+        "sheet": "SLIDE",
+        "removedPixels": 1017375,
+        "preservedGreenDominantPixels": 24579,
+        "despilledPixels": 16986,
+        "totalPixels": 1573538
+      },
+      {
+        "sheet": "COVER",
+        "removedPixels": 934403,
+        "preservedGreenDominantPixels": 18389,
+        "despilledPixels": 13777,
+        "totalPixels": 1573538
+      }
+    ],
+    "errors": [],
+    "sourceFormat": "RGB chroma keyed only during rendering",
+    "artApproval": "pending",
+    "view": "right-facing only",
+    "socketStatus": "candidate landmarks; original authoritative shot sockets unchanged"
+  },
+  "actualSlide": [
+    {
+      "tick": 1,
+      "id": "SLIDE-01",
+      "speed": 627.4315850707916,
+      "slide": 0.6833333333333332
+    },
+    {
+      "tick": 2,
+      "id": "SLIDE-01",
+      "speed": 605.6467599145323,
+      "slide": 0.6666666666666665
+    },
+    {
+      "tick": 3,
+      "id": "SLIDE-01",
+      "speed": 584.6183177940986,
+      "slide": 0.6499999999999998
+    },
+    {
+      "tick": 4,
+      "id": "SLIDE-01",
+      "speed": 564.3199966076478,
+      "slide": 0.6333333333333331
+    },
+    {
+      "tick": 5,
+      "id": "SLIDE-01",
+      "speed": 544.7264460902771,
+      "slide": 0.6166666666666664
+    },
+    {
+      "tick": 6,
+      "id": "SLIDE-01",
+      "speed": 525.8131961544641,
+      "slide": 0.5999999999999996
+    },
+    {
+      "tick": 7,
+      "id": "SLIDE-01",
+      "speed": 507.5566263297453,
+      "slide": 0.5833333333333329
+    },
+    {
+      "tick": 8,
+      "id": "SLIDE-01",
+      "speed": 489.93393626347006,
+      "slide": 0.5666666666666662
+    },
+    {
+      "tick": 9,
+      "id": "SLIDE-02",
+      "speed": 472.92311724578644,
+      "slide": 0.5499999999999995
+    },
+    {
+      "tick": 10,
+      "id": "SLIDE-02",
+      "speed": 456.50292472329784,
+      "slide": 0.5333333333333328
+    },
+    {
+      "tick": 11,
+      "id": "SLIDE-02",
+      "speed": 440.65285176706305,
+      "slide": 0.516666666666666
+    },
+    {
+      "tick": 12,
+      "id": "SLIDE-02",
+      "speed": 425.3531034618045,
+      "slide": 0.4999999999999994
+    },
+    {
+      "tick": 13,
+      "id": "SLIDE-02",
+      "speed": 410.58457218433904,
+      "slide": 0.4833333333333327
+    },
+    {
+      "tick": 14,
+      "id": "SLIDE-02",
+      "speed": 396.32881374035793,
+      "slide": 0.46666666666666606
+    },
+    {
+      "tick": 15,
+      "id": "SLIDE-02",
+      "speed": 382.56802432975275,
+      "slide": 0.4499999999999994
+    },
+    {
+      "tick": 16,
+      "id": "SLIDE-02",
+      "speed": 369.28501831171985,
+      "slide": 0.43333333333333274
+    },
+    {
+      "tick": 17,
+      "id": "SLIDE-03",
+      "speed": 356.4632067418749,
+      "slide": 0.4166666666666661
+    },
+    {
+      "tick": 18,
+      "id": "SLIDE-03",
+      "speed": 344.08657665457207,
+      "slide": 0.3999999999999994
+    },
+    {
+      "tick": 19,
+      "id": "SLIDE-03",
+      "speed": 332.1396710645547,
+      "slide": 0.38333333333333275
+    },
+    {
+      "tick": 20,
+      "id": "SLIDE-03",
+      "speed": 320.60756966296134,
+      "slide": 0.3666666666666661
+    },
+    {
+      "tick": 21,
+      "id": "SLIDE-03",
+      "speed": 309.47587018357854,
+      "slide": 0.3499999999999994
+    },
+    {
+      "tick": 22,
+      "id": "SLIDE-03",
+      "speed": 298.73067041606953,
+      "slide": 0.33333333333333276
+    },
+    {
+      "tick": 23,
+      "id": "SLIDE-03",
+      "speed": 288.35855084371497,
+      "slide": 0.3166666666666661
+    },
+    {
+      "tick": 24,
+      "id": "SLIDE-03",
+      "speed": 278.3465578839823,
+      "slide": 0.29999999999999943
+    },
+    {
+      "tick": 25,
+      "id": "SLIDE-03",
+      "speed": 268.6821877109936,
+      "slide": 0.28333333333333277
+    },
+    {
+      "tick": 26,
+      "id": "SLIDE-04",
+      "speed": 259.35337063968717,
+      "slide": 0.2666666666666661
+    },
+    {
+      "tick": 27,
+      "id": "SLIDE-04",
+      "speed": 250.3484560521714,
+      "slide": 0.24999999999999944
+    },
+    {
+      "tick": 28,
+      "id": "SLIDE-04",
+      "speed": 241.65619784744507,
+      "slide": 0.23333333333333278
+    },
+    {
+      "tick": 29,
+      "id": "SLIDE-04",
+      "speed": 233.2657403963127,
+      "slide": 0.21666666666666612
+    },
+    {
+      "tick": 30,
+      "id": "SLIDE-04",
+      "speed": 225.16660498395424,
+      "slide": 0.19999999999999946
+    },
+    {
+      "tick": 31,
+      "id": "SLIDE-04",
+      "speed": 217.34867672321724,
+      "slide": 0.1833333333333328
+    },
+    {
+      "tick": 32,
+      "id": "SLIDE-04",
+      "speed": 209.80219192228807,
+      "slide": 0.16666666666666613
+    },
+    {
+      "tick": 33,
+      "id": "SLIDE-04",
+      "speed": 202.51772589096558,
+      "slide": 0.14999999999999947
+    },
+    {
+      "tick": 34,
+      "id": "SLIDE-05",
+      "speed": 195.48618117030864,
+      "slide": 0.1333333333333328
+    },
+    {
+      "tick": 35,
+      "id": "SLIDE-05",
+      "speed": 188.69877617095796,
+      "slide": 0.11666666666666614
+    },
+    {
+      "tick": 36,
+      "id": "SLIDE-05",
+      "speed": 182.14703420594256,
+      "slide": 0.09999999999999948
+    },
+    {
+      "tick": 37,
+      "id": "SLIDE-05",
+      "speed": 175.8227729042742,
+      "slide": 0.08333333333333282
+    },
+    {
+      "tick": 38,
+      "id": "SLIDE-05",
+      "speed": 169.71809399210858,
+      "slide": 0.06666666666666615
+    },
+    {
+      "tick": 39,
+      "id": "SLIDE-05",
+      "speed": 163.82537342871117,
+      "slide": 0.04999999999999949
+    },
+    {
+      "tick": 40,
+      "id": "SLIDE-05",
+      "speed": 158.1372518849086,
+      "slide": 0.033333333333332826
+    },
+    {
+      "tick": 41,
+      "id": "SLIDE-05",
+      "speed": 152.6466255521342,
+      "slide": 0.01666666666666616
+    },
+    {
+      "tick": 42,
+      "id": "SLIDE-06",
+      "speed": 147.34663727058947,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 43,
+      "id": "SLIDE-06",
+      "speed": 106.96957189884517,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 44,
+      "id": "SLIDE-06",
+      "speed": 77.65694232443904,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 45,
+      "id": "SLIDE-06",
+      "speed": 56.37678625921806,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 46,
+      "id": "SLIDE-06",
+      "speed": 40.927983175527594,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 47,
+      "id": "SLIDE-07",
+      "speed": 29.71258061987131,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 48,
+      "id": "SLIDE-07",
+      "speed": 21.570509431313354,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 49,
+      "id": "SLIDE-07",
+      "speed": 15.659591574324638,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 50,
+      "id": "SLIDE-07",
+      "speed": 11.368429153493963,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 51,
+      "id": "SLIDE-08",
+      "speed": 8.253164254290926,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 52,
+      "id": "SLIDE-08",
+      "speed": 5.991568341468811,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 53,
+      "id": "SLIDE-08",
+      "speed": 4.349712435666964,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 54,
+      "id": "SLIDE-08",
+      "speed": 3.1577705860495398,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 55,
+      "id": "SLIDE-08",
+      "speed": 2.292453862548426,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 56,
+      "id": "SLIDE-08",
+      "speed": 1.6642579214368396,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 57,
+      "id": "SLIDE-08",
+      "speed": 1.2082050916332288,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 58,
+      "id": "SLIDE-08",
+      "speed": 0.8771233861324649,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 59,
+      "id": "SLIDE-08",
+      "speed": 0.636767250716097,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 60,
+      "id": "SLIDE-08",
+      "speed": 0.4622753628453608,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 61,
+      "id": "SLIDE-08",
+      "speed": 0.33559909190287107,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 62,
+      "id": "SLIDE-08",
+      "speed": 0.24363563265150112,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 63,
+      "id": "SLIDE-08",
+      "speed": 0.1768727119043476,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 64,
+      "id": "SLIDE-08",
+      "speed": 0.12840468315711126,
+      "slide": -5.065392549852277e-16
+    },
+    {
+      "tick": 65,
+      "id": "SLIDE-08",
+      "speed": 0.09321823858049216,
+      "slide": -5.065392549852277e-16
+    }
+  ],
+  "freeAimHeights": [
+    {
+      "id": "ready-d0-f0",
+      "scale": 1.76,
+      "heightWorld": 220
+    },
+    {
+      "id": "ready-d0-f0",
+      "scale": 1.76,
+      "heightWorld": 220
+    },
+    {
+      "id": "ready-d0-f0",
+      "scale": 1.76,
+      "heightWorld": 220
+    }
+  ],
+  "renderer": {
+    "counts": {
+      "draws": 66,
+      "missing": 0,
+      "fallback": 29
+    },
+    "residency": {
+      "requested": 64,
+      "decoded": 64,
+      "evictions": 0,
+      "failures": 0,
+      "pinnedTotal": 64,
+      "pinnedReady": 64,
+      "dynamicReady": 0,
+      "dynamicLimit": 20,
+      "active": "assets/recovered/ready-d12.webp",
+      "loading": 0,
+      "queued": 0,
+      "decodedPixelBytes": 71370512
+    },
+    "frames": [
+      {
+        "id": "COVER-04",
+        "label": "COVER-04 / recoil-compression / CANDIDATE · ONE VIEW",
+        "final": true,
+        "availability": "review-candidate",
+        "scale": 0.39232172470978444,
+        "anchor": [
+          241.24090121317147,
+          410
+        ],
+        "rect": [
+          0,
+          0,
+          398,
+          410
+        ],
+        "socketAlignment": "barrel-aligned; horizontal stance provisional"
+      },
+      {
+        "id": "ready-d12-f0",
+        "label": "RECOVERED / READY / view 12",
+        "final": false,
+        "availability": "exact",
+        "scale": 1.76,
+        "anchor": [
+          62.5,
+          109.5
+        ],
+        "rect": [
+          0,
+          0,
+          125,
+          125
+        ]
+      }
+    ],
+    "ready": true,
+    "slot": 0,
+    "candidates": {
+      "loaded": true,
+      "frameCount": 24,
+      "seenInGameplay": [
+        "SLIDE-08",
+        "RUN-01",
+        "SLIDE-03",
+        "COVER-02",
+        "COVER-04"
+      ],
+      "keying": [
+        {
+          "sheet": "RUN",
+          "removedPixels": 965331,
+          "preservedGreenDominantPixels": 20395,
+          "despilledPixels": 16860,
+          "totalPixels": 1573538
+        },
+        {
+          "sheet": "SLIDE",
+          "removedPixels": 1017375,
+          "preservedGreenDominantPixels": 24579,
+          "despilledPixels": 16986,
+          "totalPixels": 1573538
+        },
+        {
+          "sheet": "COVER",
+          "removedPixels": 934403,
+          "preservedGreenDominantPixels": 18389,
+          "despilledPixels": 13777,
+          "totalPixels": 1573538
+        }
+      ],
+      "errors": [],
+      "sourceFormat": "RGB chroma keyed only during rendering",
+      "artApproval": "pending",
+      "view": "right-facing only",
+      "socketStatus": "candidate landmarks; original authoritative shot sockets unchanged",
+      "enabled": true,
+      "preview": null
+    },
+    "coverage": {
+      "verifiedExports": [
+        "CE05",
+        "CE03",
+        "CE08",
+        "B06B"
+      ],
+      "seenInGameplay": [],
+      "previewKey": null,
+      "scope": "Four keys, one authored view; not four complete animations or 24-direction coverage"
+    },
+    "presentation": {
+      "calibrated": true,
+      "coverMotion": true,
+      "crouchCycle": false,
+      "lowCover": true,
+      "allApprovedTravel": true,
+      "coverSize": 1.35,
+      "followSeat": null
+    }
+  },
+  "errors": [],
+  "passed": 25,
+  "failed": 0
+}

@@ -1,0 +1,135 @@
+{
+  "family": "cover-peek-fire-recoil-right",
+  "generation_method": "built-in image_gen",
+  "production_status": "Chroma-key RGB candidate source v3 available for game-side color-key rendering. No native alpha export produced. Art and animation unapproved.",
+  "poses": [
+    "low attached ready",
+    "rise",
+    "aimed",
+    "recoil compression",
+    "recovery",
+    "lower",
+    "low ready",
+    "small weight shift"
+  ],
+  "assets": [
+    {
+      "path": "/workspace/scratch/213405134e9a/sprite-work/cover/jade-cover-peek-fire-candidate-v1-opaque.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "grid": {
+        "columns": 4,
+        "rows": 2
+      },
+      "nominal_cell_width": 443.5,
+      "nominal_cell_height": 443.5,
+      "has_alpha": false,
+      "sha256": "d872732a9d1c4ee6041b244e511a3e1677f338c78d4824cbbe2f4325c5d6af72",
+      "status": "rejected-transparent-export; candidate-reference-only"
+    },
+    {
+      "path": "/workspace/scratch/213405134e9a/sprite-work/cover/jade-cover-peek-fire-candidate-v2-opaque.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "grid": {
+        "columns": 4,
+        "rows": 2
+      },
+      "nominal_cell_width": 443.5,
+      "nominal_cell_height": 443.5,
+      "has_alpha": false,
+      "sha256": "d8ab3bcd31ac2ecbdb2a5df14261ec1fd9915f414c26f5310559bec6918b9d82",
+      "status": "rejected-transparent-export; candidate-reference-only"
+    },
+    {
+      "path": "/workspace/scratch/213405134e9a/sprite-work/cover/jade-cover-peek-fire-candidate-v3-chroma.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "grid": {
+        "columns": 4,
+        "rows": 2
+      },
+      "nominal_cell_width": 443.5,
+      "nominal_cell_height": 443.5,
+      "has_alpha": false,
+      "sha256": "eafc750c24d7e16c44c9288f20c16afab9015ac86de8162533ce48938d659389",
+      "status": "candidate-chroma-source; unapproved; native-alpha-export-not-produced",
+      "dominant_colors": [
+        [
+          [
+            6,
+            249,
+            5
+          ],
+          79874
+        ],
+        [
+          [
+            6,
+            249,
+            6
+          ],
+          71269
+        ],
+        [
+          [
+            7,
+            249,
+            6
+          ],
+          50577
+        ],
+        [
+          [
+            7,
+            249,
+            7
+          ],
+          46195
+        ]
+      ],
+      "corner_rgb": [
+        [
+          25,
+          241,
+          16
+        ],
+        [
+          22,
+          241,
+          15
+        ],
+        [
+          25,
+          241,
+          17
+        ],
+        [
+          26,
+          244,
+          15
+        ]
+      ]
+    }
+  ],
+  "visual_observations": [
+    "All eight complete characters face right and occupy distinct cells.",
+    "No cover walls, ground, muzzle flash or scenery; no captions.",
+    "Approximate row baseline consistent.",
+    "Gun and costume broadly follow reference but detailed identity remains review-gated.",
+    "Second attempt corrects visible coat panel mark toward angular JADE emblem.",
+    "Both attempts fail true alpha despite explicit request; do not place sheets in game as transparent sprites.",
+    "Native sheet resolution is 1774x887, below requested individual 1024x1536 source target."
+  ],
+  "site_changes": false,
+  "chroma_observations": [
+    "All eight complete right-facing poses and their approximate placement retained.",
+    "Gray checker background is removed and replaced by bright green; green is not numerically pure #00FF00.",
+    "Main pose silhouettes broadly preserved; generation edits introduce some small hair and mechanical detail differences.",
+    "Battery color detail should be checked against master; violet/cyan/amber segments most visible, green segment is not clearly distinguishable on every pose.",
+    "No cover, shadows, captions, grid or muzzle flash visible."
+  ]
+}

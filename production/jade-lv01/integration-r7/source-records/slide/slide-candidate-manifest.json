@@ -1,0 +1,166 @@
+{
+  "family": "Jade LV01 right-facing baseball slide",
+  "productionStatus": "candidate art; transparency/export/registration/gameplay validation pending",
+  "generatedWith": "built-in image_gen",
+  "assetCount": 3,
+  "animationKeys": [
+    "entry-crouch",
+    "foot-forward",
+    "full-low-slide",
+    "braking-slide",
+    "compressed-stop",
+    "planted-recovery",
+    "rising-crouch",
+    "ready"
+  ],
+  "references": [
+    {
+      "file": "/workspace/scratch/213405134e9a/approved-references/GOD MODE/Jade LV01 Lavender Visor/RS24 Run Slide Catalog/JADE-user-approved-master.png",
+      "sha256": "39375b8abfd668b750cc041c5cd78db474f359f43428bd9a585396e62b579854",
+      "width": 1536,
+      "height": 1024,
+      "role": "identity-authority"
+    },
+    {
+      "file": "/workspace/scratch/213405134e9a/approved-references/GOD MODE/Jade LV01 Lavender Visor/RS24 Run Slide Catalog/jade_s_24_direction_cyberpunk_slide_sheet.png",
+      "sha256": "3db5464cdefedc9522da8b3d471a9a0d534bd8158118eae60b1f29dbe8c8be7a",
+      "width": 1448,
+      "height": 1086,
+      "role": "motion-reference-only"
+    }
+  ],
+  "candidates": [
+    {
+      "file": "slide-8key-candidate-v1-checkerboard.png",
+      "generatedOriginal": "/workspace/scratch/213405134e9a/generated_images/exec-d5f86168-3b9a-4599-8ac7-40ad5ba8831a.png",
+      "sha256": "0ac9f709b772d3e159e712ce96ddb1945bce2a639ae54fafa4baaf0301e89e7d",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "hasAlpha": false,
+      "transparentPixels": 0,
+      "status": "unapproved-candidate",
+      "nativeResolution": true
+    },
+    {
+      "file": "slide-8key-candidate-v2-alpha-failed.png",
+      "generatedOriginal": "/workspace/scratch/213405134e9a/generated_images/exec-e8449e12-48ff-4d26-a9fd-475d3157bb2a.png",
+      "sha256": "b1aaf77ad2f6b757ce2046a3d8dfe94490400b5fc16ba765587937f2dd24c3d5",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "hasAlpha": false,
+      "transparentPixels": 0,
+      "status": "unapproved-candidate",
+      "nativeResolution": true
+    },
+    {
+      "file": "slide-8key-candidate-v3-chroma.png",
+      "generatedOriginal": "/workspace/scratch/213405134e9a/generated_images/exec-f21e6347-a475-40f5-b089-0ecdea36da02.png",
+      "sha256": "ea44b5451796452747d83cf18b78ff8a591a6f4e4b2adaf9a79bec167bb8f074",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "hasAlpha": false,
+      "transparentPixels": 0,
+      "status": "unapproved-candidate",
+      "nativeResolution": true
+    }
+  ],
+  "recommendedExtractionSource": "slide-8key-candidate-v3-chroma.png",
+  "maskAnalysisOnly": {
+    "description": "Analysis-only green-threshold connected component boxes; not exported alpha or registered frames. Minor strands may form separate components and boxes may omit these. Battery green pixels must be protected when extracting.",
+    "largeComponents": [
+      {
+        "component": 1,
+        "pixelCount": 66158,
+        "box": [
+          12,
+          67,
+          405,
+          402
+        ]
+      },
+      {
+        "component": 2,
+        "pixelCount": 67965,
+        "box": [
+          408,
+          105,
+          890,
+          402
+        ]
+      },
+      {
+        "component": 3,
+        "pixelCount": 67185,
+        "box": [
+          1319,
+          114,
+          1753,
+          405
+        ]
+      },
+      {
+        "component": 4,
+        "pixelCount": 67081,
+        "box": [
+          855,
+          133,
+          1355,
+          402
+        ]
+      },
+      {
+        "component": 24,
+        "pixelCount": 76891,
+        "box": [
+          1360,
+          467,
+          1762,
+          827
+        ]
+      },
+      {
+        "component": 25,
+        "pixelCount": 72898,
+        "box": [
+          914,
+          469,
+          1327,
+          827
+        ]
+      },
+      {
+        "component": 26,
+        "pixelCount": 73743,
+        "box": [
+          468,
+          506,
+          905,
+          827
+        ]
+      },
+      {
+        "component": 28,
+        "pixelCount": 66105,
+        "box": [
+          15,
+          528,
+          431,
+          823
+        ]
+      }
+    ]
+  },
+  "review": {
+    "identity": "Broad costume, face, visor and rainbow-battery continuity present; exact approved identity not certified. Shotgun shape can read more like compact tactical rifle.",
+    "biomechanics": "Eight requested phases discernible. Full slide leg lengths and gun continuity vary slightly; single keys require review in motion.",
+    "equipment": "No mirroring performed. Asymmetry drawn independently by generation; exact continuity not certified.",
+    "silhouettes": "Entire bodies and muzzles visibly contained inside whole canvas. Equal grid slicing unsafe because shapes cross ideal column boundaries.",
+    "transparency": "Both requested transparent outputs are RGB with baked checkerboards. Third image is chroma RGB and needs extraction.",
+    "resolution": "All three natives 1774 by 887 pixels. Per-key figure roughly 400 by 250 to 350 pixels. No upscaling performed; below native 1024x1536 per-key target.",
+    "registration": "Not completed; root will register extracted frames.",
+    "deployment": "Not performed; no Site checkout changed."
+  }
+}
