@@ -1,0 +1,89 @@
+[
+  {
+    "id": "R6-RECOVERY",
+    "family": "cover",
+    "file": "assets/r6/R6-COVER-RECOVERY.png",
+    "width": 1312,
+    "height": 1199,
+    "anchor": [
+      648,
+      1174
+    ],
+    "scale": 0.094,
+    "runtimeEligible": true,
+    "sha256": "ad282bbe819230f57b5e60dd8a725ac23a58111529fea2391889b08d5b4c2e88",
+    "alphaVerified": true,
+    "artworkApproval": "pending-user-review",
+    "slideGap": null,
+    "dimensions": [
+      1312,
+      1199
+    ]
+  },
+  {
+    "id": "R6-PUSH",
+    "family": "cover",
+    "file": "assets/r6/R6-COVER-PUSH.png",
+    "width": 1312,
+    "height": 1199,
+    "anchor": [
+      654,
+      1178
+    ],
+    "scale": 0.094,
+    "runtimeEligible": true,
+    "sha256": "b8b33e59459abc8fb7a88a468b437ab2c7a13d808f9ce2a00b3c0ed3fe4213cd",
+    "alphaVerified": true,
+    "artworkApproval": "pending-user-review",
+    "slideGap": null,
+    "dimensions": [
+      1312,
+      1199
+    ]
+  },
+  {
+    "id": "R6-CONTACT",
+    "family": "slide",
+    "file": "assets/r6/CE04-R6-entry-settle.png",
+    "width": 1312,
+    "height": 1199,
+    "anchor": [
+      695,
+      1140
+    ],
+    "scale": 0.108,
+    "runtimeEligible": true,
+    "sha256": "e7220824ac486bcfb2ca4603f0f5cd6e98f9435beb6767aaf295961ea1d3f229",
+    "alphaVerified": true,
+    "artworkApproval": "pending-user-review",
+    "slideGap": [
+      0,
+      25
+    ],
+    "dimensions": [
+      1312,
+      1199
+    ]
+  },
+  {
+    "id": "R6-AIM",
+    "family": "aim",
+    "file": "assets/r6/AIM01-low-aim-candidate.png",
+    "width": 1312,
+    "height": 1199,
+    "anchor": [
+      650,
+      1168
+    ],
+    "scale": 0.098,
+    "runtimeEligible": false,
+    "sha256": "ee8e6d670422aa4af9f8ae458c358b6413a04926332f4f56864cd1bed98ac925",
+    "alphaVerified": true,
+    "artworkApproval": "pending-user-review",
+    "slideGap": null,
+    "dimensions": [
+      1312,
+      1199
+    ]
+  }
+]
