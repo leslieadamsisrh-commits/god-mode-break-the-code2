@@ -1,0 +1,189 @@
+{
+  "method": "native Canvas, actual game renderer and decoded source images; not a browser playtest",
+  "errors": [],
+  "shots": [
+    {
+      "file": "evidence/01-cover-contact.png",
+      "frame": {
+        "id": "B05-CE03",
+        "label": "FINAL JADE / B05 CE03 / CONTACT / PLAYABLE-KEY",
+        "final": true,
+        "availability": "exact",
+        "scale": 0.105,
+        "anchor": [
+          650,
+          1178
+        ],
+        "rect": [
+          0,
+          0,
+          1312,
+          1199
+        ]
+      }
+    },
+    {
+      "file": "evidence/02-attached-ready.png",
+      "frame": {
+        "id": "B06-B06A",
+        "label": "FINAL JADE / B06 B06A / ATTACHED-IDLE / PLAYABLE-KEY",
+        "final": true,
+        "availability": "exact",
+        "scale": 0.094,
+        "anchor": [
+          645,
+          1175
+        ],
+        "rect": [
+          0,
+          0,
+          1312,
+          1199
+        ]
+      }
+    },
+    {
+      "file": "evidence/03-left-walk-temporary.png",
+      "frame": {
+        "id": "backpedal-d0-f0",
+        "label": "TEMP COVER WALK / BACKPEDAL / view 0",
+        "final": false,
+        "availability": "placeholder",
+        "scale": 1.76,
+        "anchor": [
+          62.5,
+          109.5
+        ],
+        "rect": [
+          0,
+          0,
+          125,
+          125
+        ]
+      }
+    },
+    {
+      "file": "evidence/04-right-walk-temporary.png",
+      "frame": {
+        "id": "run-d0-f0",
+        "label": "TEMP COVER WALK / RUN / view 0",
+        "final": false,
+        "availability": "placeholder",
+        "scale": 1.76,
+        "anchor": [
+          62.5,
+          109.5
+        ],
+        "rect": [
+          0,
+          0,
+          125,
+          125
+        ]
+      }
+    },
+    {
+      "file": "evidence/05-north-facing-fallback.png",
+      "frame": {
+        "id": "cover-d12-f1",
+        "label": "RECOVERED / COVER / view 12 / BRACE / slot 1",
+        "final": false,
+        "availability": "exact",
+        "scale": 1.76,
+        "anchor": [
+          62.5,
+          109.375
+        ],
+        "rect": [
+          125,
+          0,
+          125,
+          125
+        ]
+      }
+    },
+    {
+      "file": "evidence/06-corner-firing-legacy.png",
+      "frame": {
+        "id": "K03",
+        "label": "FINAL JADE / K03 / original source pose",
+        "final": true,
+        "availability": "exact",
+        "scale": 0.205,
+        "anchor": [
+          340,
+          790
+        ],
+        "rect": [
+          0,
+          0,
+          684,
+          809
+        ]
+      }
+    }
+  ],
+  "renderer": {
+    "counts": {
+      "draws": 212,
+      "missing": 0,
+      "fallback": 42
+    },
+    "residency": {
+      "requested": 65,
+      "decoded": 61,
+      "evictions": 0,
+      "failures": 0,
+      "pinnedTotal": 61,
+      "pinnedReady": 61,
+      "dynamicReady": 0,
+      "dynamicLimit": 20,
+      "active": "assets/recovered/ready-d12.webp",
+      "loading": 4,
+      "queued": 0,
+      "decodedPixelBytes": 52493456
+    },
+    "frames": [
+      {
+        "id": "B06-B06A",
+        "label": "FINAL JADE / B06 B06A / ATTACHED-IDLE / PLAYABLE-KEY",
+        "final": true,
+        "availability": "exact",
+        "scale": 0.094,
+        "anchor": [
+          645,
+          1175
+        ],
+        "rect": [
+          0,
+          0,
+          1312,
+          1199
+        ]
+      },
+      {
+        "id": "ready-d12-f0",
+        "label": "RECOVERED / READY / view 12",
+        "final": false,
+        "availability": "exact",
+        "scale": 1.76,
+        "anchor": [
+          62.5,
+          109.5
+        ],
+        "rect": [
+          0,
+          0,
+          125,
+          125
+        ]
+      }
+    ],
+    "ready": true,
+    "slot": 0,
+    "presentation": {
+      "calibrated": true,
+      "coverMotion": true
+    }
+  }
+}

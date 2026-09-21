@@ -1,0 +1,15 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Use case: background-extraction. Asset: one production PNG sprite for a 2D game. EDIT TARGET image 1 is the desired rightward cover-step pose. KEEP its character pixels, pose, proportions, visible eyes, helmet, asymmetrical white/magenta coat and angular emblem, battery, hands, shotgun, boots, and manga rendering unchanged. Remove the ENTIRE drawn grey checkerboard background, including spaces between legs, hair strands, arms, and weapon. Deliver a cutout with an ACTUAL transparent alpha channel (RGBA PNG; alpha=0 outside the character). Do not depict a checkerboard, solid color background, scene, shadow floor, labels, panels, or text. Supporting image 2 is the existing transparent left-step game export: match its genuine cutout treatment. This is background extraction, not a redesign or a new poster. Retain the rightward extended boot and the left supporting knee exactly as image 1. Do not flip or mirror. Leave a little transparent clearance around every part of the character.",
+  "references": [
+    "R1 art-review/B06C-candidate-02.png",
+    "public/assets/b06/B06B.png"
+  ],
+  "output": "art-review/B06C-candidate-03.png",
+  "mode": "RGB",
+  "transparentPixels": 0,
+  "sha256": "05f3e65a73ca856e7dc0e850d8d9060227e9e0f23f1a5857ec1e9c0e03196276",
+  "installed": false,
+  "artworkApproval": "not requested; technical export failed",
+  "newAcceptedExports": 0
+}
