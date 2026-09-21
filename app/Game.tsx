@@ -54,7 +54,7 @@ function preloadArt() {
   const atlas = new Image();
   atlas.onload = () => buildScenery(atlas);
   atlas.src = "/assets/environment/cover-destruction-atlas.png";
-  for (const [key, file] of Object.entries({ arena: "arena-blueprint.webp", war: "war-games-blueprint.webp", gloves: "dual-glove-hud.webp", lab: "training-lab.webp", dimension33: "dimension33-reference.webp" })) {
+  for (const [key, file] of Object.entries({ arena: "arena-blueprint.webp", war: "war-games-blueprint.webp", gloves: "dual-glove-hud.webp", lab: "training-lab.webp", sfRuins: "dimension33-sf-ruins.webp", crowdBaron: "dimension33-crowd-baron.webp", warBoard: "dimension33-war-board.webp" })) {
     const image = new Image(); image.onload = () => concepts.set(key, image); image.src = `/assets/concepts/${file}`;
   }
 }
@@ -140,10 +140,24 @@ function draw(canvas: HTMLCanvasElement | null, s: any, me: number, q: Calibrati
   for (const sh of s.shots || []) { g.strokeStyle = sh.owner === me ? "#b9ffff" : "#ff5ca8"; g.shadowColor = g.strokeStyle; g.shadowBlur = 12; g.lineWidth = 4; g.beginPath(); g.moveTo(sh.x, sh.y); g.lineTo(sh.x - sh.vx * .032, sh.y - sh.vy * .032); g.stroke(); g.shadowBlur = 0; }
   for (const f of s.fx || []) effect(g, f);
   g.restore();
+  drawForegroundOcclusion(g, s.time || 0, q);
   g.fillStyle = "#b5d9df"; g.font = "700 13px monospace"; g.fillText(`DIMENSION 33 // ${s.build}`, 22, 596);
 }
 
 function drawArena(g: CanvasRenderingContext2D, t: number, s: any, q: Calibration) {
+  const skyNew = g.createLinearGradient(0, 0, 0, 620); skyNew.addColorStop(0, "#070512"); skyNew.addColorStop(.48, "#311047"); skyNew.addColorStop(1, "#090d18"); g.fillStyle = skyNew; g.fillRect(0, 0, 1000, 620);
+  const ruins=concepts.get("sfRuins"), architecture=concepts.get("crowdBaron"), board=concepts.get("warBoard");
+  const crowdReactionNew = s?.phase === "finished" ? 1 : (s?.fx || []).some((f:any) => ["heavy","matter-hit","break","pinball","shot-hit"].includes(f.type)) ? .72 : 0;
+  if(ruins){const drift=Math.sin(t*.075)*5*q.backgroundDepth;g.save();g.globalAlpha=.97;g.drawImage(ruins,-26+drift,-5,1052,592*q.backgroundDepth);g.restore();}
+  if(architecture){
+    const crowdBob=Math.sin(t*3.6)*1.5+crowdReactionNew*Math.sin(t*17)*4.5;
+    g.save();g.translate(500,150);g.scale(q.crowdScale,q.middleDepth);g.translate(-500,-150);g.globalCompositeOperation="screen";g.globalAlpha=.86;g.drawImage(architecture,0,crowdBob,1000,563);g.restore();
+    const bw=250*q.balconyScale,bh=141*q.balconyScale;g.save();g.globalCompositeOperation="screen";g.globalAlpha=.10+crowdReactionNew*.16;g.shadowColor="#ff2f9d";g.shadowBlur=28+crowdReactionNew*22;g.drawImage(architecture,355,35,315,255,500-bw/2,18+Math.sin(t*.8)*2,bw,bh);g.restore();
+  }
+  if(board){const scale=q.arenaScale,w=1000*scale,h=563*scale*q.foregroundDepth;g.save();g.drawImage(board,500-w/2,122,w,h);g.restore();}
+  g.save();g.globalAlpha=.15+.12*crowdReactionNew;g.globalCompositeOperation="screen";for(let n=0;n<8;n++){const x=78+n*122,y=112+(n%2)*18;g.fillStyle=n%2?"#ff3f9c":"#55eef2";g.beginPath();g.arc(x,y+Math.sin(t*5+n)*3,3+crowdReactionNew*3,0,Math.PI*2);g.fill();}g.restore();
+  g.fillStyle="#05070dcc";g.fillRect(355,151,290,31);g.strokeStyle="#ff45a5";g.strokeRect(360,155,280,22);g.fillStyle="#fff";g.font="900 14px Arial";g.textAlign="center";g.fillText(s?.phase==="finished"?"THE ARENA LIVES":"DIMENSION 33 // WAR GAMES",500,171);g.textAlign="left";
+  return;
   const sky = g.createLinearGradient(0, 0, 0, 620); sky.addColorStop(0, "#070512"); sky.addColorStop(.22, "#2a1236"); sky.addColorStop(.48, "#a62d6d"); sky.addColorStop(1, "#071019"); g.fillStyle = sky; g.fillRect(0, 0, 1000, 620);
   const reference = concepts.get("dimension33"), crowdReaction = s?.phase === "finished" ? 1 : (s?.fx || []).some((f:any) => ["heavy","matter-hit","break","pinball","shot-hit"].includes(f.type)) ? .72 : 0;
   if (reference) {
@@ -164,6 +178,10 @@ function drawArena(g: CanvasRenderingContext2D, t: number, s: any, q: Calibratio
   g.fillStyle="#070910ee";g.fillRect(18,202,170,56);g.fillRect(812,202,170,56);g.strokeStyle="#4deef2";g.strokeRect(18,202,170,56);g.strokeStyle="#ff46a3";g.strokeRect(812,202,170,56);g.font="800 12px monospace";g.fillStyle="#60f5f5";g.fillText("MIND OVER MATTER",30,234);g.fillStyle="#ff5aad";g.fillText("ALL WORLDS · ONE ARENA",824,234);
   g.fillStyle="#05070d";g.fillRect(355,166,290,33);g.strokeStyle="#ff45a5";g.strokeRect(360,170,280,24);g.fillStyle="#fff";g.font="900 15px Arial";g.textAlign="center";g.fillText("DIMENSION 33 // WAR GAMES",500,188);g.textAlign="left";
   g.save();g.globalAlpha=.25*q.foregroundDepth;g.fillStyle="#ff2990";g.beginPath();g.ellipse(170,540,130,18,0,0,Math.PI*2);g.ellipse(825,470,105,14,0,0,Math.PI*2);g.fill();g.fillStyle="#49eef0";g.beginPath();g.ellipse(610,565,155,16,0,0,Math.PI*2);g.fill();g.restore();
+}
+
+function drawForegroundOcclusion(g:CanvasRenderingContext2D,t:number,q:Calibration){
+  const board=concepts.get("warBoard");if(!board)return;const scale=q.arenaScale,w=1000*scale,h=563*scale*q.foregroundDepth,x=500-w/2,y=122,sourceY=Math.floor(board.height*.73);g.save();g.globalAlpha=.92;g.drawImage(board,0,sourceY,board.width,board.height-sourceY,x,y+h*.73,w,h*.27);g.globalCompositeOperation="screen";g.globalAlpha=.14;g.fillStyle="#ff3f9c";g.fillRect(0,607+Math.sin(t*2)*2,1000,5);g.restore();
 }
 
 function cover(g: CanvasRenderingContext2D, c: any, q: Calibration) {
