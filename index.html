@@ -4,15 +4,76 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>GOD MODE — Style Validation 01</title>
-<link rel="stylesheet" href="combat-lab/style.css">
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#050507;color:#f7f7fb;font-family:Arial,Helvetica,sans-serif}
+#game{display:block;width:100%;height:100%;background:#08090c;touch-action:none}
+.brand{position:fixed;left:18px;top:14px;font-weight:1000;font-style:italic;font-size:25px;color:#ff1792}
+.brand span{display:block;color:#f5f5f7;font-size:10px;letter-spacing:3px;font-style:normal}
+#status{position:fixed;right:18px;top:16px;padding:8px 10px;border:1px solid rgba(255,23,146,.45);background:rgba(6,7,10,.78);font:700 11px monospace;color:#ff8cc7}
+#start{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);min-width:220px;min-height:64px;border:1px solid #ff1792;background:#111117;color:white;font:900 18px Arial;letter-spacing:1px}
+.help{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);padding:8px 12px;background:rgba(5,6,9,.82);border:1px solid rgba(255,255,255,.15);font:11px monospace;white-space:nowrap;color:#ddd}
+#error{position:fixed;left:18px;right:18px;bottom:52px;color:#ff9fbe;font:12px monospace;white-space:pre-wrap}
+@media(max-width:800px){.brand{font-size:19px}.help{font-size:9px;max-width:92vw;white-space:normal;text-align:center}#status{font-size:9px;top:64px;right:10px}}
+</style>
 </head>
 <body>
 <canvas id="game"></canvas>
-<div id="hud">
-  <div class="brand">GOD MODE <span>COMBAT LOOK LAB // STYLE VALIDATION 01</span></div>
-  <div id="status">APPROVED HEROINE · LIVE LOOK TEST</div>
-  <div class="help">WASD / left stick move · Shift / A slide · E / X attach cover · Mouse / right stick aim · Click / RT fire · R restart</div>
-</div>
-<script src="combat-lab/style-validation.js"></script>
+<div class="brand">GOD MODE <span>COMBAT LOOK LAB // STYLE VALIDATION 01</span></div>
+<div id="status">READY TO START</div>
+<button id="start" type="button">TAP TO START</button>
+<div class="help">Controller: left stick move · A slide · X cover · right stick aim · RT fire · keyboard also supported</div>
+<div id="error"></div>
+<script>
+(function(){
+"use strict";
+const c=document.getElementById("game"),g=c.getContext("2d"),status=document.getElementById("status"),start=document.getElementById("start"),err=document.getElementById("error");
+let W=0,H=0,D=1,last=performance.now(),running=false,keys={},shots=[],fx=[];
+const p={x:0,y:125,vx:0,vy:0,aim:0,slide:0,cover:false,state:"IDLE",lastShot:0};
+const cover={x:150,y:-15,w:145,h:44},dummy={x:-260,y:-70,r:25};
+function resize(){W=innerWidth;H=innerHeight;D=devicePixelRatio||1;c.width=W*D;c.height=H*D;g.setTransform(D,0,0,D,0,0)}resize();addEventListener("resize",resize);
+addEventListener("keydown",e=>keys[e.key.toLowerCase()]=true);addEventListener("keyup",e=>keys[e.key.toLowerCase()]=false);
+c.addEventListener("pointermove",e=>p.aim=Math.atan2(e.clientY-H*.52,e.clientX-W*.5));
+c.addEventListener("pointerdown",()=>keys.fire=true);addEventListener("pointerup",()=>keys.fire=false);
+function iso(x,y,z=0){return{x:W*.5+x+y*.22,y:H*.52+y*.58-z}}
+function spark(x,y,n){for(let i=0;i<n;i++)fx.push({x,y,vx:(Math.random()-.5)*130,vy:(Math.random()-.8)*100,t:.35})}
+function pad(){const q=navigator.getGamepads&&navigator.getGamepads()[0];if(!q)return false;const dz=v=>Math.abs(v)<.18?0:v,lx=dz(q.axes[0]||0),ly=dz(q.axes[1]||0),rx=dz(q.axes[2]||0),ry=dz(q.axes[3]||0);keys.a=lx<-.2;keys.d=lx>.2;keys.w=ly<-.2;keys.s=ly>.2;if(Math.hypot(rx,ry)>.22)p.aim=Math.atan2(ry,rx);keys.slide=!!q.buttons[0]?.pressed;keys.attach=!!q.buttons[2]?.pressed;keys.fire=!!q.buttons[7]?.pressed;return true}
+function step(dt){const hasPad=pad();let dx=(keys.d?1:0)-(keys.a?1:0),dy=(keys.s?1:0)-(keys.w?1:0),m=Math.hypot(dx,dy)||1;
+if((keys.shift||keys.slide)&&p.slide<=0&&!p.cover&&Math.hypot(dx,dy)>.1){p.slide=.56;p.vx=dx/m*500;p.vy=dy/m*500;p.state="SLIDE";spark(p.x,p.y,12)}
+if(p.cover){p.state="BRACED COVER";p.vx=0;p.vy=dy*185;if(dx<-.5||keys.attach===false&&keys.x){p.cover=false;p.state="DETACH"}}
+else if(p.slide>0){p.slide-=dt;p.vx*=Math.pow(.1,dt);p.vy*=Math.pow(.1,dt);if(Math.random()<.25)fx.push({x:p.x-12,y:p.y+12,vx:-p.vx*.1,vy:-p.vy*.1,t:.2})}
+else{let tx=dx/m*235,ty=dy/m*235,r=1-Math.exp(-14*dt);p.vx+=(tx-p.vx)*r;p.vy+=(ty-p.vy)*r;if(Math.hypot(dx,dy)<.1){p.vx*=Math.pow(.003,dt);p.vy*=Math.pow(.003,dt)}p.state=Math.hypot(dx,dy)>.1?"RUN":"IDLE"}
+p.x+=p.vx*dt;p.y+=p.vy*dt;p.x=Math.max(-430,Math.min(430,p.x));p.y=Math.max(-240,Math.min(280,p.y));
+if(!p.cover&&p.x>cover.x-36&&p.x<cover.x+cover.w+36&&p.y>cover.y-28&&p.y<cover.y+cover.h+28){if(p.slide>0||keys.attach||keys.x){p.cover=true;p.slide=0;p.vx=p.vy=0;p.x=cover.x-36;p.state="COVER ATTACH";spark(p.x,p.y,8)}else p.x=cover.x-38}
+if(keys.fire&&performance.now()-p.lastShot>220){shots.push({x:p.x,y:p.y,vx:Math.cos(p.aim)*720,vy:Math.sin(p.aim)*720,t:.7});p.lastShot=performance.now();p.state=p.cover?"COVER FIRE":"AIM / FIRE"}
+shots.forEach(s=>{s.x+=s.vx*dt;s.y+=s.vy*dt;s.t-=dt;if(Math.hypot(s.x-dummy.x,s.y-dummy.y)<dummy.r){s.t=0;spark(dummy.x,dummy.y,14)}});shots=shots.filter(s=>s.t>0);
+fx.forEach(f=>{f.x+=f.vx*dt;f.y+=f.vy*dt;f.t-=dt});fx=fx.filter(f=>f.t>0);
+status.textContent=(hasPad?"CONTROLLER CONNECTED · ":"")+"STATE "+p.state;
+}
+function drawCover(){const A=iso(cover.x,cover.y),B=iso(cover.x+cover.w,cover.y),C=iso(cover.x+cover.w,cover.y+cover.h),D0=iso(cover.x,cover.y+cover.h);g.beginPath();g.moveTo(A.x,A.y);g.lineTo(B.x,B.y);g.lineTo(C.x,C.y);g.lineTo(D0.x,D0.y);g.closePath();g.fillStyle="#25252c";g.fill();g.strokeStyle="#ff2a98";g.lineWidth=2;g.stroke();g.fillStyle="#ff65b4";g.font="700 11px monospace";g.fillText("COVER 01",A.x+18,A.y+18)}
+function drawHero(){const q=iso(p.x,p.y),slide=p.slide>0;g.save();g.globalAlpha=.35;g.fillStyle="#000";g.beginPath();g.ellipse(q.x,q.y+18,slide?56:34,slide?14:12,0,0,Math.PI*2);g.fill();g.restore();
+if(Math.hypot(p.vx,p.vy)>30||slide){for(let i=0;i<3;i++){g.strokeStyle="rgba(255,28,144,"+(0.2-i*.05)+")";g.lineWidth=5-i;g.beginPath();g.moveTo(q.x-30-i*8,q.y+10+i*5);g.lineTo(q.x-90-i*20,q.y+22+i*7);g.stroke()}}
+g.save();g.translate(q.x,q.y-(slide?10:56));g.rotate(slide?-.16:(p.cover?-.05:0));
+g.strokeStyle="#ff2a98";g.fillStyle="#f4f4f7";g.lineWidth=4;
+g.beginPath();g.arc(0,-72,17,0,Math.PI*2);g.fill();g.stroke();
+g.fillStyle="#111116";g.fillRect(-17,-98,34,15);g.strokeStyle="#ff2a98";g.strokeRect(-17,-98,34,15);
+g.strokeStyle="#f4f4f7";g.lineWidth=13;g.beginPath();g.moveTo(0,-55);g.lineTo(0,3);g.stroke();
+g.strokeStyle="#fff";g.lineWidth=11;g.beginPath();g.moveTo(-5,-42);g.lineTo(-30,-8);g.moveTo(5,-42);g.lineTo(32,-9);g.moveTo(-5,0);g.lineTo(-20,48);g.moveTo(5,0);g.lineTo(22,48);g.stroke();
+g.strokeStyle="#ff2a98";g.lineWidth=3;g.beginPath();g.moveTo(-28,-12);g.lineTo(-58,-45);g.moveTo(-58,-45);g.lineTo(-73,-52);g.stroke();
+for(let i=0;i<4;i++){g.fillStyle=["#ff2a98","#3da7ff","#3be7c4","#ffad38"][i];g.fillRect(-48,-53+i*13,9,10)}
+g.restore();
+g.fillStyle="#ff8cc7";g.font="700 10px monospace";g.fillText("APPROVED HEROINE VISUAL PROXY",q.x-85,q.y+42)
+}
+function draw(){g.fillStyle="#09090c";g.fillRect(0,0,W,H);let grad=g.createLinearGradient(0,0,0,H);grad.addColorStop(0,"#111116");grad.addColorStop(.55,"#17171d");grad.addColorStop(1,"#0b0b0f");g.fillStyle=grad;g.fillRect(0,70,W,H);
+g.strokeStyle="rgba(255,33,148,.13)";for(let y=-260;y<300;y+=45){let a=iso(-520,y),b=iso(520,y);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()}for(let x=-520;x<540;x+=55){let a=iso(x,-260),b=iso(x,300);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()}
+g.fillStyle="#ddd";g.font="700 12px monospace";g.fillText("ILLUSTRATED ARENA // STYLE VALIDATION",20,112);drawCover();let d=iso(dummy.x,dummy.y);g.fillStyle="#181820";g.strokeStyle="#f22a98";g.lineWidth=2;g.beginPath();g.arc(d.x,d.y,26,0,Math.PI*2);g.fill();g.stroke();g.fillStyle="#f55fac";g.fillRect(d.x-2,d.y-18,4,36);g.fillRect(d.x-18,d.y-2,36,4);
+shots.forEach(s=>{let q=iso(s.x,s.y,18);g.fillStyle="#fff";g.shadowColor="#ff2a98";g.shadowBlur=12;g.beginPath();g.arc(q.x,q.y,4,0,Math.PI*2);g.fill();g.shadowBlur=0});fx.forEach(f=>{let q=iso(f.x,f.y,5);g.fillStyle="rgba(255,45,150,"+Math.max(0,f.t/.35)+")";g.fillRect(q.x,q.y,3,3)});drawHero()}
+function frame(t){if(!running)return;let dt=Math.min(.033,(t-last)/1000);last=t;step(dt);draw();requestAnimationFrame(frame)}
+function begin(){if(running)return;running=true;start.style.display="none";status.textContent="STARTING...";last=performance.now();draw();requestAnimationFrame(frame)}
+start.addEventListener("click",begin);
+addEventListener("gamepadconnected",()=>{status.textContent="CONTROLLER DETECTED · TAP TO START"});
+window.addEventListener("error",e=>{err.textContent="STARTUP ERROR: "+e.message;status.textContent="ERROR";start.style.display="block"});
+draw();
+})();
+</script>
 </body>
 </html>
