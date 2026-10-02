@@ -2,8 +2,8 @@
 import {useCallback,useEffect,useRef,useState} from "react";
 
 type Session={room:string;code?:string;token:string;slot:number};
-type Config={moveSpeed:number;response:number;stopDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
-const DEFAULT:Config={moveSpeed:262,response:13,stopDrag:.002,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:650,slideDuration:.70,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1};
+type Config={weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
+const DEFAULT:Config={weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:552.5,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1};
 const EMPTY:any={x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,slow:false};
 const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF:"melee",KeyC:"heavy",KeyQ:"grip",KeyR:"throwMatter",KeyB:"cover",KeyO:"orbit",KeyP:"launchOrbit",Space:"pinball",KeyX:"slow"};
 const jade=new Map<string,HTMLImageElement>();let loading=false;
@@ -50,18 +50,24 @@ i.throwMatter||=pad.buttons[15]?.pressed;
  const load=async()=>{try{const p=JSON.parse(localStorage.getItem("god_mode_studio_combat_preset")||"null");if(!p)return setNote("NO PRESET SAVED");const s=session.current;if(s)for(const[k,v]of Object.entries(p))await post({action:"config",...s,patch:{[k]:v}});setConfig({...DEFAULT,...p});setNote("PRESET LOADED")}catch{setNote("PRESET ERROR")}};
  const activateController=()=>{canvas.current?.focus();try{const p=[...navigator.getGamepads()].find(Boolean);if(p){setPadStatus(`CONTROLLER: ${p.id||"CONNECTED"}`);setPadGate(false)}else{setPadStatus("CONTROLLER: PRESS A / MOVE STICK");setPadGate(false)}}catch{setPadStatus("CONTROLLER API NOT READY")}};
  const p=hud?.players?.[0];
- const tests=[
+ const tests=(config.weaveEnabled<.5?[
+  ["FULL SLIDE",(p?.slide||0)>0],
+  ["SOFT COVER",!!p?.coverId&&p?.coverMode==="soft"],
+  ["COVER FLOW",!!p?.coverId&&Math.abs(p?.coverSpeed||0)>35],
+  ["BRACED COVER",!!p?.coverId&&p?.coverMode==="braced"],
+  ["LT EXPOSURE",!!p?.coverId&&p?.coverMode==="braced"&&!!p?.input?.coverAim],
+  ["COVER FIRE",!!p?.coverId&&(p?.fireState||0)>0],
+  ["COVER EXIT",!!p?.kickStage&&p?.kickStage!=="none"]
+ ]:[
   ["BOOST DASH",!!p?.dash],
   ["FULL SLIDE",(p?.slide||0)>0],
   ["SUSTAIN",!!p?.slide&&Math.hypot(p?.vx||0,p?.vy||0)>(config.slideSpeed*.88)],
   ["CURVE",!!p?.slide&&Math.abs(p?.slideSteerCurrent||0)>.35],
   ["KINETIC BRAKE",(p?.brake||0)>0],
   ["SOFT COVER",!!p?.coverId&&p?.coverMode==="soft"],
-  ["COVER SHIMMY",!!p?.coverId&&Math.abs(p?.coverSpeed||0)>45],
   ["BRACED COVER",!!p?.coverId&&p?.coverMode==="braced"],
-  ["LT EXPOSURE",!!p?.coverId&&p?.coverMode==="braced"&&!!p?.input?.coverAim],
   ["COVER EXIT",!!p?.exit]
- ] as [string,boolean][];
+ ])
  useEffect(()=>{if(!p)return;setTestPass(prev=>{let changed=false,next={...prev};for(const [name,active] of tests)if(active&&!next[name]){next[name]=true;changed=true}return changed?next:prev})},[p?.dash,p?.slide,p?.slideSteerCurrent,p?.brake,p?.coverId,p?.coverSpeed,p?.exit]);
  return <main className="studio">
   <header><div><small>GOD MODE: BREAK THE CODE</small><b>V142 STRUCTURE LAB · COMBAT STUDIO</b></div><span>{status}</span></header>
@@ -70,30 +76,30 @@ i.throwMatter||=pad.buttons[15]?.pressed;
    <div className="minimalHud"><b>HP {Math.ceil(p?.hp||100)}</b><i style={{width:`${p?.battery||100}%`}}/><span>BATTERY {Math.ceil(p?.battery||100)}%</span><span className="padLine">{padStatus}</span></div>
    {padGate&&<button className="controllerGate" onClick={activateController}>ACTIVATE XBOX CONTROLLER<small>Tap once, then press A or move a stick</small></button>}
    <div className="toolbar"><button onClick={()=>setDirector(v=>!v)}>DIRECTOR</button><button onClick={()=>setSpritePanel(v=>!v)}>SPRITES</button><button onClick={reset}>RESET LAB</button></div>
-   <aside className="trainingDirector"><div className="panelTitle"><span>TRAINING DIRECTOR</span><b>GOD MODE WEAVE TEST</b></div>
-    <p><strong>1.</strong> Tap A once · upright boost<br/><strong>2.</strong> Double-tap A · full slide<br/><strong>3.</strong> Hold forward · sustain<br/><strong>4.</strong> Lean 20–30° · curve<br/><strong>5.</strong> Pull opposite · brake<br/><strong>6.</strong> Touch cover · soft attach<br/><strong>7.</strong> Feather stick · wrap/shimmy<br/><strong>8.</strong> Tap A again · brace<br/><strong>9.</strong> Hold LT · expose/aim/fire<br/><strong>10.</strong> Peel away or exit</p>
+   <aside className="trainingDirector"><div className="panelTitle"><span>TRAINING DIRECTOR</span><b>{config.weaveEnabled<.5?"INSTRUCTOR 142 CLASSIC":"GOD MODE WEAVE TEST"}</b></div>
+    <p>{config.weaveEnabled<.5?<><strong>1.</strong> A · baseball slide<br/><strong>2.</strong> Contact cover · soft catch<br/><strong>3.</strong> Feather stick · flow around connected edges<br/><strong>4.</strong> Pull away · immediate release<br/><strong>5.</strong> A while soft · hard brace<br/><strong>6.</strong> Hold LT · expose/aim/fire<br/><strong>7.</strong> A while braced · kick / edge burst into slide</>:<><strong>1.</strong> Tap A once · upright boost<br/><strong>2.</strong> Double-tap A · full slide<br/><strong>3.</strong> Hold forward · sustain<br/><strong>4.</strong> Lean 20–30° · curve<br/><strong>5.</strong> Pull opposite · brake<br/><strong>6.</strong> Touch cover · soft attach<br/><strong>7.</strong> Tap A again · brace<br/><strong>8.</strong> Hold LT · expose/aim/fire</>}</p>
     <div className="testGrid">{tests.map(([name])=>{const pass=!!testPass[name];return <div key={name} className={pass?"pass":""}><span>{name}</span><b>{pass?"PASS":"NOT DETECTED"}</b></div>})}</div><button className="resetTests" onClick={()=>setTestPass({})}>RESET TESTS</button>
    </aside>
    <aside className="spriteLab"><div className="panelTitle"><span>SPRITE LAB</span><b>RUNTIME ROUTING</b></div>{(()=>{const info=spriteLabInfo(hud);return <dl><dt>STATE</dt><dd>{info.state}</dd><dt>FAMILY</dt><dd>{info.family.toUpperCase()}</dd><dt>DIRECTION</dt><dd>d{String(info.dir).padStart(2,"0")} · {info.angleDeg}°</dd><dt>FRAME</dt><dd>{info.frame} / {info.total}</dd><dt>FILE</dt><dd>{info.file}</dd><dt>TARGET</dt><dd>{info.expected}</dd><dt>FALLBACK</dt><dd className={info.fallback?"warn":"ok"}>{info.fallback?"YES — ART MISSING":"NO"}</dd></dl>})()}</aside>
    {director&&<Director cfg={config} patch={patch} save={save} load={load} note={note}/>}
    {spritePanel&&<SpriteInspector s={hud}/>}
   </div>
-  <footer><span>LS MOVE</span><span>RS AIM</span><span>A TAP BOOST · DOUBLE-TAP SLIDE</span><span>B MELEE</span><span>X SLOW TIME</span><span>Y GRIP · TEMP</span><span>LB SHIELD</span><span>RB BUILD COVER</span><span>LT BRACED AIM</span><span>RT FIRE</span><span>D-PAD ↑ ORBIT</span><span>D-PAD ↓ LAUNCH</span><span>D-PAD → THROW</span><span>PINBALL · UNBOUND</span></footer>
+  <footer><span>LS MOVE</span><span>GUN FACING = SHOT DIRECTION</span><span>{config.weaveEnabled<.5?"A SLIDE · BRACE · KICK":"A TAP BOOST · DOUBLE-TAP SLIDE"}</span><span>B MELEE</span><span>X SLOW TIME</span><span>Y GRIP · TEMP</span><span>LB SHIELD</span><span>RB BUILD COVER</span><span>LT BRACED AIM</span><span>RT FIRE</span><span>D-PAD ↑ ORBIT</span><span>D-PAD ↓ LAUNCH</span><span>D-PAD → THROW</span><span>PINBALL · UNBOUND</span></footer>
  </main>
 }
 const MOVEMENT_PRESETS:Record<string,Partial<Config>>={
- "GOD MODE WEAVE":{dashSpeed:470,dashDuration:.12,doubleTapWindow:.26,slideSpeed:690,slideDuration:.68,slideSustain:520,slideSteer:11.5,slideSteerAngle:.70,slideSteerResponse:8.5,slideBrake:14.5,slideCancelSpeed:195},
- "V142 BALANCED":{dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:650,slideDuration:.70,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150},
- "AKIRA AGILE":{dashSpeed:500,dashDuration:.13,doubleTapWindow:.30,slideSpeed:690,slideDuration:.62,slideSustain:500,slideSteer:10.5,slideSteerAngle:.78,slideSteerResponse:10,slideBrake:13.5,slideCancelSpeed:185},
- "GEARS WEIGHT":{dashSpeed:350,dashDuration:.18,doubleTapWindow:.26,slideSpeed:610,slideDuration:.82,slideSustain:260,slideSteer:4.5,slideSteerAngle:.42,slideSteerResponse:5,slideBrake:6.5,slideCancelSpeed:115},
- "HIGH-SKILL WEAVE":{dashSpeed:455,dashDuration:.11,doubleTapWindow:.23,slideSpeed:720,slideDuration:.66,slideSustain:560,slideSteer:12.5,slideSteerAngle:.68,slideSteerResponse:11,slideBrake:15.5,slideCancelSpeed:205}
+ "INSTRUCTOR 142 CLASSIC":{weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,slideSpeed:552.5,slideDuration:.63},
+ "GOD MODE WEAVE":{weaveEnabled:1,moveSpeed:262,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:470,dashDuration:.12,doubleTapWindow:.26,slideSpeed:690,slideDuration:.68,slideSustain:520,slideSteer:11.5,slideSteerAngle:.70,slideSteerResponse:8.5,slideBrake:14.5,slideCancelSpeed:195},
+ "AKIRA AGILE":{weaveEnabled:1,moveSpeed:262,dashSpeed:500,dashDuration:.13,doubleTapWindow:.30,slideSpeed:690,slideDuration:.62,slideSustain:500,slideSteer:10.5,slideSteerAngle:.78,slideSteerResponse:10,slideBrake:13.5,slideCancelSpeed:185},
+ "GEARS WEIGHT":{weaveEnabled:1,moveSpeed:262,dashSpeed:350,dashDuration:.18,doubleTapWindow:.26,slideSpeed:610,slideDuration:.82,slideSustain:260,slideSteer:4.5,slideSteerAngle:.42,slideSteerResponse:5,slideBrake:6.5,slideCancelSpeed:115},
+ "HIGH-SKILL WEAVE":{weaveEnabled:1,moveSpeed:262,dashSpeed:455,dashDuration:.11,doubleTapWindow:.23,slideSpeed:720,slideDuration:.66,slideSustain:560,slideSteer:12.5,slideSteerAngle:.68,slideSteerResponse:11,slideBrake:15.5,slideCancelSpeed:205}
 };
 function Director({cfg,patch,save,load,note}:{cfg:Config;patch:(k:keyof Config,v:number)=>void;save:()=>void;load:()=>void;note:string}){const rows:[keyof Config,string,number,number,number][]=[
- ["moveSpeed","MOVE SPEED",180,360,1],["response","ACCEL / RESPONSE",5,22,.5],["dashSpeed","BOOST DASH SPEED",280,620,5],["dashDuration","BOOST DASH DURATION",.08,.28,.01],["doubleTapWindow","DOUBLE-TAP WINDOW",.16,.42,.01],["slideSpeed","SLIDE SPEED",420,850,5],["slideDuration","SLIDE DURATION",.35,1.05,.01],["slideSustain","SLIDE SUSTAIN THRUST",0,700,10],["slideSteer","SLIDE STEERING",1,14,.25],["slideSteerAngle","MAX STEER ANGLE",.20,1.05,.01],["slideSteerResponse","STEER RESPONSE",2,14,.25],["slideBrake","KINETIC BRAKE",2,18,.25],["slideCancelSpeed","STAND-UP SPEED",70,260,5],["shotCadence","SHOT CADENCE",.18,.8,.01],["shotSpread","SHOT SPREAD",.01,.09,.002],["shotDamage","PELLET DAMAGE",2,24,1],["throwForce","MATTER THROW",350,1100,10],["pinballSpeed","PINBALL SPEED",500,1200,10],["spriteScale","JADE SCALE",.55,1.25,.01],["cameraZoom","CAMERA ZOOM",.8,1.35,.01]];
+ ["moveSpeed","MOVE SPEED",180,360,1],["response","ACCEL / RESPONSE",5,22,.5],["dashSpeed","BOOST DASH SPEED",280,620,5],["dashDuration","BOOST DASH DURATION",.08,.28,.01],["doubleTapWindow","DOUBLE-TAP WINDOW",.16,.42,.01],["slideSpeed","SLIDE SPEED",420,850,5],["slideDrag","SLIDE DRAG",.03,.35,.01],["slideDuration","SLIDE DURATION",.35,1.05,.01],["slideSustain","SLIDE SUSTAIN THRUST",0,700,10],["slideSteer","SLIDE STEERING",1,14,.25],["slideSteerAngle","MAX STEER ANGLE",.20,1.05,.01],["slideSteerResponse","STEER RESPONSE",2,14,.25],["slideBrake","KINETIC BRAKE",2,18,.25],["slideCancelSpeed","STAND-UP SPEED",70,260,5],["shotCadence","SHOT CADENCE",.18,.8,.01],["shotSpread","SHOT SPREAD",.01,.09,.002],["shotDamage","PELLET DAMAGE",2,24,1],["throwForce","MATTER THROW",350,1100,10],["pinballSpeed","PINBALL SPEED",500,1200,10],["spriteScale","JADE SCALE",.55,1.25,.01],["cameraZoom","CAMERA ZOOM",.8,1.35,.01]];
  const applyPreset=async(name:string)=>{for(const [k,v] of Object.entries(MOVEMENT_PRESETS[name]||{}))await patch(k as keyof Config,Number(v))};
  return <aside className="director"><div className="panelTitle"><span>DIRECTOR MODE</span><b>LIVE COMBAT CONFIG</b></div>
- <div className="presetGrid">{Object.keys(MOVEMENT_PRESETS).map(name=><button key={name} className={name==="GOD MODE WEAVE"?"recommended":""} onClick={()=>applyPreset(name)}>{name}{name==="GOD MODE WEAVE"?<small>NEW BASE</small>:null}</button>)}</div>
- <p className="presetHint">Start with GOD MODE WEAVE. Single tap stays upright; double tap commits to slide; pull against travel to brake and stand.</p>
+ <div className="presetGrid">{Object.keys(MOVEMENT_PRESETS).map(name=><button key={name} className={name==="INSTRUCTOR 142 CLASSIC"?"recommended":""} onClick={()=>applyPreset(name)}>{name}{name==="INSTRUCTOR 142 CLASSIC"?<small>MECHANICAL AUTHORITY</small>:null}</button>)}</div>
+ <p className="presetHint">Start with INSTRUCTOR 142 CLASSIC. This is the recovered movement/cover authority. GOD MODE WEAVE remains an experiment for later A/B testing.</p>
  {rows.map(([k,l,min,max,step])=><label key={k}><span>{l}<output>{Number(cfg[k]).toFixed(step<.1?2:0)}</output></span><input type="range" min={min} max={max} step={step} value={cfg[k]} onChange={e=>patch(k,Number(e.target.value))}/></label>)}<div className="actions"><button onClick={save}>SAVE PRESET</button><button onClick={load}>LOAD PRESET</button></div>{note&&<em>{note}</em>}<p>These values update the authoritative solo simulation live. No rebuild required.</p></aside>}
 function SpriteInspector({s}:{s:any}){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32||p.exit?"slide":p.brake>0?"ready":speed>34?"run":"ready",angle=family==="slide"?p.slideFacing:family==="run"&&speed>55?Math.atan2(p.vy,p.vx):(p.gunFacing??p.aim??0),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,state=p.exit?"EDGE-DASH":p.coverId?(p.coverMode==="soft"?"SOFT COVER":p.input?.coverAim?(p.peekEdge?"BRACED CORNER AIM":"BRACED AIM"):"BRACED"):p.brake>0?"KINETIC BRAKE":p.slide>0?"SLIDE":p.dash>0?"BOOST DASH":family.toUpperCase();return <aside className="spritePanel"><div className="panelTitle"><span>SPRITE WORKSHOP</span><b>RUNTIME INSPECTOR</b></div><dl><dt>STATE</dt><dd>{state}</dd><dt>DIRECTION</dt><dd>d{String(dir).padStart(2,"0")} · {Math.round(dir*15)}°</dd><dt>SPRITE</dt><dd>{family}-d{String(dir).padStart(2,"0")}.webp</dd><dt>SPEED</dt><dd>{Math.round(speed)}</dd><dt>COVER</dt><dd>{p.coverId||"FREE"}</dd><dt>STATUS</dt><dd>APPROVED RUNTIME</dd></dl><p>Slide into a cover face to attach. Move along it to shimmy. Aim around/outside the cover to peek. Press Slide + direction at an edge to kick or wrap around it.</p></aside>}
 function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0);
