@@ -1,4 +1,4 @@
-import { mkdir, readdir, copyFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, copyFile, writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -13,6 +13,11 @@ const arenaBytes=Buffer.from(await arenaResponse.arrayBuffer());
 if(arenaBytes.length<10000) throw new Error(`Anime Upgrade arena payload too small: ${arenaBytes.length}`);
 await writeFile(path.join(arenaDir,"arena-war-games-hires.webp"),arenaBytes);
 console.log(`Recovered exact Anime Upgrade arena plate: ${arenaBytes.length} bytes`);
+const gamePath=path.join(root,"app","Game.tsx");
+let gameSource=await readFile(gamePath,"utf8");
+gameSource=gameSource.replace(arenaUrl,"/assets/dimension33-map/arena-war-games-hires.webp");
+await writeFile(gamePath,gameSource,"utf8");
+console.log("Locked runtime arena source to local baked plate");
 
 const ANIME_ARENA_URL="https://god-mode-anime-upgrade-v28.leslieadams-isrh.chatgpt.site/assets/dimension33-map/arena-war-games-hires.webp";
 const arenaDir=path.join(root,"public","assets","dimension33-map");
