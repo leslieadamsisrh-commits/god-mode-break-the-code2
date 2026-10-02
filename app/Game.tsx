@@ -12,12 +12,12 @@ type Calibration = {
   cameraPitch:number; perspective:number; playerShadow:number; coverShadow:number; crowdScale:number; balconyScale:number;
 };
 const DEFAULT_CALIBRATION: Calibration = {
-  playerScale:1.04, generatedCoverScale:.86, fixedCoverScale:.9, matterScale:.92, propScale:1,
+  playerScale:.82, generatedCoverScale:.86, fixedCoverScale:.9, matterScale:.92, propScale:1,
   arenaScale:1, foregroundDepth:1, middleDepth:1, backgroundDepth:1, cameraZoom:1,
   cameraPitch:1, perspective:1, playerShadow:1, coverShadow:1, crowdScale:1, balconyScale:1,
 };
 const CALIBRATION_FIELDS: {key:keyof Calibration;label:string;min:number;max:number;step:number}[] = [
-  {key:"playerScale",label:"PLAYER SPRITES",min:.65,max:1.55,step:.05},
+  {key:"playerScale",label:"PLAYER SPRITES · LOCKED TONIGHT",min:.82,max:.82,step:.01},
   {key:"generatedCoverScale",label:"GENERATED COVER",min:.65,max:1.65,step:.05},
   {key:"fixedCoverScale",label:"FIXED COVER",min:.65,max:1.65,step:.05},
   {key:"matterScale",label:"DEBRIS / MATTER",min:.6,max:1.8,step:.05},
@@ -88,7 +88,7 @@ export default function Game() {
   const calibrationRef = useRef<Calibration>(DEFAULT_CALIBRATION);
 
   const post = useCallback(async (body: any) => { const r = await fetch("/api/game", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), v = await r.json(); if (!r.ok) throw Error(v.error || "Request failed"); return v; }, []);
-  const accept = useCallback((v: any) => { if (v.state) { state.current = v.state; slot.current = v.slot; setHud({ phase: v.state.phase, mode: v.state.mode, round: v.state.round, winner: v.state.winner, players: v.state.players, slot: v.slot }); setStatus("LINKED"); } }, []);
+  const accept = useCallback((v: any) => { if (v.state) { state.current = v.state; slot.current = v.slot; setHud({ phase: v.state.phase, mode: v.state.mode, round: v.state.round, winner: v.state.winner, countdown: v.state.countdown, finisher: v.state.finisher, players: v.state.players, slot: v.slot }); setStatus("LINKED"); } }, []);
   const create = async (mode: "bot" | "solo" = "bot") => { try { setError(""); const v = await post({ action: "create", name, mode }); const s = { room: v.room, code: v.code, token: v.token, slot: 0 }; session.current = s; sessionStorage.setItem("god_mode_session", JSON.stringify(s)); setRoom(v.room); setCode(v.code); accept(v); if (mode === "bot") { const url = `${location.origin}/?room=${v.room}&code=${v.code}&guest=1`; setInvite(url); history.replaceState(null, "", `/?room=${v.room}&code=${v.code}`); } else { setInvite(""); history.replaceState(null, "", "/"); } running.current = true; } catch (e: any) { setError(e.message); } };
   const join = async () => { try { setError(""); const v = await post({ action: "join", room: room.toUpperCase(), code, name }); const s = { room: room.toUpperCase(), token: v.token, slot: 1 }; session.current = s; sessionStorage.setItem("god_mode_session", JSON.stringify(s)); accept(v); running.current = true; } catch (e: any) { setError(e.message); } };
   const start = async () => { if (!session.current) return; try { accept(await post({ action: state.current?.phase === "finished" ? "rematch" : "start", ...session.current })); } catch (e: any) { setError(e.message); } };
@@ -111,11 +111,11 @@ export default function Game() {
   const copyCalibration = async () => { const text = JSON.stringify(calibration, null, 2); try { await navigator.clipboard.writeText(text); setCalibrationNote("VALUES COPIED"); } catch { setCalibrationNote(text); } };
 
   return <main className="game-shell">
-    <header className="topbar"><div><span className="kicker">GOD MODE: BREAK THE CODE</span><h1>ARCADE BROTHER BUILD</h1></div><div className={`net ${status !== "LINKED" ? "warn" : ""}`}><i />{status}</div></header>
+    <header className="topbar"><div><span className="kicker">GOD MODE: BREAK THE CODE</span><h1>ANIME COMBAT MASTER</h1></div><div className={`net ${status !== "LINKED" ? "warn" : ""}`}><i />{status}</div></header>
     <section className="play-layout"><div className="arena-wrap">
       <canvas ref={canvas} className="arena" width="1400" height="868" tabIndex={0} onPointerMove={point} onPointerDown={e => { point(e); mouse.current.down = true; (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); }} onPointerUp={() => mouse.current.down = false} onPointerCancel={() => mouse.current.down = false} />
-      {!connected && <div className="lobby-card"><span className="stamp">BUILD R4 · VERSION 57 MOVEMENT · DIMENSION 33</span><h2>{room ? "TAKE OVER THE BOT" : "ENTER DIMENSION 33"}</h2><p>{room ? "Your brother is already fighting the Rift Hunter. Join this room and take over its combat slot instantly." : "The approved weighted slide and cover movement are back. Choose a live bot fight or an empty sandbox for movement and matter testing."}</p><label>CALLSIGN<input value={name} onChange={e => setName(e.target.value)} maxLength={24} /></label>{room && <div className="room-fields"><label>ROOM<input value={room} onChange={e => setRoom(e.target.value.toUpperCase())} /></label><label>CODE<input value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ""))} /></label></div>}{room ? <button className="primary" onClick={join}>JOIN & TAKE OVER</button> : <div className="mode-grid"><button className="primary" onClick={() => create("bot")}>PRACTICE VS BOT<br/><small>BROTHER CAN DROP IN</small></button><button onClick={() => create("solo")}>SOLO SANDBOX<br/><small>NO BOT</small></button></div>}{room && <button className="text-btn" onClick={() => { setRoom(""); setCode(""); history.replaceState(null, "", "/"); }}>Start my own session</button>}{error && <p className="error">{error}</p>}</div>}
-      {connected && <div className={`match-banner ${botActive ? "bot" : ""}`}>{hud.phase === "finished" ? (hud.winner === null ? "DRAW" : `${hud.players[hud.winner].name} WINS`) : hud.mode === "solo" ? "SOLO SANDBOX // NO BOT // TEST EVERYTHING" : botActive ? "RIFT HUNTER ACTIVE // BROTHER CAN DROP IN" : "BROTHER LINK ACTIVE // BREAK THE CODE"}</div>}
+      {!connected && <div className="lobby-card"><span className="stamp">ANIME UPGRADE SHELL · COMBAT MASTER CORE · DIMENSION 33</span><h2>{room ? "TAKE OVER THE BOT" : "ENTER DIMENSION 33"}</h2><p>{room ? "Your brother is already fighting the Rift Hunter. Join this room and take over its combat slot instantly." : "The approved weighted slide and cover movement are back. Choose a live bot fight or an empty sandbox for movement and matter testing."}</p><label>CALLSIGN<input value={name} onChange={e => setName(e.target.value)} maxLength={24} /></label>{room && <div className="room-fields"><label>ROOM<input value={room} onChange={e => setRoom(e.target.value.toUpperCase())} /></label><label>CODE<input value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ""))} /></label></div>}{room ? <button className="primary" onClick={join}>JOIN & TAKE OVER</button> : <div className="mode-grid"><button className="primary" onClick={() => create("bot")}>PRACTICE VS BOT<br/><small>BROTHER CAN DROP IN</small></button><button onClick={() => create("solo")}>SOLO SANDBOX<br/><small>NO BOT</small></button></div>}{room && <button className="text-btn" onClick={() => { setRoom(""); setCode(""); history.replaceState(null, "", "/"); }}>Start my own session</button>}{error && <p className="error">{error}</p>}</div>}
+      {connected && <div className={`match-banner ${botActive ? "bot" : ""}`}>{hud.phase === "countdown" ? `ROUND ${hud.round} // ${Math.max(1, Math.ceil(hud.countdown || 0))}` : hud.phase === "finisher" ? "FINISHER // COMBAT MASTER" : hud.phase === "finished" ? (hud.winner === null ? "DRAW" : `${hud.players[hud.winner].name} WINS`) : hud.mode === "solo" ? "SOLO SANDBOX // NO BOT // TEST EVERYTHING" : botActive ? "RIFT HUNTER ACTIVE // BROTHER CAN DROP IN" : "BROTHER LINK ACTIVE // BREAK THE CODE"}</div>}
       <button className="calibration-toggle" onClick={() => setCalibrationOpen(v => !v)}>{calibrationOpen ? "CLOSE CALIBRATION" : "ARENA CALIBRATION"}</button>
       {calibrationOpen && <div className="calibration-panel"><div className="calibration-head"><div><span>DIMENSION 33</span><b>LIVE SCALE LAB</b></div><button onClick={() => setCalibrationOpen(false)} aria-label="Close calibration panel">×</button></div><p>Visual tuning only. Multiplayer coordinates and Version 57 movement remain untouched.</p><div className="calibration-scroll">{CALIBRATION_FIELDS.map(field => <label className="calibration-row" key={field.key}><span>{field.label}<output>{calibration[field.key].toFixed(2)}</output></span><input type="range" min={field.min} max={field.max} step={field.step} value={calibration[field.key]} onChange={e => setCalibration(v => ({...v,[field.key]:Number(e.target.value)}))}/></label>)}</div><div className="calibration-actions"><button onClick={resetCalibration}>RESET DEFAULTS</button><button onClick={saveCalibration}>SAVE</button><button onClick={loadCalibration}>LOAD</button><button onClick={copyCalibration}>COPY VALUES</button></div>{calibrationNote && <div className="calibration-note">{calibrationNote}</div>}</div>}
       {connected && <div className="command-hud"><div className="glove left"><span>LEFT GLOVE // PSIONIC</span><b>{mePlayer?.gripCoverId ? "COVER HELD" : mePlayer?.gripId ? "MATTER HELD" : mePlayer?.orbitIds?.length ? `ORBIT ×${mePlayer.orbitIds.length}` : mePlayer?.shield ? "FIELD ACTIVE" : "FIELD READY"}</b></div><div className="reticle">◇</div><div className="glove right"><span>RIGHT GLOVE // CONSTRUCT</span><b>SHOTGUN · COVER READY</b></div></div>}
@@ -142,6 +142,22 @@ function draw(canvas: HTMLCanvasElement | null, s: any, me: number, q: Calibrati
   for (const f of s.fx || []) effect(g, f);
   g.restore();
   drawForegroundOcclusion(g, s.time || 0, q);
+  if (s.phase === "countdown") {
+    g.save(); g.setTransform(sx,0,0,sy,0,0);
+    g.fillStyle="#04070cc7"; g.fillRect(0,0,1000,620);
+    const n=Math.max(1,Math.ceil(s.countdown||0));
+    g.textAlign="center"; g.font="900 112px Arial"; g.fillStyle="#fff"; g.shadowColor=n%2?"#ff4aa5":"#56eef0"; g.shadowBlur=28;
+    g.fillText(String(n),500,328); g.shadowBlur=0; g.font="900 15px monospace"; g.fillStyle="#d7f8fb"; g.fillText("DIMENSION 33 // WAR GAMES",500,370); g.textAlign="left"; g.restore();
+  }
+  if (s.phase === "finisher") {
+    g.save(); g.setTransform(sx,0,0,sy,0,0);
+    const p=.5+.5*Math.sin((s.time||0)*34);
+    g.fillStyle=`rgba(4,5,10,${.34+p*.16})`; g.fillRect(0,0,1000,620);
+    g.globalCompositeOperation="screen"; g.strokeStyle=s.winner===0?"#ff4aa5":"#56eef0"; g.lineWidth=5+p*8;
+    g.beginPath(); g.arc(500,330,92+p*62,0,Math.PI*2); g.stroke();
+    g.globalCompositeOperation="source-over"; g.textAlign="center"; g.font="900 54px Arial"; g.fillStyle="#fff"; g.fillText("FINISHER",500,138);
+    g.font="900 14px monospace"; g.fillStyle="#ffb8dd"; g.fillText("COMBAT MASTER // FREEZE · IMPACT · SLOW RETURN",500,169); g.textAlign="left"; g.restore();
+  }
   g.fillStyle = "#b5d9df"; g.font = "700 13px monospace"; g.fillText(`DIMENSION 33 // ${s.build}`, 22, 596);
 }
 
