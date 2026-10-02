@@ -156,11 +156,31 @@ export default function Game() {
         </div>
       </div>}
       <div className="mobile-actions"><button onPointerDown={() => touchAction("slide")}>SLIDE</button><button onPointerDown={() => touchAction("melee")}>HIT</button><button onPointerDown={() => touchAction("pinball")}>PINBALL</button></div>
-    </div>{!connected && <aside className="panel">
-      {connected ? <><div className="round-line"><span>{hud.mode === "solo" ? "SOLO SANDBOX" : `ROUND ${hud.round}`}</span><b>{hud.mode === "solo" ? "∞" : `${hud.players[0]?.score || 0} : ${hud.players[1]?.score || 0}`}</b></div>{hud.players.map((p: any, i: number) => <div className={`player-card p${i}`} key={i}><div><span>{p.name}{p.bot ? " · CPU" : i === hud.slot ? " · YOU" : ""}</span><strong>{Math.ceil(p.hp)} HP</strong></div><Meter value={p.hp} kind="hp" /><div className="battery-row"><span>BATTERY</span><span>{Math.ceil(p.battery)}%</span></div><Meter value={p.battery} kind="battery" /></div>)}{invite && <button onClick={copy}>COPY BROTHER DROP-IN LINK</button>}{hud.mode !== "solo" && <button className="primary" disabled={hud.phase === "playing"} onClick={start}>{hud.phase === "finished" ? botActive ? "INSTANT REMATCH VS BOT" : "REQUEST BROTHER REMATCH" : "ROUND LIVE"}</button>}</> : <div className="signal-card"><span className="kicker">MISSION</span><h3>SLIDE. BUILD.<br />GRIP THE COVER.<br />BREAK THE CODE.</h3><p>Version 57 movement, Jade’s recovered directional sprites, and the Dimension 33 arena layer are ready.</p></div>}
-      {connected && hud.mode === "solo" && <button className="primary" onClick={start}>RESET NO-BOT SANDBOX</button>}
-      <div className="controls"><h3>DUAL GLOVE COMMANDS</h3><Control k="WASD" v="move" /><Control k="MOUSE / RT" v="aim + shotgun" /><Control k="SHIFT / A" v="baseball slide" /><Control k="E / LB" v="shield" /><Control k="Q / Y" v="Grip matter / generated cover" /><Control k="Q again" v="release psychic hold" /><Control k="R / D-PAD →" v="throw matter" /><Control k="B / X" v="generate chunky cover" /><Control k="F / RB" v="power glove" /><Control k="C / D-PAD ←" v="heavy strike" /><Control k="O / D-PAD ↑" v="Orbit" /><Control k="P / D-PAD ↓" v="launch Orbit" /><Control k="SPACE / B" v="Pinball" /><Control k="X / LT" v="slow field" /></div>
-    </aside></section>
+    </div>
+    {!connected && <aside className="panel">
+      <div className="signal-card">
+        <span className="kicker">MISSION</span>
+        <h3>SLIDE. BUILD.<br />GRIP THE COVER.<br />BREAK THE CODE.</h3>
+        <p>Combat Master movement and Jade’s cleaned directional runtime sprites are loaded over the Anime Upgrade container.</p>
+      </div>
+      <div className="controls">
+        <h3>DUAL GLOVE COMMANDS</h3>
+        <Control k="WASD" v="move" />
+        <Control k="MOUSE / RT" v="aim + shotgun" />
+        <Control k="SHIFT / A" v="baseball slide" />
+        <Control k="E / LB" v="shield" />
+        <Control k="Q / Y" v="Grip matter / cover" />
+        <Control k="R / D-PAD →" v="throw matter" />
+        <Control k="B / X" v="generate cover" />
+        <Control k="F / RB" v="power glove" />
+        <Control k="C / D-PAD ←" v="heavy strike" />
+        <Control k="O / D-PAD ↑" v="Orbit" />
+        <Control k="P / D-PAD ↓" v="launch Orbit" />
+        <Control k="SPACE / B" v="Pinball" />
+        <Control k="X / LT" v="slow field" />
+      </div>
+    </aside>}
+    </section>
   </main>;
 }
 
