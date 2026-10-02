@@ -1,9 +1,9 @@
 export type InputState={x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;slow:boolean};
-export type CombatConfig={moveSpeed:number;response:number;stopDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
-export const DEFAULT_CONFIG:CombatConfig={moveSpeed:262,response:13,stopDrag:.002,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:650,slideDuration:.70,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1};
-export type CoverAnchor={face:"left"|"right"|"top"|"bottom";offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
+export type CombatConfig={weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
+export const DEFAULT_CONFIG:CombatConfig={weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:552.5,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1};
+export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number};
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number};
@@ -13,7 +13,7 @@ export type GameState={build:string;mode:"bot"|"solo";phase:"lobby"|"countdown"|
 const empty=():InputState=>({x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,slow:false});
 const clamp=(v:number,a:number,b:number)=>Math.max(a,Math.min(b,v)),wrap=(a:number)=>Math.atan2(Math.sin(a),Math.cos(a)),dist=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y),uid=()=>crypto.randomUUID().slice(0,8);
 const A={left:70,right:930,top:90,bottom:550};
-function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{x,y,vx:0,vy:0,aim,hp,battery:100,dash:0,brake:0,slideSteerCurrent:0,lastSlideTap:-9,slide:0,slideFacing:aim,coverId:null,coverMode:null,coverAnchor:null,coverLock:0,coverSpeed:0,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,orbitIds:[],knock:0,pinball:0,lastShot:-9,fireState:0,recoil:0,returnToCover:0,boostState:0,brakeState:0,gunFacing:aim,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
+function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{x,y,vx:0,vy:0,aim,hp,battery:100,dash:0,brake:0,slideSteerCurrent:0,lastSlideTap:-9,slide:0,slideFacing:aim,slideCool:0,kickStage:"none",kickTime:0,kickAngle:aim,kickNx:0,kickNy:0,coverId:null,coverMode:null,coverAnchor:null,coverLock:0,coverSpeed:0,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,orbitIds:[],knock:0,pinball:0,lastShot:-9,fireState:0,recoil:0,returnToCover:0,boostState:0,brakeState:0,gunFacing:aim,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
 export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo"="solo"):GameState{
  const config={...DEFAULT_CONFIG};
  const players=[player(230,330,0,name,token,false,config.maxHealth)];
@@ -38,29 +38,70 @@ function coverFace(c:Cover,p:Player|{x:number;y:number;r?:number}):CoverAnchor&{
  if(Math.abs(q.x)>hw&&Math.abs(q.y)>hh)face=Math.abs(q.x)-hw>Math.abs(q.y)-hh?(q.x<0?"left":"right"):(q.y<0?"top":"bottom");
  else if(Math.abs(q.x)>hw)face=q.x<0?"left":"right";else if(Math.abs(q.y)>hh)face=q.y<0?"top":"bottom";
  else{const ds=[q.x+hw,hw-q.x,q.y+hh,hh-q.y];face=(["left","right","top","bottom"] as const)[ds.indexOf(Math.min(...ds))]}
- const vertical=face==="left"||face==="right",sign=face==="left"||face==="top"?-1:1,ca=Math.cos(c.a||0),sa=Math.sin(c.a||0);
- return{face,offset:clamp(vertical?q.y:q.x,-(vertical?hh:hw),vertical?hh:hw),half:vertical?hh:hw,nx:vertical?sign*ca:-sign*sa,ny:vertical?sign*sa:sign*ca,tx:vertical?-sa:ca,ty:vertical?ca:sa,gap:Math.hypot(q.x-px,q.y-py)-(("r" in p && typeof p.r==="number")?p.r:18)};
+ const edge=face==="top"?0:face==="right"?1:face==="bottom"?2:3;
+ const length=edge%2===0?c.w:c.h;
+ const t=edge===0?clamp(q.x+hw,0,c.w):edge===1?clamp(q.y+hh,0,c.h):edge===2?clamp(hw-q.x,0,c.w):clamp(hh-q.y,0,c.h);
+ const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0);
+ const localTangents=[[1,0],[0,1],[-1,0],[0,-1]],localNormals=[[0,-1],[1,0],[0,1],[-1,0]];
+ const [ltx,lty]=localTangents[edge],[lnx,lny]=localNormals[edge];
+ const tx=ltx*ca-lty*sa,ty=ltx*sa+lty*ca,nx=lnx*ca-lny*sa,ny=lnx*sa+lny*ca;
+ const offset=edge===0?t-hw:edge===1?t-hh:edge===2?hw-t:hh-t;
+ return{face,edge,t,length,offset,half:length/2,nx,ny,tx,ty,gap:Math.hypot(q.x-px,q.y-py)-(("r" in p&&typeof p.r==="number")?p.r:18)};
+}
+function anchorForEdge(c:Cover,edge:number,t:number):CoverAnchor{
+ const hw=c.w/2,hh=c.h/2,length=edge%2===0?c.w:c.h,tt=clamp(t,0,length),face=(["top","right","bottom","left"] as const)[edge];
+ const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),localTangents=[[1,0],[0,1],[-1,0],[0,-1]],localNormals=[[0,-1],[1,0],[0,1],[-1,0]];
+ const [ltx,lty]=localTangents[edge],[lnx,lny]=localNormals[edge],tx=ltx*ca-lty*sa,ty=ltx*sa+lty*ca,nx=lnx*ca-lny*sa,ny=lnx*sa+lny*ca;
+ const offset=edge===0?tt-hw:edge===1?tt-hh:edge===2?hw-tt:hh-tt;
+ return{face,edge,t:tt,length,offset,half:length/2,nx,ny,tx,ty};
 }
 function placeOnCover(p:Player,s:GameState){
  const c=s.covers.find(x=>x.id===p.coverId),a=p.coverAnchor;if(!c||!a)return;
- const vertical=a.face==="left"||a.face==="right",sign=a.face==="left"||a.face==="top"?-1:1,half=vertical?c.h/2:c.w/2;
- a.offset=clamp(a.offset,-half,half);a.half=half;const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0);
- a.nx=vertical?sign*ca:-sign*sa;a.ny=vertical?sign*sa:sign*ca;a.tx=vertical?-sa:ca;a.ty=vertical?ca:sa;
- const q=worldPoint(c,vertical?sign*(c.w/2+18.5):a.offset,vertical?a.offset:sign*(c.h/2+18.5));p.x=q.x;p.y=q.y;
+ const r=18.5,hw=c.w/2,hh=c.h/2;let lx=0,ly=0;
+ if(a.edge===0){lx=-hw+a.t;ly=-hh-r}
+ else if(a.edge===1){lx=hw+r;ly=-hh+a.t}
+ else if(a.edge===2){lx=hw-a.t;ly=hh+r}
+ else{lx=-hw-r;ly=hh-a.t}
+ const q=worldPoint(c,lx,ly);p.x=q.x;p.y=q.y;
 }
 function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){if(s.time<p.coverLock)return false;p.coverId=c.id;p.coverMode=mode;p.coverAnchor=coverFace(c,p);p.slide=0;p.dash=0;p.vx=p.vy=0;p.coverSpeed=0;p.contact=s.time+.22;p.peek=false;placeOnCover(p,s);s.fx.push({id:uid(),type:mode==="soft"?"soft-cover":"cover-slam",x:p.x,y:p.y,life:.25});return true}
 function releaseCover(p:Player,s:GameState,lock=.18){p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
- const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,along=i.x*a.tx+i.y*a.ty,away=i.x*a.nx+i.y*a.ny;
+ const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,mag=Math.hypot(i.x,i.y),away=i.x*a.nx+i.y*a.ny;
+ if(c.weaveEnabled<.5){
+   if(p.coverMode==="soft"&&mag>.55&&away>.65){releaseCover(p,s,.08);p.vx=i.x*c.moveSpeed;p.vy=i.y*c.moveSpeed;return}
+   const cv=s.covers.find(x=>x.id===p.coverId);if(!cv){releaseCover(p,s);return}
+   let edge=a.edge,cur=anchorForEdge(cv,edge,a.t),along=i.x*cur.tx+i.y*cur.ty,t=cur.t,g=0;
+   if(t<.5&&along<-.1)g=-1;else if(t>cur.length-.5&&along>.1)g=1;
+   if(g){
+     const ne=(edge+g+4)%4,next=anchorForEdge(cv,ne,g>0?0:(ne%2===0?cv.w:cv.h)),nextDot=i.x*next.tx+i.y*next.ty;
+     if(nextDot*g>.42){edge=ne;cur=next;t=g>0?0:next.length;along=nextDot}
+   }
+   const step=c.moveSpeed*dt*.78;t=clamp(t+along*step,0,cur.length);p.coverAnchor=anchorForEdge(cv,edge,t);p.coverSpeed=along*c.moveSpeed*.78;p.vx=p.coverAnchor.tx*p.coverSpeed;p.vy=p.coverAnchor.ty*p.coverSpeed;placeOnCover(p,s);
+   if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor.nx+Math.sin(p.gunFacing)*p.coverAnchor.ny;p.peek=forward<.35;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}
+   return;
+ }
+ const along=i.x*a.tx+i.y*a.ty;
  if(p.coverMode==="soft"&&away>.38){releaseCover(p,s,.08);p.vx=i.x*c.moveSpeed*1.15;p.vy=i.y*c.moveSpeed*1.15;return}
  p.coverSpeed+=(along*c.moveSpeed-p.coverSpeed)*Math.min(1,dt*c.response);if(Math.abs(along)<.001)p.coverSpeed*=Math.pow(c.stopDrag,dt);
- const before=a.offset,raw=a.offset+p.coverSpeed*dt;a.offset=clamp(raw,-a.half,a.half);
- if(p.coverMode==="soft"&&Math.abs(raw)>a.half+.1&&Math.abs(along)>.2){
-   const cv=s.covers.find(x=>x.id===p.coverId);
-   if(cv){const sign=Math.sign(along)||1,candidate={x:p.x+a.tx*sign*26,y:p.y+a.ty*sign*26,r:18};const next=coverFace(cv,candidate);if(next.face!==a.face){p.coverAnchor=next;p.coverSpeed*=.82;placeOnCover(p,s)}}
- }else if(a.offset===before)p.coverSpeed=0;
- p.vx=(p.coverAnchor?.tx??a.tx)*p.coverSpeed;p.vy=(p.coverAnchor?.ty??a.ty)*p.coverSpeed;placeOnCover(p,s);
- if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*a.nx+Math.sin(p.gunFacing)*a.ny;p.peek=forward<.35;p.peekEdge=Math.abs(a.offset)>a.half-18}else{p.peek=false;p.peekEdge=Math.abs(a.offset)>a.half-18}
+ const before=a.t,raw=a.t+along*c.moveSpeed*dt;a.t=clamp(raw,0,a.length);
+ if(p.coverMode==="soft"&&Math.abs(raw-a.t)>.1&&Math.abs(along)>.2){
+   const cv=s.covers.find(x=>x.id===p.coverId);if(cv){const g=raw<0?-1:1,ne=(a.edge+g+4)%4,next=anchorForEdge(cv,ne,g>0?0:(ne%2===0?cv.w:cv.h)),nextDot=i.x*next.tx+i.y*next.ty;if(nextDot*g>.3)p.coverAnchor=next}
+ }else if(a.t===before)p.coverSpeed=0;
+ placeOnCover(p,s);
+ if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor!.nx+Math.sin(p.gunFacing)*p.coverAnchor!.ny;p.peek=forward<.35;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}
+}
+function classicCoverAction(p:Player,s:GameState){
+ const a=p.coverAnchor,cv=s.covers.find(x=>x.id===p.coverId);if(!a||!cv)return false;
+ const ax=Math.cos(p.gunFacing),ay=Math.sin(p.gunFacing),normal=ax*a.nx+ay*a.ny,tan=Math.abs(ax*a.tx+ay*a.ty);
+ const kind=normal>.42?"outward":tan>.55&&normal>-.35?"past":"blocked";
+ if(kind==="blocked"){s.fx.push({id:uid(),type:"cover-block",x:p.x,y:p.y,life:.18});return false}
+ const oldId=p.coverId;releaseCover(p,s,.25);p.coverLock=s.time+.25;p.slideSteerCurrent=0;
+ if(kind==="past"){
+   const sign=ax*a.tx+ay*a.ty<0?-1:1;p.kickAngle=Math.atan2(a.ty*sign,a.tx*sign);p.kickNx=a.nx;p.kickNy=a.ny;p.kickStage="burst";p.kickTime=.13;p.vx=Math.cos(p.kickAngle)*408;p.vy=Math.sin(p.kickAngle)*408;p.slideFacing=p.kickAngle;p.slideCool=.94;p.exit=null;s.fx.push({id:uid(),type:"dash",x:p.x,y:p.y,life:.22,text:"BURST"});return true
+ }
+ const carry=clamp((p.vx*a.tx+p.vy*a.ty)/Math.max(1,s.config.moveSpeed),-.35,.35),dx=a.nx+a.tx*carry,dy=a.ny+a.ty*carry,len=Math.hypot(dx,dy)||1;
+ p.vx=dx/len*s.config.slideSpeed;p.vy=dy/len*s.config.slideSpeed;p.slideFacing=Math.atan2(p.vy,p.vx);p.slide=s.config.slideDuration;p.slideCool=s.config.slideDuration;s.fx.push({id:uid(),type:"slide",x:p.x,y:p.y,life:.4,text:"KICK"});return true
 }
 function beginCoverExit(p:Player,s:GameState,i:InputState){
  const a=p.coverAnchor,c=s.covers.find(x=>x.id===p.coverId);if(!a||!c)return false;
@@ -82,16 +123,18 @@ function slideCapture(p:Player,s:GameState){
  for(const c of s.covers){const a=coverFace(c,p);if(a.gap<=3&&p.vx*a.nx+p.vy*a.ny<-1){attachCover(p,c,s,"soft");return}}
 }
 function circleBox(o:{x:number;y:number},r:number,c:Cover){const q=localPoint(c,o.x,o.y),nx=clamp(q.x,-c.w/2,c.w/2),ny=clamp(q.y,-c.h/2,c.h/2),dx=q.x-nx,dy=q.y-ny,d=Math.hypot(dx,dy),ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),lx=d?dx/d:(q.x<0?-1:1),ly=d?dy/d:0;return{hit:d<r,nx:lx*ca-ly*sa,ny:lx*sa+ly*ca,depth:r-d}}
-function collide(p:Player,s:GameState){if(p.coverId||p.exit)return;for(const c of s.covers){const q=circleBox(p,18,c);if(!q.hit)continue;p.x+=q.nx*(q.depth+1);p.y+=q.ny*(q.depth+1)}}
+function collide(p:Player,s:GameState){if(p.coverId||p.exit)return;for(const cv of s.covers){const q=circleBox(p,18,cv);if(!q.hit)continue;if(s.config.weaveEnabled<.5&&s.time>=p.coverLock){attachCover(p,cv,s,"soft");return}p.x+=q.nx*(q.depth+1);p.y+=q.ny*(q.depth+1)}}
 function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],i=p.input,c=s.config;
- if(i.slide&&!prev.slide&&!p.coverId&&!p.exit&&p.knock<=0&&Math.hypot(i.x,i.y)>.1){
-   const a=Math.atan2(i.y,i.x),doubleTap=(s.time-p.lastSlideTap)<=c.doubleTapWindow;p.lastSlideTap=s.time;
-   if(doubleTap){
-     p.dash=0;p.slideSteerCurrent=0;p.slide=c.slideDuration;p.slideFacing=a;p.vx=Math.cos(a)*c.slideSpeed;p.vy=Math.sin(a)*c.slideSpeed;
-     s.fx.push({id:uid(),type:"slide",x:p.x,y:p.y,life:.48,owner:n,text:Math.floor(s.time)%2?"SKURT!":"SKEET"});
-   }else if(p.slide<=0){
-     p.dash=c.dashDuration;p.boostState=c.dashDuration+.08;p.slideSteerCurrent=0;p.slideFacing=a;p.vx=Math.cos(a)*c.dashSpeed;p.vy=Math.sin(a)*c.dashSpeed;
-     s.fx.push({id:uid(),type:"dash",x:p.x,y:p.y,life:.22,owner:n,text:"ZIP!"});
+ if(i.slide&&!prev.slide&&!p.coverId&&!p.exit&&p.knock<=0){
+   if(c.weaveEnabled<.5){
+     if(p.slideCool>0)return;
+     const nearby=s.covers.filter(cv=>coverFace(cv,p).gap<25).sort((a,b)=>coverFace(a,p).gap-coverFace(b,p).gap)[0];
+     if(nearby){attachCover(p,nearby,s,"braced");return}
+     const mag=Math.hypot(i.x,i.y),a=mag>.1?Math.atan2(i.y,i.x):p.gunFacing;p.slide=c.slideDuration;p.slideFacing=a;p.vx=Math.cos(a)*c.slideSpeed;p.vy=Math.sin(a)*c.slideSpeed;p.slideCool=c.slideDuration;s.fx.push({id:uid(),type:"slide",x:p.x,y:p.y,life:.42,owner:n,text:"SKEET"}); 
+   }else if(Math.hypot(i.x,i.y)>.1){
+     const a=Math.atan2(i.y,i.x),doubleTap=(s.time-p.lastSlideTap)<=c.doubleTapWindow;p.lastSlideTap=s.time;
+     if(doubleTap){p.dash=0;p.slideSteerCurrent=0;p.slide=c.slideDuration;p.slideFacing=a;p.vx=Math.cos(a)*c.slideSpeed;p.vy=Math.sin(a)*c.slideSpeed;s.fx.push({id:uid(),type:"slide",x:p.x,y:p.y,life:.48,owner:n,text:Math.floor(s.time)%2?"SKURT!":"SKEET"})}
+     else if(p.slide<=0){p.dash=c.dashDuration;p.boostState=c.dashDuration+.08;p.slideSteerCurrent=0;p.slideFacing=a;p.vx=Math.cos(a)*c.dashSpeed;p.vy=Math.sin(a)*c.dashSpeed;s.fx.push({id:uid(),type:"dash",x:p.x,y:p.y,life:.22,owner:n,text:"ZIP!"})}
    }
  }
  if(i.pinball&&!prev.pinball&&p.battery>=22){p.battery-=22;p.pinball=c.pinballDuration;p.vx=Math.cos(p.aim)*c.pinballSpeed;p.vy=Math.sin(p.aim)*c.pinballSpeed;s.fx.push({id:uid(),type:"pinball",x:p.x,y:p.y,life:.5,owner:n})}
@@ -119,10 +162,16 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
   else{const maxTwist=145*Math.PI/180,deltaAim=Math.atan2(Math.sin(i.aim-moveAngle),Math.cos(i.aim-moveAngle));p.gunFacing=moveAngle+clamp(deltaAim,-maxTwist/2,maxTwist/2)}
   p.fireState=Math.max(0,p.fireState-dt);p.recoil=Math.max(0,p.recoil-dt);p.returnToCover=Math.max(0,p.returnToCover-dt);p.boostState=Math.max(0,p.boostState-dt);p.brakeState=Math.max(0,p.brakeState-dt);
   edgeActions(s,n,prev[n]||empty());p.shield=i.shield&&p.battery>0;if(p.shield)p.battery=Math.max(0,p.battery-18*dt);if(i.slow&&p.battery>0)p.battery=Math.max(0,p.battery-28*dt);if(p.gripId)p.battery=Math.max(0,p.battery-6*dt);if(!p.shield&&!i.slow&&!p.gripId)p.battery=Math.min(100,p.battery+9*dt);
-  p.brake=Math.max(0,p.brake-dt);
-  if(p.knock>0){p.knock-=dt;p.vx*=Math.pow(.08,dt);p.vy*=Math.pow(.08,dt)}
+  p.brake=Math.max(0,p.brake-dt);p.slideCool=Math.max(0,p.slideCool-dt);
+  if(p.kickStage!=="none"){
+    p.kickTime-=dt;
+    if(p.kickTime<=0&&p.kickStage==="burst"){p.kickStage="step";p.kickTime=.09;p.vx=Math.cos(p.kickAngle)*c.moveSpeed+p.kickNx*81;p.vy=Math.sin(p.kickAngle)*c.moveSpeed+p.kickNy*81}
+    else if(p.kickTime<=0&&p.kickStage==="step"){p.kickStage="none";p.slide=c.slideDuration;p.vx=Math.cos(p.kickAngle)*c.slideSpeed;p.vy=Math.sin(p.kickAngle)*c.slideSpeed;p.slideFacing=p.kickAngle}
+    p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)
+  }
+  else if(p.knock>0){p.knock-=dt;p.vx*=Math.pow(.08,dt);p.vy*=Math.pow(.08,dt)}
   else if(p.exit){stepCoverExit(p,s,d)}
-  else if(p.coverId){moveOnCover(p,s,i,d);if(i.slide&&!prev[n]?.slide){if(p.coverMode==="soft"){p.coverMode="braced";p.vx=p.vy=0;p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n})}else beginCoverExit(p,s,i)}}
+  else if(p.coverId){moveOnCover(p,s,i,d);if(i.slide&&!prev[n]?.slide){if(p.coverMode==="soft"){p.coverMode="braced";p.vx=p.vy=0;p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n})}else if(c.weaveEnabled<.5)classicCoverAction(p,s);else beginCoverExit(p,s,i)}}
   else if(p.dash>0){
     p.dash=Math.max(0,p.dash-dt);
     p.vx*=Math.pow(.16,dt);p.vy*=Math.pow(.16,dt);
@@ -131,20 +180,11 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
   else if(p.slide>0||p.pinball>0){
     p.slide=Math.max(0,p.slide-dt);p.pinball=Math.max(0,p.pinball-dt);
     if(p.slide>0){
-      const speed=Math.hypot(p.vx,p.vy)||1,travel=Math.atan2(p.vy,p.vx),mag=Math.hypot(i.x,i.y);
-      if(mag>.12){
-        const inputA=Math.atan2(i.y,i.x),delta=Math.atan2(Math.sin(inputA-travel),Math.cos(inputA-travel)),forward=Math.cos(delta);
-        if(forward<-.15){
-          const brake=Math.max(0,1-c.slideBrake*d);p.vx*=brake;p.vy*=brake;
-          if(Math.hypot(p.vx,p.vy)<c.slideCancelSpeed){p.slide=0;p.slideSteerCurrent=0;p.brake=.18;p.brakeState=.24;p.vx*=.22;p.vy*=.22;s.fx.push({id:uid(),type:"brake",x:p.x,y:p.y,life:.34,owner:n,text:"KSSHH!"})}
-        }else{
-          const targetSteer=clamp(delta,-c.slideSteerAngle,c.slideSteerAngle)*c.slideSteer;
-          const steerBlend=1-Math.exp(-c.slideSteerResponse*d);
-          p.slideSteerCurrent+=(targetSteer-p.slideSteerCurrent)*steerBlend;
-          const next=travel+p.slideSteerCurrent*d,boost=Math.max(0,forward)*c.slideSustain*d,newSpeed=Math.min(c.slideSpeed*1.08,speed+boost);
-          p.vx=Math.cos(next)*newSpeed;p.vy=Math.sin(next)*newSpeed;p.slideFacing=next;
-        }
-      }else{p.vx*=Math.pow(.12,d);p.vy*=Math.pow(.12,d)}
+      if(c.weaveEnabled<.5){p.vx*=Math.pow(c.slideDrag,d);p.vy*=Math.pow(c.slideDrag,d)}
+      else{
+        const speed=Math.hypot(p.vx,p.vy)||1,travel=Math.atan2(p.vy,p.vx),mag=Math.hypot(i.x,i.y);
+        if(mag>.12){const inputA=Math.atan2(i.y,i.x),delta=Math.atan2(Math.sin(inputA-travel),Math.cos(inputA-travel)),forward=Math.cos(delta);if(forward<-.15){const brake=Math.max(0,1-c.slideBrake*d);p.vx*=brake;p.vy*=brake;if(Math.hypot(p.vx,p.vy)<c.slideCancelSpeed){p.slide=0;p.slideSteerCurrent=0;p.brake=.18;p.brakeState=.24;p.vx*=.22;p.vy*=.22;s.fx.push({id:uid(),type:"brake",x:p.x,y:p.y,life:.34,owner:n,text:"KSSHH!"})}}else{const targetSteer=clamp(delta,-c.slideSteerAngle,c.slideSteerAngle)*c.slideSteer,steerBlend=1-Math.exp(-c.slideSteerResponse*d);p.slideSteerCurrent+=(targetSteer-p.slideSteerCurrent)*steerBlend;const next=travel+p.slideSteerCurrent*d,boost=Math.max(0,forward)*c.slideSustain*d,newSpeed=Math.min(c.slideSpeed*1.08,speed+boost);p.vx=Math.cos(next)*newSpeed;p.vy=Math.sin(next)*newSpeed;p.slideFacing=next}}else{p.vx*=Math.pow(.12,d);p.vy*=Math.pow(.12,d)}
+      }
     }else{p.vx*=Math.pow(.72,d);p.vy*=Math.pow(.72,d)}
     p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);slideCapture(p,s);collide(p,s)
   }
