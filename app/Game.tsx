@@ -48,127 +48,7 @@ function preloadArt() {
       const key = `${family}-${d}`;
       const image = new Image();
       image.onload = () => jade.set(key, image);
-      image.src = `/assets/shotgun-v57/${family}-d${String(d).padStart(2, "0")}.webp`;
-    }
-  }
-  const animeArena = new Image();
-  animeArena.onload = () => concepts.set("animeArena", animeArena);
-  animeArena.src = "https://god-mode-anime-upgrade-v28.leslieadams-isrh.chatgpt.site/assets/dimension33-map/arena-war-games-hires.webp";
-    const atlas = new Image();
-  atlas.onload = () => buildScenery(atlas);
-  atlas.src = "/assets/environment/cover-destruction-atlas.png";
-  for (const [key, file] of Object.entries({ arena: "arena-blueprint.webp", war: "war-games-blueprint.webp", gloves: "dual-glove-hud.webp", lab: "training-lab.webp", sfRuins: "dimension33-sf-ruins.webp", crowdBaron: "dimension33-crowd-baron.webp", warBoard: "dimension33-war-board.webp" })) {
-    const image = new Image(); image.onload = () => concepts.set(key, image); image.src = `/assets/concepts/${file}`;
-  }
-}
-
-function buildScenery(atlas: HTMLImageElement) {
-  for (let row = 0; row < 4; row++) {
-    scenery[row] = [];
-    for (let col = 0; col < 8; col++) {
-      const x0 = Math.floor(col * atlas.width / 8), x1 = Math.floor((col + 1) * atlas.width / 8);
-      const y0 = Math.floor(row * atlas.height / 4), y1 = Math.floor((row + 1) * atlas.height / 4);
-      const c = document.createElement("canvas"); c.width = x1 - x0; c.height = y1 - y0;
-      const cx = c.getContext("2d", { willReadFrequently: true })!; cx.drawImage(atlas, x0, y0, c.width, c.height, 0, 0, c.width, c.height);
-      const image = cx.getImageData(0, 0, c.width, c.height), data = image.data, seen = new Uint8Array(c.width * c.height), queue: number[] = [];
-      const background = (n: number) => { const i = n * 4, r = data[i], g = data[i + 1], b = data[i + 2]; return Math.max(r, g, b) - Math.min(r, g, b) < 13 && Math.min(r, g, b) > 166; };
-      const seed = (n: number) => { if (!seen[n] && background(n)) { seen[n] = 1; queue.push(n); } };
-      for (let x = 0; x < c.width; x++) { seed(x); seed((c.height - 1) * c.width + x); }
-      for (let y = 0; y < c.height; y++) { seed(y * c.width); seed(y * c.width + c.width - 1); }
-      for (let head = 0; head < queue.length; head++) {
-        const n = queue[head], x = n % c.width, y = Math.floor(n / c.width); data[n * 4 + 3] = 0;
-        if (x) seed(n - 1); if (x < c.width - 1) seed(n + 1); if (y) seed(n - c.width); if (y < c.height - 1) seed(n + c.width);
-      }
-      cx.putImageData(image, 0, 0); scenery[row][col] = c;
-    }
-  }
-}
-
-export default function Game() {
-  const canvas = useRef<HTMLCanvasElement>(null), session = useRef<Session | null>(null), state = useRef<any>(null), slot = useRef(0), seq = useRef(0), keys = useRef<Record<string, boolean>>({}), edges = useRef<Record<string, boolean>>({}), mouse = useRef({ x: 500, y: 310, down: false }), running = useRef(false);
-  const [name, setName] = useState("Les"), [room, setRoom] = useState(""), [code, setCode] = useState(""), [status, setStatus] = useState("OFFLINE"), [error, setError] = useState(""), [invite, setInvite] = useState(""), [hud, setHud] = useState<any>(null);
-  const [calibration, setCalibration] = useState<Calibration>(DEFAULT_CALIBRATION), [calibrationOpen, setCalibrationOpen] = useState(false), [calibrationNote, setCalibrationNote] = useState(""), [menuOpen,setMenuOpen]=useState(false);
-  const calibrationRef = useRef<Calibration>(DEFAULT_CALIBRATION);
-
-  const post = useCallback(async (body: any) => { const r = await fetch("/api/game", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), v = await r.json(); if (!r.ok) throw Error(v.error || "Request failed"); return v; }, []);
-  const accept = useCallback((v: any) => { if (v.state) { state.current = v.state; slot.current = v.slot; setHud({ phase: v.state.phase, mode: v.state.mode, round: v.state.round, winner: v.state.winner, countdown: v.state.countdown, finisher: v.state.finisher, players: v.state.players, slot: v.slot }); setStatus("LINKED"); } }, []);
-  const create = async (mode: "bot" | "solo" = "bot") => { try { setError(""); const v = await post({ action: "create", name, mode }); const s = { room: v.room, code: v.code, token: v.token, slot: 0 }; session.current = s; sessionStorage.setItem("god_mode_session", JSON.stringify(s)); setRoom(v.room); setCode(v.code); accept(v); if (mode === "bot") { const url = `${location.origin}/?room=${v.room}&code=${v.code}&guest=1`; setInvite(url); history.replaceState(null, "", `/?room=${v.room}&code=${v.code}`); } else { setInvite(""); history.replaceState(null, "", "/"); } running.current = true; } catch (e: any) { setError(e.message); } };
-  const join = async () => { try { setError(""); const v = await post({ action: "join", room: room.toUpperCase(), code, name }); const s = { room: room.toUpperCase(), token: v.token, slot: 1 }; session.current = s; sessionStorage.setItem("god_mode_session", JSON.stringify(s)); accept(v); running.current = true; } catch (e: any) { setError(e.message); } };
-  const start = async () => { if (!session.current) return; try { accept(await post({ action: state.current?.phase === "finished" ? "rematch" : "start", ...session.current })); } catch (e: any) { setError(e.message); } };
-  const copy = async () => { if (!invite) return; try { if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(invite); else throw Error("clipboard unavailable"); } catch { const box = document.createElement("textarea"); box.value = invite; box.style.position = "fixed"; box.style.opacity = "0"; document.body.appendChild(box); box.select(); document.execCommand("copy"); box.remove(); } setStatus("DROP-IN LINK COPIED"); };
-
-  useEffect(() => { preloadArt(); try { const saved = JSON.parse(localStorage.getItem("god_mode_dimension33_calibration") || "null"); if (saved) { const next = {...DEFAULT_CALIBRATION,...saved}; calibrationRef.current = next; setCalibration(next); } } catch {} }, []);
-  useEffect(() => { calibrationRef.current = calibration; }, [calibration]);
-  useEffect(() => { try { const q = new URLSearchParams(location.search), qRoom = q.get("room") || "", qCode = q.get("code") || "", guest = q.get("guest") === "1", saved = JSON.parse(sessionStorage.getItem("god_mode_session") || "null"); setRoom(qRoom); setCode(qCode); if (!guest && saved?.room && (!qRoom || saved.room === qRoom)) { session.current = saved; slot.current = saved.slot; running.current = true; if (saved.code) setInvite(`${location.origin}/?room=${saved.room}&code=${saved.code}&guest=1`); } } catch { } }, []);
-  useEffect(() => { const kd = (e: KeyboardEvent) => { if ((e.target as HTMLElement)?.tagName === "INPUT") return; if (["Space", "ShiftLeft", "ShiftRight"].includes(e.code)) e.preventDefault(); if (!keys.current[e.code]) edges.current[e.code] = true; keys.current[e.code] = true; }; const ku = (e: KeyboardEvent) => { keys.current[e.code] = false; }; addEventListener("keydown", kd); addEventListener("keyup", ku); return () => { removeEventListener("keydown", kd); removeEventListener("keyup", ku); }; }, []);
-  useEffect(() => { let stopped = false; const tick = async () => { if (stopped) return; if (running.current && session.current) { try { const s = session.current, u = new URL("/api/game", location.origin); u.searchParams.set("room", s.room); u.searchParams.set("token", s.token); const r = await fetch(u, { cache: "no-store" }), v = await r.json(); if (!r.ok) throw Error(v.error); accept(v); } catch { setStatus("RECONNECTING"); } } setTimeout(tick, 90); }; tick(); return () => { stopped = true; }; }, [accept]);
-  useEffect(() => { const timer = setInterval(async () => { const s = session.current, game = state.current; if (!s || game?.phase !== "playing") return; const p = game.players[slot.current], i: any = { ...EMPTY }; i.x = (keys.current.KeyD ? 1 : 0) - (keys.current.KeyA ? 1 : 0); i.y = (keys.current.KeyS ? 1 : 0) - (keys.current.KeyW ? 1 : 0); i.aim = Math.atan2(mouse.current.y - p.y, mouse.current.x - p.x); i.fire = mouse.current.down; i.shield = !!keys.current.KeyE; for (const [key, action] of Object.entries(controlMap)) i[action] = !!edges.current[key]; edges.current = {}; let pad: Gamepad | undefined; try { pad = [...navigator.getGamepads()].find(Boolean) as Gamepad | undefined; } catch { } if (pad) { const dz = (v: number) => Math.abs(v) < .2 ? 0 : v; i.x = dz(pad.axes[0] || 0); i.y = dz(pad.axes[1] || 0); const rx = dz(pad.axes[2] || 0), ry = dz(pad.axes[3] || 0); if (rx || ry) i.aim = Math.atan2(ry, rx); i.slide ||= pad.buttons[0]?.pressed; i.pinball ||= pad.buttons[1]?.pressed; i.cover ||= pad.buttons[2]?.pressed; i.grip ||= pad.buttons[3]?.pressed; i.shield ||= pad.buttons[4]?.pressed; i.melee ||= pad.buttons[5]?.pressed; i.slow ||= pad.buttons[6]?.pressed; i.fire ||= pad.buttons[7]?.pressed; i.orbit ||= pad.buttons[12]?.pressed; i.launchOrbit ||= pad.buttons[13]?.pressed; i.throwMatter ||= pad.buttons[15]?.pressed; i.heavy ||= pad.buttons[14]?.pressed; } try { accept(await post({ action: "input", ...s, seq: ++seq.current, input: i })); } catch { setStatus("RECONNECTING"); } }, 66); return () => clearInterval(timer); }, [accept, post]);
-  useEffect(() => { let frame = 0; const loop = () => { draw(canvas.current, state.current, slot.current, calibrationRef.current); frame = requestAnimationFrame(loop); }; frame = requestAnimationFrame(loop); return () => cancelAnimationFrame(frame); }, []);
-
-  const point = (e: React.PointerEvent) => { const cv = canvas.current; if (!cv) return; const r = cv.getBoundingClientRect(), rawX = (e.clientX - r.left) / r.width * 1000, rawY = (e.clientY - r.top) / r.height * 620, q = calibrationRef.current, cam = cameraFrame(state.current, slot.current, q); mouse.current.x = (rawX - 500) / cam.zoom + cam.x; mouse.current.y = (rawY - 310) / cam.zoom + cam.y; };
-  const touchAction = (action: keyof typeof EMPTY) => { const key = Object.keys(controlMap).find(k => controlMap[k] === action) || action; edges.current[key] = true; };
-  const connected = !!hud, botActive = !!hud?.players?.some((p: any) => p.bot), mePlayer = hud?.players?.[hud?.slot || 0], opponent = hud?.players?.[(hud?.slot || 0) === 0 ? 1 : 0];
-  const saveCalibration = () => { localStorage.setItem("god_mode_dimension33_calibration", JSON.stringify(calibration)); setCalibrationNote("CALIBRATION SAVED"); setTimeout(() => setCalibrationNote(""), 1400); };
-  const loadCalibration = () => { try { const saved = JSON.parse(localStorage.getItem("god_mode_dimension33_calibration") || "null"); const next = {...DEFAULT_CALIBRATION,...(saved || {})}; calibrationRef.current = next; setCalibration(next); setCalibrationNote(saved ? "CALIBRATION LOADED" : "NO SAVE — DEFAULTS LOADED"); } catch { setCalibrationNote("SAVE COULD NOT BE READ"); } };
-  const resetCalibration = () => { calibrationRef.current = DEFAULT_CALIBRATION; setCalibration(DEFAULT_CALIBRATION); setCalibrationNote("CURRENT DEFAULTS RESTORED"); };
-  const copyCalibration = async () => { const text = JSON.stringify(calibration, null, 2); try { await navigator.clipboard.writeText(text); setCalibrationNote("VALUES COPIED"); } catch { setCalibrationNote(text); } };
-
-  return <main className="game-shell">
-    <header className="topbar"><div><span className="kicker">GOD MODE: BREAK THE CODE</span><h1>ANIME COMBAT MASTER</h1></div><div className={`net ${status !== "LINKED" ? "warn" : ""}`}><i />{status}</div></header>
-    <section className="play-layout"><div className="arena-wrap">
-      <canvas ref={canvas} className="arena" width="1400" height="868" tabIndex={0} onPointerMove={point} onPointerDown={e => { point(e); mouse.current.down = true; (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); }} onPointerUp={() => mouse.current.down = false} onPointerCancel={() => mouse.current.down = false} />
-      {!connected && <div className="lobby-card"><span className="stamp">ANIME UPGRADE SHELL · COMBAT MASTER CORE · DIMENSION 33</span><h2>{room ? "TAKE OVER THE BOT" : "ENTER DIMENSION 33"}</h2><p>{room ? "Your brother is already fighting the Rift Hunter. Join this room and take over its combat slot instantly." : "The approved weighted slide and cover movement are back. Choose a live bot fight or an empty sandbox for movement and matter testing."}</p><label>CALLSIGN<input value={name} onChange={e => setName(e.target.value)} maxLength={24} /></label>{room && <div className="room-fields"><label>ROOM<input value={room} onChange={e => setRoom(e.target.value.toUpperCase())} /></label><label>CODE<input value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ""))} /></label></div>}{room ? <button className="primary" onClick={join}>JOIN & TAKE OVER</button> : <div className="mode-grid"><button className="primary" onClick={() => create("bot")}>PRACTICE VS BOT<br/><small>BROTHER CAN DROP IN</small></button><button onClick={() => create("solo")}>SOLO SANDBOX<br/><small>NO BOT</small></button></div>}{room && <button className="text-btn" onClick={() => { setRoom(""); setCode(""); history.replaceState(null, "", "/"); }}>Start my own session</button>}{error && <p className="error">{error}</p>}</div>}
-"use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
-
-type Session = { room: string; code?: string; token: string; slot: number };
-const EMPTY = { x: 0, y: 0, aim: 0, fire: false, shield: false, slide: false, melee: false, heavy: false, grip: false, throwMatter: false, cover: false, orbit: false, launchOrbit: false, pinball: false, slow: false };
-const controlMap: Record<string, keyof typeof EMPTY> = { ShiftLeft: "slide", ShiftRight: "slide", KeyF: "melee", KeyC: "heavy", KeyQ: "grip", KeyR: "throwMatter", KeyB: "cover", KeyO: "orbit", KeyP: "launchOrbit", Space: "pinball", KeyX: "slow" };
-
-type Calibration = {
-  playerScale:number; generatedCoverScale:number; fixedCoverScale:number; matterScale:number; propScale:number;
-  arenaScale:number; foregroundDepth:number; middleDepth:number; backgroundDepth:number; cameraZoom:number;
-  cameraPitch:number; perspective:number; playerShadow:number; coverShadow:number; crowdScale:number; balconyScale:number;
-};
-const DEFAULT_CALIBRATION: Calibration = {
-  playerScale:.82, generatedCoverScale:.86, fixedCoverScale:.9, matterScale:.92, propScale:1,
-  arenaScale:1, foregroundDepth:1, middleDepth:1, backgroundDepth:1, cameraZoom:1,
-  cameraPitch:1, perspective:1, playerShadow:1, coverShadow:1, crowdScale:1, balconyScale:1,
-};
-const CALIBRATION_FIELDS: {key:keyof Calibration;label:string;min:number;max:number;step:number}[] = [
-  {key:"playerScale",label:"PLAYER SPRITES · LOCKED TONIGHT",min:.82,max:.82,step:.01},
-  {key:"generatedCoverScale",label:"GENERATED COVER",min:.65,max:1.65,step:.05},
-  {key:"fixedCoverScale",label:"FIXED COVER",min:.65,max:1.65,step:.05},
-  {key:"matterScale",label:"DEBRIS / MATTER",min:.6,max:1.8,step:.05},
-  {key:"propScale",label:"ENVIRONMENT PROPS",min:.7,max:1.5,step:.05},
-  {key:"arenaScale",label:"ARENA FLOOR",min:.8,max:1.25,step:.025},
-  {key:"foregroundDepth",label:"FOREGROUND DEPTH",min:.65,max:1.5,step:.05},
-  {key:"middleDepth",label:"MIDDLE-GROUND DEPTH",min:.65,max:1.5,step:.05},
-  {key:"backgroundDepth",label:"BACKGROUND DEPTH",min:.65,max:1.5,step:.05},
-  {key:"cameraZoom",label:"CAMERA ZOOM",min:.82,max:1.3,step:.02},
-  {key:"cameraPitch",label:"CAMERA PITCH",min:.76,max:1.18,step:.02},
-  {key:"perspective",label:"PERSPECTIVE",min:.6,max:1.5,step:.05},
-  {key:"playerShadow",label:"PLAYER SHADOW",min:.5,max:1.8,step:.05},
-  {key:"coverShadow",label:"COVER SHADOW",min:.5,max:1.8,step:.05},
-  {key:"crowdScale",label:"CROWD SCALE",min:.7,max:1.45,step:.05},
-  {key:"balconyScale",label:"BALCONY SCALE",min:.7,max:1.45,step:.05},
-];
-
-const jade = new Map<string, HTMLImageElement>();
-const concepts = new Map<string, HTMLImageElement>();
-const scenery: HTMLCanvasElement[][] = [];
-let artStarted = false;
-
-function preloadArt() {
-  if (artStarted || typeof Image === "undefined") return;
-  artStarted = true;
-  for (const family of ["ready", "run", "slide", "cover"]) {
-    for (let d = 0; d < 24; d++) {
-      const key = `${family}-${d}`;
-      const image = new Image();
-      image.onload = () => jade.set(key, image);
-      image.src = `/assets/shotgun-v57/${family}-d${String(d).padStart(2, "0")}.webp`;
+      image.src = `/assets/recovered/${family}-d${String(d).padStart(2, "0")}.webp`;
     }
   }
   const animeArena = new Image();
@@ -392,8 +272,8 @@ function fighter(g: CanvasRenderingContext2D, p: any, i: number, me: number, t: 
       : p.aim || 0;
   const direction = ((Math.round(angle / (Math.PI * 2) * 24) % 24) + 24) % 24;
 
-  // Combat Master master atlases use 250×250 source cells. Keep that source
-  // resolution, but render Jade at the smaller approved in-game footprint.
+  // Cleaned Combat Master runtime atlases use 125×125 cells. Render directly
+  // at the approved smaller in-game footprint; do not draw production guide sheets.
   const nearest = (fam: string, dir: number) => {
     for (let offset = 0; offset < 12; offset++) {
       const choices = offset === 0 ? [dir] : [dir + offset, dir - offset];
@@ -407,7 +287,7 @@ function fighter(g: CanvasRenderingContext2D, p: any, i: number, me: number, t: 
   };
 
   const image = nearest(family, direction) || nearest("ready", direction);
-  const SOURCE_CELL = 250;
+  const SOURCE_CELL = 125;
   const DISPLAY_CELL = 125;
   const cols = image ? Math.max(1, Math.floor(image.naturalWidth / SOURCE_CELL)) : 1;
   const rows = image ? Math.max(1, Math.floor(image.naturalHeight / SOURCE_CELL)) : 1;
