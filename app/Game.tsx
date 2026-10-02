@@ -51,7 +51,10 @@ function preloadArt() {
       image.src = `/assets/shotgun-v57/${family}-d${String(d).padStart(2, "0")}.webp`;
     }
   }
-  const atlas = new Image();
+  const animeArena = new Image();
+  animeArena.onload = () => concepts.set("animeArena", animeArena);
+  animeArena.src = "https://god-mode-anime-upgrade-v28.leslieadams-isrh.chatgpt.site/assets/dimension33-map/arena-war-games-hires.webp";
+    const atlas = new Image();
   atlas.onload = () => buildScenery(atlas);
   atlas.src = "/assets/environment/cover-destruction-atlas.png";
   for (const [key, file] of Object.entries({ arena: "arena-blueprint.webp", war: "war-games-blueprint.webp", gloves: "dual-glove-hud.webp", lab: "training-lab.webp", sfRuins: "dimension33-sf-ruins.webp", crowdBaron: "dimension33-crowd-baron.webp", warBoard: "dimension33-war-board.webp" })) {
@@ -102,7 +105,7 @@ export default function Game() {
   useEffect(() => { const timer = setInterval(async () => { const s = session.current, game = state.current; if (!s || game?.phase !== "playing") return; const p = game.players[slot.current], i: any = { ...EMPTY }; i.x = (keys.current.KeyD ? 1 : 0) - (keys.current.KeyA ? 1 : 0); i.y = (keys.current.KeyS ? 1 : 0) - (keys.current.KeyW ? 1 : 0); i.aim = Math.atan2(mouse.current.y - p.y, mouse.current.x - p.x); i.fire = mouse.current.down; i.shield = !!keys.current.KeyE; for (const [key, action] of Object.entries(controlMap)) i[action] = !!edges.current[key]; edges.current = {}; let pad: Gamepad | undefined; try { pad = [...navigator.getGamepads()].find(Boolean) as Gamepad | undefined; } catch { } if (pad) { const dz = (v: number) => Math.abs(v) < .2 ? 0 : v; i.x = dz(pad.axes[0] || 0); i.y = dz(pad.axes[1] || 0); const rx = dz(pad.axes[2] || 0), ry = dz(pad.axes[3] || 0); if (rx || ry) i.aim = Math.atan2(ry, rx); i.slide ||= pad.buttons[0]?.pressed; i.pinball ||= pad.buttons[1]?.pressed; i.cover ||= pad.buttons[2]?.pressed; i.grip ||= pad.buttons[3]?.pressed; i.shield ||= pad.buttons[4]?.pressed; i.melee ||= pad.buttons[5]?.pressed; i.slow ||= pad.buttons[6]?.pressed; i.fire ||= pad.buttons[7]?.pressed; i.orbit ||= pad.buttons[12]?.pressed; i.launchOrbit ||= pad.buttons[13]?.pressed; i.throwMatter ||= pad.buttons[15]?.pressed; i.heavy ||= pad.buttons[14]?.pressed; } try { accept(await post({ action: "input", ...s, seq: ++seq.current, input: i })); } catch { setStatus("RECONNECTING"); } }, 66); return () => clearInterval(timer); }, [accept, post]);
   useEffect(() => { let frame = 0; const loop = () => { draw(canvas.current, state.current, slot.current, calibrationRef.current); frame = requestAnimationFrame(loop); }; frame = requestAnimationFrame(loop); return () => cancelAnimationFrame(frame); }, []);
 
-  const point = (e: React.PointerEvent) => { const c = canvas.current; if (!c) return; const r = c.getBoundingClientRect(), rawX = (e.clientX - r.left) / r.width * 1000, rawY = (e.clientY - r.top) / r.height * 620, q = calibrationRef.current; mouse.current.x = (rawX - 500) / q.cameraZoom + 500; mouse.current.y = (rawY - 310) / (q.cameraZoom * q.cameraPitch) + 310; };
+  const point = (e: React.PointerEvent) => { const cv = canvas.current; if (!cv) return; const r = cv.getBoundingClientRect(), rawX = (e.clientX - r.left) / r.width * 1000, rawY = (e.clientY - r.top) / r.height * 620, q = calibrationRef.current, cam = cameraFrame(state.current, slot.current, q); mouse.current.x = (rawX - 500) / cam.zoom + cam.x; mouse.current.y = (rawY - 310) / cam.zoom + cam.y; };
   const touchAction = (action: keyof typeof EMPTY) => { const key = Object.keys(controlMap).find(k => controlMap[k] === action) || action; edges.current[key] = true; };
   const connected = !!hud, botActive = !!hud?.players?.some((p: any) => p.bot), mePlayer = hud?.players?.[hud?.slot || 0];
   const saveCalibration = () => { localStorage.setItem("god_mode_dimension33_calibration", JSON.stringify(calibration)); setCalibrationNote("CALIBRATION SAVED"); setTimeout(() => setCalibrationNote(""), 1400); };
@@ -131,11 +134,22 @@ export default function Game() {
 function Meter({ value, kind }: { value: number; kind: string }) { return <div className={`meter ${kind}`}><i style={{ width: `${Math.max(0, value)}%` }} /></div>; }
 function Control({ k, v }: { k: string; v: string }) { return <div className="control"><kbd>{k}</kbd><span>{v}</span></div>; }
 
+function cameraFrame(s:any, me:number, q:Calibration){
+  const z=Math.max(1, q.cameraZoom || 1);
+  const p=s?.players?.[me] || {x:500,y:310};
+  const halfW=500/z, halfH=310/z;
+  return {
+    zoom:z,
+    x:Math.max(halfW,Math.min(1000-halfW,p.x ?? 500)),
+    y:Math.max(halfH,Math.min(620-halfH,p.y ?? 310))
+  };
+}
+
 function draw(canvas: HTMLCanvasElement | null, s: any, me: number, q: Calibration) {
   if (!canvas) return; const g = canvas.getContext("2d")!, W = canvas.width, H = canvas.height, sx = W / 1000, sy = H / 620;
-  g.setTransform(sx, 0, 0, sy, 0, 0); g.clearRect(0, 0, 1000, 620); drawArena(g, s?.time || 0, s, q);
+  g.setTransform(sx, 0, 0, sy, 0, 0); g.clearRect(0, 0, 1000, 620); drawArena(g, s?.time || 0, s, q, me);
   if (!s) { g.fillStyle = "#57e3e7aa"; g.font = "700 18px monospace"; g.fillText("DIMENSION 33 // BOT SIGNAL READY", 35, 585); return; }
-  g.save(); g.translate(500,310); g.scale(q.cameraZoom,q.cameraZoom*q.cameraPitch); g.translate(-500,-310);
+  g.save(); const cam=cameraFrame(s,me,q); g.translate(500,310); g.scale(cam.zoom,cam.zoom); g.translate(-cam.x,-cam.y);
   const sorted = [...(s.covers || []).map((c: any) => ({ y: c.y + c.h, draw: () => cover(g, c, q) })), ...(s.matter || []).map((m: any) => ({ y: m.y, draw: () => matter(g, m, q) })), ...(s.players || []).map((p: any, i: number) => ({ y: p.y, draw: () => fighter(g, p, i, me, s.time, q) }))].sort((a, b) => a.y - b.y);
   sorted.forEach(x => x.draw());
   for (const sh of s.shots || []) { g.strokeStyle = sh.owner === me ? "#b9ffff" : "#ff5ca8"; g.shadowColor = g.strokeStyle; g.shadowBlur = 12; g.lineWidth = 4; g.beginPath(); g.moveTo(sh.x, sh.y); g.lineTo(sh.x - sh.vx * .032, sh.y - sh.vy * .032); g.stroke(); g.shadowBlur = 0; }
@@ -161,45 +175,34 @@ function draw(canvas: HTMLCanvasElement | null, s: any, me: number, q: Calibrati
   g.fillStyle = "#b5d9df"; g.font = "700 13px monospace"; g.fillText(`DIMENSION 33 // ${s.build}`, 22, 596);
 }
 
-function drawArena(g: CanvasRenderingContext2D, t: number, s: any, q: Calibration) {
-  const skyNew = g.createLinearGradient(0, 0, 0, 620); skyNew.addColorStop(0, "#070512"); skyNew.addColorStop(.48, "#311047"); skyNew.addColorStop(1, "#090d18"); g.fillStyle = skyNew; g.fillRect(0, 0, 1000, 620);
-  const ruins=concepts.get("sfRuins"), architecture=concepts.get("crowdBaron"), board=concepts.get("warBoard");
-  const crowdReactionNew = s?.phase === "finished" ? 1 : (s?.fx || []).some((f:any) => ["heavy","matter-hit","break","pinball","shot-hit"].includes(f.type)) ? .72 : 0;
-  if(ruins){const drift=Math.sin(t*.075)*5*q.backgroundDepth;g.save();g.globalAlpha=.97;g.drawImage(ruins,-26+drift,-5,1052,592*q.backgroundDepth);g.restore();}
-  if(architecture){
-    const crowdBob=Math.sin(t*3.6)*1.5+crowdReactionNew*Math.sin(t*17)*4.5;
-    g.save();g.translate(500,132);g.scale(q.crowdScale,q.middleDepth);g.translate(-500,-132);g.globalCompositeOperation="screen";g.globalAlpha=.8;g.drawImage(architecture,-35,-70+crowdBob,1070,602);g.restore();
-    const bw=294*q.balconyScale,bh=184*q.balconyScale;g.save();g.globalCompositeOperation="screen";g.globalAlpha=.28+crowdReactionNew*.17;g.shadowColor="#ff2f9d";g.shadowBlur=28+crowdReactionNew*22;g.drawImage(architecture,520,0,560,410,500-bw/2,5+Math.sin(t*.8)*2,bw,bh);g.restore();
+function drawArena(g: CanvasRenderingContext2D, t: number, s: any, q: Calibration, me:number) {
+  g.fillStyle="#05060b";
+  g.fillRect(0,0,1000,620);
+  const image=concepts.get("animeArena");
+  if(!image){
+    const glow=g.createRadialGradient(500,310,40,500,310,620);
+    glow.addColorStop(0,"#3a0d34"); glow.addColorStop(.55,"#111526"); glow.addColorStop(1,"#05060b");
+    g.fillStyle=glow; g.fillRect(0,0,1000,620);
+    g.fillStyle="#74edf0"; g.font="800 15px monospace"; g.fillText("LOADING DIMENSION 33 // ANIME UPGRADE ARENA",28,588);
+    return;
   }
-  if(board){const scale=q.arenaScale,w=1000*scale,h=500*scale*q.foregroundDepth;g.save();g.drawImage(board,0,145,board.width,board.height-145,500-w/2,137,w,h);g.restore();}
-  if(architecture){const bob=Math.sin(t*3.6)*1.5+crowdReactionNew*Math.sin(t*17)*4;g.save();g.globalCompositeOperation="screen";g.globalAlpha=.83;g.drawImage(architecture,0,70,390,830,0,110+bob,154*q.crowdScale,430*q.middleDepth);g.drawImage(architecture,1210,70,390,830,846,110-bob,154*q.crowdScale,430*q.middleDepth);g.restore();}
-  g.save();g.globalAlpha=.15+.12*crowdReactionNew;g.globalCompositeOperation="screen";for(let n=0;n<8;n++){const x=78+n*122,y=112+(n%2)*18;g.fillStyle=n%2?"#ff3f9c":"#55eef2";g.beginPath();g.arc(x,y+Math.sin(t*5+n)*3,3+crowdReactionNew*3,0,Math.PI*2);g.fill();}g.restore();
-  g.fillStyle="#05070dcc";g.fillRect(355,151,290,31);g.strokeStyle="#ff45a5";g.strokeRect(360,155,280,22);g.fillStyle="#fff";g.font="900 14px Arial";g.textAlign="center";g.fillText(s?.phase==="finished"?"THE ARENA LIVES":"DIMENSION 33 // WAR GAMES",500,171);g.textAlign="left";
-  return;
-  const sky = g.createLinearGradient(0, 0, 0, 620); sky.addColorStop(0, "#070512"); sky.addColorStop(.22, "#2a1236"); sky.addColorStop(.48, "#a62d6d"); sky.addColorStop(1, "#071019"); g.fillStyle = sky; g.fillRect(0, 0, 1000, 620);
-  const reference = concepts.get("dimension33"), crowdReaction = s?.phase === "finished" ? 1 : (s?.fx || []).some((f:any) => ["heavy","matter-hit","break","pinball","shot-hit"].includes(f.type)) ? .72 : 0;
-  if (reference) {
-    g.save(); g.globalAlpha = .94; const drift = Math.sin(t*.08)*4*q.backgroundDepth; g.drawImage(reference,0,0,reference.width,Math.floor(reference.height*.58),-18+drift,-8,1036,300*q.backgroundDepth); g.restore();
-    const crowdBob = Math.sin(t*4.2)*2.2 + crowdReaction*Math.sin(t*18)*5;
-    g.save(); g.globalAlpha=.9; g.drawImage(reference,0,170,510,360,-18,70+crowdBob,340*q.crowdScale,205*q.middleDepth); g.drawImage(reference,1026,170,510,360,678,70-crowdBob,340*q.crowdScale,205*q.middleDepth); g.restore();
-    const bw=330*q.balconyScale,bh=205*q.balconyScale; g.save(); g.shadowColor="#ff2f9d"; g.shadowBlur=22+crowdReaction*18; g.drawImage(reference,500,45,540,430,500-bw/2,20+Math.sin(t*.7)*2,bw,bh); g.restore();
-  }
-  g.fillStyle="#050710dd"; g.fillRect(0,164,1000,32); g.strokeStyle="#ff3e9b"; g.lineWidth=3; g.beginPath(); g.moveTo(0,190); g.lineTo(1000,190); g.stroke();
-  const crowdBase=150, crowdPulse=1+crowdReaction*.45; for(let band=0;band<3;band++){const y=crowdBase-band*20; for(let x=8+(band%2)*9;x<1000;x+=18){const bob=Math.sin(t*(2.2+band*.3)+x*.11)*2*crowdPulse; g.fillStyle=(x+band*13)%54<18?"#ff4ca9cc":"#6ef4f2bb"; g.beginPath(); g.arc(x,y+bob,2.3+band*.25,0,Math.PI*2); g.fill(); g.strokeStyle="#0b0a12"; g.lineWidth=2; g.beginPath(); g.moveTo(x,y+3+bob); g.lineTo(x,y+11+bob-crowdReaction*4); g.stroke(); if(crowdReaction>.2&&x%54===8){g.strokeStyle="#ffdf8b";g.beginPath();g.moveTo(x,y+5+bob);g.lineTo(x-5,y-4+bob);g.moveTo(x,y+5+bob);g.lineTo(x+5,y-4+bob);g.stroke();}}}
-  g.fillStyle="#070b12"; for(let x=0;x<1000;x+=74){g.fillRect(x,158,8,45);g.fillRect(x+8,174,45,5);}
-  const floor = g.createLinearGradient(0, 178, 0, 620); floor.addColorStop(0, "#293747"); floor.addColorStop(.58, "#151b27"); floor.addColorStop(1, "#090d14"); g.fillStyle = floor; g.beginPath(); g.moveTo(80-(q.arenaScale-1)*120,190); g.lineTo(920+(q.arenaScale-1)*120,190); g.lineTo(1060,620); g.lineTo(-60,620); g.closePath(); g.fill();
-  g.save(); g.globalAlpha=.36; const glow=g.createLinearGradient(0,190,0,620); glow.addColorStop(0,"#ff4c9c22");glow.addColorStop(.52,"#36ecf022");glow.addColorStop(1,"#ff3d9428");g.fillStyle=glow;g.fillRect(0,190,1000,430);g.restore();
-  g.strokeStyle = "#050a11cc"; g.lineWidth = 1; for (let y = 214; y < 620; y += 39) { g.beginPath(); g.moveTo(0, y); g.lineTo(1000, y); g.stroke(); } for (let x = -110; x < 1110; x += 76) { g.beginPath(); g.moveTo(500 + (x - 500) * .22/q.perspective, 190); g.lineTo(x, 620); g.stroke(); }
-  g.fillStyle="#090c14";g.beginPath();g.ellipse(500,350,210*q.arenaScale,92*q.arenaScale,0,0,Math.PI*2);g.fill();g.strokeStyle="#ff3a9caa";g.lineWidth=7;g.beginPath();g.ellipse(500,350,181*q.arenaScale,78*q.arenaScale,0,0,Math.PI*2);g.stroke();g.strokeStyle="#5cf3f2aa";g.lineWidth=2;g.beginPath();g.ellipse(500,350,140*q.arenaScale,59*q.arenaScale,0,0,Math.PI*2);g.stroke();
-  const floorProjection=concepts.get("arena");if(floorProjection){g.save();g.globalAlpha=.14;g.drawImage(floorProjection,402,319,196,60);g.restore();}
-  for(let n=0;n<10;n++){const x=65+n*103,y=235+(n%3)*118,w=54*q.propScale;g.fillStyle=n%2?"#ff3e9917":"#54eff019";g.fillRect(x,y,w,6);g.fillStyle="#d9f8ff18";g.fillRect(x+6,y+7,w*.55,2);}
-  g.fillStyle="#070910ee";g.fillRect(18,202,170,56);g.fillRect(812,202,170,56);g.strokeStyle="#4deef2";g.strokeRect(18,202,170,56);g.strokeStyle="#ff46a3";g.strokeRect(812,202,170,56);g.font="800 12px monospace";g.fillStyle="#60f5f5";g.fillText("MIND OVER MATTER",30,234);g.fillStyle="#ff5aad";g.fillText("ALL WORLDS · ONE ARENA",824,234);
-  g.fillStyle="#05070d";g.fillRect(355,166,290,33);g.strokeStyle="#ff45a5";g.strokeRect(360,170,280,24);g.fillStyle="#fff";g.font="900 15px Arial";g.textAlign="center";g.fillText("DIMENSION 33 // WAR GAMES",500,188);g.textAlign="left";
-  g.save();g.globalAlpha=.25*q.foregroundDepth;g.fillStyle="#ff2990";g.beginPath();g.ellipse(170,540,130,18,0,0,Math.PI*2);g.ellipse(825,470,105,14,0,0,Math.PI*2);g.fill();g.fillStyle="#49eef0";g.beginPath();g.ellipse(610,565,155,16,0,0,Math.PI*2);g.fill();g.restore();
+  const cam=cameraFrame(s,me,q);
+  const sw=image.naturalWidth/cam.zoom, sh=image.naturalHeight/cam.zoom;
+  const cx=(cam.x/1000)*image.naturalWidth, cy=(cam.y/620)*image.naturalHeight;
+  const sx=Math.max(0,Math.min(image.naturalWidth-sw,cx-sw/2));
+  const sy=Math.max(0,Math.min(image.naturalHeight-sh,cy-sh/2));
+  g.imageSmoothingEnabled=true; g.imageSmoothingQuality="high";
+  g.drawImage(image,sx,sy,sw,sh,0,0,1000,620);
+  // Keep the arena readable under particles without repainting any legacy map art.
+  const vignette=g.createRadialGradient(500,310,180,500,310,650);
+  vignette.addColorStop(0,"rgba(0,0,0,0)");
+  vignette.addColorStop(1,"rgba(3,2,8,.28)");
+  g.fillStyle=vignette; g.fillRect(0,0,1000,620);
 }
 
 function drawForegroundOcclusion(g:CanvasRenderingContext2D,t:number,q:Calibration){
-  const board=concepts.get("warBoard");if(!board)return;const scale=q.arenaScale,w=1000*scale,h=500*scale*q.foregroundDepth,x=500-w/2,y=137,sourceY=Math.floor(board.height*.72);g.save();g.globalAlpha=.94;g.drawImage(board,0,sourceY,board.width,board.height-sourceY,x,y+h*.72,w,h*.28);g.globalCompositeOperation="screen";g.globalAlpha=.14;g.fillStyle="#ff3f9c";g.fillRect(0,607+Math.sin(t*2)*2,1000,5);g.restore();
+  // Disabled on the Anime Upgrade plate. The old Brother-build foreground
+  // compositor is deliberately not allowed to leak into this container.
 }
 
 function cover(g: CanvasRenderingContext2D, c: any, q: Calibration) {
