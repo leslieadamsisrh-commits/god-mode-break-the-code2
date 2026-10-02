@@ -7,7 +7,7 @@ const DEFAULT:Config={moveSpeed:262,response:13,stopDrag:.002,slideSpeed:650,sli
 const EMPTY:any={x:0,y:0,aim:0,fire:false,shield:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,slow:false};
 const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF:"melee",KeyC:"heavy",KeyQ:"grip",KeyR:"throwMatter",KeyB:"cover",KeyO:"orbit",KeyP:"launchOrbit",Space:"pinball",KeyX:"slow"};
 const jade=new Map<string,HTMLImageElement>();let loading=false;
-function preload(){if(loading||typeof Image==="undefined")return;loading=true;for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const im=new Image();im.onload=()=>jade.set(`${family}-${d}`,im);const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;im.src="/assets/recovered/"+n}}
+function preload(){if(loading||typeof Image==="undefined")return;loading=true;for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const im=new Image();im.onload=()=>jade.set(`${family}-${d}`,im);const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;im.src="https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n}}
 
 export default function Game(){
  const canvas=useRef<HTMLCanvasElement>(null),session=useRef<Session|null>(null),state=useRef<any>(null),seq=useRef(0),keys=useRef<Record<string,boolean>>({}),edges=useRef<Record<string,boolean>>({}),mouse=useRef({x:500,y:310,down:false}),lastAccept=useRef(performance.now()),started=useRef(false);
