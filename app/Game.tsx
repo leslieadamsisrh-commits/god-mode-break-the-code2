@@ -122,7 +122,7 @@ function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx|
  const angle=family==="slide"?(p.slideFacing||0):state==="BOOST_DASH"||state==="RUN"?Math.atan2(p.vy||0,p.vx||0):(p.gunFacing??p.aim??0);
  const dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24;
  const im=nearest(family,dir)||nearest("ready",dir);
- const sourceCell=im?((im.naturalWidth>=1000||(family==="ready"&&im.naturalWidth>=200))?250:125):125;
+ const sourceCell=im?(im.naturalWidth>=1000?250:125):125;
  const cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,total=Math.max(1,cols*rows);
  const frame=family==="ready"?0:Math.floor((s?.time||0)*(family==="run"?10:7))%total;
  return{state,family,dir,angleDeg:Math.round(dir*15),frame:frame+1,total,file:`${family}-d${String(dir).padStart(2,"0")}.webp`,fallback,expected}}
