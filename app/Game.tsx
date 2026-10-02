@@ -67,8 +67,8 @@ i.throwMatter||=pad.buttons[15]?.pressed;
   ["SOFT COVER",!!p?.coverId&&p?.coverMode==="soft"],
   ["BRACED COVER",!!p?.coverId&&p?.coverMode==="braced"],
   ["COVER EXIT",!!p?.exit]
- ])
- useEffect(()=>{if(!p)return;setTestPass(prev=>{let changed=false,next={...prev};for(const [name,active] of tests)if(active&&!next[name]){next[name]=true;changed=true}return changed?next:prev})},[p?.dash,p?.slide,p?.slideSteerCurrent,p?.brake,p?.coverId,p?.coverSpeed,p?.exit]);
+ ]) as [string,boolean][];
+ useEffect(()=>{if(!p)return;setTestPass(prev=>{let changed=false,next={...prev};for(const [name,active] of tests)if(active&&!next[name]){next[name]=true;changed=true}return changed?next:prev})},[p?.dash,p?.slide,p?.slideSteerCurrent,p?.brake,p?.coverId,p?.coverMode,p?.coverSpeed,p?.input?.coverAim,p?.fireState,p?.kickStage,p?.exit,config.weaveEnabled]);
  return <main className="studio">
   <header><div><small>GOD MODE: BREAK THE CODE</small><b>V142 STRUCTURE LAB · COMBAT STUDIO</b></div><span>{status}</span></header>
   <div className="stageWrap">
