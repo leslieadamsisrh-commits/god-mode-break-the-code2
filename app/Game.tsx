@@ -88,7 +88,7 @@ export default function Game() {
   const calibrationRef = useRef<Calibration>(DEFAULT_CALIBRATION);
 
   const post = useCallback(async (body: any) => { const r = await fetch("/api/game", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), v = await r.json(); if (!r.ok) throw Error(v.error || "Request failed"); return v; }, []);
-  const accept = useCallback((v: any) => { if (v.state) { state.current = v.state; slot.current = v.slot; setHud({ phase: v.state.phase, mode: v.state.mode, round: v.state.round, winner: v.state.winner, players: v.state.players, slot: v.slot }); setStatus("LINKED"); } }, []);
+  const accept = useCallback((v: any) => { if (v.state) { state.current = v.state; slot.current = v.slot; setHud({ phase: v.state.phase, mode: v.state.mode, round: v.state.round, winner: v.state.winner, countdown: v.state.countdown, finisher: v.state.finisher, players: v.state.players, slot: v.slot }); setStatus("LINKED"); } }, []);
   const create = async (mode: "bot" | "solo" = "bot") => { try { setError(""); const v = await post({ action: "create", name, mode }); const s = { room: v.room, code: v.code, token: v.token, slot: 0 }; session.current = s; sessionStorage.setItem("god_mode_session", JSON.stringify(s)); setRoom(v.room); setCode(v.code); accept(v); if (mode === "bot") { const url = `${location.origin}/?room=${v.room}&code=${v.code}&guest=1`; setInvite(url); history.replaceState(null, "", `/?room=${v.room}&code=${v.code}`); } else { setInvite(""); history.replaceState(null, "", "/"); } running.current = true; } catch (e: any) { setError(e.message); } };
   const join = async () => { try { setError(""); const v = await post({ action: "join", room: room.toUpperCase(), code, name }); const s = { room: room.toUpperCase(), token: v.token, slot: 1 }; session.current = s; sessionStorage.setItem("god_mode_session", JSON.stringify(s)); accept(v); running.current = true; } catch (e: any) { setError(e.message); } };
   const start = async () => { if (!session.current) return; try { accept(await post({ action: state.current?.phase === "finished" ? "rematch" : "start", ...session.current })); } catch (e: any) { setError(e.message); } };
@@ -111,11 +111,11 @@ export default function Game() {
   const copyCalibration = async () => { const text = JSON.stringify(calibration, null, 2); try { await navigator.clipboard.writeText(text); setCalibrationNote("VALUES COPIED"); } catch { setCalibrationNote(text); } };
 
   return <main className="game-shell">
-    <header className="topbar"><div><span className="kicker">GOD MODE: BREAK THE CODE</span><h1>ARCADE BROTHER BUILD</h1></div><div className={`net ${status !== "LINKED" ? "warn" : ""}`}><i />{status}</div></header>
+    <header className="topbar"><div><span className="kicker">GOD MODE: BREAK THE CODE</span><h1>BAY BRIDGE BROTHER BUILD</h1></div><div className={`net ${status !== "LINKED" ? "warn" : ""}`}><i />{status}</div></header>
     <section className="play-layout"><div className="arena-wrap">
       <canvas ref={canvas} className="arena" width="1400" height="868" tabIndex={0} onPointerMove={point} onPointerDown={e => { point(e); mouse.current.down = true; (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); }} onPointerUp={() => mouse.current.down = false} onPointerCancel={() => mouse.current.down = false} />
-      {!connected && <div className="lobby-card"><span className="stamp">BUILD R4 · VERSION 57 MOVEMENT · DIMENSION 33</span><h2>{room ? "TAKE OVER THE BOT" : "ENTER DIMENSION 33"}</h2><p>{room ? "Your brother is already fighting the Rift Hunter. Join this room and take over its combat slot instantly." : "The approved weighted slide and cover movement are back. Choose a live bot fight or an empty sandbox for movement and matter testing."}</p><label>CALLSIGN<input value={name} onChange={e => setName(e.target.value)} maxLength={24} /></label>{room && <div className="room-fields"><label>ROOM<input value={room} onChange={e => setRoom(e.target.value.toUpperCase())} /></label><label>CODE<input value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ""))} /></label></div>}{room ? <button className="primary" onClick={join}>JOIN & TAKE OVER</button> : <div className="mode-grid"><button className="primary" onClick={() => create("bot")}>PRACTICE VS BOT<br/><small>BROTHER CAN DROP IN</small></button><button onClick={() => create("solo")}>SOLO SANDBOX<br/><small>NO BOT</small></button></div>}{room && <button className="text-btn" onClick={() => { setRoom(""); setCode(""); history.replaceState(null, "", "/"); }}>Start my own session</button>}{error && <p className="error">{error}</p>}</div>}
-      {connected && <div className={`match-banner ${botActive ? "bot" : ""}`}>{hud.phase === "finished" ? (hud.winner === null ? "DRAW" : `${hud.players[hud.winner].name} WINS`) : hud.mode === "solo" ? "SOLO SANDBOX // NO BOT // TEST EVERYTHING" : botActive ? "RIFT HUNTER ACTIVE // BROTHER CAN DROP IN" : "BROTHER LINK ACTIVE // BREAK THE CODE"}</div>}
+      {!connected && <div className="lobby-card"><span className="stamp">COMBAT MASTER · VERSION 57 MOVEMENT · ALTERED BAY BRIDGE</span><h2>{room ? "TAKE OVER THE BOT" : "ENTER THE ALTERED BAY BRIDGE"}</h2><p>{room ? "Your brother is already fighting the Rift Hunter. Join this room and take over its combat slot instantly." : "The approved weighted slide and cover movement are back. Choose a live bot fight or an empty sandbox for movement and matter testing."}</p><label>CALLSIGN<input value={name} onChange={e => setName(e.target.value)} maxLength={24} /></label>{room && <div className="room-fields"><label>ROOM<input value={room} onChange={e => setRoom(e.target.value.toUpperCase())} /></label><label>CODE<input value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ""))} /></label></div>}{room ? <button className="primary" onClick={join}>JOIN & TAKE OVER</button> : <div className="mode-grid"><button className="primary" onClick={() => create("bot")}>PRACTICE VS BOT<br/><small>BROTHER CAN DROP IN</small></button><button onClick={() => create("solo")}>SOLO SANDBOX<br/><small>NO BOT</small></button></div>}{room && <button className="text-btn" onClick={() => { setRoom(""); setCode(""); history.replaceState(null, "", "/"); }}>Start my own session</button>}{error && <p className="error">{error}</p>}</div>}
+      {connected && <div className={`match-banner ${botActive ? "bot" : ""}`}>{hud.phase === "countdown" ? `ROUND ${hud.round} // ${Math.max(1, Math.ceil(hud.countdown || 0))}` : hud.phase === "finisher" ? "FINISHER // BREAK THE CODE" : hud.phase === "finished" ? (hud.winner === null ? "DRAW" : `${hud.players[hud.winner].name} WINS`) : hud.mode === "solo" ? "SOLO SANDBOX // NO BOT // TEST EVERYTHING" : botActive ? "RIFT HUNTER ACTIVE // BROTHER CAN DROP IN" : "BROTHER LINK ACTIVE // BREAK THE CODE"}</div>}
       <button className="calibration-toggle" onClick={() => setCalibrationOpen(v => !v)}>{calibrationOpen ? "CLOSE CALIBRATION" : "ARENA CALIBRATION"}</button>
       {calibrationOpen && <div className="calibration-panel"><div className="calibration-head"><div><span>DIMENSION 33</span><b>LIVE SCALE LAB</b></div><button onClick={() => setCalibrationOpen(false)} aria-label="Close calibration panel">×</button></div><p>Visual tuning only. Multiplayer coordinates and Version 57 movement remain untouched.</p><div className="calibration-scroll">{CALIBRATION_FIELDS.map(field => <label className="calibration-row" key={field.key}><span>{field.label}<output>{calibration[field.key].toFixed(2)}</output></span><input type="range" min={field.min} max={field.max} step={field.step} value={calibration[field.key]} onChange={e => setCalibration(v => ({...v,[field.key]:Number(e.target.value)}))}/></label>)}</div><div className="calibration-actions"><button onClick={resetCalibration}>RESET DEFAULTS</button><button onClick={saveCalibration}>SAVE</button><button onClick={loadCalibration}>LOAD</button><button onClick={copyCalibration}>COPY VALUES</button></div>{calibrationNote && <div className="calibration-note">{calibrationNote}</div>}</div>}
       {connected && <div className="command-hud"><div className="glove left"><span>LEFT GLOVE // PSIONIC</span><b>{mePlayer?.gripCoverId ? "COVER HELD" : mePlayer?.gripId ? "MATTER HELD" : mePlayer?.orbitIds?.length ? `ORBIT ×${mePlayer.orbitIds.length}` : mePlayer?.shield ? "FIELD ACTIVE" : "FIELD READY"}</b></div><div className="reticle">◇</div><div className="glove right"><span>RIGHT GLOVE // CONSTRUCT</span><b>SHOTGUN · COVER READY</b></div></div>}
@@ -134,7 +134,7 @@ function Control({ k, v }: { k: string; v: string }) { return <div className="co
 function draw(canvas: HTMLCanvasElement | null, s: any, me: number, q: Calibration) {
   if (!canvas) return; const g = canvas.getContext("2d")!, W = canvas.width, H = canvas.height, sx = W / 1000, sy = H / 620;
   g.setTransform(sx, 0, 0, sy, 0, 0); g.clearRect(0, 0, 1000, 620); drawArena(g, s?.time || 0, s, q);
-  if (!s) { g.fillStyle = "#57e3e7aa"; g.font = "700 18px monospace"; g.fillText("DIMENSION 33 // BOT SIGNAL READY", 35, 585); return; }
+  if (!s) { g.fillStyle = "#57e3e7aa"; g.font = "700 18px monospace"; g.fillText("ALTERED BAY BRIDGE // BOT SIGNAL READY", 35, 585); return; }
   g.save(); g.translate(500,310); g.scale(q.cameraZoom,q.cameraZoom*q.cameraPitch); g.translate(-500,-310);
   const sorted = [...(s.covers || []).map((c: any) => ({ y: c.y + c.h, draw: () => cover(g, c, q) })), ...(s.matter || []).map((m: any) => ({ y: m.y, draw: () => matter(g, m, q) })), ...(s.players || []).map((p: any, i: number) => ({ y: p.y, draw: () => fighter(g, p, i, me, s.time, q) }))].sort((a, b) => a.y - b.y);
   sorted.forEach(x => x.draw());
@@ -142,23 +142,79 @@ function draw(canvas: HTMLCanvasElement | null, s: any, me: number, q: Calibrati
   for (const f of s.fx || []) effect(g, f);
   g.restore();
   drawForegroundOcclusion(g, s.time || 0, q);
-  g.fillStyle = "#b5d9df"; g.font = "700 13px monospace"; g.fillText(`DIMENSION 33 // ${s.build}`, 22, 596);
+  g.fillStyle = "#b5d9df"; g.font = "700 13px monospace"; g.fillText(`ALTERED BAY BRIDGE // ${s.build}`, 22, 596);
 }
 
 function drawArena(g: CanvasRenderingContext2D, t: number, s: any, q: Calibration) {
-  const skyNew = g.createLinearGradient(0, 0, 0, 620); skyNew.addColorStop(0, "#070512"); skyNew.addColorStop(.48, "#311047"); skyNew.addColorStop(1, "#090d18"); g.fillStyle = skyNew; g.fillRect(0, 0, 1000, 620);
-  const ruins=concepts.get("sfRuins"), architecture=concepts.get("crowdBaron"), board=concepts.get("warBoard");
-  const crowdReactionNew = s?.phase === "finished" ? 1 : (s?.fx || []).some((f:any) => ["heavy","matter-hit","break","pinball","shot-hit"].includes(f.type)) ? .72 : 0;
-  if(ruins){const drift=Math.sin(t*.075)*5*q.backgroundDepth;g.save();g.globalAlpha=.97;g.drawImage(ruins,-26+drift,-5,1052,592*q.backgroundDepth);g.restore();}
-  if(architecture){
-    const crowdBob=Math.sin(t*3.6)*1.5+crowdReactionNew*Math.sin(t*17)*4.5;
-    g.save();g.translate(500,132);g.scale(q.crowdScale,q.middleDepth);g.translate(-500,-132);g.globalCompositeOperation="screen";g.globalAlpha=.8;g.drawImage(architecture,-35,-70+crowdBob,1070,602);g.restore();
-    const bw=294*q.balconyScale,bh=184*q.balconyScale;g.save();g.globalCompositeOperation="screen";g.globalAlpha=.28+crowdReactionNew*.17;g.shadowColor="#ff2f9d";g.shadowBlur=28+crowdReactionNew*22;g.drawImage(architecture,520,0,560,410,500-bw/2,5+Math.sin(t*.8)*2,bw,bh);g.restore();
+  // Environment-only layer: Brother Build remains the combat/network authority.
+  const sky=g.createLinearGradient(0,0,0,620);
+  sky.addColorStop(0,"#09111c");sky.addColorStop(.48,"#263644");sky.addColorStop(1,"#071018");
+  g.fillStyle=sky;g.fillRect(0,0,1000,620);
+
+  // Bay water / distant industrial depth.
+  g.fillStyle="#0b2937";g.fillRect(0,135,1000,210);
+  g.save();g.globalAlpha=.35;for(let n=0;n<26;n++){
+    const x=(n*97+(t*4)%97)-80,y=202+(n%5)*17;
+    g.fillStyle=n%3===0?"#63dfe7":"#d7a6d0";g.fillRect(x,y,38+(n%4)*17,2);
+  }g.restore();
+
+  // Distant San Francisco/Oakland industrial silhouette.
+  g.fillStyle="#101923";for(let x=0;x<1000;x+=34){
+    const h=20+((x*17)%55);g.fillRect(x,175-h,24,h);
+    if(x%102===0){g.fillStyle="#ff4ca944";g.fillRect(x+8,158-h,3,3);g.fillStyle="#101923";}
   }
-  if(board){const scale=q.arenaScale,w=1000*scale,h=500*scale*q.foregroundDepth;g.save();g.drawImage(board,0,145,board.width,board.height-145,500-w/2,137,w,h);g.restore();}
-  if(architecture){const bob=Math.sin(t*3.6)*1.5+crowdReactionNew*Math.sin(t*17)*4;g.save();g.globalCompositeOperation="screen";g.globalAlpha=.83;g.drawImage(architecture,0,70,390,830,0,110+bob,154*q.crowdScale,430*q.middleDepth);g.drawImage(architecture,1210,70,390,830,846,110-bob,154*q.crowdScale,430*q.middleDepth);g.restore();}
-  g.save();g.globalAlpha=.15+.12*crowdReactionNew;g.globalCompositeOperation="screen";for(let n=0;n<8;n++){const x=78+n*122,y=112+(n%2)*18;g.fillStyle=n%2?"#ff3f9c":"#55eef2";g.beginPath();g.arc(x,y+Math.sin(t*5+n)*3,3+crowdReactionNew*3,0,Math.PI*2);g.fill();}g.restore();
-  g.fillStyle="#05070dcc";g.fillRect(355,151,290,31);g.strokeStyle="#ff45a5";g.strokeRect(360,155,280,22);g.fillStyle="#fff";g.font="900 14px Arial";g.textAlign="center";g.fillText(s?.phase==="finished"?"THE ARENA LIVES":"DIMENSION 33 // WAR GAMES",500,171);g.textAlign="left";
+
+  // Massive bridge towers and suspension architecture receding through the frame.
+  for(const [x,scale,alpha] of [[112,.72,.46],[500,1,.9],[888,.72,.46]] as any[]){
+    g.save();g.globalAlpha=alpha;
+    g.strokeStyle="#71808a";g.lineWidth=10*scale;
+    const base=350,top=46,w=104*scale;
+    g.beginPath();g.moveTo(x-w/2,base);g.lineTo(x-w/2,top);g.moveTo(x+w/2,base);g.lineTo(x+w/2,top);g.stroke();
+    g.lineWidth=7*scale;g.beginPath();g.moveTo(x-w/2,118);g.lineTo(x+w/2,118);g.moveTo(x-w/2,206);g.lineTo(x+w/2,206);g.stroke();
+    g.lineWidth=2;for(let k=-6;k<=6;k++){const cx=x+k*64*scale,curve=56+Math.abs(k)*15*scale;g.beginPath();g.moveTo(cx,curve);g.lineTo(cx,305);g.stroke();}
+    g.restore();
+  }
+  g.strokeStyle="#8897a299";g.lineWidth=4;g.beginPath();g.moveTo(0,115);g.quadraticCurveTo(500,15,1000,115);g.stroke();
+
+  // Closed freeway deck in strong three-quarter perspective.
+  const floor=g.createLinearGradient(0,220,0,620);floor.addColorStop(0,"#474b4e");floor.addColorStop(.7,"#2b2f31");floor.addColorStop(1,"#181b1d");
+  g.fillStyle=floor;g.beginPath();g.moveTo(240,205);g.lineTo(760,205);g.lineTo(1100,620);g.lineTo(-100,620);g.closePath();g.fill();
+  g.strokeStyle="#151719aa";g.lineWidth=1;for(let y=235;y<620;y+=38){g.beginPath();g.moveTo(145-(y-235)*.38,y);g.lineTo(855+(y-235)*.38,y);g.stroke();}
+  // Lane markings and freeway wear.
+  for(const ratio of [.27,.39,.5,.61,.73]){for(let y=235;y<610;y+=58){
+    const spread=145+(y-235)*.43,xx=500+(ratio-.5)*spread*2.2;g.strokeStyle="#efe6c088";g.lineWidth=4;g.beginPath();g.moveTo(xx,y);g.lineTo(xx+(ratio-.5)*7,y+27);g.stroke();
+  }}
+  g.save();g.globalAlpha=.18;g.strokeStyle="#050607";for(let n=0;n<24;n++){const y=260+n*15,x=130+(n*83)%740;g.beginPath();g.moveTo(x,y);g.lineTo(x+34+(n%3)*18,y+5);g.stroke();}g.restore();
+
+  // War Games freeway closure: recognizable real infrastructure first, Dimension 33 layered on top.
+  g.fillStyle="#11161bcc";g.fillRect(35,198,196,47);g.fillRect(769,198,196,47);
+  g.strokeStyle="#ff4aa5";g.strokeRect(35,198,196,47);g.strokeStyle="#56eef0";g.strokeRect(769,198,196,47);
+  g.font="800 11px monospace";g.fillStyle="#ff71b6";g.fillText("FREEWAY CLOSED // WAR GAMES",47,226);
+  g.fillStyle="#70f3f2";g.fillText("DIMENSION 33 // SECTOR B",782,226);
+
+  // Emergency barricade lamps and subtle dimensional contamination.
+  for(let x=70;x<960;x+=92){g.fillStyle=x%184?"#ff3f9c":"#55eef2";g.globalAlpha=.55;g.fillRect(x,256+(x%3)*8,5,5);}g.globalAlpha=1;
+  g.save();g.globalCompositeOperation="screen";g.globalAlpha=.14+.04*Math.sin(t*2.2);
+  g.fillStyle="#ff2f9d";g.fillRect(0,330,1000,7);g.fillStyle="#55eef2";g.fillRect(0,463,1000,5);g.restore();
+
+  // Existing arena art is intentionally not drawn here; gameplay objects are still rendered by the recovered Brother Build.
+  g.fillStyle="#05070dcc";g.fillRect(350,153,300,34);g.strokeStyle="#ff45a5";g.strokeRect(355,157,290,24);
+  g.fillStyle="#fff";g.font="900 14px Arial";g.textAlign="center";
+  g.fillText(s?.phase==="finished"?"WAR GAMES // ROUND COMPLETE":"ALTERED BAY BRIDGE // DIMENSION 33",500,174);g.textAlign="left";
+
+  // Existing recovered countdown + finisher presentation, layered over the map.
+  if(s?.phase==="countdown"){
+    const n=Math.max(1,Math.ceil(s.countdown||0));g.fillStyle="#05070dbb";g.fillRect(0,0,1000,620);
+    g.fillStyle="#fff";g.font="900 108px Arial";g.textAlign="center";g.fillText(String(n),500,330);
+    g.font="900 18px monospace";g.fillStyle=n%2?"#ff59ae":"#58eff0";g.fillText("WAR GAMES ROUND "+s.round,500,374);g.textAlign="left";
+  }
+  if(s?.phase==="finisher"){
+    const pulse=.5+.5*Math.sin(t*30);g.fillStyle=`rgba(8,5,15,${.38+pulse*.16})`;g.fillRect(0,0,1000,620);
+    g.save();g.globalCompositeOperation="screen";g.strokeStyle=s.winner===0?"#ff4aa5":"#56eef0";g.lineWidth=4+pulse*7;
+    g.beginPath();g.arc(500,350,90+pulse*70,0,Math.PI*2);g.stroke();g.restore();
+    g.fillStyle="#fff";g.font="900 52px Arial";g.textAlign="center";g.fillText("FINISHER",500,142);
+    g.font="900 15px monospace";g.fillStyle="#ffafd8";g.fillText("CONTROL · IMPACT · RETURN TO COMBAT",500,171);g.textAlign="left";
+  }
   return;
   const sky = g.createLinearGradient(0, 0, 0, 620); sky.addColorStop(0, "#070512"); sky.addColorStop(.22, "#2a1236"); sky.addColorStop(.48, "#a62d6d"); sky.addColorStop(1, "#071019"); g.fillStyle = sky; g.fillRect(0, 0, 1000, 620);
   const reference = concepts.get("dimension33"), crowdReaction = s?.phase === "finished" ? 1 : (s?.fx || []).some((f:any) => ["heavy","matter-hit","break","pinball","shot-hit"].includes(f.type)) ? .72 : 0;
@@ -182,9 +238,7 @@ function drawArena(g: CanvasRenderingContext2D, t: number, s: any, q: Calibratio
   g.save();g.globalAlpha=.25*q.foregroundDepth;g.fillStyle="#ff2990";g.beginPath();g.ellipse(170,540,130,18,0,0,Math.PI*2);g.ellipse(825,470,105,14,0,0,Math.PI*2);g.fill();g.fillStyle="#49eef0";g.beginPath();g.ellipse(610,565,155,16,0,0,Math.PI*2);g.fill();g.restore();
 }
 
-function drawForegroundOcclusion(g:CanvasRenderingContext2D,t:number,q:Calibration){
-  const board=concepts.get("warBoard");if(!board)return;const scale=q.arenaScale,w=1000*scale,h=500*scale*q.foregroundDepth,x=500-w/2,y=137,sourceY=Math.floor(board.height*.72);g.save();g.globalAlpha=.94;g.drawImage(board,0,sourceY,board.width,board.height-sourceY,x,y+h*.72,w,h*.28);g.globalCompositeOperation="screen";g.globalAlpha=.14;g.fillStyle="#ff3f9c";g.fillRect(0,607+Math.sin(t*2)*2,1000,5);g.restore();
-}
+function drawForegroundOcclusion(g:CanvasRenderingContext2D,t:number,q:Calibration){ /* Bay Bridge foreground reserved for later art pass. */ }
 
 function cover(g: CanvasRenderingContext2D, c: any, q: Calibration) {
   const ratio=c.maxHp?c.hp/c.maxHp:0, depth=.84+(c.y-208)/320*.16*q.perspective, visualScale=c.generated?q.generatedCoverScale:q.fixedCoverScale, width=c.w*depth*visualScale, center=c.x+c.w/2,base=c.y+c.h;
