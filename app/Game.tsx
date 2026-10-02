@@ -262,8 +262,11 @@ function drawForegroundOcclusion(g:CanvasRenderingContext2D,t:number,q:Calibrati
 }
 
 function cover(g: CanvasRenderingContext2D, c: any, q: Calibration) {
-  const ratio=c.maxHp?c.hp/c.maxHp:0, depth=.84+(c.y-208)/320*.16*q.perspective, visualScale=c.generated?q.generatedCoverScale:q.fixedCoverScale, width=c.w*depth*visualScale, center=c.x+c.w/2,base=c.y+c.h;
-  g.save();g.fillStyle="#000b";g.beginPath();g.ellipse(center,base+8,width*.42,12*depth*q.coverShadow,-.03,0,Math.PI*2);g.fill();drawConstructedCover(g,c,depth*visualScale,c.generated,ratio);g.restore();
+  // The locked V28 arena plate already contains the permanent arena cover.
+  // Keep fixed-cover collision authoritative but do not paint prototype gray boxes over the finished map.
+  if(!c.generated)return;
+  const ratio=c.maxHp?c.hp/c.maxHp:0, depth=.84+(c.y-208)/320*.16*q.perspective, visualScale=q.generatedCoverScale, width=c.w*depth*visualScale, center=c.x+c.w/2,base=c.y+c.h;
+  g.save();g.fillStyle="#0009";g.beginPath();g.ellipse(center,base+8,width*.42,12*depth*q.coverShadow,-.03,0,Math.PI*2);g.fill();drawConstructedCover(g,c,depth*visualScale,true,ratio);g.restore();
 }
 
 function drawConstructedCover(g: CanvasRenderingContext2D, c: any, depth: number, generated=true, ratio=1) {
@@ -275,7 +278,10 @@ function drawConstructedCover(g: CanvasRenderingContext2D, c: any, depth: number
       g.save();g.globalCompositeOperation="screen";for(let n=0;n<9;n++){const a=n*Math.PI*2/9+progress*5,r=24+(1-progress)*34;g.fillStyle=n%2?"#ff4da7":"#62eff1";g.fillRect(c.x+c.w/2+Math.cos(a)*r,c.y+c.h/2+Math.sin(a)*r*.48,3,3);}g.restore();
     }else{g.drawImage(sprite,x,y,targetW,targetH);}
   }else{
-    g.fillStyle=generated?"#6f7d82":"#796f69";g.strokeStyle="#0a0c10";g.lineWidth=3;g.fillRect(x,y,targetW,targetH);g.strokeRect(x,y,targetW,targetH);
+    // Clean psychic-construction fallback: never show the old opaque gray prototype slab.
+    g.fillStyle="rgba(9,22,30,.58)";g.strokeStyle="#67f4f1";g.lineWidth=2;g.shadowColor="#67f4f1";g.shadowBlur=14;
+    g.fillRect(x,y,targetW,targetH);g.strokeRect(x,y,targetW,targetH);g.shadowBlur=0;
+    g.globalAlpha=.5;g.beginPath();g.moveTo(x+8,y+targetH*.72);g.lineTo(x+targetW-8,y+targetH*.42);g.stroke();g.globalAlpha=1;
   }
   if(ratio>0){g.strokeStyle=generated?"#67f4f1":"#ff58aa";g.globalAlpha=generated?.62:.34;g.lineWidth=2;g.beginPath();g.moveTo(x+targetW*.12,y+targetH*.62);g.lineTo(x+targetW*.88,y+targetH*.54);g.stroke();g.globalAlpha=1;}
 }
