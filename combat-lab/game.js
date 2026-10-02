@@ -10,7 +10,18 @@ function loadSpriteProxy(){
  for(const fam of families)for(let d=0;d<24;d++){let key=fam+"-d"+String(d).padStart(2,"0"),im=new Image();jobs.push(new Promise(res=>{im.onload=()=>{spriteImgs[key]=im;res()};im.onerror=()=>res();im.src="/combat-lab/assets/cyberkitty/"+key+".webp"}))}
  Promise.all(jobs).then(()=>{spriteReady=Object.keys(spriteImgs).length>0;console.log("Cyber Kitty runtime loaded",Object.keys(spriteImgs).length,"directional atlases")})
 }loadSpriteProxy();
-function reset(){p={x:0,y:210,vx:0,vy:0,r:17,hp:100,battery:100,slide:0,cover:null,state:"FREE",phase:0,aim:0,lowerAim:0,drop:0,impact:0,recoil:0};bots=[{x:-250,y:-90,vx:0,vy:0,hp:100,cool:1},{x:260,y:-80,vx:0,vy:0,hp:100,cool:1.4}];shots=[];fx=[];covers=[{x:-190,y:-20,w:150,h:38},{x:60,y:-55,w:150,h:38},{x:-335,y:110,w:150,h:38},{x:185,y:115,w:150,h:38},{x:-70,y:170,w:150,h:34},{x:-430,y:-125,w:58,h:235},{x:370,y:-125,w:58,h:235}]}reset();
+const BAY_BRIDGE={name:"ALTERED DIMENSION BAY BRIDGE",phase:"GRAYBOX GAMEPLAY FOUNDATION",road:{x0:-540,x1:540,y0:-300,y1:330},routes:[
+ {name:"LEFT FLANK",y:-150},{name:"CENTER CONTESTED",y:5},{name:"RIGHT FLANK",y:165}
+]};
+function reset(){p={x:0,y:250,vx:0,vy:0,r:17,hp:100,battery:100,slide:0,cover:null,state:"FREE",phase:0,aim:0,lowerAim:0,drop:0,impact:0,recoil:0};
+bots=[{x:-305,y:-165,vx:0,vy:0,hp:100,cool:1},{x:305,y:-155,vx:0,vy:0,hp:100,cool:1.4}];shots=[];fx=[];
+covers=[
+ {x:-410,y:-205,w:120,h:34,kind:"barrier"},{x:-245,y:-155,w:115,h:34,kind:"wreck"},{x:-75,y:-205,w:130,h:34,kind:"barrier"},{x:110,y:-155,w:120,h:34,kind:"wreck"},{x:300,y:-205,w:105,h:34,kind:"barrier"},
+ {x:-355,y:-35,w:145,h:38,kind:"barrier"},{x:-120,y:-15,w:105,h:38,kind:"median"},{x:55,y:-20,w:105,h:38,kind:"median"},{x:235,y:-35,w:145,h:38,kind:"barrier"},
+ {x:-405,y:135,w:120,h:34,kind:"wreck"},{x:-240,y:185,w:115,h:34,kind:"barrier"},{x:-70,y:135,w:130,h:34,kind:"wreck"},{x:115,y:185,w:120,h:34,kind:"barrier"},{x:300,y:135,w:105,h:34,kind:"wreck"},
+ {x:-500,y:-70,w:52,h:175,kind:"gate"},{x:448,y:-70,w:52,h:175,kind:"gate"},
+ {x:360,y:-260,w:68,h:115,kind:"tower"}
+]}reset();
 const iso=(x,y,z=0)=>({x:W/2+x+y*.22,y:H*.46+y*.60-z});
 function pad(){let q=navigator.getGamepads&&navigator.getGamepads()[0];if(!q)return;let dz=v=>Math.abs(v)<.18?0:v,lx=dz(q.axes[0]||0),ly=dz(q.axes[1]||0),rx=dz(q.axes[2]||0),ry=dz(q.axes[3]||0);keys.a=lx<-.2;keys.d=lx>.2;keys.w=ly<-.2;keys.s=ly>.2;if(hyp(rx,ry)>.2){mouse.x=W/2+rx*330;mouse.y=H/2+ry*230}let m={0:"slide",1:"vault",2:"attach",3:"shield",6:"grip",7:"fire",8:"r"};for(let i in m){let k=m[i],down=!!q.buttons[i]?.pressed;if(down&&!prevPad[i])pressed[k]=1;if(k==="fire")mouse.down=down;else keys[k]=down;prevPad[i]=down}}
 function nearestFace(o,r){let nx=clamp(o.x,r.x,r.x+r.w),ny=clamp(o.y,r.y,r.y+r.h),dx=o.x-nx,dy=o.y-ny,dd=hyp(dx,dy);return{nx,ny,dx,dy,dd}}
@@ -41,6 +52,55 @@ function body(o,hero){let P=iso(o.x,o.y),aim=hero?p.aim:Math.atan2(p.y-o.y,p.x-o
  for(const pair of [[sh[0],hands[0]],[sh[1],hands[1]]]){g.lineWidth=15;g.lineCap="round";g.beginPath();g.moveTo(pair[0].x,pair[0].y);g.lineTo(pair[1].x,pair[1].y);g.stroke()}
  let stride2=cy*25*spd;for(let sg of [-1,1]){let hh={x:J.pelvis.x+R.x*sg*9,y:J.pelvis.y+5},kk=slide?(sg<0?{x:hh.x+F.x*30,y:hh.y+18}:{x:hh.x-F.x*14,y:hh.y+26}):{x:hh.x+F.x*stride2*sg,y:hh.y+36},aa=slide?(sg<0?{x:kk.x+F.x*36,y:kk.y+12}:{x:kk.x-F.x*18,y:kk.y+22}):{x:kk.x+F.x*stride2*sg,y:kk.y+38};g.lineWidth=18;g.beginPath();g.moveTo(hh.x,hh.y);g.lineTo(kk.x,kk.y);g.lineTo(aa.x,aa.y);g.stroke()}
  g.restore();g.fillStyle="#35eaff";g.font="bold 13px Arial";g.fillText("JADE // GHOST PROXY",P.x-58,P.y+34)}}
-function draw(){g.imageSmoothingEnabled=false;g.fillStyle="#050812";g.fillRect(0,0,W,H);g.fillStyle="#0a1520";g.fillRect(0,70,W,H);for(let i=0;i<18;i++){let x=(i*137)%W,y=110+(i*83)%(H-180),q=iso(x-W/2,(y-H*.46)/.60);g.fillStyle=i%3===0?"#1b2940":i%3===1?"#172b30":"#24182d";g.fillRect(q.x-18,q.y-9,36,18);g.strokeStyle=i%2?"#35eaff55":"#ff168c55";g.strokeRect(q.x-18,q.y-9,36,18)}for(let y=-300;y<350;y+=50)line(iso(-620,y),iso(620,y),1,"#173346");for(let x=-620;x<650;x+=50)line(iso(x,-330),iso(x,370),1,"#173346");g.fillStyle="#ff168c";g.font="bold 16px monospace";g.fillText("GOD MODE // 16-BIT CYBER KITTY TRAINING LAB v9.0",22,105);g.fillStyle="#35eaff";g.font="12px monospace";g.fillText("MOVE · SLIDE · COVER · AIM · FIRE · BREAK THE CODE",22,124);for(const r of covers){let A=iso(r.x,r.y),B=iso(r.x+r.w,r.y),C=iso(r.x+r.w,r.y+r.h),D=iso(r.x,r.y+r.h);g.fillStyle="#263844";g.strokeStyle="#35eaff";g.lineWidth=2;g.beginPath();g.moveTo(A.x,A.y);g.lineTo(B.x,B.y);g.lineTo(C.x,C.y);g.lineTo(D.x,D.y);g.closePath();g.fill();g.stroke();g.fillStyle="#111923";g.beginPath();g.moveTo(D.x,D.y);g.lineTo(C.x,C.y);g.lineTo(C.x,C.y+28);g.lineTo(D.x,D.y+28);g.closePath();g.fill()}shots.forEach(s=>{let q=iso(s.x,s.y,18);g.fillStyle=s.enemy?"#ff6a3d":"#35eaff";g.beginPath();g.arc(q.x,q.y,4,0,7);g.fill()});bots.forEach(b=>{if(b.hp>0)body(b,false)});body(p,true);stats.innerHTML="v7.1 GHOST SPRITE PROXY<br>STATE "+p.state+"<br>HP "+Math.ceil(p.hp)+"<br>BATTERY "+Math.ceil(p.battery)+"%";if(poseName)poseName.textContent=p.state}
+function draw(){
+ g.imageSmoothingEnabled=false;
+ // Phase 2A graybox: readable freeway topology only. No final art baked into combat.
+ g.fillStyle="#07090d";g.fillRect(0,0,W,H);
+ g.fillStyle="#10151b";g.fillRect(0,70,W,H);
+
+ // Bay / void beyond the closed freeway.
+ g.fillStyle="#071722";g.fillRect(0,H*.08,W,H*.84);
+ // Project the freeway deck as a large readable combat plane.
+ let TL=iso(-560,-320),TR=iso(560,-320),BR=iso(560,350),BL=iso(-560,350);
+ g.fillStyle="#272d33";g.strokeStyle="#5f6a74";g.lineWidth=3;
+ g.beginPath();g.moveTo(TL.x,TL.y);g.lineTo(TR.x,TR.y);g.lineTo(BR.x,BR.y);g.lineTo(BL.x,BL.y);g.closePath();g.fill();g.stroke();
+
+ // Road shoulders.
+ for(const yy of [-285,315]){line(iso(-540,yy),iso(540,yy),5,"#b8c0c744")}
+ // Lane markings / route readability.
+ for(const yy of [-150,5,165]){
+   for(let xx=-500;xx<500;xx+=90) line(iso(xx,yy),iso(xx+48,yy),3,"#f1eadb66");
+ }
+ // Closed-war-games end gates.
+ for(const xx of [-515,485]){
+   line(iso(xx,-270),iso(xx,300),7,"#ff168c99");
+ }
+ // Bridge tower / suspension silhouettes kept outside core combat readability.
+ g.strokeStyle="#526472";g.lineWidth=7;
+ let t1=iso(-510,-270,-10),t2=iso(-510,-270,190),t3=iso(505,-270,-10),t4=iso(505,-270,190);
+ line(t1,t2,7,"#526472");line(t3,t4,7,"#526472");
+ line(t2,t4,3,"#526472aa");
+ for(let i=0;i<=8;i++){let x=-500+i*125;line(iso(x,-290,0),iso(x,-290,110+Math.sin(i/8*Math.PI)*70),2,"#52647266")}
+
+ // Route labels make the graybox testable before visual production.
+ g.font="bold 11px monospace";g.fillStyle="#9fb4c4";
+ for(const r of BAY_BRIDGE.routes){let q=iso(-505,r.y);g.fillText(r.name,q.x,q.y-8)}
+
+ // Existing combat assets / cover proxies.
+ for(const r of covers){
+   let A=iso(r.x,r.y),B=iso(r.x+r.w,r.y),C=iso(r.x+r.w,r.y+r.h),D=iso(r.x,r.y+r.h);
+   let fill=r.kind==="wreck"?"#39434d":r.kind==="tower"?"#4a4f58":r.kind==="gate"?"#38263c":r.kind==="median"?"#4a4641":"#404a52";
+   let edge=r.kind==="gate"?"#ff168c":r.kind==="tower"?"#ffd76a":"#35eaff";
+   g.fillStyle=fill;g.strokeStyle=edge;g.lineWidth=2;
+   g.beginPath();g.moveTo(A.x,A.y);g.lineTo(B.x,B.y);g.lineTo(C.x,C.y);g.lineTo(D.x,D.y);g.closePath();g.fill();g.stroke();
+   g.fillStyle="#151a20";g.beginPath();g.moveTo(D.x,D.y);g.lineTo(C.x,C.y);g.lineTo(C.x,C.y+28);g.lineTo(D.x,D.y+28);g.closePath();g.fill();
+ }
+ shots.forEach(s=>{let q=iso(s.x,s.y,18);g.fillStyle=s.enemy?"#ff6a3d":"#35eaff";g.beginPath();g.arc(q.x,q.y,4,0,7);g.fill()});
+ bots.forEach(b=>{if(b.hp>0)body(b,false)});body(p,true);
+ g.fillStyle="#ff168c";g.font="bold 16px monospace";g.fillText("GOD MODE // ALTERED DIMENSION BAY BRIDGE",22,105);
+ g.fillStyle="#35eaff";g.font="12px monospace";g.fillText("PHASE 2A GRAYBOX · CLOSED FREEWAY WAR GAMES TEST",22,124);
+ stats.innerHTML="BAY BRIDGE GAMEPLAY LAB<br>STATE "+p.state+"<br>HP "+Math.ceil(p.hp)+"<br>BATTERY "+Math.ceil(p.battery)+"%";
+ if(poseName)poseName.textContent=p.state
+}
 function frame(now){let dt=Math.min(.05,(now-last)/1000);last=now;acc+=dt;while(acc>=FIX){step(FIX);acc-=FIX}draw();requestAnimationFrame(frame)}requestAnimationFrame(frame);
 })();
