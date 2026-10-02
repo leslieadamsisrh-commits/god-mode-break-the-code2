@@ -3,7 +3,7 @@ export type CombatConfig={moveSpeed:number;response:number;stopDrag:number;dashS
 export const DEFAULT_CONFIG:CombatConfig={moveSpeed:262,response:13,stopDrag:.002,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:650,slideDuration:.70,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;dash:number;lastSlideTap:number;slide:number;slideFacing:number;coverId:string|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;orbitIds:string[];knock:number;pinball:number;lastShot:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;dash:number;brake:number;lastSlideTap:number;slide:number;slideFacing:number;coverId:string|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;orbitIds:string[];knock:number;pinball:number;lastShot:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number};
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number};
@@ -13,7 +13,7 @@ export type GameState={build:string;mode:"bot"|"solo";phase:"lobby"|"countdown"|
 const empty=():InputState=>({x:0,y:0,aim:0,fire:false,shield:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,slow:false});
 const clamp=(v:number,a:number,b:number)=>Math.max(a,Math.min(b,v)),wrap=(a:number)=>Math.atan2(Math.sin(a),Math.cos(a)),dist=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y),uid=()=>crypto.randomUUID().slice(0,8);
 const A={left:70,right:930,top:90,bottom:550};
-function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{x,y,vx:0,vy:0,aim,hp,battery:100,dash:0,lastSlideTap:-9,slide:0,slideFacing:aim,coverId:null,coverAnchor:null,coverLock:0,coverSpeed:0,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,orbitIds:[],knock:0,pinball:0,lastShot:-9,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
+function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{x,y,vx:0,vy:0,aim,hp,battery:100,dash:0,brake:0,lastSlideTap:-9,slide:0,slideFacing:aim,coverId:null,coverAnchor:null,coverLock:0,coverSpeed:0,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,orbitIds:[],knock:0,pinball:0,lastShot:-9,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
 export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo"="solo"):GameState{
  const config={...DEFAULT_CONFIG};
  const players=[player(230,330,0,name,token,false,config.maxHealth)];
@@ -100,6 +100,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
 function botInput(s:GameState){const n=s.players.findIndex(p=>p.bot);if(n<0)return;const p=s.players[n],t=s.players[1-n];if(!t)return;const a=Math.atan2(t.y-p.y,t.x-p.x),d=dist(p,t);p.input={...empty(),x:Math.cos(a)*(d>260?.7:0),y:Math.sin(a)*(d>260?.7:0),aim:a,fire:d<520&&s.time%1.4<.1}}
 function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.players.some(p=>p.input.slow&&p.battery>0),d=dt*(slow?.52:1);
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input;p.aim=i.aim;edgeActions(s,n,prev[n]||empty());p.shield=i.shield&&p.battery>0;if(p.shield)p.battery=Math.max(0,p.battery-18*dt);if(i.slow&&p.battery>0)p.battery=Math.max(0,p.battery-28*dt);if(p.gripId)p.battery=Math.max(0,p.battery-6*dt);if(!p.shield&&!i.slow&&!p.gripId)p.battery=Math.min(100,p.battery+9*dt);
+  p.brake=Math.max(0,p.brake-dt);
   if(p.knock>0){p.knock-=dt;p.vx*=Math.pow(.08,dt);p.vy*=Math.pow(.08,dt)}
   else if(p.exit){stepCoverExit(p,s,d)}
   else if(p.coverId){moveOnCover(p,s,i,d);if(i.slide&&!prev[n]?.slide)beginCoverExit(p,s,i)}
@@ -116,7 +117,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
         const inputA=Math.atan2(i.y,i.x),delta=Math.atan2(Math.sin(inputA-travel),Math.cos(inputA-travel)),forward=Math.cos(delta);
         if(forward<-.15){
           const brake=Math.max(0,1-c.slideBrake*d);p.vx*=brake;p.vy*=brake;
-          if(Math.hypot(p.vx,p.vy)<c.slideCancelSpeed){p.slide=0;p.vx*=.35;p.vy*=.35;s.fx.push({id:uid(),type:"brake",x:p.x,y:p.y,life:.25,owner:n,text:"CHK!"})}
+          if(Math.hypot(p.vx,p.vy)<c.slideCancelSpeed){p.slide=0;p.brake=.16;p.vx*=.22;p.vy*=.22;s.fx.push({id:uid(),type:"brake",x:p.x,y:p.y,life:.34,owner:n,text:"KSSHH!"})}
         }else{
           const steer=clamp(delta,-c.slideSteerAngle,c.slideSteerAngle)*c.slideSteer*d;
           const next=travel+steer,boost=Math.max(0,forward)*c.slideSustain*d,newSpeed=Math.min(c.slideSpeed*1.08,speed+boost);
