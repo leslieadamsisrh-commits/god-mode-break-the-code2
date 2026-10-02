@@ -15,8 +15,8 @@ export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kin
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number};
 export type Fx={id:string;type:string;x:number;y:number;life:number;owner?:number};
 export type GameState={
-  build:string;mode:"bot"|"solo";phase:"lobby"|"playing"|"finished";round:number;winner:number|null;
-  createdAt:number;lastAt:number;time:number;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[];
+  build:string;mode:"bot"|"solo";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;
+  countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[];
 };
 
 const emptyInput=():InputState=>({x:0,y:0,aim:0,fire:false,shield:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,slow:false});
@@ -41,7 +41,7 @@ export function newGame(hostName:string,hostToken:string,now=Date.now(),mode:"bo
   [[132,236,"metal"],[868,236,"stone"],[126,496,"stone"],[874,496,"metal"],[420,265,"stone"],[580,492,"metal"]].forEach(([x,y,kind],i)=>matter.push({id:"m"+i,x:x as number,y:y as number,vx:0,vy:0,r:14,kind:kind as "metal"|"stone",heldBy:null,orbitBy:null,life:999}));
   const players=[player(190,370,0,hostName,hostToken)];
   if(mode==="bot")players.push(player(810,370,Math.PI,"RIFT HUNTER","",true));
-  return{build:"BROTHER-BUILD-R6-ALIGNED-ARENA",mode,phase:"playing",round:1,winner:null,createdAt:now,lastAt:now,time:0,players,covers,matter,shots:[],fx:[]};
+  return{build:"ANIME-COMBAT-MASTER-TONIGHT",mode,phase:mode==="solo"?"playing":"countdown",round:1,winner:null,countdown:3,finisher:0,createdAt:now,lastAt:now,time:0,players,covers,matter,shots:[],fx:[]};
 }
 
 export function joinGame(s:GameState,name:string,token:string){
@@ -63,7 +63,7 @@ function respawn(s:GameState){
   const scores=s.players.map(p=>p.score),ident=s.players.map(p=>({name:p.name,token:p.token,bot:p.bot}));
   const fresh=newGame(ident[0].name,ident[0].token,s.lastAt,s.mode||"bot");
   if(ident[1])fresh.players[1]=player(810,370,Math.PI,ident[1].name,ident[1].token,ident[1].bot);
-  fresh.players.forEach((p,i)=>p.score=scores[i]);fresh.phase="playing";fresh.round=s.round+1;fresh.createdAt=s.createdAt;
+  fresh.players.forEach((p,i)=>p.score=scores[i]);fresh.phase=fresh.mode==="solo"?"playing":"countdown";fresh.countdown=3;fresh.round=s.round+1;fresh.createdAt=s.createdAt;
   Object.assign(s,fresh);
 }
 
@@ -142,14 +142,35 @@ function step(s:GameState,dt:number,previous:InputState[]){
   for(const m of s.matter){if(m.heldBy!==null){const p=s.players[m.heldBy];m.x=p.x+Math.cos(p.aim)*70;m.y=p.y+Math.sin(p.aim)*70;continue;}if(m.orbitBy!==null){const p=s.players[m.orbitBy],idx=p.orbitIds.indexOf(m.id),a=s.time*4+idx*Math.PI*2/Math.max(1,p.orbitIds.length);m.x=p.x+Math.cos(a)*62;m.y=p.y+Math.sin(a)*62;continue;}m.x+=m.vx*d;m.y+=m.vy*d;if(m.x<ARENA.left||m.x>ARENA.right){m.x=clamp(m.x,ARENA.left,ARENA.right);m.vx*=-.58;}if(m.y<ARENA.top||m.y>ARENA.bottom){m.y=clamp(m.y,ARENA.top,ARENA.bottom);m.vy*=-.58;}m.vx*=Math.pow(.35,d);m.vy*=Math.pow(.35,d);if(m.life<999)m.life-=dt;for(let slot=0;slot<s.players.length;slot++){const p=s.players[slot];if(Math.hypot(m.vx,m.vy)>170&&distance(m,p)<m.r+19){const a=Math.atan2(m.vy,m.vx);damage(s,slot,22,Math.cos(a)*360,Math.sin(a)*360,"matter-hit");m.vx*=.25;m.vy*=.25;}}for(const c of s.covers){if(c.hp>0&&circleBox(m,m.r,c).hit&&Math.hypot(m.vx,m.vy)>140){damageCover(s,c,28);m.vx*=-.45;m.vy*=-.45;}}}
   for(const shot of s.shots){shot.x+=shot.vx*d;shot.y+=shot.vy*d;shot.life-=dt;const target=1-shot.owner,p=s.players[target],attacker=s.players[shot.owner];if(p&&p.hp>0&&distance(shot,p)<22){const power=attacker?.bot?.68:1;damage(s,target,10*power,shot.vx*.12*power,shot.vy*.12*power,"shot-hit");shot.life=0;continue;}for(const c of s.covers){if(c.hp>0&&circleBox(shot,2,c).hit){damageCover(s,c,7);shot.life=0;break;}}}
   s.shots=s.shots.filter(x=>x.life>0);s.matter=s.matter.filter(x=>x.life>0);s.fx.forEach(x=>x.life-=dt);s.fx=s.fx.filter(x=>x.life>0);
-  const [a,b]=s.players;if(s.mode!=="solo"&&b&&(a.hp<=0||b.hp<=0)){s.phase="finished";s.winner=a.hp===b.hp?null:a.hp>b.hp?0:1;if(s.winner!==null)s.players[s.winner].score++;}
+  const [a,b]=s.players;if(s.mode!=="solo"&&b&&(a.hp<=0||b.hp<=0)){s.winner=a.hp===b.hp?null:a.hp>b.hp?0:1;if(s.winner!==null)s.players[s.winner].score++;s.phase="finisher";s.finisher=1.65;s.shots=[];s.fx.push({id:uid(),type:"finisher",x:(a.x+b.x)/2,y:(a.y+b.y)/2,life:1.65,owner:s.winner===null?undefined:s.winner});}
 }
 
 export function advance(s:GameState,now=Date.now()){
-  s.mode||=(s.players.some(p=>p.bot)?"bot":"bot");s.players.forEach(p=>{if(p.gripCoverId===undefined)p.gripCoverId=null;});s.covers.forEach(c=>{if(c.build===undefined)c.build=0;});
-  if(s.phase!=="playing"||(s.players.length<2&&s.mode!=="solo")){s.lastAt=now;return;}
-  let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;let previous=s.players.map(p=>({...p.processedInput}));
-  while(elapsed>0){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,previous);s.players.forEach(p=>p.processedInput={...p.input});previous=s.players.map(p=>({...p.input}));elapsed-=dt;if(s.phase!=="playing")break;}
+  s.mode||=(s.players.some(p=>p.bot)?"bot":"bot");
+  if(s.countdown===undefined)s.countdown=0;if(s.finisher===undefined)s.finisher=0;
+  s.players.forEach(p=>{if(p.gripCoverId===undefined)p.gripCoverId=null;});
+  s.covers.forEach(c=>{if(c.build===undefined)c.build=0;});
+  let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;
+
+  if(s.phase==="countdown"){
+    s.countdown=Math.max(0,s.countdown-elapsed);
+    if(s.countdown<=0){s.phase="playing";s.fx.push({id:uid(),type:"fight-start",x:500,y:350,life:.45});}
+    return;
+  }
+  if(s.phase==="finisher"){
+    s.finisher=Math.max(0,s.finisher-elapsed);
+    s.fx.forEach(x=>x.life-=elapsed);s.fx=s.fx.filter(x=>x.life>0);
+    if(s.finisher<=0)s.phase="finished";
+    return;
+  }
+  if(s.phase!=="playing"||(s.players.length<2&&s.mode!=="solo"))return;
+
+  let previous=s.players.map(p=>({...p.processedInput}));
+  while(elapsed>0){
+    const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,previous);
+    s.players.forEach(p=>p.processedInput={...p.input});previous=s.players.map(p=>({...p.input}));
+    elapsed-=dt;if(s.phase!=="playing")break;
+  }
 }
 export function startOrRematch(s:GameState,slot:number){const p=s.players[slot];if(!p||p.bot)return;if(s.mode==="solo"){respawn(s);return;}if(s.phase==="lobby"&&slot===0&&s.players.length===2){respawn(s);return;}if(s.phase==="finished"){p.rematch=true;if(s.players.some(p=>p.bot)||s.players.every(p=>p.rematch))respawn(s);}}
 export function safeState(s:GameState){return{...s,players:s.players.map(({token,...p})=>p)};}
