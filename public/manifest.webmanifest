@@ -1,0 +1,11 @@
+{
+  "name": "GOD MODE: BREAK THE CODE",
+  "short_name": "GOD MODE",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#05080c",
+  "theme_color": "#05080c",
+  "orientation": "landscape",
+  "description": "GOD MODE Combat Master Studio"
+}
