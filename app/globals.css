@@ -12,7 +12,7 @@
 /* === ANIME UPGRADE PLAY CONTAINER === */
 .play-layout.playing{height:100vh;grid-template-columns:1fr;background:#05050a}
 .play-layout.playing .arena-wrap{height:100vh}
-.play-layout.playing .command-hud,.play-layout.playing+.panel{display:none}
+.play-layout.playing .command-hud,.play-layout.playing+.panel,.play-layout.playing .match-banner{display:none}
 .play-layout.playing .arena{background:#05050a}
 
 .anime-upgrade-hud{position:absolute;inset:0;z-index:5;pointer-events:none;font-family:Arial,Helvetica,sans-serif;color:#fff}
