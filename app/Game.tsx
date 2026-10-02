@@ -51,12 +51,12 @@ function preloadArt() {
       const runtimeName = (family === "run" || family === "slide") && d === 3
         ? `${family}.webp`
         : `${family}-d${String(d).padStart(2, "0")}.webp`;
-      image.src = `/assets/recovered/${runtimeName}`;
+      image.src = `/assets/recovered/${runtimeName}?v=clean-v57-20261001`;
     }
   }
   const animeArena = new Image();
   animeArena.onload = () => concepts.set("animeArena", animeArena);
-  animeArena.src = "/assets/dimension33-map/arena-war-games-hires.webp";
+  animeArena.src = "/assets/dimension33-map/arena-war-games-hires.webp?v=v28-lock-20261001";
     const atlas = new Image();
   atlas.onload = () => buildScenery(atlas);
   atlas.src = "/assets/environment/cover-destruction-atlas.png";
