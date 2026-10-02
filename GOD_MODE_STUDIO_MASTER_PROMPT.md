@@ -45,17 +45,22 @@ Maintain:
 - one map schema,
 - one published multiplayer configuration.
 
-The stable baseline for this production room is:
+The production authorities for this room are now:
 
-COMBAT AUTHORITY:
-- V12 Combat Master / recovered Version 57 movement
-- authoritative movement values:
-  - move speed 262
-  - response 13
-  - stop drag .002
-  - slide speed 650
-  - slide duration .70
-  - fixed simulation 1/60
+MECHANICAL AUTHORITY — INSTRUCTOR 142:
+- The uploaded Instructor 142 gameplay recording is the behavioral authority for movement and cover feel.
+- Preserve Instructor 142's fluid movement, acceleration, braking, slide timing, cover capture, cover flow, corner behavior, cover exits, combat transitions, camera feel, matter interaction, and kinetic-effect timing.
+- Do NOT rebuild Instructor 142 behavior from Version 57 when a later Instructor 142 behavior is known.
+- Version 57 remains a fallback/reference for isolated mechanics only.
+- First goal is to reproduce Instructor 142 behavior faithfully before evolving it.
+
+CHARACTER SCALE / PRESENTATION AUTHORITY — NEWEST EDITABLE STRUCTURE LAB:
+- Jade must stay at the SAME apparent in-game size as the small pink-caped Jade in the newest editable Structure Lab / current Combat Studio.
+- Do NOT enlarge Jade to match older V142 art sheets.
+- Do NOT let different source sprite resolutions change her apparent gameplay scale.
+- Every replacement sprite family must be normalized to the current Structure Lab character size.
+- Use per-family registration data for scale, ground anchor, x/y offset, muzzle socket, cover-contact socket, and frame timing.
+- The desired result is Instructor 142 mechanics wearing the current small pink-caped Jade presentation.
 
 MULTIPLAYER AUTHORITY:
 - verified V12-08L private duel architecture
@@ -67,14 +72,16 @@ MULTIPLAYER AUTHORITY:
 - room/session isolation
 
 SPRITE AUTHORITY:
-- approved SMALL pink-cape Jade runtime sprite family
-- 24-direction ready / run / slide / cover
+- approved SMALL pink-cape Jade runtime sprite family from the newest editable Structure Lab
+- 24-direction ready / run / slide / cover where already available
 - approved recovered runtime assets only
 - no guide-sheet graphics
 - no giant artwork panels
 - no silent sprite substitution
+- mixed Instructor 142 sprites are behavioral/art references and temporary fallbacks only until replaced and normalized
 
 EDITOR REFERENCES TO RECOVER:
+- newest editable V142 Structure Lab / Director Chat / Place Pieces flow
 - Dimension 33 Map Markup editor
 - Structure Lab / Place Pieces editor
 - runtime scale calibration tools
@@ -87,8 +94,8 @@ FIRST BUILD ONLY:
 
 - solo Jade
 - neutral floor
-- small approved pink-cape Jade sprites
-- Master Combat movement
+- small approved pink-cape Jade sprites at the exact apparent size of the newest editable Structure Lab
+- Instructor 142 movement and cover behavior
 - independent aim / move
 - shotgun
 - slide
@@ -921,6 +928,37 @@ Only actual code/system additions require deployment.
 
 Ordinary combat tuning, sprite routing, hitbox editing,
 map layout and asset placement happen inside the editor.
+
+---
+
+# 20A. INSTRUCTOR 142 RECOVERY / PORT RULE
+
+Before further movement redesign:
+
+1. Treat the uploaded Instructor 142 recording as the behavioral reference.
+2. Recover the closest accessible Instructor 142 / V142 runtime, source, exported HTML, or later combat modules.
+3. Port those mechanics into the current single-site Studio without changing the current small-Jade scale.
+4. Preserve the current Director, Training Director, Sprite Lab, iPad Home Screen app, and multiplayer-compatible configuration architecture around the recovered mechanics.
+5. First prove:
+   - open movement
+   - acceleration / braking
+   - slide
+   - cover capture
+   - cover flow
+   - corner wrap
+   - peel-away
+   - hard brace
+   - cover aim / fire / retract
+   - cover exit
+   - matter interaction
+6. Once the creator confirms the recovered feel matches Instructor 142, freeze a V142 CLASSIC checkpoint/preset.
+7. Only after that:
+   - replace mixed sprites family-by-family
+   - normalize every family to newest Structure Lab Jade size
+   - preserve sockets and anchors
+   - compare V142 CLASSIC against future GOD MODE WEAVE experiments.
+
+Do NOT continue approximating Instructor 142 with newly invented movement rules when recovered behavior can be reused.
 
 ---
 
