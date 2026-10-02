@@ -19,7 +19,18 @@ export default function Game(){
  useEffect(()=>{const kd=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement)?.tagName))return;if(["Space","ShiftLeft","ShiftRight"].includes(e.code))e.preventDefault();if(!keys.current[e.code])edges.current[e.code]=true;keys.current[e.code]=true},ku=(e:KeyboardEvent)=>keys.current[e.code]=false;addEventListener("keydown",kd);addEventListener("keyup",ku);return()=>{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}},[]);
  useEffect(()=>{let dead=false;const poll=async()=>{if(dead)return;const s=session.current;if(s)try{const u=new URL("/api/game",location.origin);u.searchParams.set("room",s.room);u.searchParams.set("token",s.token);const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(r.ok)accept(v)}catch{}setTimeout(poll,80)};poll();return()=>{dead=true}},[accept]);
  useEffect(()=>{const timer=setInterval(async()=>{const s=session.current,g=state.current;if(!s||!g)return;const p=g.players[0],i:any={...EMPTY};i.x=(keys.current.KeyD?1:0)-(keys.current.KeyA?1:0);i.y=(keys.current.KeyS?1:0)-(keys.current.KeyW?1:0);i.aim=Math.atan2(mouse.current.y-p.y,mouse.current.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};
-  try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;i.x=dz(pad.axes[0]||0);i.y=dz(pad.axes[1]||0);const rx=dz(pad.axes[2]||0),ry=dz(pad.axes[3]||0);if(rx||ry)i.aim=Math.atan2(ry,rx);i.slide||=pad.buttons[0]?.pressed;i.pinball||=pad.buttons[1]?.pressed;i.grip||=pad.buttons[3]?.pressed;i.shield||=pad.buttons[4]?.pressed;i.melee||=pad.buttons[5]?.pressed;i.slow||=pad.buttons[6]?.pressed;i.fire||=pad.buttons[7]?.pressed;i.orbit||=pad.buttons[12]?.pressed;i.launchOrbit||=pad.buttons[13]?.pressed;i.heavy||=pad.buttons[14]?.pressed;i.throwMatter||=pad.buttons[15]?.pressed}}catch{}
+  try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;i.x=dz(pad.axes[0]||0);i.y=dz(pad.axes[1]||0);const rx=dz(pad.axes[2]||0),ry=dz(pad.axes[3]||0);if(rx||ry)i.aim=Math.atan2(ry,rx);i.slide||=pad.buttons[0]?.pressed;/* A = slide / vault / cover movement */
+i.melee||=pad.buttons[1]?.pressed;/* B = melee / interact — V142 authority */
+i.slow||=pad.buttons[2]?.pressed;/* X = Slow Time */
+i.grip||=pad.buttons[3]?.pressed;/* Y temporarily keeps Grip until weapon wheel is restored */
+i.shield||=pad.buttons[4]?.pressed;/* LB = shield */
+i.cover||=pad.buttons[5]?.pressed;/* RB = create/use cover */
+i.fire||=pad.buttons[7]?.pressed;/* RT = fire */
+i.orbit||=pad.buttons[12]?.pressed;
+i.launchOrbit||=pad.buttons[13]?.pressed;
+i.heavy||=pad.buttons[14]?.pressed;
+i.throwMatter||=pad.buttons[15]?.pressed;
+/* Pinball intentionally has no controller binding until its certified V142 slot is recovered. */}}catch{}
   try{accept(await post({action:"input",...s,seq:++seq.current,input:i}))}catch{}
  },33);return()=>clearInterval(timer)},[accept,post]);
  useEffect(()=>{let id=0;const loop=()=>{draw(canvas.current,state.current,lastAccept.current);id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[]);
@@ -37,7 +48,7 @@ export default function Game(){
    {director&&<Director cfg={config} patch={patch} save={save} load={load} note={note}/>}
    {spritePanel&&<SpriteInspector s={hud}/>}
   </div>
-  <footer><span>WASD / LS MOVE</span><span>MOUSE / RS AIM</span><span>SHIFT / A SLIDE</span><span>RT FIRE</span><span>E / LB SHIELD</span><span>Q GRIP</span><span>R THROW</span><span>O ORBIT</span><span>P LAUNCH</span><span>SPACE PINBALL</span><span>X SLOW</span><span>B COVER</span></footer>
+  <footer><span>LS MOVE</span><span>RS AIM</span><span>A SLIDE / VAULT</span><span>B MELEE</span><span>X SLOW TIME</span><span>Y GRIP · TEMP</span><span>LB SHIELD</span><span>RB COVER</span><span>RT FIRE</span><span>D-PAD ↑ ORBIT</span><span>D-PAD ↓ LAUNCH</span><span>D-PAD → THROW</span><span>PINBALL · UNBOUND</span></footer>
  </main>
 }
 function Director({cfg,patch,save,load,note}:{cfg:Config;patch:(k:keyof Config,v:number)=>void;save:()=>void;load:()=>void;note:string}){const rows:[keyof Config,string,number,number,number][]=[
