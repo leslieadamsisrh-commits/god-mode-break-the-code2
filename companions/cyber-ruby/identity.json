@@ -1,0 +1,13 @@
+{
+  "pet_id": "pet_6abfa0f124308191a3b6cf3ac194e59f",
+  "name": "Cyber Ruby",
+  "role": "project-companion",
+  "gameplay_enabled": false,
+  "runtime_enabled": false,
+  "networked": false,
+  "design_status": "temporary",
+  "description": "Jade's tan pit bull companion with a white nose stripe and white sock paws, currently used only as Leslie's GOD MODE work buddy.",
+  "verified_at": "2026-10-02",
+  "source_library_file_id": "file_00000000520081f594edf1f0ad222561",
+  "atlas_sha256": "ada9a34f1e1582a22f1704315bc1947f7dc1dc97304b9ea708a23184c4499c23"
+}
