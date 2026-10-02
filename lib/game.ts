@@ -4,7 +4,7 @@ export const DEFAULT_CONFIG:CombatConfig={moveSpeed:262,response:13,stopDrag:.00
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
 export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
-export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number};
+export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number};
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number};
 export type Fx={id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string};
@@ -20,8 +20,8 @@ export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo
  if(mode==="bot")players.push(player(780,330,Math.PI,"RIFT HUNTER","",true,config.maxHealth));
  const matter:Matter[]=[];[[170,170,"stone"],[330,190,"metal"],[500,160,"stone"],[680,195,"metal"],[800,165,"stone"],[420,470,"metal"],[610,465,"stone"],[760,445,"metal"]].forEach(([x,y,k],i)=>matter.push({id:"m"+i,x:x as number,y:y as number,vx:0,vy:0,r:14,kind:k as any,heldBy:null,orbitBy:null,life:999}));
  const covers:Cover[]=[
- {id:"cover-piece-01",x:360,y:365,w:170,h:38,a:0,hp:4,maxHp:4,generated:false,build:0},
- {id:"sniper-tower-base",x:690,y:315,w:128,h:46,a:Math.PI/2,hp:18,maxHp:18,generated:false,build:0}
+ {id:"cover-piece-01",x:360,y:365,w:170,h:38,a:0,hp:4,maxHp:4,generated:false,build:0,variant:0},
+ {id:"sniper-tower-base",x:690,y:315,w:128,h:46,a:Math.PI/2,hp:18,maxHp:18,generated:false,build:0,variant:3}
  ];
  return{build:"COMBAT-MASTER-STUDIO-01",mode,phase:mode==="solo"?"playing":"countdown",round:1,winner:null,countdown:3,finisher:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
 }
@@ -54,8 +54,12 @@ function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
  const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,along=i.x*a.tx+i.y*a.ty,away=i.x*a.nx+i.y*a.ny;
  if(p.coverMode==="soft"&&away>.38){releaseCover(p,s,.08);p.vx=i.x*c.moveSpeed*1.15;p.vy=i.y*c.moveSpeed*1.15;return}
  p.coverSpeed+=(along*c.moveSpeed-p.coverSpeed)*Math.min(1,dt*c.response);if(Math.abs(along)<.001)p.coverSpeed*=Math.pow(c.stopDrag,dt);
- const before=a.offset;a.offset=clamp(a.offset+p.coverSpeed*dt,-a.half,a.half);if(a.offset===before)p.coverSpeed=0;
- p.vx=a.tx*p.coverSpeed;p.vy=a.ty*p.coverSpeed;placeOnCover(p,s);
+ const before=a.offset,raw=a.offset+p.coverSpeed*dt;a.offset=clamp(raw,-a.half,a.half);
+ if(p.coverMode==="soft"&&Math.abs(raw)>a.half+.1&&Math.abs(along)>.2){
+   const cv=s.covers.find(x=>x.id===p.coverId);
+   if(cv){const sign=Math.sign(along)||1,candidate={x:p.x+a.tx*sign*26,y:p.y+a.ty*sign*26,r:18};const next=coverFace(cv,candidate);if(next.face!==a.face){p.coverAnchor=next;p.coverSpeed*=.82;placeOnCover(p,s)}}
+ }else if(a.offset===before)p.coverSpeed=0;
+ p.vx=(p.coverAnchor?.tx??a.tx)*p.coverSpeed;p.vy=(p.coverAnchor?.ty??a.ty)*p.coverSpeed;placeOnCover(p,s);
  if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*a.nx+Math.sin(p.gunFacing)*a.ny;p.peek=forward<.35;p.peekEdge=Math.abs(a.offset)>a.half-18}else{p.peek=false;p.peekEdge=Math.abs(a.offset)>a.half-18}
 }
 function beginCoverExit(p:Player,s:GameState,i:InputState){
@@ -92,7 +96,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  }
  if(i.pinball&&!prev.pinball&&p.battery>=22){p.battery-=22;p.pinball=c.pinballDuration;p.vx=Math.cos(p.aim)*c.pinballSpeed;p.vy=Math.sin(p.aim)*c.pinballSpeed;s.fx.push({id:uid(),type:"pinball",x:p.x,y:p.y,life:.5,owner:n})}
  if((i.melee&&!prev.melee||i.heavy&&!prev.heavy)&&s.time-p.lastMelee>(i.heavy?.85:.38)){p.lastMelee=s.time;s.fx.push({id:uid(),type:i.heavy?"heavy":"melee",x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40,life:.22,owner:n})}
- if(i.cover&&!prev.cover&&p.battery>=30){p.battery-=30;const x=clamp(p.x+Math.cos(p.aim)*100-65,A.left,A.right-130),y=clamp(p.y+Math.sin(p.aim)*100-15,A.top,A.bottom-30);const generated=s.covers.filter(c=>c.generated);if(generated.length>=4){const old=generated[0];if(p.coverId===old.id)releaseCover(p,s,.15);s.covers=s.covers.filter(c=>c.id!==old.id)}s.covers.push({id:uid(),x:x+65,y:y+15,w:130,h:30,a:p.aim+Math.PI/2,hp:110,maxHp:110,generated:true,build:1});s.fx.push({id:uid(),type:"materialize",x:x+65,y:y+15,life:.7,owner:n})}
+ if(i.cover&&!prev.cover&&p.battery>=30){p.battery-=30;const x=clamp(p.x+Math.cos(p.aim)*100-65,A.left,A.right-130),y=clamp(p.y+Math.sin(p.aim)*100-15,A.top,A.bottom-30);const generated=s.covers.filter(c=>c.generated);if(generated.length>=4){const old=generated[0];if(p.coverId===old.id)releaseCover(p,s,.15);s.covers=s.covers.filter(c=>c.id!==old.id)}const used=new Set(s.covers.filter(c=>c.generated).map(c=>c.variant));let variant=0;while(used.has(variant)&&variant<3)variant++;s.covers.push({id:uid(),x:x+65,y:y+15,w:130,h:30,a:p.aim+Math.PI/2,hp:110,maxHp:110,generated:true,build:1,variant});s.fx.push({id:uid(),type:"materialize",x:x+65,y:y+15,life:.7,owner:n})}
  if(i.grip&&!prev.grip){if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m)m.heldBy=null;p.gripId=null}else{const m=s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null).sort((a,b)=>dist(a,p)-dist(b,p))[0];if(m&&dist(m,p)<245){p.gripId=m.id;m.heldBy=n}}}
  if(i.throwMatter&&!prev.throwMatter&&p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m){m.heldBy=null;m.vx=Math.cos(p.aim)*c.throwForce;m.vy=Math.sin(p.aim)*c.throwForce;m.life=3;p.gripId=null}}
  if(i.orbit&&!prev.orbit&&p.battery>=25){const ms=s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null).sort((a,b)=>dist(a,p)-dist(b,p)).slice(0,3);if(ms.length){p.battery-=25;p.orbitIds=ms.map(m=>m.id);ms.forEach(m=>m.orbitBy=n)}}
@@ -111,8 +115,8 @@ function botInput(s:GameState){const n=s.players.findIndex(p=>p.bot);if(n<0)retu
 function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.players.some(p=>p.input.slow&&p.battery>0),d=dt*(slow?.52:1);
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input;p.aim=i.aim;
   const moveAngle=Math.hypot(p.vx,p.vy)>35?Math.atan2(p.vy,p.vx):p.gunFacing;
-  const maxTwist=145*Math.PI/180,deltaAim=Math.atan2(Math.sin(i.aim-moveAngle),Math.cos(i.aim-moveAngle));
-  p.gunFacing=moveAngle+clamp(deltaAim,-maxTwist/2,maxTwist/2);
+  if(p.coverId&&p.coverMode==="braced"&&i.coverAim)p.gunFacing=i.aim;
+  else{const maxTwist=145*Math.PI/180,deltaAim=Math.atan2(Math.sin(i.aim-moveAngle),Math.cos(i.aim-moveAngle));p.gunFacing=moveAngle+clamp(deltaAim,-maxTwist/2,maxTwist/2)}
   p.fireState=Math.max(0,p.fireState-dt);p.recoil=Math.max(0,p.recoil-dt);p.returnToCover=Math.max(0,p.returnToCover-dt);p.boostState=Math.max(0,p.boostState-dt);p.brakeState=Math.max(0,p.brakeState-dt);
   edgeActions(s,n,prev[n]||empty());p.shield=i.shield&&p.battery>0;if(p.shield)p.battery=Math.max(0,p.battery-18*dt);if(i.slow&&p.battery>0)p.battery=Math.max(0,p.battery-28*dt);if(p.gripId)p.battery=Math.max(0,p.battery-6*dt);if(!p.shield&&!i.slow&&!p.gripId)p.battery=Math.min(100,p.battery+9*dt);
   p.brake=Math.max(0,p.brake-dt);
