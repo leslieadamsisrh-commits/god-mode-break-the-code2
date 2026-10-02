@@ -18,3 +18,7 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .presetGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0 4px}.presetGrid button{border:1px solid #355864;background:#102630;color:#eaffff;padding:9px 7px;font:800 9px monospace;letter-spacing:.04em;cursor:pointer}.presetGrid button:hover{border-color:var(--cyan);background:#153843}.presetHint{margin:5px 0 10px!important;color:#7fa2ab!important;font-size:10px!important}
 
 .presetGrid button{position:relative}.presetGrid button.recommended{border-color:var(--pink);box-shadow:0 0 16px #ff4aa522;background:#271326}.presetGrid button small{display:block;margin-top:3px;color:var(--pink);font:900 7px monospace;letter-spacing:.12em}
+
+.padLine{display:block;margin-top:6px;color:#8ceff1;font:800 8px monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.controllerGate{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:12;border:2px solid var(--cyan);background:#07131ff0;color:#fff;padding:16px 22px;font:900 13px monospace;letter-spacing:.08em;box-shadow:0 20px 60px #000d,0 0 22px #62edf044;cursor:pointer}
+.controllerGate small{display:block;margin-top:7px;color:#9fc8ce;font:700 9px monospace;letter-spacing:.02em}
