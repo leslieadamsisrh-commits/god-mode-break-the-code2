@@ -3,7 +3,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const jadeSrc = path.join(root, "combat-lab", "assets", "cyberkitty");
-const jadeDst = path.join(root, "public", "assets", "jade");
+const jadeDst = path.join(root, "public", "assets", "shotgun-v57");
 
 await mkdir(jadeDst, { recursive: true });
 await cp(jadeSrc, jadeDst, { recursive: true, force: true });
@@ -31,4 +31,4 @@ if (cover) {
   await copyFile(cover, path.join(envDir, "cover-destruction-atlas.png"));
 }
 
-console.log("Prepared GOD MODE runtime assets:", jadeDst, cover ? "cover atlas copied" : "cover atlas optional/missing");
+console.log("Prepared GOD MODE Combat Master 250px atlases:", jadeDst, cover ? "cover atlas copied" : "cover atlas optional/missing");
