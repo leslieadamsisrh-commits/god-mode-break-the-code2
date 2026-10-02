@@ -20,11 +20,9 @@ export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo
  if(mode==="bot")players.push(player(780,330,Math.PI,"RIFT HUNTER","",true,config.maxHealth));
  const matter:Matter[]=[];[[170,170,"stone"],[330,190,"metal"],[500,160,"stone"],[680,195,"metal"],[800,165,"stone"],[420,470,"metal"],[610,465,"stone"],[760,445,"metal"]].forEach(([x,y,k],i)=>matter.push({id:"m"+i,x:x as number,y:y as number,vx:0,vy:0,r:14,kind:k as any,heldBy:null,orbitBy:null,life:999}));
  const covers:Cover[]=[
- {id:"cover-center",x:438,y:285,w:124,h:30,a:0,hp:999,maxHp:999,generated:false,build:0},
- {id:"cover-left",x:190,y:380,w:150,h:32,a:0,hp:999,maxHp:999,generated:false,build:0},
- {id:"cover-right",x:660,y:190,w:150,h:32,a:0,hp:999,maxHp:999,generated:false,build:0},
- {id:"cover-vertical",x:720,y:390,w:118,h:30,a:Math.PI/2,hp:999,maxHp:999,generated:false,build:0}
-];
+ {id:"cover-piece-01",x:360,y:365,w:170,h:38,a:0,hp:4,maxHp:4,generated:false,build:0},
+ {id:"sniper-tower-base",x:690,y:315,w:128,h:46,a:Math.PI/2,hp:18,maxHp:18,generated:false,build:0}
+ ];
  return{build:"COMBAT-MASTER-STUDIO-01",mode,phase:mode==="solo"?"playing":"countdown",round:1,winner:null,countdown:3,finisher:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
 }
 export function updateConfig(s:GameState,patch:Partial<CombatConfig>){s.config={...s.config,...patch};for(const p of s.players)p.hp=Math.min(p.hp,s.config.maxHealth)}
