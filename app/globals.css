@@ -30,3 +30,7 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 
 .resetTests{width:100%;margin-top:7px;border:1px solid #49616b;background:#101a20;color:#dce9ec;padding:7px;font:900 9px monospace;letter-spacing:.08em;cursor:pointer}
 .resetTests:hover{border-color:var(--cyan);color:#fff}
+
+.spriteLab{position:absolute;right:14px;bottom:14px;width:250px;background:#07111bdc;border:1px solid #4b6570;border-top:4px solid var(--pink);box-shadow:0 18px 50px #000b;padding:11px;backdrop-filter:blur(10px);z-index:6}
+.spriteLab .panelTitle{margin-bottom:6px}.spriteLab .panelTitle span{color:var(--pink)}.spriteLab dl{display:grid;grid-template-columns:78px 1fr;gap:5px 7px;margin:0;font:800 9px monospace}.spriteLab dt{color:#76919a}.spriteLab dd{margin:0;color:#eef7f8;overflow-wrap:anywhere}.spriteLab dd.warn{color:#ffb26b}.spriteLab dd.ok{color:#6af0c7}
+@media(max-width:800px){.spriteLab{right:10px;bottom:62px;width:220px}}
