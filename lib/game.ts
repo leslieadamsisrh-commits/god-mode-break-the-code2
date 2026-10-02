@@ -41,7 +41,7 @@ function coverFace(c:Cover,p:Player|{x:number;y:number;r?:number}):CoverAnchor&{
  else if(Math.abs(q.x)>hw)face=q.x<0?"left":"right";else if(Math.abs(q.y)>hh)face=q.y<0?"top":"bottom";
  else{const ds=[q.x+hw,hw-q.x,q.y+hh,hh-q.y];face=(["left","right","top","bottom"] as const)[ds.indexOf(Math.min(...ds))]}
  const vertical=face==="left"||face==="right",sign=face==="left"||face==="top"?-1:1,ca=Math.cos(c.a||0),sa=Math.sin(c.a||0);
- return{face,offset:clamp(vertical?q.y:q.x,-(vertical?hh:hw),vertical?hh:hw),half:vertical?hh:hw,nx:vertical?sign*ca:-sign*sa,ny:vertical?sign*sa:sign*ca,tx:vertical?-sa:ca,ty:vertical?ca:sa,gap:Math.hypot(q.x-px,q.y-py)-(p.r??18)};
+ return{face,offset:clamp(vertical?q.y:q.x,-(vertical?hh:hw),vertical?hh:hw),half:vertical?hh:hw,nx:vertical?sign*ca:-sign*sa,ny:vertical?sign*sa:sign*ca,tx:vertical?-sa:ca,ty:vertical?ca:sa,gap:Math.hypot(q.x-px,q.y-py)-(("r" in p && typeof p.r==="number")?p.r:18)};
 }
 function placeOnCover(p:Player,s:GameState){
  const c=s.covers.find(x=>x.id===p.coverId),a=p.coverAnchor;if(!c||!a)return;
