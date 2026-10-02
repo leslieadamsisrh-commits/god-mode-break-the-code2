@@ -1,8 +1,18 @@
-import { mkdir, readdir, copyFile } from "node:fs/promises";
+import { mkdir, readdir, copyFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
 const root=process.cwd();
+
+const ANIME_ARENA_URL="https://god-mode-anime-upgrade-v28.leslieadams-isrh.chatgpt.site/assets/dimension33-map/arena-war-games-hires.webp";
+const arenaDir=path.join(root,"public","assets","dimension33-map");
+await mkdir(arenaDir,{recursive:true});
+const arenaResponse=await fetch(ANIME_ARENA_URL,{signal:AbortSignal.timeout(20000)});
+if(!arenaResponse.ok) throw new Error(`Exact Anime Upgrade arena unavailable: HTTP ${arenaResponse.status}`);
+const arenaBytes=Buffer.from(await arenaResponse.arrayBuffer());
+if(arenaBytes.length<10000) throw new Error(`Exact Anime Upgrade arena payload too small: ${arenaBytes.length} bytes`);
+await writeFile(path.join(arenaDir,"arena-war-games-hires.webp"),arenaBytes);
+console.log(`Recovered exact Anime Upgrade arena plate: ${arenaBytes.length} bytes`);
 const srcDir=path.join(root,"combat-lab","assets","cyberkitty");
 const dstDir=path.join(root,"public","assets","recovered");
 await mkdir(dstDir,{recursive:true});
