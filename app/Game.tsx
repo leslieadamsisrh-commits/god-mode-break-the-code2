@@ -48,12 +48,15 @@ function preloadArt() {
       const key = `${family}-${d}`;
       const image = new Image();
       image.onload = () => jade.set(key, image);
-      image.src = `/assets/recovered/${family}-d${String(d).padStart(2, "0")}.webp`;
+      const runtimeName = (family === "run" || family === "slide") && d === 3
+        ? `${family}.webp`
+        : `${family}-d${String(d).padStart(2, "0")}.webp`;
+      image.src = `/assets/recovered/${runtimeName}`;
     }
   }
   const animeArena = new Image();
   animeArena.onload = () => concepts.set("animeArena", animeArena);
-  animeArena.src = "https://god-mode-anime-upgrade-v28.leslieadams-isrh.chatgpt.site/assets/dimension33-map/arena-war-games-hires.webp";
+  animeArena.src = "/assets/dimension33-map/arena-war-games-hires.webp";
     const atlas = new Image();
   atlas.onload = () => buildScenery(atlas);
   atlas.src = "/assets/environment/cover-destruction-atlas.png";
