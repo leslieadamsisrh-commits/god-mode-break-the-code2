@@ -48,7 +48,7 @@ function preloadArt() {
       const key = `${family}-${d}`;
       const image = new Image();
       image.onload = () => jade.set(key, image);
-      image.src = `/assets/jade/${family}-d${String(d).padStart(2, "0")}.webp`;
+      image.src = `/assets/shotgun-v57/${family}-d${String(d).padStart(2, "0")}.webp`;
     }
   }
   const atlas = new Image();
@@ -226,22 +226,118 @@ function matter(g: CanvasRenderingContext2D, m: any, q: Calibration) {
 }
 
 function fighter(g: CanvasRenderingContext2D, p: any, i: number, me: number, t: number, q: Calibration) {
-  const color = i === 0 ? "#ff4aa5" : "#56eef0", speed = Math.hypot(p.vx || 0, p.vy || 0), family = p.coverId ? "cover" : (p.slide > 0 || p.pinball > 0 || p.knock > .32) ? "slide" : speed > 34 ? "run" : "ready";
-  const angle = family === "slide" && Number.isFinite(p.slideFacing) ? p.slideFacing : family === "run" && speed > 55 ? Math.atan2(p.vy, p.vx) : p.aim || 0;
+  const color = i === 0 ? "#ff4aa5" : "#56eef0";
+  const speed = Math.hypot(p.vx || 0, p.vy || 0);
+  const family = p.coverId ? "cover" : (p.slide > 0 || p.pinball > 0 || p.knock > .32) ? "slide" : speed > 34 ? "run" : "ready";
+  const angle = family === "slide" && Number.isFinite(p.slideFacing)
+    ? p.slideFacing
+    : family === "run" && speed > 55
+      ? Math.atan2(p.vy, p.vx)
+      : p.aim || 0;
   const direction = ((Math.round(angle / (Math.PI * 2) * 24) % 24) + 24) % 24;
-  const image = jade.get(`${family}-${direction}`) || jade.get(`ready-${direction}`), cell = 125, frames = image ? Math.max(1, Math.floor(image.width / cell) * Math.floor(image.height / cell)) : 1;
+
+  // Combat Master master atlases use 250×250 source cells. Keep that source
+  // resolution, but render Jade at the smaller approved in-game footprint.
+  const nearest = (fam: string, dir: number) => {
+    for (let offset = 0; offset < 12; offset++) {
+      const choices = offset === 0 ? [dir] : [dir + offset, dir - offset];
+      for (const raw of choices) {
+        const d = ((raw % 24) + 24) % 24;
+        const candidate = jade.get(`${fam}-${d}`);
+        if (candidate) return candidate;
+      }
+    }
+    return undefined;
+  };
+
+  const image = nearest(family, direction) || nearest("ready", direction);
+  const SOURCE_CELL = 250;
+  const DISPLAY_CELL = 125;
+  const cols = image ? Math.max(1, Math.floor(image.naturalWidth / SOURCE_CELL)) : 1;
+  const rows = image ? Math.max(1, Math.floor(image.naturalHeight / SOURCE_CELL)) : 1;
+  const frames = Math.max(1, cols * rows);
   let frame = family === "ready" ? 0 : Math.floor(t * (family === "run" ? 10 : 7)) % frames;
-  if (family === "slide" && p.slide > 0) frame = Math.min(frames - 1, Math.max(0, Math.floor((1 - p.slide / .7) * frames)));
-  const cols = Math.max(1, Math.floor((image?.width || cell) / cell)), depth = .72 + p.y / 620 * .34*q.perspective, scale = depth * 1.02*q.playerScale, sx = (frame % cols) * cell, sy = Math.floor(frame / cols) * cell;
-  g.save(); g.fillStyle = "#0009"; g.beginPath(); g.ellipse(p.x, p.y + 7, 31 * depth*q.playerShadow, 10 * depth*q.playerShadow, 0, 0, Math.PI * 2); g.fill();
-  if (p.shield) { const pulse = 1 + Math.sin(t * 18) * .04; g.strokeStyle = color; g.shadowColor = color; g.shadowBlur = 20; g.lineWidth = 5; g.globalAlpha = .78; g.beginPath(); g.ellipse(p.x, p.y - 34 * depth, 42 * pulse * depth, 62 * pulse * depth, 0, 0, Math.PI * 2); g.stroke(); g.globalAlpha = 1; g.shadowBlur = 0; }
-  if (image) { g.globalAlpha = p.hp <= 0 ? .38 : 1; g.imageSmoothingEnabled = false; g.drawImage(image, sx, sy, cell, cell, p.x - 62.5 * scale, p.y - 109.5 * scale, cell * scale, cell * scale); }
-  else { g.translate(p.x, p.y); g.fillStyle = "#151923"; g.strokeStyle = color; g.lineWidth = 3; g.beginPath(); g.moveTo(-16, 10); g.lineTo(-11, -44); g.lineTo(13, -44); g.lineTo(18, 10); g.closePath(); g.fill(); g.stroke(); }
+  if (family === "slide" && p.slide > 0) {
+    frame = Math.min(frames - 1, Math.max(0, Math.floor((1 - p.slide / .7) * frames)));
+  }
+
+  const sx = (frame % cols) * SOURCE_CELL;
+  const sy = Math.floor(frame / cols) * SOURCE_CELL;
+  const depth = .72 + p.y / 620 * .34 * q.perspective;
+  const scale = depth * 1.02 * q.playerScale;
+
+  g.save();
+  g.fillStyle = "#0009";
+  g.beginPath();
+  g.ellipse(p.x, p.y + 7, 31 * depth * q.playerShadow, 10 * depth * q.playerShadow, 0, 0, Math.PI * 2);
+  g.fill();
+
+  if (p.shield) {
+    const pulse = 1 + Math.sin(t * 18) * .04;
+    g.strokeStyle = color;
+    g.shadowColor = color;
+    g.shadowBlur = 20;
+    g.lineWidth = 5;
+    g.globalAlpha = .78;
+    g.beginPath();
+    g.ellipse(p.x, p.y - 34 * depth, 42 * pulse * depth, 62 * pulse * depth, 0, 0, Math.PI * 2);
+    g.stroke();
+    g.globalAlpha = 1;
+    g.shadowBlur = 0;
+  }
+
+  if (image) {
+    g.globalAlpha = p.hp <= 0 ? .38 : 1;
+    g.imageSmoothingEnabled = true;
+    g.imageSmoothingQuality = "high";
+    g.drawImage(
+      image,
+      sx, sy, SOURCE_CELL, SOURCE_CELL,
+      p.x - DISPLAY_CELL * .5 * scale,
+      p.y - DISPLAY_CELL * .876 * scale,
+      DISPLAY_CELL * scale,
+      DISPLAY_CELL * scale
+    );
+  } else {
+    g.translate(p.x, p.y);
+    g.fillStyle = "#151923";
+    g.strokeStyle = color;
+    g.lineWidth = 3;
+    g.beginPath();
+    g.moveTo(-16, 10);
+    g.lineTo(-11, -44);
+    g.lineTo(13, -44);
+    g.lineTo(18, 10);
+    g.closePath();
+    g.fill();
+    g.stroke();
+  }
   g.restore();
-  g.strokeStyle = color; g.globalAlpha = .65; g.lineWidth = i === me ? 3 : 2; g.beginPath(); g.ellipse(p.x, p.y + 5, 28 * depth, 9 * depth, 0, 0, Math.PI * 2); g.stroke(); g.globalAlpha = 1;
-  g.fillStyle = color; g.font = "700 12px monospace"; g.fillText(`${i === me ? "YOU" : p.bot ? "CPU" : "P" + (i + 1)} // ${p.name}`, p.x - 48, p.y + 43 * depth);
-  g.fillStyle = "#111a22"; g.fillRect(p.x - 36, p.y - 122 * depth, 72, 6); g.fillStyle = color; g.fillRect(p.x - 36, p.y - 122 * depth, 72 * Math.max(0, p.hp) / 100, 6);
-  if (t < .8) { g.strokeStyle = color; g.globalAlpha = 1 - t / .8; for (let n = 0; n < 4; n++) { g.beginPath(); g.arc(p.x, p.y, 24 + n * 7 + t * 30, 0, Math.PI * 2); g.stroke(); } g.globalAlpha = 1; }
+
+  g.strokeStyle = color;
+  g.globalAlpha = .65;
+  g.lineWidth = i === me ? 3 : 2;
+  g.beginPath();
+  g.ellipse(p.x, p.y + 5, 28 * depth, 9 * depth, 0, 0, Math.PI * 2);
+  g.stroke();
+  g.globalAlpha = 1;
+  g.fillStyle = color;
+  g.font = "700 12px monospace";
+  g.fillText(`${i === me ? "YOU" : p.bot ? "CPU" : "P" + (i + 1)} // ${p.name}`, p.x - 48, p.y + 43 * depth);
+  g.fillStyle = "#111a22";
+  g.fillRect(p.x - 36, p.y - 122 * depth, 72, 6);
+  g.fillStyle = color;
+  g.fillRect(p.x - 36, p.y - 122 * depth, 72 * Math.max(0, p.hp) / 100, 6);
+  if (t < .8) {
+    g.strokeStyle = color;
+    g.globalAlpha = 1 - t / .8;
+    for (let n = 0; n < 4; n++) {
+      g.beginPath();
+      g.arc(p.x, p.y, 24 + n * 7 + t * 30, 0, Math.PI * 2);
+      g.stroke();
+    }
+    g.globalAlpha = 1;
+  }
 }
 
 function effect(g: CanvasRenderingContext2D, f: any) {
