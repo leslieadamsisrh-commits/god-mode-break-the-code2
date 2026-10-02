@@ -16,3 +16,5 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 @media(max-width:800px){header{height:54px}.studio{grid-template-rows:54px 1fr 48px}header b{font-size:15px}.toolbar{top:auto;bottom:12px}.director,.spritePanel{top:64px;max-height:calc(100% - 130px)}footer{gap:12px;padding:0 10px}.minimalHud{width:155px}}
 
 .presetGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0 4px}.presetGrid button{border:1px solid #355864;background:#102630;color:#eaffff;padding:9px 7px;font:800 9px monospace;letter-spacing:.04em;cursor:pointer}.presetGrid button:hover{border-color:var(--cyan);background:#153843}.presetHint{margin:5px 0 10px!important;color:#7fa2ab!important;font-size:10px!important}
+
+.presetGrid button{position:relative}.presetGrid button.recommended{border-color:var(--pink);box-shadow:0 0 16px #ff4aa522;background:#271326}.presetGrid button small{display:block;margin-top:3px;color:var(--pink);font:900 7px monospace;letter-spacing:.12em}
