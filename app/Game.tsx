@@ -2,8 +2,8 @@
 import {useCallback,useEffect,useRef,useState} from "react";
 
 type Session={room:string;code?:string;token:string;slot:number};
-type Config={moveSpeed:number;response:number;stopDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
-const DEFAULT:Config={moveSpeed:262,response:13,stopDrag:.002,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:650,slideDuration:.70,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1};
+type Config={moveSpeed:number;response:number;stopDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
+const DEFAULT:Config={moveSpeed:262,response:13,stopDrag:.002,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:650,slideDuration:.70,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1};
 const EMPTY:any={x:0,y:0,aim:0,fire:false,shield:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,slow:false};
 const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF:"melee",KeyC:"heavy",KeyQ:"grip",KeyR:"throwMatter",KeyB:"cover",KeyO:"orbit",KeyP:"launchOrbit",Space:"pinball",KeyX:"slow"};
 const jade=new Map<string,HTMLImageElement>();let loading=false;
@@ -48,13 +48,28 @@ i.throwMatter||=pad.buttons[15]?.pressed;
  const save=()=>{localStorage.setItem("god_mode_studio_combat_preset",JSON.stringify(config));setNote("PRESET SAVED LOCALLY");setTimeout(()=>setNote(""),1200)};
  const load=async()=>{try{const p=JSON.parse(localStorage.getItem("god_mode_studio_combat_preset")||"null");if(!p)return setNote("NO PRESET SAVED");const s=session.current;if(s)for(const[k,v]of Object.entries(p))await post({action:"config",...s,patch:{[k]:v}});setConfig({...DEFAULT,...p});setNote("PRESET LOADED")}catch{setNote("PRESET ERROR")}};
  const activateController=()=>{canvas.current?.focus();try{const p=[...navigator.getGamepads()].find(Boolean);if(p){setPadStatus(`CONTROLLER: ${p.id||"CONNECTED"}`);setPadGate(false)}else{setPadStatus("CONTROLLER: PRESS A / MOVE STICK");setPadGate(false)}}catch{setPadStatus("CONTROLLER API NOT READY")}};
- const p=hud?.players?.[0];return <main className="studio">
+ const p=hud?.players?.[0];
+ const tests=[
+  ["BOOST DASH",!!p?.dash],
+  ["FULL SLIDE",(p?.slide||0)>0],
+  ["SUSTAIN",!!p?.slide&&Math.hypot(p?.vx||0,p?.vy||0)>(config.slideSpeed*.88)],
+  ["CURVE",!!p?.slide&&Math.abs(p?.slideSteerCurrent||0)>.35],
+  ["KINETIC BRAKE",(p?.brake||0)>0],
+  ["COVER ATTACH",!!p?.coverId],
+  ["COVER SHIMMY",!!p?.coverId&&Math.abs(p?.coverSpeed||0)>45],
+  ["COVER EXIT",!!p?.exit]
+ ] as [string,boolean][];
+ return <main className="studio">
   <header><div><small>GOD MODE: BREAK THE CODE</small><b>V142 STRUCTURE LAB · COMBAT STUDIO</b></div><span>{status}</span></header>
   <div className="stageWrap">
    <canvas ref={canvas} width={1400} height={868} onPointerMove={point} onPointerDown={e=>{point(e);mouse.current.down=true;(e.currentTarget as HTMLElement).focus();(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)}} onPointerUp={()=>mouse.current.down=false} onPointerCancel={()=>mouse.current.down=false}/>
    <div className="minimalHud"><b>HP {Math.ceil(p?.hp||100)}</b><i style={{width:`${p?.battery||100}%`}}/><span>BATTERY {Math.ceil(p?.battery||100)}%</span><span className="padLine">{padStatus}</span></div>
    {padGate&&<button className="controllerGate" onClick={activateController}>ACTIVATE XBOX CONTROLLER<small>Tap once, then press A or move a stick</small></button>}
    <div className="toolbar"><button onClick={()=>setDirector(v=>!v)}>DIRECTOR</button><button onClick={()=>setSpritePanel(v=>!v)}>SPRITES</button><button onClick={reset}>RESET LAB</button></div>
+   <aside className="trainingDirector"><div className="panelTitle"><span>TRAINING DIRECTOR</span><b>GOD MODE WEAVE TEST</b></div>
+    <p><strong>1.</strong> Tap A once · upright boost<br/><strong>2.</strong> Double-tap A · full slide<br/><strong>3.</strong> Hold forward · sustain<br/><strong>4.</strong> Lean 20–30° · curve<br/><strong>5.</strong> Pull opposite · brake<br/><strong>6.</strong> Slide into cover · attach<br/><strong>7.</strong> Move along cover · shimmy<br/><strong>8.</strong> Exit at edge · kick/dash</p>
+    <div className="testGrid">{tests.map(([name,pass])=><div key={name} className={pass?"pass":""}><span>{name}</span><b>{pass?"PASS":"NOT DETECTED"}</b></div>)}</div>
+   </aside>
    {director&&<Director cfg={config} patch={patch} save={save} load={load} note={note}/>}
    {spritePanel&&<SpriteInspector s={hud}/>}
   </div>
@@ -62,14 +77,14 @@ i.throwMatter||=pad.buttons[15]?.pressed;
  </main>
 }
 const MOVEMENT_PRESETS:Record<string,Partial<Config>>={
- "GOD MODE WEAVE":{dashSpeed:470,dashDuration:.12,doubleTapWindow:.26,slideSpeed:690,slideDuration:.68,slideSustain:520,slideSteer:11.5,slideSteerAngle:.70,slideBrake:14.5,slideCancelSpeed:195},
- "V142 BALANCED":{dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:650,slideDuration:.70,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideBrake:9.5,slideCancelSpeed:150},
- "AKIRA AGILE":{dashSpeed:500,dashDuration:.13,doubleTapWindow:.30,slideSpeed:690,slideDuration:.62,slideSustain:500,slideSteer:10.5,slideSteerAngle:.78,slideBrake:13.5,slideCancelSpeed:185},
- "GEARS WEIGHT":{dashSpeed:350,dashDuration:.18,doubleTapWindow:.26,slideSpeed:610,slideDuration:.82,slideSustain:260,slideSteer:4.5,slideSteerAngle:.42,slideBrake:6.5,slideCancelSpeed:115},
- "HIGH-SKILL WEAVE":{dashSpeed:455,dashDuration:.11,doubleTapWindow:.23,slideSpeed:720,slideDuration:.66,slideSustain:560,slideSteer:12.5,slideSteerAngle:.68,slideBrake:15.5,slideCancelSpeed:205}
+ "GOD MODE WEAVE":{dashSpeed:470,dashDuration:.12,doubleTapWindow:.26,slideSpeed:690,slideDuration:.68,slideSustain:520,slideSteer:11.5,slideSteerAngle:.70,slideSteerResponse:8.5,slideBrake:14.5,slideCancelSpeed:195},
+ "V142 BALANCED":{dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:650,slideDuration:.70,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150},
+ "AKIRA AGILE":{dashSpeed:500,dashDuration:.13,doubleTapWindow:.30,slideSpeed:690,slideDuration:.62,slideSustain:500,slideSteer:10.5,slideSteerAngle:.78,slideSteerResponse:10,slideBrake:13.5,slideCancelSpeed:185},
+ "GEARS WEIGHT":{dashSpeed:350,dashDuration:.18,doubleTapWindow:.26,slideSpeed:610,slideDuration:.82,slideSustain:260,slideSteer:4.5,slideSteerAngle:.42,slideSteerResponse:5,slideBrake:6.5,slideCancelSpeed:115},
+ "HIGH-SKILL WEAVE":{dashSpeed:455,dashDuration:.11,doubleTapWindow:.23,slideSpeed:720,slideDuration:.66,slideSustain:560,slideSteer:12.5,slideSteerAngle:.68,slideSteerResponse:11,slideBrake:15.5,slideCancelSpeed:205}
 };
 function Director({cfg,patch,save,load,note}:{cfg:Config;patch:(k:keyof Config,v:number)=>void;save:()=>void;load:()=>void;note:string}){const rows:[keyof Config,string,number,number,number][]=[
- ["moveSpeed","MOVE SPEED",180,360,1],["response","ACCEL / RESPONSE",5,22,.5],["dashSpeed","BOOST DASH SPEED",280,620,5],["dashDuration","BOOST DASH DURATION",.08,.28,.01],["doubleTapWindow","DOUBLE-TAP WINDOW",.16,.42,.01],["slideSpeed","SLIDE SPEED",420,850,5],["slideDuration","SLIDE DURATION",.35,1.05,.01],["slideSustain","SLIDE SUSTAIN THRUST",0,700,10],["slideSteer","SLIDE STEERING",1,14,.25],["slideSteerAngle","MAX STEER ANGLE",.20,1.05,.01],["slideBrake","KINETIC BRAKE",2,18,.25],["slideCancelSpeed","STAND-UP SPEED",70,260,5],["shotCadence","SHOT CADENCE",.18,.8,.01],["shotSpread","SHOT SPREAD",.01,.09,.002],["shotDamage","PELLET DAMAGE",2,24,1],["throwForce","MATTER THROW",350,1100,10],["pinballSpeed","PINBALL SPEED",500,1200,10],["spriteScale","JADE SCALE",.55,1.25,.01],["cameraZoom","CAMERA ZOOM",.8,1.35,.01]];
+ ["moveSpeed","MOVE SPEED",180,360,1],["response","ACCEL / RESPONSE",5,22,.5],["dashSpeed","BOOST DASH SPEED",280,620,5],["dashDuration","BOOST DASH DURATION",.08,.28,.01],["doubleTapWindow","DOUBLE-TAP WINDOW",.16,.42,.01],["slideSpeed","SLIDE SPEED",420,850,5],["slideDuration","SLIDE DURATION",.35,1.05,.01],["slideSustain","SLIDE SUSTAIN THRUST",0,700,10],["slideSteer","SLIDE STEERING",1,14,.25],["slideSteerAngle","MAX STEER ANGLE",.20,1.05,.01],["slideSteerResponse","STEER RESPONSE",2,14,.25],["slideBrake","KINETIC BRAKE",2,18,.25],["slideCancelSpeed","STAND-UP SPEED",70,260,5],["shotCadence","SHOT CADENCE",.18,.8,.01],["shotSpread","SHOT SPREAD",.01,.09,.002],["shotDamage","PELLET DAMAGE",2,24,1],["throwForce","MATTER THROW",350,1100,10],["pinballSpeed","PINBALL SPEED",500,1200,10],["spriteScale","JADE SCALE",.55,1.25,.01],["cameraZoom","CAMERA ZOOM",.8,1.35,.01]];
  const applyPreset=async(name:string)=>{for(const [k,v] of Object.entries(MOVEMENT_PRESETS[name]||{}))await patch(k as keyof Config,Number(v))};
  return <aside className="director"><div className="panelTitle"><span>DIRECTOR MODE</span><b>LIVE COMBAT CONFIG</b></div>
  <div className="presetGrid">{Object.keys(MOVEMENT_PRESETS).map(name=><button key={name} className={name==="GOD MODE WEAVE"?"recommended":""} onClick={()=>applyPreset(name)}>{name}{name==="GOD MODE WEAVE"?<small>NEW BASE</small>:null}</button>)}</div>
@@ -96,4 +111,4 @@ function cover(g:CanvasRenderingContext2D,c:any){g.save();g.translate(c.x,c.y);g
  if(tower){g.fillStyle="#171c21";g.fillRect(-w*.31,-z*.88,w*.62,z*.22);g.strokeStyle="#737d84";g.strokeRect(-w*.31,-z*.88,w*.62,z*.22);g.fillStyle="#ff4aa5";g.globalAlpha=.55;g.fillRect(-w*.22,-z*.79,w*.44,4);g.globalAlpha=1}
  g.globalAlpha=.45;g.strokeStyle=c.generated?"#b2ffff":"#6b7379";g.beginPath();g.moveTo(-w*.34,-z*.45);g.lineTo(w*.3,-z*.7);g.stroke();g.beginPath();g.moveTo(-w*.18,-z*.2);g.lineTo(w*.39,-z*.35);g.stroke();g.globalAlpha=1;g.shadowBlur=0;g.restore()}
 function matter(g:CanvasRenderingContext2D,m:any){g.save();g.translate(m.x,m.y);g.rotate((m.x+m.y)*.015);g.fillStyle=m.kind==="metal"?"#536f82":"#86766e";g.strokeStyle=m.heldBy!==null?"#62f0f0":m.orbitBy!==null?"#ff4aaa":"#d8d5cf";g.lineWidth=3;g.shadowColor=g.strokeStyle;g.shadowBlur=m.heldBy!==null||m.orbitBy!==null?14:0;g.beginPath();for(let i=0;i<7;i++){const a=i*Math.PI*2/7,r=m.r*(i%2?.74:1);i?g.lineTo(Math.cos(a)*r,Math.sin(a)*r):g.moveTo(Math.cos(a)*r,Math.sin(a)*r)}g.closePath();g.fill();g.stroke();g.restore()}
-function fx(g:CanvasRenderingContext2D,f:any){g.save();g.globalAlpha=Math.min(1,f.life*4);if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){const dir=f.type==="brake"?1:-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":f.type==="muzzle"?"#fff2a0":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
+function fx(g:CanvasRenderingContext2D,f:any){g.save();g.globalAlpha=Math.min(1,f.life*4);if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){const dir=f.type==="brake"?1:-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":f.type==="muzzle"?"#fff2a0":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
