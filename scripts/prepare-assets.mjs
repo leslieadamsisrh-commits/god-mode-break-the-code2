@@ -4,6 +4,16 @@ import sharp from "sharp";
 
 const root=process.cwd();
 
+const arenaUrl="https://god-mode-anime-upgrade-v28.leslieadams-isrh.chatgpt.site/assets/dimension33-map/arena-war-games-hires.webp";
+const arenaDir=path.join(root,"public","assets","dimension33-map");
+await mkdir(arenaDir,{recursive:true});
+const arenaResponse=await fetch(arenaUrl,{signal:AbortSignal.timeout(20000)});
+if(!arenaResponse.ok) throw new Error(`Anime Upgrade arena recovery failed: HTTP ${arenaResponse.status}`);
+const arenaBytes=Buffer.from(await arenaResponse.arrayBuffer());
+if(arenaBytes.length<10000) throw new Error(`Anime Upgrade arena payload too small: ${arenaBytes.length}`);
+await writeFile(path.join(arenaDir,"arena-war-games-hires.webp"),arenaBytes);
+console.log(`Recovered exact Anime Upgrade arena plate: ${arenaBytes.length} bytes`);
+
 const ANIME_ARENA_URL="https://god-mode-anime-upgrade-v28.leslieadams-isrh.chatgpt.site/assets/dimension33-map/arena-war-games-hires.webp";
 const arenaDir=path.join(root,"public","assets","dimension33-map");
 await mkdir(arenaDir,{recursive:true});
