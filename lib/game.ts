@@ -160,7 +160,11 @@ export function advance(s:GameState,now=Date.now()){
   if(s.phase==="finisher"){
     s.finisher=Math.max(0,s.finisher-elapsed);
     s.fx.forEach(x=>x.life-=elapsed);s.fx=s.fx.filter(x=>x.life>0);
-    if(s.finisher<=0)s.phase="finished";
+    if(s.finisher<=0){
+      const matchWon=s.players.some(p=>p.score>=3);
+      if(matchWon)s.phase="finished";
+      else respawn(s);
+    }
     return;
   }
   if(s.phase!=="playing"||(s.players.length<2&&s.mode!=="solo"))return;
