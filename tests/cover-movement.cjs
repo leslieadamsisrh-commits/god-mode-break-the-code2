@@ -8,12 +8,12 @@ function tick(s,input,ms=17){m.setInput(s,0,s.players[0].lastSeq+1,input);m.adva
 for(const weave of [0,1])for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let edge=0;edge<4;edge++)for(const mode of ['soft','braced']){
  for(const aimOffset of [0,Math.PI,Math.PI/2]){
   let {s,p,a}=fixture(rotation,edge,mode,weave);const aim=Math.atan2(a.ny,a.nx)+aimOffset,ox=p.x,oy=p.y;
-  tick(s,{x:a.nx*.35,y:a.ny*.35,aim,coverAim:true});assert.equal(p.coverId,null);assert((p.x-ox)*a.nx+(p.y-oy)*a.ny>0);assert.equal(p.battery,100);checks++;
-  ({s,p,a}=fixture(rotation,edge,mode,weave));tick(s,{x:a.nx,y:a.ny,aim,slide:true});assert.equal(p.coverId,null);assert(p.slide>0);assert(Math.abs(Math.atan2(Math.sin(p.slideFacing-Math.atan2(a.ny,a.nx)),Math.cos(p.slideFacing-Math.atan2(a.ny,a.nx))))<1e-6);assert.equal(p.battery,88);checks++;
+  tick(s,{x:a.nx*.35,y:a.ny*.35,aim,coverAim:true});if(mode==='soft'){assert.equal(p.coverId,null);assert((p.x-ox)*a.nx+(p.y-oy)*a.ny>0)}else{assert.equal(p.coverId,'test-cover');assert.equal(p.x,ox);assert.equal(p.y,oy)}assert.equal(p.battery,100);checks++;
+  ({s,p,a}=fixture(rotation,edge,mode,weave));tick(s,{x:a.nx,y:a.ny,aim,slide:true});if(mode==='soft'){assert.equal(p.coverId,'test-cover');assert.equal(p.coverMode,'braced');assert.equal(p.battery,100);checks++;continue}assert.equal(p.coverId,null);assert(p.slide>0);assert(Math.abs(Math.atan2(Math.sin(p.slideFacing-Math.atan2(a.ny,a.nx)),Math.cos(p.slideFacing-Math.atan2(a.ny,a.nx))))<1e-6);assert.equal(p.battery,88);checks++;
  }
  let {s,p,a}=fixture(rotation,edge,mode,weave);tick(s,{x:-a.nx,y:-a.ny,aim:Math.atan2(a.ny,a.nx),slide:mode==='braced'});assert.equal(p.coverId,'test-cover');assert.equal(p.battery,100);assert(!m.circleBox(p,18,s.covers[0]).hit);checks++;
  ({s,p,a}=fixture(rotation,edge,'braced',weave));tick(s,{x:a.tx,y:a.ty,aim:Math.atan2(-a.ty,-a.tx),slide:true});assert.equal(p.coverId,null);assert.equal(p.kickStage,'burst');assert.equal(p.battery,88);assert(Math.abs(p.vx*a.nx+p.vy*a.ny)<1e-6);checks++;
- ({s,p,a}=fixture(rotation,edge,'braced',weave));p.battery=0;tick(s,{x:a.nx,y:a.ny,aim:0,slide:true});assert.equal(p.coverId,null);assert.equal(p.slide,0);assert.equal(p.battery,0);checks++;
+ ({s,p,a}=fixture(rotation,edge,'braced',weave));p.battery=0;tick(s,{x:a.nx,y:a.ny,aim:0,slide:true});assert.equal(p.coverId,'test-cover');assert.equal(p.slide,0);assert.equal(p.battery,0);checks++;
  ({s,p,a}=fixture(rotation,edge,mode,weave));const before=p.coverAnchor.t;tick(s,{x:a.tx*.5,y:a.ty*.5,aim:0});assert.equal(p.coverId,'test-cover');assert(p.coverAnchor.t>before);checks++;
 }
 for(const weave of [0,1])for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let edge=0;edge<4;edge++){
@@ -26,4 +26,34 @@ const {s,p,a}=fixture(0,2,'braced');s.covers.push({...s.covers[0],id:'next',y:44
 tick(s,{x:0,y:-1,aim:0});tick(s,{x:0,y:-1,aim:0,slide:true});assert.equal(p.battery,76);checks++;
 const ui=fs.readFileSync('app/Game.tsx','utf8'),start=ui.indexOf('function spriteFacing('),end=ui.indexOf('function SpriteInspector(');vm.runInContext(stripTypeScriptTypes(ui.slice(start,end))+';globalThis.pose=spriteFacing;',ctx);
 const q={coverId:'cover',coverAnchor:{nx:0,ny:-1},gunFacing:0,input:{coverAim:false}};assert.equal(ctx.pose(q,'cover',0),-Math.PI/2);q.input.coverAim=true;assert.equal(ctx.pose(q,'cover',0),0);checks+=2;
-console.log(`PASS: ${checks} checks across all faces, four rotations, Classic/Weave, opposite gun aim, soft/braced release, paid kicks, depleted charge, flow, next-cover recapture, repeat bursts and pose selection.`);
+console.log(`PASS: ${checks} checks across all faces, four rotations, Classic/Weave, opposite gun aim, soft release/braced lock, paid kicks, depleted charge, flow, next-cover recapture, repeat bursts and pose selection.`);
+
+// Restored brace exposes on LT and retracts without releasing its attachment.
+for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let edge=0;edge<4;edge++){
+ const {s,p,a}=fixture(rotation,edge,'braced');tick(s,{aim:Math.atan2(-a.ny,-a.nx),coverAim:true});assert.equal(p.coverId,'test-cover');assert(p.peek);
+ tick(s,{aim:Math.atan2(-a.ny,-a.nx),coverAim:false});assert.equal(p.coverId,'test-cover');assert.equal(p.peek,false);assert(p.returnToCover>0);checks++;
+}
+// Attached concrete wins over nearby debris; ripping clears both cover anchors.
+for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let edge=0;edge<4;edge++)for(const mode of ['soft','braced']){
+ const {s,p,a}=fixture(rotation,edge,mode);const cv=s.covers[0];cv.id=p.coverId='cover-piece-01';s.matter=[{id:'debris',x:p.x+1,y:p.y,r:14,kind:'stone',vx:0,vy:0,life:999,heldBy:null,orbitBy:null}];
+ tick(s,{grip:true,aim:Math.atan2(a.ny,a.nx)},16);assert.equal(p.gripCoverId,cv.id);assert.equal(p.coverId,null);assert.equal(p.coverAnchor,null);assert.equal(s.matter[0].heldBy,null);assert(Math.abs(p.battery-(100-s.config.gripEnergy-s.config.holdEnergy*.016))<1e-6);
+ for(let n=0;n<15;n++)tick(s,{x:a.tx*.8,y:a.ty*.8,aim:Math.atan2(a.ny,a.nx)},16);assert(Math.hypot(cv.vx,cv.vy)>0);assert.equal(p.gripCoverId,cv.id);assert(Number.isFinite(cv.a));checks++;
+}
+// Release retains block position/orientation and inherits carrier plus block velocity.
+for(const speed of [0,180,-180]){
+ const {s,p}=fixture(0,0,'braced');const cv=s.covers[0];cv.id=p.coverId='cover-piece-01';tick(s,{grip:true,aim:0},16);p.x=400;p.y=300;p.vx=speed;p.vy=0;cv.x=510;cv.y=300;cv.a=.45;cv.vx=speed*.8;cv.vy=30;const aim=speed<0?Math.PI:0;p.gunFacing=p.aim=aim;
+ const expectedX=Math.cos(aim)*s.config.throwForce*.62+p.vx*s.config.carryMomentum+cv.vx*(1-s.config.carryMomentum),expectedY=Math.sin(aim)*s.config.throwForce*.62+cv.vy*(1-s.config.carryMomentum),before=p.battery;
+ tick(s,{x:speed?Math.sign(speed):0,aim,throwMatter:true},16);assert.equal(p.gripCoverId,null);assert(Math.abs(cv.x-(510+expectedX*.016))<1e-6);assert(Math.abs(cv.y-(300+expectedY*.016))<1e-6);assert(Math.abs(cv.vx-expectedX*Math.pow(.09,.016))<1e-6);assert.equal(cv.a,.45);assert(Math.abs(before-p.battery-s.config.coverThrowEnergy)<1e-6);checks++;
+}
+{
+ const {s,p}=fixture(0,0,'braced'),cv=s.covers[0];cv.id=p.coverId='cover-piece-01';tick(s,{grip:true,aim:0},16);p.battery=.01;tick(s,{aim:0},16);assert.equal(p.gripCoverId,null);assert.equal(cv.build,0);assert.equal(cv.vx,0);assert.equal(cv.vy,0);checks++;
+}
+{
+ const s=m.newGame('test','token',1000,'solo'),p=s.players[0];s.matter=[];tick(s,{cover:true,aim:0},16);const cv=s.covers.find(c=>c.generated);assert(cv);tick(s,{grip:true,aim:0},16);assert.equal(p.gripCoverId,cv.id);p.battery=1;tick(s,{throwMatter:true,aim:0},16);assert.equal(p.gripCoverId,cv.id);assert(cv.build>=0);checks++;
+}
+// Carry/throw collision uses rotated footprints and bounded substeps.
+{
+ const {s,p}=fixture(.61,0,'braced'),cv=s.covers[0];cv.id=p.coverId='cover-piece-01';tick(s,{grip:true,aim:0},16);p.gripCoverId=null;cv.x=350;cv.y=300;cv.a=0;cv.vx=700;cv.vy=0;cv.build=-700;s.covers.push({...cv,id:'obstacle',x:570,build:0,vx:0,vy:0});
+ for(let n=0;n<40;n++)tick(s,{aim:0},16);assert(cv.x<=400.1);assert.equal(cv.vx,0);checks++;
+}
+console.log(`PASS: ${checks} total brace, exposure/retract, selection, carry, momentum, charge, recapture and rotated-cover checks.`);
