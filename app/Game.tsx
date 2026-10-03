@@ -102,7 +102,7 @@ export default function Game(){
    {director&&<Director cfg={config} patch={patch} applyPreset={applyMovementPreset} save={save} load={load} note={note}/>}
    {spritePanel&&<SpriteInspector s={hud}/>}
   </div>
-  <footer><span>LS MOVE</span><span>GUN FACING = SHOT DIRECTION</span><span>{config.weaveEnabled<.5?"A SLIDE · BRACE · KICK":"A TAP BOOST · DOUBLE-TAP SLIDE"}</span><span>B MELEE</span><span>X SLOW TIME</span><span>LB HOLD GRIP · RELEASE DROP</span><span>RB BUILD COVER</span><span>LT SHIELD / COVER AIM</span><span>RT SHOOT / HELD THROW</span><span>Y POWER-UP · PENDING</span><span>D-PAD ↑ GUN · → COVER · ↓ POWER · ← FIELD · SELECTORS PENDING</span><span>PINBALL · UNBOUND</span></footer>
+  <footer><span>LS MOVE</span><span>GUN FACING = SHOT DIRECTION</span><span>{config.weaveEnabled<.5?"A SLIDE · BRACE · KICK":"A TAP BOOST · DOUBLE-TAP SLIDE"}</span><span>B MELEE</span><span>X SLOW TIME</span><span>LB GRIP / DROP</span><span>RB BUILD COVER</span><span>LT SHIELD / AIM</span><span>RT FIRE / THROW</span><span>Y POWER-UP · PENDING</span><span>D-PAD SELECTORS · PENDING</span><span>PINBALL · UNBOUND</span></footer>
  </main>
 }
 const MOVEMENT_PRESETS:Record<string,Partial<Config>>={
