@@ -6,8 +6,8 @@ export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:nu
 export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;born?:number};
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
-export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number};
-export type Fx={id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string};
+export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;z?:number};
+export type Fx={id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number};
 export type GameState={build:string;mode:"bot"|"solo";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
 
 const empty=():InputState=>({x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,slow:false});
@@ -68,6 +68,8 @@ function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){i
 function releaseCover(p:Player,s:GameState,lock=.18){p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
  const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,mag=Math.hypot(i.x,i.y),away=i.x*a.nx+i.y*a.ny;
+ // Stick intent releases either cover mode, even while aiming in the opposite direction.
+ if(mag>.18&&away/mag>.15){releaseCover(p,s,.18);p.vx=i.x*c.moveSpeed;p.vy=i.y*c.moveSpeed;p.x=clamp(p.x+p.vx*dt,A.left,A.right);p.y=clamp(p.y+p.vy*dt,A.top,A.bottom);collide(p,s);return}
  if(c.weaveEnabled<.5){
    if(p.coverMode==="soft"&&mag>.55&&away>.65){releaseCover(p,s,.08);p.vx=i.x*c.moveSpeed;p.vy=i.y*c.moveSpeed;return}
    const cv=s.covers.find(x=>x.id===p.coverId);if(!cv){releaseCover(p,s);return}
@@ -91,16 +93,16 @@ function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
  placeOnCover(p,s);
  if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor!.nx+Math.sin(p.gunFacing)*p.coverAnchor!.ny;p.peek=forward<.35;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}
 }
-function classicCoverAction(p:Player,s:GameState){
+function classicCoverAction(p:Player,s:GameState,i:InputState){
  const a=p.coverAnchor,cv=s.covers.find(x=>x.id===p.coverId);if(!a||!cv)return false;
- const ax=Math.cos(p.gunFacing),ay=Math.sin(p.gunFacing),normal=ax*a.nx+ay*a.ny,tan=Math.abs(ax*a.tx+ay*a.ty);
- const kind=normal>.42?"outward":tan>.55&&normal>-.35?"past":"blocked";
+ const mag=Math.hypot(i.x,i.y),ax=mag>.18?i.x/mag:a.nx,ay=mag>.18?i.y/mag:a.ny,normal=ax*a.nx+ay*a.ny,tan=Math.abs(ax*a.tx+ay*a.ty);
+ const kind=normal>.15?"outward":tan>.55&&normal>=-.05?"past":"blocked";
  if(kind==="blocked"){s.fx.push({id:uid(),type:"cover-block",x:p.x,y:p.y,life:.18});return false}
  const oldId=p.coverId;releaseCover(p,s,.25);p.coverLock=s.time+.25;p.slideSteerCurrent=0;
  if(kind==="past"){
-   const sign=ax*a.tx+ay*a.ty<0?-1:1;p.kickAngle=Math.atan2(a.ty*sign,a.tx*sign);p.kickNx=a.nx;p.kickNy=a.ny;p.kickStage="burst";p.kickTime=.13;p.vx=Math.cos(p.kickAngle)*408;p.vy=Math.sin(p.kickAngle)*408;p.slideFacing=p.kickAngle;p.slideCool=.94;p.exit=null;s.fx.push({id:uid(),type:"dash",x:p.x,y:p.y,life:.22,text:"BURST"});return true
+   const sign=ax*a.tx+ay*a.ty<0?-1:1;p.kickAngle=Math.atan2(ay,ax);p.kickNx=a.nx;p.kickNy=a.ny;p.kickStage="burst";p.kickTime=.13;p.vx=Math.cos(p.kickAngle)*408;p.vy=Math.sin(p.kickAngle)*408;p.slideFacing=p.kickAngle;p.slideCool=.94;p.exit=null;s.fx.push({id:uid(),type:"dash",x:p.x,y:p.y,life:.22,text:"BURST"});return true
  }
- const carry=clamp((p.vx*a.tx+p.vy*a.ty)/Math.max(1,s.config.moveSpeed),-.35,.35),dx=a.nx+a.tx*carry,dy=a.ny+a.ty*carry,len=Math.hypot(dx,dy)||1;
+ const dx=ax,dy=ay,len=Math.hypot(dx,dy)||1;
  p.vx=dx/len*s.config.slideSpeed;p.vy=dy/len*s.config.slideSpeed;p.slideFacing=Math.atan2(p.vy,p.vx);p.slide=s.config.slideDuration;p.slideCool=s.config.slideDuration;s.fx.push({id:uid(),type:"slide",x:p.x,y:p.y,life:.4,text:"KICK"});return true
 }
 function beginCoverExit(p:Player,s:GameState,i:InputState){
@@ -188,7 +190,15 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
   }
   else if(p.knock>0){p.knock-=dt;p.vx*=Math.pow(.08,dt);p.vy*=Math.pow(.08,dt)}
   else if(p.exit){stepCoverExit(p,s,d)}
-  else if(p.coverId){moveOnCover(p,s,i,d);if(i.slide&&!prev[n]?.slide){if(p.coverMode==="soft"){p.coverMode="braced";p.vx=p.vy=0;p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n})}else if(p.battery>=c.slideEnergy){const exited=c.weaveEnabled<.5?classicCoverAction(p,s):beginCoverExit(p,s,i);if(exited)spendEnergy(p,s,c.slideEnergy)}}}
+  else if(p.coverId){
+    // Handle A before walk-away can clear the anchor needed by a kick.
+    if(i.slide&&!prev[n]?.slide){
+      const a=p.coverAnchor,mag=Math.hypot(i.x,i.y),out=a&&mag>.18?(i.x*a.nx+i.y*a.ny)/mag:0;
+      if(p.coverMode==="soft"&&out<=.15){p.coverMode="braced";p.vx=p.vy=0;p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n});moveOnCover(p,s,i,d)}
+      else if(p.battery>=c.slideEnergy){if(classicCoverAction(p,s,i))spendEnergy(p,s,c.slideEnergy);else moveOnCover(p,s,i,d)}
+      else{spendEnergy(p,s,c.slideEnergy);moveOnCover(p,s,i,d)}
+    }else moveOnCover(p,s,i,d);
+  }
   else if(p.dash>0){
     p.dash=Math.max(0,p.dash-dt);
     p.vx*=Math.pow(.16,dt);p.vy*=Math.pow(.16,dt);
@@ -206,7 +216,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
     p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);slideCapture(p,s);collide(p,s)
   }
   else{const r=1-Math.exp(-c.response*d),m=Math.hypot(i.x,i.y);p.vx+=(i.x*c.moveSpeed-p.vx)*r;p.vy+=(i.y*c.moveSpeed-p.vy)*r;if(m<.05){p.vx*=Math.pow(c.stopDrag,d);p.vy*=Math.pow(c.stopDrag,d)}p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)}
-  if(i.fire&&s.time-p.lastShot>=c.shotCadence&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){p.lastShot=s.time;p.fireState=.11;p.recoil=.12;if(p.coverId)p.returnToCover=.28;const muzzle=muzzleSocket(p);for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5})}s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.12,owner:n})}
+  if(i.fire&&s.time-p.lastShot>=c.shotCadence&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){p.lastShot=s.time;p.fireState=.11;p.recoil=.12;if(p.coverId)p.returnToCover=.28;const muzzle=muzzleSocket(p);for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,z:44*c.spriteScale})}s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.12,owner:n,z:44*c.spriteScale})}
  }
  for(let n=0;n<s.players.length;n++){const p=s.players[n];if(!p.gripCoverId)continue;const cv=s.covers.find(c=>c.id===p.gripCoverId);if(!cv){p.gripCoverId=null;continue}const a=p.gunFacing??p.aim,targetX=p.x+Math.cos(a)*p.coverGripDist,targetY=p.y+Math.sin(a)*p.coverGripDist;cv.x+=(targetX-cv.x)*Math.min(1,d*12);cv.y+=(targetY-cv.y)*Math.min(1,d*12);cv.a+=(a+Math.PI/2-cv.a)*Math.min(1,d*9);cv.build=.001}
  for(const cv of s.covers){if(cv.build>=0)continue;const owner=s.players.find(p=>dist(p,cv)<260);const a=cv.a-Math.PI/2,speed=-cv.build;cv.x=clamp(cv.x+Math.cos(a)*speed*d,A.left+cv.w/2,A.right-cv.w/2);cv.y=clamp(cv.y+Math.sin(a)*speed*d,A.top+cv.h/2,A.bottom-cv.h/2);cv.build*=Math.pow(.09,d);if(-cv.build<35)cv.build=0}
