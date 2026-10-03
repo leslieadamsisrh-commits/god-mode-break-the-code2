@@ -3,7 +3,7 @@ import {useCallback,useEffect,useRef,useState} from "react";
 
 type Session={room:string;code?:string;token:string;slot:number};
 type Config={weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
-const DEFAULT:Config={weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:552.5,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
+const DEFAULT:Config={weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:580.125,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
 const EMPTY:any={x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,slow:false};
 const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF:"melee",KeyC:"heavy",KeyQ:"grip",KeyR:"throwMatter",KeyB:"cover",KeyO:"orbit",KeyP:"launchOrbit",Space:"pinball",KeyX:"slow"};
 const jade=new Map<string,HTMLImageElement>();
@@ -111,7 +111,7 @@ i.throwMatter||=pad.buttons[15]?.pressed;
  </main>
 }
 const MOVEMENT_PRESETS:Record<string,Partial<Config>>={
- "INSTRUCTOR 142 CLASSIC":{weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,slideSpeed:552.5,slideDuration:.63,cameraZoom:1.85},
+ "INSTRUCTOR 142 CLASSIC":{weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,slideSpeed:580.125,slideDuration:.63,cameraZoom:1.85},
  "GOD MODE WEAVE":{weaveEnabled:1,moveSpeed:262,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:470,dashDuration:.12,doubleTapWindow:.26,slideSpeed:690,slideDuration:.68,slideSustain:520,slideSteer:11.5,slideSteerAngle:.70,slideSteerResponse:8.5,slideBrake:14.5,slideCancelSpeed:195},
  "AKIRA AGILE":{weaveEnabled:1,moveSpeed:262,dashSpeed:500,dashDuration:.13,doubleTapWindow:.30,slideSpeed:690,slideDuration:.62,slideSustain:500,slideSteer:10.5,slideSteerAngle:.78,slideSteerResponse:10,slideBrake:13.5,slideCancelSpeed:185},
  "GEARS WEIGHT":{weaveEnabled:1,moveSpeed:262,dashSpeed:350,dashDuration:.18,doubleTapWindow:.26,slideSpeed:610,slideDuration:.82,slideSustain:260,slideSteer:4.5,slideSteerAngle:.42,slideSteerResponse:5,slideBrake:6.5,slideCancelSpeed:115},
