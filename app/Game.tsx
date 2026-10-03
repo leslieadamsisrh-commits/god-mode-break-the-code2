@@ -233,10 +233,7 @@ function drawPowerFrame(g:CanvasRenderingContext2D,p:any,cfg:Config,frame:number
  return true;
 }
 function drawPowerPose(g:CanvasRenderingContext2D,p:any,cfg:Config){
- if(p.charging&&(p.godCharge||0)>=.8){
-  const cycle=[7,8,7,6],phase=Math.max(0,(p.chargeAge-.35)*4),index=Math.floor(phase),blend=phase-index,alpha=g.globalAlpha;
-  g.save();g.globalAlpha=alpha*(1-blend);drawPowerFrame(g,p,cfg,cycle[index%4]);g.globalAlpha=alpha*blend;drawPowerFrame(g,p,cfg,cycle[(index+1)%4]);g.restore();return true;
- }
+ // Keep the approved inkwork opaque: overlapping full poses produce double outlines.
  return drawPowerFrame(g,p,cfg,powerFrame(p,cfg));
 }
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),d=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,d)||nearest("ready",d);
