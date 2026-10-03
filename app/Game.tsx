@@ -142,7 +142,7 @@ function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx|
  const angle=family==="slide"?(p.slideFacing||0):state==="BOOST_DASH"||state==="RUN"?Math.atan2(p.vy||0,p.vx||0):(p.gunFacing??p.aim??0);
  const dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24;
  const im=nearest(family,dir)||nearest("ready",dir);
- const sourceCell=im?(im.naturalWidth>=1000?250:125):125;
+ const sourceCell=im?(im.naturalWidth%250===0&&im.naturalHeight%250===0?250:125):125;
  const cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,total=Math.max(1,cols*rows);
  const frame=family==="ready"?0:Math.floor((s?.time||0)*(family==="run"?10:7))%total;
  return{state,family,dir,angleDeg:Math.round(dir*15),frame:frame+1,total,file:`${family}-d${String(dir).padStart(2,"0")}.webp`,fallback,expected}}
@@ -166,7 +166,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  for(const e of kineticEcho){if(!fullSlide){const follow=1-Math.exp(-17*frameDt);e.x+=(local.x-e.x)*follow;e.y+=(local.y-e.y)*follow;e.life-=frameDt}else e.life=Math.max(e.life,.3)}
  while(kineticEcho.length&&(kineticEcho[0].life<=0||Math.hypot(kineticEcho[0].x-local.x,kineticEcho[0].y-local.y)<3))kineticEcho.shift();
  const echoActive=local.slide>0||local.dash>0||local.kickStage&&local.kickStage!=="none"||travelLen>360;
- if(fullSlide&&travelLen>60&&(!kineticEcho.length||Math.hypot(local.x-kineticEcho[kineticEcho.length-1].x,local.y-kineticEcho[kineticEcho.length-1].y)>30)){const family=local.slide>0||local.kickStage&&local.kickStage!=="none"?"slide":"run",angle=family==="slide"?(local.slideFacing||Math.atan2(local.vy,local.vx)):Math.atan2(local.vy,local.vx),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,dir)||nearest("ready",dir),sourceCell=im?(im.naturalWidth>=1000?250:125):125,cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,frames=Math.max(1,cols*rows),frame=family==="slide"&&local.slide>0?Math.min(frames-1,Math.max(0,Math.floor((1-local.slide/cfg.slideDuration)*frames))):Math.floor(s.time*10)%frames;kineticEcho.push({x:local.x,y:local.y,angle,family,dir,frame,life:.34,maxLife:.34,speed:travelLen});if(kineticEcho.length>3)kineticEcho.shift();echoLast=now}
+ if(fullSlide&&travelLen>60&&(!kineticEcho.length||Math.hypot(local.x-kineticEcho[kineticEcho.length-1].x,local.y-kineticEcho[kineticEcho.length-1].y)>30)){const family=local.slide>0||local.kickStage&&local.kickStage!=="none"?"slide":"run",angle=family==="slide"?(local.slideFacing||Math.atan2(local.vy,local.vx)):Math.atan2(local.vy,local.vx),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,dir)||nearest("ready",dir),sourceCell=im?(im.naturalWidth%250===0&&im.naturalHeight%250===0?250:125):125,cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,frames=Math.max(1,cols*rows),frame=family==="slide"&&local.slide>0?Math.min(frames-1,Math.max(0,Math.floor((1-local.slide/cfg.slideDuration)*frames))):Math.floor(s.time*10)%frames;kineticEcho.push({x:local.x,y:local.y,angle,family,dir,frame,life:.34,maxLife:.34,speed:travelLen});if(kineticEcho.length>3)kineticEcho.shift();echoLast=now}
  if(fullSlide&&travelLen>60){floorWake.push({x:local.x,y:local.y,angle:Math.atan2(local.vy,local.vx),age:.27});if(floorWake.length>18)floorWake.shift()}
  for(const mark of floorWake){g.save();g.translate(mark.x,mark.y);g.rotate(mark.angle);g.globalAlpha=mark.age/.27*.68;const ground=classicAssets.get("ground");if(ground)g.drawImage(ground,3*384,0,384,384,-48,-43,96,86);g.strokeStyle="#5ef0ff";g.shadowColor="#ff4bb9";g.shadowBlur=9;for(let n=0;n<3;n++){g.beginPath();g.moveTo(-14-n*5,-8+n*8);g.lineTo(-46-n*9,-13+n*11);g.stroke()}g.restore()}
  if(graffiti)classicGraffiti(g,classicAssets.get("graffiti"),graffiti,.94);
@@ -188,7 +188,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
 }
 function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im)return im}}
 function spriteCell(im:HTMLImageElement,family:string,frame:number){
- const cell=im.naturalWidth>=1000&&im.naturalWidth%250===0&&im.naturalHeight%250===0?250:125;
+ const cell=im.naturalWidth%250===0&&im.naturalHeight%250===0?250:125;
  const cols=Math.max(1,Math.floor(im.naturalWidth/cell)),rows=Math.max(1,Math.floor(im.naturalHeight/cell)),frames=Math.max(1,cols*rows),fr=((frame%frames)+frames)%frames;
  return{cell,cols,rows,frames,sx:(fr%cols)*cell,sy:Math.floor(fr/cols)*cell}
 }
