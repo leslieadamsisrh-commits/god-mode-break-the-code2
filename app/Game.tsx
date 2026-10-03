@@ -60,7 +60,9 @@ i.throwMatter||=pad.buttons[15]?.pressed;
   ["BRACED COVER",!!p?.coverId&&p?.coverMode==="braced"],
   ["LT EXPOSURE",!!p?.coverId&&p?.coverMode==="braced"&&!!p?.input?.coverAim],
   ["COVER FIRE",!!p?.coverId&&(p?.fireState||0)>0],
-  ["COVER EXIT",!!p?.kickStage&&p?.kickStage!=="none"]
+  ["COVER EXIT",!!p?.kickStage&&p?.kickStage!=="none"],
+  ["RIP / CARRY",!!p?.gripCoverId],
+  ["THROW COVER",!!hud?.fx?.some((f:any)=>f.type==="cover-throw")]
  ]:[
   ["BOOST DASH",!!p?.dash],
   ["FULL SLIDE",(p?.slide||0)>0],
@@ -80,14 +82,14 @@ i.throwMatter||=pad.buttons[15]?.pressed;
    {padGate&&<button className="controllerGate" onClick={activateController}>ACTIVATE XBOX CONTROLLER<small>Tap once, then press A or move a stick</small></button>}
    <div className="toolbar"><button onClick={()=>setDirector(v=>!v)}>DIRECTOR</button><button onClick={()=>setSpritePanel(v=>!v)}>SPRITES</button><button onClick={reset}>RESET LAB</button></div>
    <aside className="trainingDirector"><div className="panelTitle"><span>TRAINING DIRECTOR</span><b>{config.weaveEnabled<.5?"INSTRUCTOR 142 CLASSIC":"GOD MODE WEAVE TEST"}</b></div>
-    <p>{config.weaveEnabled<.5?<><strong>1.</strong> A · baseball slide<br/><strong>2.</strong> Contact cover · soft catch<br/><strong>3.</strong> Feather stick · flow around connected edges<br/><strong>4.</strong> Pull away · immediate release<br/><strong>5.</strong> A while soft · hard brace<br/><strong>6.</strong> Hold LT · expose/aim/fire<br/><strong>7.</strong> A while braced · kick / edge burst into slide</>:<><strong>1.</strong> Tap A once · upright boost<br/><strong>2.</strong> Double-tap A · full slide<br/><strong>3.</strong> Hold forward · sustain<br/><strong>4.</strong> Lean 20–30° · curve<br/><strong>5.</strong> Pull opposite · brake<br/><strong>6.</strong> Touch cover · soft attach<br/><strong>7.</strong> Tap A again · brace<br/><strong>8.</strong> Hold LT · expose/aim/fire</>}</p>
+    <p>{config.weaveEnabled<.5?<><strong>1.</strong> A · baseball slide<br/><strong>2.</strong> Contact cover · soft catch<br/><strong>3.</strong> Feather stick · flow around connected edges<br/><strong>4.</strong> Pull away · immediate release<br/><strong>5.</strong> A while soft · hard brace<br/><strong>6.</strong> Hold LT · expose/aim/fire<br/><strong>7.</strong> A while braced · kick / edge burst into slide<br/><strong>8.</strong> Y near concrete · rip/carry<br/><strong>9.</strong> D-pad → · throw concrete</>:<><strong>1.</strong> Tap A once · upright boost<br/><strong>2.</strong> Double-tap A · full slide<br/><strong>3.</strong> Hold forward · sustain<br/><strong>4.</strong> Lean 20–30° · curve<br/><strong>5.</strong> Pull opposite · brake<br/><strong>6.</strong> Touch cover · soft attach<br/><strong>7.</strong> Tap A again · brace<br/><strong>8.</strong> Hold LT · expose/aim/fire</>}</p>
     <div className="testGrid">{tests.map(([name])=>{const pass=!!testPass[name];return <div key={name} className={pass?"pass":""}><span>{name}</span><b>{pass?"PASS":"NOT DETECTED"}</b></div>})}</div><button className="resetTests" onClick={()=>setTestPass({})}>RESET TESTS</button>
    </aside>
    <aside className="spriteLab"><div className="panelTitle"><span>SPRITE LAB</span><b>RUNTIME ROUTING · KINETIC ECHO</b></div>{(()=>{const info=spriteLabInfo(hud);return <dl><dt>STATE</dt><dd>{info.state}</dd><dt>FAMILY</dt><dd>{info.family.toUpperCase()}</dd><dt>DIRECTION</dt><dd>d{String(info.dir).padStart(2,"0")} · {info.angleDeg}°</dd><dt>FRAME</dt><dd>{info.frame} / {info.total}</dd><dt>FILE</dt><dd>{info.file}</dd><dt>TARGET</dt><dd>{info.expected}</dd><dt>FALLBACK</dt><dd className={info.fallback?"warn":"ok"}>{info.fallback?"YES — ART MISSING":"NO"}</dd></dl>})()}</aside>
    {director&&<Director cfg={config} patch={patch} save={save} load={load} note={note}/>}
    {spritePanel&&<SpriteInspector s={hud}/>}
   </div>
-  <footer><span>LS MOVE</span><span>GUN FACING = SHOT DIRECTION</span><span>{config.weaveEnabled<.5?"A SLIDE · BRACE · KICK":"A TAP BOOST · DOUBLE-TAP SLIDE"}</span><span>B MELEE</span><span>X SLOW TIME</span><span>Y GRIP · TEMP</span><span>LB SHIELD</span><span>RB BUILD COVER</span><span>LT BRACED AIM</span><span>RT FIRE</span><span>D-PAD ↑ ORBIT</span><span>D-PAD ↓ LAUNCH</span><span>D-PAD → THROW</span><span>PINBALL · UNBOUND</span></footer>
+  <footer><span>LS MOVE</span><span>GUN FACING = SHOT DIRECTION</span><span>{config.weaveEnabled<.5?"A SLIDE · BRACE · KICK":"A TAP BOOST · DOUBLE-TAP SLIDE"}</span><span>B MELEE</span><span>X SLOW TIME</span><span>Y GRIP / RIP COVER</span><span>LB SHIELD</span><span>RB BUILD COVER</span><span>LT BRACED AIM</span><span>RT FIRE</span><span>D-PAD ↑ ORBIT</span><span>D-PAD ↓ LAUNCH</span><span>D-PAD → THROW MATTER/COVER</span><span>PINBALL · UNBOUND</span></footer>
  </main>
 }
 const MOVEMENT_PRESETS:Record<string,Partial<Config>>={
@@ -142,7 +144,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  if(echoActive&&now-echoLast>34){const family=local.slide>0||local.kickStage&&local.kickStage!=="none"?"slide":"run",angle=family==="slide"?(local.slideFacing||Math.atan2(local.vy,local.vx)):Math.atan2(local.vy,local.vx),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,dir)||nearest("ready",dir),sourceCell=im?(im.naturalWidth>=1000?250:125):125,cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,frames=Math.max(1,cols*rows),frame=family==="slide"&&local.slide>0?Math.min(frames-1,Math.max(0,Math.floor((1-local.slide/cfg.slideDuration)*frames))):Math.floor(s.time*10)%frames;kineticEcho.push({x:local.x,y:local.y,angle,family,dir,frame,life:.13,maxLife:.13,speed:travelLen});if(kineticEcho.length>5)kineticEcho.shift();echoLast=now}
  let ix=(keyState.KeyD?1:0)-(keyState.KeyA?1:0),iy=(keyState.KeyS?1:0)-(keyState.KeyW?1:0);try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;ix=dz(pad.axes[0]||0);iy=dz(pad.axes[1]||0)}}catch{}const il=Math.hypot(ix,iy)||1;ix/=il;iy/=il;
  for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125;g.save();g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*.5*sc-3*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*.5*sc+4*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.restore()}
-  const drawables=[...(s.covers||[]).map((c:any)=>({y:c.y+Math.abs(Math.sin(c.a||0))*c.w*.5+Math.abs(Math.cos(c.a||0))*c.h*.5,fn:()=>cover(g,c)})),...(s.matter||[]).map((m:any)=>({y:m.y,fn:()=>matter(g,m)})),{y:local.y,fn:()=>fighter(g,local,s.time,cfg)}].sort((a,b)=>a.y-b.y);drawables.forEach(o=>o.fn());
+  const heldCoverIds=new Set((s.players||[]).map((p:any)=>p.gripCoverId).filter(Boolean));const drawables=[...(s.covers||[]).map((c:any)=>({y:c.y+Math.abs(Math.sin(c.a||0))*c.w*.5+Math.abs(Math.cos(c.a||0))*c.h*.5,fn:()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)})),...(s.matter||[]).map((m:any)=>({y:m.y,fn:()=>matter(g,m)})),{y:local.y,fn:()=>fighter(g,local,s.time,cfg)}].sort((a,b)=>a.y-b.y);drawables.forEach(o=>o.fn());
  if(echoActive&&travelLen>120){g.save();const strength=Math.min(1,travelLen/650);g.lineWidth=2;for(let n=0;n<4;n++){const side=(n-1.5)*7,len=26+strength*(34+n*7);g.strokeStyle=n%2?"#ff4aa5aa":"#62edf0aa";g.beginPath();g.moveTo(local.x-tx*12-ty*side,local.y-ty*12+tx*side);g.lineTo(local.x-tx*len-ty*side,local.y-ty*len+tx*side);g.stroke()}g.restore()}
 
  for(const sh of s.shots||[]){g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x,sh.y);g.lineTo(sh.x-sh.vx*.025,sh.y-sh.vy*.025);g.stroke()}for(const f of s.fx||[])fx(g,f);
@@ -170,7 +172,7 @@ function cover(g:CanvasRenderingContext2D,c:any){
  const w=c.w,h=c.h,z=profiles.z,b=profiles.bevel,build=c.generated?Math.max(0,Math.min(1,1-(c.build||0))):1;
  g.fillStyle="#0009";g.beginPath();g.ellipse(0,h/2+12,w*.44,12,0,0,Math.PI*2);g.fill();
  g.globalAlpha=c.generated?.35+.65*build:1;g.shadowColor=c.generated?profiles.edge:"#000";g.shadowBlur=c.generated?16:6;
- g.fillStyle=profiles.front;g.strokeStyle=profiles.edge;g.lineWidth=2.5;
+ g.fillStyle=profiles.front;g.strokeStyle=c.psychicHeld?"#62edf0":profiles.edge;g.lineWidth=c.psychicHeld?4:2.5;if(c.psychicHeld){g.shadowColor="#ff4aa5";g.shadowBlur=20}
  g.beginPath();g.moveTo(-w/2,-h/2-z+b);g.lineTo(-w/2+b,-h/2-z);g.lineTo(w/2-b,-h/2-z);g.lineTo(w/2,-h/2-z+b);g.lineTo(w/2,h/2);g.lineTo(-w/2,h/2);g.closePath();g.fill();g.stroke();
  g.fillStyle=profiles.top;g.beginPath();g.moveTo(-w/2+b,-h/2-z);g.lineTo(w/2-b,-h/2-z);g.lineTo(w/2,h/2-z+b*.35);g.lineTo(-w/2,h/2-z+b*.35);g.closePath();g.fill();g.stroke();
  g.fillStyle=profiles.side;g.beginPath();g.moveTo(w/2,-h/2-z+b);g.lineTo(w/2,h/2-z+b*.35);g.lineTo(w/2,h/2);g.lineTo(w/2,-h/2);g.closePath();g.fill();g.stroke();
