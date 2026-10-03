@@ -31,7 +31,7 @@ function presentation(s:any,now:number){
  while(snapshots.length>2&&snapshots[1].at<=target)snapshots.shift();
  const a=snapshots[0],b=snapshots[1],blend=Math.max(0,Math.min(1,(target-a.at)/Math.max(1,b.at-a.at)));
  const mix=(xs:any[],ys:any[])=>ys.map(y=>{const x=xs.find(x=>x.id===y.id);return x?{...y,x:x.x+(y.x-x.x)*blend,y:x.y+(y.y-x.y)*blend,...typeof x.a==="number"&&typeof y.a==="number"?{a:x.a+Math.atan2(Math.sin(y.a-x.a),Math.cos(y.a-x.a))*blend}:{}}:y});
- const players=b.state.players.map((p:any,n:number)=>{const q=a.state.players[n];return q?{...p,x:q.x+(p.x-q.x)*blend,y:q.y+(p.y-q.y)*blend}:p});
+ const players=b.state.players.map((p:any,n:number)=>{const q=a.state.players[n];return q?{...p,x:q.x+(p.x-q.x)*blend,y:q.y+(p.y-q.y)*blend,...q.charging&&p.charging?{chargeAge:q.chargeAge+(p.chargeAge-q.chargeAge)*blend,godCharge:q.godCharge+(p.godCharge-q.godCharge)*blend}:{},...q.powerReturn>0&&p.powerReturn>0?{powerReturn:q.powerReturn+(p.powerReturn-q.powerReturn)*blend}:{}}:p});
  return {...b.state,time:a.state.time+(b.state.time-a.state.time)*blend,players,covers:mix(a.state.covers||[],b.state.covers||[]),matter:mix(a.state.matter||[],b.state.matter||[])};
 }
 const powerAssets=new Map<string,HTMLImageElement>();
@@ -131,7 +131,7 @@ function spriteFacing(p:any,family:string,speed:number){
 function spriteRegistration(family:string){return{groundAnchor:{x:.5,y:family==="cover"?.86:.88}}}
 function SpriteInspector({s}:{s:any}){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32||p.exit?"slide":p.brake>0?"ready":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,state=p.gripCoverId?"PSYCHIC CARRY":p.gripId?"MATTER GRIP":p.exit?"EDGE-DASH":p.coverId?(p.coverMode==="soft"?"SOFT COVER":p.input?.coverAim?(p.peekEdge?"BRACED CORNER AIM":"BRACED AIM"):"BRACED"):p.brake>0?"KINETIC BRAKE":p.slide>0?"SLIDE":p.dash>0?"BOOST DASH":family.toUpperCase();return <aside className="spritePanel"><div className="panelTitle"><span>SPRITE WORKSHOP</span><b>RUNTIME INSPECTOR</b></div><dl><dt>STATE</dt><dd>{state}</dd><dt>DIRECTION</dt><dd>d{String(dir).padStart(2,"0")} · {Math.round(dir*15)}°</dd><dt>SPRITE</dt><dd>{family}-d{String(dir).padStart(2,"0")}.webp</dd><dt>SPEED</dt><dd>{Math.round(speed)}</dd><dt>COVER</dt><dd>{p.coverId||"FREE"}</dd><dt>STATUS</dt><dd>{p.gripCoverId?"GRIP POSE FALLBACK":"APPROVED RUNTIME"}</dd></dl><p>Slide to catch soft cover; point away to walk off. A locks hard brace. LT plants feet and exposes; release LT retracts while staying braced. A + left stick kicks away. Hold LB grips the attached block; release drops it. RT while holding throws. Release RT before shooting again.</p></aside>}
 function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0);
- if(p.charging||p.powerFlash>0||p.powerReturn>0){const frame=powerFrame(p,s.config||DEFAULT);return {state:p.charging?"GOD_CHARGE":"GOD_RELEASE",family:"god-frame",dir:0,angleDeg:0,frame:frame+1,total:12,file:frame<6?"opening.png + face overlay":"continuation.png + face overlay",expected:"APPROVED FIRST VIEW · 360 ART PENDING",fallback:false}}
+ if(p.charging||p.powerFlash>0||p.powerReturn>0){const frame=powerFrame(p,s.config||DEFAULT);return {state:p.charging?((p.godCharge||0)>=.8?"GOD_CHARGE_LOOP":"GOD_CHARGE_ENTRY"):p.powerFlash>0?"GOD_FLAME_PEAK":"GOD_WEAPON_RETURN",family:"god-frame",dir:0,angleDeg:0,frame:frame+1,total:12,file:frame<6?"opening.png + face overlay":"continuation.png + face overlay",expected:"APPROVED FIRST VIEW · 360 ART PENDING",fallback:false}}
  let state="READY",family="ready",fallback=false,expected="READY";
  if(p.gripCoverId){state="PSYCHIC_CARRY";family=speed>34?"run":"ready";expected="GRIP_CARRY";fallback=true}
  else if(p.exit){state="COVER_EXIT";family="slide";expected="COVER_EXIT";fallback=true}
@@ -179,7 +179,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  for(const mark of floorWake){g.save();g.translate(mark.x,mark.y);g.rotate(mark.angle);g.globalAlpha=mark.age/.27*.68;const ground=classicAssets.get("ground");if(ground)g.drawImage(ground,3*384,0,384,384,-48,-43,96,86);g.strokeStyle="#5ef0ff";g.shadowColor="#ff4bb9";g.shadowBlur=9;for(let n=0;n<3;n++){g.beginPath();g.moveTo(-14-n*5,-8+n*8);g.lineTo(-46-n*9,-13+n*11);g.stroke()}g.restore()}
  if(graffiti)classicGraffiti(g,classicAssets.get("graffiti"),graffiti,.94);
  let ix=(keyState.KeyD?1:0)-(keyState.KeyA?1:0),iy=(keyState.KeyS?1:0)-(keyState.KeyW?1:0);try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;ix=dz(pad.axes[0]||0);iy=dz(pad.axes[1]||0)}}catch{}const il=Math.hypot(ix,iy)||1;ix/=il;iy/=il;
- for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125;g.save();g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*.5*sc-3*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*.5*sc+4*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.restore()}
+ for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(e.family);g.save();g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc-3*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc+4*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.restore()}
  const heldCoverIds=new Set((s.players||[]).map((p:any)=>p.gripCoverId).filter(Boolean));
  const drawables=[
   ...(s.covers||[]).map((c:any)=>({
@@ -216,17 +216,34 @@ function coverPoseFrame(p:any,t:number,total:number){
 
 const POWER_ANCHORS=[[263,493],[271,493],[276,493],[289,475],[287,475],[295,475],[293,490],[292,490],[294,490],[305,479],[306,479],[309,479]];
 const POWER_FACES=[[278,110,25,28],[278,110,25,28],[285,110,25,28],[290,102,25,28],[290,100,25,28],[290,98,25,28],[297,113,24,27],[297,113,24,27],[297,113,24,27],[308,122,24,27],[310,123,24,27],[311,125,24,27]];
-function powerFrame(p:any,cfg:Config){if(p.charging){if(p.chargeAge<.35)return Math.min(2,Math.floor(p.chargeAge/.35*3));return Math.min(8,3+Math.floor((p.godCharge||0)*6))}if(p.powerFlash>0)return p.powerFlash>.4?9:p.powerFlash>.2?10:11;return Math.max(0,Math.min(2,Math.floor(p.powerReturn/.24*3)))}
-function drawPowerPose(g:CanvasRenderingContext2D,p:any,cfg:Config){
- const frame=powerFrame(p,cfg),local=frame%6,key=frame<6?"opening":"continuation",im=powerAssets.get(key),face=powerAssets.get("face-"+key);if(!im)return false;
+// Entry plays once. Only the settled charge poses cycle; activation has its own peak.
+function chargeFrame(age:number,charge:number){
+ if(age<.35)return Math.min(2,Math.floor(age/.35*3));
+ if(charge<.8)return Math.min(7,3+Math.floor(charge/.8*5));
+ return [7,8,7,6][Math.floor((age-.35)*4)%4];
+}
+function powerFrame(p:any,cfg:Config){if(p.charging)return chargeFrame(p.chargeAge||0,p.godCharge||0);if(p.powerFlash>0)return p.powerFlash>.4?9:p.powerFlash>.2?10:11;return p.godTime>0?11:chargeFrame(p.powerReleaseAge||0,p.powerReleaseCharge||0)}
+function powerPoseAlpha(p:any){return p.charging||p.powerFlash>0?1:Math.max(0,Math.min(1,(p.powerReturn||0)/.24))}
+function powerAura(p:any){return p.charging?(p.godCharge||0)*.8:p.godTime>0?.6*Math.min(1,p.godTime/Math.max(.01,p.godDuration||12)):(p.godFade||0)/.45*(p.godFadeStrength||0)}
+function drawPowerFrame(g:CanvasRenderingContext2D,p:any,cfg:Config,frame:number){
+ const local=frame%6,key=frame<6?"opening":"continuation",im=powerAssets.get(key),face=powerAssets.get("face-"+key);if(!im)return false;
  const sx=local%3*512,sy=Math.floor(local/3)*512,[ax,ay]=POWER_ANCHORS[frame],size=125*cfg.spriteScale,unit=size/512,dx=p.x-ax*unit,dy=p.y-ay*unit;
  g.drawImage(im,sx,sy,512,512,dx,dy,size,size);
  if(face){const [x,y,w,h]=POWER_FACES[frame];g.save();g.beginPath();g.ellipse(dx+(x+w/2)*unit,dy+(y+h/2)*unit,w/2*unit,h/2*unit,0,0,Math.PI*2);g.clip();g.drawImage(face,sx+x,sy+y,w,h,dx+x*unit,dy+y*unit,w*unit,h*unit);g.restore()}
  return true;
 }
+function drawPowerPose(g:CanvasRenderingContext2D,p:any,cfg:Config){
+ if(p.charging&&(p.godCharge||0)>=.8){
+  const cycle=[7,8,7,6],phase=Math.max(0,(p.chargeAge-.35)*4),index=Math.floor(phase),blend=phase-index,alpha=g.globalAlpha;
+  g.save();g.globalAlpha=alpha*(1-blend);drawPowerFrame(g,p,cfg,cycle[index%4]);g.globalAlpha=alpha*blend;drawPowerFrame(g,p,cfg,cycle[(index+1)%4]);g.restore();return true;
+ }
+ return drawPowerFrame(g,p,cfg,powerFrame(p,cfg));
+}
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),d=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,d)||nearest("ready",d);
  const meta=im?spriteCell(im,family,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;let frame=family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;if(family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(family);
- g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=p.charging?(p.godCharge||0)*.8:p.godTime>0?.18+.42*Math.min(1,p.godTime/3):(p.godFade||0)*.8;g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-40*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const powerPose=(p.charging||p.powerFlash>0||p.powerReturn>0)&&drawPowerPose(g,p,cfg);if(!powerPose&&im){const m=spriteCell(im,family,frame);g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*registration.groundAnchor.x*sc,p.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!powerPose){g.strokeStyle="#ff4aa5";g.strokeRect(p.x-18,p.y-70,36,70)}g.restore();
+ g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-40*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
+ if(im&&poseAlpha<1){const m=spriteCell(im,family,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*registration.groundAnchor.x*sc,p.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!im&&!poseAlpha){g.strokeStyle="#ff4aa5";g.strokeRect(p.x-18,p.y-70,36,70)}
+ if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.restore();
  g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke()}
 // Structure Lab concrete-cover-atlas-v2: original face registration, not replacement artwork.
 type CoverPoint={x:number;y:number};
@@ -284,4 +301,5 @@ function fx(g:CanvasRenderingContext2D,f:any){
  g.save();g.translate(0,-(f.z||0));g.globalAlpha=Math.min(1,f.life*4);if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){const dir=f.type==="brake"?1:-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":f.type==="muzzle"?"#fff2a0":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
 
 function arrow(g:CanvasRenderingContext2D,x1:number,y1:number,x2:number,y2:number){const a=Math.atan2(y2-y1,x2-x1);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.beginPath();g.moveTo(x2,y2);g.lineTo(x2-Math.cos(a-.55)*11,y2-Math.sin(a-.55)*11);g.lineTo(x2-Math.cos(a+.55)*11,y2-Math.sin(a+.55)*11);g.closePath();g.fill()}
+
 

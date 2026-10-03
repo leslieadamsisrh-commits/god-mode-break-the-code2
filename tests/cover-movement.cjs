@@ -152,3 +152,28 @@ console.log(`PASS: ${checks} total controller/cover checks, including center/cor
  const t=m.newGame('clock','token',1000,'solo');t.covers=[];t.players[0].godTime=t.players[0].godDuration=12;for(let n=0;n<720;n++)tick(t,{},17);assert.equal(t.players[0].godTime,0);checks++;
 }
 console.log(`PASS: ${checks} checks including God Frame charge, damage, depletion, cancellation and expiry.`);
+
+
+// Animation phases must not replay dissolution while sustaining or returning to combat.
+{
+ const start=ui.indexOf('function chargeFrame('),end=ui.indexOf('function drawPowerFrame(',start);
+ const source=fs.readFileSync('app/Game.tsx','utf8');
+ vm.runInContext(stripTypeScriptTypes(source.slice(source.indexOf('function chargeFrame('),source.indexOf('function drawPowerFrame(')))+';globalThis.powerVisual={chargeFrame,powerFrame,powerPoseAlpha,powerAura};',ctx);
+ const v=ctx.powerVisual;
+ for(const age of [.01,.14,.27]){assert.equal(v.chargeFrame(age,0),Math.floor(age/.35*3));checks++}
+ const frames=new Set();for(let n=0;n<100;n++){const f=v.chargeFrame(3+n*.05,1);assert(f>=6&&f<=8);frames.add(f)}assert(frames.size>1);checks++;
+ assert.equal(v.powerFrame({powerReturn:.24,godTime:12},{}),11);checks++;
+ assert.equal(v.powerFrame({powerReturn:.24,powerReleaseAge:1.5,powerReleaseCharge:.48},{}),6);checks++;
+ assert.equal(v.powerPoseAlpha({powerReturn:.12}),.5);assert.equal(v.powerPoseAlpha({}),0);checks++;
+ assert(v.powerAura({godTime:9,godDuration:12})>v.powerAura({godTime:3,godDuration:12}));checks++;
+ const s=m.newGame('transition','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];
+ for(let n=0;n<85;n++)tick(s,{powerup:true});const age=p.chargeAge,charge=p.godCharge;tick(s,{});
+ assert.equal(p.powerReleaseAge,age);assert.equal(p.powerReleaseCharge,charge);assert(p.godTime>0&&p.godTime<12);checks++;
+ tick(s,{slide:true,x:1});assert.equal(p.powerFlash,0);assert.equal(p.powerReturn,0);assert(p.slide>0);checks++;
+ const t=m.newGame('cancel','token',1000,'solo'),q=t.players[0];t.covers=[];t.matter=[];for(let n=0;n<12;n++)tick(t,{powerup:true});tick(t,{});assert.equal(q.godTime,0);assert(q.powerReturn>0);checks++;
+ tick(t,{fire:true});assert.equal(q.powerReturn,0);assert(t.shots.length);checks++;
+ tick(t,{powerup:true});assert(q.charging);checks++;
+ tick(t,{powerup:true,shield:true});assert(!q.charging);assert.equal(q.powerReturn,0);assert.equal(q.godTime,0);checks++;
+ for(let n=0;n<5;n++)tick(t,{powerup:true});assert(!q.charging);checks++;tick(t,{});tick(t,{powerup:true});assert(q.charging);checks++;
+}
+console.log(`PASS: ${checks} checks including sustained charge loop, partial release, immediate combat interruption, proportional glow and repeat charging.`);
