@@ -1,9 +1,9 @@
 export type InputState={x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;powerup:boolean;slow:boolean};
-export type CombatConfig={powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
-export const DEFAULT_CONFIG:CombatConfig={powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:599.269125,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
+export type CombatConfig={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
+export const DEFAULT_CONFIG:CombatConfig={chargeMoveScale:.65,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:599.269125,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;born?:number;vx?:number;vy?:number};
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;clearanceCoverId?:string};
@@ -13,7 +13,7 @@ export type GameState={build:string;mode:"bot"|"solo";phase:"lobby"|"countdown"|
 const empty=():InputState=>({x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false});
 const clamp=(v:number,a:number,b:number)=>Math.max(a,Math.min(b,v)),wrap=(a:number)=>Math.atan2(Math.sin(a),Math.cos(a)),dist=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y),uid=()=>crypto.randomUUID().slice(0,8);
 const A={left:70,right:930,top:90,bottom:550};
-function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{x,y,vx:0,vy:0,aim,hp,battery:100,charging:false,chargeAge:0,godCharge:0,godTime:0,godDuration:0,powerFlash:0,powerReturn:0,powerReleaseAge:0,powerReleaseCharge:0,godFade:0,godFadeStrength:0,powerBlocked:false,lastEnergyAt:-9,dash:0,brake:0,slideSteerCurrent:0,lastSlideTap:-9,slide:0,slideFacing:aim,slideCool:0,kickStage:"none",kickTime:0,kickAngle:aim,kickNx:0,kickNy:0,coverId:null,coverMode:null,coverAnchor:null,coverLock:0,coverSpeed:0,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,coverGripAngle:aim,coverGripDist:92,orbitIds:[],knock:0,pinball:0,lastShot:-9,fireBlocked:false,fireState:0,recoil:0,returnToCover:0,boostState:0,brakeState:0,gunFacing:aim,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
+function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{x,y,vx:0,vy:0,aim,hp,battery:100,charging:false,chargeMotion:1,chargeAge:0,godCharge:0,godTime:0,godDuration:0,powerFlash:0,powerReturn:0,powerReleaseAge:0,powerReleaseCharge:0,godFade:0,godFadeStrength:0,powerBlocked:false,lastEnergyAt:-9,dash:0,brake:0,slideSteerCurrent:0,lastSlideTap:-9,slide:0,slideFacing:aim,slideCool:0,kickStage:"none",kickTime:0,kickAngle:aim,kickNx:0,kickNy:0,coverId:null,coverMode:null,coverAnchor:null,coverLock:0,coverSpeed:0,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,coverGripAngle:aim,coverGripDist:92,orbitIds:[],knock:0,pinball:0,lastShot:-9,fireBlocked:false,fireState:0,recoil:0,returnToCover:0,boostState:0,brakeState:0,gunFacing:aim,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
 export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo"="solo"):GameState{
  const config={...DEFAULT_CONFIG};
  const players=[player(230,330,0,name,token,false,config.maxHealth)];
@@ -67,12 +67,12 @@ function placeOnCover(p:Player,s:GameState){
 function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){if(s.time<p.coverLock)return false;p.coverId=c.id;p.coverMode=mode;p.coverAnchor=coverFace(c,p);p.slide=0;p.dash=0;p.vx=p.vy=0;p.coverSpeed=0;p.contact=s.time+.22;p.peek=false;placeOnCover(p,s);s.fx.push({id:uid(),type:mode==="soft"?"soft-cover":"cover-slam",x:p.x,y:p.y,life:.25});return true}
 function releaseCover(p:Player,s:GameState,lock=.18){p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
- const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,mag=Math.hypot(i.x,i.y),away=i.x*a.nx+i.y*a.ny;
+ const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,moveSpeed=c.moveSpeed*(p.chargeMotion??1),mag=Math.hypot(i.x,i.y),away=i.x*a.nx+i.y*a.ny;
  // Soft cover follows stick intent; LT plants a hard brace and A owns its escape.
  if(p.coverMode==="braced"&&i.coverAim){p.vx=p.vy=p.coverSpeed=0;placeOnCover(p,s);const forward=Math.cos(p.gunFacing)*a.nx+Math.sin(p.gunFacing)*a.ny;p.peek=forward<.35;p.peekEdge=Math.min(a.t,a.length-a.t)<18;return}
- if(p.coverMode==="soft"&&mag>.18&&away/mag>.15){releaseCover(p,s,.18);p.vx=i.x*c.moveSpeed;p.vy=i.y*c.moveSpeed;p.x=clamp(p.x+p.vx*dt,A.left,A.right);p.y=clamp(p.y+p.vy*dt,A.top,A.bottom);collide(p,s);return}
+ if(p.coverMode==="soft"&&mag>.18&&away/mag>.15){releaseCover(p,s,.18);p.vx=i.x*moveSpeed;p.vy=i.y*moveSpeed;p.x=clamp(p.x+p.vx*dt,A.left,A.right);p.y=clamp(p.y+p.vy*dt,A.top,A.bottom);collide(p,s);return}
  if(c.weaveEnabled<.5){
-   if(p.coverMode==="soft"&&mag>.55&&away>.65){releaseCover(p,s,.08);p.vx=i.x*c.moveSpeed;p.vy=i.y*c.moveSpeed;return}
+   if(p.coverMode==="soft"&&mag>.55&&away>.65){releaseCover(p,s,.08);p.vx=i.x*moveSpeed;p.vy=i.y*moveSpeed;return}
    const cv=s.covers.find(x=>x.id===p.coverId);if(!cv){releaseCover(p,s);return}
    let edge=a.edge,cur=anchorForEdge(cv,edge,a.t),along=i.x*cur.tx+i.y*cur.ty,t=cur.t,g=0;
    if(t<.5&&along<-.1)g=-1;else if(t>cur.length-.5&&along>.1)g=1;
@@ -80,14 +80,14 @@ function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
      const ne=(edge+g+4)%4,next=anchorForEdge(cv,ne,g>0?0:(ne%2===0?cv.w:cv.h)),nextDot=i.x*next.tx+i.y*next.ty;
      if(nextDot*g>.42){edge=ne;cur=next;t=g>0?0:next.length;along=nextDot}
    }
-   const step=c.moveSpeed*dt*.78;t=clamp(t+along*step,0,cur.length);p.coverAnchor=anchorForEdge(cv,edge,t);p.coverSpeed=along*c.moveSpeed*.78;p.vx=p.coverAnchor.tx*p.coverSpeed;p.vy=p.coverAnchor.ty*p.coverSpeed;placeOnCover(p,s);
+   const step=moveSpeed*dt*.78;t=clamp(t+along*step,0,cur.length);p.coverAnchor=anchorForEdge(cv,edge,t);p.coverSpeed=along*moveSpeed*.78;p.vx=p.coverAnchor.tx*p.coverSpeed;p.vy=p.coverAnchor.ty*p.coverSpeed;placeOnCover(p,s);
    if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor.nx+Math.sin(p.gunFacing)*p.coverAnchor.ny;p.peek=forward<.35;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}
    return;
  }
  const along=i.x*a.tx+i.y*a.ty;
- if(p.coverMode==="soft"&&away>.38){releaseCover(p,s,.08);p.vx=i.x*c.moveSpeed*1.15;p.vy=i.y*c.moveSpeed*1.15;return}
- p.coverSpeed+=(along*c.moveSpeed-p.coverSpeed)*Math.min(1,dt*c.response);if(Math.abs(along)<.001)p.coverSpeed*=Math.pow(c.stopDrag,dt);
- const before=a.t,raw=a.t+along*c.moveSpeed*dt;a.t=clamp(raw,0,a.length);
+ if(p.coverMode==="soft"&&away>.38){releaseCover(p,s,.08);p.vx=i.x*moveSpeed*1.15;p.vy=i.y*moveSpeed*1.15;return}
+ p.coverSpeed+=(along*moveSpeed-p.coverSpeed)*Math.min(1,dt*c.response);if(Math.abs(along)<.001)p.coverSpeed*=Math.pow(c.stopDrag,dt);
+ const before=a.t,raw=a.t+along*moveSpeed*dt;a.t=clamp(raw,0,a.length);
  if(p.coverMode==="soft"&&Math.abs(raw-a.t)>.1&&Math.abs(along)>.2){
    const cv=s.covers.find(x=>x.id===p.coverId);if(cv){const g=raw<0?-1:1,ne=(a.edge+g+4)%4,next=anchorForEdge(cv,ne,g>0?0:(ne%2===0?cv.w:cv.h)),nextDot=i.x*next.tx+i.y*next.ty;if(nextDot*g>.3)p.coverAnchor=next}
  }else if(a.t===before)p.coverSpeed=0;
@@ -160,7 +160,9 @@ function powerStep(p:Player,s:GameState,dt:number){
   p.powerReleaseAge=p.chargeAge;p.powerReleaseCharge=p.godCharge;p.charging=false;p.powerReturn=interrupted?0:.24;p.chargeAge=0;p.godCharge=0;if(interrupted){p.powerBlocked=true;p.powerFlash=0;}
  }
  if(i.powerup&&!p.charging&&!p.powerBlocked&&!p.godTime&&!interrupted){p.charging=true;p.chargeAge=0;p.godCharge=0;p.powerReturn=0}
- if(p.charging){p.chargeAge+=dt;p.godCharge=clamp((p.chargeAge-.35)/Math.max(.1,c.powerChargeSeconds),0,1);p.battery=Math.min(100,p.battery+c.powerRecharge*dt);p.lastEnergyAt=s.time;if(p.coverId){p.coverMode="braced";p.peek=false;p.vx=p.vy=p.coverSpeed=0}}
+ if(p.charging){p.chargeAge+=dt;p.godCharge=clamp((p.chargeAge-.35)/Math.max(.1,c.powerChargeSeconds),0,1);p.battery=Math.min(100,p.battery+c.powerRecharge*dt);p.lastEnergyAt=s.time;if(p.coverId)p.peek=false}
+ const target=p.charging?clamp(c.chargeMoveScale??.65,.35,.85):1;
+ p.chargeMotion=(p.chargeMotion??1)+(target-(p.chargeMotion??1))*(1-Math.exp(-clamp(c.chargeMoveResponse??8,3,16)*dt));
 }
 function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],i=p.input,c=s.config;
  if(i.slide&&!prev.slide&&!p.coverId&&!p.exit&&p.knock<=0){
@@ -248,7 +250,6 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
   else if(p.knock>0){p.knock-=dt;p.vx*=Math.pow(.08,dt);p.vy*=Math.pow(.08,dt)}
   else if(p.exit){stepCoverExit(p,s,d)}
   else if(p.coverId){
-    if(p.charging){p.vx=p.vy=p.coverSpeed=0;placeOnCover(p,s);continue}
     // Handle A before walk-away can clear the anchor needed by a kick.
     if(i.slide&&!prev[n]?.slide){
       const a=p.coverAnchor,mag=Math.hypot(i.x,i.y),out=a&&mag>.18?(i.x*a.nx+i.y*a.ny)/mag:0;
@@ -273,7 +274,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
     }else{p.vx*=Math.pow(.72,d);p.vy*=Math.pow(.72,d)}
     p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);slideCapture(p,s);collide(p,s)
   }
-  else{const chargeMove=p.charging?.18:1,r=1-Math.exp(-c.response*d),m=Math.hypot(i.x,i.y);p.vx+=(i.x*c.moveSpeed*chargeMove-p.vx)*r;p.vy+=(i.y*c.moveSpeed*chargeMove-p.vy)*r;if(m<.05){p.vx*=Math.pow(c.stopDrag,d);p.vy*=Math.pow(c.stopDrag,d)}p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)}
+  else{const chargeMove=p.chargeMotion??1,r=1-Math.exp(-c.response*d),m=Math.hypot(i.x,i.y);p.vx+=(i.x*c.moveSpeed*chargeMove-p.vx)*r;p.vy+=(i.y*c.moveSpeed*chargeMove-p.vy)*r;if(m<.05){p.vx*=Math.pow(c.stopDrag,d);p.vy*=Math.pow(c.stopDrag,d)}p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)}
   if(i.fire&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&!p.gripId&&!p.gripCoverId&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
    const muzzle=muzzleSocket(p),clearance=p.coverId&&p.coverMode==="braced"&&i.coverAim&&p.peek?p.coverId:undefined;
    const blocked=s.covers.some(cv=>cv.id!==clearance&&segmentCover(p,muzzle,cv));p.lastShot=s.time;

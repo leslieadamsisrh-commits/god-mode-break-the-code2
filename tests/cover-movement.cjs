@@ -177,3 +177,26 @@ console.log(`PASS: ${checks} checks including God Frame charge, damage, depletio
  for(let n=0;n<5;n++)tick(t,{powerup:true});assert(!q.charging);checks++;tick(t,{});tick(t,{powerup:true});assert(q.charging);checks++;
 }
 console.log(`PASS: ${checks} checks including sustained charge loop, partial release, immediate combat interruption, proportional glow and repeat charging.`);
+
+// Charging keeps a useful, eased movement pace and never auto-braces soft cover.
+{
+ const s=m.newGame('float','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];
+ for(let n=0;n<30;n++)tick(s,{x:1});const before=p.vx;
+ tick(s,{x:1,powerup:true});assert(p.charging);assert(p.chargeMotion>.9&&p.chargeMotion<1);assert(p.vx>before*.9);checks++;
+ for(let n=0;n<50;n++)tick(s,{x:1,powerup:true});assert(Math.abs(p.chargeMotion-.65)<.002);assert(p.vx>s.config.moveSpeed*.6&&p.vx<s.config.moveSpeed*.7);checks++;
+ const chargedSpeed=p.vx;tick(s,{x:1});assert(!p.charging);assert(p.chargeMotion>.65&&p.chargeMotion<.75);assert(p.vx>chargedSpeed&&p.vx<before);checks++;
+ for(let n=0;n<30;n++)tick(s,{x:1});assert(p.chargeMotion>.99);checks++;
+}
+for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let edge=0;edge<4;edge++){
+ let {s,p,a}=fixture(rotation,edge,'soft');const before=a.t,sign=before>a.length/2?-1:1;
+ for(let n=0;n<5;n++)tick(s,{powerup:true,x:a.tx*sign*.5,y:a.ty*sign*.5});
+ assert(p.charging);assert.equal(p.coverMode,'soft');assert.equal(p.coverId,'test-cover');assert((p.coverAnchor.t-before)*sign>0);assert(!m.circleBox(p,18,s.covers[0]).hit);checks++;
+ ({s,p,a}=fixture(rotation,edge,'soft'));tick(s,{powerup:true,x:a.nx,y:a.ny});assert(p.charging);assert.equal(p.coverId,null);assert(p.vx*a.nx+p.vy*a.ny>0);checks++;
+ ({s,p,a}=fixture(rotation,edge,'braced'));const x=p.x,y=p.y;tick(s,{powerup:true,x:a.nx,y:a.ny});assert(p.charging);assert.equal(p.coverMode,'braced');assert.equal(p.x,x);assert.equal(p.y,y);checks++;
+}
+{
+ const {s,p}=fixture(0,0,'soft');p.x=230;p.y=300;p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverLock=0;s.covers[0].x=330;s.covers[0].y=300;
+ for(let n=0;n<60&&!p.coverId;n++)tick(s,{x:1,powerup:true});assert(p.charging);assert.equal(p.coverId,'test-cover');assert.equal(p.coverMode,'soft');assert(!m.circleBox(p,18,s.covers[0]).hit);checks++;
+ const anchor={...p.coverAnchor},x=p.x,y=p.y;for(let n=0;n<20;n++)tick(s,{powerup:true,x:anchor.tx*.5,y:anchor.ty*.5});assert(p.charging);assert(Math.hypot(p.x-x,p.y-y)>5);checks++;
+}
+console.log(`PASS: ${checks} checks including charge float easing, return pace, rotated-cover flow, soft walk-away, brace preservation and moving cover capture.`);
