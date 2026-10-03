@@ -8,7 +8,8 @@ const EMPTY:any={x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:fals
 const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF:"melee",KeyC:"heavy",KeyQ:"grip",KeyR:"throwMatter",KeyB:"cover",KeyO:"orbit",KeyP:"launchOrbit",Space:"pinball",KeyX:"slow"};
 const jade=new Map<string,HTMLImageElement>();
 type EchoFrame={x:number;y:number;angle:number;family:string;dir:number;frame:number;life:number;maxLife:number;speed:number};
-const kineticEcho:EchoFrame[]=[];let echoLast=0;let loading=false;
+const kineticEcho:EchoFrame[]=[];let echoLast=0;
+let cameraState={x:500,y:310,ready:false};let loading=false;
 function preload(){if(loading||typeof Image==="undefined")return;loading=true;for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const im=new Image();im.onload=()=>jade.set(`${family}-${d}`,im);const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;im.src="https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n}}
 
 export default function Game(){
@@ -129,7 +130,10 @@ function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx|
 function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>){if(!canvas)return;const g=canvas.getContext("2d")!,sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.fillStyle="#070b10";g.fillRect(0,0,1000,620);if(!s)return;
  const lag=Math.min(.055,(performance.now()-received)/1000),cfg=s.config||DEFAULT,p=s.players[0],local={...p,x:p.x+(p.vx||0)*lag,y:p.y+(p.vy||0)*lag};
  const zoom=Math.max(1.25,Math.min(2.15,cfg.cameraZoom||1.85)),look=18,lookY=8,ga=local.gunFacing??local.aim??0;
- const halfW=500/zoom,halfH=310/zoom,camX=Math.max(halfW,Math.min(1000-halfW,local.x+Math.cos(ga)*look)),camY=Math.max(halfH,Math.min(620-halfH,local.y+Math.sin(ga)*lookY));
+ const halfW=500/zoom,halfH=310/zoom,targetX=Math.max(halfW,Math.min(1000-halfW,local.x+Math.cos(ga)*look)),targetY=Math.max(halfH,Math.min(620-halfH,local.y+Math.sin(ga)*lookY));
+ if(!cameraState.ready){cameraState.x=targetX;cameraState.y=targetY;cameraState.ready=true}
+ const follow=1-Math.exp(-8/60);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
+ const camX=Math.round(cameraState.x*4)/4,camY=Math.round(cameraState.y*4)/4;
  g.setTransform(sx*zoom,0,0,sy*zoom,(500-camX*zoom)*sx,(310-camY*zoom)*sy);
  g.strokeStyle="#162733";g.lineWidth=1/zoom;for(let x=50;x<1000;x+=50){g.beginPath();g.moveTo(x,70);g.lineTo(x,560);g.stroke()}for(let y=90;y<570;y+=40){g.beginPath();g.moveTo(50,y);g.lineTo(950,y);g.stroke()}g.strokeStyle="#31505c";g.strokeRect(70,90,860,460);g.fillStyle="#aeb7bd";g.font=`${Math.max(8,12/zoom)}px monospace`;g.fillText("INSTRUCTOR 142 CLASSIC // CLOSE COMBAT CAMERA",82,112);
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
@@ -137,18 +141,23 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  const echoActive=local.slide>0||local.dash>0||local.kickStage&&local.kickStage!=="none"||travelLen>360;
  if(echoActive&&now-echoLast>34){const family=local.slide>0||local.kickStage&&local.kickStage!=="none"?"slide":"run",angle=family==="slide"?(local.slideFacing||Math.atan2(local.vy,local.vx)):Math.atan2(local.vy,local.vx),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,dir)||nearest("ready",dir),sourceCell=im?(im.naturalWidth>=1000?250:125):125,cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,frames=Math.max(1,cols*rows),frame=family==="slide"&&local.slide>0?Math.min(frames-1,Math.max(0,Math.floor((1-local.slide/cfg.slideDuration)*frames))):Math.floor(s.time*10)%frames;kineticEcho.push({x:local.x,y:local.y,angle,family,dir,frame,life:.13,maxLife:.13,speed:travelLen});if(kineticEcho.length>5)kineticEcho.shift();echoLast=now}
  let ix=(keyState.KeyD?1:0)-(keyState.KeyA?1:0),iy=(keyState.KeyS?1:0)-(keyState.KeyW?1:0);try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;ix=dz(pad.axes[0]||0);iy=dz(pad.axes[1]||0)}}catch{}const il=Math.hypot(ix,iy)||1;ix/=il;iy/=il;
- for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const sourceCell=(im.naturalWidth>=1000||(e.family==="ready"&&im.naturalWidth>=200))?250:125,cols=Math.max(1,Math.floor(im.naturalWidth/sourceCell)),frames=Math.max(1,cols*Math.max(1,Math.floor(im.naturalHeight/sourceCell))),fr=e.frame%frames,sx0=(fr%cols)*sourceCell,sy0=Math.floor(fr/cols)*sourceCell,fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125;g.save();g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,sx0,sy0,sourceCell,sourceCell,e.x-displayCell*.5*sc-3*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,sx0,sy0,sourceCell,sourceCell,e.x-displayCell*.5*sc+4*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.restore()}
+ for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125;g.save();g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*.5*sc-3*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*.5*sc+4*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.restore()}
   const drawables=[...(s.covers||[]).map((c:any)=>({y:c.y+Math.abs(Math.sin(c.a||0))*c.w*.5+Math.abs(Math.cos(c.a||0))*c.h*.5,fn:()=>cover(g,c)})),...(s.matter||[]).map((m:any)=>({y:m.y,fn:()=>matter(g,m)})),{y:local.y,fn:()=>fighter(g,local,s.time,cfg)}].sort((a,b)=>a.y-b.y);drawables.forEach(o=>o.fn());
  if(echoActive&&travelLen>120){g.save();const strength=Math.min(1,travelLen/650);g.lineWidth=2;for(let n=0;n<4;n++){const side=(n-1.5)*7,len=26+strength*(34+n*7);g.strokeStyle=n%2?"#ff4aa5aa":"#62edf0aa";g.beginPath();g.moveTo(local.x-tx*12-ty*side,local.y-ty*12+tx*side);g.lineTo(local.x-tx*len-ty*side,local.y-ty*len+tx*side);g.stroke()}g.restore()}
- if(travelLen>25){g.save();g.strokeStyle="#ffffff";g.fillStyle="#ffffff";g.lineWidth=3;arrow(g,local.x,local.y,local.x+tx*70,local.y+ty*70);g.restore()}
- if(Math.hypot(ix,iy)>.2){g.save();g.strokeStyle="#62edf0";g.fillStyle="#62edf0";g.lineWidth=3;arrow(g,local.x,local.y-10,local.x+ix*58,local.y-10+iy*58);g.restore()}
+
  for(const sh of s.shots||[]){g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x,sh.y);g.lineTo(sh.x-sh.vx*.025,sh.y-sh.vy*.025);g.stroke()}for(const f of s.fx||[])fx(g,f);
 }
 function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im)return im}}
+function spriteCell(im:HTMLImageElement,family:string,frame:number){
+ const candidates=family==="ready"?[125,250]:[125,250];
+ let cell=125,best=-1;
+ for(const size of candidates){if(im.naturalWidth%size||im.naturalHeight%size)continue;const count=(im.naturalWidth/size)*(im.naturalHeight/size);if(count>best){best=count;cell=size}}
+ const cols=Math.max(1,Math.floor(im.naturalWidth/cell)),rows=Math.max(1,Math.floor(im.naturalHeight/cell)),frames=Math.max(1,cols*rows),fr=((frame%frames)+frames)%frames;
+ return{cell,cols,rows,frames,sx:(fr%cols)*cell,sy:Math.floor(fr/cols)*cell}
+}
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=family==="slide"?p.slideFacing:family==="run"&&speed>55?Math.atan2(p.vy,p.vx):p.aim||0,d=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,d)||nearest("ready",d);
- const sourceCell=im?(im.naturalWidth>=1000?250:125):125;
- const cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,frames=cols*rows;let frame=family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;if(family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125;
- g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}if(im){const fr=frame%frames,sx=(fr%cols)*sourceCell,sy=Math.floor(fr/cols)*sourceCell;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(im,sx,sy,sourceCell,sourceCell,p.x-displayCell*.5*sc,p.y-displayCell*.88*sc,displayCell*sc,displayCell*sc)}else{g.strokeStyle="#ff4aa5";g.strokeRect(p.x-18,p.y-70,36,70)}
+ const meta=im?spriteCell(im,family,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;let frame=family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;if(family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125;
+ g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}if(im){const m=spriteCell(im,family,frame);g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*.5*sc,p.y-displayCell*.88*sc,displayCell*sc,displayCell*sc)}else{g.strokeStyle="#ff4aa5";g.strokeRect(p.x-18,p.y-70,36,70)}
  g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke()}
 function cover(g:CanvasRenderingContext2D,c:any){
  g.save();g.translate(c.x,c.y);g.rotate(c.a||0);
