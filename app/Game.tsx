@@ -145,7 +145,7 @@ function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx|
  const im=nearest(family,dir)||nearest("ready",dir);
  const sourceCell=im?(im.naturalWidth%250===0&&im.naturalHeight%250===0?250:125):125;
  const cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,total=Math.max(1,cols*rows);
- const frame=family==="ready"?0:Math.floor((s?.time||0)*(family==="run"?10:7))%total;
+ const frame=family==="cover"?coverPoseFrame(p,s?.time||0,total):family==="ready"?0:Math.floor((s?.time||0)*(family==="run"?10:7))%total;
  return{state,family,dir,angleDeg:Math.round(dir*15),frame:frame+1,total,file:`${family}-d${String(dir).padStart(2,"0")}.webp`,fallback,expected}}
 function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>){if(!canvas)return;const g=canvas.getContext("2d")!,sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.fillStyle="#070b10";g.fillRect(0,0,1000,620);if(!s)return;
  const renderNow=performance.now();s=presentation(s,renderNow);const cfg=s.config||DEFAULT,p=s.players[0],local={...p};
@@ -193,8 +193,22 @@ function spriteCell(im:HTMLImageElement,family:string,frame:number){
  const cols=Math.max(1,Math.floor(im.naturalWidth/cell)),rows=Math.max(1,Math.floor(im.naturalHeight/cell)),frames=Math.max(1,cols*rows),fr=((frame%frames)+frames)%frames;
  return{cell,cols,rows,frames,sx:(fr%cols)*cell,sy:Math.floor(fr/cols)*cell}
 }
+
+// The recovered atlases separate contact, brace, peek and fire; they are not idle loops.
+function coverPoseFrame(p:any,t:number,total:number){
+ const extended=total===12;
+ const pose=extended?{contact:[0,1,2],brace:4,lateral:[5,6],peek:7,fire:8,return:9}:{contact:[0,1],brace:1,lateral:[],peek:2,fire:3,return:4};
+ if(total!==6&&total!==12)return 0;
+ if(p.fireState>0||p.recoil>0)return pose.fire;
+ if(p.returnToCover>0&&!p.input?.coverAim)return pose.return;
+ if(p.coverMode==="braced"&&p.input?.coverAim)return pose.peek;
+ if(p.contact>t){const elapsed=Math.max(0,.22-(p.contact-t));return pose.contact[Math.min(pose.contact.length-1,Math.floor(elapsed/.22*pose.contact.length))]}
+ if(Math.abs(p.coverSpeed||0)>35&&pose.lateral.length)return pose.lateral[Math.floor(t*7)%pose.lateral.length];
+ return pose.brace;
+}
+
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=family==="slide"?p.slideFacing:family==="run"&&speed>55?Math.atan2(p.vy,p.vx):p.aim||0,d=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,d)||nearest("ready",d);
- const meta=im?spriteCell(im,family,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;let frame=family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;if(family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125;
+ const meta=im?spriteCell(im,family,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;let frame=family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;if(family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125;
  g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}if(im){const m=spriteCell(im,family,frame);g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*.5*sc,p.y-displayCell*.88*sc,displayCell*sc,displayCell*sc)}else{g.strokeStyle="#ff4aa5";g.strokeRect(p.x-18,p.y-70,36,70)}
  g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke()}
 function cover(g:CanvasRenderingContext2D,c:any){
