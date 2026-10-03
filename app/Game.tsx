@@ -9,14 +9,25 @@ const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF
 const jade=new Map<string,HTMLImageElement>();
 type EchoFrame={x:number;y:number;angle:number;family:string;dir:number;frame:number;life:number;maxLife:number;speed:number};
 const kineticEcho:EchoFrame[]=[];let echoLast=0;
-let cameraState={x:500,y:310,ready:false};let loading=false;
+let cameraState={x:500,y:310,ready:false,last:0};let loading=false;
+const snapshots:{state:any;at:number}[]=[];
+function recordSnapshot(s:any,at:number){snapshots.push({state:s,at});if(snapshots.length>20)snapshots.shift()}
+function presentation(s:any,now:number){
+ if(snapshots.length<2)return s;
+ const target=now-100;
+ while(snapshots.length>2&&snapshots[1].at<=target)snapshots.shift();
+ const a=snapshots[0],b=snapshots[1],blend=Math.max(0,Math.min(1,(target-a.at)/Math.max(1,b.at-a.at)));
+ const mix=(xs:any[],ys:any[])=>ys.map(y=>{const x=xs.find(x=>x.id===y.id);return x?{...y,x:x.x+(y.x-x.x)*blend,y:x.y+(y.y-x.y)*blend}:y});
+ const players=b.state.players.map((p:any,n:number)=>{const q=a.state.players[n];return q?{...p,x:q.x+(p.x-q.x)*blend,y:q.y+(p.y-q.y)*blend}:p});
+ return {...b.state,time:a.state.time+(b.state.time-a.state.time)*blend,players,covers:mix(a.state.covers||[],b.state.covers||[]),matter:mix(a.state.matter||[],b.state.matter||[])};
+}
 function preload(){if(loading||typeof Image==="undefined")return;loading=true;for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const im=new Image();im.onload=()=>jade.set(`${family}-${d}`,im);const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;im.src="https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n}}
 
 export default function Game(){
  const canvas=useRef<HTMLCanvasElement>(null),session=useRef<Session|null>(null),state=useRef<any>(null),seq=useRef(0),keys=useRef<Record<string,boolean>>({}),edges=useRef<Record<string,boolean>>({}),mouse=useRef({x:500,y:310,down:false}),lastAccept=useRef(performance.now()),started=useRef(false);
  const [hud,setHud]=useState<any>(null),[status,setStatus]=useState("BOOTING"),[director,setDirector]=useState(false),[spritePanel,setSpritePanel]=useState(false),[config,setConfig]=useState<Config>(DEFAULT),[note,setNote]=useState(""),[padStatus,setPadStatus]=useState("CONTROLLER: WAITING"),[padGate,setPadGate]=useState(true),[testPass,setTestPass]=useState<Record<string,boolean>>({});
  const post=useCallback(async(body:any)=>{const r=await fetch("/api/game",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)}),v=await r.json();if(!r.ok)throw Error(v.error||"Request failed");return v},[]);
- const accept=useCallback((v:any)=>{if(v.state){state.current=v.state;lastAccept.current=performance.now();setHud(v.state);setConfig(v.state.config||DEFAULT);setStatus("COMBAT MASTER LIVE")}},[]);
+ const accept=useCallback((v:any)=>{if(v.state){if(state.current&&v.state.round===state.current.round&&v.state.lastAt<=state.current.lastAt)return;const at=performance.now();if(state.current&&v.state.round!==state.current.round){snapshots.length=0;kineticEcho.length=0;cameraState.ready=false}recordSnapshot(v.state,at);state.current=v.state;lastAccept.current=at;setHud(v.state);setConfig(v.state.config||DEFAULT);setStatus("COMBAT MASTER LIVE")}},[]);
  const create=useCallback(async()=>{if(started.current)return;started.current=true;try{let saved:any=null;try{saved=JSON.parse(sessionStorage.getItem("god_mode_studio_session")||"null")}catch{}if(saved){session.current=saved;return}const v=await post({action:"create",name:"Les",mode:"solo"}),s={room:v.room,code:v.code,token:v.token,slot:0};session.current=s;sessionStorage.setItem("god_mode_studio_session",JSON.stringify(s));accept(v)}catch(e:any){started.current=false;setStatus(e.message)}},[accept,post]);
  useEffect(()=>{preload();create()},[create]);
  useEffect(()=>{
@@ -29,7 +40,7 @@ export default function Game(){
  },[]);
  useEffect(()=>{const kd=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement)?.tagName))return;if(["Space","ShiftLeft","ShiftRight"].includes(e.code))e.preventDefault();if(!keys.current[e.code])edges.current[e.code]=true;keys.current[e.code]=true},ku=(e:KeyboardEvent)=>keys.current[e.code]=false;addEventListener("keydown",kd);addEventListener("keyup",ku);return()=>{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}},[]);
  useEffect(()=>{let dead=false;const poll=async()=>{if(dead)return;const s=session.current;if(s)try{const u=new URL("/api/game",location.origin);u.searchParams.set("room",s.room);u.searchParams.set("token",s.token);const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(r.ok)accept(v)}catch{}setTimeout(poll,80)};poll();return()=>{dead=true}},[accept]);
- useEffect(()=>{const timer=setInterval(async()=>{const s=session.current,g=state.current;if(!s||!g)return;const p=g.players[0],i:any={...EMPTY};i.x=(keys.current.KeyD?1:0)-(keys.current.KeyA?1:0);i.y=(keys.current.KeyS?1:0)-(keys.current.KeyW?1:0);i.aim=Math.atan2(mouse.current.y-p.y,mouse.current.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};
+ useEffect(()=>{let pending=false;const timer=setInterval(async()=>{const s=session.current,g=state.current;if(!s||!g||pending)return;pending=true;const p=g.players[0],i:any={...EMPTY};i.x=(keys.current.KeyD?1:0)-(keys.current.KeyA?1:0);i.y=(keys.current.KeyS?1:0)-(keys.current.KeyW?1:0);i.aim=Math.atan2(mouse.current.y-p.y,mouse.current.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};
   try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;i.x=dz(pad.axes[0]||0);i.y=dz(pad.axes[1]||0);const rx=dz(pad.axes[2]||0),ry=dz(pad.axes[3]||0);if(rx||ry)i.aim=Math.atan2(ry,rx);i.slide||=pad.buttons[0]?.pressed;/* A = slide / vault / cover movement */
 i.melee||=pad.buttons[1]?.pressed;/* B = melee / interact — V142 authority */
 i.slow||=pad.buttons[2]?.pressed;/* X = Slow Time */
@@ -43,7 +54,7 @@ i.launchOrbit||=pad.buttons[13]?.pressed;
 i.heavy||=pad.buttons[14]?.pressed;
 i.throwMatter||=pad.buttons[15]?.pressed;
 /* Pinball intentionally has no controller binding until its certified V142 slot is recovered. */}}catch{}
-  try{accept(await post({action:"input",...s,seq:++seq.current,input:i}))}catch{}
+  try{accept(await post({action:"input",...s,seq:++seq.current,input:i}))}catch{}finally{pending=false}
  },33);return()=>clearInterval(timer)},[accept,post]);
  useEffect(()=>{let id=0;const loop=()=>{draw(canvas.current,state.current,lastAccept.current,mouse.current,keys.current);id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[]);
  const point=(e:React.PointerEvent)=>{const c=canvas.current;if(!c)return;const r=c.getBoundingClientRect();mouse.current.x=(e.clientX-r.left)/r.width*1000;mouse.current.y=(e.clientY-r.top)/r.height*620};
@@ -130,16 +141,16 @@ function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx|
  const frame=family==="ready"?0:Math.floor((s?.time||0)*(family==="run"?10:7))%total;
  return{state,family,dir,angleDeg:Math.round(dir*15),frame:frame+1,total,file:`${family}-d${String(dir).padStart(2,"0")}.webp`,fallback,expected}}
 function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>){if(!canvas)return;const g=canvas.getContext("2d")!,sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.fillStyle="#070b10";g.fillRect(0,0,1000,620);if(!s)return;
- const lag=Math.min(.055,(performance.now()-received)/1000),cfg=s.config||DEFAULT,p=s.players[0],local={...p,x:p.x+(p.vx||0)*lag,y:p.y+(p.vy||0)*lag};
- const zoom=Math.max(1.25,Math.min(2.15,cfg.cameraZoom||1.85)),look=18,lookY=8,ga=local.gunFacing??local.aim??0;
+ const renderNow=performance.now();s=presentation(s,renderNow);const cfg=s.config||DEFAULT,p=s.players[0],local={...p};
+ const zoom=Math.max(1.25,Math.min(2.15,cfg.cameraZoom||1.85)),look=0,lookY=0,ga=local.gunFacing??local.aim??0;
  const halfW=500/zoom,halfH=310/zoom,targetX=Math.max(halfW,Math.min(1000-halfW,local.x+Math.cos(ga)*look)),targetY=Math.max(halfH,Math.min(620-halfH,local.y+Math.sin(ga)*lookY));
  if(!cameraState.ready){cameraState.x=targetX;cameraState.y=targetY;cameraState.ready=true}
- const follow=1-Math.exp(-8/60);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
- const camX=Math.round(cameraState.x*4)/4,camY=Math.round(cameraState.y*4)/4;
+ const frameDt=cameraState.last?Math.min(.05,(renderNow-cameraState.last)/1000):1/60;cameraState.last=renderNow;const follow=1-Math.exp(-8*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
+ const camX=cameraState.x,camY=cameraState.y;
  g.setTransform(sx*zoom,0,0,sy*zoom,(500-camX*zoom)*sx,(310-camY*zoom)*sy);
  g.strokeStyle="#162733";g.lineWidth=1/zoom;for(let x=50;x<1000;x+=50){g.beginPath();g.moveTo(x,70);g.lineTo(x,560);g.stroke()}for(let y=90;y<570;y+=40){g.beginPath();g.moveTo(50,y);g.lineTo(950,y);g.stroke()}g.strokeStyle="#31505c";g.strokeRect(70,90,860,460);g.fillStyle="#aeb7bd";g.font=`${Math.max(8,12/zoom)}px monospace`;g.fillText("INSTRUCTOR 142 CLASSIC // CLOSE COMBAT CAMERA",82,112);
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
- const now=performance.now(),echoDt=Math.min(.05,Math.max(0,(now-echoLast)/1000));for(const e of kineticEcho)e.life-=echoDt;while(kineticEcho.length&&kineticEcho[0].life<=0)kineticEcho.shift();
+ const now=renderNow,echoDt=frameDt;for(const e of kineticEcho)e.life-=echoDt;while(kineticEcho.length&&kineticEcho[0].life<=0)kineticEcho.shift();
  const echoActive=local.slide>0||local.dash>0||local.kickStage&&local.kickStage!=="none"||travelLen>360;
  if(echoActive&&now-echoLast>34){const family=local.slide>0||local.kickStage&&local.kickStage!=="none"?"slide":"run",angle=family==="slide"?(local.slideFacing||Math.atan2(local.vy,local.vx)):Math.atan2(local.vy,local.vx),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,dir)||nearest("ready",dir),sourceCell=im?(im.naturalWidth>=1000?250:125):125,cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,frames=Math.max(1,cols*rows),frame=family==="slide"&&local.slide>0?Math.min(frames-1,Math.max(0,Math.floor((1-local.slide/cfg.slideDuration)*frames))):Math.floor(s.time*10)%frames;kineticEcho.push({x:local.x,y:local.y,angle,family,dir,frame,life:.13,maxLife:.13,speed:travelLen});if(kineticEcho.length>5)kineticEcho.shift();echoLast=now}
  let ix=(keyState.KeyD?1:0)-(keyState.KeyA?1:0),iy=(keyState.KeyS?1:0)-(keyState.KeyW?1:0);try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;ix=dz(pad.axes[0]||0);iy=dz(pad.axes[1]||0)}}catch{}const il=Math.hypot(ix,iy)||1;ix/=il;iy/=il;
@@ -160,9 +171,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
 }
 function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im)return im}}
 function spriteCell(im:HTMLImageElement,family:string,frame:number){
- const candidates=family==="ready"?[125,250]:[125,250];
- let cell=125,best=-1;
- for(const size of candidates){if(im.naturalWidth%size||im.naturalHeight%size)continue;const count=(im.naturalWidth/size)*(im.naturalHeight/size);if(count>best){best=count;cell=size}}
+ const cell=im.naturalWidth>=1000&&im.naturalWidth%250===0&&im.naturalHeight%250===0?250:125;
  const cols=Math.max(1,Math.floor(im.naturalWidth/cell)),rows=Math.max(1,Math.floor(im.naturalHeight/cell)),frames=Math.max(1,cols*rows),fr=((frame%frames)+frames)%frames;
  return{cell,cols,rows,frames,sx:(fr%cols)*cell,sy:Math.floor(fr/cols)*cell}
 }
