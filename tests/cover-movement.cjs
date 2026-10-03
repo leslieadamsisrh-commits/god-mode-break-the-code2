@@ -63,7 +63,7 @@ const controllerStart=ui.indexOf('function readController('),controllerEnd=ui.in
 vm.runInContext(stripTypeScriptTypes(ui.slice(controllerStart,controllerEnd))+';globalThis.mapPad=readController;',ctx);
 for(let button=0;button<16;button++){
  const pad={axes:[0,0,0,0],buttons:Array.from({length:16},()=>({pressed:false,value:0}))};pad.buttons[button]={pressed:true,value:1};
- const input=ctx.mapPad(pad,{aim:0}),expected={0:['slide'],1:['melee'],2:['slow'],4:['grip'],5:['cover'],6:['shield','coverAim'],7:['fire']}[button]||[];
+ const input=ctx.mapPad(pad,{aim:0}),expected={0:['slide'],1:['melee'],2:['slow'],3:['powerup'],4:['grip'],5:['cover'],6:['shield','coverAim'],7:['fire']}[button]||[];
  assert.deepEqual(Object.keys(input).filter(k=>input[k]===true).sort(),expected.sort());checks++;
 }
 {
@@ -138,3 +138,17 @@ for(const weave of [0,1])for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let
  tick(s,{grip:true,aim:0},16);assert.equal(p.gripCoverId,null);assert.equal(cv.build,0);checks++;
 }
 console.log(`PASS: ${checks} total controller/cover checks, including center/corner side/top/diagonal firing and trigger-edge recovery.`);
+
+
+// Real-time power window, charge interruptions and preservation of Classic values.
+{
+ const s=m.newGame('power','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];p.battery=20;
+ const speed=s.config.slideSpeed;for(let n=0;n<170;n++)tick(s,{powerup:true},17);
+ assert(p.charging);assert.equal(p.godCharge,1);assert(p.battery>90);tick(s,{});assert(!p.charging);assert(p.godTime>11.98&&p.godTime<=12);checks++;
+ for(let n=0;n<60;n++)tick(s,{});tick(s,{fire:true,aim:0});assert(s.shots.length);assert.equal(s.shots[0].damage,s.config.shotDamage*1.35);assert.equal(s.config.slideSpeed,speed);checks++;
+ p.battery=.01;tick(s,{});assert.equal(p.godTime,0);assert(p.godFade>0);checks++;
+ tick(s,{powerup:true});tick(s,{powerup:false});assert.equal(p.godTime,0);checks++;
+ tick(s,{powerup:true});tick(s,{powerup:true,slide:true,x:1});assert(!p.charging);assert.equal(p.godTime,0);checks++;
+ const t=m.newGame('clock','token',1000,'solo');t.covers=[];t.players[0].godTime=t.players[0].godDuration=12;for(let n=0;n<720;n++)tick(t,{},17);assert.equal(t.players[0].godTime,0);checks++;
+}
+console.log(`PASS: ${checks} checks including God Frame charge, damage, depletion, cancellation and expiry.`);

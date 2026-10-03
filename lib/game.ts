@@ -1,19 +1,19 @@
-export type InputState={x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;slow:boolean};
-export type CombatConfig={gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
-export const DEFAULT_CONFIG:CombatConfig={gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:599.269125,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
+export type InputState={x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;powerup:boolean;slow:boolean};
+export type CombatConfig={powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
+export const DEFAULT_CONFIG:CombatConfig={powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:599.269125,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;godFade:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;born?:number;vx?:number;vy?:number};
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
-export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;z?:number;clearanceCoverId?:string};
+export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;clearanceCoverId?:string};
 export type Fx={id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number};
 export type GameState={build:string;mode:"bot"|"solo";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
 
-const empty=():InputState=>({x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,slow:false});
+const empty=():InputState=>({x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false});
 const clamp=(v:number,a:number,b:number)=>Math.max(a,Math.min(b,v)),wrap=(a:number)=>Math.atan2(Math.sin(a),Math.cos(a)),dist=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y),uid=()=>crypto.randomUUID().slice(0,8);
 const A={left:70,right:930,top:90,bottom:550};
-function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{x,y,vx:0,vy:0,aim,hp,battery:100,lastEnergyAt:-9,dash:0,brake:0,slideSteerCurrent:0,lastSlideTap:-9,slide:0,slideFacing:aim,slideCool:0,kickStage:"none",kickTime:0,kickAngle:aim,kickNx:0,kickNy:0,coverId:null,coverMode:null,coverAnchor:null,coverLock:0,coverSpeed:0,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,coverGripAngle:aim,coverGripDist:92,orbitIds:[],knock:0,pinball:0,lastShot:-9,fireBlocked:false,fireState:0,recoil:0,returnToCover:0,boostState:0,brakeState:0,gunFacing:aim,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
+function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{x,y,vx:0,vy:0,aim,hp,battery:100,charging:false,chargeAge:0,godCharge:0,godTime:0,godDuration:0,powerFlash:0,powerReturn:0,godFade:0,powerBlocked:false,lastEnergyAt:-9,dash:0,brake:0,slideSteerCurrent:0,lastSlideTap:-9,slide:0,slideFacing:aim,slideCool:0,kickStage:"none",kickTime:0,kickAngle:aim,kickNx:0,kickNy:0,coverId:null,coverMode:null,coverAnchor:null,coverLock:0,coverSpeed:0,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,coverGripAngle:aim,coverGripDist:92,orbitIds:[],knock:0,pinball:0,lastShot:-9,fireBlocked:false,fireState:0,recoil:0,returnToCover:0,boostState:0,brakeState:0,gunFacing:aim,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
 export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo"="solo"):GameState{
  const config={...DEFAULT_CONFIG};
  const players=[player(230,330,0,name,token,false,config.maxHealth)];
@@ -147,6 +147,21 @@ function settleCover(cv:Cover,s:GameState){
  cv.x=clamp(cv.x,A.left+ex,A.right-ex);cv.y=clamp(cv.y,A.top+ey,A.bottom-ey);
 }
 function spendEnergy(p:Player,s:GameState,cost:number){if(p.battery<cost){s.fx.push({id:uid(),type:"low-energy",x:p.x,y:p.y,life:.3,text:"LOW CHARGE"});return false}p.battery=Math.max(0,p.battery-cost);p.lastEnergyAt=s.time;return true}
+// Charge is vulnerable; timers use real time, never slow-time simulation time.
+function powerStep(p:Player,s:GameState,dt:number){
+ const i=p.input,c=s.config;
+ p.powerFlash=Math.max(0,p.powerFlash-dt);if(p.powerFlash<=0)p.powerReturn=Math.max(0,p.powerReturn-dt);p.godFade=Math.max(0,p.godFade-dt);
+ if(!i.powerup)p.powerBlocked=false;
+ if(p.godTime>0){p.godTime=Math.max(0,p.godTime-dt);p.battery=Math.max(0,p.battery-c.godDrain*dt);p.lastEnergyAt=s.time;if(!p.godTime||p.battery<=0){p.godTime=0;p.godFade=.45}}
+ if(p.powerFlash>0&&(i.fire||i.slide||i.grip||i.melee)){p.powerFlash=0;p.powerReturn=.24}
+ const interrupted=!!(i.fire||i.slide||i.melee||i.heavy||i.grip||i.cover||i.shield||i.coverAim||i.slow||i.pinball||p.knock>0||p.slide>0||p.dash>0||p.exit||p.kickStage!=="none");
+ if(p.charging&&(!i.powerup||interrupted)){
+  if(!interrupted&&p.godCharge>=.35&&p.battery>0){p.godDuration=c.godDuration*p.godCharge;p.godTime=p.godDuration;p.powerFlash=.65;s.fx.push({id:uid(),type:"god-awaken",x:p.x,y:p.y,life:.5,text:"GOD FRAME"})}
+  p.charging=false;p.powerReturn=.24;p.chargeAge=0;p.godCharge=0;if(interrupted)p.powerBlocked=true;
+ }
+ if(i.powerup&&!p.charging&&!p.powerBlocked&&!p.godTime&&!interrupted){p.charging=true;p.chargeAge=0;p.godCharge=0;p.powerReturn=0}
+ if(p.charging){p.chargeAge+=dt;p.godCharge=clamp((p.chargeAge-.35)/Math.max(.1,c.powerChargeSeconds),0,1);p.battery=Math.min(100,p.battery+c.powerRecharge*dt);p.lastEnergyAt=s.time;if(p.coverId){p.coverMode="braced";p.peek=false;p.vx=p.vy=p.coverSpeed=0}}
+}
 function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],i=p.input,c=s.config;
  if(i.slide&&!prev.slide&&!p.coverId&&!p.exit&&p.knock<=0){
    if(c.weaveEnabled<.5){
@@ -184,12 +199,12 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  if(held&&i.fire)p.fireBlocked=true;
  if((i.throwMatter&&!prev.throwMatter)||(held&&i.grip&&i.fire&&!prev.fire)){
    if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv&&spendEnergy(p,s,c.coverThrowEnergy)){
-     const a=p.gunFacing??p.aim,force=c.throwForce*.62,inherit=clamp(c.carryMomentum,0,1);
+     const a=p.gunFacing??p.aim,force=c.throwForce*.62*(p.godTime>0?1.25:1),inherit=clamp(c.carryMomentum,0,1);
      // Release where it is: preserve orientation and measured carry velocity.
      cv.vx=Math.cos(a)*force+p.vx*inherit+(cv.vx||0)*(1-inherit);cv.vy=Math.sin(a)*force+p.vy*inherit+(cv.vy||0)*(1-inherit);
      cv.build=-Math.hypot(cv.vx,cv.vy);s.fx.push({id:uid(),type:"cover-throw",x:cv.x,y:cv.y,life:.55,owner:n,text:"WHAM"});p.gripCoverId=null;
    }}
-   else if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m&&spendEnergy(p,s,c.coverThrowEnergy)){m.heldBy=null;m.vx=Math.cos(p.aim)*c.throwForce;m.vy=Math.sin(p.aim)*c.throwForce;m.life=3;p.gripId=null}}
+   else if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m&&spendEnergy(p,s,c.coverThrowEnergy)){m.heldBy=null;m.vx=Math.cos(p.aim)*c.throwForce*(p.godTime>0?1.25:1);m.vy=Math.sin(p.aim)*c.throwForce*(p.godTime>0?1.25:1);m.life=3;p.gripId=null}}
  }
  if(i.orbit&&!prev.orbit&&p.battery>=25){const ms=s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null).sort((a,b)=>dist(a,p)-dist(b,p)).slice(0,3);if(ms.length){p.battery-=25;p.orbitIds=ms.map(m=>m.id);ms.forEach(m=>m.orbitBy=n)}}
  if(i.launchOrbit&&!prev.launchOrbit&&p.orbitIds.length){p.orbitIds.forEach((id,j)=>{const m=s.matter.find(m=>m.id===id);if(m){m.orbitBy=null;m.vx=Math.cos(p.aim+(j-1)*.12)*c.throwForce*1.05;m.vy=Math.sin(p.aim+(j-1)*.12)*c.throwForce*1.05;m.life=3}});p.orbitIds=[]}
@@ -213,14 +228,14 @@ function segmentCover(from:{x:number;y:number},to:{x:number;y:number},cv:Cover){
 }
 function botInput(s:GameState){const n=s.players.findIndex(p=>p.bot);if(n<0)return;const p=s.players[n],t=s.players[1-n];if(!t)return;const a=Math.atan2(t.y-p.y,t.x-p.x),d=dist(p,t);p.input={...empty(),x:Math.cos(a)*(d>260?.7:0),y:Math.sin(a)*(d>260?.7:0),aim:a,fire:d<520&&s.time%1.4<.1}}
 function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.players.some(p=>p.input.slow&&p.battery>0),d=dt*(slow?.52:1);
- for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input;p.aim=i.aim;
+ for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input;p.aim=i.aim;powerStep(p,s,dt);
   const coverContext=!!p.coverId;
   if(p.coverId&&i.coverAim&&p.coverMode==="soft"){p.coverMode="braced";p.vx=p.vy=p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n})}
   const moveAngle=Math.hypot(p.vx,p.vy)>35?Math.atan2(p.vy,p.vx):p.gunFacing;
-  if(p.coverId&&p.coverMode==="braced"&&i.coverAim)p.gunFacing=i.aim;
+  if(p.charging||p.coverId&&p.coverMode==="braced"&&i.coverAim)p.gunFacing=i.aim;
   else{const maxTwist=145*Math.PI/180,deltaAim=Math.atan2(Math.sin(i.aim-moveAngle),Math.cos(i.aim-moveAngle));p.gunFacing=moveAngle+clamp(deltaAim,-maxTwist/2,maxTwist/2)}
   p.fireState=Math.max(0,p.fireState-dt);p.recoil=Math.max(0,p.recoil-dt);p.returnToCover=Math.max(0,p.returnToCover-dt);p.boostState=Math.max(0,p.boostState-dt);p.brakeState=Math.max(0,p.brakeState-dt);
-  const beforeEnergy=p.battery;edgeActions(s,n,prev[n]||empty());if(p.battery<beforeEnergy)p.lastEnergyAt=s.time;p.shield=i.shield&&!coverContext&&!p.coverId&&p.battery>0;if(p.shield)p.battery=Math.max(0,p.battery-18*dt);if(i.slow&&p.battery>0)p.battery=Math.max(0,p.battery-28*dt);if(p.gripId||p.gripCoverId)p.battery=Math.max(0,p.battery-c.holdEnergy*dt);if(p.shield||i.slow||p.gripId||p.gripCoverId)p.lastEnergyAt=s.time;else if(s.time-(p.lastEnergyAt??-9)>=c.rechargeDelay&&!p.slide&&!p.dash&&!p.kickStage?.match(/burst|step/))p.battery=Math.min(100,p.battery+c.rechargeRate*dt);
+  const beforeEnergy=p.battery;edgeActions(s,n,prev[n]||empty());if(p.battery<beforeEnergy)p.lastEnergyAt=s.time;p.shield=i.shield&&!coverContext&&!p.coverId&&p.battery>0;if(p.shield)p.battery=Math.max(0,p.battery-18*dt);if(i.slow&&p.battery>0)p.battery=Math.max(0,p.battery-28*dt);if(p.gripId||p.gripCoverId)p.battery=Math.max(0,p.battery-c.holdEnergy*dt);if(p.shield||i.slow||p.gripId||p.gripCoverId)p.lastEnergyAt=s.time;else if(!p.charging&&!p.godTime&&s.time-(p.lastEnergyAt??-9)>=c.rechargeDelay&&!p.slide&&!p.dash&&!p.kickStage?.match(/burst|step/))p.battery=Math.min(100,p.battery+c.rechargeRate*dt);
   if(p.coverMode==="braced"&&prev[n]?.coverAim&&!i.coverAim)p.returnToCover=Math.max(p.returnToCover,.16);
   if(p.battery<=0){if(p.gripId){const held=s.matter.find(m=>m.id===p.gripId);if(held)held.heldBy=null;p.gripId=null}if(p.gripCoverId){const cv=s.covers.find(cv=>cv.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}}p.gripCoverId=null}
   p.brake=Math.max(0,p.brake-dt);p.slideCool=Math.max(0,p.slideCool-dt);
@@ -233,6 +248,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
   else if(p.knock>0){p.knock-=dt;p.vx*=Math.pow(.08,dt);p.vy*=Math.pow(.08,dt)}
   else if(p.exit){stepCoverExit(p,s,d)}
   else if(p.coverId){
+    if(p.charging){p.vx=p.vy=p.coverSpeed=0;placeOnCover(p,s);continue}
     // Handle A before walk-away can clear the anchor needed by a kick.
     if(i.slide&&!prev[n]?.slide){
       const a=p.coverAnchor,mag=Math.hypot(i.x,i.y),out=a&&mag>.18?(i.x*a.nx+i.y*a.ny)/mag:0;
@@ -257,13 +273,13 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
     }else{p.vx*=Math.pow(.72,d);p.vy*=Math.pow(.72,d)}
     p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);slideCapture(p,s);collide(p,s)
   }
-  else{const r=1-Math.exp(-c.response*d),m=Math.hypot(i.x,i.y);p.vx+=(i.x*c.moveSpeed-p.vx)*r;p.vy+=(i.y*c.moveSpeed-p.vy)*r;if(m<.05){p.vx*=Math.pow(c.stopDrag,d);p.vy*=Math.pow(c.stopDrag,d)}p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)}
-  if(i.fire&&!p.fireBlocked&&!p.gripId&&!p.gripCoverId&&s.time-p.lastShot>=c.shotCadence&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
+  else{const chargeMove=p.charging?.18:1,r=1-Math.exp(-c.response*d),m=Math.hypot(i.x,i.y);p.vx+=(i.x*c.moveSpeed*chargeMove-p.vx)*r;p.vy+=(i.y*c.moveSpeed*chargeMove-p.vy)*r;if(m<.05){p.vx*=Math.pow(c.stopDrag,d);p.vy*=Math.pow(c.stopDrag,d)}p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)}
+  if(i.fire&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&!p.gripId&&!p.gripCoverId&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
    const muzzle=muzzleSocket(p),clearance=p.coverId&&p.coverMode==="braced"&&i.coverAim&&p.peek?p.coverId:undefined;
    const blocked=s.covers.some(cv=>cv.id!==clearance&&segmentCover(p,muzzle,cv));p.lastShot=s.time;
    if(blocked){s.fx.push({id:uid(),type:"cover-block",x:muzzle.x,y:muzzle.y,life:.18,owner:n})}
    else{p.fireState=.11;p.recoil=.12;if(p.coverId)p.returnToCover=.28;
-    for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,z:44*c.spriteScale,clearanceCoverId:clearance})}
+    for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,damage:c.shotDamage*(p.godTime>0?c.godDamage:1),z:44*c.spriteScale,clearanceCoverId:clearance})}
     s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.12,owner:n,z:44*c.spriteScale})
    }
   }
@@ -284,9 +300,10 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
    if(-cv.build<35){cv.build=0;cv.vx=cv.vy=0}
  }
  for(const m of s.matter){if(m.heldBy!==null){const p=s.players[m.heldBy];m.x=p.x+Math.cos(p.aim)*70;m.y=p.y+Math.sin(p.aim)*70;continue}if(m.orbitBy!==null){const p=s.players[m.orbitBy],j=p.orbitIds.indexOf(m.id),a=s.time*4+j*2.1;m.x=p.x+Math.cos(a)*62;m.y=p.y+Math.sin(a)*62;continue}m.x+=m.vx*d;m.y+=m.vy*d;m.vx*=Math.pow(.35,d);m.vy*=Math.pow(.35,d);if(m.life<999)m.life-=dt;if(m.x<A.left||m.x>A.right){m.x=clamp(m.x,A.left,A.right);m.vx*=-.6}if(m.y<A.top||m.y>A.bottom){m.y=clamp(m.y,A.top,A.bottom);m.vy*=-.6}}
- for(const sh of s.shots){const from={x:sh.x,y:sh.y};sh.x+=sh.vx*d;sh.y+=sh.vy*d;sh.life-=dt;if(s.covers.some(cv=>cv.id!==sh.clearanceCoverId&&segmentCover(from,sh,cv))){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:sh.x,y:sh.y,life:.18});continue}const target=s.players[1-sh.owner];if(target&&dist(sh,target)<21){if(target.coverId&&target.coverMode==="braced"&&!target.input.coverAim){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:target.x,y:target.y,life:.18});continue}target.hp=Math.max(0,target.hp-c.shotDamage);target.knock=.26;target.vx+=sh.vx*.1;target.vy+=sh.vy*.1;sh.life=0;s.fx.push({id:uid(),type:"hit",x:target.x,y:target.y,life:.25})}}
+ for(const sh of s.shots){const from={x:sh.x,y:sh.y};sh.x+=sh.vx*d;sh.y+=sh.vy*d;sh.life-=dt;if(s.covers.some(cv=>cv.id!==sh.clearanceCoverId&&segmentCover(from,sh,cv))){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:sh.x,y:sh.y,life:.18});continue}const target=s.players[1-sh.owner];if(target&&dist(sh,target)<21){if(target.coverId&&target.coverMode==="braced"&&!target.input.coverAim){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:target.x,y:target.y,life:.18});continue}target.hp=Math.max(0,target.hp-(sh.damage??c.shotDamage));target.knock=.26;target.vx+=sh.vx*.1;target.vy+=sh.vy*.1;sh.life=0;s.fx.push({id:uid(),type:"hit",x:target.x,y:target.y,life:.25})}}
  s.shots=s.shots.filter(x=>x.life>0);s.matter=s.matter.filter(x=>x.life>0);s.fx.forEach(f=>f.life-=dt);s.fx=s.fx.filter(f=>f.life>0);
 }
 export function advance(s:GameState,now=Date.now()){let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;if(s.phase==="countdown"){s.countdown=Math.max(0,s.countdown-elapsed);if(!s.countdown)s.phase="playing";return}if(s.phase!=="playing"||(s.mode!=="solo"&&s.players.length<2))return;let prev=s.players.map(p=>({...p.processedInput}));while(elapsed>0){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,prev);s.players.forEach(p=>p.processedInput={...p.input});prev=s.players.map(p=>({...p.input}));elapsed-=dt}}
 export function startOrRematch(s:GameState,slot:number){if(s.mode==="solo"){respawn(s);return}if(slot===0){respawn(s)}}
 export function safeState(s:GameState){return{...s,players:s.players.map(({token,...p})=>p)}}
+
