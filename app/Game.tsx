@@ -73,7 +73,7 @@ i.throwMatter||=pad.buttons[15]?.pressed;
   ["BRACED COVER",!!p?.coverId&&p?.coverMode==="braced"],
   ["COVER EXIT",!!p?.exit]
  ]) as [string,boolean][];
- useEffect(()=>{if(!p)return;setTestPass(prev=>{let changed=false,next={...prev};for(const [name,active] of tests)if(active&&!next[name]){next[name]=true;changed=true}return changed?next:prev})},[p?.dash,p?.slide,p?.slideSteerCurrent,p?.brake,p?.coverId,p?.coverMode,p?.coverSpeed,p?.input?.coverAim,p?.fireState,p?.kickStage,p?.exit,config.weaveEnabled]);
+ useEffect(()=>{if(!p)return;setTestPass(prev=>{let changed=false,next={...prev};for(const [name,active] of tests)if(active&&!next[name]){next[name]=true;changed=true}return changed?next:prev})},[p?.dash,p?.slide,p?.slideSteerCurrent,p?.brake,p?.coverId,p?.coverMode,p?.coverSpeed,p?.input?.coverAim,p?.fireState,p?.kickStage,p?.exit,p?.gripCoverId,hud?.fx,config.weaveEnabled]);
  return <main className="studio">
   <header><div><small>GOD MODE: BREAK THE CODE</small><b>V142 STRUCTURE LAB · COMBAT STUDIO</b></div><span>{status}</span></header>
   <div className="stageWrap">
@@ -144,7 +144,16 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  if(echoActive&&now-echoLast>34){const family=local.slide>0||local.kickStage&&local.kickStage!=="none"?"slide":"run",angle=family==="slide"?(local.slideFacing||Math.atan2(local.vy,local.vx)):Math.atan2(local.vy,local.vx),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,dir)||nearest("ready",dir),sourceCell=im?(im.naturalWidth>=1000?250:125):125,cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,frames=Math.max(1,cols*rows),frame=family==="slide"&&local.slide>0?Math.min(frames-1,Math.max(0,Math.floor((1-local.slide/cfg.slideDuration)*frames))):Math.floor(s.time*10)%frames;kineticEcho.push({x:local.x,y:local.y,angle,family,dir,frame,life:.13,maxLife:.13,speed:travelLen});if(kineticEcho.length>5)kineticEcho.shift();echoLast=now}
  let ix=(keyState.KeyD?1:0)-(keyState.KeyA?1:0),iy=(keyState.KeyS?1:0)-(keyState.KeyW?1:0);try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;ix=dz(pad.axes[0]||0);iy=dz(pad.axes[1]||0)}}catch{}const il=Math.hypot(ix,iy)||1;ix/=il;iy/=il;
  for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125;g.save();g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*.5*sc-3*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*.5*sc+4*fade,e.y-displayCell*.88*sc,displayCell*sc,displayCell*sc);g.restore()}
-  const heldCoverIds=new Set((s.players||[]).map((p:any)=>p.gripCoverId).filter(Boolean));const drawables=[...(s.covers||[]).map((c:any)=>({y:c.y+Math.abs(Math.sin(c.a||0))*c.w*.5+Math.abs(Math.cos(c.a||0))*c.h*.5,fn:()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)})),...(s.matter||[]).map((m:any)=>({y:m.y,fn:()=>matter(g,m)})),{y:local.y,fn:()=>fighter(g,local,s.time,cfg)}].sort((a,b)=>a.y-b.y);drawables.forEach(o=>o.fn());
+ const heldCoverIds=new Set((s.players||[]).map((p:any)=>p.gripCoverId).filter(Boolean));
+ const drawables=[
+  ...(s.covers||[]).map((c:any)=>({
+   y:c.y+Math.abs(Math.sin(c.a||0))*c.w*.5+Math.abs(Math.cos(c.a||0))*c.h*.5,
+   fn:()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)})
+  })),
+  ...(s.matter||[]).map((m:any)=>({y:m.y,fn:()=>matter(g,m)})),
+  {y:local.y,fn:()=>fighter(g,local,s.time,cfg)}
+ ].sort((a,b)=>a.y-b.y);
+ drawables.forEach(o=>o.fn());
  if(echoActive&&travelLen>120){g.save();const strength=Math.min(1,travelLen/650);g.lineWidth=2;for(let n=0;n<4;n++){const side=(n-1.5)*7,len=26+strength*(34+n*7);g.strokeStyle=n%2?"#ff4aa5aa":"#62edf0aa";g.beginPath();g.moveTo(local.x-tx*12-ty*side,local.y-ty*12+tx*side);g.lineTo(local.x-tx*len-ty*side,local.y-ty*len+tx*side);g.stroke()}g.restore()}
 
  for(const sh of s.shots||[]){g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x,sh.y);g.lineTo(sh.x-sh.vx*.025,sh.y-sh.vy*.025);g.stroke()}for(const f of s.fx||[])fx(g,f);
