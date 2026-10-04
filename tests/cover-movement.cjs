@@ -162,8 +162,8 @@ console.log(`PASS: ${checks} checks including God Frame charge, damage, depletio
  const v=ctx.powerVisual;
  for(const age of [.01,.14,.27]){assert.equal(v.chargeFrame(age,0),Math.floor(age/.35*3));checks++}
  const frames=new Set();for(let n=0;n<100;n++){const f=v.chargeFrame(3+n*.05,1);assert(f>=6&&f<=8);frames.add(f)}assert(frames.size>1);checks++;
- assert.equal(v.powerFrame({powerReturn:.24,godTime:12},{}),10);checks++;
- assert.equal(v.powerFrame({powerReturn:.24,powerReleaseAge:1.5,powerReleaseCharge:.48},{}),10);checks++;
+ assert.equal(v.powerFrame({powerReturn:.24,godTime:12},{}),11);checks++;
+ assert.equal(v.powerFrame({powerReturn:.24,powerReleaseAge:1.5,powerReleaseCharge:.48},{}),4);checks++;
  assert.equal(v.powerPoseAlpha({powerReturn:.12}),.5);assert.equal(v.powerPoseAlpha({}),0);checks++;
  assert(v.powerAura({godTime:9,godDuration:12})>v.powerAura({godTime:3,godDuration:12}));checks++;
  const s=m.newGame('transition','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];
@@ -235,3 +235,19 @@ console.log(`PASS: ${checks} checks including grounded lift, peak-once hover, pa
  }
 }
 console.log(`PASS: ${checks} checks including charge atlas bounds, uniform scale and grounded registration.`);
+
+// Expiry/depletion consume Y held during power; release and fresh press rearm it.
+for(const depleted of [false,true]){
+ const s=m.newGame('manual-charge','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];
+ p.godTime=depleted?5:.01;p.godDuration=12;if(depleted)p.battery=.001;
+ tick(s,{powerup:true});assert.equal(p.godTime,0);assert(!p.charging);assert(p.powerBlocked);checks++;
+ for(let n=0;n<20;n++)tick(s,{powerup:true});assert(!p.charging);checks++;
+ tick(s,{});assert(!p.powerBlocked);checks++;
+ tick(s,{powerup:true});assert(p.charging);checks++;
+}
+{
+ const v=ctx.powerVisual;
+ assert.deepEqual([.16,.14,0].map(powerFlash=>v.powerFrame({powerFlash,powerReturn:.24,powerReleaseCharge:1,godTime:12},{})),[10,11,11]);checks++;
+ for(const age of [.05,.18,.3,1.3]){const charge=Math.max(0,(age-.35)/2.4);assert.equal(v.powerFrame({powerReturn:.24,powerReleaseAge:age,powerReleaseCharge:charge},{}),v.chargeFrame(age,charge));checks++}
+}
+console.log(`PASS: ${checks} checks including fresh-Y rearming, depletion lockout, monotonic weapon return and partial-pose continuity.`);

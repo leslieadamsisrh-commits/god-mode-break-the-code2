@@ -227,7 +227,7 @@ function chargeFrame(age:number,charge:number,seconds=2.4){
 function powerFrame(p:any,cfg:Config){
  if(p.charging)return chargeFrame(p.chargeAge||0,p.godCharge||0,cfg.powerChargeSeconds);
  if(p.powerFlash>0)return (p.powerReleaseCharge||0)>=.99&&p.powerFlash>.45?9:p.powerFlash>.15?10:11;
- if(p.powerReturn>0)return 10;
+ if(p.powerReturn>0)return p.godTime>0?11:chargeFrame(p.powerReleaseAge||0,p.powerReleaseCharge||0,cfg.powerChargeSeconds);
  return 11;
 }
 function powerHover(p:any){

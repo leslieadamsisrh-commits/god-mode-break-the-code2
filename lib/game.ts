@@ -152,6 +152,8 @@ function powerStep(p:Player,s:GameState,dt:number){
  const i=p.input,c=s.config;
  p.powerFlash=Math.max(0,p.powerFlash-dt);if(p.powerFlash<=0)p.powerReturn=Math.max(0,p.powerReturn-dt);p.godFade=Math.max(0,p.godFade-dt);
  if(!i.powerup)p.powerBlocked=false;
+ // Y pressed during powered combat must be released before the next charge.
+ if(p.godTime>0&&i.powerup)p.powerBlocked=true;
  if(p.godTime>0){const glow=.6*Math.min(1,p.godTime/Math.max(.01,p.godDuration||12));p.godTime=Math.max(0,p.godTime-dt);p.battery=Math.max(0,p.battery-c.godDrain*dt);p.lastEnergyAt=s.time;if(!p.godTime||p.battery<=0){p.godTime=0;p.godFade=.45;p.godFadeStrength=glow}}
  if((p.powerFlash>0||p.powerReturn>0)&&(i.fire||i.slide||i.grip||i.melee||i.cover||i.shield||i.coverAim||p.knock>0)){p.powerFlash=0;p.powerReturn=0}
  const interrupted=!!(i.fire||i.slide||i.melee||i.heavy||i.grip||i.cover||i.shield||i.coverAim||i.slow||i.pinball||p.knock>0||p.slide>0||p.dash>0||p.exit||p.kickStage!=="none");
