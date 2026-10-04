@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="animation-language-registration-b02-lateral-v2";
+const BATCH="animation-language-pass02-topology-rig-split";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Cover contact socket",buttons:"Slide into each face/corner → brace → hold/release LT",watch:"Jade should sit against the wall instead of inside it. Watch feet, hips, shoulder and weapon relationship on top/bottom/left/right faces."},
- {title:"B02 impact compression",buttons:"Repeat A slides into cover at slow/medium/full approach speeds",watch:"Look for low slide → visible compression → settle → brace. Impact should read physically without slowing or moving the gameplay root."},
- {title:"Weighted lateral cycle",buttons:"Brace → move left/right slowly, then fast → stop → reverse",watch:"Plant/stride/plant/settle cadence should track travel speed. No foot cycling while nearly stationary; no detach or speed change."}
+ {title:"FACE / EDGE / CORNER",buttons:"A slide into cover at the middle → near an edge → directly toward a corner",watch:"Jade should remain outside solid geometry while registration changes smoothly from FACE to EDGE to CORNER. No mask stacking or topology flicker."},
+ {title:"Cover traversal",buttons:"Brace → FACE → EDGE → CORNER → EDGE → FACE · repeat both directions and speeds",watch:"Watch feet, pelvis, contact socket and concealment. B02/B03 should compress and rise into a stable brace without changing gameplay timing."},
+ {title:"Moving cover combat",buttons:"Move laterally → hold LT → sweep 30°/45°/60° → RT fire → recoil → release LT → shield",watch:"Lower-body cover locomotion should continue while upper-body aim/fire/recoil/retract/shield presentation changes. Inputs must remain immediate."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
