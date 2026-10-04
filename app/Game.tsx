@@ -217,7 +217,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
   {y:local.y,kind:"player",fn:()=>fighter(g,local,s.time,cfg)}
  ].sort((a,b)=>a.y-b.y);
  actors.forEach(o=>{
-  withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?local.coverId:null);
+  withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?local.coverId:null,o.kind==="player"&&!!(local.input?.coverAim||local.fireState>0||local.recoil>0));
  });
 
 
@@ -244,8 +244,10 @@ function coverLateralFrame(p:any,t:number,total:number){
  if(total!==12||Math.abs(p.coverSpeed||0)<=20)return null;
  // Authored 12-cell cover atlas owns lateral locomotion. Direction selects the
  // leading stride; cadence stays presentation-only and never changes coverSpeed.
- const sign=(p.coverSpeed||0)<0?-1:1,phase=Math.floor(t*8)%2;
- return sign<0?[5,6][phase]:[6,5][phase];
+ const sign=(p.coverSpeed||0)<0?-1:1,phase=Math.floor(t*10)%4;
+ // Four-beat authored cycle: plant -> stride -> opposite plant -> settle.
+ // Existing cells are reused; no mirrored/new Jade art and no gameplay-speed change.
+ return sign<0?[5,6,5,4][phase]:[6,5,6,4][phase];
 }
 function coverPoseFrame(p:any,t:number,total:number){
  const extended=total===12;
