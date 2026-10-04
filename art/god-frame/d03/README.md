@@ -1,6 +1,6 @@
 # Jade d03 front-right charge candidate
 
-Status: visually approved by the user on 2026-10-03. Runtime registration implemented; 1,835 checks and production build passed. Live verification pending.
+Status: visually approved by the user on 2026-10-03. Runtime registration implemented; 1,835 checks and production build passed. Live d03 scale, hover, full release/ready return, countdown/expiry, repeat charge and brief release passed on gameplay commit 4665600 (Railway SUCCESS). Physical controller and full moving-cover/combat matrix remain pending.
 
 This batch follows the approved current Jade design and the existing ready-d03
 combat facing. It covers grounded entry, lift, three hover poses, peak and

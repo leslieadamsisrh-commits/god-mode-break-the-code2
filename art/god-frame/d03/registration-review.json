@@ -164,7 +164,7 @@
     "One anatomical scale per source resolution; match normal ready-d03 height; do not independently scale each pose.",
     "Final anchors, smooth playback, and source isolation must pass in-game validation before deployment."
   ],
-  "registrationStatus": "implementation-awaiting-lab-verification",
+  "registrationStatus": "renderer-regression-and-live-scale-verified",
   "runtimeRects": [
     [
       23,
@@ -288,5 +288,28 @@
       192,
       364
     ]
-  ]
+  ],
+  "verification": {
+    "regressionChecks": 1835,
+    "build": "passed",
+    "deploymentCommit": "46656006e8bcae74534ae942ea3962ae05548aef",
+    "railwayDeployment": "d039d49b-0a73-4ac7-b404-8bf57fcc752a",
+    "railwayStatus": "SUCCESS",
+    "livePreview": [
+      "d03 combat scale and no fallback",
+      "sustained hover frames 7 and 8",
+      "full release and ready weapon return",
+      "powered countdown and expiry",
+      "repeat charge after expiry",
+      "brief entry release without activation"
+    ],
+    "controllerPlaytest": "pending-user-device",
+    "remainingLiveMatrix": [
+      "moving hold and turning",
+      "nearby cover capture/traversal",
+      "combat interruption",
+      "powered shooting/sliding/carrying/throwing",
+      "depletion/fresh held-Y behavior on physical controller"
+    ]
+  }
 }
