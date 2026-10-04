@@ -5,8 +5,8 @@ Continue this existing project. Do not start a new app or redesign Jade.
 Repository: leslieadamsisrh-commits/god-mode-break-the-code2
 Branch: integration/combat-master-multiplayer-core
 App: https://god-mode-playable-core-production.up.railway.app/
-Last verified gameplay commit: b25de3e2fa53e861945db4844543874d51909392
-Railway deployment: 7ffe19db-6aee-4b00-a02a-b4039c35a16f — SUCCESS
+Last verified gameplay commit: 5c0b777ff7beab2688f7cd06c2ba46ea9121bf59
+Railway deployment: 8eb20c45-4402-42c4-95b2-6683571e9edf — SUCCESS
 
 FIRST: inspect current branch HEAD, live deployment, app/Game.tsx, tests/cover-movement.cjs, and art/god-frame/d06 and d03. Preserve 0827281 plus all newer approved work. d03 is approved, registered and installed; older candidate notes below are historical. Verify the actual current state instead of restarting or assuming the oldest checkpoint is HEAD. Do not force-push or overwrite concurrent work.
 
@@ -82,5 +82,5 @@ Next: focused controller validation and obtain visual approval for existing psyc
 
 ## Approved d03 psychic installation — 2026-10-03 22:16 PDT
 User approved the displayed three-pose psychic batch. Installed byte-identical source as public/assets/god-frame/psychic-d03-v1.png. This supersedes historical unapproved/uninstalled notes above. d03 only: reach .12 s, sustained hold, retract .16 s. Uniform anatomical scale matches approved d03 height, source baseline 736, anchors recorded in registration JSON. Host timestamps are presentation metadata, not animation/input gates. New action overrides retract immediately. Moving hold uses the approved planted hold; authored carry locomotion remains pending. Other directions retain existing fallback.
-1,963 regression checks, 26 combat-chain stages, psychic-art routing/scale/source checks and production build pass. Director PSYCHIC ART PREVIEW cycles three poses and off using a render-only local copy; authoritative gameplay is untouched. Exact deployment/live art continuity verification pending at this commit.
-Next: verify deployed lab preview reach/hold/retract scale and full silhouette, then physical LB grip/carry/drop/throw -> Y test. No full controller or network validation claim. Approved charge art, cover escape, camera, controls, shield and effects preserved.
+1,963 regression checks, 26 combat-chain stages, psychic-art routing/scale/source checks and production build pass. Director PSYCHIC ART PREVIEW cycles three poses and off using a render-only local copy; authoritative gameplay is untouched. Gameplay/art 5c0b777ff7beab2688f7cd06c2ba46ea9121bf59 deployed via 8eb20c45-4402-42c4-95b2-6683571e9edf SUCCESS. Live Director art preview verified reach/hold/retract complete silhouette, equal combat scale and foot line; preview then turned off. Proof art/combat-cohesion/d03-psychic/live-hold-5c0b777.jpg. This verifies rendered registration, not physical action timing.
+Next: physical LB grip/carry/drop/throw -> Y test. No full controller or network validation claim. Approved charge art, cover escape, camera, controls, shield and effects preserved.

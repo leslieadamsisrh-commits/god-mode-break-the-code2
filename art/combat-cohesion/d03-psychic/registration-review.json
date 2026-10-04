@@ -67,5 +67,6 @@
       736
     ]
   ],
-  "anatomical_height": 697
+  "anatomical_height": 697,
+  "live_lab_registration": "PASS: 5c0b777 Railway SUCCESS; render-only Director reach/hold/retract preview, whole silhouettes and matched scale/foot line. Physical action timing still pending."
 }
