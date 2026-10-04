@@ -2,8 +2,8 @@
   "direction": 6,
   "angleDegrees": 90,
   "baselineCommit": "ed2e88e5ea8fc4cc69e99b1a3f91f410fa9b9031",
-  "runtimeInstalled": false,
-  "registrationStatus": "renderer-regression-passed-live-check-pending",
+  "runtimeInstalled": true,
+  "registrationStatus": "renderer-regression-and-live-scale-verified",
   "reference": {
     "family": "ready",
     "file": "ready-d06.webp",
@@ -155,5 +155,19 @@
         }
       ]
     }
-  ]
+  ],
+  "verification": {
+    "regressionChecks": 1765,
+    "build": "passed",
+    "deploymentCommit": "0827281d40f141db3e0f7d25c97f537affeda620",
+    "railwayStatus": "SUCCESS",
+    "livePreview": [
+      "front hover loop",
+      "front full release and weapon-ready return",
+      "short 25-percent release without activation",
+      "powered countdown",
+      "expiry and repeat charging"
+    ],
+    "controllerPlaytest": "pending-user-device"
+  }
 }

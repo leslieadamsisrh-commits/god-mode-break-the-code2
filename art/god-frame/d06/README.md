@@ -15,8 +15,8 @@ helmet, cape, boots and weapon silhouettes; the loop body heights differ by
 two source pixels (595, 595, 593). Transition silhouette heights vary with
 knee flexion. Do not normalize each pose independently.
 
-These source assets are copied unchanged into public/assets/god-frame for d06 runtime selection. Registration regression checks pass; live visual verification is next.
-The deployed gameplay baseline is ed2e88e, Railway SUCCESS. Charging speed
+These source assets are copied unchanged into public/assets/god-frame for d06 runtime selection. Registration checks and live scale verification passed.
+The deployed gameplay baseline is 0827281, Railway SUCCESS. Charging speed
 0.67145, existing easing, vulnerable charging, battery behavior, 12-second
 powered window, camera, normal movement, combat and Echo remain unchanged.
 
@@ -33,7 +33,7 @@ turning, soft-cover movement and the registration used by normal rendering
 and Kinetic Echo. Expand the next small facing batch only after that pass.
 
 Directional charge coverage is d00 plus approved d06. d06 is integrated
-with the existing facing rules; live validation is pending. The other missing charge
+with the existing facing rules; live entry/loop/release/return/countdown/expiry/repeat checks passed. The other missing charge
 views are d01-d05 and d07-d23; existing combat views must guide each one.
 
 Generation used the built-in image tool. Prompt: preserve the approved front

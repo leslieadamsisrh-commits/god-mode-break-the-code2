@@ -1,0 +1,167 @@
+{
+  "direction": 3,
+  "angleDegrees": 45,
+  "appearanceApproval": "pending",
+  "runtimeInstalled": false,
+  "baselineCommit": "0827281d40f141db3e0f7d25c97f537affeda620",
+  "sheet": {
+    "file": "sequence-review.png",
+    "size": [
+      1448,
+      1086
+    ],
+    "sha256": "a8c2cb4e84a116ad19ff7013e662b42f975e94ca08014521e8b99f84a443d48c",
+    "opaqueBodyBounds": [
+      [
+        30,
+        25,
+        310,
+        339
+      ],
+      [
+        384,
+        24,
+        356,
+        339
+      ],
+      [
+        737,
+        27,
+        296,
+        339
+      ],
+      [
+        1098,
+        29,
+        304,
+        336
+      ],
+      [
+        30,
+        375,
+        279,
+        345
+      ],
+      [
+        383,
+        373,
+        290,
+        343
+      ],
+      [
+        737,
+        373,
+        294,
+        338
+      ],
+      [
+        1097,
+        373,
+        290,
+        346
+      ],
+      [
+        23,
+        727,
+        288,
+        337
+      ],
+      [
+        378,
+        727,
+        300,
+        338
+      ],
+      [
+        737,
+        728,
+        364,
+        340
+      ],
+      [
+        1101,
+        734,
+        328,
+        343
+      ]
+    ]
+  },
+  "replacementDissolve": {
+    "file": "dissolve-review.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "sha256": "00822a79f0e21e48caacbbb740b6fd7f539d7b8e7bf70305d7dc18a6db4187db",
+    "opaqueBounds": [
+      239,
+      200,
+      999,
+      1076
+    ],
+    "opaqueHeightPixels": 876
+  },
+  "readyReference": {
+    "file": "ready-d03.webp",
+    "cellPixels": 250,
+    "opaqueHeightPixels": 178
+  },
+  "runtimeFrameSources": [
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 0
+    },
+    {
+      "sheet": "dissolve-review.png",
+      "sourcePose": 0
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 2
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 3
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 4
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 5
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 6
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 7
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 8
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 9
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 10
+    },
+    {
+      "sheet": "sequence-review.png",
+      "sourcePose": 0
+    }
+  ],
+  "registrationNotes": [
+    "Opening ready pose reused for final weapon-ready return; source pose12 is excluded.",
+    "Original source pose2 is excluded; use isolated dissolve replacement.",
+    "Source pose3 upper-left padding contains neighboring discarded weapon particles: clip upper region at x745 until source y200, then allow x732 for the cape below. Preserve full genuine body bounds.",
+    "Source pose11 right crop ends at x1101, before discarded pose12 begins.",
+    "One anatomical scale per source resolution; match normal ready-d03 height; do not independently scale each pose.",
+    "Final anchors, smooth playback, and source isolation must pass in-game validation before deployment."
+  ]
+}
