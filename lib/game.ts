@@ -309,10 +309,12 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
    // Top exposure already clears the attached floor footprint. Keep the
    // visible muzzle/projectile above its 47-unit top rather than inside it.
    const exposedD03=!!clearance&&muzzle.dir===3,artUnit=(125*143/250/638)*c.spriteScale;
+   const neighbor=!!clearance?(muzzle.dir===2?{anchor:[1202,525.1677115987461],muzzle:[1424,97]}:muzzle.dir===4?{anchor:[1189,993.1677115987461],muzzle:[1420,624]}:null):null,neighborUnit=125*143/250/445*c.spriteScale;
    // The authored barrel is the authoritative horizontal origin, not a visual-only offset.
    if(exposedD03)muzzle.x=p.x+(1688-1363)*artUnit;
+   if(neighbor)muzzle.x=p.x+(neighbor.muzzle[0]-neighbor.anchor[0])*neighborUnit;
    const renderOffsetX=0;
-   const shotHeight=exposedD03?(muzzle.y-p.y)+(814-250)*artUnit:clearance?Math.max(44*c.spriteScale,15616/332+4):44*c.spriteScale;
+   const shotHeight=neighbor?(muzzle.y-p.y)+(neighbor.anchor[1]-neighbor.muzzle[1])*neighborUnit:exposedD03?(muzzle.y-p.y)+(814-250)*artUnit:clearance?Math.max(44*c.spriteScale,15616/332+4):44*c.spriteScale;
    const blocked=s.covers.some(cv=>cv.id!==clearance&&segmentCover(p,muzzle,cv));p.lastShot=s.time;
    if(blocked){s.fx.push({id:uid(),type:"cover-block",x:muzzle.x,y:muzzle.y,life:.18,owner:n})}
    else{p.fireState=.11;p.recoil=.12;if(p.coverId)p.returnToCover=.28;

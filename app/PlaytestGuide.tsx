@@ -2,11 +2,11 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="cover-barrel-v5";
+const BATCH="cover-neighbors-v6";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Front-right barrel",buttons:"Brace → aim front-right → hold LT → fire RT → release LT",watch:"Check the front-right shot starts at the barrel and clears cover while your feet stay planted. Release LT to tuck back. Other directional poses are still under review."},
+ {title:"Three cover angles",buttons:"Brace → sweep through the three front-right angles → hold LT → fire RT → release LT",watch:"Check shots at 30°, 45° and 60° start at the drawn barrel and clears cover while your feet stay planted. Release LT to tuck back. Other directional poses are still under review."},
  {title:"Cover escape",buttons:"From cover: fresh A + left stick pointing away",watch:"Escape immediately. Try low/zero battery, then full battery; lower power gives shorter travel."},
  {title:"Recharge",buttons:"During escape or retract: fresh Y → hold → release → shoot RT",watch:"Charge starts immediately. Release Y, then fire; the weapon should return smoothly."}
 ];
