@@ -439,19 +439,23 @@ function coverVisualOffset(p:any){
 }
 function coverCaptureBridge(p:any,t:number){
  if(!p.coverId||typeof p.contact!=="number"||p.contact<=t)return null;
- const age=Math.max(0,.22-(p.contact-t));
+ const age=Math.max(0,.22-(p.contact-t)),topology=coverTopology(p);
  // Three presentation-only bridge beats over the existing authoritative .22s contact window.
  // B01 pre-impact inherits the terminal slide silhouette; B02 compression and B03 settle
  // reuse the existing authored cover contact cells. No gameplay timer or root is changed.
- if(age<.04)return{kind:"slide",phase:.94,compression:0};
+ if(age<.04)return{kind:"slide",phase:.94,compression:0,rise:0,topology};
  // B02: use the authored contact silhouette but add a tiny presentation-only compression
  // along the cover normal. This sells impact without moving collision/root or inventing Jade.
- if(age<.115)return{kind:"cover",frame:0,compression:Math.sin((age-.04)/.075*Math.PI)};
- if(age<.18)return{kind:"cover",frame:1,compression:(.18-age)/.065*.35};
- return{kind:"cover",frame:2,compression:0};
+ if(age<.115)return{kind:"cover",frame:0,compression:Math.sin((age-.04)/.075*Math.PI),rise:0,topology};
+ if(age<.18)return{kind:"cover",frame:1,compression:(.18-age)/.065*.35,rise:(age-.115)/.065,topology};
+ return{kind:"cover",frame:2,compression:0,rise:1,topology};
 }
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);
- const impact=coverCaptureBridge(p,t);if(impact?.compression&&p.coverAnchor){g.translate(-p.coverAnchor.nx*impact.compression*2.4,-p.coverAnchor.ny*impact.compression*2.4)}
+ const impact=coverCaptureBridge(p,t);if(impact&&p.coverAnchor){
+  if(impact.compression)g.translate(-p.coverAnchor.nx*impact.compression*2.4,-p.coverAnchor.ny*impact.compression*2.4);
+  // B03 planted rise is visual only and remains inside the authoritative .22s contact window.
+  if(impact.rise)g.translate(p.coverAnchor.nx*impact.rise*.65,p.coverAnchor.ny*impact.rise*.65-impact.rise*1.1);
+ }
 const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&p.input?.coverAim?supportedCoverDir(p):rawDir,im=safestSprite(family,d);
  let bridge=impact,renderFamily=family,renderIm=im;
  if(bridge?.kind==="slide"){renderFamily="slide";renderIm=safestSprite("slide",rawDir)}
