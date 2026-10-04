@@ -1,34 +1,38 @@
-// Presentation only: use the same ground footprint and vertical height as cover().
+// Presentation only: exact projected cover-face occlusion. Gameplay collision is untouched.
 export const COVER_HEIGHT=15616/332;
 type Point={x:number;y:number};
 type Cover={x:number;y:number;w:number;h:number;a?:number;generated?:boolean;born?:number};
-export function coverOccluder(c:Cover,groundY:number):Point[]{
+const EPS=1.25;
+function floorCorners(c:Cover):Point[]{
  const co=Math.cos(c.a||0),si=Math.sin(c.a||0);
- const floor=[[-c.w/2,-c.h/2],[c.w/2,-c.h/2],[c.w/2,c.h/2],[-c.w/2,c.h/2]].map(([x,y])=>({x:c.x+x*co-y*si,y:c.y+x*si+y*co}));
- // Only material farther into the screen than this actor's ground anchor can hide it.
- if(Math.max(...floor.map(p=>p.y))<=groundY+1e-6)return [];
- const front:Point[]=[];
- for(let n=0;n<floor.length;n++){
-  const a=floor[n],b=floor[(n+1)%floor.length],inside=a.y>=groundY,next=b.y>=groundY;
-  if(inside)front.push(a);
-  if(inside!==next){const f=(groundY-a.y)/(b.y-a.y);front.push({x:a.x+(b.x-a.x)*f,y:groundY})}
+ return [[-c.w/2,-c.h/2],[c.w/2,-c.h/2],[c.w/2,c.h/2],[-c.w/2,c.h/2]].map(([x,y])=>({x:c.x+x*co-y*si,y:c.y+x*si+y*co}));
+}
+function clipFar(poly:Point[],groundY:number){
+ const out:Point[]=[];for(let n=0;n<poly.length;n++){const a=poly[n],b=poly[(n+1)%poly.length],ain=a.y>groundY+EPS,bin=b.y>groundY+EPS;
+  if(ain)out.push(a);
+  if(ain!==bin){const t=(groundY+EPS-a.y)/(b.y-a.y);out.push({x:a.x+(b.x-a.x)*t,y:groundY+EPS})}
+ }return out;
+}
+// Return the exact visible front-side quads plus the far top polygon. Avoid a convex hull:
+// at rotated corners the hull fills empty screen-space and visually cuts through Jade.
+export function coverOccluders(c:Cover,groundY:number):Point[][]{
+ const floor=floorCorners(c),polys:Point[][]=[];
+ for(let n=0;n<4;n++){const a=floor[n],b=floor[(n+1)%4];if(Math.max(a.y,b.y)<=groundY+EPS)continue;
+  const clipped=clipFar([a,b,{x:b.x,y:b.y-COVER_HEIGHT},{x:a.x,y:a.y-COVER_HEIGHT}],groundY);
+  if(clipped.length>=3)polys.push(clipped);
  }
- // Project that clipped solid, not its bounding box: a rotated corner changes locally.
- const points=front.flatMap(p=>[p,{x:p.x,y:p.y-COVER_HEIGHT}]).sort((a,b)=>a.x-b.x||a.y-b.y);
- const cross=(a:Point,b:Point,c:Point)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);
- const half=(list:Point[])=>{const result:Point[]=[];for(const p of list){while(result.length>1&&cross(result[result.length-2],result[result.length-1],p)<=0)result.pop();result.push(p)}return result.slice(0,-1)};
- return [...half(points),...half([...points].reverse())];
+ const farTop=clipFar(floor.map(p=>({x:p.x,y:p.y-COVER_HEIGHT})),groundY-COVER_HEIGHT);
+ if(farTop.length>=3)polys.push(farTop);
+ return polys;
 }
 export function withCoverOcclusion(g:CanvasRenderingContext2D,covers:Cover[],groundY:number,time:number,draw:()=>void){
  g.save();
  for(const c of covers){
-  // Keep the existing translucent formation effect; solid occlusion starts when it finishes.
   if(c.generated&&typeof c.born==="number"&&time-c.born<.72)continue;
-  const polygon=coverOccluder(c,groundY);if(polygon.length<3)continue;
-  g.beginPath();g.rect(-1000000,-1000000,2000000,2000000);
-  polygon.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();
-  // Separate clips intersect: overlapping covers must not XOR holes and reveal Jade.
-  g.clip("evenodd");
+  for(const polygon of coverOccluders(c,groundY)){
+   g.beginPath();g.rect(-1000000,-1000000,2000000,2000000);
+   polygon.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip("evenodd");
+  }
  }
  draw();g.restore();
 }
