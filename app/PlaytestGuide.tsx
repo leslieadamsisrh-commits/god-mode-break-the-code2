@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="animation-language-cover-flow-v1";
+const BATCH="animation-language-registration-b02-lateral-v2";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Slide → impact → brace",buttons:"A slide into cover from several angles → release stick → let Jade settle",watch:"Look for one continuous body path: low slide → compressed impact → rise/settle → brace. Flag any scale pop, foot jump, or instant pose swap."},
- {title:"Attached-cover visibility",buttons:"Attach to the center and corners → move around overlapping/angled cover → hold/release LT",watch:"Jade should be genuinely hidden by her owning wall, but nearby stacked cover must not erase her. Head/shoulder/weapon exposure should remain physically readable."},
- {title:"Brace ↔ lateral flow",buttons:"Brace → move left/right along cover repeatedly → stop → reverse → stop",watch:"Look for plant → stride → opposite plant → settle. Feet and hips should carry lateral weight without changing gameplay speed or detaching from cover."}
+ {title:"Cover contact socket",buttons:"Slide into each face/corner → brace → hold/release LT",watch:"Jade should sit against the wall instead of inside it. Watch feet, hips, shoulder and weapon relationship on top/bottom/left/right faces."},
+ {title:"B02 impact compression",buttons:"Repeat A slides into cover at slow/medium/full approach speeds",watch:"Look for low slide → visible compression → settle → brace. Impact should read physically without slowing or moving the gameplay root."},
+ {title:"Weighted lateral cycle",buttons:"Brace → move left/right slowly, then fast → stop → reverse",watch:"Plant/stride/plant/settle cadence should track travel speed. No foot cycling while nearly stationary; no detach or speed change."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
