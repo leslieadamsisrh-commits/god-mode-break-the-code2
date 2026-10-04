@@ -38,3 +38,9 @@ lib/cover-occlusion.ts is presentation only. app/Game.tsx paints cover once, the
 Deployment and live browser verification are recorded in the final handoff after completion. Physical-controller angle/transition review and two-client networking remain pending. Do not claim sampled frames, Canvas fixtures, host snapshots or guide checkboxes certify those.
 
 Next exact step: controller recording of task1 at front, side and rotated/moving corners, LT expose/RT fire/LT retract. Preserve escape/recharge; investigate any remaining visual boundary before new gun/psychic/carry connectors. Do not regenerate approved art to solve depth ordering.
+
+## Deployed verification
+
+38cfb31a1197a07861f703f52845dfb13b961f5b — Railway SUCCESS (ed5df834-5dc5-4069-866a-87e755f3958c). Live UI confirmed v2 task text, all statuses Untested and intact approved recoil/retract preview rendering; previews restored off and Classic/.67145/scale/camera intact. live-cover-occlusion-38cfb31.jpg is a production preview/UI proof, not a reproduced corner gameplay sequence.
+
+Fresh ordinary-input host chain after SUCCESS passed contact -> brace -> d03 exposed fire -> LT release -> outward escape -> fresh Y -> full release -> combat. An attempt during deployment encountered ROOM_NOT_FOUND/404 when the in-memory room was replaced; rerun from a fresh post-deploy room passed. Available browser keyboard actions did not drive a reliable complete cover traversal, so full live rendered angle/moving-cover/controller and two-client checks remain pending. No controller approval fabricated. The geometric and actual-renderer fixture checks establish the correction independently.
