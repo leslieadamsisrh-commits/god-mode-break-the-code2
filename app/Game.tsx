@@ -16,6 +16,7 @@ function readController(pad:any,i:any){
 }
 const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF:"melee",KeyC:"heavy",KeyQ:"grip",KeyR:"throwMatter",KeyB:"cover",KeyO:"orbit",KeyP:"launchOrbit",Space:"pinball",KeyX:"slow"};
 const jade=new Map<string,HTMLImageElement>();
+const lastGoodSprite=new Map<string,{im:HTMLImageElement;dir:number}>();
 type EchoFrame={x:number;y:number;angle:number;family:string;dir:number;frame:number;life:number;maxLife:number;speed:number};
 const kineticEcho:EchoFrame[]=[];let echoLast=0;
 const hoverWake:{x:number;y:number;age:number;strength:number}[]=[];
@@ -218,9 +219,16 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
 
  for(const sh of s.shots||[]){g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x+(sh.renderOffsetX||0),sh.y-(sh.z||0));g.lineTo(sh.x+(sh.renderOffsetX||0)-sh.vx*.025,sh.y-(sh.z||0)-sh.vy*.025);g.stroke()}for(const f of s.fx||[])if(f.type!=="slide")fx(g,f);
 }
-function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im)return im}}
-function exactSprite(f:string,d:number){return jade.get(`${f}-${((d%24)+24)%24}`)}
-function safestSprite(f:string,d:number){const exact=exactSprite(f,d);if(exact)return exact;presentationQA.missingExact++;return exactSprite("ready",d)||nearest(f,d)||nearest("ready",d)}
+function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im?.complete&&im.naturalWidth)return im}}
+function exactSprite(f:string,d:number){const im=jade.get(`${f}-${((d%24)+24)%24}`);return im?.complete&&im.naturalWidth?im:undefined}
+function safestSprite(f:string,d:number){
+ const exact=exactSprite(f,d);if(exact){lastGoodSprite.set(f,{im:exact,dir:d});return exact}
+ presentationQA.missingExact++;
+ const directionalReady=exactSprite("ready",d),near=nearest(f,d),nearReady=nearest("ready",d),held=lastGoodSprite.get(f)?.im||lastGoodSprite.get("ready")?.im;
+ const chosen=directionalReady||near||nearReady||held;
+ if(chosen)lastGoodSprite.set(f,{im:chosen,dir:d});
+ return chosen;
+}
 function spriteCell(im:HTMLImageElement,family:string,frame:number){
  const cell=im.naturalWidth%250===0&&im.naturalHeight%250===0?250:125;
  const cols=Math.max(1,Math.floor(im.naturalWidth/cell)),rows=Math.max(1,Math.floor(im.naturalHeight/cell)),frames=Math.max(1,cols*rows),fr=((frame%frames)+frames)%frames;
@@ -363,7 +371,7 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const spe
  const meta=im?spriteCell(im,family,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;let frame=family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;if(family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(family);
  g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
  const exposure=poseAlpha===0&&(drawCoverNeighbor(g,p,cfg)||drawCoverExposure(g,p,cfg));const connector=exposure||poseAlpha===0&&drawCoverConnector(g,p,cfg);const psychic=!connector&&poseAlpha===0&&drawPsychicPose(g,p,t,cfg);
- if(!connector&&!psychic&&im&&poseAlpha<1){const m=spriteCell(im,family,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*registration.groundAnchor.x*sc,p.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!connector&&!psychic&&!im&&!poseAlpha){g.strokeStyle="#ff4aa5";g.strokeRect(p.x-18,p.y-70,36,70)}
+ if(!connector&&!psychic&&im&&poseAlpha<1){const m=spriteCell(im,family,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*registration.groundAnchor.x*sc,p.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!connector&&!psychic&&!im&&!poseAlpha){presentationQA.missingExact++}
  if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.restore();
  g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke()}
 // Structure Lab concrete-cover-atlas-v2: original face registration, not replacement artwork.
