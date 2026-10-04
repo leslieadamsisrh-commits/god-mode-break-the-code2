@@ -273,7 +273,9 @@ function coverLateralFrame(p:any,t:number,total:number){
  if(total!==12||Math.abs(p.coverSpeed||0)<=20)return null;
  // Authored 12-cell cover atlas owns lateral locomotion. Direction selects the
  // leading stride; cadence stays presentation-only and never changes coverSpeed.
- const sign=(p.coverSpeed||0)<0?-1:1,phase=Math.floor(t*10)%4;
+ const sign=(p.coverSpeed||0)<0?-1:1;
+ // Tie cadence to actual cover travel so feet do not cycle while barely moving.
+ const cadence=Math.max(6,Math.min(11,Math.abs(p.coverSpeed||0)/18)),phase=Math.floor(t*cadence)%4;
  // Four-beat authored cycle: plant -> stride -> opposite plant -> settle.
  // Existing cells are reused; no mirrored/new Jade art and no gameplay-speed change.
  return sign<0?[5,6,5,4][phase]:[6,5,6,4][phase];
@@ -414,8 +416,11 @@ function coverVisualOffset(p:any){
  const a=p.coverAnchor,exposed=!!(p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0);
  // Presentation-only contact correction. Gameplay root/collision remains authoritative.
  // Keep exposed poses closer to authored anchor; tucked poses sit just outside the physical face.
- const push=exposed?1.5:3.25;
- return{x:a.nx*push,y:a.ny*push};
+ // Face-specific socket correction derived from the attached cover basis.
+ // Normal keeps Jade outside the wall; tangent corrects authored silhouette bias.
+ const normal=exposed?1.25:3.5;
+ const tangentBias=a.face==="left"?-.9:a.face==="right"?.9:a.face==="top"?-.45:.45;
+ return{x:a.nx*normal+a.tx*tangentBias,y:a.ny*normal+a.ty*tangentBias};
 }
 function coverCaptureBridge(p:any,t:number){
  if(!p.coverId||typeof p.contact!=="number"||p.contact<=t)return null;
@@ -423,15 +428,17 @@ function coverCaptureBridge(p:any,t:number){
  // Three presentation-only bridge beats over the existing authoritative .22s contact window.
  // B01 pre-impact inherits the terminal slide silhouette; B02 compression and B03 settle
  // reuse the existing authored cover contact cells. No gameplay timer or root is changed.
- if(age<.045)return{kind:"slide",phase:.94};
- // Compression holds the first authored contact silhouette long enough to read impact.
- if(age<.12)return{kind:"cover",frame:0};
- // Settle advances through the authored contact family before brace takes over.
- if(age<.185)return{kind:"cover",frame:1};
- return{kind:"cover",frame:2};
+ if(age<.04)return{kind:"slide",phase:.94,compression:0};
+ // B02: use the authored contact silhouette but add a tiny presentation-only compression
+ // along the cover normal. This sells impact without moving collision/root or inventing Jade.
+ if(age<.115)return{kind:"cover",frame:0,compression:Math.sin((age-.04)/.075*Math.PI)};
+ if(age<.18)return{kind:"cover",frame:1,compression:(.18-age)/.065*.35};
+ return{kind:"cover",frame:2,compression:0};
 }
-function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&p.input?.coverAim?supportedCoverDir(p):rawDir,im=safestSprite(family,d);
- let bridge=coverCaptureBridge(p,t),renderFamily=family,renderIm=im;
+function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);
+ const impact=coverCaptureBridge(p,t);if(impact?.compression&&p.coverAnchor){g.translate(-p.coverAnchor.nx*impact.compression*2.4,-p.coverAnchor.ny*impact.compression*2.4)}
+const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&p.input?.coverAim?supportedCoverDir(p):rawDir,im=safestSprite(family,d);
+ let bridge=impact,renderFamily=family,renderIm=im;
  if(bridge?.kind==="slide"){renderFamily="slide";renderIm=safestSprite("slide",rawDir)}
  else if(bridge?.kind==="cover"){renderFamily="cover";renderIm=safestSprite("cover",rawDir)}
  const meta=renderIm?spriteCell(renderIm,renderFamily,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;
