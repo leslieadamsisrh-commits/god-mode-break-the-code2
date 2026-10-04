@@ -283,3 +283,24 @@ console.log(`PASS: ${checks} checks including fresh-Y rearming, depletion lockou
  }
 }
 console.log(`PASS: ${checks} checks including front charge crop completeness, combat scale, existing facing rules and asset-load fallback.`);
+
+// Approved front-right registration: source isolation, scale, routing and return.
+{
+ const seq={naturalWidth:1448,naturalHeight:1086},dissolve={naturalWidth:1254,naturalHeight:1254},base={naturalWidth:1536,naturalHeight:1024};
+ ctx.powerAssets=new Map([['grounded-float-v1',base],['front-right-d03-sequence-v1',seq],['front-right-d03-dissolve-v1',dissolve]]);
+ const p={x:120,y:220,vx:0,vy:0,gunFacing:Math.PI/4,input:{},charging:true,godCharge:.8};
+ let first,last;
+ for(let frame=0;frame<12;frame++){
+  const calls=[],paths=[],g={drawImage:(...a)=>calls.push(a),save(){},restore(){},beginPath(){},moveTo:(...a)=>paths.push(a),lineTo:(...a)=>paths.push(a),closePath(){},clip(){paths.push('clip')}};
+  assert(ctx.drawFloat(g,p,{spriteScale:.82},frame));const [im,sx,sy,w,h,dx,dy,dw,dh]=calls[0];
+  assert.equal(im,frame===1?dissolve:seq);assert(sx>=0&&sy>=0&&sx+w<=im.naturalWidth&&sy+h<=im.naturalHeight);
+  assert(Math.abs(dw/w-dh/h)<1e-9);assert(Math.abs(dw/w-(125*178/250/(frame===1?876:339))*.82)<1e-9);
+  assert([dx,dy,dw,dh].every(Number.isFinite));if(frame===2){assert(paths.includes('clip'));assert.equal(paths[0][0],dx+13*dw/w);checks+=2}
+  if(frame===10){assert.equal(sx+w,1101);checks++}if(frame===0)first=calls[0];if(frame===11)last=calls[0];checks+=5;
+ }
+ assert.deepEqual(first,last);checks++;
+ for(const q of [{...p,vx:100,vy:0},{...p,coverId:'c',coverAnchor:{nx:1,ny:0}},{...p,gunFacing:Math.PI}]){const calls=[];ctx.drawFloat({drawImage:(...a)=>calls.push(a)},q,{spriteScale:.82},6);assert.equal(calls[0][0],base);checks++}
+ ctx.powerAssets.delete('front-right-d03-dissolve-v1');const calls=[];ctx.drawFloat({drawImage:(...a)=>calls.push(a)},p,{spriteScale:.82},6);assert.equal(calls[0][0],base);checks++;
+ for(const kind of ['sequence','dissolve']){assert(fs.readFileSync(`art/god-frame/d03/${kind}-review.png`).equals(fs.readFileSync(`public/assets/god-frame/front-right-d03-${kind}-v1.png`)));checks++}
+}
+console.log(`PASS: ${checks} checks including d03 compact dissolve, isolated crops, uniform scale, identical ready return and missing-asset fallback.`);

@@ -1,6 +1,6 @@
 # Jade d03 front-right charge candidate
 
-Status: awaiting visual approval; not installed or loaded by the app.
+Status: visually approved by the user on 2026-10-03. Runtime registration implemented; 1,835 checks and production build passed. Live verification pending.
 
 This batch follows the approved current Jade design and the existing ready-d03
 combat facing. It covers grounded entry, lift, three hover poses, peak and

@@ -1,8 +1,8 @@
 {
   "direction": 3,
   "angleDegrees": 45,
-  "appearanceApproval": "pending",
-  "runtimeInstalled": false,
+  "appearanceApproval": "approved-user-2026-10-03",
+  "runtimeInstalled": true,
   "baselineCommit": "0827281d40f141db3e0f7d25c97f537affeda620",
   "sheet": {
     "file": "sequence-review.png",
@@ -163,5 +163,130 @@
     "Source pose11 right crop ends at x1101, before discarded pose12 begins.",
     "One anatomical scale per source resolution; match normal ready-d03 height; do not independently scale each pose.",
     "Final anchors, smooth playback, and source isolation must pass in-game validation before deployment."
+  ],
+  "registrationStatus": "implementation-awaiting-lab-verification",
+  "runtimeRects": [
+    [
+      23,
+      20,
+      325,
+      347
+    ],
+    [
+      230,
+      190,
+      780,
+      896
+    ],
+    [
+      732,
+      20,
+      310,
+      350
+    ],
+    [
+      1090,
+      20,
+      318,
+      350
+    ],
+    [
+      23,
+      367,
+      293,
+      357
+    ],
+    [
+      376,
+      366,
+      304,
+      357
+    ],
+    [
+      730,
+      366,
+      309,
+      357
+    ],
+    [
+      1090,
+      366,
+      305,
+      357
+    ],
+    [
+      16,
+      720,
+      302,
+      351
+    ],
+    [
+      371,
+      720,
+      315,
+      351
+    ],
+    [
+      730,
+      720,
+      371,
+      351
+    ],
+    [
+      23,
+      20,
+      325,
+      347
+    ]
+  ],
+  "runtimeAnchors": [
+    [
+      192,
+      364
+    ],
+    [
+      662,
+      1076
+    ],
+    [
+      905,
+      366
+    ],
+    [
+      1268,
+      366
+    ],
+    [
+      190,
+      716
+    ],
+    [
+      550,
+      716
+    ],
+    [
+      904,
+      716
+    ],
+    [
+      1264,
+      716
+    ],
+    [
+      184,
+      1066
+    ],
+    [
+      544,
+      1066
+    ],
+    [
+      902,
+      1066
+    ],
+    [
+      192,
+      364
+    ]
   ]
 }

@@ -25,13 +25,13 @@ ALREADY COMPLETE — PRESERVE
 RESUME HERE — d03 FRONT-RIGHT CANDIDATE
 Read art/god-frame/d03/README.md and registration-review.json before editing.
 Source assets: sequence-review.png and dissolve-review.png in that directory.
-The candidate appearance is awaiting approval and is NOT loaded by the app.
+The d03 appearance was approved by the user on 2026-10-03. Registration is implemented with compact dissolve, opening-ready reuse, explicit source isolation and uniform sheet scales. 1,835 checks and production build passed. Live verification remains pending.
 
 Use the corrected front-right sequence and its isolated compact dissolve replacement. The sheet's original oversized dissolve (source pose 2) is excluded. Its final ready stance (source pose 12) is also excluded: reuse source pose 1 for both opening and final ready states. This guarantees the same stance without generating duplicate artwork. The peak has already been corrected to retain front-right facing.
 
 The JSON records twelve state mappings, source hashes, complete silhouette bounds and remaining extraction work. Source pose 3's upper-left padding contains neighboring discarded weapon particles; isolate it without clipping the genuine cape below. Pose 11's right crop must exclude discarded pose 12. Inspect the actual pixels and follow the recorded source coordinates. These notes are not a claim that d03 runtime registration has passed.
 
-Show the candidate sheet AND compact dissolve replacement for visual approval before installation. Do not ask to reapprove d06. Once d03 is approved, align anchors and anatomical scale against the existing ready-d03 combat sprite, verify the complete animated sequence in the actual lab, run regression checks, then install and deploy only this approved direction. Reuse existing source art wherever possible; generate only exact missing or failed poses. Do not regenerate a whole sheet to fix one pose.
+The candidate sheet AND compact dissolve replacement have visual approval. Do not ask to approve them again. Do not ask to reapprove d06. Once d03 is approved, align anchors and anatomical scale against the existing ready-d03 combat sprite, verify the complete animated sequence in the actual lab, run regression checks, then install and deploy only this approved direction. Reuse existing source art wherever possible; generate only exact missing or failed poses. Do not regenerate a whole sheet to fix one pose.
 
 LOCKED GAMEPLAY
 Keep charging speed exactly 0.67145 of normal with existing easing. Preserve Classic movement, camera, controller mappings, cover handling, psychic abilities, battery costs/recovery, combat benefits, combat animations, SKEET/SKURT!, Kinetic Echo and studio tools. Hold Y charges; release Y activates. Charging remains vulnerable. Full-charge powered time stays roughly 12 seconds. No new tiers, invincibility, abilities, reload systems or unrelated features.
