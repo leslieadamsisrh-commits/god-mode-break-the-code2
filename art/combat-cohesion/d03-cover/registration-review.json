@@ -34,5 +34,5 @@
   ],
   "registrationBasis": "Original exposed crouch silhouette 143 px, original 250px ground anchor y215; new silhouette height638, equivalent 6px sole offset; shared scale, no individual pose stretch",
   "runtimeDirection": "d03 gunFacing only",
-  "liveVerification": "pending"
+  "liveVerification": "8c88297 Railway cc7634cc-10ee-4c9e-b815-0cb6f7cc9e2c SUCCESS; live render-only recoil/retract at crouched scale and footline; host ordinary-input contact/brace/d03 fire/release/escape/charge/full release/combat pass. Full rendered encounter/controller/two-client checks pending."
 }
