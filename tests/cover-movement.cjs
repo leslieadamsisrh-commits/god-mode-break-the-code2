@@ -218,3 +218,20 @@ console.log(`PASS: ${checks} checks including charge float easing, return pace, 
  assert.equal(m.newGame('pace','token',1000,'solo').config.chargeMoveScale,.65*1.033);checks++;
 }
 console.log(`PASS: ${checks} checks including grounded lift, peak-once hover, partial recovery, interruption and preserved Echo registration.`);
+
+// Exercise atlas source bounds and destination registration through the renderer.
+{
+ ctx.powerAssets=new Map([["grounded-float-v1",{naturalWidth:1536,naturalHeight:1024}]]);
+ const a=ui.indexOf('function drawPowerFrame('),b=ui.indexOf('function drawPowerPose(',a);
+ vm.runInContext(stripTypeScriptTypes(ui.slice(a,b))+';globalThis.drawFloat=drawPowerFrame;',ctx);
+ for(let frame=0;frame<12;frame++){
+  const calls=[],g={drawImage:(...args)=>calls.push(args)},p={x:120,y:220,charging:true,godCharge:frame<3?0:.8};
+  assert(ctx.drawFloat(g,p,{spriteScale:.82},frame));checks++;
+  const [,sx,sy,w,h,dx,dy,dw,dh]=calls[0];
+  assert(sx>=0&&sy>=0&&sx+w<=1536&&sy+h<=1024);checks++;
+  assert(Math.abs(dw/w-dh/h)<1e-9);checks++;
+  assert(dh<80&&dh>70);checks++;
+  assert([dx,dy,dw,dh].every(Number.isFinite));checks++;
+ }
+}
+console.log(`PASS: ${checks} checks including charge atlas bounds, uniform scale and grounded registration.`);
