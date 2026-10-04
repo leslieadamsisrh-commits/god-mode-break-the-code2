@@ -173,7 +173,7 @@ function slideAction(s:GameState,n:number,prev:InputState){const p=s.players[n],
    if(c.weaveEnabled<.5){
      if(p.slideCool>0)return;
      const nearby=s.covers.filter(cv=>coverFace(cv,p).gap<25).sort((a,b)=>coverFace(a,p).gap-coverFace(b,p).gap)[0];
-     if(nearby){attachCover(p,nearby,s,"braced");return}
+     if(nearby){attachCover(p,nearby,s,"braced");return true}
      if(!spendEnergy(p,s,c.slideEnergy))return;
      const mag=Math.hypot(i.x,i.y),a=mag>.1?Math.atan2(i.y,i.x):p.gunFacing;p.slide=c.slideDuration;p.slideFacing=a;p.vx=Math.cos(a)*c.slideSpeed;p.vy=Math.sin(a)*c.slideSpeed;p.slideCool=c.slideDuration;s.fx.push({id:uid(),type:"slide",x:p.x,y:p.y,life:.42,owner:n,text:"SKEET"}); 
    }else if(Math.hypot(i.x,i.y)>.1){
@@ -184,7 +184,8 @@ function slideAction(s:GameState,n:number,prev:InputState){const p=s.players[n],
  }
 }
 function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],i=p.input,c=s.config;
- slideAction(s,n,prev);
+ // Successful immediate brace keeps its original priority over other edges.
+ if(slideAction(s,n,prev))return;
  if(i.pinball&&!prev.pinball&&p.battery>=22){p.battery-=22;p.pinball=c.pinballDuration;p.vx=Math.cos(p.aim)*c.pinballSpeed;p.vy=Math.sin(p.aim)*c.pinballSpeed;s.fx.push({id:uid(),type:"pinball",x:p.x,y:p.y,life:.5,owner:n})}
  if((i.melee&&!prev.melee||i.heavy&&!prev.heavy)&&s.time-p.lastMelee>(i.heavy?.85:.38)){p.lastMelee=s.time;s.fx.push({id:uid(),type:i.heavy?"heavy":"melee",x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40,life:.22,owner:n})}
  if(i.cover&&!prev.cover&&p.battery>=30){p.battery-=30;const x=clamp(p.x+Math.cos(p.aim)*100-65,A.left,A.right-130),y=clamp(p.y+Math.sin(p.aim)*100-15,A.top,A.bottom-30);const generated=s.covers.filter(c=>c.generated);if(generated.length>=4){const old=generated[0];if(p.coverId===old.id)releaseCover(p,s,.15);s.covers=s.covers.filter(c=>c.id!==old.id)}const used=new Set(s.covers.filter(c=>c.generated).map(c=>c.variant));let variant=0;while(used.has(variant)&&variant<3)variant++;s.covers.push({id:uid(),x:x+65,y:y+15,w:130,h:30,a:p.aim+Math.PI/2,hp:110,maxHp:110,generated:true,build:1,variant,born:s.time});s.fx.push({id:uid(),type:"materialize",x:x+65,y:y+15,life:.7,owner:n})}

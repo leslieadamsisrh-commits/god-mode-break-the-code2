@@ -342,3 +342,7 @@ for(const object of ['cover','debris']){
  tick(s,{slide:true,aim:0},16);assert.equal(p.gripCoverId,null,'blocked slide swallowed cover drop');assert.equal(p.gripId,null,'blocked slide swallowed matter drop');if(object==='debris')assert.equal(s.matter[0].heldBy,null);checks++;
 }
 console.log(`PASS: ${checks} checks including independent action edges during unavailable slides.`);
+
+// Successful immediate brace preserves its existing input priority.
+{const s=m.newGame('brace-priority','token',1000,'solo'),p=s.players[0];p.x=255;p.y=365;tick(s,{slide:true,cover:true,x:1,aim:0},16);assert.equal(p.coverId,'cover-piece-01');assert.equal(s.covers.filter(c=>c.generated).length,0);checks++;}
+console.log(`PASS: ${checks} checks including preserved successful-brace priority.`);
