@@ -309,8 +309,9 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
    // Top exposure already clears the attached floor footprint. Keep the
    // visible muzzle/projectile above its 47-unit top rather than inside it.
    const exposedD03=!!clearance&&muzzle.dir===3,artUnit=(125*143/250/638)*c.spriteScale;
-   // Visual socket only: the authoritative floor trajectory/collision is unchanged.
-   const renderOffsetX=exposedD03?(1688-1363)*artUnit-(muzzle.x-p.x):0;
+   // The authored barrel is the authoritative horizontal origin, not a visual-only offset.
+   if(exposedD03)muzzle.x=p.x+(1688-1363)*artUnit;
+   const renderOffsetX=0;
    const shotHeight=exposedD03?(muzzle.y-p.y)+(814-250)*artUnit:clearance?Math.max(44*c.spriteScale,15616/332+4):44*c.spriteScale;
    const blocked=s.covers.some(cv=>cv.id!==clearance&&segmentCover(p,muzzle,cv));p.lastShot=s.time;
    if(blocked){s.fx.push({id:uid(),type:"cover-block",x:muzzle.x,y:muzzle.y,life:.18,owner:n})}
@@ -343,5 +344,6 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
 export function advance(s:GameState,now=Date.now()){let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;if(s.phase==="countdown"){s.countdown=Math.max(0,s.countdown-elapsed);if(!s.countdown)s.phase="playing";return}if(s.phase!=="playing"||(s.mode!=="solo"&&s.players.length<2))return;let prev=s.players.map(p=>({...p.processedInput}));while(elapsed>0){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,prev);s.players.forEach(p=>p.processedInput={...p.input});prev=s.players.map(p=>({...p.input}));elapsed-=dt}}
 export function startOrRematch(s:GameState,slot:number){if(s.mode==="solo"){respawn(s);return}if(slot===0){respawn(s)}}
 export function safeState(s:GameState){return{...s,players:s.players.map(({token,...p})=>p)}}
+
 
 

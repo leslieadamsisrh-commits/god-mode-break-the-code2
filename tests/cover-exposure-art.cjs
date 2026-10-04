@@ -8,7 +8,14 @@ const game={crypto:require('node:crypto').webcrypto};vm.createContext(game);vm.r
 const m=game.api,s=m.newGame('socket','host',1000,'solo'),q=s.players[0],cv={id:'wall',x:500,y:320,w:160,h:42,a:0,hp:140,maxHp:140,generated:false,build:0};s.covers=[cv];s.matter=[];q.x=500;q.y=280.5;m.attachCover(q,cv,s,'braced');m.setInput(s,0,1,{coverAim:true,fire:true,aim:Math.PI/4});m.advance(s,1016);
 assert(s.shots.length===7);const sh=s.shots[0],flash=s.fx.find(x=>x.type==='muzzle'),unit=125*143/250/638*.82;
 assert(Math.abs(flash.x+flash.renderOffsetX-(q.x+(1688-1363)*unit))<1e-9);assert(Math.abs(flash.y-flash.z-(q.y+(250-814)*unit))<1e-9);
-assert(sh.z>47.036);assert.equal(s.fx.find(x=>x.type==='muzzle').renderOffsetX,sh.renderOffsetX);
+assert.equal(flash.renderOffsetX,0);assert.equal(flash.x,q.x+(1688-1363)*unit);assert.equal(sh.renderOffsetX,0);assert(sh.z>47.036);assert.equal(s.fx.find(x=>x.type==='muzzle').renderOffsetX,sh.renderOffsetX);
+// A second obstacle at the authored barrel catches the real floor path.
+const blocked=m.newGame('barrel-block','host',1000,'solo'),b=blocked.players[0];blocked.covers=[cv];blocked.matter=[];b.x=500;b.y=280.5;m.attachCover(b,cv,blocked,'braced');
+const oldX=b.x+(Math.cos(Math.PI/4)*33-Math.sin(Math.PI/4)*-2),barrelX=b.x+325*unit,barrelY=b.y+Math.sin(Math.PI/4)*33+Math.cos(Math.PI/4)*-2;
+assert(barrelX-oldX>5);blocked.covers.push({...cv,id:'barrel-obstacle',x:barrelX,y:barrelY,w:2,h:2});
+m.setInput(blocked,0,1,{coverAim:true,fire:true,aim:Math.PI/4});m.advance(blocked,1016);assert.equal(blocked.shots.length,0);assert(blocked.fx.some(f=>f.type==='cover-block'));
+assert(Math.abs(sh.x-flash.x-sh.vx*.016)<1e-9);assert(Math.abs(sh.y-flash.y-sh.vy*.016)<1e-9);
 for(let frame=0;frame<2;frame++){let args;draw({drawImage:(...a)=>args=a},{...p,coverPreview:frame+2},{spriteScale:.82});assert.equal(args[0],image);assert.equal(args[4],887);assert(args[1]+args[3]<=1774);const bottom=frame?841:844;assert(Math.abs(args[6]+(bottom-args[2])*unit-(p.y+27*unit))<1e-9);}
 assert(fs.readFileSync('public/assets/god-frame/cover-d03-exposure-v1.png').equals(fs.readFileSync('art/combat-cohesion/d03-over-cover/aim-recoil-review-v1.png')));
-console.log('PASS: approved exposure routing, immediate interruptions, isolated silhouettes, identical sole baseline, host/recoil visual socket parity, byte-identical source. Floor shot trajectory unchanged.');
+console.log('PASS: approved exposure routing, immediate interruptions, isolated silhouettes, identical sole baseline, host/recoil visual socket parity, byte-identical source. Authoritative horizontal origin follows the approved recoil barrel.');
+
