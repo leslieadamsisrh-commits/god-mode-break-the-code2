@@ -377,11 +377,26 @@ function coverVisualOffset(p:any){
  const push=exposed?1.5:3.25;
  return{x:a.nx*push,y:a.ny*push};
 }
+function coverCaptureBridge(p:any,t:number){
+ if(!p.coverId||typeof p.contact!=="number"||p.contact<=t)return null;
+ const age=Math.max(0,.22-(p.contact-t));
+ // Three presentation-only bridge beats over the existing authoritative .22s contact window.
+ // B01 pre-impact inherits the terminal slide silhouette; B02 compression and B03 settle
+ // reuse the existing authored cover contact cells. No gameplay timer or root is changed.
+ if(age<.055)return{kind:"slide",phase:.92};
+ if(age<.13)return{kind:"cover",frame:0};
+ return{kind:"cover",frame:1};
+}
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&p.input?.coverAim?supportedCoverDir(p):rawDir,im=safestSprite(family,d);
- const meta=im?spriteCell(im,family,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;let frame=family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;if(family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(family);
+ let bridge=coverCaptureBridge(p,t),renderFamily=family,renderIm=im;
+ if(bridge?.kind==="slide"){renderFamily="slide";renderIm=safestSprite("slide",rawDir)}
+ else if(bridge?.kind==="cover"){renderFamily="cover";renderIm=safestSprite("cover",rawDir)}
+ const meta=renderIm?spriteCell(renderIm,renderFamily,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;
+ let frame=bridge?.kind==="cover"?Math.min(frames-1,bridge.frame):bridge?.kind==="slide"?Math.min(frames-1,Math.max(0,Math.floor(bridge.phase*frames))):family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;
+ if(!bridge&&family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(family);
  g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
  const exposure=poseAlpha===0&&(drawCoverNeighbor(g,p,cfg)||drawCoverExposure(g,p,cfg));const connector=exposure||poseAlpha===0&&drawCoverConnector(g,p,cfg);const psychic=!connector&&poseAlpha===0&&drawPsychicPose(g,p,t,cfg);
- if(!connector&&!psychic&&im&&poseAlpha<1){const m=spriteCell(im,family,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*registration.groundAnchor.x*sc,p.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!connector&&!psychic&&!im&&!poseAlpha){presentationQA.missingExact++}
+ if(!connector&&!psychic&&renderIm&&poseAlpha<1){const m=spriteCell(renderIm,renderFamily,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(renderIm,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*spriteRegistration(renderFamily).groundAnchor.x*sc,p.y-displayCell*spriteRegistration(renderFamily).groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!connector&&!psychic&&!im&&!poseAlpha){presentationQA.missingExact++}
  if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.restore();
  g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke();g.restore()}
 // Structure Lab concrete-cover-atlas-v2: original face registration, not replacement artwork.
