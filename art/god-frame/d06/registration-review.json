@@ -1,0 +1,159 @@
+{
+  "direction": 6,
+  "angleDegrees": 90,
+  "baselineCommit": "ed2e88e5ea8fc4cc69e99b1a3f91f410fa9b9031",
+  "runtimeInstalled": false,
+  "registrationStatus": "pending-in-game-validation",
+  "reference": {
+    "family": "ready",
+    "file": "ready-d06.webp",
+    "cellPixels": 250,
+    "opaqueHeightPixels": 176,
+    "displayCellWorldPixels": 125,
+    "spriteScale": 0.82,
+    "groundAnchor": [
+      0.5,
+      0.88
+    ]
+  },
+  "rules": [
+    "Keep source artwork unchanged; use explicit source rectangles, not assumed equal grid cells.",
+    "Opaque body bounds are audit measurements, not final draw rectangles; include disconnected dissolution fragments.",
+    "Use one anatomical scale per source-sheet resolution; never resize individual poses.",
+    "Align pelvis and ground position; apply hover offset only to body, not collision or cover.",
+    "Route with existing spriteFacing rules; no new turning control or mirrored equipment.",
+    "Approve transition appearance and verify complete sequence at normal combat scale before runtime installation."
+  ],
+  "sheets": [
+    {
+      "file": "approved-hover-loop.png",
+      "sha256": "7595935640836acf9fb318727e0e39a1b9bcf6b968d6891afd9fce63405b9b31",
+      "size": [
+        2172,
+        724
+      ],
+      "approval": "appearance-approved",
+      "frames": [
+        {
+          "state": "hover-a",
+          "opaqueBodyBounds": [
+            251,
+            63,
+            454,
+            595
+          ]
+        },
+        {
+          "state": "hover-b",
+          "opaqueBodyBounds": [
+            873,
+            63,
+            426,
+            595
+          ]
+        },
+        {
+          "state": "hover-c",
+          "opaqueBodyBounds": [
+            1462,
+            63,
+            445,
+            593
+          ]
+        }
+      ]
+    },
+    {
+      "file": "transitions-review.png",
+      "sha256": "a15fd996d20ac4db2c558a74ee5e5c2481310ef559b41e24e60f047b56cdf3b7",
+      "size": [
+        1223,
+        1286
+      ],
+      "approval": "awaiting-visual-approval",
+      "frames": [
+        {
+          "state": "ready",
+          "opaqueBodyBounds": [
+            49,
+            35,
+            329,
+            405
+          ]
+        },
+        {
+          "state": "dissolve",
+          "opaqueBodyBounds": [
+            458,
+            36,
+            313,
+            403
+          ]
+        },
+        {
+          "state": "gun-absent",
+          "opaqueBodyBounds": [
+            862,
+            35,
+            298,
+            405
+          ]
+        },
+        {
+          "state": "grounded-strain",
+          "opaqueBodyBounds": [
+            68,
+            451,
+            304,
+            395
+          ]
+        },
+        {
+          "state": "heels-lift",
+          "opaqueBodyBounds": [
+            461,
+            451,
+            303,
+            392
+          ]
+        },
+        {
+          "state": "lift",
+          "opaqueBodyBounds": [
+            840,
+            444,
+            332,
+            406
+          ]
+        },
+        {
+          "state": "peak",
+          "opaqueBodyBounds": [
+            32,
+            851,
+            376,
+            401
+          ]
+        },
+        {
+          "state": "weapon-return",
+          "opaqueBodyBounds": [
+            455,
+            852,
+            320,
+            398
+          ]
+        },
+        {
+          "state": "ready-return",
+          "opaqueBodyBounds": [
+            839,
+            851,
+            337,
+            402
+          ]
+        }
+      ]
+    }
+  ]
+}
