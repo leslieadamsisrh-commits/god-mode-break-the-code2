@@ -26,6 +26,17 @@ const floorWake:{x:number;y:number;angle:number;age:number}[]=[];
 let slideWasActive=false,slideWord=0,graffiti:any=null;
 function classicGraffiti(e:CanvasRenderingContext2D,t:HTMLImageElement|undefined,n:any,r=1){if(!t?.complete||!t.naturalWidth||n.life<=0)return;let i=CLASSIC_LETTERS[n.word],a=t.naturalHeight/2,o=Math.cos(n.angle),s=Math.sin(n.angle)*.58,c=classicClamp(n.age/.22,0,1),l=classicClamp(n.life/.24,0,1),u=1-Math.min(1,n.age/.2);e.save(),e.globalCompositeOperation=`screen`,e.translate(n.originX,n.originY-8),e.globalAlpha=r*l,e.shadowColor=`#75f6ff`,e.shadowBlur=11,e.strokeStyle=`#f8fbff`,e.lineWidth=1.3,e.beginPath(),e.arc(0,0,5+u*13,0,Math.PI*2),e.stroke();for(let t=0;t<7;t++){let i=t*2.399+n.angle,a=(8+t%3*5)*(1-u*.45);e.fillStyle=t%2?`#ff57b6`:`#72f7ff`,e.globalAlpha=r*l*(.35+u*.55),e.fillRect(Math.cos(i)*a-1,Math.sin(i)*a*.58-1,2+t%2,2+t%2)}for(let u=0;u<i.length;u++){let d=classicClamp((n.age-u*.032)/.16,0,1);if(d<=0)continue;let[f,p]=i[u],m=Math.round(f*t.naturalWidth),h=Math.max(1,Math.round((p-f)*t.naturalWidth)),g=h/a,_=27+u%2,v=classicClamp(g*_*.72,18,29),y=10+c*24+u*15,b=o*y,x=s*y-23-Math.sin(d*Math.PI)*4,ee=1+(1-d)*.28;e.save(),e.translate(b,x),e.rotate(Math.sin(n.angle)*.1),e.shadowColor=u%2?`#ff4eae`:`#67f5ff`,e.shadowBlur=8;for(let i=2;i>0;i--)e.globalAlpha=r*l*d*(.08+i*.035),e.drawImage(t,m,n.word*a,h,a,-v/2-o*i*7,-_/2-s*i*7,v*ee,_);e.globalAlpha=r*l*d*.95,e.drawImage(t,m,n.word*a,h,a,-v/2,-_/2,v*ee,_),e.strokeStyle=u%2?`#ff4eae`:`#67f5ff`,e.lineWidth=1.2,e.globalAlpha=r*l*d*.62,e.beginPath(),e.moveTo(-v*.4-o*4,-s*4),e.lineTo(-v*.4-o*(14+d*8),-s*(14+d*8)),e.stroke(),e.restore()}let d=classicClamp(n.age/.055,0,1),f=n.age<.34?1:classicClamp((.56-n.age)/.22,0,1);if(f>0){let i=1-(1-d)**3,c=n.word?104:94,l=n.word?29:28,u=o*(5+i*8),p=-9+s*(3+i*6)-i*4;e.save(),e.globalCompositeOperation=`source-over`,e.translate(u,p),e.rotate(Math.sin(n.angle)*.045),e.scale(.78+i*.22,.78+i*.22),e.globalAlpha=r*f,e.shadowColor=`#05070c`,e.shadowBlur=3,e.filter=`contrast(1.32) saturate(1.25)`,e.drawImage(t,0,n.word*a,t.naturalWidth,a,-c/2,-l/2,c,l),e.filter=`none`,e.shadowColor=n.word?`#ff48ad`:`#63f4ff`,e.shadowBlur=7,e.globalAlpha=r*f*.42,e.drawImage(t,0,n.word*a,t.naturalWidth,a,-c/2,-l/2,c,l),e.restore()}e.restore()}
 let cameraState={x:500,y:310,ready:false,last:0};let loading=false;
+const coverAimVisual=new Map<string,number>();
+function angleDelta(a:number,b:number){return Math.atan2(Math.sin(a-b),Math.cos(a-b))}
+function supportedCoverDir(p:any){
+ const raw=p.gunFacing??p.aim??0,exact=((Math.round(raw/(Math.PI*2)*24)%24)+24)%24;
+ if(!p.coverId||p.coverMode!=="braced"||!p.input?.coverAim)return exact;
+ const supported=[2,3,4],prev=coverAimVisual.get(p.id||"local");
+ if(prev!==undefined&&supported.includes(prev)&&Math.abs(angleDelta(raw,prev*Math.PI/12))<Math.PI/16)return prev;
+ let best=supported[0],err=Infinity;for(const d of supported){const e=Math.abs(angleDelta(raw,d*Math.PI/12));if(e<err){err=e;best=d}}
+ // Never fabricate a pose outside the authored 30/45/60-degree family. Hold the closest valid pose.
+ coverAimVisual.set(p.id||"local",best);return best;
+}
 const snapshots:{state:any;at:number}[]=[];
 function recordSnapshot(s:any,at:number){snapshots.push({state:s,at});if(snapshots.length>20)snapshots.shift()}
 function presentation(s:any,now:number){
@@ -209,6 +220,8 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  for(const sh of s.shots||[]){g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x+(sh.renderOffsetX||0),sh.y-(sh.z||0));g.lineTo(sh.x+(sh.renderOffsetX||0)-sh.vx*.025,sh.y-(sh.z||0)-sh.vy*.025);g.stroke()}for(const f of s.fx||[])if(f.type!=="slide")fx(g,f);
 }
 function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im)return im}}
+function exactSprite(f:string,d:number){return jade.get(`${f}-${((d%24)+24)%24}`)}
+function safestSprite(f:string,d:number){return exactSprite(f,d)||exactSprite("ready",d)||nearest(f,d)||nearest("ready",d)}
 function spriteCell(im:HTMLImageElement,family:string,frame:number){
  const cell=im.naturalWidth%250===0&&im.naturalHeight%250===0?250:125;
  const cols=Math.max(1,Math.floor(im.naturalWidth/cell)),rows=Math.max(1,Math.floor(im.naturalHeight/cell)),frames=Math.max(1,cols*rows),fr=((frame%frames)+frames)%frames;
@@ -315,7 +328,7 @@ function coverExposureFrame(p:any){
  if(!powerAssets.has("cover-d03-exposure-v1"))return null;
  if(p.coverPreview===2||p.coverPreview===3)return p.coverPreview-2;
  if(!p.coverId||p.coverMode!=="braced"||!p.peek||!p.input?.coverAim||p.charging||p.powerFlash>0||p.powerReturn>0||p.knock>0||p.slide>0||p.dash>0||p.exit||p.gripId||p.gripCoverId||p.kickStage&&p.kickStage!=="none")return null;
- const dir=((Math.round((p.gunFacing??p.aim??0)/(Math.PI*2)*24)%24)+24)%24;
+ const dir=supportedCoverDir(p);
  if(dir!==3)return null;
  return p.fireState>0||p.recoil>0?1:0;
 }
@@ -324,7 +337,7 @@ function coverConnectorFrame(p:any){
  if(!powerAssets.has("cover-d03-connectors-v1"))return null;
  if(p.coverPreview===0||p.coverPreview===1)return p.coverPreview;
  if(!p.coverId||p.coverMode!=="braced"||p.charging||p.powerFlash>0||p.powerReturn>0||p.knock>0||p.slide>0||p.dash>0||p.exit||p.gripId||p.gripCoverId||p.kickStage&&p.kickStage!=="none")return null;
- const angle=p.gunFacing??p.aim??0,dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24;
+ const angle=p.gunFacing??p.aim??0,dir=supportedCoverDir(p);
  if(dir!==3)return null;
  if(p.fireState>0||p.recoil>0)return 0;
  if(p.returnToCover>0&&!p.input?.coverAim)return 1;
@@ -337,7 +350,7 @@ function coverNeighborFrame(p:any){
  if(p.coverPreview>=4&&p.coverPreview<=7)return p.coverPreview-4;
  if(p.coverPreview>=0)return null;
  if(!p.coverId||p.coverMode!=="braced"||!p.peek||!p.input?.coverAim||p.charging||p.powerFlash>0||p.powerReturn>0||p.knock>0||p.slide>0||p.dash>0||p.exit||p.gripId||p.gripCoverId||p.kickStage&&p.kickStage!=="none")return null;
- const dir=((Math.round((p.gunFacing??p.aim??0)/(Math.PI*2)*24)%24)+24)%24;
+ const dir=supportedCoverDir(p);
  if(dir!==2&&dir!==4)return null;
  return (dir===2?0:2)+(p.fireState>0||p.recoil>0?1:0);
 }
@@ -347,7 +360,7 @@ function drawCoverNeighbor(g:CanvasRenderingContext2D,p:any,cfg:Config){
  g.save();g.beginPath();for(const [x,y,bw,bh] of pose.bands)g.rect(p.x+(x-ax)*unit,p.y+(y-ay)*unit,bw*unit,bh*unit);g.clip();
  g.drawImage(im,sx,sy,w,h,p.x+(sx-ax)*unit,p.y+(sy-ay)*unit,w*unit,h*unit);g.restore();return true;
 }
-function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),d=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,d)||nearest("ready",d);
+function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&p.input?.coverAim?supportedCoverDir(p):rawDir,im=safestSprite(family,d);
  const meta=im?spriteCell(im,family,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;let frame=family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;if(family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(family);
  g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
  const exposure=poseAlpha===0&&(drawCoverNeighbor(g,p,cfg)||drawCoverExposure(g,p,cfg));const connector=exposure||poseAlpha===0&&drawCoverConnector(g,p,cfg);const psychic=!connector&&poseAlpha===0&&drawPsychicPose(g,p,t,cfg);
