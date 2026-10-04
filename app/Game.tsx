@@ -51,16 +51,44 @@ function presentation(s:any,now:number){
  return {...b.state,time:a.state.time+(b.state.time-a.state.time)*blend,players,covers:mix(a.state.covers||[],b.state.covers||[]),matter:mix(a.state.matter||[],b.state.matter||[])};
 }
 const powerAssets=new Map<string,HTMLImageElement>();
-function preload(){if(loading||typeof Image==="undefined")return;loading=true;for(const key of ["cover-d02-d04-exposure-v1","cover-d03-exposure-v1","cover-d03-connectors-v1","psychic-d03-v1","grounded-float-v1","front-d06-loop-v1","front-d06-transitions-v1","front-right-d03-sequence-v1","front-right-d03-dissolve-v1","opening","continuation","face-opening","face-continuation"]){const im=new Image();im.onload=()=>powerAssets.set(key,im);im.src="/assets/god-frame/"+key+".png"}for(const [key,path] of [["graffiti","/assets/dimension33-map/slide-graffiti-skeet-skurt-v2.png"],["ground","/assets/shotgun-v57-ground-effects.png"],["concrete","/assets/dimension33-map/concrete-cover-atlas-v2.png"]]){const im=new Image();im.onload=()=>classicAssets.set(key,im);im.src="https://jade-v1-combat-lab-v142.leslieadams-isrh.chatgpt.site"+path}for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const im=new Image();im.onload=()=>jade.set(`${family}-${d}`,im);const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;im.src="https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n}}
+type BootState={done:number;total:number;failed:number;label:string};
+let preloadPromise:Promise<BootState>|null=null;
+function loadImage(src:string,onReady:(im:HTMLImageElement)=>void,progress:(ok:boolean)=>void){
+ return new Promise<void>(resolve=>{
+  const im=new Image();im.decoding="async";
+  const finish=async(ok:boolean)=>{if(ok){try{await im.decode()}catch{}onReady(im)}progress(ok);resolve()};
+  im.onload=()=>void finish(true);im.onerror=()=>void finish(false);im.src=src;
+ });
+}
+function preload(onProgress?:(s:BootState)=>void){
+ if(preloadPromise)return preloadPromise;
+ preloadPromise=(async()=>{
+  const power=["cover-d02-d04-exposure-v1","cover-d03-exposure-v1","cover-d03-connectors-v1","psychic-d03-v1","grounded-float-v1","front-d06-loop-v1","front-d06-transitions-v1","front-right-d03-sequence-v1","front-right-d03-dissolve-v1","opening","continuation","face-opening","face-continuation"];
+  const classic=[["graffiti","/assets/dimension33-map/slide-graffiti-skeet-skurt-v2.png"],["ground","/assets/shotgun-v57-ground-effects.png"],["concrete","/assets/dimension33-map/concrete-cover-atlas-v2.png"]] as const;
+  const sprites:{key:string;src:string}[]=[];
+  for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;sprites.push({key:`${family}-${d}`,src:"https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n})}
+  const jobs:{label:string;src:string;ready:(im:HTMLImageElement)=>void}[]=[
+   ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
+   ...classic.map(([key,path])=>({label:key,src:"https://jade-v1-combat-lab-v142.leslieadams-isrh.chatgpt.site"+path,ready:(im:HTMLImageElement)=>classicAssets.set(key,im)})),
+   ...sprites.map(x=>({label:x.key,src:x.src,ready:(im:HTMLImageElement)=>jade.set(x.key,im)}))
+  ];
+  let done=0,failed=0;const total=jobs.length;loading=true;
+  const progress=(label:string)=>(ok:boolean)=>{done++;if(!ok)failed++;onProgress?.({done,total,failed,label})};
+  // Bounded parallel batches avoid hammering iPad/Safari with 100 simultaneous decodes.
+  for(let i=0;i<jobs.length;i+=12)await Promise.all(jobs.slice(i,i+12).map(j=>loadImage(j.src,j.ready,progress(j.label))));
+  loading=false;return{done,total,failed,label:"READY"};
+ })();
+ return preloadPromise;
+}
 
 export default function Game(){
  const coverPreview=useRef(-1);const [previewCover,setPreviewCover]=useState(-1);const psychicPreview=useRef(-1);const [previewPsychic,setPreviewPsychic]=useState(-1);const chargePreview=useRef(false);const [previewCharging,setPreviewCharging]=useState(false);
  const canvas=useRef<HTMLCanvasElement>(null),session=useRef<Session|null>(null),state=useRef<any>(null),seq=useRef(0),keys=useRef<Record<string,boolean>>({}),edges=useRef<Record<string,boolean>>({}),mouse=useRef({x:500,y:310,down:false}),lastAccept=useRef(performance.now()),started=useRef(false);
- const [hud,setHud]=useState<any>(null),[status,setStatus]=useState("BOOTING"),[director,setDirector]=useState(false),[spritePanel,setSpritePanel]=useState(false),[config,setConfig]=useState<Config>(DEFAULT),[note,setNote]=useState(""),[padStatus,setPadStatus]=useState("CONTROLLER: WAITING"),[padGate,setPadGate]=useState(true),[testPass,setTestPass]=useState<Record<string,boolean>>({});
+ const [hud,setHud]=useState<any>(null),[status,setStatus]=useState("BOOTING"),[boot,setBoot]=useState<BootState>({done:0,total:112,failed:0,label:"INITIALIZING HELMET"}),[bootReady,setBootReady]=useState(false),[director,setDirector]=useState(false),[spritePanel,setSpritePanel]=useState(false),[config,setConfig]=useState<Config>(DEFAULT),[note,setNote]=useState(""),[padStatus,setPadStatus]=useState("CONTROLLER: WAITING"),[padGate,setPadGate]=useState(true),[testPass,setTestPass]=useState<Record<string,boolean>>({});
  const post=useCallback(async(body:any)=>{const r=await fetch("/api/game",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)}),v=await r.json();if(!r.ok)throw Error(v.error||"Request failed");return v},[]);
  const accept=useCallback((v:any)=>{if(v.state){if(state.current&&v.state.round===state.current.round&&v.state.lastAt<=state.current.lastAt)return;const at=performance.now();if(state.current&&v.state.round!==state.current.round){snapshots.length=0;kineticEcho.length=0;hoverWake.length=0;cameraState.ready=false}recordSnapshot(v.state,at);state.current=v.state;lastAccept.current=at;setHud(v.state);setConfig(v.state.config||DEFAULT);setStatus("COMBAT MASTER LIVE")}},[]);
  const create=useCallback(async()=>{if(started.current)return;started.current=true;try{let saved:any=null;try{saved=JSON.parse(sessionStorage.getItem("god_mode_studio_session")||"null")}catch{}if(saved){session.current=saved;accept(await post({action:"config",...saved,patch:DEFAULT}));return}const v=await post({action:"create",name:"Les",mode:"solo"}),s={room:v.room,code:v.code,token:v.token,slot:0};session.current=s;sessionStorage.setItem("god_mode_studio_session",JSON.stringify(s));accept(v)}catch(e:any){started.current=false;setStatus(e.message)}},[accept,post]);
- useEffect(()=>{preload();create()},[create]);
+ useEffect(()=>{let dead=false;(async()=>{setStatus("GOD HELMET BOOT");const result=await preload(v=>{if(!dead)setBoot(v)});if(dead)return;setBoot(result);setBootReady(true);setStatus(result.failed?"BOOT READY · FALLBACKS AVAILABLE":"HELMET ONLINE");await create()})();return()=>{dead=true}},[create]);
  useEffect(()=>{
    const connected=(e:GamepadEvent)=>{setPadStatus(`CONTROLLER: ${e.gamepad.id||"CONNECTED"}`);setPadGate(false);canvas.current?.focus()};
    const disconnected=()=>{setPadStatus("CONTROLLER: DISCONNECTED");setPadGate(true)};
@@ -71,10 +99,10 @@ export default function Game(){
  },[]);
  useEffect(()=>{const kd=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement)?.tagName))return;if(["Space","ShiftLeft","ShiftRight"].includes(e.code))e.preventDefault();if(!keys.current[e.code])edges.current[e.code]=true;keys.current[e.code]=true},ku=(e:KeyboardEvent)=>keys.current[e.code]=false;addEventListener("keydown",kd);addEventListener("keyup",ku);return()=>{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}},[]);
  useEffect(()=>{let dead=false;const poll=async()=>{if(dead)return;const s=session.current;if(s)try{const u=new URL("/api/game",location.origin);u.searchParams.set("room",s.room);u.searchParams.set("token",s.token);const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(r.ok)accept(v);else if(r.status===404&&v.error==="ROOM_NOT_FOUND"){session.current=null;sessionStorage.removeItem("god_mode_studio_session");started.current=false;seq.current=0;snapshots.length=0;cameraState.ready=false;await create()}}catch{}setTimeout(poll,80)};poll();return()=>{dead=true}},[accept,create]);
- useEffect(()=>{let pending=false;const timer=setInterval(async()=>{const s=session.current,g=state.current;if(!s||!g||pending)return;pending=true;const p=g.players[0],i:any={...EMPTY};i.x=(keys.current.KeyD?1:0)-(keys.current.KeyA?1:0);i.y=(keys.current.KeyS?1:0)-(keys.current.KeyW?1:0);i.aim=Math.atan2(mouse.current.y-p.y,mouse.current.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.powerup=!!keys.current.KeyY||chargePreview.current;
+ useEffect(()=>{let pending=false;const timer=setInterval(async()=>{const s=session.current,g=state.current;if(!bootReady||!s||!g||pending)return;pending=true;const p=g.players[0],i:any={...EMPTY};i.x=(keys.current.KeyD?1:0)-(keys.current.KeyA?1:0);i.y=(keys.current.KeyS?1:0)-(keys.current.KeyW?1:0);i.aim=Math.atan2(mouse.current.y-p.y,mouse.current.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.powerup=!!keys.current.KeyY||chargePreview.current;
   try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){i.aim=p.aim;readController(pad,i)}}catch{}
   try{accept(await post({action:"input",...s,seq:++seq.current,input:i}))}catch{}finally{pending=false}
- },33);return()=>clearInterval(timer)},[accept,post]);
+ },33);return()=>clearInterval(timer)},[accept,post,bootReady]);
  useEffect(()=>{let id=0;const loop=()=>{draw(canvas.current,state.current,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current);id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[]);
  const point=(e:React.PointerEvent)=>{const c=canvas.current;if(!c)return;const r=c.getBoundingClientRect();mouse.current.x=(e.clientX-r.left)/r.width*1000;mouse.current.y=(e.clientY-r.top)/r.height*620};
  const patch=async(key:keyof Config,value:number)=>{const next={...config,[key]:value};setConfig(next);const s=session.current;if(s)try{accept(await post({action:"config",...s,patch:{[key]:value}}))}catch{}};
@@ -108,9 +136,10 @@ export default function Game(){
  return <main className="studio">
   <header><div><small>GOD MODE: BREAK THE CODE</small><b>V142 STRUCTURE LAB · COMBAT STUDIO</b></div><span>{status}</span></header>
   <div className="stageWrap">
+   {!bootReady&&<div className="controllerGate" aria-live="polite"><b>GOD HELMET BOOT</b><small>LOADING COMBAT MEMORY · {boot.done}/{boot.total}</small><small>{boot.label}{boot.failed?` · ${boot.failed} FALLBACK${boot.failed===1?"":"S"}`:""}</small><i style={{display:"block",width:"min(320px,70vw)",height:8,border:"1px solid currentColor",marginTop:10}}><span style={{display:"block",height:"100%",width:`${boot.total?boot.done/boot.total*100:0}%`,background:"currentColor"}}/></i></div>}
    <canvas ref={canvas} width={1400} height={868} onPointerMove={point} onPointerDown={e=>{point(e);mouse.current.down=true;(e.currentTarget as HTMLElement).focus();(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)}} onPointerUp={()=>mouse.current.down=false} onPointerCancel={()=>mouse.current.down=false}/>
    <div className="minimalHud"><b>HP {Math.ceil(p?.hp??100)}</b><span className="padLine">{config.weaveEnabled<.5?"CLASSIC · A SLIDE":"WEAVE EXPERIMENT · A DOUBLE-TAP SLIDE"}</span><i style={{width:`${p?.battery??100}%`}}/><span>BATTERY {Math.ceil(p?.battery??100)}%</span><span>{p?.charging?`CHARGE ${Math.round((p.godCharge||0)*100)}%`:p?.godTime>0?`GOD FRAME ${p.godTime.toFixed(1)}s`:"HOLD Y · POWER UP"}</span><span className="padLine">{padStatus}</span></div>
-   {padGate&&<button className="controllerGate" onClick={activateController}>ACTIVATE XBOX CONTROLLER<small>Tap once, then press A or move a stick</small></button>}
+   {bootReady&&padGate&&<button className="controllerGate" onClick={activateController}>ACTIVATE XBOX CONTROLLER<small>Tap once, then press A or move a stick</small></button>}
    <PlaytestGuide/>
    <div className="toolbar"><button onClick={()=>setDirector(v=>!v)}>DIRECTOR</button><button onClick={()=>setSpritePanel(v=>!v)}>SPRITES</button><button onClick={reset}>RESET LAB</button></div>
    {director&&<aside className="trainingDirector"><div className="panelTitle"><span>TRAINING DIRECTOR</span><b>{config.weaveEnabled<.5?"INSTRUCTOR 142 CLASSIC":"GOD MODE WEAVE TEST"}</b></div>
