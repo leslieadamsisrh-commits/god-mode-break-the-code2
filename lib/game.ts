@@ -306,11 +306,14 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
   const holding=!!(p.gripId||p.gripCoverId);if(holding&&!wasHolding){p.psychicStartedAt=s.time;p.psychicReturnUntil=0}else if(!holding&&wasHolding)p.psychicReturnUntil=s.time+.16;
   if(i.fire&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&!p.gripId&&!p.gripCoverId&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
    const muzzle=muzzleSocket(p),clearance=p.coverId&&p.coverMode==="braced"&&i.coverAim&&p.peek?p.coverId:undefined;
+   // Top exposure already clears the attached floor footprint. Keep the
+   // visible muzzle/projectile above its 47-unit top rather than inside it.
+   const shotHeight=clearance?Math.max(44*c.spriteScale,15616/332+4):44*c.spriteScale;
    const blocked=s.covers.some(cv=>cv.id!==clearance&&segmentCover(p,muzzle,cv));p.lastShot=s.time;
    if(blocked){s.fx.push({id:uid(),type:"cover-block",x:muzzle.x,y:muzzle.y,life:.18,owner:n})}
    else{p.fireState=.11;p.recoil=.12;if(p.coverId)p.returnToCover=.28;
-    for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,damage:c.shotDamage*(p.godTime>0?c.godDamage:1),z:44*c.spriteScale,clearanceCoverId:clearance})}
-    s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.12,owner:n,z:44*c.spriteScale})
+    for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,damage:c.shotDamage*(p.godTime>0?c.godDamage:1),z:shotHeight,clearanceCoverId:clearance})}
+    s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.12,owner:n,z:shotHeight})
    }
   }
  }
