@@ -240,6 +240,13 @@ function spriteCell(im:HTMLImageElement,family:string,frame:number){
 }
 
 // The recovered atlases separate contact, brace, peek and fire; they are not idle loops.
+function coverLateralFrame(p:any,t:number,total:number){
+ if(total!==12||Math.abs(p.coverSpeed||0)<=20)return null;
+ // Authored 12-cell cover atlas owns lateral locomotion. Direction selects the
+ // leading stride; cadence stays presentation-only and never changes coverSpeed.
+ const sign=(p.coverSpeed||0)<0?-1:1,phase=Math.floor(t*8)%2;
+ return sign<0?[5,6][phase]:[6,5][phase];
+}
 function coverPoseFrame(p:any,t:number,total:number){
  const extended=total===12;
  const pose=extended?{contact:[0,1,2],brace:4,lateral:[5,6],peek:7,fire:8,return:9}:{contact:[0,1],brace:1,lateral:[],peek:2,fire:3,return:4};
@@ -248,7 +255,7 @@ function coverPoseFrame(p:any,t:number,total:number){
  if(p.returnToCover>0&&!p.input?.coverAim)return pose.return;
  if(p.coverMode==="braced"&&p.input?.coverAim)return pose.peek;
  if(p.contact>t){const elapsed=Math.max(0,.22-(p.contact-t));return pose.contact[Math.min(pose.contact.length-1,Math.floor(elapsed/.22*pose.contact.length))]}
- if(Math.abs(p.coverSpeed||0)>35&&pose.lateral.length)return pose.lateral[Math.floor(t*7)%pose.lateral.length];
+ const lateral=coverLateralFrame(p,t,total);if(lateral!==null)return lateral;
  return pose.brace;
 }
 
