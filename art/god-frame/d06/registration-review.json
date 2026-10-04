@@ -3,7 +3,7 @@
   "angleDegrees": 90,
   "baselineCommit": "ed2e88e5ea8fc4cc69e99b1a3f91f410fa9b9031",
   "runtimeInstalled": false,
-  "registrationStatus": "pending-in-game-validation",
+  "registrationStatus": "renderer-regression-passed-live-check-pending",
   "reference": {
     "family": "ready",
     "file": "ready-d06.webp",
@@ -22,7 +22,7 @@
     "Use one anatomical scale per source-sheet resolution; never resize individual poses.",
     "Align pelvis and ground position; apply hover offset only to body, not collision or cover.",
     "Route with existing spriteFacing rules; no new turning control or mirrored equipment.",
-    "Approve transition appearance and verify complete sequence at normal combat scale before runtime installation."
+    "Transition appearance approved on 2026-10-03; verify complete sequence at normal combat scale live."
   ],
   "sheets": [
     {
@@ -70,7 +70,7 @@
         1223,
         1286
       ],
-      "approval": "awaiting-visual-approval",
+      "approval": "appearance-approved",
       "frames": [
         {
           "state": "ready",

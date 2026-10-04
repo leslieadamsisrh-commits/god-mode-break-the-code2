@@ -251,3 +251,35 @@ for(const depleted of [false,true]){
  for(const age of [.05,.18,.3,1.3]){const charge=Math.max(0,(age-.35)/2.4);assert.equal(v.powerFrame({powerReturn:.24,powerReleaseAge:age,powerReleaseCharge:charge},{}),v.chargeFrame(age,charge));checks++}
 }
 console.log(`PASS: ${checks} checks including fresh-Y rearming, depletion lockout, monotonic weapon return and partial-pose continuity.`);
+
+// Front charge follows the existing body-facing rule and keeps complete source poses.
+{
+ const reg=JSON.parse(fs.readFileSync('art/god-frame/d06/registration-review.json','utf8'));
+ const base={naturalWidth:1536,naturalHeight:1024},loop={naturalWidth:2172,naturalHeight:724},entry={naturalWidth:1223,naturalHeight:1286};
+ ctx.powerAssets=new Map([['grounded-float-v1',base],['front-d06-loop-v1',loop],['front-d06-transitions-v1',entry]]);
+ const front={x:120,y:220,vx:0,vy:0,gunFacing:Math.PI/2,input:{},charging:true,godCharge:.8};
+ for(let frame=0;frame<12;frame++){
+  const calls=[],g={drawImage:(...args)=>calls.push(args)};assert(ctx.drawFloat(g,front,{spriteScale:.82},frame));
+  const [im,sx,sy,w,h,dx,dy,dw,dh]=calls[0],isLoop=frame>=6&&frame<=8;
+  assert.equal(im,isLoop?loop:entry);assert(sx>=0&&sy>=0&&sx+w<=im.naturalWidth&&sy+h<=im.naturalHeight);
+  const sourceFrame=isLoop?frame-6:frame<6?frame:frame-3;
+  const [bx,by,bw,bh]=reg.sheets[isLoop?0:1].frames[sourceFrame].opaqueBodyBounds;
+  assert(bx>=sx&&by>=sy&&bx+bw<=sx+w&&by+bh<=sy+h);
+  assert(Math.abs(dw/w-dh/h)<1e-9);
+  const readyHeight=125*.82*176/250,actualHeight=bh*dw/w;
+  assert(actualHeight<=readyHeight*1.025&&actualHeight>=readyHeight*.96);
+  assert([dx,dy,dw,dh].every(Number.isFinite));checks+=7;
+ }
+ // Travel facing, soft-cover facing, exposed gun facing and missing-view fallback.
+ for(const p of [{...front,vx:100,vy:0},{...front,coverId:'c',coverAnchor:{nx:1,ny:0}},{...front,gunFacing:Math.PI}]){
+  const calls=[];ctx.drawFloat({drawImage:(...a)=>calls.push(a)},p,{spriteScale:.82},6);assert.equal(calls[0][0],base);checks++;
+ }
+ const exposed={...front,coverId:'c',coverAnchor:{nx:1,ny:0},input:{coverAim:true}},calls=[];
+ ctx.drawFloat({drawImage:(...a)=>calls.push(a)},exposed,{spriteScale:.82},6);assert.equal(calls[0][0],loop);checks++;
+ ctx.powerAssets.delete('front-d06-loop-v1');const missing=[];
+ ctx.drawFloat({drawImage:(...a)=>missing.push(a)},front,{spriteScale:.82},6);assert.equal(missing[0][0],base);checks++;
+ for(const [source,target] of [['approved-hover-loop.png','front-d06-loop-v1.png'],['transitions-review.png','front-d06-transitions-v1.png']]){
+  assert(fs.readFileSync('art/god-frame/d06/'+source).equals(fs.readFileSync('public/assets/god-frame/'+target)));checks++;
+ }
+}
+console.log(`PASS: ${checks} checks including front charge crop completeness, combat scale, existing facing rules and asset-load fallback.`);
