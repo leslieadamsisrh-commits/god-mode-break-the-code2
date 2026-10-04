@@ -2,11 +2,11 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="cover-charge-v1";
+const BATCH="cover-occlusion-v2";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Cover fire",buttons:"Brace → hold LT → fire RT → release LT",watch:"Aim, recoil and retract should connect without a pose or foot jump."},
+ {title:"Cover fire",buttons:"Brace → hold LT → fire RT → release LT",watch:"Check front, side and corner cover: only the wall in front should hide Jade. Watch aim, recoil and retract."},
  {title:"Cover escape",buttons:"From cover: fresh A + left stick pointing away",watch:"Escape immediately. Try low/zero battery, then full battery; lower power gives shorter travel."},
  {title:"Recharge",buttons:"During escape or retract: fresh Y → hold → release → shoot RT",watch:"Charge starts immediately. Release Y, then fire; the weapon should return smoothly."}
 ];

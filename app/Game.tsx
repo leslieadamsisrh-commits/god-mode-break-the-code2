@@ -1,6 +1,7 @@
 "use client";
 import {useCallback,useEffect,useRef,useState} from "react";
 import PlaytestGuide from "./PlaytestGuide";
+import {COVER_HEIGHT,withCoverOcclusion} from "../lib/cover-occlusion";
 
 type Session={room:string;code?:string;token:string;slot:number};
 type Config={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
@@ -192,15 +193,15 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  let ix=(keyState.KeyD?1:0)-(keyState.KeyA?1:0),iy=(keyState.KeyS?1:0)-(keyState.KeyW?1:0);try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;ix=dz(pad.axes[0]||0);iy=dz(pad.axes[1]||0)}}catch{}const il=Math.hypot(ix,iy)||1;ix/=il;iy/=il;
  for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(e.family);g.save();g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc-3*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc+4*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.restore()}
  const heldCoverIds=new Set((s.players||[]).map((p:any)=>p.gripCoverId).filter(Boolean));
- const drawables=[
-  ...(s.covers||[]).map((c:any)=>({
-   y:c.y+Math.abs(Math.sin(c.a||0))*c.w*.5+Math.abs(Math.cos(c.a||0))*c.h*.5,
-   fn:()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time)
-  })),
+ // Draw solid scenery once, then depth-clip each actor against its actual projected faces.
+ // A whole-block Y sort cannot describe a character beside a long or rotated wall.
+ const covers=s.covers||[];
+ [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time));
+ const actors=[
   ...(s.matter||[]).map((m:any)=>({y:m.y,fn:()=>matter(g,m)})),
   {y:local.y,fn:()=>fighter(g,local,s.time,cfg)}
  ].sort((a,b)=>a.y-b.y);
- drawables.forEach(o=>o.fn());
+ actors.forEach(o=>withCoverOcclusion(g,covers,o.y,s.time,o.fn));
 
 
  for(const sh of s.shots||[]){g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x,sh.y-(sh.z||0));g.lineTo(sh.x-sh.vx*.025,sh.y-(sh.z||0)-sh.vy*.025);g.stroke()}for(const f of s.fx||[])if(f.type!=="slide")fx(g,f);
@@ -342,7 +343,7 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
 function cover(g:CanvasRenderingContext2D,c:any,t:number){
  // Rotation is applied to the ground footprint; elevation stays vertical.
  // The lab's camera projection is already represented by this build's world coordinates.
- const im=classicAssets.get("concrete"),z=15616/332,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
+ const im=classicAssets.get("concrete"),z=COVER_HEIGHT,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
  const project=(x:number,y:number,height:number)=>({x:x*co-y*si,y:x*si+y*co-height});
  const footprint=[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]];
  const ground=footprint.map(([x,y])=>project(x,y,0)),top=footprint.map(([x,y])=>project(x,y,z));

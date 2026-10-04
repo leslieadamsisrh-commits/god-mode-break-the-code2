@@ -15,3 +15,6 @@ The guide remains visible and usable in the iPad recording; task changes and man
 ## Decision and exact next step
 
 Cover fire is an explicit unresolved user issue. Prioritize it over the previously planned gun/create/grip/carry/drop/throw art batch. Preserve the two positively marked behaviors and all protected mechanics/art. Clarify the cover-fire symptom if spoken feedback cannot be recovered; then reproduce the smallest state/render boundary before patching. Do not regenerate approved art or expand directions until cause and genuinely missing pose are established. No automatic or artistic approval inferred from these checkmarks. Five reference principles remain unchanged; no new tiers/abilities/control remaps.
+
+## User clarification and follow-through
+User clarified the Issue as Jade overlapping the wrong cover surfaces at different angles, obscuring pose transitions. Revisited dense fire frames and 48–71 overview; code/geometry reproduces whole-block depth ordering at rotated near corners. See COVER_OCCLUSION_REVIEW.md for the targeted correction and limits. This supersedes the earlier need to ask which cover-fire symptom was intended. Escape/recharge remain positively marked; no speculative movement tuning.

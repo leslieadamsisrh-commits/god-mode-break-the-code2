@@ -17,3 +17,6 @@ Actual source audit plus engine checks; not a physical-controller completion cla
 26 real-input engine stages run through run/capture/traverse/fire/build/carry/drop/throw/shoot/recharge in solo and joined host/guest snapshots. Created-cover carrying and Y drop also exercised. Existing regression matrix covers rotated cover, moving capture, depletion, incoming knock, early/full charge, fresh press and asset registration. Snapshot serialization is not a two-browser network playtest.
 
 Next: d03 psychic approved and registered. Validate deployed lab transitions and physical carry/drop/throw/Y loop. Audit gun-to-power entry and throw recovery alongside this family before claiming the full direction complete. No tiers or bulk directions generated.
+
+## Cover-angle presentation boundary
+User-reported cover fire issue is occlusion, not authorization to replace approved recoil/retract. lib/cover-occlusion.ts clips only foreground solid material against the actor ground anchor; rotated/moving covers use current transforms and existing height. All start/hold/cancel/release/held-object/input rules above remain unchanged. See COVER_OCCLUSION_REVIEW.md. Validate task1 angles before advancing gun/psychic/carry art.
