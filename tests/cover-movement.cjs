@@ -158,12 +158,12 @@ console.log(`PASS: ${checks} checks including God Frame charge, damage, depletio
 {
  const start=ui.indexOf('function chargeFrame('),end=ui.indexOf('function drawPowerFrame(',start);
  const source=fs.readFileSync('app/Game.tsx','utf8');
- vm.runInContext(stripTypeScriptTypes(source.slice(source.indexOf('function chargeFrame('),source.indexOf('function drawPowerFrame(')))+';globalThis.powerVisual={chargeFrame,powerFrame,powerPoseAlpha,powerAura};',ctx);
+ vm.runInContext(stripTypeScriptTypes(source.slice(source.indexOf('function chargeFrame('),source.indexOf('function drawPowerFrame(')))+';globalThis.powerVisual={chargeFrame,powerFrame,powerPoseAlpha,powerAura,powerHover};',ctx);
  const v=ctx.powerVisual;
  for(const age of [.01,.14,.27]){assert.equal(v.chargeFrame(age,0),Math.floor(age/.35*3));checks++}
  const frames=new Set();for(let n=0;n<100;n++){const f=v.chargeFrame(3+n*.05,1);assert(f>=6&&f<=8);frames.add(f)}assert(frames.size>1);checks++;
- assert.equal(v.powerFrame({powerReturn:.24,godTime:12},{}),11);checks++;
- assert.equal(v.powerFrame({powerReturn:.24,powerReleaseAge:1.5,powerReleaseCharge:.48},{}),6);checks++;
+ assert.equal(v.powerFrame({powerReturn:.24,godTime:12},{}),10);checks++;
+ assert.equal(v.powerFrame({powerReturn:.24,powerReleaseAge:1.5,powerReleaseCharge:.48},{}),10);checks++;
  assert.equal(v.powerPoseAlpha({powerReturn:.12}),.5);assert.equal(v.powerPoseAlpha({}),0);checks++;
  assert(v.powerAura({godTime:9,godDuration:12})>v.powerAura({godTime:3,godDuration:12}));checks++;
  const s=m.newGame('transition','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];
@@ -183,8 +183,8 @@ console.log(`PASS: ${checks} checks including sustained charge loop, partial rel
  const s=m.newGame('float','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];
  for(let n=0;n<30;n++)tick(s,{x:1});const before=p.vx;
  tick(s,{x:1,powerup:true});assert(p.charging);assert(p.chargeMotion>.9&&p.chargeMotion<1);assert(p.vx>before*.9);checks++;
- for(let n=0;n<50;n++)tick(s,{x:1,powerup:true});assert(Math.abs(p.chargeMotion-.65)<.002);assert(p.vx>s.config.moveSpeed*.6&&p.vx<s.config.moveSpeed*.7);checks++;
- const chargedSpeed=p.vx;tick(s,{x:1});assert(!p.charging);assert(p.chargeMotion>.65&&p.chargeMotion<.75);assert(p.vx>chargedSpeed&&p.vx<before);checks++;
+ for(let n=0;n<50;n++)tick(s,{x:1,powerup:true});assert(Math.abs(p.chargeMotion-.67145)<.002);assert(p.vx>s.config.moveSpeed*.6&&p.vx<s.config.moveSpeed*.7);checks++;
+ const chargedSpeed=p.vx;tick(s,{x:1});assert(!p.charging);assert(p.chargeMotion>.67145&&p.chargeMotion<.75);assert(p.vx>chargedSpeed&&p.vx<before);checks++;
  for(let n=0;n<30;n++)tick(s,{x:1});assert(p.chargeMotion>.99);checks++;
 }
 for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let edge=0;edge<4;edge++){
@@ -200,3 +200,21 @@ for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let edge=0;edge<4;edge++){
  const anchor={...p.coverAnchor},x=p.x,y=p.y;for(let n=0;n<20;n++)tick(s,{powerup:true,x:anchor.tx*.5,y:anchor.ty*.5});assert(p.charging);assert(Math.hypot(p.x-x,p.y-y)>5);checks++;
 }
 console.log(`PASS: ${checks} checks including charge float easing, return pace, rotated-cover flow, soft walk-away, brace preservation and moving cover capture.`);
+
+// Hover changes presentation only; repeated full holds cannot replay the peak.
+{
+ const v=ctx.powerVisual;
+ assert.equal(v.powerHover({charging:true,godCharge:0}),0);checks++;
+ assert.equal(v.powerHover({charging:true,godCharge:.8}),6);checks++;
+ assert(v.powerHover({charging:true,godCharge:.3})<v.powerHover({charging:true,godCharge:.6}));checks++;
+ assert.equal(v.powerHover({powerFlash:.15,powerReleaseCharge:1}),0);checks++;
+ assert.equal(v.powerHover({powerReturn:.12,powerReleaseCharge:.8}),3);checks++;
+ assert.equal(v.powerHover({knock:1}),0);checks++;
+ assert.equal(v.chargeFrame(2.8,1,2.4),9);checks++;
+ for(let n=0;n<120;n++){assert.notEqual(v.chargeFrame(3+n*.05,1,2.4),9);checks++}
+ assert.equal(v.powerFrame({powerFlash:.5,powerReleaseCharge:.5},{}),10);checks++;
+ assert.equal(v.powerFrame({powerFlash:.1,powerReleaseCharge:1},{}),11);checks++;
+ assert(ui.includes('const registration=spriteRegistration(e.family)')||ui.includes('registration=spriteRegistration(e.family)'));checks++;
+ assert.equal(m.newGame('pace','token',1000,'solo').config.chargeMoveScale,.65*1.033);checks++;
+}
+console.log(`PASS: ${checks} checks including grounded lift, peak-once hover, partial recovery, interruption and preserved Echo registration.`);

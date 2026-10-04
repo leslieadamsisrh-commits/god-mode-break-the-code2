@@ -3,7 +3,7 @@ import {useCallback,useEffect,useRef,useState} from "react";
 
 type Session={room:string;code?:string;token:string;slot:number};
 type Config={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
-const DEFAULT:Config={chargeMoveScale:.65,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:599.269125,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
+const DEFAULT:Config={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:599.269125,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
 const EMPTY:any={x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false};
 function readController(pad:any,i:any){
  const down=(n:number)=>!!(pad.buttons[n]?.pressed||pad.buttons[n]?.value>.25),dz=(v:number)=>Math.abs(v)<.18?0:v;
@@ -35,7 +35,7 @@ function presentation(s:any,now:number){
  return {...b.state,time:a.state.time+(b.state.time-a.state.time)*blend,players,covers:mix(a.state.covers||[],b.state.covers||[]),matter:mix(a.state.matter||[],b.state.matter||[])};
 }
 const powerAssets=new Map<string,HTMLImageElement>();
-function preload(){if(loading||typeof Image==="undefined")return;loading=true;for(const key of ["opening","continuation","face-opening","face-continuation"]){const im=new Image();im.onload=()=>powerAssets.set(key,im);im.src="/assets/god-frame/"+key+".png"}for(const [key,path] of [["graffiti","/assets/dimension33-map/slide-graffiti-skeet-skurt-v2.png"],["ground","/assets/shotgun-v57-ground-effects.png"],["concrete","/assets/dimension33-map/concrete-cover-atlas-v2.png"]]){const im=new Image();im.onload=()=>classicAssets.set(key,im);im.src="https://jade-v1-combat-lab-v142.leslieadams-isrh.chatgpt.site"+path}for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const im=new Image();im.onload=()=>jade.set(`${family}-${d}`,im);const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;im.src="https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n}}
+function preload(){if(loading||typeof Image==="undefined")return;loading=true;for(const key of ["grounded-float-v1","opening","continuation","face-opening","face-continuation"]){const im=new Image();im.onload=()=>powerAssets.set(key,im);im.src="/assets/god-frame/"+key+".png"}for(const [key,path] of [["graffiti","/assets/dimension33-map/slide-graffiti-skeet-skurt-v2.png"],["ground","/assets/shotgun-v57-ground-effects.png"],["concrete","/assets/dimension33-map/concrete-cover-atlas-v2.png"]]){const im=new Image();im.onload=()=>classicAssets.set(key,im);im.src="https://jade-v1-combat-lab-v142.leslieadams-isrh.chatgpt.site"+path}for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const im=new Image();im.onload=()=>jade.set(`${family}-${d}`,im);const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;im.src="https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n}}
 
 export default function Game(){
  const chargePreview=useRef(false);const [previewCharging,setPreviewCharging]=useState(false);
@@ -131,7 +131,7 @@ function spriteFacing(p:any,family:string,speed:number){
 function spriteRegistration(family:string){return{groundAnchor:{x:.5,y:family==="cover"?.86:.88}}}
 function SpriteInspector({s}:{s:any}){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32||p.exit?"slide":p.brake>0?"ready":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,state=p.gripCoverId?"PSYCHIC CARRY":p.gripId?"MATTER GRIP":p.exit?"EDGE-DASH":p.coverId?(p.coverMode==="soft"?"SOFT COVER":p.input?.coverAim?(p.peekEdge?"BRACED CORNER AIM":"BRACED AIM"):"BRACED"):p.brake>0?"KINETIC BRAKE":p.slide>0?"SLIDE":p.dash>0?"BOOST DASH":family.toUpperCase();return <aside className="spritePanel"><div className="panelTitle"><span>SPRITE WORKSHOP</span><b>RUNTIME INSPECTOR</b></div><dl><dt>STATE</dt><dd>{state}</dd><dt>DIRECTION</dt><dd>d{String(dir).padStart(2,"0")} · {Math.round(dir*15)}°</dd><dt>SPRITE</dt><dd>{family}-d{String(dir).padStart(2,"0")}.webp</dd><dt>SPEED</dt><dd>{Math.round(speed)}</dd><dt>COVER</dt><dd>{p.coverId||"FREE"}</dd><dt>STATUS</dt><dd>{p.gripCoverId?"GRIP POSE FALLBACK":"APPROVED RUNTIME"}</dd></dl><p>Slide to catch soft cover; point away to walk off. A locks hard brace. LT plants feet and exposes; release LT retracts while staying braced. A + left stick kicks away. Hold LB grips the attached block; release drops it. RT while holding throws. Release RT before shooting again.</p></aside>}
 function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0);
- if(p.charging||p.powerFlash>0||p.powerReturn>0){const frame=powerFrame(p,s.config||DEFAULT);return {state:p.charging?((p.godCharge||0)>=.8?"GOD_CHARGE_LOOP":"GOD_CHARGE_ENTRY"):p.powerFlash>0?"GOD_FLAME_PEAK":"GOD_WEAPON_RETURN",family:"god-frame",dir:0,angleDeg:0,frame:frame+1,total:12,file:frame<6?"opening.png + face overlay":"continuation.png + face overlay",expected:"APPROVED FIRST VIEW · 360 ART PENDING",fallback:false}}
+ if(p.charging||p.powerFlash>0||p.powerReturn>0){const frame=powerFrame(p,s.config||DEFAULT);return {state:p.charging?((p.godCharge||0)>=.8?"GOD_CHARGE_LOOP":"GOD_CHARGE_ENTRY"):p.powerFlash>0?"GOD_FLAME_PEAK":"GOD_WEAPON_RETURN",family:"god-frame",dir:0,angleDeg:0,frame:frame+1,total:12,file:"grounded-float-v1.png",expected:"APPROVED FIRST VIEW · 360 ART PENDING",fallback:false}}
  let state="READY",family="ready",fallback=false,expected="READY";
  if(p.gripCoverId){state="PSYCHIC_CARRY";family=speed>34?"run":"ready";expected="GRIP_CARRY";fallback=true}
  else if(p.exit){state="COVER_EXIT";family="slide";expected="COVER_EXIT";fallback=true}
@@ -217,15 +217,36 @@ function coverPoseFrame(p:any,t:number,total:number){
 const POWER_ANCHORS=[[263,493],[271,493],[276,493],[289,475],[287,475],[295,475],[293,490],[292,490],[294,490],[305,479],[306,479],[309,479]];
 const POWER_FACES=[[278,110,25,28],[278,110,25,28],[285,110,25,28],[290,102,25,28],[290,100,25,28],[290,98,25,28],[297,113,24,27],[297,113,24,27],[297,113,24,27],[308,122,24,27],[310,123,24,27],[311,125,24,27]];
 // Entry plays once. Only the settled charge poses cycle; activation has its own peak.
-function chargeFrame(age:number,charge:number){
+function chargeFrame(age:number,charge:number,seconds=2.4){
  if(age<.35)return Math.min(2,Math.floor(age/.35*3));
- if(charge<.8)return Math.min(7,3+Math.floor(charge/.8*5));
- return [7,8,7,6][Math.floor((age-.35)*4)%4];
+ if(charge<.8)return 3+Math.min(2,Math.floor(charge/.8*3));
+ // Full-charge peak plays once while held, never as part of the hover loop.
+ const fullAge=.35+seconds;if(charge>=1&&age>=fullAge&&age<fullAge+.18)return 9;
+ return [6,7,8,7][Math.floor((age-.35)*5)%4];
 }
-function powerFrame(p:any,cfg:Config){if(p.charging)return chargeFrame(p.chargeAge||0,p.godCharge||0);if(p.powerFlash>0)return p.powerFlash>.4?9:p.powerFlash>.2?10:11;return p.godTime>0?11:chargeFrame(p.powerReleaseAge||0,p.powerReleaseCharge||0)}
+function powerFrame(p:any,cfg:Config){
+ if(p.charging)return chargeFrame(p.chargeAge||0,p.godCharge||0,cfg.powerChargeSeconds);
+ if(p.powerFlash>0)return (p.powerReleaseCharge||0)>=.99&&p.powerFlash>.45?9:p.powerFlash>.15?10:11;
+ if(p.powerReturn>0)return 10;
+ return 11;
+}
+function powerHover(p:any){
+ const lift=(charge:number)=>{const x=Math.max(0,Math.min(1,charge/.8));return 6*x*x*(3-2*x)};
+ if(p.charging)return lift(p.godCharge||0);
+ if(p.powerFlash>0)return lift(p.powerReleaseCharge||0)*Math.max(0,Math.min(1,(p.powerFlash-.15)/.3));
+ if(p.powerReturn>0&&!p.godTime)return lift(p.powerReleaseCharge||0)*Math.min(1,p.powerReturn/.24);
+ return 0;
+}
 function powerPoseAlpha(p:any){return p.charging||p.powerFlash>0?1:Math.max(0,Math.min(1,(p.powerReturn||0)/.24))}
 function powerAura(p:any){return p.charging?(p.godCharge||0)*.8:p.godTime>0?.6*Math.min(1,p.godTime/Math.max(.01,p.godDuration||12)):(p.godFade||0)/.45*(p.godFadeStrength||0)}
+// Anchors register each pose to the same world position. Source anatomy uses one
+// uniform scale, matched to the approved opening's 447-pixel body height.
+const FLOAT_ANCHORS=[[225,336],[225,336],[225,336],[238,336],[232,336],[236,336],[238,336],[237,336],[236,336],[236,336],[229,336],[225,336]];
 function drawPowerFrame(g:CanvasRenderingContext2D,p:any,cfg:Config,frame:number){
+ const atlas=powerAssets.get("grounded-float-v1");
+ if(atlas){const row=Math.floor(frame/4),sx=frame%4*384,sy=Math.round(row*1024/3),bottom=Math.round((row+1)*1024/3),[ax,ay]=FLOAT_ANCHORS[frame],unit=(125/512)*(447/317)*cfg.spriteScale;
+  g.drawImage(atlas,sx,sy,384,bottom-sy,p.x-ax*unit,p.y-ay*unit-powerHover(p)*cfg.spriteScale,384*unit,(bottom-sy)*unit);return true}
+ // Preserve the installed baseline if the new sheet has not loaded yet.
  const local=frame%6,key=frame<6?"opening":"continuation",im=powerAssets.get(key),face=powerAssets.get("face-"+key);if(!im)return false;
  const sx=local%3*512,sy=Math.floor(local/3)*512,[ax,ay]=POWER_ANCHORS[frame],size=125*cfg.spriteScale,unit=size/512,dx=p.x-ax*unit,dy=p.y-ay*unit;
  g.drawImage(im,sx,sy,512,512,dx,dy,size,size);
@@ -238,7 +259,7 @@ function drawPowerPose(g:CanvasRenderingContext2D,p:any,cfg:Config){
 }
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),d=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,d)||nearest("ready",d);
  const meta=im?spriteCell(im,family,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;let frame=family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;if(family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(family);
- g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-40*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
+ g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
  if(im&&poseAlpha<1){const m=spriteCell(im,family,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*registration.groundAnchor.x*sc,p.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!im&&!poseAlpha){g.strokeStyle="#ff4aa5";g.strokeRect(p.x-18,p.y-70,36,70)}
  if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.restore();
  g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke()}
