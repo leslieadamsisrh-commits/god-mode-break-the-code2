@@ -329,3 +329,16 @@ for(const action of ['slide','shield','coverAim','fire','grip','melee','cover','
  const t=m.newGame('drop-Y','token',1000,'solo'),q=t.players[0],cv=t.covers[0],piece=t.matter[0];q.gripCoverId=cv.id;q.gripId=piece.id;piece.heldBy=0;tick(t,{powerup:true,grip:true});assert(q.charging);assert.equal(q.gripCoverId,null);assert.equal(q.gripId,null);assert.equal(piece.heldBy,null);assert.equal(cv.build,0);checks+=5;
 }
 console.log(`PASS: ${checks} checks including instant-Y combat cancellation, held-control consumption, new-action interruption and vulnerability.`);
+
+// An unavailable slide must not consume another independent input edge.
+for(const weave of [0,1]){
+ const s=m.newGame('cohesion','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];p.slideCool=.4;p.slide=.3;p.lastSlideTap=s.time;
+ tick(s,{slide:true,cover:true,x:1,aim:0},16);assert.equal(s.covers.filter(c=>c.generated).length,1,'blocked slide swallowed cover creation');checks++;
+}
+for(const object of ['cover','debris']){
+ const s=m.newGame('cohesion-drop','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];p.slideCool=.4;p.processedInput.grip=true;
+ if(object==='cover'){s.covers=[{id:'held',x:340,y:330,w:130,h:30,a:0,hp:110,maxHp:110,generated:true,build:.001,variant:0}];p.gripCoverId='held'}
+ else{s.matter=[{id:'held',x:290,y:330,r:14,kind:'stone',vx:0,vy:0,life:999,heldBy:0,orbitBy:null}];p.gripId='held'}
+ tick(s,{slide:true,aim:0},16);assert.equal(p.gripCoverId,null,'blocked slide swallowed cover drop');assert.equal(p.gripId,null,'blocked slide swallowed matter drop');if(object==='debris')assert.equal(s.matter[0].heldBy,null);checks++;
+}
+console.log(`PASS: ${checks} checks including independent action edges during unavailable slides.`);

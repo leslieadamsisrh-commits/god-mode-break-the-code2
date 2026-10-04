@@ -1,0 +1,55 @@
+{
+  "approved": false,
+  "installed": false,
+  "source_sha256": "5b3cda4db811360ba5d633072700977d9367eeb15c3f6282fc0b0e8eedaf995a",
+  "size": [
+    2048,
+    768
+  ],
+  "poses": [
+    "left-glove-reach",
+    "psychic-hold",
+    "left-glove-retract"
+  ],
+  "source_columns": [
+    [
+      0,
+      0,
+      683,
+      768
+    ],
+    [
+      683,
+      0,
+      683,
+      768
+    ],
+    [
+      1366,
+      0,
+      682,
+      768
+    ]
+  ],
+  "silhouette_bounds_alpha_over_24": [
+    [
+      58,
+      39,
+      674,
+      736
+    ],
+    [
+      700,
+      38,
+      1323,
+      736
+    ],
+    [
+      1386,
+      38,
+      1990,
+      736
+    ]
+  ],
+  "registration": "Final anchors, scale against installed d03 and game-scale continuity pending visual approval."
+}

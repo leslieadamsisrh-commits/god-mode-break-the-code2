@@ -5,10 +5,10 @@ Continue this existing project. Do not start a new app or redesign Jade.
 Repository: leslieadamsisrh-commits/god-mode-break-the-code2
 Branch: integration/combat-master-multiplayer-core
 App: https://god-mode-playable-core-production.up.railway.app/
-Last verified gameplay commit: 46656006e8bcae74534ae942ea3962ae05548aef
-Railway deployment: d039d49b-0a73-4ac7-b404-8bf57fcc752a — SUCCESS
+Last verified gameplay commit: b10c86ad730c867a62de69cea68a76713175d7f4
+Railway deployment: 03082a47-f47d-4ecf-8c16-9a725a98d2d6 — SUCCESS
 
-FIRST: inspect current branch HEAD, live deployment, app/Game.tsx, tests/cover-movement.cjs, and art/god-frame/d06 and d03. Preserve 0827281 plus all newer approved work. The latest asset checkpoint contains this handoff and the d03 review artwork; those review assets are not installed. Verify the actual current state instead of restarting or assuming the oldest checkpoint is HEAD. Do not force-push or overwrite concurrent work.
+FIRST: inspect current branch HEAD, live deployment, app/Game.tsx, tests/cover-movement.cjs, and art/god-frame/d06 and d03. Preserve 0827281 plus all newer approved work. d03 is approved, registered and installed; older candidate notes below are historical. Verify the actual current state instead of restarting or assuming the oldest checkpoint is HEAD. Do not force-push or overwrite concurrent work.
 
 APPROVED LOOK
 The displayed high-detail Jade appearance is approved for this pass. It is current production artwork, not a low-resolution draft to regenerate later. A separate future design project must not influence this pass. Preserve her helmet, face, restrained expressions, armor, blue battery backpack, pink cape, gloves, boots, anatomy, detail and normal combat scale. Right glove forms guns; left glove handles powers. Equipment is asymmetric: never invent views by mirroring, stretching or rotating sprites.
@@ -22,7 +22,7 @@ ALREADY COMPLETE — PRESERVE
 - Weapon return no longer goes ready → half-formed gun. Partial-charge recovery retains its last charging pose while recovering.
 - Build and 1,765 regression checks passed. Live browser preview verified d06 combat scale, hover loop, full release, weapon-ready return, short approximately 25% release without activation, powered countdown, expiry and repeat charging. Physical controller playtest remains pending; do not claim it has passed.
 
-RESUME HERE — d03 FRONT-RIGHT CANDIDATE
+COMPLETED — d03 FRONT-RIGHT REGISTRATION
 Read art/god-frame/d03/README.md and registration-review.json before editing.
 Source assets: sequence-review.png and dissolve-review.png in that directory.
 The d03 appearance was approved by the user on 2026-10-03. Registration is implemented with compact dissolve, opening-ready reuse, explicit source isolation and uniform sheet scales. 1,835 checks and production build passed. Live d03 combat scale, hover, full release/ready return, countdown/expiry, repeat charging and brief release without activation passed. The full physical controller, moving-cover and powered-combat matrix remains pending.
@@ -64,3 +64,12 @@ User clarified fresh Y must immediately cancel voluntary action and enter rechar
 Footage RPReplay_Final1791082004.mp4 (186.07s): moving powered/charge presentation and ground wake seen in 0:00-1:00; cover occlusion and grip/throw activity around 1:20-2:00; slide effects and repeated charge/combat return around 2:00-3:00. Video does not expose raw controller inputs, frame timings or source commit: do not infer exact input failures, clipping causes or network causes from appearance alone.
 
 Next art work: audit existing ready/run/slide/cover and approved d00/d03/d06 charge frames; connect ready->charge, running stop->charge, slide cancel->grounded charge, shield/aim retract->charge, braced cover->charge, weapon return->recharge. Reuse valid poses; generate only missing connecting poses and obtain visual approval. Then expand missing hover directions in small audited batches, with left-stick facing and consistent pelvis/ground registration. Refine ring-like ground wake into a restrained energy scorch after transition validation. Higher tiers remain parked.
+
+## Combat cohesion batch 1 — 2026-10-03
+Recovered HEAD c90a500 and deployment 6e573a3f-3fc5-48f1-87f2-c53748d74254 SUCCESS before editing. No applicable AGENTS.md found in scratch source. Source workspace is an extracted checkout without .git; mutations committed through GitHub fast-forward tools.
+
+Reproduced: fresh A during slide cooldown exits edgeActions early and consumes unrelated RB build or LB release/drop in that same input update. Fix: isolate slideAction so its rejection returns only from slide handling. Same behavior for unavailable Weave slides; no movement values or mappings changed. Existing 1,924 checks plus four boundary cases pass: 1,928. New tests/combat-cohesion.cjs passes 26 staged checks exercising real inputs through run, soft capture/traverse, brace/fire/retract, build, carry/drop/regrip/throw, fresh-trigger gunfire, recharge/release/recharge; repeats with joined host/guest serialized snapshots, plus generated-cover movement and Y drop. These are engine/snapshot tests, not browser-network or physical-controller certification. Production build passed. Deployment/live verification pending for this batch.
+
+Art audit: approved charge d00/d03/d06 installed; psychic carry still uses ready/run fallback, exposed cover/fire/recoil and cover-exit routes also have recorded fallbacks. New art/combat-cohesion/d03-psychic/sequence-review.png is a three-pose LEFT power glove reach/hold/retract candidate, NOT APPROVED and NOT INSTALLED. Corrected spacing source and registration-review.json saved; no other sprite set generated. Preserve existing approved art. User must visually approve new candidate under master prompt section 4 before registration/installation. Final anchors and actual lab continuity remain pending.
+
+Resume: verify deployed code and overlapping-input behavior, then obtain candidate visual approval, register against approved d03 scale and grounded anchors, verify carry/drop/charge transitions in lab. Continue remaining connectors and directions only in small batches. Complete physical controller and two-browser network loop before claiming whole encounter verified. No higher tier or new abilities added.
