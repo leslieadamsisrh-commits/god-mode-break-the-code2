@@ -3,7 +3,7 @@ import {useCallback,useEffect,useRef,useState} from "react";
 
 type Session={room:string;code?:string;token:string;slot:number};
 type Config={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
-const DEFAULT:Config={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:599.269125,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
+const DEFAULT:Config={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:689.15949375,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
 const EMPTY:any={x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false};
 function readController(pad:any,i:any){
  const down=(n:number)=>!!(pad.buttons[n]?.pressed||pad.buttons[n]?.value>.25),dz=(v:number)=>Math.abs(v)<.18?0:v;
@@ -16,6 +16,7 @@ const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF
 const jade=new Map<string,HTMLImageElement>();
 type EchoFrame={x:number;y:number;angle:number;family:string;dir:number;frame:number;life:number;maxLife:number;speed:number};
 const kineticEcho:EchoFrame[]=[];let echoLast=0;
+const hoverWake:{x:number;y:number;age:number;strength:number}[]=[];
 const CLASSIC_LETTERS=[[[0,.225],[.21,.445],[.425,.635],[.605,.815],[.785,1]],[[0,.235],[.215,.41],[.385,.565],[.535,.73],[.7,.89],[.855,1]]];
 const classicClamp=(v:number,a:number,b:number)=>Math.max(a,Math.min(b,v));
 const classicAssets=new Map<string,HTMLImageElement>();
@@ -27,7 +28,7 @@ const snapshots:{state:any;at:number}[]=[];
 function recordSnapshot(s:any,at:number){snapshots.push({state:s,at});if(snapshots.length>20)snapshots.shift()}
 function presentation(s:any,now:number){
  if(snapshots.length<2)return s;
- const target=now-100;
+ const target=now-50;
  while(snapshots.length>2&&snapshots[1].at<=target)snapshots.shift();
  const a=snapshots[0],b=snapshots[1],blend=Math.max(0,Math.min(1,(target-a.at)/Math.max(1,b.at-a.at)));
  const mix=(xs:any[],ys:any[])=>ys.map(y=>{const x=xs.find(x=>x.id===y.id);return x?{...y,x:x.x+(y.x-x.x)*blend,y:x.y+(y.y-x.y)*blend,...typeof x.a==="number"&&typeof y.a==="number"?{a:x.a+Math.atan2(Math.sin(y.a-x.a),Math.cos(y.a-x.a))*blend}:{}}:y});
@@ -42,7 +43,7 @@ export default function Game(){
  const canvas=useRef<HTMLCanvasElement>(null),session=useRef<Session|null>(null),state=useRef<any>(null),seq=useRef(0),keys=useRef<Record<string,boolean>>({}),edges=useRef<Record<string,boolean>>({}),mouse=useRef({x:500,y:310,down:false}),lastAccept=useRef(performance.now()),started=useRef(false);
  const [hud,setHud]=useState<any>(null),[status,setStatus]=useState("BOOTING"),[director,setDirector]=useState(false),[spritePanel,setSpritePanel]=useState(false),[config,setConfig]=useState<Config>(DEFAULT),[note,setNote]=useState(""),[padStatus,setPadStatus]=useState("CONTROLLER: WAITING"),[padGate,setPadGate]=useState(true),[testPass,setTestPass]=useState<Record<string,boolean>>({});
  const post=useCallback(async(body:any)=>{const r=await fetch("/api/game",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)}),v=await r.json();if(!r.ok)throw Error(v.error||"Request failed");return v},[]);
- const accept=useCallback((v:any)=>{if(v.state){if(state.current&&v.state.round===state.current.round&&v.state.lastAt<=state.current.lastAt)return;const at=performance.now();if(state.current&&v.state.round!==state.current.round){snapshots.length=0;kineticEcho.length=0;cameraState.ready=false}recordSnapshot(v.state,at);state.current=v.state;lastAccept.current=at;setHud(v.state);setConfig(v.state.config||DEFAULT);setStatus("COMBAT MASTER LIVE")}},[]);
+ const accept=useCallback((v:any)=>{if(v.state){if(state.current&&v.state.round===state.current.round&&v.state.lastAt<=state.current.lastAt)return;const at=performance.now();if(state.current&&v.state.round!==state.current.round){snapshots.length=0;kineticEcho.length=0;hoverWake.length=0;cameraState.ready=false}recordSnapshot(v.state,at);state.current=v.state;lastAccept.current=at;setHud(v.state);setConfig(v.state.config||DEFAULT);setStatus("COMBAT MASTER LIVE")}},[]);
  const create=useCallback(async()=>{if(started.current)return;started.current=true;try{let saved:any=null;try{saved=JSON.parse(sessionStorage.getItem("god_mode_studio_session")||"null")}catch{}if(saved){session.current=saved;accept(await post({action:"config",...saved,patch:DEFAULT}));return}const v=await post({action:"create",name:"Les",mode:"solo"}),s={room:v.room,code:v.code,token:v.token,slot:0};session.current=s;sessionStorage.setItem("god_mode_studio_session",JSON.stringify(s));accept(v)}catch(e:any){started.current=false;setStatus(e.message)}},[accept,post]);
  useEffect(()=>{preload();create()},[create]);
  useEffect(()=>{
@@ -108,7 +109,7 @@ export default function Game(){
  </main>
 }
 const MOVEMENT_PRESETS:Record<string,Partial<Config>>={
- "INSTRUCTOR 142 CLASSIC":{weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,slideSpeed:599.269125,slideDuration:.63,cameraZoom:1.85},
+ "INSTRUCTOR 142 CLASSIC":{weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,slideSpeed:689.15949375,slideDuration:.63,cameraZoom:1.85},
  "GOD MODE WEAVE":{weaveEnabled:1,moveSpeed:262,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:470,dashDuration:.12,doubleTapWindow:.26,slideSpeed:690,slideDuration:.68,slideSustain:520,slideSteer:11.5,slideSteerAngle:.70,slideSteerResponse:8.5,slideBrake:14.5,slideCancelSpeed:195},
  "AKIRA AGILE":{weaveEnabled:1,moveSpeed:262,dashSpeed:500,dashDuration:.13,doubleTapWindow:.30,slideSpeed:690,slideDuration:.62,slideSustain:500,slideSteer:10.5,slideSteerAngle:.78,slideSteerResponse:10,slideBrake:13.5,slideCancelSpeed:185},
  "GEARS WEIGHT":{weaveEnabled:1,moveSpeed:262,dashSpeed:350,dashDuration:.18,doubleTapWindow:.26,slideSpeed:610,slideDuration:.82,slideSustain:260,slideSteer:4.5,slideSteerAngle:.42,slideSteerResponse:5,slideBrake:6.5,slideCancelSpeed:115},
@@ -124,6 +125,7 @@ function Director({cfg,patch,applyPreset,save,load,note}:{cfg:Config;applyPreset
 // Shared by the visible fighter and both inspectors: gun aim never selects an idle cover pose.
 function spriteFacing(p:any,family:string,speed:number){
  if(family==="slide")return p.slideFacing??p.aim??0;
+ if(p.charging&&!p.coverId&&(typeof p.input?.x==="number"||typeof p.input?.y==="number"))return Math.hypot(p.input?.x||0,p.input?.y||0)>.18?Math.atan2(p.input.y,p.input.x):(p.gunFacing??p.aim??0);
  if(p.coverId&&p.coverAnchor){const exposed=p.input?.coverAim||p.fireState>0||p.recoil>0;return exposed?(p.gunFacing??p.aim??0):Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx)}
  if(p.input?.fire||p.fireState>0)return p.gunFacing??p.aim??0;
  return family==="run"&&speed>55?Math.atan2(p.vy,p.vx):(p.gunFacing??p.aim??0);
@@ -169,6 +171,11 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  if(fullSlide&&!slideWasActive){const angle=local.slideFacing||0;graffiti={word:slideWord++%2,originX:local.x+Math.cos(angle)*8,originY:local.y+Math.sin(angle)*4,angle,age:0,life:.78}}
  slideWasActive=fullSlide;
  if(graffiti){graffiti.age+=frameDt;graffiti.life-=frameDt;if(graffiti.life<=0)graffiti=null}
+ for(const mark of hoverWake)mark.age-=frameDt;
+ while(hoverWake.length&&hoverWake[0].age<=0)hoverWake.shift();
+ const hoverEnergy=powerAura(local),lastWake=hoverWake[hoverWake.length-1];
+ if(hoverEnergy>.05&&travelLen>20&&(!lastWake||Math.hypot(local.x-lastWake.x,local.y-lastWake.y)>10)){hoverWake.push({x:local.x,y:local.y,age:.65,strength:hoverEnergy});if(hoverWake.length>24)hoverWake.shift()}
+ for(const mark of hoverWake){g.save();g.globalAlpha=mark.age/.65*mark.strength*.65;g.strokeStyle="#ff41b8";g.shadowColor="#ff41b8";g.shadowBlur=9;g.lineWidth=2;g.beginPath();g.ellipse(mark.x,mark.y+5,20,6,0,0,Math.PI*2);g.stroke();g.strokeStyle="#67f5ff";g.beginPath();g.moveTo(mark.x-11,mark.y+4);g.lineTo(mark.x+9,mark.y+7);g.stroke();g.restore()}
  for(const mark of floorWake)mark.age-=frameDt;
  while(floorWake.length&&floorWake[0].age<=0)floorWake.shift();
  for(const e of kineticEcho){if(!fullSlide){const follow=1-Math.exp(-17*frameDt);e.x+=(local.x-e.x)*follow;e.y+=(local.y-e.y)*follow;e.life-=frameDt}else e.life=Math.max(e.life,.3)}

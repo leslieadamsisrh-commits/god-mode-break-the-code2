@@ -54,3 +54,6 @@ NEXT CONTROLLER LOOP
 Move → hold Y → lift → turn toward front → reach cover → release → shoot → expire → release Y → press Y to charge again.
 
 Work incrementally, conserve credits, use no unnecessary agents, and keep explanations short and plain. Report what changed, what actually passed, the exact artwork still pending, and the next playtest. No broad refactors or unrelated work. Resume this checkpoint; do not restart the project.
+
+## Controller feedback pass — 2026-10-03 19:30 PDT
+User authorized quicker slide, left-stick hover turning, ground energy wake and recharge from retained battery. This supersedes the old prohibition on mid-window recharge. Fresh Y refills a partly used battery even during powered time; expiry/depletion still require release then fresh Y. Free hover follows left-stick intent and retains facing when neutral. Classic slide speed increased 15% (599.269125 -> 689.15949375), duration/drag/cost unchanged. Presentation buffer reduced 100 -> 50 ms for response; physical network-feel validation pending. Ground-energy wake is capped at 24 marks and fades in 0.65 seconds. No tiers added. Build and 1,846 checks pass. Deployment/live verification pending for this pass. Remaining missing artwork still uses d00 fallback; no directions fabricated.

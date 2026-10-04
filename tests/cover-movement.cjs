@@ -304,3 +304,15 @@ console.log(`PASS: ${checks} checks including front charge crop completeness, co
  for(const kind of ['sequence','dissolve']){assert(fs.readFileSync(`art/god-frame/d03/${kind}-review.png`).equals(fs.readFileSync(`public/assets/god-frame/front-right-d03-${kind}-v1.png`)));checks++}
 }
 console.log(`PASS: ${checks} checks including d03 compact dissolve, isolated crops, uniform scale, identical ready return and missing-asset fallback.`);
+
+// Director feedback: refill retained battery with fresh Y, without expiry auto-start.
+{
+ const s=m.newGame('refill','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];p.battery=50;p.godTime=6;p.godDuration=12;
+ tick(s,{powerup:true,x:0,y:1,aim:0});assert(p.charging);assert.equal(p.godTime,0);assert(p.godCharge>=.49&&p.godCharge<.55);assert(Math.abs(p.gunFacing-Math.PI/2)<1e-9);checks+=4;
+ for(let n=0;n<50;n++)tick(s,{powerup:true,x:0,y:1,aim:0});assert(p.battery>70);assert(p.godCharge>.75);checks+=2;
+ tick(s,{});assert(!p.charging);assert(p.godTime>0);checks+=2;
+ const t=m.newGame('partial','token',1000,'solo'),q=t.players[0];t.covers=[];q.battery=40;tick(t,{powerup:true});assert(q.charging&&q.godCharge>=.4);checks++;
+ const r=m.newGame('slide-speed','token',1000,'solo');r.covers=[];tick(r,{x:1,y:0,slide:true});assert(Math.hypot(r.players[0].vx,r.players[0].vy)>650);checks++;
+ assert.equal(ctx.pose({charging:true,input:{x:-1,y:0},gunFacing:0},'ready',0),Math.PI);checks++;
+}
+console.log(`PASS: ${checks} checks including retained-battery refill, fresh-Y activation, left-stick hover facing and quicker Classic slide.`);
