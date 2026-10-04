@@ -9,11 +9,11 @@ for(const weave of [0,1])for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let
  for(const aimOffset of [0,Math.PI,Math.PI/2]){
   let {s,p,a}=fixture(rotation,edge,mode,weave);const aim=Math.atan2(a.ny,a.nx)+aimOffset,ox=p.x,oy=p.y;
   tick(s,{x:a.nx*.35,y:a.ny*.35,aim,coverAim:false});if(mode==='soft'){assert.equal(p.coverId,null);assert((p.x-ox)*a.nx+(p.y-oy)*a.ny>0)}else{assert.equal(p.coverId,'test-cover');assert.equal(p.x,ox);assert.equal(p.y,oy)}assert.equal(p.battery,100);checks++;
-  ({s,p,a}=fixture(rotation,edge,mode,weave));tick(s,{x:a.nx,y:a.ny,aim,slide:true});if(mode==='soft'){assert.equal(p.coverId,'test-cover');assert.equal(p.coverMode,'braced');assert.equal(p.battery,100);checks++;continue}assert.equal(p.coverId,null);assert(p.slide>0);assert(Math.abs(Math.atan2(Math.sin(p.slideFacing-Math.atan2(a.ny,a.nx)),Math.cos(p.slideFacing-Math.atan2(a.ny,a.nx))))<1e-6);assert.equal(p.battery,88);checks++;
+  ({s,p,a}=fixture(rotation,edge,mode,weave));tick(s,{x:a.nx,y:a.ny,aim,slide:true});assert.equal(p.coverId,null);assert(p.slide>0);assert(Math.abs(Math.atan2(Math.sin(p.slideFacing-Math.atan2(a.ny,a.nx)),Math.cos(p.slideFacing-Math.atan2(a.ny,a.nx))))<1e-6);assert.equal(p.battery,88);checks++;
  }
  let {s,p,a}=fixture(rotation,edge,mode,weave);tick(s,{x:-a.nx,y:-a.ny,aim:Math.atan2(a.ny,a.nx),slide:mode==='braced'});assert.equal(p.coverId,'test-cover');assert.equal(p.battery,100);assert(!m.circleBox(p,18,s.covers[0]).hit);checks++;
  ({s,p,a}=fixture(rotation,edge,'braced',weave));tick(s,{x:a.tx,y:a.ty,aim:Math.atan2(-a.ty,-a.tx),slide:true});assert.equal(p.coverId,null);assert.equal(p.kickStage,'burst');assert.equal(p.battery,88);assert(Math.abs(p.vx*a.nx+p.vy*a.ny)<1e-6);checks++;
- ({s,p,a}=fixture(rotation,edge,'braced',weave));p.battery=0;tick(s,{x:a.nx,y:a.ny,aim:0,slide:true});assert.equal(p.coverId,'test-cover');assert.equal(p.slide,0);assert.equal(p.battery,0);checks++;
+ ({s,p,a}=fixture(rotation,edge,'braced',weave));p.battery=0;tick(s,{x:a.nx,y:a.ny,aim:0,slide:true},16);assert.equal(p.coverId,null);assert(p.slide>0);assert.equal(p.battery,0);assert(Math.abs(Math.hypot(p.vx,p.vy)-s.config.slideSpeed*.55)<1e-6);checks++;
  ({s,p,a}=fixture(rotation,edge,mode,weave));const before=p.coverAnchor.t;tick(s,{x:a.tx*.5,y:a.ty*.5,aim:0});assert.equal(p.coverId,'test-cover');assert(p.coverAnchor.t>before);checks++;
 }
 for(const weave of [0,1])for(const rotation of [0,.61,Math.PI/2,Math.PI])for(let edge=0;edge<4;edge++){
@@ -346,3 +346,17 @@ console.log(`PASS: ${checks} checks including independent action edges during un
 // Successful immediate brace preserves its existing input priority.
 {const s=m.newGame('brace-priority','token',1000,'solo'),p=s.players[0];p.x=255;p.y=365;tick(s,{slide:true,cover:true,x:1,aim:0},16);assert.equal(p.coverId,'cover-piece-01');assert.equal(s.covers.filter(c=>c.generated).length,0);checks++;}
 console.log(`PASS: ${checks} checks including preserved successful-brace priority.`);
+
+// Escape is bounded, grounded and one-shot across battery, facing and cover variants.
+for(const mode of ['soft','braced'])for(const battery of [0,1,6,12,100])for(const angle of [0,.61,Math.PI/2]){
+ const {s,p,a}=fixture(angle,0,mode);s.covers[0].generated=true;p.battery=battery;p.slideCool=2;const x=p.x,y=p.y;
+ tick(s,{slide:true,x:a.nx,y:a.ny,aim:0},16);assert.equal(p.coverId,null);assert.equal(p.battery,Math.max(0,battery-12));assert(p.slide>0);
+ const scale=.55+.45*Math.min(battery/12,1);assert(Math.abs(Math.hypot(p.vx,p.vy)-s.config.slideSpeed*scale)<1e-6);
+ for(let n=0;n<12;n++)tick(s,{slide:true,x:a.nx,y:a.ny,aim:0},16);assert.equal(p.coverId,null);assert(!m.circleBox(p,18,s.covers[0]).hit);assert((p.x-x)*a.nx+(p.y-y)*a.ny>0);checks++;
+}
+for(const battery of [0,6,12]){
+ const {s,p,a}=fixture(0,0,'braced');p.battery=battery;tick(s,{slide:true,x:a.tx,y:a.ty,aim:0},16);assert.equal(p.kickStage,'burst');
+ for(let n=0;n<15;n++)tick(s,{x:a.tx,y:a.ty,aim:0},16);assert.equal(p.coverId,null);assert.equal(p.kickStage,'none');assert(p.slide>0);assert.equal(p.kickScale,.55+.45*Math.min(battery/12,1));checks++;
+}
+{const {s,p}=fixture(0,0,'braced');p.battery=0;tick(s,{slide:true,aim:0},16);assert.equal(p.coverId,null);tick(s,{powerup:true,aim:0},16);assert(p.charging);assert.equal(p.slide,0);checks++;}
+console.log(`PASS: ${checks} checks including battery-independent cover escape.`);

@@ -3,7 +3,7 @@ export type CombatConfig={chargeMoveScale:number;chargeMoveResponse:number;power
 export const DEFAULT_CONFIG:CombatConfig={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:689.15949375,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player={chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player={chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;born?:number;vx?:number;vy?:number};
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;clearanceCoverId?:string};
@@ -99,12 +99,15 @@ function classicCoverAction(p:Player,s:GameState,i:InputState){
  const mag=Math.hypot(i.x,i.y),ax=mag>.18?i.x/mag:a.nx,ay=mag>.18?i.y/mag:a.ny,normal=ax*a.nx+ay*a.ny,tan=Math.abs(ax*a.tx+ay*a.ty);
  const kind=normal>.15?"outward":tan>.55&&normal>=-.05?"past":"blocked";
  if(kind==="blocked"){s.fx.push({id:uid(),type:"cover-block",x:p.x,y:p.y,life:.18});return false}
- const oldId=p.coverId;releaseCover(p,s,.25);p.coverLock=s.time+.25;p.slideSteerCurrent=0;
+ // Every valid escape has a free base; charge funds only the bounded boost.
+ const cost=Math.min(Math.max(0,p.battery),Math.max(0,s.config.slideEnergy)),scale=.55+.45*(s.config.slideEnergy>0?cost/s.config.slideEnergy:1);
+ p.battery=Math.max(0,p.battery-cost);if(cost>0)p.lastEnergyAt=s.time;p.kickScale=scale;
+ releaseCover(p,s,.25);p.coverLock=s.time+.25;p.slideSteerCurrent=0;
  if(kind==="past"){
-   const sign=ax*a.tx+ay*a.ty<0?-1:1;p.kickAngle=Math.atan2(ay,ax);p.kickNx=a.nx;p.kickNy=a.ny;p.kickStage="burst";p.kickTime=.13;p.vx=Math.cos(p.kickAngle)*408;p.vy=Math.sin(p.kickAngle)*408;p.slideFacing=p.kickAngle;p.slideCool=.94;p.exit=null;s.fx.push({id:uid(),type:"dash",x:p.x,y:p.y,life:.22,text:"BURST"});return true
+   const sign=ax*a.tx+ay*a.ty<0?-1:1;p.kickAngle=Math.atan2(ay,ax);p.kickNx=a.nx;p.kickNy=a.ny;p.kickStage="burst";p.kickTime=.13;p.vx=Math.cos(p.kickAngle)*408*scale;p.vy=Math.sin(p.kickAngle)*408*scale;p.slideFacing=p.kickAngle;p.slideCool=.94;p.exit=null;s.fx.push({id:uid(),type:"dash",x:p.x,y:p.y,life:.22,text:"BURST"});return true
  }
  const dx=ax,dy=ay,len=Math.hypot(dx,dy)||1;
- p.vx=dx/len*s.config.slideSpeed;p.vy=dy/len*s.config.slideSpeed;p.slideFacing=Math.atan2(p.vy,p.vx);p.slide=s.config.slideDuration;p.slideCool=s.config.slideDuration;s.fx.push({id:uid(),type:"slide",x:p.x,y:p.y,life:.4,text:"KICK"});return true
+ p.vx=dx/len*s.config.slideSpeed*scale;p.vy=dy/len*s.config.slideSpeed*scale;p.slideFacing=Math.atan2(p.vy,p.vx);p.slide=s.config.slideDuration;p.slideCool=s.config.slideDuration;s.fx.push({id:uid(),type:"slide",x:p.x,y:p.y,life:.4,text:"KICK"});return true
 }
 function beginCoverExit(p:Player,s:GameState,i:InputState){
  const a=p.coverAnchor,c=s.covers.find(x=>x.id===p.coverId);if(!a||!c)return false;
@@ -269,8 +272,8 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
   p.brake=Math.max(0,p.brake-dt);p.slideCool=Math.max(0,p.slideCool-dt);
   if(p.kickStage!=="none"){
     p.kickTime-=dt;
-    if(p.kickTime<=0&&p.kickStage==="burst"){p.kickStage="step";p.kickTime=.09;p.vx=Math.cos(p.kickAngle)*c.moveSpeed+p.kickNx*81;p.vy=Math.sin(p.kickAngle)*c.moveSpeed+p.kickNy*81}
-    else if(p.kickTime<=0&&p.kickStage==="step"){p.kickStage="none";p.slide=c.slideDuration;p.vx=Math.cos(p.kickAngle)*c.slideSpeed;p.vy=Math.sin(p.kickAngle)*c.slideSpeed;p.slideFacing=p.kickAngle}
+    if(p.kickTime<=0&&p.kickStage==="burst"){p.kickStage="step";p.kickTime=.09;p.vx=(Math.cos(p.kickAngle)*c.moveSpeed+p.kickNx*81)*(p.kickScale??1);p.vy=(Math.sin(p.kickAngle)*c.moveSpeed+p.kickNy*81)*(p.kickScale??1)}
+    else if(p.kickTime<=0&&p.kickStage==="step"){p.kickStage="none";p.slide=c.slideDuration;p.vx=Math.cos(p.kickAngle)*c.slideSpeed*(p.kickScale??1);p.vy=Math.sin(p.kickAngle)*c.slideSpeed*(p.kickScale??1);p.slideFacing=p.kickAngle}
     p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)
   }
   else if(p.knock>0){p.knock-=dt;p.vx*=Math.pow(.08,dt);p.vy*=Math.pow(.08,dt)}
@@ -279,9 +282,8 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
     // Handle A before walk-away can clear the anchor needed by a kick.
     if(i.slide&&!prev[n]?.slide){
       const a=p.coverAnchor,mag=Math.hypot(i.x,i.y),out=a&&mag>.18?(i.x*a.nx+i.y*a.ny)/mag:0;
-      if(p.coverMode==="soft"){p.coverMode="braced";p.vx=p.vy=0;p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n});moveOnCover(p,s,i,d)}
-      else if(p.battery>=c.slideEnergy){if(classicCoverAction(p,s,i))spendEnergy(p,s,c.slideEnergy);else moveOnCover(p,s,i,d)}
-      else{spendEnergy(p,s,c.slideEnergy);moveOnCover(p,s,i,d)}
+      if(p.coverMode==="soft"&&out<=.15){p.coverMode="braced";p.vx=p.vy=0;p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n});moveOnCover(p,s,i,d)}
+      else if(!classicCoverAction(p,s,i))moveOnCover(p,s,i,d);
     }else moveOnCover(p,s,i,d);
   }
   else if(p.dash>0){
