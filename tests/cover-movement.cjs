@@ -316,3 +316,16 @@ console.log(`PASS: ${checks} checks including d03 compact dissolve, isolated cro
  assert.equal(ctx.pose({charging:true,input:{x:-1,y:0},gunFacing:0},'ready',0),Math.PI);checks++;
 }
 console.log(`PASS: ${checks} checks including retained-battery refill, fresh-Y activation, left-stick hover facing and quicker Classic slide.`);
+
+// Fresh Y wins over actions already in progress, including held combat controls.
+for(const action of ['slide','shield','coverAim','fire','grip','melee','cover','slow']){
+ const s=m.newGame('instant-Y','token',1000,'solo'),p=s.players[0];s.covers=[];s.matter=[];p.battery=55;p.godTime=6;p.godDuration=12;p.slide=.4;p.dash=.1;p.kickStage='burst';p.exit={points:[],index:0,dx:1,dy:0,until:1,travel:0,total:1,coverId:'old'};
+ tick(s,{powerup:true,[action]:true});assert(p.charging);assert.equal(p.godTime,0);assert(p.godCharge>=.55);assert.equal(p.slide,0);assert.equal(p.dash,0);assert.equal(p.exit,null);checks+=6;
+ for(let n=0;n<10;n++)tick(s,{powerup:true,[action]:true});assert(p.charging);checks++;
+ tick(s,{powerup:true});tick(s,{powerup:true,fire:true});assert(!p.charging);assert(p.powerBlocked);checks+=2;
+}
+{
+ const s=m.newGame('vulnerable-Y','token',1000,'solo'),p=s.players[0];s.covers=[];p.knock=.2;tick(s,{powerup:true});assert(!p.charging);checks++;
+ const t=m.newGame('drop-Y','token',1000,'solo'),q=t.players[0],cv=t.covers[0],piece=t.matter[0];q.gripCoverId=cv.id;q.gripId=piece.id;piece.heldBy=0;tick(t,{powerup:true,grip:true});assert(q.charging);assert.equal(q.gripCoverId,null);assert.equal(q.gripId,null);assert.equal(piece.heldBy,null);assert.equal(cv.build,0);checks+=5;
+}
+console.log(`PASS: ${checks} checks including instant-Y combat cancellation, held-control consumption, new-action interruption and vulnerability.`);

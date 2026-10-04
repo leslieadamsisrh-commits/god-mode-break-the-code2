@@ -3,7 +3,7 @@ export type CombatConfig={chargeMoveScale:number;chargeMoveResponse:number;power
 export const DEFAULT_CONFIG:CombatConfig={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:689.15949375,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player={x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player={chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;born?:number;vx?:number;vy?:number};
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;clearanceCoverId?:string};
@@ -232,7 +232,24 @@ function segmentCover(from:{x:number;y:number},to:{x:number;y:number},cv:Cover){
  }return leave>=0&&enter<=1;
 }
 function botInput(s:GameState){const n=s.players.findIndex(p=>p.bot);if(n<0)return;const p=s.players[n],t=s.players[1-n];if(!t)return;const a=Math.atan2(t.y-p.y,t.x-p.x),d=dist(p,t);p.input={...empty(),x:Math.cos(a)*(d>260?.7:0),y:Math.sin(a)*(d>260?.7:0),aim:a,fire:d<520&&s.time%1.4<.1}}
-function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.players.some(p=>p.input.slow&&p.battery>0),d=dt*(slow?.52:1);
+// A fresh Y press cancels voluntary actions; only already-held buttons are
+// consumed until released. New combat inputs and incoming hits still interrupt.
+function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
+ const i={...raw},fresh=raw.powerup&&!p.processedInput.powerup;
+ const actions=["fire","shield","coverAim","slide","melee","heavy","grip","throwMatter","cover","orbit","launchOrbit","pinball","slow"];
+ if(fresh&&!p.powerBlocked&&p.knock<=0&&(!p.godTime||p.godTime>dt&&p.battery>s.config.godDrain*dt)){
+  p.chargeSuppressed=actions.filter(key=>(raw as any)[key]);
+  p.slide=p.dash=p.pinball=p.brake=0;p.exit=null;p.kickStage="none";p.kickTime=0;p.shield=false;p.peek=false;
+  if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}p.gripCoverId=null}
+  if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m)m.heldBy=null;p.gripId=null}
+ }
+ if(!raw.powerup)p.chargeSuppressed=[];
+ else{p.chargeSuppressed=(p.chargeSuppressed||[]).filter(key=>(raw as any)[key]);for(const key of p.chargeSuppressed)(i as any)[key]=false}
+ return i;
+}
+function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInputs=s.players.map(p=>p.input);
+ s.players.forEach((p,n)=>p.input=chargeIntent(p,s,rawInputs[n],dt));
+ const slow=s.players.some(p=>p.input.slow&&p.battery>0),d=dt*(slow?.52:1);
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input;p.aim=i.aim;powerStep(p,s,dt);
   const coverContext=!!p.coverId;
   if(p.coverId&&i.coverAim&&p.coverMode==="soft"){p.coverMode="braced";p.vx=p.vy=p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n})}
@@ -306,6 +323,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,slow=s.p
  }
  for(const m of s.matter){if(m.heldBy!==null){const p=s.players[m.heldBy];m.x=p.x+Math.cos(p.aim)*70;m.y=p.y+Math.sin(p.aim)*70;continue}if(m.orbitBy!==null){const p=s.players[m.orbitBy],j=p.orbitIds.indexOf(m.id),a=s.time*4+j*2.1;m.x=p.x+Math.cos(a)*62;m.y=p.y+Math.sin(a)*62;continue}m.x+=m.vx*d;m.y+=m.vy*d;m.vx*=Math.pow(.35,d);m.vy*=Math.pow(.35,d);if(m.life<999)m.life-=dt;if(m.x<A.left||m.x>A.right){m.x=clamp(m.x,A.left,A.right);m.vx*=-.6}if(m.y<A.top||m.y>A.bottom){m.y=clamp(m.y,A.top,A.bottom);m.vy*=-.6}}
  for(const sh of s.shots){const from={x:sh.x,y:sh.y};sh.x+=sh.vx*d;sh.y+=sh.vy*d;sh.life-=dt;if(s.covers.some(cv=>cv.id!==sh.clearanceCoverId&&segmentCover(from,sh,cv))){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:sh.x,y:sh.y,life:.18});continue}const target=s.players[1-sh.owner];if(target&&dist(sh,target)<21){if(target.coverId&&target.coverMode==="braced"&&!target.input.coverAim){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:target.x,y:target.y,life:.18});continue}target.hp=Math.max(0,target.hp-(sh.damage??c.shotDamage));target.knock=.26;target.vx+=sh.vx*.1;target.vy+=sh.vy*.1;sh.life=0;s.fx.push({id:uid(),type:"hit",x:target.x,y:target.y,life:.25})}}
+ s.players.forEach((p,n)=>p.input=rawInputs[n]);
  s.shots=s.shots.filter(x=>x.life>0);s.matter=s.matter.filter(x=>x.life>0);s.fx.forEach(f=>f.life-=dt);s.fx=s.fx.filter(f=>f.life>0);
 }
 export function advance(s:GameState,now=Date.now()){let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;if(s.phase==="countdown"){s.countdown=Math.max(0,s.countdown-elapsed);if(!s.countdown)s.phase="playing";return}if(s.phase!=="playing"||(s.mode!=="solo"&&s.players.length<2))return;let prev=s.players.map(p=>({...p.processedInput}));while(elapsed>0){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,prev);s.players.forEach(p=>p.processedInput={...p.input});prev=s.players.map(p=>({...p.input}));elapsed-=dt}}
