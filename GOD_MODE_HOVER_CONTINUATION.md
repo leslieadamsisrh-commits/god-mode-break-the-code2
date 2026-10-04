@@ -5,8 +5,8 @@ Continue this existing project. Do not start a new app or redesign Jade.
 Repository: leslieadamsisrh-commits/god-mode-break-the-code2
 Branch: integration/combat-master-multiplayer-core
 App: https://god-mode-playable-core-production.up.railway.app/
-Last verified gameplay commit: 6228e6fc5aeae61219ae3de29b602658d08b3dc8
-Railway deployment: 0b10e9c5-9c10-4abc-9243-2d8f2cc87fc9 — SUCCESS
+Last verified gameplay commit: b25de3e2fa53e861945db4844543874d51909392
+Railway deployment: 7ffe19db-6aee-4b00-a02a-b4039c35a16f — SUCCESS
 
 FIRST: inspect current branch HEAD, live deployment, app/Game.tsx, tests/cover-movement.cjs, and art/god-frame/d06 and d03. Preserve 0827281 plus all newer approved work. d03 is approved, registered and installed; older candidate notes below are historical. Verify the actual current state instead of restarting or assuming the oldest checkpoint is HEAD. Do not force-push or overwrite concurrent work.
 
@@ -77,5 +77,5 @@ Resume: deployed code and engine overlapping-input behavior are verified to the 
 ## Reliable cover escape — 2026-10-03 22:03 PDT
 Current authority: GOD_MODE_COVER_ESCAPE_REVIEW.md plus the latest user prompt. Recovered 11d5a59881d481200e0c26d74987a85c39593405, Railway 53578970-e2b5-45b2-92a8-d9b132793085 SUCCESS before edits. No applicable AGENTS.md found; extracted source has no .git.
 Reproduced battery gate in cover movement: below slideEnergy, A kept braced attachment. Escape now always has a free 55% base speed, with linear boost to existing full speed at slideEnergy (default 12). Cost is min(available battery, slideEnergy); timers, steering and collision unchanged. Soft cover outward+A escapes; neutral/tangent A still braces. Braced neutral A escapes outward, tangent A retains burst/step/slide, inward A remains blocked without cost. Existing .25-second recapture lock retained. Powered stage scale persists through the kick. No new tier, remap, visual changes or new simultaneous ability.
-1,963 regression checks and 26 combat-chain stages pass; production build passes. Exact deployment/live verification pending at this commit. Physical controller and two-client checks remain pending. d03 psychic candidate remains unapproved/uninstalled; no new images generated.
-Next: verify exact deployment and live low-battery escape, then obtain visual approval for existing psychic candidate and audit cover expose/retract/exit connectors. No full-video motion/transcript claim: recording RPReplay_Final1791087074 was only sampled in prior review; deeper continuous review remains pending.
+1,963 regression checks and 26 combat-chain stages pass; production build passes. Gameplay b25de3e2fa53e861945db4844543874d51909392 deployed via 7ffe19db-6aee-4b00-a02a-b4039c35a16f SUCCESS. Public live API using ordinary shield/slow/movement/LT/A/Y inputs confirmed zero-battery braced escape: (367.6432,325.5) -> (367.6432,256.95839), battery remained 0; fresh Y immediately entered charging. This is host behavior, not controller feel or a rendered-motion claim. Physical controller and two-client checks remain pending. d03 psychic candidate remains unapproved/uninstalled; no new images generated.
+Next: focused controller validation and obtain visual approval for existing psychic candidate and audit cover expose/retract/exit connectors. No full-video motion/transcript claim: recording RPReplay_Final1791087074 was only sampled in prior review; deeper continuous review remains pending.
