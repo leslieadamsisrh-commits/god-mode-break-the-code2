@@ -25,9 +25,12 @@ export function coverOccluders(c:Cover,groundY:number):Point[][]{
  if(farTop.length>=3)polys.push(farTop);
  return polys;
 }
-export function withCoverOcclusion(g:CanvasRenderingContext2D,covers:Cover[],groundY:number,time:number,draw:()=>void){
+export function withCoverOcclusion(g:CanvasRenderingContext2D,covers:Cover[],groundY:number,time:number,draw:()=>void,ownerId?:string|null){
  g.save();
  for(const c of covers){
+  // When an actor is attached, its owning cover defines full-body concealment.
+  // Nearby stacked covers still render as scenery but do not compound actor clipping.
+  if(ownerId&&((c as any).id)!==ownerId)continue;
   if(c.generated&&typeof c.born==="number"&&time-c.born<.72)continue;
   for(const polygon of coverOccluders(c,groundY)){
    g.beginPath();g.rect(-1000000,-1000000,2000000,2000000);
