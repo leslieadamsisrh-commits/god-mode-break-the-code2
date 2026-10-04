@@ -15,7 +15,7 @@ Default cost cap 12. Zero battery gives 55% existing speed, 6 gives 77.5%, 12 or
 
 Source: lib/game.ts is the host simulation; app/Game.tsx presents/interpolates its authoritative snapshots. No separate client escape algorithm was changed. Regression cases cover all faces/rotations, low/zero/full charge, soft/braced intent, generated cover, held A, tangent stage continuity and escape-to-Y. 1,963 checks; 26 combat-chain stages; build pass. Engine/snapshot coverage is not physical controller or two-browser validation.
 
-Artwork: approved d00/d03/d06 unchanged. Existing d03 psychic reach/hold/retract candidate remains review-only. Exposed cover/fire/recoil/retract and exit fallbacks need authored connectors; inspect approved sources before generating. Do not generate another sheet while existing approval is outstanding.
+Artwork: approved d00/d03/d06 unchanged. d03 psychic reach/hold/retract was approved and installed at 5c0b777. Exposed cover/fire/recoil/retract and exit fallbacks need authored connectors; inspect approved sources before generating. The prior approval is complete; prepare the next small missing cover connector batch after source audit.
 
 Future recordings: review full timeline, then motion around action handoffs at finer intervals. Record timestamp, observation, intended behavior, possible cause, reproduction and minimal fix. Separate speech, user-reported buttons, visible evidence and code-confirmed causes. Never infer input/latency/build identity from video. Audio transcription was unavailable; do not invent it. Prior sampled recording needs deeper review before further visual conclusions.
 
