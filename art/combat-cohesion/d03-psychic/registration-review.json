@@ -1,6 +1,6 @@
 {
-  "approved": false,
-  "installed": false,
+  "approved": true,
+  "installed": true,
   "source_sha256": "5b3cda4db811360ba5d633072700977d9367eeb15c3f6282fc0b0e8eedaf995a",
   "size": [
     2048,
@@ -51,5 +51,21 @@
       736
     ]
   ],
-  "registration": "Final anchors, scale against installed d03 and game-scale continuity pending visual approval."
+  "registration": "Uniform 125*178/250/697 * spriteScale; baseline 736; d03 only; reach .12 seconds, hold, retract .16 seconds. New action overrides retract without delay.",
+  "approved_at": "2026-10-03T22:16:17-07:00",
+  "anchors": [
+    [
+      410,
+      736
+    ],
+    [
+      1060,
+      736
+    ],
+    [
+      1730,
+      736
+    ]
+  ],
+  "anatomical_height": 697
 }

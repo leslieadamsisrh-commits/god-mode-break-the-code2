@@ -6,8 +6,8 @@ Actual source audit plus engine checks; not a physical-controller completion cla
 |---|---|---|
 | Run -> A slide -> soft cover | Paid Classic slide captures grounded cover; feather input traverses | Existing run/slide/cover sources |
 | Soft cover -> LT brace -> RT -> LT release | Brace keeps anchor; exposed fire uses muzzle clearance; release retracts | Exposed/fire/recoil/return routes still flag fallbacks |
-| RB create -> LB grip | Creation spends existing cost; grip favors attached manipulable cover, otherwise directional candidate | New d03 left-glove candidate awaiting approval |
-| LB carry + move -> LB release | Existing carry response/rotation and collision; release drops without throwing | Ready/run carry fallback remains |
+| RB create -> LB grip | Creation spends existing cost; grip favors attached manipulable cover, otherwise directional candidate | Approved d03 reach/hold/retract installed; other views pending |
+| LB carry + move -> LB release | Existing carry response/rotation and collision; release drops without throwing | d03 approved planted hold; other directions and carry locomotion pending |
 | LB + fresh RT throw -> shoot | Throw consumes trigger; release then fresh RT restores gunfire | Throw/retract connectors pending |
 | Any voluntary action -> fresh Y | Cancels voluntary action, safely drops held matter, seeds retained battery; existing held actions consumed until release | Approved charge entry; action-specific connectors incomplete |
 | Y release -> weapon return -> recharge | Existing early/full release and fresh-Y behavior retained | Approved d00/d03/d06 charge/return |
@@ -16,4 +16,4 @@ Actual source audit plus engine checks; not a physical-controller completion cla
 
 26 real-input engine stages run through run/capture/traverse/fire/build/carry/drop/throw/shoot/recharge in solo and joined host/guest snapshots. Created-cover carrying and Y drop also exercised. Existing regression matrix covers rotated cover, moving capture, depletion, incoming knock, early/full charge, fresh press and asset registration. Snapshot serialization is not a two-browser network playtest.
 
-Next: obtain new d03 psychic sheet visual approval, then finalize registration and validate its actual lab transitions. Audit gun-to-power entry and throw recovery alongside this family before claiming the full direction complete. No tiers or bulk directions generated.
+Next: d03 psychic approved and registered. Validate deployed lab transitions and physical carry/drop/throw/Y loop. Audit gun-to-power entry and throw recovery alongside this family before claiming the full direction complete. No tiers or bulk directions generated.
