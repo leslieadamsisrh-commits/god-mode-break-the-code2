@@ -213,10 +213,12 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  const covers=s.covers||[];
  [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time));
  const actors=[
-  ...(s.matter||[]).map((m:any)=>({y:m.y,fn:()=>matter(g,m)})),
-  {y:local.y,fn:()=>fighter(g,local,s.time,cfg)}
+  ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",fn:()=>matter(g,m)})),
+  {y:local.y,kind:"player",fn:()=>fighter(g,local,s.time,cfg)}
  ].sort((a,b)=>a.y-b.y);
- actors.forEach(o=>withCoverOcclusion(g,covers,o.y,s.time,o.fn));
+ actors.forEach(o=>{
+  withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?local.coverId:null);
+ });
 
 
  for(const sh of s.shots||[]){g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x+(sh.renderOffsetX||0),sh.y-(sh.z||0));g.lineTo(sh.x+(sh.renderOffsetX||0)-sh.vx*.025,sh.y-(sh.z||0)-sh.vy*.025);g.stroke()}for(const f of s.fx||[])if(f.type!=="slide")fx(g,f);
@@ -383,9 +385,12 @@ function coverCaptureBridge(p:any,t:number){
  // Three presentation-only bridge beats over the existing authoritative .22s contact window.
  // B01 pre-impact inherits the terminal slide silhouette; B02 compression and B03 settle
  // reuse the existing authored cover contact cells. No gameplay timer or root is changed.
- if(age<.055)return{kind:"slide",phase:.92};
- if(age<.13)return{kind:"cover",frame:0};
- return{kind:"cover",frame:1};
+ if(age<.045)return{kind:"slide",phase:.94};
+ // Compression holds the first authored contact silhouette long enough to read impact.
+ if(age<.12)return{kind:"cover",frame:0};
+ // Settle advances through the authored contact family before brace takes over.
+ if(age<.185)return{kind:"cover",frame:1};
+ return{kind:"cover",frame:2};
 }
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&p.input?.coverAim?supportedCoverDir(p):rawDir,im=safestSprite(family,d);
  let bridge=coverCaptureBridge(p,t),renderFamily=family,renderIm=im;
