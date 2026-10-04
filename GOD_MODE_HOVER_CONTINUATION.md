@@ -155,5 +155,7 @@ Next review: smallest neighboring d02/d04 exposed aim/recoil batch, foursprites 
 
 
 
-Exact gameplay commitf34ad13ebdfecad689f038e116172094e33a0baa / Railway65f38c3d-6ebb-407f-86ce-326e63b7b5b3 SUCCESS. Ordinary-input live host chain passed; live browser preview and preserved settings confirmed. Read art/combat-cohesion/BARREL_AUTHORITY_20261004.md. Physical controller and two-client browser checks remain pending.
+## Exact live checkpoint and latest art approval
+Gameplayf34ad13ebdfecad689f038e116172094e33a0baa deployed65f38c3d-6ebb-407f-86ce-326e63b7b5b3 SUCCESS; evidence/approval commit596705bf471c21435e452532b988eff4e24fab52 deployed000354ae-6452-4325-8d13-9f87ea657ba5 SUCCESS. Live host chain and live rendered approved d03 previews verified separately; physical-controller/two-client checks pending. Read BARREL_AUTHORITY_20261004.md.
 User2026-10-04 08:56PDT approves the displayed new sprites' APPEARANCE and authorizes continued installation work. This supersedes the historical unapproved visual status. The source still needs technical cleanup of halo/alpha, per-frame sockets and direction/registration checks before runtime installation; appearance approval is not a claim those checks passed.
+Alpha-audit correction supersedes all halo-rejection notes: actual empty space is alpha0, so keep the approved source unchanged. Pixel768,512 belongs to a boot. Four distinct alpha components have overlapping row bounds and a muzzle crossing the nominal768cell; isolate accurately before registering and installing. See d02-d04-over-cover/README.md and registration-review.json. New directions and supported-pose limiter remain pending; do not claim every shot source or145degree controller behavior is fixed. Preserve exact current movement/art.

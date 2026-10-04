@@ -1,0 +1,83 @@
+{
+  "status": "appearance approved; not registered or installed",
+  "source": "appearance-approved-review-v1.png",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "components": [
+    {
+      "dir": 2,
+      "pose": "aim",
+      "bounds": [
+        170,
+        15,
+        793,
+        543
+      ]
+    },
+    {
+      "dir": 2,
+      "pose": "recoil",
+      "bounds": [
+        853,
+        26,
+        1452,
+        544
+      ]
+    },
+    {
+      "dir": 4,
+      "pose": "aim",
+      "bounds": [
+        139,
+        537,
+        793,
+        1011
+      ]
+    },
+    {
+      "dir": 4,
+      "pose": "recoil",
+      "bounds": [
+        851,
+        537,
+        1497,
+        1012
+      ]
+    }
+  ],
+  "alphaAudit": {
+    "emptyExamples": [
+      [
+        820,
+        300
+      ],
+      [
+        820,
+        480
+      ],
+      [
+        100,
+        300
+      ],
+      [
+        750,
+        400
+      ],
+      [
+        768,
+        600
+      ]
+    ],
+    "alpha": 0,
+    "erratum": "768,512 is on boot; RGB preview halo is transparent"
+  },
+  "pending": [
+    "complete source-component isolation with overlapping row bounds",
+    "one shared anatomical scale and pelvis/ground anchors",
+    "exact per-frame barrel registration",
+    "direction identity comparison and actual-scale cover chain",
+    "host/client aiming limit using validated directional set"
+  ]
+}
