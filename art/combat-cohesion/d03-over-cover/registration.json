@@ -1,0 +1,44 @@
+{
+  "approved": true,
+  "source": "aim-recoil-review-v1.png",
+  "installed": "public/assets/god-frame/cover-d03-exposure-v1.png",
+  "direction": 3,
+  "rects": [
+    [
+      0,
+      0,
+      925,
+      887
+    ],
+    [
+      925,
+      0,
+      849,
+      887
+    ]
+  ],
+  "anchors": [
+    [
+      553,
+      817
+    ],
+    [
+      1363,
+      814
+    ]
+  ],
+  "uniformScale": "125*143/250/638*config.spriteScale",
+  "soleOffset": 27,
+  "muzzle": {
+    "recoil": [
+      1688,
+      250
+    ],
+    "aim": [
+      882,
+      255
+    ]
+  },
+  "scope": "existing braced LT peek d03 only",
+  "status": "installed; deployment/live verification follows"
+}
