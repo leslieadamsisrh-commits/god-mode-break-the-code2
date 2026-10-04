@@ -90,3 +90,6 @@ User reports current charge movement and cover escape feel smooth. Preserve this
 
 ## d03 cover connector review — 2026-10-04
 Recovered a03c552, Railway 228de7ab-4400-4211-9ecd-a8baf5e05d9c SUCCESS. Audited original six-cell d03 cover, ready and slide sources. Reuse existing brace/exposed aim and downstream slide/approved charge. Prepared only missing recoil/retract connectors: art/combat-cohesion/d03-cover/connectors-review-v1.png, NOT APPROVED / NOT INSTALLED. Source audit, compact interaction rules, isolation bounds and next step in its README.md; generation prompt saved alongside. No runtime movement/code changes. Stop at required visual approval; after approval finalize anchors/scale/muzzle, install one d03 chain and verify/deploy. Controller/network checks remain pending.
+
+## Approved d03 cover connectors installed — 2026-10-03 22:53 PDT
+User approved recoil/retract batch from 1ce7bc2. Installed byte-identical candidate with shared crouch scale and grounded anchors; d03 braced only, immediate interruption preserved. Source rules and registration in art/combat-cohesion/d03-cover. No host mechanics/movement changes. 1,963 checks, 26 chain stages, psychic-art and new cover-art checks, build passed. Deployment/live verification pending; next verify lab continuity before controller request.

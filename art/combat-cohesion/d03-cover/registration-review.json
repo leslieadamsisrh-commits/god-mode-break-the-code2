@@ -1,0 +1,38 @@
+{
+  "approved": true,
+  "installed": true,
+  "approval": "User: That looks great, man. Let\u2019s move to the next one. This looks amazing.",
+  "sourceSha256": "df70d2838814a95846c2424cf29b32ea99a719118a7f9f9a5b56dc7cd75d2e9c",
+  "rects": [
+    [
+      0,
+      0,
+      887,
+      887
+    ],
+    [
+      887,
+      0,
+      887,
+      887
+    ]
+  ],
+  "anchors": [
+    [
+      514,
+      828
+    ],
+    [
+      1320,
+      831
+    ]
+  ],
+  "uniformScale": "125*143/250/638 * spriteScale",
+  "poses": [
+    "recoil",
+    "retract"
+  ],
+  "registrationBasis": "Original exposed crouch silhouette 143 px, original 250px ground anchor y215; new silhouette height638, equivalent 6px sole offset; shared scale, no individual pose stretch",
+  "runtimeDirection": "d03 gunFacing only",
+  "liveVerification": "pending"
+}
