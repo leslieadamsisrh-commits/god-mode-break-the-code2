@@ -72,7 +72,7 @@ function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
  if(p.coverMode==="braced"&&i.coverAim){
   // LT plants aim direction but no longer freezes lateral cover travel.
   // The existing traversal solver below remains authoritative for feet/root.
-  const forward=Math.cos(p.gunFacing)*a.nx+Math.sin(p.gunFacing)*a.ny;p.peek=forward<.35;p.peekEdge=Math.min(a.t,a.length-a.t)<18;
+  const forward=Math.cos(p.gunFacing)*a.nx+Math.sin(p.gunFacing)*a.ny;p.peek=true;p.peekEdge=Math.min(a.t,a.length-a.t)<18;
  }
  if(p.coverMode==="soft"&&mag>.18&&away/mag>.15){releaseCover(p,s,.18);p.vx=i.x*moveSpeed;p.vy=i.y*moveSpeed;p.x=clamp(p.x+p.vx*dt,A.left,A.right);p.y=clamp(p.y+p.vy*dt,A.top,A.bottom);collide(p,s);return}
  if(c.weaveEnabled<.5){
@@ -85,7 +85,7 @@ function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
      if(nextDot*g>.42){edge=ne;cur=next;t=g>0?0:next.length;along=nextDot}
    }
    const step=moveSpeed*dt*.78;t=clamp(t+along*step,0,cur.length);p.coverAnchor=anchorForEdge(cv,edge,t);p.coverSpeed=along*moveSpeed*.78;p.vx=p.coverAnchor.tx*p.coverSpeed;p.vy=p.coverAnchor.ty*p.coverSpeed;placeOnCover(p,s);
-   if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor.nx+Math.sin(p.gunFacing)*p.coverAnchor.ny;p.peek=forward<.35;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}
+   if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor.nx+Math.sin(p.gunFacing)*p.coverAnchor.ny;p.peek=true;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}
    return;
  }
  const along=i.x*a.tx+i.y*a.ty;
@@ -96,7 +96,7 @@ function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
    const cv=s.covers.find(x=>x.id===p.coverId);if(cv){const g=raw<0?-1:1,ne=(a.edge+g+4)%4,next=anchorForEdge(cv,ne,g>0?0:(ne%2===0?cv.w:cv.h)),nextDot=i.x*next.tx+i.y*next.ty;if(nextDot*g>.3)p.coverAnchor=next}
  }else if(a.t===before)p.coverSpeed=0;
  placeOnCover(p,s);
- if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor!.nx+Math.sin(p.gunFacing)*p.coverAnchor!.ny;p.peek=forward<.35;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}
+ if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor!.nx+Math.sin(p.gunFacing)*p.coverAnchor!.ny;p.peek=true;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}
 }
 function classicCoverAction(p:Player,s:GameState,i:InputState){
  const a=p.coverAnchor,cv=s.covers.find(x=>x.id===p.coverId);if(!a||!cv)return false;
