@@ -547,7 +547,20 @@ function fx(g:CanvasRenderingContext2D,f:any){
   const fade=classicClamp(f.life/.25,0,1);g.save();g.translate(f.x,f.y);g.globalAlpha=fade*.55;g.strokeStyle=f.type==="cover-block"?"#ff78ac":"#74dfe6";g.lineWidth=1;
   g.beginPath();g.ellipse(0,2,7+(1-fade)*4,3,0,0,Math.PI*2);g.stroke();g.restore();return;
  }
- g.save();g.translate(f.renderOffsetX||0,-(f.z||0));g.globalAlpha=Math.min(1,f.life*4);if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){const dir=f.type==="brake"?1:-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":f.type==="muzzle"?"#fff2a0":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
+ g.save();g.translate(f.renderOffsetX||0,-(f.z||0));g.globalAlpha=Math.min(1,f.life*4);
+ if(f.type==="brake"&&Number.isFinite(f.oldAngle)){
+  const age=1-classicClamp(f.life/.42,0,1),oa=f.oldAngle,na=f.newAngle??oa,strength=classicClamp((f.entrySpeed||0)/689.15949375,0,1);
+  g.save();g.translate(f.x,f.y);
+  // Short scrape scar and incoming/outgoing vector arcs: presentation only.
+  g.globalAlpha=(1-age)*.7;g.lineWidth=2.2;g.strokeStyle="#8f8178";g.beginPath();g.moveTo(-Math.cos(oa)*6,-Math.sin(oa)*6);g.lineTo(-Math.cos(oa)*(18+30*strength),-Math.sin(oa)*(18+30*strength));g.stroke();
+  g.strokeStyle="#6af2ff";g.globalAlpha=(1-age)*.55;g.beginPath();g.moveTo(0,0);g.lineTo(Math.cos(na)*(16+18*strength),Math.sin(na)*(16+18*strength));g.stroke();
+  // Bounded deterministic concrete chips; no authoritative matter objects.
+  const count=f.hard?8:Math.max(2,Math.round(3+strength*2));for(let i=0;i<count;i++){const spread=(i-(count-1)/2)*.12,a=oa+Math.PI+spread,r=(10+i*3)*(1+age*.8);g.save();g.translate(Math.cos(a)*r,Math.sin(a)*r-age*(5+i%3));g.rotate(a+i*.7);g.fillStyle=i%2?"#82736a":"#a39185";g.fillRect(-2,-1.5,4+(i%3),3);g.restore()}
+  // Panther-boot contact spark / compressed psychic wake.
+  g.globalAlpha=(1-age)*.85;g.strokeStyle="#fff1a8";g.lineWidth=1.5;for(let i=0;i<4;i++){const a=oa+Math.PI+(i-1.5)*.28;g.beginPath();g.moveTo(0,0);g.lineTo(Math.cos(a)*(8+i*3),Math.sin(a)*(8+i*3));g.stroke()}
+  g.restore();
+ }
+ if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){if(f.type==="brake"&&Number.isFinite(f.oldAngle)){const a=f.oldAngle+Math.PI,near=8+i*4,far=30+i*6;g.beginPath();g.moveTo(f.x+Math.cos(a)*near,f.y+Math.sin(a)*near);g.lineTo(f.x+Math.cos(a)*far,f.y+Math.sin(a)*far);g.stroke()}else{const dir=-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":f.type==="muzzle"?"#fff2a0":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
 
 function arrow(g:CanvasRenderingContext2D,x1:number,y1:number,x2:number,y2:number){const a=Math.atan2(y2-y1,x2-x1);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.beginPath();g.moveTo(x2,y2);g.lineTo(x2-Math.cos(a-.55)*11,y2-Math.sin(a-.55)*11);g.lineTo(x2-Math.cos(a+.55)*11,y2-Math.sin(a+.55)*11);g.closePath();g.fill()}
 
