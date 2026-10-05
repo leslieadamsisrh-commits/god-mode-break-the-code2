@@ -314,6 +314,9 @@ function coverLateralFrame(p:any,t:number,total:number){
 }
 function coverPoseFrame(p:any,t:number,total:number){
  const extended=total===12;
+ // LT released always resolves toward the protected low cover family.
+ // returnToCover may show an authored retract first; traversal input can interrupt immediately.
+ if(p.coverId&&p.coverMode==="braced"&&!p.input?.coverAim&&p.returnToCover<=0&&Math.abs(p.coverSpeed||0)<=20)return extended?4:Math.min(total-1,2);
  const pose=extended?{contact:[0,1,2],brace:4,lateral:[5,6],peek:7,fire:8,return:9}:{contact:[0,1],brace:1,lateral:[],peek:2,fire:3,return:4};
  if(total!==6&&total!==12)return 0;
  if(p.fireState>0||p.recoil>0)return pose.fire;
