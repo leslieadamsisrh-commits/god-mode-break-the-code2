@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="actor-polish-shotgun-authority-pass06";
+const BATCH="animation-qa-harness-01";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Animation cleanup",buttons:"Run all directions repeatedly · emphasize sustained UP-RIGHT → reverse → slide → Brake → redirect",watch:"Up-right trailing leg should read plant → drive → recover, without the old side-kick. Watch pelvis, boots, backpack and cape."},
- {title:"Trigger authority",buttons:"Plant at waist/tall cover → fire into wall → barely over → edge → corner → open space",watch:"Every cadence-ready RT pull must BOOM. Bad shots collide with geometry instead of disappearing."},
- {title:"Combat rhythm",buttons:"Move → slide → Brake → cover → plant → BANG → rotate → BANG → retract → escape → reposition → BANG",watch:"Judge .39s cadence: faster and immediate, but still weighted. Record the run."}
+ {title:"Recording 1 · Directed QA",buttons:"Tap QA COURSE → start screen recording → follow A1 through J in order",watch:"Do not rush. Give each requested action 3–4 seconds of clean repetition. Keep telemetry/event strip visible."},
+ {title:"Recording 2 · Natural stress",buttons:"Keep QA visible → select J NATURAL STRESS → play hard for 60–90 seconds",watch:"Play naturally, not perfectly. Let warnings and event history identify states around visible defects."},
+ {title:"Send both recordings",buttons:"Upload both recordings after the course",watch:"They become the evidence for the final Jade Sprite Actor defect list and one surgical correction batch."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
