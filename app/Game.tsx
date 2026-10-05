@@ -515,6 +515,13 @@ function drawPack03Retract(g:CanvasRenderingContext2D,p:any,cfg:Config){
  const im=actorAssets.get("connectors"),idx=pack03RetractIndex(p);if(!im||idx===null)return false;
  return drawActorAtlasFrame(g,im,idx,6,3,p,cfg,1,"connectors");
 }
+function drawPlantPunctuation(g:CanvasRenderingContext2D,p:any,t:number){
+ if(!p.coverId||p.coverMode!=="braced")return;
+ const justPlant=p.input?.coverAim&&p.contact<=t&&Math.abs(p.coverSpeed||0)<1;
+ if(!justPlant)return;
+ // Restrained micro punctuation: only while planted; low alpha keeps reticle/muzzle clear.
+ g.save();g.globalAlpha=.22;g.fillStyle="#d9ffff";g.font="900 italic 9px Arial";g.fillText("CHK!",p.x-12,p.y+5);g.restore();
+}
 function coverCaptureBridge(p:any,t:number){
  if(!p.coverId||typeof p.contact!=="number"||p.contact<=t)return null;
  const age=Math.max(0,.22-(p.contact-t)),topology=coverTopology(p);
@@ -552,7 +559,7 @@ const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pi
  const psychic=!connector&&poseAlpha===0&&drawPsychicPose(g,p,t,cfg);
  if(!connector&&!psychic&&renderIm&&poseAlpha<1){const m=spriteCell(renderIm,renderFamily,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(renderIm,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*spriteRegistration(renderFamily).groundAnchor.x*sc,p.y-displayCell*spriteRegistration(renderFamily).groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!connector&&!psychic&&!im&&!poseAlpha){presentationQA.missingExact++}
  if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.restore();
- g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke();g.restore()}
+ drawPlantPunctuation(g,p,t);g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke();g.restore()}
 // Structure Lab concrete-cover-atlas-v2: original face registration, not replacement artwork.
 type CoverPoint={x:number;y:number};
 const CONCRETE_FACES:Record<string,number[][]>={
