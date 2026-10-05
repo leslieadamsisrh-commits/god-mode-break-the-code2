@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="sprite-actor-pack02-kinetic-impact-motion-continuity";
+const BATCH="sprite-actor-pack03-production-boundary-v1";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Brake physics",buttons:"Full slide → soft brake → 45° cut → 90° cut → 180° reverse",watch:"Watch Panther-boot plant, concrete chips/scrape, old-vector streak and new-vector release. SKRRK! should be reserved for hard cuts."},
- {title:"Aim-ring keys",buttons:"Cover → LT → rotate 45° → 90° → 135° → 180° → opposite side → fire at each",watch:"45° donor region should remain stable. A90/A135/A180 are intentionally safe fallbacks until approved production art exists; flag anatomy/scale discontinuities."},
- {title:"Full flow",buttons:"Run → slide → brake → redirect → cover → traverse → LT → rotate → fire → retract → escape",watch:"Cover feet should track actual travel and plant on reversal. Judge whether momentum and animation read as one continuous action."}
+ {title:"Lower-body language",buttons:"Slide → cover → shuffle → stop → reverse → edge → corner · then Brake 45° / 90° / 180°",watch:"Approved low-brace/shuffle donors should stay registered. True planted pivots remain production-art missing; judge feet/pelvis and Brake ground response."},
+ {title:"Aim-ring QA",buttons:"Cover + LT → rotate 0° → 45° → 90° → 135° → 180° → 225° → 270° → 315° → 360°",watch:"30–60° authored region should read cleanly. Side/rear sectors are intentionally safe fallback/MISSING until approved A90/A135/A180 art is authored; gameplay aim must remain 360°."},
+ {title:"Full combat sentence",buttons:"Run → slide → Brake → redirect → cover → shuffle → LT → rotate → fire → recoil → retract → A escape → slide",watch:"Verify immediate control, stable protected mechanics, and no disappearing/debug Jade. Record where missing art—not mechanics—breaks continuity."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
