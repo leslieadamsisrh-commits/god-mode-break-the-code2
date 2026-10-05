@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="cover-completion-waist-tall-traversal-combat-v1";
+const BATCH="cover-refinement-corner-edge-tall-v2";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Waist vs tall cover",buttons:"Use the horizontal waist cover → LT + RT over top · then tall vertical cover → try over-top → move to edge → LT + RT",watch:"Waist cover allows top exposure. Tall cover must block over-top fire and require edge/corner exposure. Movement feel must stay unchanged."},
- {title:"FACE → EDGE → CORNER",buttons:"Attach → traverse FACE → EDGE → CORNER → reverse → EDGE → FACE → A escape",watch:"Topology should read continuously with no embedded body, flicker, foot skating or input delay. Repeat slow and fast."},
- {title:"Moving cover combat",buttons:"Move laterally while holding LT → sweep 30°/45°/60° → RT → recoil → release LT → shield → reverse",watch:"Lower body keeps traversing while upper body fights. Shotgun, recoil, retract and shield must not freeze lateral movement."}
+ {title:"Tall-cover edge rule",buttons:"Tall vertical cover → LT+RT from middle → move to either edge/corner → LT+RT",watch:"Middle must block the shotgun; edge/corner must expose it. Jade should stay visibly outside the wall throughout."},
+ {title:"Corner ownership",buttons:"Traverse FACE → EDGE → CORNER → next FACE repeatedly in both directions",watch:"No visual cross-through, side-flip or mask stacking at the corner. Contact should remain attached to the owning geometry."},
+ {title:"Combat traversal stress",buttons:"Hold LT while moving → aim sweep → fire/recoil → reverse → release LT → A escape",watch:"Movement remains immediate. Lower-body traversal must survive upper-body combat and corner transitions without changing slide feel."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
