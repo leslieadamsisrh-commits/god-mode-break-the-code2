@@ -1,6 +1,8 @@
-# COVER AIM RING — MISSING ART MANIFEST V1
+# COVER AIM RING — MISSING ART MANIFEST V2
 
 Gameplay aim is continuous 360 degrees. Presentation ring: 16 sectors (22.5 degrees). Current approved dedicated cover aim/recoil donor art exists at approximately 30° (d02), 45° (d03), and 60° (d04).
+
+Pack 02 audit result: no approved source components in the current Studio inventory can cleanly produce true A90 / A135 / A180 or their asymmetric opposite-side equivalents without inventing/off-model anatomy. These remain production-art requirements. No questionable composition was accepted.
 
 | Sector | Angle | Current donor | Status | Missing production work |
 |---|---:|---|---|---|
@@ -8,15 +10,15 @@ Gameplay aim is continuous 360 degrees. Presentation ring: 16 sectors (22.5 degr
 | 1 | 22.5° | d02 30° | acceptable neighbor | connector + final sector key optional |
 | 2 | 45° | d03 45° | approved key | none for aim/recoil; retract already partially authored |
 | 3 | 67.5° | d04 60° | acceptable neighbor | connector + final sector key optional |
-| 4 | 90° | d04 60° / cover fallback | fallback | side aim/fire/recoil/recovery + pivot |
+| 4 | 90° | d04 60° / cover fallback | MISSING | A90 authored torso/weapon family + planted pivot |
 | 5 | 112.5° | nearest safe cover | fallback | rear-quarter torso/weapon group + pivot |
-| 6 | 135° | nearest safe cover | fallback | rear-quarter aim/fire/recoil + pivot |
+| 6 | 135° | nearest safe cover | MISSING | A135 authored rear-quarter family + pivot |
 | 7 | 157.5° | nearest safe cover | fallback | rear aim transition |
-| 8 | 180° | nearest safe cover | fallback | full rear aim/fire/recoil + lower-body orientation |
+| 8 | 180° | nearest safe cover | MISSING | A180 authored rear family + lower-body orientation |
 | 9 | 202.5° | nearest safe cover | fallback | rear aim transition |
-| 10 | 225° | nearest safe cover | fallback | rear-quarter aim/fire/recoil + pivot |
+| 10 | 225° | nearest safe cover | MISSING | opposite A135 family; no arbitrary mirror |
 | 11 | 247.5° | nearest safe cover | fallback | rear-quarter torso/weapon group + pivot |
-| 12 | 270° | nearest safe cover | fallback | side aim/fire/recoil/recovery + pivot |
+| 12 | 270° | nearest safe cover | MISSING | opposite A90 family; no arbitrary mirror |
 | 13 | 292.5° | d04-family only if anatomically compatible | fallback | opposite-side authored key; no arbitrary mirror |
 | 14 | 315° | d03-family only if anatomically compatible | fallback | opposite-side authored key; no arbitrary mirror |
 | 15 | 337.5° | d02-family only if anatomically compatible | fallback | opposite-side authored key; no arbitrary mirror |
