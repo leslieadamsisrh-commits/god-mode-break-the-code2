@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="final-cover-combat-pass05";
+const BATCH="actor-polish-shotgun-authority-pass06";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Plant",buttons:"Attach → traverse L/R → stop → hold LT → push left stick every direction → rotate right stick 360° → release LT → traverse",watch:"LT held must freeze cover translation while right-stick aim stays immediate. Release must restore protected mobility."},
- {title:"Physical exposure",buttons:"Test waist + tall cover at FACE / EDGE / CORNER → attempt over/left/right/back-angle shots",watch:"Shot must agree with registered barrel clearance. Waist can clear over/side; tall FACE blocks; tall edge/corner can expose."},
- {title:"Natural combat",buttons:"Run → slide → Brake → cover → shuffle → LT plant → aim → shotgun → recoil → rotate → shotgun → retract → A escape → slide",watch:"Stop testing and play hard. Judge whether cover states disappear into intuitive control; record the full run."}
+ {title:"Animation cleanup",buttons:"Run all directions repeatedly · emphasize sustained UP-RIGHT → reverse → slide → Brake → redirect",watch:"Up-right trailing leg should read plant → drive → recover, without the old side-kick. Watch pelvis, boots, backpack and cape."},
+ {title:"Trigger authority",buttons:"Plant at waist/tall cover → fire into wall → barely over → edge → corner → open space",watch:"Every cadence-ready RT pull must BOOM. Bad shots collide with geometry instead of disappearing."},
+ {title:"Combat rhythm",buttons:"Move → slide → Brake → cover → plant → BANG → rotate → BANG → retract → escape → reposition → BANG",watch:"Judge .39s cadence: faster and immediate, but still weighted. Record the run."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
