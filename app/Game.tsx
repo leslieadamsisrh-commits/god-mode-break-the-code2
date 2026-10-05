@@ -285,16 +285,24 @@ function spriteCell(im:HTMLImageElement,family:string,frame:number){
 }
 
 // The recovered atlases separate contact, brace, peek and fire; they are not idle loops.
+function coverTraversalPresentation(p:any){
+ const topology=coverTopology(p),speed=Math.abs(p.coverSpeed||0);
+ return{topology,moving:speed>20,edge:topology!=="FACE",corner:topology==="CORNER",speed};
+}
 function coverLateralFrame(p:any,t:number,total:number){
  if(total!==12||Math.abs(p.coverSpeed||0)<=20)return null;
  // Authored 12-cell cover atlas owns lateral locomotion. Direction selects the
  // leading stride; cadence stays presentation-only and never changes coverSpeed.
- const sign=(p.coverSpeed||0)<0?-1:1;
+ const travel=coverTraversalPresentation(p),sign=(p.coverSpeed||0)<0?-1:1;
+ // EDGE/CORNER slow the visual cadence slightly to sell planting without changing world movement.
  // Tie cadence to actual cover travel so feet do not cycle while barely moving.
- const cadence=Math.max(6,Math.min(11,Math.abs(p.coverSpeed||0)/18)),phase=Math.floor(t*cadence)%4;
+ const cadence=Math.max(6,Math.min(11,Math.abs(p.coverSpeed||0)/18))*(travel.corner?.72:travel.edge?.86:1),phase=Math.floor(t*cadence)%4;
  // Four-beat authored cycle: plant -> stride -> opposite plant -> settle.
  // Existing cells are reused; no mirrored/new Jade art and no gameplay-speed change.
- return sign<0?[5,6,5,4][phase]:[6,5,6,4][phase];
+ const faceCycle=sign<0?[5,6,5,4]:[6,5,6,4];
+ const edgeCycle=sign<0?[5,4,6,4]:[6,4,5,4];
+ const cornerCycle=sign<0?[4,5,4,6]:[4,6,4,5];
+ return (travel.corner?cornerCycle:travel.edge?edgeCycle:faceCycle)[phase];
 }
 function coverPoseFrame(p:any,t:number,total:number){
  const extended=total===12;
