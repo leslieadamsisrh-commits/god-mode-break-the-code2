@@ -1,4 +1,4 @@
-# CURRENT JADE ANIMATION MANIFEST — PASS 07
+# CURRENT JADE ANIMATION MANIFEST — REGISTRATION LOCK 08
 
 Purpose: deterministic current-production animation blueprint for later premium-Jade replacement. Gameplay mechanics remain authoritative.
 
@@ -38,3 +38,29 @@ root; pelvis; ground line; left/right foot; body height; waist seam; shoulders; 
 Pass07 cover grammar: slide/contact → soft mobile one-knee; A → hard brace; LT on hard brace → planted combat; LT release → hard protection; escape → movement.
 
 Future high-detail Jade inherits the same root, pose identity, direction, sockets, transitions, timing, aim sector and muzzle relationship. Replace artwork, not gameplay.
+
+## Registration Lock 08 — canonical current-production template
+- gameplay root: (0.50, 1.00)
+- ground target: 0.88 normalized actor height (cover 0.885; slide/Pack03 0.89 within intentional pose tolerance)
+- crown target: y 0.04
+- pelvis: (0.50, 0.60)
+- shoulders: x 0.31–0.69 @ y 0.31
+- helmet envelope: center (0.50,0.15), w 0.29, h 0.23
+- backpack envelope: center (0.37,0.40), w 0.25, h 0.35
+- cape origin: (0.39,0.38)
+- weapon hand: (0.65,0.39)
+- support hand: (0.72,0.43)
+- muzzle target: (0.88,0.37)
+- body envelope: left 0.18, right 0.82, top 0.04, bottom 0.96
+
+### Lock08 correction record
+| Priority | State/component | Defect | Action | Status |
+|---|---|---|---|---|
+| P1 | Pack03 aim/lower/connectors | ground contract differed from runtime families | normalized atlas registration ground to canonical tolerance; gameplay root unchanged | CORRECTED |
+| P1 | family/direction transitions | apparent vertical bounce at donor switch | added 90ms presentation-only settle; no velocity/root change | CORRECTED |
+| P1 | cape across donor families | magenta/shape/attachment varies inside baked whole-body source art | no destructive whole-sprite recolor; canonical cape origin recorded for authored component replacement | MISSING / REQUIRES AUTHORED REPLACEMENT |
+| P1 | diagonal lower body | residual knee/shin/boot inconsistency exists in baked directional art | exact art retained for honest QA; no neighboring full-sprite substitution | MISSING / REQUIRES AUTHORED REPLACEMENT |
+| P2 | helmet/backpack apparent envelope | donor perspective varies slightly | canonical envelope/socket locked for QA/premium replacement | COMPOSED / QA |
+| P2 | shotgun/muzzle | perspective variation across major aim keys | gameplay muzzle remains authoritative; canonical target documented | COMPOSED / QA |
+
+No claim is made that baked cape or residual diagonal anatomy has been repainted in Lock08. Those require specific authored replacement components rather than runtime distortion.
