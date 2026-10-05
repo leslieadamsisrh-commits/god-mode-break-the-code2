@@ -53,7 +53,9 @@ function coverAimSector(p:any){
 type ActorSectorStatus="AUTHORED"|"COMPOSED"|"SAFE_NEIGHBOR"|"MISSING";
 const COVER_ACTOR_SECTORS:ActorSectorStatus[]=[
  "SAFE_NEIGHBOR","SAFE_NEIGHBOR","AUTHORED","SAFE_NEIGHBOR",
- "MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","SAFE_NEIGHBOR","SAFE_NEIGHBOR"
+ "COMPOSED","SAFE_NEIGHBOR","COMPOSED","SAFE_NEIGHBOR",
+ "COMPOSED","SAFE_NEIGHBOR","COMPOSED","SAFE_NEIGHBOR",
+ "COMPOSED","SAFE_NEIGHBOR","SAFE_NEIGHBOR","SAFE_NEIGHBOR"
 ];
 function coverActorSectorStatus(p:any){return COVER_ACTOR_SECTORS[coverAimSector(p)]||"MISSING"}
 function supportedCoverDir(p:any){
@@ -78,6 +80,7 @@ function presentation(s:any,now:number){
  return {...b.state,time:a.state.time+(b.state.time-a.state.time)*blend,players,covers:mix(a.state.covers||[],b.state.covers||[]),matter:mix(a.state.matter||[],b.state.matter||[])};
 }
 const powerAssets=new Map<string,HTMLImageElement>();
+const actorAssets=new Map<string,HTMLImageElement>();
 type BootState={done:number;total:number;failed:number;label:string};
 let preloadPromise:Promise<BootState>|null=null;
 function loadImage(src:string,onReady:(im:HTMLImageElement)=>void,progress:(ok:boolean)=>void){
@@ -93,11 +96,13 @@ function preload(onProgress?:(s:BootState)=>void){
  if(preloadPromise)return preloadPromise;
  preloadPromise=(async()=>{
   const power=["cover-d02-d04-exposure-v1","cover-d03-exposure-v1","cover-d03-connectors-v1","psychic-d03-v1","grounded-float-v1","front-d06-loop-v1","front-d06-transitions-v1","front-right-d03-sequence-v1","front-right-d03-dissolve-v1","opening","continuation","face-opening","face-continuation"];
+  const actor=[["lower","/assets/sprite-actor-pack03a/lower_body_pack03a.webp"],["aim","/assets/sprite-actor-pack03a/aim_keys_pack03a.webp"],["connectors","/assets/sprite-actor-pack03a/connectors_pack03a.webp"]] as const;
   const classic=[["graffiti","/assets/dimension33-map/slide-graffiti-skeet-skurt-v2.png"],["ground","/assets/shotgun-v57-ground-effects.png"],["concrete","/assets/dimension33-map/concrete-cover-atlas-v2.png"]] as const;
   const sprites:{key:string;src:string}[]=[];
   for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;sprites.push({key:`${family}-${d}`,src:"https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n})}
   const jobs:{label:string;src:string;ready:(im:HTMLImageElement)=>void}[]=[
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
+   ...actor.map(([key,path])=>({label:"actor-"+key,src:path,ready:(im:HTMLImageElement)=>actorAssets.set(key,im)})),
    ...classic.map(([key,path])=>({label:key,src:"https://jade-v1-combat-lab-v142.leslieadams-isrh.chatgpt.site"+path,ready:(im:HTMLImageElement)=>classicAssets.set(key,im)})),
    ...sprites.map(x=>({label:x.key,src:x.src,ready:(im:HTMLImageElement)=>jade.set(x.key,im)}))
   ];
@@ -473,6 +478,39 @@ function coverVisualOffset(p:any){
  const topologyNormal=topology==="CORNER"?2.15:topology==="EDGE"?.8:0;
  return{x:a.nx*(normal+topologyNormal)+a.tx*(faceBias+topologyTangent),y:a.ny*(normal+topologyNormal)+a.ty*(faceBias+topologyTangent)};
 }
+function drawActorAtlasFrame(g:CanvasRenderingContext2D,im:HTMLImageElement,index:number,cols:number,rows:number,p:any,cfg:Config,scale=1){
+ const cw=im.naturalWidth/cols,ch=im.naturalHeight/rows,sx=(index%cols)*cw,sy=Math.floor(index/cols)*ch;
+ const h=125*cfg.spriteScale*scale,w=h*(cw/ch);
+ g.drawImage(im,sx,sy,cw,ch,p.x-w*.5,p.y-h*.94,w,h);return true;
+}
+function pack03AimIndex(p:any){
+ if(!p.coverId||p.coverMode!=="braced"||!p.input?.coverAim)return null;
+ const sector=coverAimSector(p),base:Record<number,number>={4:0,6:4,8:8,10:12,12:16};
+ const b=base[sector];if(b===undefined)return null;
+ const state=p.recoil>0?2:p.fireState>0?1:0;return b+state;
+}
+function drawPack03Aim(g:CanvasRenderingContext2D,p:any,cfg:Config){
+ const im=actorAssets.get("aim"),idx=pack03AimIndex(p);if(!im||idx===null)return false;
+ return drawActorAtlasFrame(g,im,idx,5,4,p,cfg,1.02);
+}
+function drawPack03Brake(g:CanvasRenderingContext2D,p:any,cfg:Config){
+ const im=actorAssets.get("lower");if(!im||!(p.brakeState>0)||p.coverId)return false;
+ const age=1-Math.max(0,Math.min(1,p.brakeState/.24)),idx=4+Math.min(3,Math.floor(age*4));
+ return drawActorAtlasFrame(g,im,idx,4,2,p,cfg,1.04);
+}
+function pack03RetractIndex(p:any){
+ if(!p.coverId||p.coverMode!=="braced"||!(p.returnToCover>0)||p.input?.coverAim)return null;
+ const sector=coverAimSector(p);let pair:number|null=null;
+ if(sector===8||sector===7||sector===9)pair=12; // R01
+ else if(sector===6||sector===10||sector===5||sector===11)pair=14; // R02
+ else if(sector===4||sector===12)pair=16; // R03
+ if(pair===null)return null;
+ const phase=p.returnToCover>.08?0:1;return pair+phase;
+}
+function drawPack03Retract(g:CanvasRenderingContext2D,p:any,cfg:Config){
+ const im=actorAssets.get("connectors"),idx=pack03RetractIndex(p);if(!im||idx===null)return false;
+ return drawActorAtlasFrame(g,im,idx,6,3,p,cfg,1.03);
+}
 function coverCaptureBridge(p:any,t:number){
  if(!p.coverId||typeof p.contact!=="number"||p.contact<=t)return null;
  const age=Math.max(0,.22-(p.contact-t)),topology=coverTopology(p);
@@ -502,7 +540,12 @@ const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pi
  g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
  const splitCover=poseAlpha===0&&p.coverId&&p.coverMode==="braced"&&Math.abs(p.coverSpeed||0)>20&&!!(p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0);
  if(splitCover&&renderIm){const lm=spriteCell(renderIm,renderFamily,frame),lr=spriteRegistration(renderFamily);g.save();g.beginPath();g.rect(-1e4,p.y-31,2e4,1e4);g.clip();g.drawImage(renderIm,lm.sx,lm.sy,lm.cell,lm.cell,p.x-displayCell*lr.groundAnchor.x*sc,p.y-displayCell*lr.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.restore()}
- const exposure=poseAlpha===0&&(drawCoverNeighbor(g,p,cfg,splitCover)||drawCoverExposure(g,p,cfg,splitCover));const connector=exposure||poseAlpha===0&&drawCoverConnector(g,p,cfg,splitCover);const psychic=!connector&&poseAlpha===0&&drawPsychicPose(g,p,t,cfg);
+ const packBrake=poseAlpha===0&&drawPack03Brake(g,p,cfg);
+ const packAim=!packBrake&&poseAlpha===0&&drawPack03Aim(g,p,cfg);
+ const packRetract=!packBrake&&!packAim&&poseAlpha===0&&drawPack03Retract(g,p,cfg);
+ const exposure=!packBrake&&!packAim&&!packRetract&&poseAlpha===0&&(drawCoverNeighbor(g,p,cfg,splitCover)||drawCoverExposure(g,p,cfg,splitCover));
+ const connector=packBrake||packAim||packRetract||exposure||poseAlpha===0&&drawCoverConnector(g,p,cfg,splitCover);
+ const psychic=!connector&&poseAlpha===0&&drawPsychicPose(g,p,t,cfg);
  if(!connector&&!psychic&&renderIm&&poseAlpha<1){const m=spriteCell(renderIm,renderFamily,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(renderIm,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*spriteRegistration(renderFamily).groundAnchor.x*sc,p.y-displayCell*spriteRegistration(renderFamily).groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!connector&&!psychic&&!im&&!poseAlpha){presentationQA.missingExact++}
  if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.restore();
  g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke();g.restore()}
