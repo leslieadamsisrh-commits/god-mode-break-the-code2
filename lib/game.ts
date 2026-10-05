@@ -229,8 +229,9 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
 function muzzleSocket(p:Player){
  const a=p.gunFacing??p.aim??0;
  const dir=((Math.round(a/(Math.PI*2)*24)%24)+24)%24;
- // Directional socket table is intentionally data-driven so art can refine it later.
- const forward=[31,31,32,33,34,34,35,35,34,34,33,32,31,31,32,33,34,34,35,35,34,34,33,32][dir]||32;
+ // Pack04: one stable muzzle contract for every major aim family. These are
+ // gameplay-space sockets; art registration is normalized independently.
+ const forward=[32,32,33,34,35,35,36,36,36,35,35,34,33,33,34,35,36,36,36,36,35,35,34,33][dir]||34;
  const side=[0,-1,-2,-2,-1,0,1,2,2,1,0,-1,-2,-2,-1,0,1,2,2,1,0,-1,-2,-1][dir]||0;
  const px=Math.cos(a),py=Math.sin(a),sx=-py,sy=px;
  return{x:p.x+px*forward+sx*side,y:p.y+py*forward+sy*side,dir};
@@ -340,10 +341,10 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
    const renderOffsetX=0;
    const shotHeight=neighbor?(muzzle.y-p.y)+(neighbor.anchor[1]-neighbor.muzzle[1])*neighborUnit:exposedD03?(muzzle.y-p.y)+(814-250)*artUnit:clearance?Math.max(44*c.spriteScale,15616/332+4):44*c.spriteScale;
    const blocked=s.covers.some(cv=>cv.id!==clearance&&segmentCover(p,muzzle,cv));p.lastShot=s.time;
-   if(blocked){s.fx.push({id:uid(),type:"cover-block",x:muzzle.x,y:muzzle.y,life:.18,owner:n})}
+   if(blocked){s.fx.push({id:uid(),type:"cover-block",x:muzzle.x,y:muzzle.y,life:.18,owner:n,text:"CLAK"})}
    else{p.fireState=.11;p.recoil=.12;if(p.coverId)p.returnToCover=.28;
     for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,damage:c.shotDamage*(p.godTime>0?c.godDamage:1),z:shotHeight,renderOffsetX,clearanceCoverId:clearance})}
-    s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.12,owner:n,z:shotHeight,renderOffsetX})
+    s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.14,owner:n,z:shotHeight,renderOffsetX,text:"BOOM"})
    }
   }
  }
