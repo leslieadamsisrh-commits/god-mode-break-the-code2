@@ -67,8 +67,10 @@ type BootState={done:number;total:number;failed:number;label:string};
 let preloadPromise:Promise<BootState>|null=null;
 function loadImage(src:string,onReady:(im:HTMLImageElement)=>void,progress:(ok:boolean)=>void){
  return new Promise<void>(resolve=>{
-  const im=new Image();im.decoding="async";
-  const finish=async(ok:boolean)=>{if(ok){try{await im.decode()}catch{}onReady(im)}progress(ok);resolve()};
+  const im=new Image();im.decoding="async";let settled=false;
+  const finish=async(ok:boolean)=>{if(settled)return;settled=true;clearTimeout(timer);if(ok){try{await Promise.race([im.decode(),new Promise(r=>setTimeout(r,900))])}catch{}if(im.naturalWidth)onReady(im);else ok=false}progress(ok);resolve()};
+  // Full Safari can leave cross-origin Image requests pending indefinitely. Never let one asset deadlock boot.
+  const timer=setTimeout(()=>void finish(false),3500);
   im.onload=()=>void finish(true);im.onerror=()=>void finish(false);im.src=src;
  });
 }
@@ -88,6 +90,8 @@ function preload(onProgress?:(s:BootState)=>void){
   const progress=(label:string)=>(ok:boolean)=>{done++;if(!ok)failed++;onProgress?.({done,total,failed,label})};
   // Bounded parallel batches avoid hammering iPad/Safari with 100 simultaneous decodes.
   for(let i=0;i<jobs.length;i+=12)await Promise.all(jobs.slice(i,i+12).map(j=>loadImage(j.src,j.ready,progress(j.label))));
+  // A remote atlas failure is recoverable because safestSprite holds approved loaded poses.
+  // Boot completion is mandatory; individual remote requests are not.
   loading=false;return{done,total,failed,label:"READY"};
  })();
  return preloadPromise;
