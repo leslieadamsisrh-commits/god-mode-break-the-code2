@@ -39,6 +39,7 @@ function softState(p:any){
  if(sp<-20)return "SOFT_FLOW_L";if(sp>20)return "SOFT_FLOW_R";return "SOFT_READY";
 }
 export default function AnimationQaHarness({s,onExit}:{s:any;onExit:()=>void}){
+ const [registration,setRegistration]=useState(false);
  const [step,setStep]=useState(0),[events,setEvents]=useState<string[]>([]),[warn,setWarn]=useState<string[]>([]);
  const prev=useRef<any>(null),lastSector=useRef<{v:number,t:number}|null>(null),lastMuzzle=useRef<{x:number;y:number;aim:number}|null>(null);
  const p=s?.players?.[0]||{},cfg=s?.config||{};p._qaTime=s?.time||0;const scState=softState(p),fam=family(p),speed=Math.hypot(p.vx||0,p.vy||0),ang=fam==="run"&&speed>55?Math.atan2(p.vy||0,p.vx||0):(p.gunFacing??p.aim??0);
@@ -62,18 +63,23 @@ export default function AnimationQaHarness({s,onExit}:{s:any;onExit:()=>void}){
   if(p.coverMode==="soft"&&Math.abs(p.coverSpeed||0)<2&&q&&q.sc?.startsWith("SOFT_FLOW"))warnings.push("⚠ SOFT COVER FOOT SKATE");
   if(lastSector.current&&lastSector.current.v!==sec&&now-lastSector.current.t<90)warnings.push("⚠ SECTOR CHATTER");
   if(!lastSector.current||lastSector.current.v!==sec)lastSector.current={v:sec,t:now};
+  if(q&&q.state!==state){
+   const oldFam=(q.state||"").split(" ")[0],newFam=fam.toUpperCase();
+   if(oldFam!==newFam&&Math.abs((fam==="cover"?.885:fam==="slide"?.89:.88)-(q.ground??.88))>.018)warnings.push("⚠ HEIGHT / GROUND POP");
+  }
   if(lastMuzzle.current){const dm=Math.hypot(mu.x-lastMuzzle.current.x,mu.y-lastMuzzle.current.y),da=Math.abs(deg((p.gunFacing??p.aim??0)-lastMuzzle.current.aim));if(dm>20&&da<12)warnings.push("⚠ MUZZLE POP")}
   lastMuzzle.current={...mu,aim:p.gunFacing??p.aim??0};
   if(lines.length)setEvents(e=>[...lines,...e].slice(0,12));
   if(warnings.length)setWarn(w=>[...warnings,...w].slice(0,6));
-  prev.current={state,sc:scState,cover:p.coverId,planted:!!p.input?.coverAim,fire:p.fireState||0,recoil:p.recoil||0,return:p.returnToCover||0,corrected,x:p.x||0,y:p.y||0,frame:Math.floor((s?.time||0)*(fam==="run"?10:7))%6};
+  prev.current={state,ground:fam==="cover"?.885:fam==="slide"?.89:.88,sc:scState,cover:p.coverId,planted:!!p.input?.coverAim,fire:p.fireState||0,recoil:p.recoil||0,return:p.returnToCover||0,corrected,x:p.x||0,y:p.y||0,frame:Math.floor((s?.time||0)*(fam==="run"?10:7))%6};
  },[s?.time,p.x,p.y,p.coverId,p.input?.coverAim,p.fireState,p.recoil,p.returnToCover,fam,d,sec,corrected]);
 
  const c=COURSE[Math.max(0,Math.min(COURSE.length-1,step))];
  return <div className="qaHarness">
   <div className="qaHead"><div><small>ANIMATION QA HARNESS 01</small><b>{c[0]}</b></div><button onClick={onExit}>EXIT QA / PLAY NORMALLY</button></div>
   <div className="qaPrompt"><strong>INPUT</strong><span>{c[1]}</span><strong>WATCH</strong><span>{c[2]}</span></div>
-  <div className="qaNav"><button onClick={()=>setStep(Math.max(0,step-1))}>PREVIOUS</button><button onClick={()=>{setEvents([]);setWarn([])}}>REPEAT / CLEAR</button><button onClick={()=>setStep(Math.min(COURSE.length-1,step+1))}>NEXT</button><span>{step+1}/{COURSE.length}</span></div>
+  <div className="qaNav"><button onClick={()=>setRegistration(v=>!v)}>{registration?"REGISTRATION QA ON":"REGISTRATION QA"}</button><button onClick={()=>setStep(Math.max(0,step-1))}>PREVIOUS</button><button onClick={()=>{setEvents([]);setWarn([])}}>REPEAT / CLEAR</button><button onClick={()=>setStep(Math.min(COURSE.length-1,step+1))}>NEXT</button><span>{step+1}/{COURSE.length}</span></div>
+  {registration&&<div className="qaRegistration"><b>REGISTRATION LOCK 08</b><span>GROUND .88 · ROOT .50/1.00 · PELVIS .50/.60 · CROWN .04</span><span>SHOULDERS .31↔.69 @ .31 · CAPE ORIGIN .39/.38 · BACKPACK .37/.40</span><span>BODY ENVELOPE .18↔.82 · MUZZLE TARGET .88/.37</span></div>}
   <div className="qaGrid">
    <section><b>MOVEMENT</b><span>STATE {fam.toUpperCase()}</span><span>SPEED {speed.toFixed(1)}</span><span>VEL {deg(Math.atan2(p.vy||0,p.vx||0)).toFixed(0)}°</span><span>INPUT {deg(Math.atan2(p.input?.y||0,p.input?.x||0)).toFixed(0)}°</span></section>
    <section><b>SPRITE</b><span>DIR d{String(d).padStart(2,"0")} · {deg(ang).toFixed(0)}°</span><span>SRC {source}</span><span>FRAME {Math.floor((s?.time||0)*(fam==="run"?10:7))%6}</span><span>{corrected?"CORRECTED DONOR d22":"EXACT / RUNTIME"}</span></section>
