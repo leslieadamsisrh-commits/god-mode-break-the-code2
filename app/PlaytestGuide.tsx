@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="sprite-actor-pack03-production-boundary-v1";
+const BATCH="sprite-actor-art-integration-03a";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Lower-body language",buttons:"Slide → cover → shuffle → stop → reverse → edge → corner · then Brake 45° / 90° / 180°",watch:"Approved low-brace/shuffle donors should stay registered. True planted pivots remain production-art missing; judge feet/pelvis and Brake ground response."},
- {title:"Aim-ring QA",buttons:"Cover + LT → rotate 0° → 45° → 90° → 135° → 180° → 225° → 270° → 315° → 360°",watch:"30–60° authored region should read cleanly. Side/rear sectors are intentionally safe fallback/MISSING until approved A90/A135/A180 art is authored; gameplay aim must remain 360°."},
- {title:"Full combat sentence",buttons:"Run → slide → Brake → redirect → cover → shuffle → LT → rotate → fire → recoil → retract → A escape → slide",watch:"Verify immediate control, stable protected mechanics, and no disappearing/debug Jade. Record where missing art—not mechanics—breaks continuity."}
+ {title:"Brake / pivots",buttons:"Slide → Brake → redirect 45° / 90° / 180°",watch:"Current-production L04/L05 + KB actor frames should read as planted momentum changes. Watch root, feet, scale and concrete response."},
+ {title:"Aim Ring",buttons:"Cover + LT → slowly rotate full 360° → fire at 45° / 90° / 135° / 180° and opposite directions",watch:"Gameplay aim remains continuous. A90/A135/A180 current-production keys should replace side/rear fallbacks without disappearing, mirroring errors or muzzle drift."},
+ {title:"Full flow",buttons:"Run → slide → Brake → redirect → cover → shuffle → LT → 360° aim → fire → recoil → retract → A escape",watch:"Judge whether current-production Jade now reads as one actor through the full combat circle. Flag any component that should be rejected/rebuilt."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
