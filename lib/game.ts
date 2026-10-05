@@ -309,7 +309,8 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
             p.slide=0;p.slideSteerCurrent=0;p.brake=.18;p.brakeState=.24;
             const residual=.22,redirect=Math.max(0,Math.min(1,mag))*c.moveSpeed*.38;
             p.vx=p.vx*residual+i.x*redirect;p.vy=p.vy*residual+i.y*redirect;
-            s.fx.push({id:uid(),type:"brake",x:p.x,y:p.y,life:.34,owner:n,text:"SKRRK!"});
+            const oldAngle=travel,newAngle=Math.atan2(i.y,i.x),redirectAngle=Math.abs(wrap(newAngle-oldAngle)),hard=redirectAngle>Math.PI*.42&&speed>c.slideSpeed*.62;
+            s.fx.push({id:uid(),type:"brake",x:p.x,y:p.y,life:.42,owner:n,text:hard?"SKRRK!":"",entrySpeed:speed,oldAngle,newAngle,redirectAngle,hard} as any);
           }
         }else if(c.weaveEnabled>=.5){
           const targetSteer=clamp(delta,-c.slideSteerAngle,c.slideSteerAngle)*c.slideSteer,steerBlend=1-Math.exp(-c.slideSteerResponse*d);
