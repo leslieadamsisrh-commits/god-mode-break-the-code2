@@ -231,14 +231,26 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  if(i.launchOrbit&&!prev.launchOrbit&&p.orbitIds.length){p.orbitIds.forEach((id,j)=>{const m=s.matter.find(m=>m.id===id);if(m){m.orbitBy=null;m.vx=Math.cos(p.aim+(j-1)*.12)*c.throwForce*1.05;m.vy=Math.sin(p.aim+(j-1)*.12)*c.throwForce*1.05;m.life=3}});p.orbitIds=[]}
 }
 function muzzleSocket(p:Player){
- const a=p.gunFacing??p.aim??0;
- const dir=((Math.round(a/(Math.PI*2)*24)%24)+24)%24;
- // Pack04: one stable muzzle contract for every major aim family. These are
- // gameplay-space sockets; art registration is normalized independently.
- const forward=[32,32,33,34,35,35,36,36,36,35,35,34,33,33,34,35,36,36,36,36,35,35,34,33][dir]||34;
+ const a=p.gunFacing??p.aim??0,dir=((Math.round(a/(Math.PI*2)*24)%24)+24)%24;
+ // Pass05 major-family socket contract. Continuous aim owns shot direction;
+ // sector data only describes the registered current-production barrel reach.
+ const major=[34,35,36,36,35,34,33,33],sector=((Math.round(a/(Math.PI*2)*8)%8)+8)%8,forward=major[sector];
  const side=[0,-1,-2,-2,-1,0,1,2,2,1,0,-1,-2,-2,-1,0,1,2,2,1,0,-1,-2,-1][dir]||0;
  const px=Math.cos(a),py=Math.sin(a),sx=-py,sy=px;
  return{x:p.x+px*forward+sx*side,y:p.y+py*forward+sy*side,dir};
+}
+function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:number;y:number},aim:number){
+ if(!cv||!p.coverAnchor)return{allowed:true,clearance:undefined as string|undefined,mode:"FREE"};
+ const a=p.coverAnchor,topology=Math.min(a.t,a.length-a.t)<18?"EDGE":"FACE";
+ if(p.coverMode!=="braced"||!p.input.coverAim)return{allowed:false,clearance:undefined,mode:"PROTECTED"};
+ // Tall FACE never clears over the top. EDGE/CORNER must point sufficiently
+ // around/outside the owning face. Waist can expose over top from FACE.
+ if(cv.coverClass==="tall"&&topology==="FACE")return{allowed:false,clearance:undefined,mode:"TALL_FACE"};
+ const px=Math.cos(aim),py=Math.sin(aim),out=px*a.nx+py*a.ny,along=px*a.tx+py*a.ty;
+ const sideClear=topology!=="FACE"&&Math.abs(along)>.18;
+ const overClear=cv.coverClass!=="tall"&&out>-.35;
+ const allowed=sideClear||overClear;
+ return{allowed,clearance:allowed?cv.id:undefined,mode:sideClear?"SIDE":overClear?"OVER":"BLOCKED"};
 }
 // Swept contact in the existing rotated floor footprint. Exposed top fire clears only its own block.
 function segmentCover(from:{x:number;y:number},to:{x:number;y:number},cv:Cover){
@@ -330,11 +342,8 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
   const holding=!!(p.gripId||p.gripCoverId);if(holding&&!wasHolding){p.psychicStartedAt=s.time;p.psychicReturnUntil=0}else if(!holding&&wasHolding)p.psychicReturnUntil=s.time+.16;
   if(i.fire&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&!p.gripId&&!p.gripCoverId&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
    const attachedCover=p.coverId?s.covers.find(cv=>cv.id===p.coverId):undefined;
-   const tallAttached=attachedCover?.coverClass==="tall";
-   // Waist cover may expose over the top. Tall cover requires an edge/corner peek.
-   const canExpose=!tallAttached||!!p.peekEdge;
-   const muzzle=muzzleSocket(p),clearance=p.coverId&&p.coverMode==="braced"&&i.coverAim&&p.peek&&canExpose?p.coverId:undefined;
-   if(p.coverId&&p.coverMode==="braced"&&i.coverAim&&tallAttached&&!p.peekEdge){p.lastShot=s.time;s.fx.push({id:uid(),type:"cover-block",x:p.x,y:p.y,life:.18,owner:n,text:"EDGE PEEK"});continue}
+   const muzzle=muzzleSocket(p),physical=coverMuzzleClearance(p,attachedCover,muzzle,p.gunFacing),clearance=physical.clearance;
+   if(p.coverId&&p.coverMode==="braced"&&i.coverAim&&!physical.allowed){p.lastShot=s.time;s.fx.push({id:uid(),type:"cover-block",x:muzzle.x,y:muzzle.y,life:.18,owner:n,text:physical.mode==="TALL_FACE"?"EDGE PEEK":"BLOCKED"});continue}
    // Top exposure already clears the attached floor footprint. Keep the
    // visible muzzle/projectile above its 47-unit top rather than inside it.
    const exposedD03=!!clearance&&muzzle.dir===3,artUnit=(125*143/250/638)*c.spriteScale;
