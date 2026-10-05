@@ -28,6 +28,7 @@ let slideWasActive=false,slideWord=0,graffiti:any=null;
 function classicGraffiti(e:CanvasRenderingContext2D,t:HTMLImageElement|undefined,n:any,r=1){if(!t?.complete||!t.naturalWidth||n.life<=0)return;let i=CLASSIC_LETTERS[n.word],a=t.naturalHeight/2,o=Math.cos(n.angle),s=Math.sin(n.angle)*.58,c=classicClamp(n.age/.22,0,1),l=classicClamp(n.life/.24,0,1),u=1-Math.min(1,n.age/.2);e.save(),e.globalCompositeOperation=`screen`,e.translate(n.originX,n.originY-8),e.globalAlpha=r*l,e.shadowColor=`#75f6ff`,e.shadowBlur=11,e.strokeStyle=`#f8fbff`,e.lineWidth=1.3,e.beginPath(),e.arc(0,0,5+u*13,0,Math.PI*2),e.stroke();for(let t=0;t<7;t++){let i=t*2.399+n.angle,a=(8+t%3*5)*(1-u*.45);e.fillStyle=t%2?`#ff57b6`:`#72f7ff`,e.globalAlpha=r*l*(.35+u*.55),e.fillRect(Math.cos(i)*a-1,Math.sin(i)*a*.58-1,2+t%2,2+t%2)}for(let u=0;u<i.length;u++){let d=classicClamp((n.age-u*.032)/.16,0,1);if(d<=0)continue;let[f,p]=i[u],m=Math.round(f*t.naturalWidth),h=Math.max(1,Math.round((p-f)*t.naturalWidth)),g=h/a,_=27+u%2,v=classicClamp(g*_*.72,18,29),y=10+c*24+u*15,b=o*y,x=s*y-23-Math.sin(d*Math.PI)*4,ee=1+(1-d)*.28;e.save(),e.translate(b,x),e.rotate(Math.sin(n.angle)*.1),e.shadowColor=u%2?`#ff4eae`:`#67f5ff`,e.shadowBlur=8;for(let i=2;i>0;i--)e.globalAlpha=r*l*d*(.08+i*.035),e.drawImage(t,m,n.word*a,h,a,-v/2-o*i*7,-_/2-s*i*7,v*ee,_);e.globalAlpha=r*l*d*.95,e.drawImage(t,m,n.word*a,h,a,-v/2,-_/2,v*ee,_),e.strokeStyle=u%2?`#ff4eae`:`#67f5ff`,e.lineWidth=1.2,e.globalAlpha=r*l*d*.62,e.beginPath(),e.moveTo(-v*.4-o*4,-s*4),e.lineTo(-v*.4-o*(14+d*8),-s*(14+d*8)),e.stroke(),e.restore()}let d=classicClamp(n.age/.055,0,1),f=n.age<.34?1:classicClamp((.56-n.age)/.22,0,1);if(f>0){let i=1-(1-d)**3,c=n.word?104:94,l=n.word?29:28,u=o*(5+i*8),p=-9+s*(3+i*6)-i*4;e.save(),e.globalCompositeOperation=`source-over`,e.translate(u,p),e.rotate(Math.sin(n.angle)*.045),e.scale(.78+i*.22,.78+i*.22),e.globalAlpha=r*f,e.shadowColor=`#05070c`,e.shadowBlur=3,e.filter=`contrast(1.32) saturate(1.25)`,e.drawImage(t,0,n.word*a,t.naturalWidth,a,-c/2,-l/2,c,l),e.filter=`none`,e.shadowColor=n.word?`#ff48ad`:`#63f4ff`,e.shadowBlur=7,e.globalAlpha=r*f*.42,e.drawImage(t,0,n.word*a,t.naturalWidth,a,-c/2,-l/2,c,l),e.restore()}e.restore()}
 let cameraState={x:500,y:310,ready:false,last:0};let loading=false;
 const coverAimVisual=new Map<string,number>();
+const coverTravelPhase=new Map<string,{phase:number,lastT:number,lastSign:number}>();
 type CoverTopology="FACE"|"EDGE"|"CORNER";
 const coverTopologyVisual=new Map<string,CoverTopology>();
 function coverTopology(p:any):CoverTopology{
@@ -304,9 +305,14 @@ function coverLateralFrame(p:any,t:number,total:number){
  const travel=coverTraversalPresentation(p),sign=(p.coverSpeed||0)<0?-1:1;
  // EDGE/CORNER slow the visual cadence slightly to sell planting without changing world movement.
  // Tie cadence to actual cover travel so feet do not cycle while barely moving.
- const cadence=Math.max(6,Math.min(11,Math.abs(p.coverSpeed||0)/18))*(travel.corner?.72:travel.edge?.86:1),phase=Math.floor(t*cadence)%4;
+ const key=p.id||"local",prev=coverTravelPhase.get(key)||{phase:0,lastT:t,lastSign:sign},dt=Math.max(0,Math.min(.1,t-prev.lastT));
+ // Phase advances from actual cover displacement (speed * dt), not wall-clock cadence.
+ // A reversal plants immediately before beginning the opposite stride.
+ if(prev.lastSign!==sign){prev.phase=Math.ceil(prev.phase/4)*4;prev.lastSign=sign}
+ const topologyScale=travel.corner?.72:travel.edge?.86:1,stepDistance=18;
+ prev.phase+=Math.abs(p.coverSpeed||0)*dt/stepDistance*topologyScale;prev.lastT=t;coverTravelPhase.set(key,prev);
+ const phase=Math.floor(prev.phase)%4;
  // Four-beat authored cycle: plant -> stride -> opposite plant -> settle.
- // Existing cells are reused; no mirrored/new Jade art and no gameplay-speed change.
  const faceCycle=sign<0?[5,6,5,4]:[6,5,6,4];
  const edgeCycle=sign<0?[5,4,6,4]:[6,4,5,4];
  const cornerCycle=sign<0?[4,5,4,6]:[4,6,4,5];
