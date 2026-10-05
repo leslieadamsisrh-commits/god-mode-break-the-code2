@@ -43,13 +43,21 @@ function coverTopology(p:any):CoverTopology{
 const presentationQA={unsupportedCoverAim:0,missingExact:0,missing:new Map<string,number>()};
 function noteMissing(state:string,family:string,dir:number){const key=`${state}|${family}|d${String(dir).padStart(2,"0")}`;presentationQA.missing.set(key,(presentationQA.missing.get(key)||0)+1)}
 function angleDelta(a:number,b:number){return Math.atan2(Math.sin(a-b),Math.cos(a-b))}
+function coverAimSector(p:any){
+ const raw=p.gunFacing??p.aim??0,key=p.id||"local",step=Math.PI/8,exact=((Math.round(raw/step)%16)+16)%16,prev=coverAimVisual.get(key);
+ // 16-sector presentation ring with hysteresis. Gameplay aim remains raw/continuous.
+ if(prev!==undefined&&Math.abs(angleDelta(raw,prev*step))<step*.62)return prev;
+ coverAimVisual.set(key,exact);return exact;
+}
 function supportedCoverDir(p:any){
- const raw=p.gunFacing??p.aim??0,exact=((Math.round(raw/(Math.PI*2)*24)%24)+24)%24;
- if(!p.coverId||p.coverMode!=="braced"||!p.input?.coverAim)return exact;
- const supported=[2,3,4],prev=coverAimVisual.get(p.id||"local");
- if(prev!==undefined&&supported.includes(prev)&&Math.abs(angleDelta(raw,prev*Math.PI/12))<Math.PI/16)return prev;
- let best=supported[0],err=Infinity;for(const d of supported){const e=Math.abs(angleDelta(raw,d*Math.PI/12));if(e<err){err=e;best=d}}
- // Never fabricate a pose outside the authored 30/45/60-degree family. Hold the closest valid pose.\n if(exact!==best)presentationQA.unsupportedCoverAim++;coverAimVisual.set(p.id||"local",best);return best;
+ const raw=p.gunFacing??p.aim??0,exact24=((Math.round(raw/(Math.PI*2)*24)%24)+24)%24;
+ if(!p.coverId||p.coverMode!=="braced"||!p.input?.coverAim)return exact24;
+ const sector=coverAimSector(p),sectorAngle=sector*Math.PI/8;
+ // Existing 30/45/60 art is presentation donor material only. Pick it only when close;
+ // otherwise the Sprite Actor falls through to a safe approved whole-body pose.
+ const donors=[2,3,4];let best=donors[0],err=Infinity;for(const d of donors){const e=Math.abs(angleDelta(sectorAngle,d*Math.PI/12));if(e<err){err=e;best=d}}
+ if(err<=Math.PI/12){coverAimVisual.set((p.id||"local")+"-donor",best);return best}
+ presentationQA.unsupportedCoverAim++;return exact24;
 }
 const snapshots:{state:any;at:number}[]=[];
 function recordSnapshot(s:any,at:number){snapshots.push({state:s,at});if(snapshots.length>20)snapshots.shift()}
