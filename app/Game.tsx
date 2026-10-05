@@ -50,6 +50,12 @@ function coverAimSector(p:any){
  if(prev!==undefined&&Math.abs(angleDelta(raw,prev*step))<step*.62)return prev;
  coverAimVisual.set(key,exact);return exact;
 }
+type ActorSectorStatus="AUTHORED"|"COMPOSED"|"SAFE_NEIGHBOR"|"MISSING";
+const COVER_ACTOR_SECTORS:ActorSectorStatus[]=[
+ "SAFE_NEIGHBOR","SAFE_NEIGHBOR","AUTHORED","SAFE_NEIGHBOR",
+ "MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","MISSING","SAFE_NEIGHBOR","SAFE_NEIGHBOR"
+];
+function coverActorSectorStatus(p:any){return COVER_ACTOR_SECTORS[coverAimSector(p)]||"MISSING"}
 function supportedCoverDir(p:any){
  const raw=p.gunFacing??p.aim??0,exact24=((Math.round(raw/(Math.PI*2)*24)%24)+24)%24;
  if(!p.coverId||p.coverMode!=="braced"||!p.input?.coverAim)return exact24;
@@ -420,8 +426,8 @@ function coverExposureFrame(p:any){
  if(!powerAssets.has("cover-d03-exposure-v1"))return null;
  if(p.coverPreview===2||p.coverPreview===3)return p.coverPreview-2;
  if(!p.coverId||p.coverMode!=="braced"||!p.peek||!p.input?.coverAim||p.charging||p.powerFlash>0||p.powerReturn>0||p.knock>0||p.slide>0||p.dash>0||p.exit||p.gripId||p.gripCoverId||p.kickStage&&p.kickStage!=="none")return null;
- const dir=supportedCoverDir(p);
- if(dir!==3)return null;
+ const dir=supportedCoverDir(p),status=coverActorSectorStatus(p);
+ if(status==="MISSING"||dir!==3)return null;
  return p.fireState>0||p.recoil>0?1:0;
 }
 function drawCoverExposure(g:CanvasRenderingContext2D,p:any,cfg:Config,upperOnly=false){const frame=coverExposureFrame(p);if(frame===null)return false;const im=powerAssets.get("cover-d03-exposure-v1")!,[sx,sy,w,h]=COVER_EXPOSURE_RECTS[frame],[ax,ay]=COVER_EXPOSURE_ANCHORS[frame],unit=(125*143/250/638)*cfg.spriteScale;g.save();if(upperOnly){g.beginPath();g.rect(-1e4,-1e4,2e4,p.y-31+1e4);g.clip()}g.drawImage(im,sx,sy,w,h,p.x-(ax-sx)*unit,p.y-(ay-sy)*unit,w*unit,h*unit);g.restore();return true;}
@@ -429,8 +435,8 @@ function coverConnectorFrame(p:any){
  if(!powerAssets.has("cover-d03-connectors-v1"))return null;
  if(p.coverPreview===0||p.coverPreview===1)return p.coverPreview;
  if(!p.coverId||p.coverMode!=="braced"||p.charging||p.powerFlash>0||p.powerReturn>0||p.knock>0||p.slide>0||p.dash>0||p.exit||p.gripId||p.gripCoverId||p.kickStage&&p.kickStage!=="none")return null;
- const angle=p.gunFacing??p.aim??0,dir=supportedCoverDir(p);
- if(dir!==3)return null;
+ const angle=p.gunFacing??p.aim??0,dir=supportedCoverDir(p),status=coverActorSectorStatus(p);
+ if(status==="MISSING"||dir!==3)return null;
  if(p.fireState>0||p.recoil>0)return 0;
  if(p.returnToCover>0&&!p.input?.coverAim)return 1;
  return null;
