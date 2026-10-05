@@ -445,8 +445,9 @@ function coverVisualOffset(p:any){
  const topology=coverTopology(p),normal=exposed?1.25:3.5;
  const faceBias=a.face==="left"?-.9:a.face==="right"?.9:a.face==="top"?-.45:.45;
  const endSign=(a.t??0)<(a.length??0)/2?-1:1;
- const topologyTangent=topology==="FACE"?0:topology==="EDGE"?endSign*1.8:endSign*3.1;
- const topologyNormal=topology==="CORNER"?1.15:topology==="EDGE"?.55:0;
+ const topologyTangent=topology==="FACE"?0:topology==="EDGE"?endSign*1.35:endSign*2.05;
+ // Keep corner art outside the owning footprint; large tangential offsets caused visual cross-through.
+ const topologyNormal=topology==="CORNER"?2.15:topology==="EDGE"?.8:0;
  return{x:a.nx*(normal+topologyNormal)+a.tx*(faceBias+topologyTangent),y:a.ny*(normal+topologyNormal)+a.ty*(faceBias+topologyTangent)};
 }
 function coverCaptureBridge(p:any,t:number){
