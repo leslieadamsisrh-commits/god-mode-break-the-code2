@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="combat-continuity-pass04";
+const BATCH="final-cover-combat-pass05";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Actor rotation",buttons:"Cover + LT → 45° → 90° → 135° → 180° → opposite side → back · fire at each major key",watch:"Watch ground line, pelvis, apparent height, helmet, backpack, shotgun and muzzle. No scale/root popping."},
- {title:"Cover exposure",buttons:"Test waist + tall cover at FACE → EDGE → CORNER · aim/fire over/around valid positions",watch:"Waist cover may expose; tall cover must require edge/corner clearance. Jade stays concealed when protected; muzzle must not originate inside geometry."},
- {title:"Full flow",buttons:"Run → slide → Brake → redirect → cover → traverse → LT → 360° aim → shotgun → recoil → retract → escape",watch:"Judge animation continuity, cover readability, shotgun priority, FX clutter and controller response. Record the run."}
+ {title:"Plant",buttons:"Attach → traverse L/R → stop → hold LT → push left stick every direction → rotate right stick 360° → release LT → traverse",watch:"LT held must freeze cover translation while right-stick aim stays immediate. Release must restore protected mobility."},
+ {title:"Physical exposure",buttons:"Test waist + tall cover at FACE / EDGE / CORNER → attempt over/left/right/back-angle shots",watch:"Shot must agree with registered barrel clearance. Waist can clear over/side; tall FACE blocks; tall edge/corner can expose."},
+ {title:"Natural combat",buttons:"Run → slide → Brake → cover → shuffle → LT plant → aim → shotgun → recoil → rotate → shotgun → retract → A escape → slide",watch:"Stop testing and play hard. Judge whether cover states disappear into intuitive control; record the full run."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
