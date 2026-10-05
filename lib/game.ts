@@ -69,7 +69,11 @@ function releaseCover(p:Player,s:GameState,lock=.18){p.coverId=null;p.coverMode=
 function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
  const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,moveSpeed=c.moveSpeed*(p.chargeMotion??1),mag=Math.hypot(i.x,i.y),away=i.x*a.nx+i.y*a.ny;
  // Soft cover follows stick intent; LT plants a hard brace and A owns its escape.
- if(p.coverMode==="braced"&&i.coverAim){p.vx=p.vy=p.coverSpeed=0;placeOnCover(p,s);const forward=Math.cos(p.gunFacing)*a.nx+Math.sin(p.gunFacing)*a.ny;p.peek=forward<.35;p.peekEdge=Math.min(a.t,a.length-a.t)<18;return}
+ if(p.coverMode==="braced"&&i.coverAim){
+  // LT plants aim direction but no longer freezes lateral cover travel.
+  // The existing traversal solver below remains authoritative for feet/root.
+  const forward=Math.cos(p.gunFacing)*a.nx+Math.sin(p.gunFacing)*a.ny;p.peek=forward<.35;p.peekEdge=Math.min(a.t,a.length-a.t)<18;
+ }
  if(p.coverMode==="soft"&&mag>.18&&away/mag>.15){releaseCover(p,s,.18);p.vx=i.x*moveSpeed;p.vy=i.y*moveSpeed;p.x=clamp(p.x+p.vx*dt,A.left,A.right);p.y=clamp(p.y+p.vy*dt,A.top,A.bottom);collide(p,s);return}
  if(c.weaveEnabled<.5){
    if(p.coverMode==="soft"&&mag>.55&&away>.65){releaseCover(p,s,.08);p.vx=i.x*moveSpeed;p.vy=i.y*moveSpeed;return}
