@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="sprite-actor-art-integration-03a";
+const BATCH="combat-continuity-pass04";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Brake / pivots",buttons:"Slide → Brake → redirect 45° / 90° / 180°",watch:"Current-production L04/L05 + KB actor frames should read as planted momentum changes. Watch root, feet, scale and concrete response."},
- {title:"Aim Ring",buttons:"Cover + LT → slowly rotate full 360° → fire at 45° / 90° / 135° / 180° and opposite directions",watch:"Gameplay aim remains continuous. A90/A135/A180 current-production keys should replace side/rear fallbacks without disappearing, mirroring errors or muzzle drift."},
- {title:"Full flow",buttons:"Run → slide → Brake → redirect → cover → shuffle → LT → 360° aim → fire → recoil → retract → A escape",watch:"Judge whether current-production Jade now reads as one actor through the full combat circle. Flag any component that should be rejected/rebuilt."}
+ {title:"Actor rotation",buttons:"Cover + LT → 45° → 90° → 135° → 180° → opposite side → back · fire at each major key",watch:"Watch ground line, pelvis, apparent height, helmet, backpack, shotgun and muzzle. No scale/root popping."},
+ {title:"Cover exposure",buttons:"Test waist + tall cover at FACE → EDGE → CORNER · aim/fire over/around valid positions",watch:"Waist cover may expose; tall cover must require edge/corner clearance. Jade stays concealed when protected; muzzle must not originate inside geometry."},
+ {title:"Full flow",buttons:"Run → slide → Brake → redirect → cover → traverse → LT → 360° aim → shotgun → recoil → retract → escape",watch:"Judge animation continuity, cover readability, shotgun priority, FX clutter and controller response. Record the run."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
