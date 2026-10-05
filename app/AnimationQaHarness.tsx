@@ -18,7 +18,11 @@ const COURSE=[
  ["G 360 AIM","Plant → one full clockwise + counterclockwise circle","Sector / major key / connector / muzzle continuity"],
  ["H SHOTGUN","At major keys: AIM → RT → recoil → recovery","Weapon state / cadence / shells / muzzle"],
  ["I RETRACT","Release LT from 45/90/135/180/opposites","Connector → protected; interrupt with LT/shield/A"],
- ["J STRESS","PLAY HARD 60–90 sec","Natural continuity under real input"]
+ ["J STRESS","PLAY HARD 60–90 sec","Natural continuity under real input"],
+ ["K SOFT CAPTURE","Slide into waist cover: shallow → direct → high-speed","SOFT_CAPTURE → SOFT_READY · impact compression · one-knee silhouette"],
+ ["L SOFT FLOW","Soft cover: flow left → stop → reverse → right → edge → corner → release","SOFT_FLOW_L/R · SOFT_REVERSE · SOFT_EDGE/CORNER · no foot skate"],
+ ["M SOFT → HARD","From one-knee soft cover press A once","A must commit HARD_BRACE; soft cover must not auto-brace from LT"],
+ ["N FULL COVER SENTENCE","Slide → soft → flow → A brace → LT → aim → fire → retract → escape","Verify all three cover relationships remain visually distinct"]
 ] as const;
 
 function deg(a:number){let d=(a||0)*180/Math.PI;return ((d%360)+360)%360}
@@ -27,10 +31,17 @@ function sector16(a:number){return ((Math.round((a||0)/(Math.PI*2)*16)%16)+16)%1
 function majorKey(s:number){const d=s*22.5;return [0,45,90,135,180,225,270,315].reduce((a,b)=>Math.abs(b-d)<Math.abs(a-d)?b:a,0)}
 function family(p:any){const sp=Math.hypot(p?.vx||0,p?.vy||0);return p?.coverId?"cover":p?.slide>0||p?.pinball>0||p?.knock>.32?"slide":sp>34?"run":"ready"}
 
+function softState(p:any){
+ if(!p?.coverId)return "FREE";if(p.coverMode==="braced")return p.input?.coverAim?"LT_PLANT":"HARD_BRACE";
+ const sp=p.coverSpeed||0,a=p.coverAnchor,edge=a?Math.min(a.t||0,(a.length||0)-(a.t||0)):99;
+ if((p.contact||0)>(p._qaTime||0))return "SOFT_CAPTURE";
+ if(edge<18)return "SOFT_EDGE";
+ if(sp<-20)return "SOFT_FLOW_L";if(sp>20)return "SOFT_FLOW_R";return "SOFT_READY";
+}
 export default function AnimationQaHarness({s,onExit}:{s:any;onExit:()=>void}){
  const [step,setStep]=useState(0),[events,setEvents]=useState<string[]>([]),[warn,setWarn]=useState<string[]>([]);
  const prev=useRef<any>(null),lastSector=useRef<{v:number,t:number}|null>(null),lastMuzzle=useRef<{x:number;y:number;aim:number}|null>(null);
- const p=s?.players?.[0]||{},cfg=s?.config||{},fam=family(p),speed=Math.hypot(p.vx||0,p.vy||0),ang=fam==="run"&&speed>55?Math.atan2(p.vy||0,p.vx||0):(p.gunFacing??p.aim??0);
+ const p=s?.players?.[0]||{},cfg=s?.config||{};p._qaTime=s?.time||0;const scState=softState(p),fam=family(p),speed=Math.hypot(p.vx||0,p.vy||0),ang=fam==="run"&&speed>55?Math.atan2(p.vy||0,p.vx||0):(p.gunFacing??p.aim??0);
  const d=dir24(ang),sec=sector16(p.gunFacing??p.aim??0),topology=p?.coverAnchor?(Math.min(p.coverAnchor.t||0,(p.coverAnchor.length||0)-(p.coverAnchor.t||0))<18?"EDGE":"FACE"):"—";
  const source=`${fam}-d${String(d).padStart(2,"0")}.webp`,corrected=fam==="run"&&d===21;
  const mu={x:(p.x||0)+Math.cos(p.gunFacing??p.aim??0)*34,y:(p.y||0)+Math.sin(p.gunFacing??p.aim??0)*34};
@@ -48,13 +59,14 @@ export default function AnimationQaHarness({s,onExit}:{s:any;onExit:()=>void}){
   if(corrected&&(!q||!q.corrected))lines.push("d21 → d22 CORRECTED DONOR");
   if(p.input?.coverAim&&q&&Math.hypot((p.x||0)-q.x,(p.y||0)-q.y)>2.5)warnings.push("⚠ COVER ROOT DRIFT");
   if(speed<2&&q&&fam==="run"&&q.frame!==Math.floor((s?.time||0)*10)%6)warnings.push("⚠ FOOT PHASE WARNING");
+  if(p.coverMode==="soft"&&Math.abs(p.coverSpeed||0)<2&&q&&q.sc?.startsWith("SOFT_FLOW"))warnings.push("⚠ SOFT COVER FOOT SKATE");
   if(lastSector.current&&lastSector.current.v!==sec&&now-lastSector.current.t<90)warnings.push("⚠ SECTOR CHATTER");
   if(!lastSector.current||lastSector.current.v!==sec)lastSector.current={v:sec,t:now};
   if(lastMuzzle.current){const dm=Math.hypot(mu.x-lastMuzzle.current.x,mu.y-lastMuzzle.current.y),da=Math.abs(deg((p.gunFacing??p.aim??0)-lastMuzzle.current.aim));if(dm>20&&da<12)warnings.push("⚠ MUZZLE POP")}
   lastMuzzle.current={...mu,aim:p.gunFacing??p.aim??0};
   if(lines.length)setEvents(e=>[...lines,...e].slice(0,12));
   if(warnings.length)setWarn(w=>[...warnings,...w].slice(0,6));
-  prev.current={state,cover:p.coverId,planted:!!p.input?.coverAim,fire:p.fireState||0,recoil:p.recoil||0,return:p.returnToCover||0,corrected,x:p.x||0,y:p.y||0,frame:Math.floor((s?.time||0)*(fam==="run"?10:7))%6};
+  prev.current={state,sc:scState,cover:p.coverId,planted:!!p.input?.coverAim,fire:p.fireState||0,recoil:p.recoil||0,return:p.returnToCover||0,corrected,x:p.x||0,y:p.y||0,frame:Math.floor((s?.time||0)*(fam==="run"?10:7))%6};
  },[s?.time,p.x,p.y,p.coverId,p.input?.coverAim,p.fireState,p.recoil,p.returnToCover,fam,d,sec,corrected]);
 
  const c=COURSE[Math.max(0,Math.min(COURSE.length-1,step))];
@@ -66,7 +78,7 @@ export default function AnimationQaHarness({s,onExit}:{s:any;onExit:()=>void}){
    <section><b>MOVEMENT</b><span>STATE {fam.toUpperCase()}</span><span>SPEED {speed.toFixed(1)}</span><span>VEL {deg(Math.atan2(p.vy||0,p.vx||0)).toFixed(0)}°</span><span>INPUT {deg(Math.atan2(p.input?.y||0,p.input?.x||0)).toFixed(0)}°</span></section>
    <section><b>SPRITE</b><span>DIR d{String(d).padStart(2,"0")} · {deg(ang).toFixed(0)}°</span><span>SRC {source}</span><span>FRAME {Math.floor((s?.time||0)*(fam==="run"?10:7))%6}</span><span>{corrected?"CORRECTED DONOR d22":"EXACT / RUNTIME"}</span></section>
    <section><b>ACTOR</b><span>ROOT {(p.x||0).toFixed(1)}, {(p.y||0).toFixed(1)}</span><span>PELVIS runtime root</span><span>GROUND {fam==="cover"?.86:.88}</span><span>SCALE {(cfg.spriteScale||.82).toFixed(2)}</span></section>
-   <section><b>COVER</b><span>ID {p.coverId||"FREE"}</span><span>CLASS {p.coverId?(s?.covers||[]).find((x:any)=>x.id===p.coverId)?.coverClass||"generated":"—"}</span><span>TOPO {topology}</span><span>PLANTED {p.input?.coverAim?"YES":"NO"}</span></section>
+   <section><b>COVER</b><span>ID {p.coverId||"FREE"}</span><span>CLASS {p.coverId?(s?.covers||[]).find((x:any)=>x.id===p.coverId)?.coverClass||"generated":"—"}</span><span>TOPO {topology}</span><span>PLANTED {p.input?.coverAim?"YES":"NO"}</span><span>SC {scState}</span></section>
    <section><b>AIM</b><span>RAW {deg(p.gunFacing??p.aim??0).toFixed(1)}°</span><span>SECTOR {sec}/15</span><span>KEY A{majorKey(sec)}</span><span>CONNECTOR {(p.returnToCover||0)>0?"RETRACT":(p.input?.coverAim?"AIM":"—")}</span></section>
    <section><b>WEAPON</b><span>{weapon}</span><span>MUZZLE {mu.x.toFixed(1)}, {mu.y.toFixed(1)}</span><span>CADENCE {cadence.toFixed(2)}s</span><span>SHELLS {p.shells??"—"}/{p.maxShells??"—"} · RES {p.reserveShells??"—"}</span></section>
   </div>
