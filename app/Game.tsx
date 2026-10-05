@@ -212,7 +212,9 @@ function spriteFacing(p:any,family:string,speed:number){
  if(p.input?.fire||p.fireState>0)return p.gunFacing??p.aim??0;
  return family==="run"&&speed>55?Math.atan2(p.vy,p.vx):(p.gunFacing??p.aim??0);
 }
-function spriteRegistration(family:string){return{groundAnchor:{x:.5,y:family==="cover"?.86:.88}}}
+const JADE_REG_LOCK08={root:{x:.5,y:1},ground:{x:.5,y:.88},crownY:.04,pelvis:{x:.5,y:.60},shoulders:{left:.31,right:.69,y:.31},helmet:{x:.5,y:.15,w:.29,h:.23},backpack:{x:.37,y:.40,w:.25,h:.35},cape:{x:.39,y:.38},weaponHand:{x:.65,y:.39},supportHand:{x:.72,y:.43},muzzle:{x:.88,y:.37},bodyEnvelope:{left:.18,right:.82,top:.04,bottom:.96}} as const;
+const FAMILY_REG08={ready:{ground:.88,y:0},run:{ground:.88,y:0},slide:{ground:.89,y:0},cover:{ground:.885,y:0},aim:{ground:.89,y:0},lower:{ground:.89,y:0},connectors:{ground:.89,y:0}} as const;
+function spriteRegistration(family:string){const r=(FAMILY_REG08 as any)[family]||FAMILY_REG08.ready;return{groundAnchor:{x:.5,y:r.ground},canonical:JADE_REG_LOCK08}}
 function SpriteInspector({s}:{s:any}){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32||p.exit?"slide":p.brake>0?"ready":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,state=p.gripCoverId?"PSYCHIC CARRY":p.gripId?"MATTER GRIP":p.exit?"EDGE-DASH":p.coverId?(p.coverMode==="soft"?"SOFT COVER":p.input?.coverAim?(p.peekEdge?"BRACED CORNER AIM":"BRACED AIM"):"BRACED"):p.brake>0?"KINETIC BRAKE":p.slide>0?"SLIDE":p.dash>0?"BOOST DASH":family.toUpperCase();return <aside className="spritePanel"><div className="panelTitle"><span>SPRITE WORKSHOP</span><b>RUNTIME INSPECTOR</b></div><dl><dt>STATE</dt><dd>{state}</dd><dt>DIRECTION</dt><dd>d{String(dir).padStart(2,"0")} · {Math.round(dir*15)}°</dd><dt>SPRITE</dt><dd>{family}-d{String(dir).padStart(2,"0")}.webp</dd><dt>SPEED</dt><dd>{Math.round(speed)}</dd><dt>COVER</dt><dd>{p.coverId||"FREE"}</dd><dt>STATUS</dt><dd>{p.gripCoverId?"GRIP POSE FALLBACK":"APPROVED RUNTIME"}</dd><dt>PRESENTATION QA</dt><dd>UNSUPPORTED AIM {presentationQA.unsupportedCoverAim} · EXACT MISS {presentationQA.missingExact}</dd></dl><p>Slide to catch soft cover; point away to walk off. A locks hard brace. LT plants feet and exposes; release LT retracts while staying braced. A + left stick kicks away. Hold LB grips the attached block; release drops it. RT while holding throws. Release RT before shooting again.</p></aside>}
 function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0);
  if(p.charging||p.powerFlash>0||p.powerReturn>0){const frame=powerFrame(p,s.config||DEFAULT),dir=powerDirection(p),front=hasFrontPower(p),right=hasRightPower(p);return {state:p.charging?((p.godCharge||0)>=.8?"GOD_CHARGE_LOOP":"GOD_CHARGE_ENTRY"):p.powerFlash>0?"GOD_FLAME_PEAK":"GOD_WEAPON_RETURN",family:"god-frame",dir,angleDeg:dir*15,frame:frame+1,total:12,file:right?(frame===1?"front-right-d03-dissolve-v1.png":"front-right-d03-sequence-v1.png"):front?(frame>=6&&frame<=8?"front-d06-loop-v1.png":"front-d06-transitions-v1.png"):"grounded-float-v1.png",expected:right?"APPROVED FRONT-RIGHT · d03":front?"APPROVED FRONT · d06":dir===0?"APPROVED FIRST VIEW · d00":"CHARGE VIEW MISSING · d00 FALLBACK",fallback:!right&&!front&&dir!==0}}
@@ -505,7 +507,7 @@ function coverVisualOffset(p:any){
 }
 // Pack04 registration contract: every Pack03A cel shares one ground/root line.
 // Per-family offsets correct atlas framing only; never gameplay root/collision.
-const PACK04_REG={aim:{scale:1,ground:.945,x:0},lower:{scale:1,ground:.945,x:0},connectors:{scale:1,ground:.945,x:0}} as const;
+const PACK04_REG={aim:{scale:1,ground:.89,x:0},lower:{scale:1,ground:.89,x:0},connectors:{scale:1,ground:.89,x:0}} as const;
 function drawActorAtlasFrame(g:CanvasRenderingContext2D,im:HTMLImageElement,index:number,cols:number,rows:number,p:any,cfg:Config,scale=1,family:keyof typeof PACK04_REG="aim"){
  const cw=im.naturalWidth/cols,ch=im.naturalHeight/rows,sx=(index%cols)*cw,sy=Math.floor(index/cols)*ch,r=PACK04_REG[family];
  const h=125*cfg.spriteScale*scale*r.scale,w=h*(cw/ch);
@@ -559,6 +561,13 @@ function coverCaptureBridge(p:any,t:number){
  if(age<.18)return{kind:"cover",frame:1,compression:(.18-age)/.065*.35,rise:(age-.115)/.065,topology};
  return{kind:"cover",frame:2,compression:0,rise:1,topology};
 }
+const actorVisualMemory=new Map<string,{family:string;dir:number;changed:number}>();
+function actorContinuity(p:any,family:string,dir:number,t:number){
+ const key=p.id||"local",old=actorVisualMemory.get(key);let settle=1;
+ if(!old||old.family!==family||old.dir!==dir){actorVisualMemory.set(key,{family,dir,changed:t});settle=0}else settle=Math.min(1,(t-old.changed)/.09);
+ // Tiny presentation-only settle dampens donor-family silhouette bounce without changing gameplay root.
+ return{settle,y:(1-settle)*1.1};
+}
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);
  if(p.coverId&&p.coverMode==="soft"){
   const sc=softCoverState(p,t),impact=Math.max(0,Math.min(1,p.softImpact||0));
@@ -573,7 +582,7 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const vis
   // B03 planted rise is visual only and remains inside the authoritative .22s contact window.
   if(impact.rise)g.translate(p.coverAnchor.nx*impact.rise*.65,p.coverAnchor.ny*impact.rise*.65-impact.rise*1.1);
  }
-const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&p.input?.coverAim?supportedCoverDir(p):rawDir,im=safestSprite(family,d);
+const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&p.input?.coverAim?supportedCoverDir(p):rawDir,im=safestSprite(family,d);const continuity=actorContinuity(p,family,d,t);if(continuity.y)g.translate(0,continuity.y);
  let bridge=impact,renderFamily=family,renderIm=im;
  if(bridge?.kind==="slide"){renderFamily="slide";renderIm=safestSprite("slide",rawDir)}
  else if(bridge?.kind==="cover"){renderFamily="cover";renderIm=safestSprite("cover",rawDir)}
