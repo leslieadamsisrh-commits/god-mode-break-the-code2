@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="jade-sprite-actor-low-cover-aim-ring-retract-v1";
+const BATCH="sprite-actor-pack01-kinetic-brake-smoothness-v1";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Slide → low cover",buttons:"Baseball slide into waist cover and tall cover → release LT → move left/right",watch:"Jade should resolve toward the protected low-cover family and remain concealed while traversing. Preserve slide speed/feel."},
- {title:"360° cover aim ring",buttons:"Attach → hold LT → slowly rotate right stick through one complete circle → fire at multiple angles",watch:"Gameplay aim must follow the full circle. Presentation may use safe donor/fallback art, but Jade must never disappear, resize, or lock the gun to 30°/45°/60°."},
- {title:"Universal retract",buttons:"Aim at widely separated angles → release LT → interrupt with left stick, LT, shield, and A",watch:"LT release returns toward protected cover. Every interrupt must respond immediately; no recenter requirement or animation lock."}
+ {title:"Kinetic control",buttons:"Build slide speed → pull left stick opposite momentum → repeat with 45° / 90° / full reverse redirects",watch:"Brake should compress momentum rather than digital-stop. Feel for skid distance, redirect authority and immediate control."},
+ {title:"Sprite Actor / 360°",buttons:"Slide into cover → LT → rotate 45° → 90° → 135° → 180° → opposite side → fire at major keys",watch:"Gameplay aim stays 360°. Note visual sectors that pop or use weak donor art; movement/feet should remain stable."},
+ {title:"Combat flow",buttons:"Run → slide → brake → redirect → cover → LT → aim → fire → retract → A escape",watch:"Look for overall flow/choppiness. Preserve slide speed; distinguish movement feel from missing animation sectors."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
