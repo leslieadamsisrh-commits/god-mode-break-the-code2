@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="cover-refinement-corner-edge-tall-v2";
+const BATCH="jade-sprite-actor-low-cover-aim-ring-retract-v1";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Tall-cover edge rule",buttons:"Tall vertical cover → LT+RT from middle → move to either edge/corner → LT+RT",watch:"Middle must block the shotgun; edge/corner must expose it. Jade should stay visibly outside the wall throughout."},
- {title:"Corner ownership",buttons:"Traverse FACE → EDGE → CORNER → next FACE repeatedly in both directions",watch:"No visual cross-through, side-flip or mask stacking at the corner. Contact should remain attached to the owning geometry."},
- {title:"Combat traversal stress",buttons:"Hold LT while moving → aim sweep → fire/recoil → reverse → release LT → A escape",watch:"Movement remains immediate. Lower-body traversal must survive upper-body combat and corner transitions without changing slide feel."}
+ {title:"Slide → low cover",buttons:"Baseball slide into waist cover and tall cover → release LT → move left/right",watch:"Jade should resolve toward the protected low-cover family and remain concealed while traversing. Preserve slide speed/feel."},
+ {title:"360° cover aim ring",buttons:"Attach → hold LT → slowly rotate right stick through one complete circle → fire at multiple angles",watch:"Gameplay aim must follow the full circle. Presentation may use safe donor/fallback art, but Jade must never disappear, resize, or lock the gun to 30°/45°/60°."},
+ {title:"Universal retract",buttons:"Aim at widely separated angles → release LT → interrupt with left stick, LT, shield, and A",watch:"LT release returns toward protected cover. Every interrupt must respond immediately; no recenter requirement or animation lock."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
