@@ -267,8 +267,9 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  while(kineticEcho.length&&(kineticEcho[0].life<=0||Math.hypot(kineticEcho[0].x-local.x,kineticEcho[0].y-local.y)<3))kineticEcho.shift();
  const echoActive=local.slide>0||local.dash>0||local.kickStage&&local.kickStage!=="none"||travelLen>360;
  if(fullSlide&&travelLen>60&&(!kineticEcho.length||Math.hypot(local.x-kineticEcho[kineticEcho.length-1].x,local.y-kineticEcho[kineticEcho.length-1].y)>30)){const family=local.slide>0||local.kickStage&&local.kickStage!=="none"?"slide":"run",angle=family==="slide"?(local.slideFacing||Math.atan2(local.vy,local.vx)):Math.atan2(local.vy,local.vx),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,im=nearest(family,dir)||nearest("ready",dir),sourceCell=im?(im.naturalWidth%250===0&&im.naturalHeight%250===0?250:125):125,cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,frames=Math.max(1,cols*rows),frame=family==="slide"&&local.slide>0?Math.min(frames-1,Math.max(0,Math.floor((1-local.slide/cfg.slideDuration)*frames))):Math.floor(s.time*10)%frames;kineticEcho.push({x:local.x,y:local.y,angle,family,dir,frame,life:.34,maxLife:.34,speed:travelLen});if(kineticEcho.length>3)kineticEcho.shift();echoLast=now}
- if(fullSlide&&travelLen>60){floorWake.push({x:local.x,y:local.y,angle:Math.atan2(local.vy,local.vx),age:.27});if(floorWake.length>18)floorWake.shift()}
- for(const mark of floorWake){g.save();g.translate(mark.x,mark.y);g.rotate(mark.angle);g.globalAlpha=mark.age/.27*.68;const ground=classicAssets.get("ground");if(ground)g.drawImage(ground,3*384,0,384,384,-48,-43,96,86);g.strokeStyle="#5ef0ff";g.shadowColor="#ff4bb9";g.shadowBlur=9;for(let n=0;n<3;n++){g.beginPath();g.moveTo(-14-n*5,-8+n*8);g.lineTo(-46-n*9,-13+n*11);g.stroke()}g.restore()}
+ const fxPriority=local.godTime>0||local.charging?4:local.fireState>0||local.recoil>0?3:local.brakeState>0?2:fullSlide?1:0;
+ if(fullSlide&&travelLen>60&&fxPriority<=1){floorWake.push({x:local.x,y:local.y,angle:Math.atan2(local.vy,local.vx),age:.27});if(floorWake.length>18)floorWake.shift()}
+ for(const mark of floorWake){if(fxPriority>=2)continue;g.save();g.translate(mark.x,mark.y);g.rotate(mark.angle);g.globalAlpha=mark.age/.27*.68;const ground=classicAssets.get("ground");if(ground)g.drawImage(ground,3*384,0,384,384,-48,-43,96,86);g.strokeStyle="#5ef0ff";g.shadowColor="#ff4bb9";g.shadowBlur=9;for(let n=0;n<3;n++){g.beginPath();g.moveTo(-14-n*5,-8+n*8);g.lineTo(-46-n*9,-13+n*11);g.stroke()}g.restore()}
  if(graffiti)classicGraffiti(g,classicAssets.get("graffiti"),graffiti,.94);
  let ix=(keyState.KeyD?1:0)-(keyState.KeyA?1:0),iy=(keyState.KeyS?1:0)-(keyState.KeyW?1:0);try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;ix=dz(pad.axes[0]||0);iy=dz(pad.axes[1]||0)}}catch{}const il=Math.hypot(ix,iy)||1;ix/=il;iy/=il;
  for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(e.family);g.save();g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc-3*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc+4*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.restore()}
@@ -478,10 +479,13 @@ function coverVisualOffset(p:any){
  const topologyNormal=topology==="CORNER"?2.15:topology==="EDGE"?.8:0;
  return{x:a.nx*(normal+topologyNormal)+a.tx*(faceBias+topologyTangent),y:a.ny*(normal+topologyNormal)+a.ty*(faceBias+topologyTangent)};
 }
-function drawActorAtlasFrame(g:CanvasRenderingContext2D,im:HTMLImageElement,index:number,cols:number,rows:number,p:any,cfg:Config,scale=1){
- const cw=im.naturalWidth/cols,ch=im.naturalHeight/rows,sx=(index%cols)*cw,sy=Math.floor(index/cols)*ch;
- const h=125*cfg.spriteScale*scale,w=h*(cw/ch);
- g.drawImage(im,sx,sy,cw,ch,p.x-w*.5,p.y-h*.94,w,h);return true;
+// Pack04 registration contract: every Pack03A cel shares one ground/root line.
+// Per-family offsets correct atlas framing only; never gameplay root/collision.
+const PACK04_REG={aim:{scale:1,ground:.945,x:0},lower:{scale:1,ground:.945,x:0},connectors:{scale:1,ground:.945,x:0}} as const;
+function drawActorAtlasFrame(g:CanvasRenderingContext2D,im:HTMLImageElement,index:number,cols:number,rows:number,p:any,cfg:Config,scale=1,family:keyof typeof PACK04_REG="aim"){
+ const cw=im.naturalWidth/cols,ch=im.naturalHeight/rows,sx=(index%cols)*cw,sy=Math.floor(index/cols)*ch,r=PACK04_REG[family];
+ const h=125*cfg.spriteScale*scale*r.scale,w=h*(cw/ch);
+ g.drawImage(im,sx,sy,cw,ch,p.x-w*.5+r.x*cfg.spriteScale,p.y-h*r.ground,w,h);return true;
 }
 function pack03AimIndex(p:any){
  if(!p.coverId||p.coverMode!=="braced"||!p.input?.coverAim)return null;
@@ -491,12 +495,12 @@ function pack03AimIndex(p:any){
 }
 function drawPack03Aim(g:CanvasRenderingContext2D,p:any,cfg:Config){
  const im=actorAssets.get("aim"),idx=pack03AimIndex(p);if(!im||idx===null)return false;
- return drawActorAtlasFrame(g,im,idx,5,4,p,cfg,1.02);
+ return drawActorAtlasFrame(g,im,idx,5,4,p,cfg,1,"aim");
 }
 function drawPack03Brake(g:CanvasRenderingContext2D,p:any,cfg:Config){
  const im=actorAssets.get("lower");if(!im||!(p.brakeState>0)||p.coverId)return false;
  const age=1-Math.max(0,Math.min(1,p.brakeState/.24)),idx=4+Math.min(3,Math.floor(age*4));
- return drawActorAtlasFrame(g,im,idx,4,2,p,cfg,1.04);
+ return drawActorAtlasFrame(g,im,idx,4,2,p,cfg,1,"lower");
 }
 function pack03RetractIndex(p:any){
  if(!p.coverId||p.coverMode!=="braced"||!(p.returnToCover>0)||p.input?.coverAim)return null;
@@ -509,7 +513,7 @@ function pack03RetractIndex(p:any){
 }
 function drawPack03Retract(g:CanvasRenderingContext2D,p:any,cfg:Config){
  const im=actorAssets.get("connectors"),idx=pack03RetractIndex(p);if(!im||idx===null)return false;
- return drawActorAtlasFrame(g,im,idx,6,3,p,cfg,1.03);
+ return drawActorAtlasFrame(g,im,idx,6,3,p,cfg,1,"connectors");
 }
 function coverCaptureBridge(p:any,t:number){
  if(!p.coverId||typeof p.contact!=="number"||p.contact<=t)return null;
