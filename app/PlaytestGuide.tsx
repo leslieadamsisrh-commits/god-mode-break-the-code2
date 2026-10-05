@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="animation-language-pass02-topology-rig-split";
+const BATCH="cover-completion-waist-tall-traversal-combat-v1";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"FACE / EDGE / CORNER",buttons:"A slide into cover at the middle → near an edge → directly toward a corner",watch:"Jade should remain outside solid geometry while registration changes smoothly from FACE to EDGE to CORNER. No mask stacking or topology flicker."},
- {title:"Cover traversal",buttons:"Brace → FACE → EDGE → CORNER → EDGE → FACE · repeat both directions and speeds",watch:"Watch feet, pelvis, contact socket and concealment. B02/B03 should compress and rise into a stable brace without changing gameplay timing."},
- {title:"Moving cover combat",buttons:"Move laterally → hold LT → sweep 30°/45°/60° → RT fire → recoil → release LT → shield",watch:"Lower-body cover locomotion should continue while upper-body aim/fire/recoil/retract/shield presentation changes. Inputs must remain immediate."}
+ {title:"Waist vs tall cover",buttons:"Use the horizontal waist cover → LT + RT over top · then tall vertical cover → try over-top → move to edge → LT + RT",watch:"Waist cover allows top exposure. Tall cover must block over-top fire and require edge/corner exposure. Movement feel must stay unchanged."},
+ {title:"FACE → EDGE → CORNER",buttons:"Attach → traverse FACE → EDGE → CORNER → reverse → EDGE → FACE → A escape",watch:"Topology should read continuously with no embedded body, flicker, foot skating or input delay. Repeat slow and fast."},
+ {title:"Moving cover combat",buttons:"Move laterally while holding LT → sweep 30°/45°/60° → RT → recoil → release LT → shield → reverse",watch:"Lower body keeps traversing while upper body fights. Shotgun, recoil, retract and shield must not freeze lateral movement."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
