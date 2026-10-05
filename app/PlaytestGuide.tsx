@@ -2,13 +2,14 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="animation-qa-harness-01";
+const BATCH="jade-cover-flow-finalization-07";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Recording 1 · Directed QA",buttons:"Tap QA COURSE → start screen recording → follow A1 through J in order",watch:"Do not rush. Give each requested action 3–4 seconds of clean repetition. Keep telemetry/event strip visible."},
- {title:"Recording 2 · Natural stress",buttons:"Keep QA visible → select J NATURAL STRESS → play hard for 60–90 seconds",watch:"Play naturally, not perfectly. Let warnings and event history identify states around visible defects."},
- {title:"Send both recordings",buttons:"Upload both recordings after the course",watch:"They become the evidence for the final Jade Sprite Actor defect list and one surgical correction batch."}
+ {title:"One-knee flow",buttons:"Run → baseball slide into waist cover · shallow/direct/high-speed → flow L → stop → reverse → R → edge → corner → release",watch:"Soft cover should read low, athletic and mobile — protected movement, not wall attachment."},
+ {title:"Cover commitment",buttons:"From soft cover: A → hard brace → LT → planted 360° combat → RT → recoil → LT release → escape",watch:"A is the deliberate commitment. LT must not auto-brace soft cover. LT release returns to hard protection."},
+ {title:"Lower-body QA",buttons:"Open QA COURSE → run all 8 directions and diagonals/reversals",watch:"Look for outward kick, knee tracking, Panther boot rotation, foot skating and pelvis/root jumps. d21 donor workaround is retired."},
+ {title:"Natural flow",buttons:"Run → slide → soft → flow → release → Brake → redirect → soft → A brace → LT → shotgun → retract → escape",watch:"Record the run. Judge whether soft / hard / planted combat now feel like three distinct relationships."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
