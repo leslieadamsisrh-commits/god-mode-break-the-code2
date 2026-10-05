@@ -291,7 +291,12 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
 }
 function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im?.complete&&im.naturalWidth)return im}}
 function exactSprite(f:string,d:number){const im=jade.get(`${f}-${((d%24)+24)%24}`);return im?.complete&&im.naturalWidth?im:undefined}
+// Pass06 surgical art correction: runtime d21 up-right run contains the long-standing
+// outward trailing-leg kick. Use adjacent approved d22 locomotion art while preserving
+// d21 gameplay vector, cadence and root. This is presentation-only and deliberately not mirrored.
+function correctedPresentationDir(f:string,d:number){return f==="run"&&d===21?22:d}
 function safestSprite(f:string,d:number){
+ d=correctedPresentationDir(f,d);
  const exact=exactSprite(f,d);if(exact){lastGoodSprite.set(f,{im:exact,dir:d});return exact}
  presentationQA.missingExact++;
  const directionalReady=exactSprite("ready",d),near=nearest(f,d),nearReady=nearest("ready",d),held=lastGoodSprite.get(f)?.im||lastGoodSprite.get("ready")?.im;
