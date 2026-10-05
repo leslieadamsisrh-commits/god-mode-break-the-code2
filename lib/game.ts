@@ -298,11 +298,25 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
   else if(p.slide>0||p.pinball>0){
     p.slide=Math.max(0,p.slide-dt);p.pinball=Math.max(0,p.pinball-dt);
     if(p.slide>0){
-      if(c.weaveEnabled<.5){p.vx*=Math.pow(c.slideDrag,d);p.vy*=Math.pow(c.slideDrag,d)}
-      else{
-        const speed=Math.hypot(p.vx,p.vy)||1,travel=Math.atan2(p.vy,p.vx),mag=Math.hypot(i.x,i.y);
-        if(mag>.12){const inputA=Math.atan2(i.y,i.x),delta=Math.atan2(Math.sin(inputA-travel),Math.cos(inputA-travel)),forward=Math.cos(delta);if(forward<-.15){const brake=Math.max(0,1-c.slideBrake*d);p.vx*=brake;p.vy*=brake;if(Math.hypot(p.vx,p.vy)<c.slideCancelSpeed){p.slide=0;p.slideSteerCurrent=0;p.brake=.18;p.brakeState=.24;p.vx*=.22;p.vy*=.22;s.fx.push({id:uid(),type:"brake",x:p.x,y:p.y,life:.34,owner:n,text:"KSSHH!"})}}else{const targetSteer=clamp(delta,-c.slideSteerAngle,c.slideSteerAngle)*c.slideSteer,steerBlend=1-Math.exp(-c.slideSteerResponse*d);p.slideSteerCurrent+=(targetSteer-p.slideSteerCurrent)*steerBlend;const next=travel+p.slideSteerCurrent*d,boost=Math.max(0,forward)*c.slideSustain*d,newSpeed=Math.min(c.slideSpeed*1.08,speed+boost);p.vx=Math.cos(next)*newSpeed;p.vy=Math.sin(next)*newSpeed;p.slideFacing=next}}else{p.vx*=Math.pow(.12,d);p.vy*=Math.pow(.12,d)}
-      }
+      const speed=Math.hypot(p.vx,p.vy)||1,travel=Math.atan2(p.vy,p.vx),mag=Math.hypot(i.x,i.y);
+      // Base Jade Kinetic Brake: promote the previously playtested weave brake into Classic
+      // without enabling weave steering, mini-boost, or changing top/slide speed.
+      if(mag>.12){
+        const inputA=Math.atan2(i.y,i.x),delta=Math.atan2(Math.sin(inputA-travel),Math.cos(inputA-travel)),forward=Math.cos(delta);
+        if(forward<-.15){
+          const brake=Math.max(0,1-c.slideBrake*d);p.vx*=brake;p.vy*=brake;
+          if(Math.hypot(p.vx,p.vy)<c.slideCancelSpeed){
+            p.slide=0;p.slideSteerCurrent=0;p.brake=.18;p.brakeState=.24;
+            const residual=.22,redirect=Math.max(0,Math.min(1,mag))*c.moveSpeed*.38;
+            p.vx=p.vx*residual+i.x*redirect;p.vy=p.vy*residual+i.y*redirect;
+            s.fx.push({id:uid(),type:"brake",x:p.x,y:p.y,life:.34,owner:n,text:"SKRRK!"});
+          }
+        }else if(c.weaveEnabled>=.5){
+          const targetSteer=clamp(delta,-c.slideSteerAngle,c.slideSteerAngle)*c.slideSteer,steerBlend=1-Math.exp(-c.slideSteerResponse*d);
+          p.slideSteerCurrent+=(targetSteer-p.slideSteerCurrent)*steerBlend;const next=travel+p.slideSteerCurrent*d,boost=Math.max(0,forward)*c.slideSustain*d,newSpeed=Math.min(c.slideSpeed*1.08,speed+boost);
+          p.vx=Math.cos(next)*newSpeed;p.vy=Math.sin(next)*newSpeed;p.slideFacing=next;
+        }else{p.vx*=Math.pow(c.slideDrag,d);p.vy*=Math.pow(c.slideDrag,d)}
+      }else{p.vx*=Math.pow(c.weaveEnabled>=.5?.12:c.slideDrag,d);p.vy*=Math.pow(c.weaveEnabled>=.5?.12:c.slideDrag,d)}
     }else{p.vx*=Math.pow(.72,d);p.vy*=Math.pow(.72,d)}
     p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);slideCapture(p,s);collide(p,s)
   }
