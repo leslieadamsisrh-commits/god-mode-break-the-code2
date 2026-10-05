@@ -2,14 +2,14 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="jade-cover-flow-finalization-07";
+const BATCH="jade-visual-registration-lock-08";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"One-knee flow",buttons:"Run → baseball slide into waist cover · shallow/direct/high-speed → flow L → stop → reverse → R → edge → corner → release",watch:"Soft cover should read low, athletic and mobile — protected movement, not wall attachment."},
- {title:"Cover commitment",buttons:"From soft cover: A → hard brace → LT → planted 360° combat → RT → recoil → LT release → escape",watch:"A is the deliberate commitment. LT must not auto-brace soft cover. LT release returns to hard protection."},
- {title:"Lower-body QA",buttons:"Open QA COURSE → run all 8 directions and diagonals/reversals",watch:"Look for outward kick, knee tracking, Panther boot rotation, foot skating and pelvis/root jumps. d21 donor workaround is retired."},
- {title:"Natural flow",buttons:"Run → slide → soft → flow → release → Brake → redirect → soft → A brace → LT → shotgun → retract → escape",watch:"Record the run. Judge whether soft / hard / planted combat now feel like three distinct relationships."}
+ {title:"Silhouette lock",buttons:"QA COURSE → REGISTRATION QA → idle → all 8 run directions → stop → 45/90/135/180/225/270/315/0 aim",watch:"Crown, shoulders, pelvis, legs, backpack, cape and shotgun should read as one same-sized Jade."},
+ {title:"Cape / lower body",buttons:"Diagonals → reverse → slide → Brake → redirect → soft cover → flow L/R → reverse → edge/corner",watch:"Flag cape color/socket pops, outward kick, knee/shin/boot discontinuity, foot skate. Baked defects are reported honestly, not hidden."},
+ {title:"Combat rotation",buttons:"Soft → A hard brace → LT → slow 360° both ways → fire each major key",watch:"Torso, helmet, backpack, arms, shotgun and muzzle registration."},
+ {title:"Natural acceptance",buttons:"Disable registration guides → play hard 60–90 seconds",watch:"If corrections disappear into play and no P0/P1 regression appears, freeze current Jade and move to the duel."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
