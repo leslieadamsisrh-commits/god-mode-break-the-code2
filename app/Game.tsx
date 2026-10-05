@@ -208,7 +208,7 @@ function Director({cfg,patch,applyPreset,save,load,note}:{cfg:Config;applyPreset
 function spriteFacing(p:any,family:string,speed:number){
  if(family==="slide")return p.slideFacing??p.aim??0;
  if(p.charging&&!p.coverId&&(typeof p.input?.x==="number"||typeof p.input?.y==="number"))return Math.hypot(p.input?.x||0,p.input?.y||0)>.18?Math.atan2(p.input.y,p.input.x):(p.gunFacing??p.aim??0);
- if(p.coverId&&p.coverAnchor){const exposed=p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0;return exposed?(p.gunFacing??p.aim??0):Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx)}
+ if(p.coverId&&p.coverAnchor){if(p.coverMode==="soft"){const moving=Math.abs(p.coverSpeed||0)>20;return moving?Math.atan2(p.coverAnchor.ty*Math.sign(p.coverSpeed||1),p.coverAnchor.tx*Math.sign(p.coverSpeed||1)):(p.gunFacing??p.aim??Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx))}const exposed=p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0;return exposed?(p.gunFacing??p.aim??0):Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx)}
  if(p.input?.fire||p.fireState>0)return p.gunFacing??p.aim??0;
  return family==="run"&&speed>55?Math.atan2(p.vy,p.vx):(p.gunFacing??p.aim??0);
 }
@@ -292,10 +292,9 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
 }
 function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im?.complete&&im.naturalWidth)return im}}
 function exactSprite(f:string,d:number){const im=jade.get(`${f}-${((d%24)+24)%24}`);return im?.complete&&im.naturalWidth?im:undefined}
-// Pass06 surgical art correction: runtime d21 up-right run contains the long-standing
-// outward trailing-leg kick. Use adjacent approved d22 locomotion art while preserving
-// d21 gameplay vector, cadence and root. This is presentation-only and deliberately not mirrored.
-function correctedPresentationDir(f:string,d:number){return f==="run"&&d===21?22:d}
+// Pass07: use exact directional runtime art again. The temporary d21→d22 donor
+// hid only one symptom and is no longer treated as the final lower-body repair.
+function correctedPresentationDir(f:string,d:number){return d}
 function safestSprite(f:string,d:number){
  d=correctedPresentationDir(f,d);
  const exact=exactSprite(f,d);if(exact){lastGoodSprite.set(f,{im:exact,dir:d});return exact}
@@ -336,7 +335,26 @@ function coverLateralFrame(p:any,t:number,total:number){
  const cornerCycle=sign<0?[4,5,4,6]:[4,6,4,5];
  return (travel.corner?cornerCycle:travel.edge?edgeCycle:faceCycle)[phase];
 }
+type SoftCoverState="SOFT_CAPTURE"|"SOFT_READY"|"SOFT_FLOW_L"|"SOFT_FLOW_R"|"SOFT_REVERSE"|"SOFT_EDGE"|"SOFT_CORNER"|"SOFT_RELEASE";
+const softCoverMemory=new Map<string,{sign:number;changed:number}>();
+function softCoverState(p:any,t:number):SoftCoverState{
+ const topology=coverTopology(p),speed=p.coverSpeed||0,key=p.id||"local",sign=Math.abs(speed)>12?Math.sign(speed):0,prev=softCoverMemory.get(key)||{sign,changed:t};
+ if(sign&&prev.sign&&sign!==prev.sign){prev.sign=sign;prev.changed=t}else if(sign&&!prev.sign)prev.sign=sign;softCoverMemory.set(key,prev);
+ if(p.contact>t)return "SOFT_CAPTURE";
+ if(topology==="CORNER")return "SOFT_CORNER";
+ if(topology==="EDGE")return "SOFT_EDGE";
+ if(sign&&t-prev.changed<.14)return "SOFT_REVERSE";
+ if(speed<-20)return "SOFT_FLOW_L";
+ if(speed>20)return "SOFT_FLOW_R";
+ return "SOFT_READY";
+}
+function softCoverFrame(p:any,t:number,total:number){
+ if(p.coverMode!=="soft"||total!==12)return null;
+ const st=softCoverState(p,t),map:Record<SoftCoverState,number>={SOFT_CAPTURE:2,SOFT_READY:4,SOFT_FLOW_L:5,SOFT_FLOW_R:6,SOFT_REVERSE:4,SOFT_EDGE:5,SOFT_CORNER:4,SOFT_RELEASE:6};
+ return map[st];
+}
 function coverPoseFrame(p:any,t:number,total:number){
+ const soft=softCoverFrame(p,t,total);if(soft!==null)return soft;
  const extended=total===12;
  // LT released always resolves toward the protected low cover family.
  // returnToCover may show an authored retract first; traversal input can interrupt immediately.
@@ -542,6 +560,14 @@ function coverCaptureBridge(p:any,t:number){
  return{kind:"cover",frame:2,compression:0,rise:1,topology};
 }
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);
+ if(p.coverId&&p.coverMode==="soft"){
+  const sc=softCoverState(p,t),impact=Math.max(0,Math.min(1,p.softImpact||0));
+  // One-knee language from approved current-production cover cells: lower silhouette,
+  // stronger direct-impact compression, subtle mobile lean. Gameplay root is untouched.
+  const low=sc==="SOFT_CAPTURE"?4.5+impact*4:sc==="SOFT_READY"?5.5:3.2;
+  g.translate(0,low);
+  if(p.coverAnchor&&(sc==="SOFT_FLOW_L"||sc==="SOFT_FLOW_R"))g.translate(p.coverAnchor.tx*Math.sign(p.coverSpeed||1)*1.5,p.coverAnchor.ty*Math.sign(p.coverSpeed||1)*1.5);
+ }
  const impact=coverCaptureBridge(p,t);if(impact&&p.coverAnchor){
   if(impact.compression)g.translate(-p.coverAnchor.nx*impact.compression*2.4,-p.coverAnchor.ny*impact.compression*2.4);
   // B03 planted rise is visual only and remains inside the authoritative .22s contact window.
