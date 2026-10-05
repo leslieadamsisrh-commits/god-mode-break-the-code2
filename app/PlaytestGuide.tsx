@@ -2,13 +2,13 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="sprite-actor-pack01-kinetic-brake-smoothness-v1";
+const BATCH="sprite-actor-pack02-kinetic-impact-motion-continuity";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Kinetic control",buttons:"Build slide speed → pull left stick opposite momentum → repeat with 45° / 90° / full reverse redirects",watch:"Brake should compress momentum rather than digital-stop. Feel for skid distance, redirect authority and immediate control."},
- {title:"Sprite Actor / 360°",buttons:"Slide into cover → LT → rotate 45° → 90° → 135° → 180° → opposite side → fire at major keys",watch:"Gameplay aim stays 360°. Note visual sectors that pop or use weak donor art; movement/feet should remain stable."},
- {title:"Combat flow",buttons:"Run → slide → brake → redirect → cover → LT → aim → fire → retract → A escape",watch:"Look for overall flow/choppiness. Preserve slide speed; distinguish movement feel from missing animation sectors."}
+ {title:"Brake physics",buttons:"Full slide → soft brake → 45° cut → 90° cut → 180° reverse",watch:"Watch Panther-boot plant, concrete chips/scrape, old-vector streak and new-vector release. SKRRK! should be reserved for hard cuts."},
+ {title:"Aim-ring keys",buttons:"Cover → LT → rotate 45° → 90° → 135° → 180° → opposite side → fire at each",watch:"45° donor region should remain stable. A90/A135/A180 are intentionally safe fallbacks until approved production art exists; flag anatomy/scale discontinuities."},
+ {title:"Full flow",buttons:"Run → slide → brake → redirect → cover → traverse → LT → rotate → fire → retract → escape",watch:"Cover feet should track actual travel and plant on reversal. Judge whether momentum and animation read as one continuous action."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
