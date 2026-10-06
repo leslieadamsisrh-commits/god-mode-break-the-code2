@@ -84,6 +84,7 @@ function presentation(s:any,now:number){
  return {...b.state,time:a.state.time+(b.state.time-a.state.time)*blend,players,covers:mix(a.state.covers||[],b.state.covers||[]),matter:mix(a.state.matter||[],b.state.matter||[])};
 }
 const powerAssets=new Map<string,HTMLImageElement>();
+const evolutionAssets=new Map<string,HTMLImageElement>();
 const actorAssets=new Map<string,HTMLImageElement>();
 type BootState={done:number;total:number;failed:number;label:string};
 let preloadPromise:Promise<BootState>|null=null;
@@ -104,7 +105,9 @@ function preload(onProgress?:(s:BootState)=>void){
   const classic=[["graffiti","/assets/dimension33-map/slide-graffiti-skeet-skurt-v2.png"],["ground","/assets/shotgun-v57-ground-effects.png"],["concrete","/assets/dimension33-map/concrete-cover-atlas-v2.png"]] as const;
   const sprites:{key:string;src:string}[]=[];
   for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;sprites.push({key:`${family}-${d}`,src:"https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n})}
+  const evolution=[["helix-front","/assets/god-evolution-tier1/helix-front.svg"],["helix-rear","/assets/god-evolution-tier1/helix-rear.svg"],["flame","/assets/god-evolution-tier1/flame-aura.svg"],["geometry","/assets/god-evolution-tier1/sacred-geometry.svg"],["crystal-code","/assets/god-evolution-tier1/crystal-code.svg"],["ground-fracture","/assets/god-evolution-tier1/ground-fracture.svg"]] as const;
   const jobs:{label:string;src:string;ready:(im:HTMLImageElement)=>void}[]=[
+   ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
    ...actor.map(([key,path])=>({label:"actor-"+key,src:path,ready:(im:HTMLImageElement)=>actorAssets.set(key,im)})),
    ...classic.map(([key,path])=>({label:key,src:"https://jade-v1-combat-lab-v142.leslieadams-isrh.chatgpt.site"+path,ready:(im:HTMLImageElement)=>classicAssets.set(key,im)})),
@@ -254,8 +257,10 @@ type EvoStage="BASE"|"IGNITION"|"GATHER"|"DOUBLE_HELIX"|"GROUND_BREAK"|"LEVITATI
 function evoCharge(p:any){return Math.max(0,Math.min(1,Number(p?.godCharge||0)))}
 function evoStage(p:any):EvoStage{if((p?.godTime||0)>0)return"TIER_I";const q=evoCharge(p);if(!p?.charging&&q<=0)return"BASE";if(q<.15)return"IGNITION";if(q<.32)return"GATHER";if(q<.5)return"DOUBLE_HELIX";if(q<.67)return"GROUND_BREAK";if(q<.82)return"LEVITATION";if(q<.96)return"CRYSTALLINE";return"TIER_READY"}
 function helixPoint(p:any,t:number,q:number,phase:number,height:number,radius:number,dir=1){const a=t*(2.2+q*8)*dir+phase;return{x:p.x+Math.cos(a)*radius*(1-q*.2),y:p.y-height+Math.sin(a)*radius*.28}}
+function evoSprite(g:CanvasRenderingContext2D,key:string,p:any,alpha:number,w:number,h:number,rot=0){const im=evolutionAssets.get(key);if(!im||!im.complete||!im.naturalWidth)return false;g.save();g.translate(p.x,p.y-40);g.rotate(rot);g.globalAlpha=alpha;g.drawImage(im,-w/2,-h/2,w,h);g.restore();return true}
 function drawGodGround(g:CanvasRenderingContext2D,p:any,t:number){
  const q=evoCharge(p),active=p.charging||q>0||(p.godTime||0)>0;if(!active)return;const tier=(p.godTime||0)>0;
+ if(q>.18)evoSprite(g,"ground-fracture",{...p,y:p.y+38},Math.min(.5,.12+q*.38),118+q*46,59+q*22,0);
  g.save();g.translate(p.x,p.y+5);const r=20+q*48+(tier?8:0);
  g.globalAlpha=.24+.46*q;g.strokeStyle="#65f7ff";g.lineWidth=1.2+q*1.8;g.shadowColor="#5ef5ff";g.shadowBlur=8+q*16;
  g.beginPath();g.ellipse(0,0,r,r*.28,0,0,Math.PI*2);g.stroke();
@@ -265,17 +270,24 @@ function drawGodGround(g:CanvasRenderingContext2D,p:any,t:number){
 }
 function drawGodRear(g:CanvasRenderingContext2D,p:any,t:number){
  const q=evoCharge(p),tier=(p.godTime||0)>0;if(!p.charging&&q<=0&&!tier)return;const e=tier?1:Math.max(.08,q);
- g.save();g.globalCompositeOperation="lighter";
- const bands=q<.15?1:q<.32?2:q<.5?3:4;
- for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#67f6ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=9+e*18;g.lineWidth=1.3+e*2.1;g.globalAlpha=.2+.42*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(29+e*18)*(1-u*.18),pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);const front=Math.sin(t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4)>0;if(front)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
+ g.save();g.globalCompositeOperation="source-over";
+ const art=evoSprite(g,"helix-rear",p,.18+.30*e,105+e*35,145+e*50,-.05*Math.sin(t*2));
+ if(e>.18)evoSprite(g,"flame",p,.10+.20*e,100+e*28,145+e*48,0);
+ g.globalCompositeOperation="lighter";
+ const bands=art?1:q<.15?1:q<.32?2:q<.5?3:4;
+ for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#67f6ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=9+e*18;g.lineWidth=1.3+e*2.1;g.globalAlpha=art?.10+.12*e:.2+.42*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(29+e*18)*(1-u*.18),pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);const front=Math.sin(t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4)>0;if(front)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
  if(e>.62){const count=4+Math.floor(e*8);for(let i=0;i<count;i++){const a=t*(1.2+e*3)+i*2.399,rr=18+(i%4)*9+e*12,h=10+((i*17)%65)*e;g.globalAlpha=.18+.38*e;g.fillStyle=i%3?"#76f8ff":"#ff62c4";g.fillRect(p.x+Math.cos(a)*rr-1,p.y-h+Math.sin(a)*rr*.18-1,2+(i%2),2+(i%2))}}
  g.restore();
 }
 function drawGodFront(g:CanvasRenderingContext2D,p:any,t:number){
  const q=evoCharge(p),tier=(p.godTime||0)>0;if(!p.charging&&q<=0&&!tier)return;const e=tier?1:Math.max(.08,q),stage=evoStage(p);
- g.save();g.globalCompositeOperation="lighter";
- const bands=q<.15?1:q<.32?2:q<.5?3:4;
- for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#7df8ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=10+e*20;g.lineWidth=1.4+e*2.4;g.globalAlpha=.22+.46*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(29+e*18)*(1-u*.18),ang=t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4,pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);if(Math.sin(ang)<=0)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
+ g.save();g.globalCompositeOperation="source-over";
+ const art=evoSprite(g,"helix-front",p,.16+.28*e,105+e*35,145+e*50,.05*Math.sin(t*2));
+ if(e>.5)evoSprite(g,"geometry",p,.08+.13*e,118+e*32,118+e*32,t*.08);
+ if(e>.68)evoSprite(g,"crystal-code",p,.10+.18*e,112+e*28,132+e*34,0);
+ g.globalCompositeOperation="lighter";
+ const bands=art?1:q<.15?1:q<.32?2:q<.5?3:4;
+ for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#7df8ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=10+e*20;g.lineWidth=1.4+e*2.4;g.globalAlpha=art?.08+.10*e:.22+.46*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(29+e*18)*(1-u*.18),ang=t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4,pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);if(Math.sin(ang)<=0)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
  if(e>.5){const structures=e>.9?3:e>.7?2:1;for(let j=0;j<structures;j++){const rr=24+j*13+e*10,rot=t*(.5+j*.22)*(j%2?-1:1);g.save();g.translate(p.x,p.y-38-e*18+j*8);g.rotate(rot);g.globalAlpha=.12+.28*e;g.strokeStyle=j%2?"#ff5dbd":"#a8ffff";g.lineWidth=1.2;g.beginPath();const sides=j===0?3:j===1?6:8;for(let i=0;i<=sides;i++){const a=i/sides*Math.PI*2-Math.PI/2,x=Math.cos(a)*rr,y=Math.sin(a)*rr*.45;i?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();g.restore()}}
  if(e>.68){const n=5+Math.floor(e*8);for(let i=0;i<n;i++){const a=t*(1.8+e*4)+i*2.399,rr=20+(i%5)*8,h=10+((i*13)%78)*e,x=p.x+Math.cos(a)*rr,y=p.y-h+Math.sin(a)*rr*.2;g.save();g.translate(x,y);g.rotate(a);g.globalAlpha=.18+.45*e;g.strokeStyle=i%2?"#ff78ca":"#b7ffff";g.strokeRect(-2,-5,4,10);if(e>.82){g.beginPath();g.moveTo(-5,0);g.lineTo(0,-9);g.lineTo(5,0);g.lineTo(0,9);g.closePath();g.stroke()}g.restore()}}
  if(stage==="TIER_READY"){g.globalAlpha=.3+.2*Math.sin(t*22);g.strokeStyle="#fff";g.lineWidth=2;g.beginPath();g.arc(p.x,p.y-38,48+Math.sin(t*8)*4,0,Math.PI*2);g.stroke()}
