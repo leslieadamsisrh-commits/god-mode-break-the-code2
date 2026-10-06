@@ -104,3 +104,39 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .gmHero{position:absolute;right:5%;top:19%;bottom:17%;width:47%;background:linear-gradient(135deg,#18223ecc,#531235aa);border:1px solid #ff4d9c66;display:flex;align-items:end;justify-content:space-around;padding:20px;transform:skewX(-4deg)}.gmHero strong{font:900 clamp(28px,5vw,72px) Impact,sans-serif;color:#ff4a9c}.gmHero span{font:900 clamp(14px,2vw,30px) Impact,sans-serif}
 .gmMenu nav{position:relative;z-index:3;margin:2% 0 0 5%;width:37%;display:grid;gap:5px}.gmMenu nav button,.directorTiles button{display:grid;text-align:left;background:#09111ddb;border:1px solid #29404e;color:#fff;padding:10px 14px}.gmMenu nav button.active{background:linear-gradient(90deg,#ff1682,#8c164f);border-color:#ff70ba;transform:translateX(7px)}.gmMenu nav b,.directorTiles b{font-size:15px;letter-spacing:.1em}.gmMenu nav span,.directorTiles span{font-size:9px;color:#a8c4cd;letter-spacing:.08em;margin-top:2px}.gmMenu>footer{position:absolute;left:5%;bottom:4%;font:800 10px ui-monospace,monospace;color:#a8c4cd}
 .gmDirector header b{color:#ff4ca1}.directorTiles{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(760px,88%);margin:7% auto}.directorTiles button{min-height:110px;border-color:#48616e}.directorTiles button:hover{border-color:#ff55aa}.gmBack{position:absolute;left:6%;bottom:7%;background:#09111d;color:#fff;border:1px solid #6eefff;padding:10px 20px}
+
+
+/* BAY BRIDGE MAP CONTAINER 01 — six registered Comic Depth domains */
+.bayContainer01{background:#0a0d19;overflow:hidden}
+.bayContainer01 .bayDepth{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.bayContainer01 .l0{z-index:0;background:
+ radial-gradient(circle at 62% 17%,#ff4c9c66 0 3%,#5e3bd355 9%,transparent 22%),
+ radial-gradient(circle at 64% 14%,#121b46 0 8%,#26dff933 9% 11%,transparent 22%),
+ linear-gradient(165deg,#17162d 0 24%,#52254d 43%,#ff854b 62%,#171a2c 82%)}
+.dimensionalPortal{position:absolute;left:54%;top:2%;width:25%;aspect-ratio:1;border:8px solid #5cecff66;border-radius:50%;box-shadow:0 0 28px #5cecff88,inset 0 0 34px #ff49b988;transform:rotate(-12deg)}
+.dimensionalPortal:after{content:"";position:absolute;inset:18%;border:4px solid #ff50b988;border-radius:50%;box-shadow:0 0 24px #ff50b9}
+.dimensionalMoon{position:absolute;right:5%;top:4%;width:13%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 32%,#e5b8d8,#7c5d91 45%,#2d2947 75%);box-shadow:0 0 38px #ff67bd55}
+.riftClouds{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 35%,#111625cc,transparent 32%),radial-gradient(ellipse at 85% 28%,#30214499,transparent 31%);opacity:.85}
+.bayContainer01 .l1{z-index:1;top:19%}
+.sfSkyline{position:absolute;left:0;right:0;bottom:33%;height:29%;background:linear-gradient(90deg,transparent 0 4%,#141a28 4% 7%,transparent 7% 9%,#111827 9% 12%,transparent 12% 17%,#1a1b31 17% 20%,transparent 20% 26%,#151a2b 26% 30%,transparent 30% 37%,#161b2d 37% 43%,transparent 43% 48%,#111828 48% 52%,transparent 52% 58%,#19182c 58% 62%,transparent 62% 70%,#131928 70% 76%,transparent 76% 83%,#18192a 83% 89%,transparent 89%);filter:drop-shadow(0 0 5px #ff4b9c55)}
+.bayWater{position:absolute;left:-5%;right:-5%;bottom:0;height:38%;background:linear-gradient(#192333aa,#101927),repeating-linear-gradient(100deg,transparent 0 24px,#5beaff22 25px 28px,transparent 29px 54px);box-shadow:inset 0 8px 30px #ff714522}
+.farBridge{position:absolute;left:-8%;right:-8%;bottom:35%;height:7px;background:#121927;transform:rotate(-2deg);box-shadow:0 -2px #ff5c9d55,0 3px #55e9ff33}
+.bayContainer01 .l2{z-index:2}
+.bayContainer01 .l2 .bayTower{top:8%;height:50%;background:linear-gradient(90deg,#10151f,#58606c 42%,#1b202b);box-shadow:0 0 0 2px #0b0e14,0 0 16px #ff4f9a33}
+.bayContainer01 .l2 .bayTower.left{left:20%}.bayContainer01 .l2 .bayTower.right{right:16%}
+.bridgeDeck{position:absolute;left:-7%;right:-7%;top:34%;height:14px;background:linear-gradient(#4c525b,#171c24 45%,#0c1118);transform:rotate(-3deg);box-shadow:0 5px 0 #090d12,0 -2px #ff5b9d55}
+.bayContainer01 .l2 .bayCables{opacity:.9;background:
+ radial-gradient(ellipse at 50% -18%,transparent 0 51%,#101723 51.3% 51.8%,transparent 52.1%),
+ linear-gradient(69deg,transparent 0 21%,#111923 21.2% 21.45%,transparent 21.7%),
+ linear-gradient(110deg,transparent 0 76%,#111923 76.2% 76.45%,transparent 76.7%)}
+.bayContainer01 .l3{z-index:3;top:29%}
+.wetRoad{position:absolute;left:-12%;right:-12%;top:10%;height:115%;transform:perspective(950px) rotateX(56deg) rotateZ(-3deg);transform-origin:50% 0;background:
+ repeating-linear-gradient(100deg,transparent 0 34px,#ffffff08 35px 37px,transparent 38px 74px),
+ linear-gradient(90deg,#171a21,#34333a 47%,#181b22);border-top:8px solid #55545c;box-shadow:0 -5px #11151c,0 25px 50px #000a}
+.laneMark{position:absolute;top:0;bottom:0;width:3px;background:repeating-linear-gradient(#f4d99d 0 25px,transparent 25px 48px);opacity:.55}.laneMark.a{left:36%}.laneMark.b{left:64%}
+.expansionJoint{position:absolute;left:5%;right:5%;top:48%;height:5px;background:#080a0e;box-shadow:0 2px #7d717055}
+.wetReflection{position:absolute;top:6%;bottom:5%;width:8%;filter:blur(8px);opacity:.19}.wetReflection.cyan{left:30%;background:linear-gradient(transparent,#52eaff,transparent)}.wetReflection.magenta{left:56%;background:linear-gradient(transparent,#ff48a7,transparent)}.wetReflection.orange{left:72%;background:linear-gradient(transparent,#ff8b4d,transparent)}
+.bayContainer01 .l4{z-index:5}.steam{position:absolute;width:23%;height:18%;border-radius:50%;filter:blur(15px);background:#d7e8ef22}.steam.s1{left:8%;bottom:18%}.steam.s2{right:12%;bottom:29%}
+.bayContainer01 .l5{z-index:8}.foregroundGirder{position:absolute;left:-5%;bottom:-8%;width:36%;height:16%;border-top:18px solid #0d131c;transform:rotate(7deg);box-shadow:0 -3px #ff4e9a33}.foregroundCable{position:absolute;right:-12%;top:-4%;width:48%;height:8px;background:#0b1119;transform:rotate(62deg);opacity:.78}
+.stageWrap>canvas{z-index:4!important}
+.bayContainer01 .l4{z-index:5}.bayContainer01 .l5{z-index:6}
