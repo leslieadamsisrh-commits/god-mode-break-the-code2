@@ -27,7 +27,7 @@ export function comicProject(x:number,y:number,z:number,cam:ComicCameraKey){
 function zoneFor(x:number){return BAY_ZONES.find(z=>x>=z.x0&&x<z.x1)||BAY_ZONES[BAY_ZONES.length-1]}
 
 export default function BayBridgeArena({s}:{s:any}){
- const [cam,setCam]=useState<ComicCameraKey>("B"),[qa,setQa]=useState(false);
+ const [cam,setCam]=useState<ComicCameraKey>("B"),[qa,setQa]=useState(false),[open,setOpen]=useState(false);
  const p=s?.players?.[0]||{x:230,y:330},zone=zoneFor(p.x||0),c=COMIC_CAMERAS[cam];
  return <div className="bayArena">
   <div className="baySky"><i/><i/><i/></div>
@@ -40,11 +40,16 @@ export default function BayBridgeArena({s}:{s:any}){
    <div className="girderFrame"/>
   </div>
   <div className="bayForeground"/>
-  <div className="arenaControls">
-   {(Object.keys(COMIC_CAMERAS) as ComicCameraKey[]).map(k=><button className={cam===k?"active":""} key={k} onClick={()=>setCam(k)}>{k}</button>)}
-   <button onClick={()=>setQa(v=>!v)}>{qa?"ARENA QA ON":"ARENA QA"}</button>
+  <div className="arenaMenu">
+   <button className="studioMenuButton" onClick={()=>setOpen(v=>!v)}>☰ STUDIO</button>
+   <div className="cameraChip">CAM {cam} · {c.pitch}° · {cam==="B"?"BALANCED OBLIQUE":cam==="A"?"THREE-QUARTER":"STEEP TACTICAL"}</div>
+   {open&&<div className="studioDropdown">
+    <b>CAMERA</b>
+    {(Object.keys(COMIC_CAMERAS) as ComicCameraKey[]).map(k=><button className={cam===k?"active":""} key={k} onClick={()=>setCam(k)}><strong>CAM {k}</strong><span>{COMIC_CAMERAS[k].name.replace(/^CAM . · /,"")} · {COMIC_CAMERAS[k].pitch}°</span></button>)}
+    <hr/><b>DIAGNOSTICS</b>
+    <button onClick={()=>setQa(v=>!v)}><strong>{qa?"✓ ":""}ARENA QA</strong><span>Projection · zones · depth · cover metadata</span></button>
+   </div>}
   </div>
-  <div className="cameraReadout">{c.name} · PITCH {c.pitch}° · YAW {c.yaw}° · ZONE {zone.id} {zone.name}</div>
   {qa&&<div className="arenaQa">
    <b>COMIC DEPTH SPACE</b><span>WORLD {Number(p.x||0).toFixed(1)}, {Number(p.y||0).toFixed(1)}, 0</span>
    <span>PROJECT {JSON.stringify(comicProject(p.x||0,p.y||0,0,cam))}</span>
