@@ -2,6 +2,7 @@
 import {useCallback,useEffect,useRef,useState} from "react";
 import PlaytestGuide from "./PlaytestGuide";
 import AnimationQaHarness from "./AnimationQaHarness";
+import BayBridgeArena from "./BayBridgeArena";
 import {COVER_HEIGHT,withCoverOcclusion} from "../lib/cover-occlusion";
 
 type Session={room:string;code?:string;token:string;slot:number};
@@ -174,7 +175,7 @@ export default function Game(){
   <header><div><small>GOD MODE: BREAK THE CODE</small><b>V142 STRUCTURE LAB · COMBAT STUDIO</b></div><span>{status}</span></header>
   <div className="stageWrap">
    {!bootReady&&<div className="controllerGate" aria-live="polite"><b>GOD HELMET BOOT</b><small>LOADING COMBAT MEMORY · {boot.done}/{boot.total}</small><small>{boot.label}{boot.failed?` · ${boot.failed} FALLBACK${boot.failed===1?"":"S"}`:""}</small><i style={{display:"block",width:"min(320px,70vw)",height:8,border:"1px solid currentColor",marginTop:10}}><span style={{display:"block",height:"100%",width:`${boot.total?boot.done/boot.total*100:0}%`,background:"currentColor"}}/></i></div>}
-   <canvas ref={canvas} width={1400} height={868} onPointerMove={point} onPointerDown={e=>{point(e);mouse.current.down=true;(e.currentTarget as HTMLElement).focus();(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)}} onPointerUp={()=>mouse.current.down=false} onPointerCancel={()=>mouse.current.down=false}/>
+   <BayBridgeArena s={hud}/>\n   <canvas ref={canvas} width={1400} height={868} onPointerMove={point} onPointerDown={e=>{point(e);mouse.current.down=true;(e.currentTarget as HTMLElement).focus();(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)}} onPointerUp={()=>mouse.current.down=false} onPointerCancel={()=>mouse.current.down=false}/>
    <div className="minimalHud"><b>HP {Math.ceil(p?.hp??100)}</b><span className="padLine">{config.weaveEnabled<.5?"CLASSIC · A SLIDE":"WEAVE EXPERIMENT · A DOUBLE-TAP SLIDE"}</span><i style={{width:`${p?.battery??100}%`}}/><span>BATTERY {Math.ceil(p?.battery??100)}%</span><span>{p?.charging?`CHARGE ${Math.round((p.godCharge||0)*100)}%`:p?.godTime>0?`GOD FRAME ${p.godTime.toFixed(1)}s`:"HOLD Y · POWER UP"}</span><span className="padLine">{padStatus}</span></div>
    {bootReady&&padGate&&<button className="controllerGate" onClick={activateController}>ACTIVATE XBOX CONTROLLER<small>Tap once, then press A or move a stick</small></button>}
    <PlaytestGuide/>
