@@ -137,13 +137,9 @@ export default function Game(){
  },[]);
  useEffect(()=>{const kd=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement)?.tagName))return;if(["Space","ShiftLeft","ShiftRight"].includes(e.code))e.preventDefault();if(!keys.current[e.code])edges.current[e.code]=true;keys.current[e.code]=true},ku=(e:KeyboardEvent)=>keys.current[e.code]=false;addEventListener("keydown",kd);addEventListener("keyup",ku);return()=>{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}},[]);
  useEffect(()=>{let dead=false;const poll=async()=>{if(dead)return;const s=session.current;if(s)try{const u=new URL("/api/game",location.origin);u.searchParams.set("room",s.room);u.searchParams.set("token",s.token);const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(r.ok)accept(v);else if(r.status===404&&v.error==="ROOM_NOT_FOUND"){session.current=null;sessionStorage.removeItem("god_mode_studio_session");started.current=false;seq.current=0;snapshots.length=0;cameraState.ready=false;await create()}}catch{}setTimeout(poll,80)};poll();return()=>{dead=true}},[accept,create]);
+ useEffect(()=>{let raf=0;const uiLoop=()=>{try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const start=!!(pad.buttons[9]?.pressed||pad.buttons[9]?.value>.25);if(start&&!startHeld.current)setStudioMenu(v=>!v);startHeld.current=start}else startHeld.current=false}catch{}raf=requestAnimationFrame(uiLoop)};raf=requestAnimationFrame(uiLoop);return()=>cancelAnimationFrame(raf)},[]);
  useEffect(()=>{let pending=false;const timer=setInterval(async()=>{const s=session.current,g=state.current;if(!bootReady||!s||!g||pending)return;pending=true;const p=g.players[0],i:any={...EMPTY};i.x=(keys.current.KeyD?1:0)-(keys.current.KeyA?1:0);i.y=(keys.current.KeyS?1:0)-(keys.current.KeyW?1:0);i.aim=Math.atan2(mouse.current.y-p.y,mouse.current.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.powerup=!!keys.current.KeyY||chargePreview.current;
-  try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){
-   const start=!!(pad.buttons[9]?.pressed||pad.buttons[9]?.value>.25);
-   if(start&&!startHeld.current)setStudioMenu(v=>!v);
-   startHeld.current=start;
-   if(!studioMenu){i.aim=p.aim;readController(pad,i)}
-  }}catch{}
+  try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad&&!studioMenu){i.aim=p.aim;readController(pad,i)}}catch{}
   if(studioMenu){Object.assign(i,{x:0,y:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false})}
   try{accept(await post({action:"input",...s,seq:++seq.current,input:i}))}catch{}finally{pending=false}
  },33);return()=>clearInterval(timer)},[accept,post,bootReady,studioMenu]);
