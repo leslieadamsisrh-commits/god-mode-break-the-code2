@@ -5,6 +5,7 @@ export type BayMapObject={
  id:string;worldPosition:{x:number;y:number;z:number};dimensions:{w:number;h:number;z:number};rotation:number;
  depthDomain:DepthDomain;collisionHull:{shape:"box";w:number;h:number};renderedShell:string;material:BayMaterial;
  coverClass:"waist"|"tall"|null;topology:"FACE_EDGE_CORNER"|null;lane:BayLane;mass:number;rotationalInertia:number;
+ shellProfile:"BARRIER"|"DIVIDER"|"SEDAN"|"VAN"|"CABINET"|"GIRDER"|"RAILING"|"EQUIPMENT"|"MODULE"|"BLOCK";planes:("TOP"|"FRONT"|"BACK"|"LEFT"|"RIGHT"|"END"|"DETAIL"|"DAMAGE"|"GLASS"|"EMISSIVE")[];
  breakThreshold:number;gripCompatible:boolean;throwable:boolean;destructionFamily:string;editorMetadata:{label:string;locked?:boolean};
 };
 export const BAY_CAMERA={id:"CAMERA_B",pitch:31,yaw:-25,combatScaleMin:.96,combatScaleMax:1.035,weakPerspective:true} as const;
@@ -16,8 +17,9 @@ export const BAY_LANES=[
  {id:"RIGHT_FLANK",x0:120,y0:410,x1:880,y1:520},
  {id:"LONG_SIGHT",x0:250,y0:115,x1:760,y1:175}
 ] as const;
+const profile=(shell:string):BayMapObject["shellProfile"]=>shell.includes("sedan")?"SEDAN":shell.includes("van")?"VAN":shell.includes("cabinet")?"CABINET":shell.includes("girder")?"GIRDER":shell.includes("railing")?"RAILING":shell.includes("equipment")?"EQUIPMENT":shell.includes("module")?"MODULE":shell.includes("block")?"BLOCK":shell.includes("divider")?"DIVIDER":"BARRIER";
 const obj=(id:string,x:number,y:number,w:number,h:number,rotation:number,shell:string,material:BayMaterial,coverClass:"waist"|"tall",lane:BayLane,mass:number,breakThreshold:number,label:string):BayMapObject=>({
- id,worldPosition:{x,y,z:0},dimensions:{w,h,z:coverClass==="tall"?78:46},rotation,depthDomain:"L3_COMBAT",collisionHull:{shape:"box",w,h},renderedShell:shell,material,coverClass,topology:"FACE_EDGE_CORNER",lane,mass,rotationalInertia:mass*(w*w+h*h)/12,breakThreshold,gripCompatible:true,throwable:true,destructionFamily:material.toLowerCase()+"-debris",editorMetadata:{label}
+ id,worldPosition:{x,y,z:0},dimensions:{w,h,z:coverClass==="tall"?78:46},rotation,depthDomain:"L3_COMBAT",collisionHull:{shape:"box",w,h},renderedShell:shell,material,coverClass,topology:"FACE_EDGE_CORNER",lane,mass,rotationalInertia:mass*(w*w+h*h)/12,shellProfile:profile(shell),planes:["TOP","FRONT","BACK","LEFT","RIGHT","END","DETAIL","DAMAGE",...(material==="VEHICLE"?["GLASS" as const]:[]),...(material==="INFRASTRUCTURE"?["EMISSIVE" as const]:[])],breakThreshold,gripCompatible:true,throwable:true,destructionFamily:material.toLowerCase()+"-debris",editorMetadata:{label}
 });
 export const BAY_OBJECTS:BayMapObject[]=[
  obj("bay-jersey-a",286,337,112,34,-.08,"damaged-jersey","CONCRETE","waist","CENTER",7,140,"Jersey A"),
