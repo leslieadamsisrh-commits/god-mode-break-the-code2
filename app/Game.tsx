@@ -6,10 +6,11 @@ import BayBridgeArena from "./BayBridgeArena";
 import GodModeShell from "./GodModeShell";
 import {COVER_HEIGHT,withCoverOcclusion} from "../lib/cover-occlusion";
 import {GOD_TIERS} from "../lib/gameFramework";
+import {bayObject} from "../lib/bayBridgeMap";
 
 type Session={room:string;code?:string;token:string;slot:number};
 type Config={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
-const DEFAULT:Config={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:0,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:410,dashDuration:.16,doubleTapWindow:.28,slideSpeed:689.15949375,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.48,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
+const DEFAULT:Config={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:1,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:620,dashDuration:.19,doubleTapWindow:.28,slideSpeed:689.15949375,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.39,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
 const EMPTY:any={x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false};
 function readController(pad:any,i:any){
  const down=(n:number)=>!!(pad.buttons[n]?.pressed||pad.buttons[n]?.value>.25),dz=(v:number)=>Math.abs(v)<.18?0:v;
@@ -312,7 +313,7 @@ function drawGodFront(g:CanvasRenderingContext2D,p:any,t:number){
  }
  g.restore();
 }
-function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1){if(!canvas)return;const g=canvas.getContext("2d")!,sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.fillStyle="#070b10";g.fillRect(0,0,1000,620);if(!s)return;
+function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1){if(!canvas)return;const g=canvas.getContext("2d")!,sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
  const renderNow=performance.now();s=presentation(s,renderNow);const cfg=s.config||DEFAULT,p=s.players[0],local={...p};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
  const zoom=Math.max(1.25,Math.min(2.15,cfg.cameraZoom||1.85)),look=0,lookY=0,ga=local.gunFacing??local.aim??0;
  const halfW=500/zoom,halfH=310/zoom,targetX=Math.max(halfW,Math.min(1000-halfW,local.x+Math.cos(ga)*look)),targetY=Math.max(halfH,Math.min(620-halfH,local.y+Math.sin(ga)*lookY));
@@ -320,7 +321,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  const frameDt=cameraState.last?Math.min(.05,(renderNow-cameraState.last)/1000):1/60;cameraState.last=renderNow;const follow=1-Math.exp(-8*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
  const camX=cameraState.x,camY=cameraState.y;
  g.setTransform(sx*zoom,0,0,sy*zoom,(500-camX*zoom)*sx,(310-camY*zoom)*sy);
- g.strokeStyle="#162733";g.lineWidth=1/zoom;for(let x=50;x<1000;x+=50){g.beginPath();g.moveTo(x,70);g.lineTo(x,560);g.stroke()}for(let y=90;y<570;y+=40){g.beginPath();g.moveTo(50,y);g.lineTo(950,y);g.stroke()}g.strokeStyle="#31505c";g.strokeRect(70,90,860,460);g.fillStyle="#aeb7bd";g.font=`${Math.max(8,12/zoom)}px monospace`;g.fillText("INSTRUCTOR 142 CLASSIC // CLOSE COMBAT CAMERA",82,112);
+ 
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
  const fullSlide=local.slide>0;
@@ -687,7 +688,7 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
 function cover(g:CanvasRenderingContext2D,c:any,t:number){
  // Rotation is applied to the ground footprint; elevation stays vertical.
  // The lab's camera projection is already represented by this build's world coordinates.
- const im=classicAssets.get("concrete"),z=COVER_HEIGHT,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
+ const im=classicAssets.get("concrete"),meta=bayObject(c.id),material=meta?.material||"CONCRETE",z=meta?.dimensions?.z||COVER_HEIGHT,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
  const project=(x:number,y:number,height:number)=>({x:x*co-y*si,y:x*si+y*co-height});
  const footprint=[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]];
  const ground=footprint.map(([x,y])=>project(x,y,0)),top=footprint.map(([x,y])=>project(x,y,z));
@@ -696,16 +697,17 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number){
  g.save();g.translate(c.x,c.y);
  g.fillStyle="#0008";g.beginPath();g.ellipse(0,7,w*.53,h*.6,c.a||0,0,Math.PI*2);g.fill();
  if(c.psychicHeld){g.shadowColor="#ff4aa5";g.shadowBlur=18}
+ const pal=material==="STEEL"?["#242b35","#4c5966","#1e2630","#5e6c78","#697682"]:material==="VEHICLE"?["#251d2a","#493248","#211b27","#5d3c55","#6b455d"]:material==="INFRASTRUCTURE"?["#24282c","#4b5155","#202529","#596166","#687075"]:["#343b40","#454c51","#30383d","#697176","#899196"];
  const sides=[
-  {kind:"back",p:[top[0],top[1],ground[1],ground[0]],fill:"#343b40"},
-  {kind:"right",p:[top[1],top[2],ground[2],ground[1]],fill:"#454c51"},
-  {kind:"left",p:[top[0],top[3],ground[3],ground[0]],fill:"#30383d"},
-  {kind:"front",p:[top[3],top[2],ground[2],ground[3]],fill:"#697176"}
+  {kind:"back",p:[top[0],top[1],ground[1],ground[0]],fill:pal[0]},
+  {kind:"right",p:[top[1],top[2],ground[2],ground[1]],fill:pal[1]},
+  {kind:"left",p:[top[0],top[3],ground[3],ground[0]],fill:pal[2]},
+  {kind:"front",p:[top[3],top[2],ground[2],ground[3]],fill:pal[3]}
  ];
  sides.sort((a,b)=>a.p.reduce((sum,p)=>sum+p.y,0)-b.p.reduce((sum,p)=>sum+p.y,0));
  if(formation<1){g.globalAlpha=Math.max(.07,formation*.85);g.filter=`blur(${Math.round((1-formation)*5)}px)`}
  for(const face of sides)concreteFace(g,im,CONCRETE_FACES[face.kind][stage],face.p,face.fill);
- concreteFace(g,im,CONCRETE_FACES.top[stage],top,"#899196");g.filter="none";g.globalAlpha=1;g.shadowBlur=0;
+ concreteFace(g,im,CONCRETE_FACES.top[stage],top,pal[4]);g.filter="none";g.globalAlpha=1;g.shadowBlur=0;
  // Original lab cap seams, fastening holes, and edge wear.
  g.strokeStyle="#111a20";g.lineWidth=1.25;g.fillStyle="#141e23";
  for(const fraction of [-.48,.48]){const a=project(w/2*fraction,-h/2,z+.4),b=project(w/2*fraction,h/2,z+.4);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()}
