@@ -6,6 +6,7 @@ export type BayMapObject={
  depthDomain:DepthDomain;collisionHull:{shape:"box";w:number;h:number};renderedShell:string;material:BayMaterial;
  coverClass:"waist"|"tall"|null;topology:"FACE_EDGE_CORNER"|null;lane:BayLane;mass:number;rotationalInertia:number;
  shellProfile:"BARRIER"|"DIVIDER"|"SEDAN"|"VAN"|"CABINET"|"GIRDER"|"RAILING"|"EQUIPMENT"|"MODULE"|"BLOCK";planes:("TOP"|"FRONT"|"BACK"|"LEFT"|"RIGHT"|"END"|"DETAIL"|"DAMAGE"|"GLASS"|"EMISSIVE")[];
+ rig:{spine:{x0:number;y0:number;z0:number;x1:number;y1:number;z1:number};ribs:{t:number;width:number;height:number}[];coverRails:{side:"FRONT"|"BACK"|"LEFT"|"RIGHT";from:number;to:number;height:number}[];contactPoints:{x:number;y:number}[];occlusionHeight:number};
  breakThreshold:number;gripCompatible:boolean;throwable:boolean;destructionFamily:string;editorMetadata:{label:string;locked?:boolean};
 };
 export const BAY_CAMERA={id:"CAMERA_B",pitch:31,yaw:-25,combatScaleMin:.96,combatScaleMax:1.035,weakPerspective:true} as const;
@@ -18,8 +19,20 @@ export const BAY_LANES=[
  {id:"LONG_SIGHT",x0:250,y0:115,x1:760,y1:175}
 ] as const;
 const profile=(shell:string):BayMapObject["shellProfile"]=>shell.includes("sedan")?"SEDAN":shell.includes("van")?"VAN":shell.includes("cabinet")?"CABINET":shell.includes("girder")?"GIRDER":shell.includes("railing")?"RAILING":shell.includes("equipment")?"EQUIPMENT":shell.includes("module")?"MODULE":shell.includes("block")?"BLOCK":shell.includes("divider")?"DIVIDER":"BARRIER";
+function rigFor(profile:BayMapObject["shellProfile"],w:number,h:number,z:number):BayMapObject["rig"]{
+ const base={spine:{x0:-w*.45,y0:0,z0:z*.45,x1:w*.45,y1:0,z1:z*.45},ribs:[{t:0,width:h,height:z*.8},{t:.5,width:h,height:z},{t:1,width:h,height:z*.8}],coverRails:[{side:"FRONT" as const,from:.08,to:.92,height:z*.62},{side:"BACK" as const,from:.08,to:.92,height:z*.62}],contactPoints:[{x:-w*.38,y:h*.42},{x:w*.38,y:h*.42}],occlusionHeight:z};
+ if(profile==="SEDAN")return{...base,ribs:[{t:0,width:h*.82,height:z*.42},{t:.22,width:h*.96,height:z*.62},{t:.42,width:h,height:z*.86},{t:.68,width:h*.98,height:z*.84},{t:.88,width:h*.9,height:z*.52},{t:1,width:h*.72,height:z*.38}],contactPoints:[{x:-w*.34,y:h*.48},{x:w*.34,y:h*.48}],coverRails:[{side:"FRONT",from:.08,to:.92,height:z*.52},{side:"BACK",from:.12,to:.88,height:z*.52}]};
+ if(profile==="VAN")return{...base,ribs:[{t:0,width:h*.9,height:z*.68},{t:.16,width:h,height:z*.96},{t:.78,width:h,height:z},{t:1,width:h*.92,height:z*.82}],coverRails:[{side:"FRONT",from:.04,to:.96,height:z*.74},{side:"BACK",from:.04,to:.96,height:z*.74}]};
+ if(profile==="GIRDER")return{...base,ribs:[{t:0,width:h*.72,height:z*.65},{t:.18,width:h,height:z},{t:.5,width:h*.8,height:z*.86},{t:.82,width:h,height:z},{t:1,width:h*.62,height:z*.58}],coverRails:[{side:"FRONT",from:.12,to:.88,height:z*.55}]};
+ if(profile==="RAILING")return{...base,ribs:[{t:0,width:h*.7,height:z},{t:.25,width:h*.55,height:z},{t:.5,width:h*.55,height:z},{t:.75,width:h*.55,height:z},{t:1,width:h*.7,height:z}],coverRails:[{side:"FRONT",from:0,to:1,height:z*.48}]};
+ if(profile==="CABINET"||profile==="MODULE")return{...base,ribs:[{t:0,width:h*.94,height:z*.94},{t:.5,width:h,height:z},{t:1,width:h*.94,height:z*.94}],coverRails:[{side:"FRONT",from:.04,to:.96,height:z*.72},{side:"BACK",from:.04,to:.96,height:z*.72},{side:"LEFT",from:.08,to:.92,height:z*.7},{side:"RIGHT",from:.08,to:.92,height:z*.7}]};
+ if(profile==="EQUIPMENT")return{...base,ribs:[{t:0,width:h*.7,height:z*.62},{t:.28,width:h,height:z*.92},{t:.65,width:h*.9,height:z},{t:1,width:h*.62,height:z*.7}],coverRails:[{side:"FRONT",from:.12,to:.86,height:z*.58}]};
+ if(profile==="DIVIDER")return{...base,ribs:[{t:0,width:h*.72,height:z*.76},{t:.2,width:h,height:z},{t:.5,width:h*.94,height:z*.92},{t:.8,width:h,height:z},{t:1,width:h*.7,height:z*.72}]};
+ if(profile==="BLOCK")return{...base,ribs:[{t:0,width:h*.86,height:z*.8},{t:.18,width:h,height:z*.96},{t:.52,width:h*.92,height:z},{t:.82,width:h,height:z*.9},{t:1,width:h*.78,height:z*.7}]};
+ return{...base,ribs:[{t:0,width:h*.7,height:z*.72},{t:.16,width:h,height:z},{t:.5,width:h*.9,height:z*.92},{t:.84,width:h,height:z},{t:1,width:h*.68,height:z*.7}]};
+}
 const obj=(id:string,x:number,y:number,w:number,h:number,rotation:number,shell:string,material:BayMaterial,coverClass:"waist"|"tall",lane:BayLane,mass:number,breakThreshold:number,label:string):BayMapObject=>({
- id,worldPosition:{x,y,z:0},dimensions:{w,h,z:coverClass==="tall"?78:46},rotation,depthDomain:"L3_COMBAT",collisionHull:{shape:"box",w,h},renderedShell:shell,material,coverClass,topology:"FACE_EDGE_CORNER",lane,mass,rotationalInertia:mass*(w*w+h*h)/12,shellProfile:profile(shell),planes:["TOP","FRONT","BACK","LEFT","RIGHT","END","DETAIL","DAMAGE",...(material==="VEHICLE"?["GLASS" as const]:[]),...(material==="INFRASTRUCTURE"?["EMISSIVE" as const]:[])],breakThreshold,gripCompatible:true,throwable:true,destructionFamily:material.toLowerCase()+"-debris",editorMetadata:{label}
+ id,worldPosition:{x,y,z:0},dimensions:{w,h,z:coverClass==="tall"?78:46},rotation,depthDomain:"L3_COMBAT",collisionHull:{shape:"box",w,h},renderedShell:shell,material,coverClass,topology:"FACE_EDGE_CORNER",lane,mass,rotationalInertia:mass*(w*w+h*h)/12,shellProfile:profile(shell),rig:rigFor(profile(shell),w,h,coverClass==="tall"?78:46),planes:["TOP","FRONT","BACK","LEFT","RIGHT","END","DETAIL","DAMAGE",...(material==="VEHICLE"?["GLASS" as const]:[]),...(material==="INFRASTRUCTURE"?["EMISSIVE" as const]:[])],breakThreshold,gripCompatible:true,throwable:true,destructionFamily:material.toLowerCase()+"-debris",editorMetadata:{label}
 });
 export const BAY_OBJECTS:BayMapObject[]=[
  obj("bay-jersey",286,337,112,34,-.08,"damaged-jersey","CONCRETE","waist","CENTER",7,140,"Damaged Jersey Barrier"),
