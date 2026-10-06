@@ -271,25 +271,25 @@ function drawGodGround(g:CanvasRenderingContext2D,p:any,t:number){
 function drawGodRear(g:CanvasRenderingContext2D,p:any,t:number){
  const q=evoCharge(p),tier=(p.godTime||0)>0;if(!p.charging&&q<=0&&!tier)return;const e=tier?1:Math.max(.08,q);
  g.save();g.globalCompositeOperation="source-over";
- const art=evoSprite(g,"helix-rear",p,.18+.30*e,105+e*35,145+e*50,-.05*Math.sin(t*2));
- if(e>.18)evoSprite(g,"flame",p,.10+.20*e,100+e*28,145+e*48,0);
+ const art=evoSprite(g,"helix-rear",p,.14+.22*e,125+e*50,160+e*58,-.05*Math.sin(t*2));
+ if(e>.18)evoSprite(g,"flame",p,.09+.17*e,122+e*42,158+e*55,0);
  g.globalCompositeOperation="lighter";
  const bands=art?1:q<.15?1:q<.32?2:q<.5?3:4;
- for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#67f6ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=9+e*18;g.lineWidth=1.3+e*2.1;g.globalAlpha=art?.10+.12*e:.2+.42*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(29+e*18)*(1-u*.18),pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);const front=Math.sin(t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4)>0;if(front)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
+ for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#67f6ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=9+e*18;g.lineWidth=1.3+e*2.1;g.globalAlpha=art?.055+.075*e:.18+.32*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(38+e*24)*(1-u*.16),pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);const front=Math.sin(t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4)>0;if(front)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
  if(e>.62){const count=4+Math.floor(e*8);for(let i=0;i<count;i++){const a=t*(1.2+e*3)+i*2.399,rr=18+(i%4)*9+e*12,h=10+((i*17)%65)*e;g.globalAlpha=.18+.38*e;g.fillStyle=i%3?"#76f8ff":"#ff62c4";g.fillRect(p.x+Math.cos(a)*rr-1,p.y-h+Math.sin(a)*rr*.18-1,2+(i%2),2+(i%2))}}
  g.restore();
 }
 function drawGodFront(g:CanvasRenderingContext2D,p:any,t:number){
  const q=evoCharge(p),tier=(p.godTime||0)>0;if(!p.charging&&q<=0&&!tier)return;const e=tier?1:Math.max(.08,q),stage=evoStage(p);
  g.save();g.globalCompositeOperation="source-over";
- const art=evoSprite(g,"helix-front",p,.16+.28*e,105+e*35,145+e*50,.05*Math.sin(t*2));
- if(e>.5)evoSprite(g,"geometry",p,.08+.13*e,118+e*32,118+e*32,t*.08);
- if(e>.68)evoSprite(g,"crystal-code",p,.10+.18*e,112+e*28,132+e*34,0);
+ const art=evoSprite(g,"helix-front",p,.12+.19*e,125+e*50,160+e*58,.05*Math.sin(t*2));
+ if(e>.5)evoSprite(g,"geometry",p,.05+.08*e,142+e*42,142+e*42,t*.08);
+ if(e>.68)evoSprite(g,"crystal-code",p,.035+.055*e,70+e*18,82+e*22,0);
  g.globalCompositeOperation="lighter";
  const bands=art?1:q<.15?1:q<.32?2:q<.5?3:4;
- for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#7df8ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=10+e*20;g.lineWidth=1.4+e*2.4;g.globalAlpha=art?.08+.10*e:.22+.46*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(29+e*18)*(1-u*.18),ang=t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4,pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);if(Math.sin(ang)<=0)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
+ for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#7df8ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=10+e*20;g.lineWidth=1.4+e*2.4;g.globalAlpha=art?.045+.065*e:.18+.34*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(29+e*18)*(1-u*.18),ang=t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4,pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);if(Math.sin(ang)<=0)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
  if(e>.5){const structures=e>.9?3:e>.7?2:1;for(let j=0;j<structures;j++){const rr=24+j*13+e*10,rot=t*(.5+j*.22)*(j%2?-1:1);g.save();g.translate(p.x,p.y-38-e*18+j*8);g.rotate(rot);g.globalAlpha=.12+.28*e;g.strokeStyle=j%2?"#ff5dbd":"#a8ffff";g.lineWidth=1.2;g.beginPath();const sides=j===0?3:j===1?6:8;for(let i=0;i<=sides;i++){const a=i/sides*Math.PI*2-Math.PI/2,x=Math.cos(a)*rr,y=Math.sin(a)*rr*.45;i?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();g.restore()}}
- if(e>.68){const n=5+Math.floor(e*8);for(let i=0;i<n;i++){const a=t*(1.8+e*4)+i*2.399,rr=20+(i%5)*8,h=10+((i*13)%78)*e,x=p.x+Math.cos(a)*rr,y=p.y-h+Math.sin(a)*rr*.2;g.save();g.translate(x,y);g.rotate(a);g.globalAlpha=.18+.45*e;g.strokeStyle=i%2?"#ff78ca":"#b7ffff";g.strokeRect(-2,-5,4,10);if(e>.82){g.beginPath();g.moveTo(-5,0);g.lineTo(0,-9);g.lineTo(5,0);g.lineTo(0,9);g.closePath();g.stroke()}g.restore()}}
+ if(e>.68){const n=4+Math.floor(e*5);for(let i=0;i<n;i++){const a=t*(1.8+e*4)+i*2.399,rr=34+(i%5)*10+e*8,h=12+((i*13)%78)*e,x=p.x+Math.cos(a)*rr,y=p.y-h+Math.sin(a)*rr*.2;g.save();g.translate(x,y);g.rotate(a);g.globalAlpha=.08+.18*e;g.strokeStyle=i%2?"#ff78ca":"#b7ffff";g.strokeRect(-1,-2.5,2,5);if(e>.82){g.beginPath();g.moveTo(-2.5,0);g.lineTo(0,-4.5);g.lineTo(2.5,0);g.lineTo(0,4.5);g.closePath();g.stroke()}g.restore()}}
  if(stage==="TIER_READY"){g.globalAlpha=.3+.2*Math.sin(t*22);g.strokeStyle="#fff";g.lineWidth=2;g.beginPath();g.arc(p.x,p.y-38,48+Math.sin(t*8)*4,0,Math.PI*2);g.stroke()}
  if(tier){g.globalAlpha=.22+.12*Math.sin(t*5);g.strokeStyle="#9efeff";g.lineWidth=1.5;g.beginPath();g.ellipse(p.x,p.y-39,36,58,0,0,Math.PI*2);g.stroke()}
  g.restore();
