@@ -41,9 +41,10 @@ export default function BayBridgeArena({s}:{s:any}){
   </div>
   <div className="bayForeground"/>
   <div className="arenaMenu">
-   <button className="studioMenuButton" onClick={()=>setOpen(v=>!v)}>☰ STUDIO</button>
+   <button className="studioMenuButton" onClick={()=>setOpen(v=>!v)}>{open?"✕ CLOSE":"☰ MENU"}</button>
    <div className="cameraChip">CAM {cam} · {c.pitch}° · {cam==="B"?"BALANCED OBLIQUE":cam==="A"?"THREE-QUARTER":"STEEP TACTICAL"}</div>
    {open&&<div className="studioDropdown">
+    <button className="menuClose" onClick={()=>setOpen(false)}><strong>✕ CLOSE MENU</strong><span>Return to full-screen play</span></button>
     <b>CAMERA</b>
     {(Object.keys(COMIC_CAMERAS) as ComicCameraKey[]).map(k=><button className={cam===k?"active":""} key={k} onClick={()=>setCam(k)}><strong>CAM {k}</strong><span>{COMIC_CAMERAS[k].name.replace(/^CAM . · /,"")} · {COMIC_CAMERAS[k].pitch}°</span></button>)}
     <hr/><b>DIAGNOSTICS</b>
