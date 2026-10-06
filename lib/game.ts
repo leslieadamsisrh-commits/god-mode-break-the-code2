@@ -1,3 +1,4 @@
+import {bayCoverState} from "./bayBridgeMap";
 export type InputState={x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;powerup:boolean;slow:boolean};
 export type CombatConfig={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
 export const DEFAULT_CONFIG:CombatConfig={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:6,holdEnergy:6,coverThrowEnergy:8,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:12,dashEnergy:6,rechargeDelay:1.1,rechargeRate:9,weaveEnabled:1,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:620,dashDuration:.19,doubleTapWindow:.28,slideSpeed:689.15949375,slideDuration:.63,slideSustain:360,slideSteer:7.5,slideSteerAngle:.62,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.39,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:100,spriteScale:.82,cameraZoom:1.85};
@@ -19,10 +20,7 @@ export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo
  const players=[player(230,330,0,name,token,false,config.maxHealth)];
  if(mode==="bot")players.push(player(780,330,Math.PI,"RIFT HUNTER","",true,config.maxHealth));
  const matter:Matter[]=[];[[170,170,"stone"],[330,190,"metal"],[500,160,"stone"],[680,195,"metal"],[800,165,"stone"],[420,470,"metal"],[610,465,"stone"],[760,445,"metal"]].forEach(([x,y,k],i)=>matter.push({id:"m"+i,x:x as number,y:y as number,vx:0,vy:0,r:14,kind:k as any,heldBy:null,orbitBy:null,life:999}));
- const covers:Cover[]=[
- {id:"cover-piece-01",x:360,y:365,w:170,h:42,a:0,hp:140,maxHp:140,generated:false,build:0,variant:0,coverClass:"waist"},
- {id:"sniper-tower-base",x:690,y:315,w:128,h:46,a:Math.PI/2,hp:18,maxHp:18,generated:false,build:0,variant:3,coverClass:"tall"}
- ];
+ const covers:Cover[]=bayCoverState();
  return{build:"COMBAT-MASTER-STUDIO-01",mode,phase:mode==="solo"?"playing":"countdown",round:1,winner:null,countdown:3,finisher:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
 }
 export function updateConfig(s:GameState,patch:Partial<CombatConfig>){s.config={...s.config,...patch};for(const p of s.players)p.hp=Math.min(p.hp,s.config.maxHealth)}
