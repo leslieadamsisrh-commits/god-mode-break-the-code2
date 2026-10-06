@@ -22,16 +22,16 @@ const obj=(id:string,x:number,y:number,w:number,h:number,rotation:number,shell:s
  id,worldPosition:{x,y,z:0},dimensions:{w,h,z:coverClass==="tall"?78:46},rotation,depthDomain:"L3_COMBAT",collisionHull:{shape:"box",w,h},renderedShell:shell,material,coverClass,topology:"FACE_EDGE_CORNER",lane,mass,rotationalInertia:mass*(w*w+h*h)/12,shellProfile:profile(shell),planes:["TOP","FRONT","BACK","LEFT","RIGHT","END","DETAIL","DAMAGE",...(material==="VEHICLE"?["GLASS" as const]:[]),...(material==="INFRASTRUCTURE"?["EMISSIVE" as const]:[])],breakThreshold,gripCompatible:true,throwable:true,destructionFamily:material.toLowerCase()+"-debris",editorMetadata:{label}
 });
 export const BAY_OBJECTS:BayMapObject[]=[
- obj("bay-jersey-a",286,337,112,34,-.08,"damaged-jersey","CONCRETE","waist","CENTER",7,140,"Jersey A"),
- obj("bay-jersey-b",714,337,112,34,.08,"damaged-jersey","CONCRETE","waist","CENTER",7,140,"Jersey B"),
- obj("bay-divider-l",390,455,132,36,.10,"fractured-divider","CONCRETE","waist","RIGHT_FLANK",9,170,"Divider L"),
- obj("bay-divider-r",610,215,132,36,-.10,"fractured-divider","CONCRETE","waist","LEFT_FLANK",9,170,"Divider R"),
- obj("bay-sedan-l",405,235,118,48,.08,"wrecked-sedan","VEHICLE","waist","LEFT_FLANK",12,210,"Wrecked Sedan L"),
- obj("bay-sedan-r",595,435,118,48,-.08,"wrecked-sedan","VEHICLE","waist","RIGHT_FLANK",12,210,"Wrecked Sedan R"),
- obj("bay-cabinet-l",474,188,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","LEFT_FLANK",9,180,"Maintenance Cabinet L"),
- obj("bay-cabinet-r",526,482,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","RIGHT_FLANK",9,180,"Maintenance Cabinet R"),
- obj("bay-girder-center",500,350,126,32,0,"fractured-girder","STEEL","waist","CENTER",15,260,"Center Girder"),
- obj("bay-service-van",780,245,122,52,-.05,"service-van","VEHICLE","tall","LEFT_FLANK",16,250,"Service Van")
+ obj("bay-jersey",286,337,112,34,-.08,"damaged-jersey","CONCRETE","waist","CENTER",7,140,"Damaged Jersey Barrier"),
+ obj("bay-divider",714,337,132,36,.08,"fractured-divider","CONCRETE","waist","CENTER",9,170,"Fractured Divider"),
+ obj("bay-sedan",405,235,118,48,.08,"wrecked-sedan","VEHICLE","waist","LEFT_FLANK",12,210,"Wrecked Sedan"),
+ obj("bay-service-van",780,245,122,52,-.05,"service-van","VEHICLE","tall","LEFT_FLANK",16,250,"Service Vehicle"),
+ obj("bay-cabinet",526,482,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","RIGHT_FLANK",9,180,"Maintenance Cabinet"),
+ obj("bay-girder",500,350,126,32,0,"fractured-girder","STEEL","waist","CENTER",15,260,"Fractured Steel Girder"),
+ obj("bay-railing",610,215,142,28,-.10,"broken-railing","STEEL","waist","LEFT_FLANK",10,190,"Broken Railing Base"),
+ obj("bay-roadwork",390,455,82,46,.10,"roadwork-equipment","INFRASTRUCTURE","waist","RIGHT_FLANK",8,160,"Roadwork Equipment"),
+ obj("bay-module",650,455,112,50,-.06,"service-module","STEEL","tall","RIGHT_FLANK",18,280,"Service Module"),
+ obj("bay-block",215,455,94,42,.06,"maintenance-block","CONCRETE","waist","RIGHT_FLANK",13,230,"Concrete Maintenance Block")
 ];
 export const BAY_DEPTH_DOMAINS=[
  {id:"L0_SKY",nominalDistance:5000,parallax:.015},
