@@ -8,9 +8,10 @@ export function comicProject(x:number,y:number,z=0){
  return{x:rx,y:ry*Math.sin(p)-z*Math.cos(p),depth:ry*Math.cos(p)+z*Math.sin(p),scale};
 }
 function laneFor(x:number,y:number){return BAY_LANES.find(l=>x>=l.x0&&x<=l.x1&&y>=l.y0&&y<=l.y1)?.id||"TRANSIT"}
+function visiblePlanes(angle:number){const a=((angle%(Math.PI*2))+Math.PI*2)%(Math.PI*2),front=Math.cos(a)>=0,right=Math.sin(a)>=0;return ["TOP",front?"FRONT":"BACK",right?"RIGHT":"LEFT","DETAIL","DAMAGE"]}
 
 export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onReset,menuOpen,onMenuToggle}:{s:any;onAnimationQa?:()=>void;onDirector?:()=>void;onSprites?:()=>void;onReset?:()=>void;menuOpen:boolean;onMenuToggle:()=>void}){
- const [qa,setQa]=useState(false),p=s?.players?.[0]||{x:230,y:330},lane=laneFor(p.x||0,p.y||0),near=(s?.covers||[]).map((c:any)=>bayObject(c.id)).filter(Boolean);
+ const [qa,setQa]=useState(false),[selected,setSelected]=useState(0),[testAngle,setTestAngle]=useState(0),p=s?.players?.[0]||{x:230,y:330},lane=laneFor(p.x||0,p.y||0),near=(s?.covers||[]).map((c:any)=>bayObject(c.id)).filter(Boolean),actor=BAY_OBJECTS[selected%BAY_OBJECTS.length],planes=visiblePlanes(testAngle);
  return <div className="bayArena bayContainer01">
   <div className="bayDepth l0"><div className="dimensionalPortal"/><div className="dimensionalMoon"/><div className="riftClouds"/></div>
   <div className="bayDepth l1"><div className="sfSkyline"/><div className="bayWater"/><div className="farBridge"/></div>
@@ -37,6 +38,12 @@ export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onR
    <span>DEPTH {BAY_DEPTH_DOMAINS.map(d=>d.id+":"+d.nominalDistance).join(" · ")}</span>
    <span>SPAWNS {BAY_SPAWNS.map(x=>x.id+" "+x.x+"/"+x.y).join(" · ")}</span>
    <span>OBJECTS {near.map((o:any)=>o.id+":"+o.material+"/"+o.renderedShell).join(" · ")}</span>
+   <hr/><b>ENVIRONMENT ACTOR INSPECTOR</b>
+   <span>{actor.editorMetadata.label} · {actor.material} · {actor.shellProfile}</span>
+   <span>WORLD {actor.worldPosition.x}/{actor.worldPosition.y}/{actor.worldPosition.z} · HULL {actor.collisionHull.w}×{actor.collisionHull.h} · MASS {actor.mass}</span>
+   <span>ROTATION {Math.round(testAngle*180/Math.PI)}° · VISIBLE {planes.join(" + ")}</span>
+   <span>GRIP {actor.gripCompatible?"YES":"NO"} · THROW {actor.throwable?"YES":"NO"} · BREAK {actor.breakThreshold}</span>
+   <div style={{display:"flex",gap:4,pointerEvents:"auto"}}><button onClick={()=>setSelected(v=>(v+1)%BAY_OBJECTS.length)}>NEXT ACTOR</button><button onClick={()=>setTestAngle(v=>(v+Math.PI/4)%(Math.PI*2))}>ROTATE 45°</button></div>
   </div>}
  </div>
 }
