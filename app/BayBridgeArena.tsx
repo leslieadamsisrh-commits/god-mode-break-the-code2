@@ -26,8 +26,8 @@ export function comicProject(x:number,y:number,z:number,cam:ComicCameraKey){
 }
 function zoneFor(x:number){return BAY_ZONES.find(z=>x>=z.x0&&x<z.x1)||BAY_ZONES[BAY_ZONES.length-1]}
 
-export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onReset}:{s:any;onAnimationQa?:()=>void;onDirector?:()=>void;onSprites?:()=>void;onReset?:()=>void}){
- const [cam,setCam]=useState<ComicCameraKey>("B"),[qa,setQa]=useState(false),[open,setOpen]=useState(false);
+export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onReset,menuOpen,onMenuToggle}:{s:any;onAnimationQa?:()=>void;onDirector?:()=>void;onSprites?:()=>void;onReset?:()=>void;menuOpen:boolean;onMenuToggle:()=>void}){
+ const [cam,setCam]=useState<ComicCameraKey>("B"),[qa,setQa]=useState(false);const open=menuOpen;
  const p=s?.players?.[0]||{x:230,y:330},zone=zoneFor(p.x||0),c=COMIC_CAMERAS[cam];
  return <div className="bayArena">
   <div className="baySky"><i/><i/><i/></div>
@@ -41,10 +41,10 @@ export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onR
   </div>
   <div className="bayForeground"/>
   <div className="arenaMenu">
-   <button className="studioMenuButton" onClick={()=>setOpen(v=>!v)}>{open?"✕ CLOSE":`☰ MENU · CAM ${cam}`}</button>
+   <button className="studioMenuButton" onClick={onMenuToggle}>{open?"✕ CLOSE":`☰ MENU · CAM ${cam}`}</button>
    <div className="cameraChip">CAM {cam} · {c.pitch}° · {cam==="B"?"BALANCED OBLIQUE":cam==="A"?"THREE-QUARTER":"STEEP TACTICAL"}</div>
    {open&&<div className="studioDropdown">
-    <button className="menuClose" onClick={()=>setOpen(false)}><strong>✕ CLOSE MENU</strong><span>Return to full-screen play</span></button>
+    <button className="menuClose" onClick={onMenuToggle}><strong>✕ CLOSE MENU</strong><span>Return to full-screen play</span></button>
     <b>CAMERA</b>
     {(Object.keys(COMIC_CAMERAS) as ComicCameraKey[]).map(k=><button className={cam===k?"active":""} key={k} onClick={()=>setCam(k)}><strong>CAM {k}</strong><span>{COMIC_CAMERAS[k].name.replace(/^CAM . · /,"")} · {COMIC_CAMERAS[k].pitch}°</span></button>)}
     <hr/><b>DIAGNOSTICS</b>
