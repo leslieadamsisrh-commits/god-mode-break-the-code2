@@ -685,6 +685,41 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
  if(im?.complete&&im.naturalWidth){const [x,y,w,h]=crop,[a,b,,d]=points;g.save();path();g.clip();g.transform((b.x-a.x)/w,(b.y-a.y)/w,(d.x-a.x)/h,(d.y-a.y)/h,a.x,a.y);g.drawImage(im,x,y,w,h,0,0,w,h);g.restore()}
  path();g.strokeStyle="#070a0e";g.lineWidth=2.5;g.stroke();
 }
+function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
+ if(!meta)return;const P=(x:number,y:number,zz:number)=>project(x,y,zz),line=(pts:{x:number;y:number}[],stroke="#0a0d12",width=1.5)=>{g.strokeStyle=stroke;g.lineWidth=width;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke()};
+ const topY=-h/2,frontY=h/2;
+ g.save();g.lineJoin="round";g.lineCap="round";
+ // Shared ink silhouette / damage language. Collision remains the simple hull.
+ g.strokeStyle="#080b10";g.lineWidth=2.2;const corners=[P(-w/2,-h/2,z),P(w/2,-h/2,z),P(w/2,h/2,z),P(-w/2,h/2,z)];line([...corners,corners[0]],"#080b10",2.2);
+ if(meta.shellProfile==="BARRIER"||meta.shellProfile==="DIVIDER"||meta.shellProfile==="BLOCK"){
+  // chipped top, cracks, aggregate/rebar accents
+  line([P(-w*.34,frontY,z*.82),P(-w*.25,frontY,z*.55),P(-w*.12,frontY,z*.68),P(-w*.04,frontY,z*.35)],"#171318",1.3);
+  line([P(w*.18,frontY,z*.9),P(w*.24,frontY,z*.62),P(w*.36,frontY,z*.48)],"#19151a",1.1);
+  g.fillStyle="#b5a99b";for(const x of [-.3,-.08,.22,.38]){const p=P(w*x,frontY,z*(.2+.5*Math.abs(x)));g.fillRect(p.x-1.4,p.y-1.4,2.8,2.8)}
+  if(meta.shellProfile==="DIVIDER"){g.strokeStyle="#8b4c43";g.lineWidth=1.2;for(const x of [-.42,.42]){const a=P(w*x,frontY,z*.72),b=P(w*(x+.05),frontY,z*1.08);line([a,b],"#8b4c43",1.2)}}
+ }
+ if(meta.shellProfile==="SEDAN"||meta.shellProfile==="VAN"){
+  // authored vehicle planes: roof/glass/wheels over the simple box hull
+  const roof=meta.shellProfile==="SEDAN"?z*.78:z*.92,roofW=meta.shellProfile==="SEDAN"?w*.54:w*.72;
+  const a=P(-roofW/2,0,roof),b=P(roofW/2,0,roof),fa=P(-w*.38,frontY,z*.5),fb=P(w*.38,frontY,z*.5);
+  g.fillStyle="#121b26";g.strokeStyle="#71dff055";g.lineWidth=1.2;g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.lineTo(fb.x,fb.y);g.lineTo(fa.x,fa.y);g.closePath();g.fill();g.stroke();
+  for(const x of [-.34,.34]){const p=P(w*x,frontY,4);g.fillStyle="#090b0e";g.beginPath();g.ellipse(p.x,p.y,8,4,c.a||0,0,Math.PI*2);g.fill();g.strokeStyle="#626a70";g.stroke()}
+  line([P(-w*.46,frontY,z*.33),P(w*.46,frontY,z*.3)],"#ff4f9b55",1);
+ }
+ if(meta.shellProfile==="CABINET"||meta.shellProfile==="MODULE"||meta.shellProfile==="EQUIPMENT"){
+  const a=P(-w*.36,frontY,z*.78),b=P(w*.36,frontY,z*.78),c1=P(w*.36,frontY,z*.18),d=P(-w*.36,frontY,z*.18);g.fillStyle="#161d22";g.globalAlpha=.75;g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.lineTo(c1.x,c1.y);g.lineTo(d.x,d.y);g.closePath();g.fill();g.globalAlpha=1;line([a,b,c1,d,a],"#0a0d10",1.4);
+  const warn=P(0,frontY,z*.48);g.fillStyle="#f0b84a";g.fillRect(warn.x-6,warn.y-2,12,4);
+  if(meta.shellProfile==="MODULE"){for(const x of [-.25,0,.25]){const p=P(w*x,frontY,z*.25);g.fillStyle="#55eaff";g.globalAlpha=.55;g.fillRect(p.x-2,p.y-1,4,2)}g.globalAlpha=1}
+ }
+ if(meta.shellProfile==="GIRDER"||meta.shellProfile==="RAILING"){
+  line([P(-w*.45,0,z*.8),P(w*.45,0,z*.8)],"#11151b",4);
+  line([P(-w*.45,0,z*.18),P(w*.45,0,z*.18)],"#11151b",4);
+  for(const x of [-.35,-.1,.15,.4])line([P(w*x,0,z*.18),P(w*(x+.12),0,z*.8)],"#2c333a",2.2);
+  if(meta.shellProfile==="RAILING")for(const x of [-.42,-.14,.14,.42])line([P(w*x,0,z*.12),P(w*x,0,z*.95)],"#303943",2);
+ }
+ // wet contact/reflection strip — cheap, bounded, material-specific
+ const rp=P(0,frontY,0);g.globalCompositeOperation="lighter";g.globalAlpha=.12;g.fillStyle=meta.material==="VEHICLE"?"#ff4f9b":meta.material==="STEEL"?"#61efff":"#d8a17b";g.beginPath();g.ellipse(rp.x,rp.y+5,w*.34,Math.max(2,h*.12),c.a||0,0,Math.PI*2);g.fill();g.restore();
+}
 function cover(g:CanvasRenderingContext2D,c:any,t:number){
  // Rotation is applied to the ground footprint; elevation stays vertical.
  // The lab's camera projection is already represented by this build's world coordinates.
@@ -707,7 +742,7 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number){
  sides.sort((a,b)=>a.p.reduce((sum,p)=>sum+p.y,0)-b.p.reduce((sum,p)=>sum+p.y,0));
  if(formation<1){g.globalAlpha=Math.max(.07,formation*.85);g.filter=`blur(${Math.round((1-formation)*5)}px)`}
  for(const face of sides)concreteFace(g,im,CONCRETE_FACES[face.kind][stage],face.p,face.fill);
- concreteFace(g,im,CONCRETE_FACES.top[stage],top,pal[4]);g.filter="none";g.globalAlpha=1;g.shadowBlur=0;
+ concreteFace(g,im,CONCRETE_FACES.top[stage],top,pal[4]);g.filter="none";g.globalAlpha=1;g.shadowBlur=0;environmentActorInk(g,c,meta,z,w,h,project);
  // Original lab cap seams, fastening holes, and edge wear.
  g.strokeStyle="#111a20";g.lineWidth=1.25;g.fillStyle="#141e23";
  for(const fraction of [-.48,.48]){const a=project(w/2*fraction,-h/2,z+.4),b=project(w/2*fraction,h/2,z+.4);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()}
