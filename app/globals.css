@@ -64,3 +64,16 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .arenaControls{position:absolute;z-index:12;left:8px;bottom:8px;display:flex;gap:4px;pointer-events:auto}.arenaControls button{background:#0a111acc;color:#dff;border:1px solid #66dcea;padding:5px 8px;font-weight:800}.arenaControls button.active{outline:2px solid #ff56b7}
 .cameraReadout{position:absolute;z-index:11;right:8px;bottom:8px;background:#071019cc;border:1px solid #456b78;color:#bdeef2;padding:5px 8px;font:700 9px ui-monospace,monospace}
 .arenaQa{position:absolute;z-index:13;right:8px;top:8px;max-width:46%;display:grid;gap:2px;background:#071019e8;border:1px solid #ff5db8;color:#dff;padding:7px;font:700 9px ui-monospace,monospace}.arenaQa b{color:#ff70c4}
+
+/* Studio navigation cleanup */
+.arenaControls,.cameraReadout,.toolbar{display:none!important}
+.arenaMenu{position:absolute;z-index:16;left:8px;bottom:8px;display:flex;gap:6px;align-items:center;pointer-events:auto}
+.studioMenuButton,.devMenuToggle{background:#071019e8;color:#e9ffff;border:1px solid #5bddea;padding:7px 10px;font-weight:900;letter-spacing:.06em}
+.cameraChip{background:#071019dc;color:#bffaff;border:1px solid #456b78;padding:6px 9px;font:800 9px ui-monospace,monospace;white-space:nowrap}
+.studioDropdown,.devDropdown{position:absolute;display:grid;gap:3px;background:#071019f5;border:1px solid #5bddea;box-shadow:0 8px 24px #000a;padding:7px;min-width:245px}
+.studioDropdown{left:0;bottom:36px}.devDropdown{right:0;bottom:36px}
+.studioDropdown>b{color:#ff69bc;font:900 9px ui-monospace,monospace;padding:3px}.studioDropdown hr,.devDropdown hr{width:100%;border:0;border-top:1px solid #456b78}
+.studioDropdown button,.devDropdown button{display:grid;grid-template-columns:70px 1fr;gap:8px;text-align:left;align-items:center;background:#101a24;color:#dff;border:1px solid #304d58;padding:7px}
+.studioDropdown button.active{border-color:#ff5db8;box-shadow:inset 3px 0 #ff5db8}.studioDropdown button span,.devDropdown button span{font-size:9px;color:#9eb9c1}
+.devMenu{position:absolute;z-index:20;right:8px;bottom:8px;pointer-events:auto}
+@media(max-width:800px){.cameraChip{font-size:8px;max-width:55vw;overflow:hidden;text-overflow:ellipsis}.studioDropdown,.devDropdown{min-width:215px}.studioDropdown button,.devDropdown button{grid-template-columns:62px 1fr;padding:6px}}
