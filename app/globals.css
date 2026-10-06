@@ -77,3 +77,12 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .studioDropdown button.active{border-color:#ff5db8;box-shadow:inset 3px 0 #ff5db8}.studioDropdown button span,.devDropdown button span{font-size:9px;color:#9eb9c1}
 .devMenu{position:absolute;z-index:20;right:8px;bottom:8px;pointer-events:auto}
 @media(max-width:800px){.cameraChip{font-size:8px;max-width:55vw;overflow:hidden;text-overflow:ellipsis}.studioDropdown,.devDropdown{min-width:215px}.studioDropdown button,.devDropdown button{grid-template-columns:62px 1fr;padding:6px}}
+
+/* iPad-safe Studio menu hotfix */
+.arenaMenu{position:fixed!important;left:auto!important;right:max(10px,env(safe-area-inset-right))!important;top:max(10px,env(safe-area-inset-top))!important;bottom:auto!important;z-index:90!important;display:flex!important;align-items:center!important;gap:5px!important;max-width:calc(100vw - 20px)!important}
+.studioMenuButton{min-width:82px!important;min-height:38px!important;font-size:11px!important}
+.cameraChip{max-width:min(52vw,260px)!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.studioDropdown{position:fixed!important;left:auto!important;right:max(10px,env(safe-area-inset-right))!important;top:calc(max(10px,env(safe-area-inset-top)) + 44px)!important;bottom:auto!important;max-height:calc(100dvh - 68px)!important;overflow:auto!important;z-index:91!important}
+.devMenu{position:fixed!important;right:max(10px,env(safe-area-inset-right))!important;bottom:max(10px,env(safe-area-inset-bottom))!important;z-index:89!important}
+.devDropdown{position:fixed!important;right:max(10px,env(safe-area-inset-right))!important;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 42px)!important;max-height:calc(100dvh - 70px)!important;overflow:auto!important;z-index:91!important}
+@media(max-width:800px){.arenaMenu{top:max(6px,env(safe-area-inset-top))!important;right:max(6px,env(safe-area-inset-right))!important}.cameraChip{max-width:42vw!important}.studioDropdown{right:max(6px,env(safe-area-inset-right))!important;top:calc(max(6px,env(safe-area-inset-top)) + 42px)!important;width:min(270px,calc(100vw - 12px))!important}.devMenu{right:max(6px,env(safe-area-inset-right))!important;bottom:max(6px,env(safe-area-inset-bottom))!important}}
