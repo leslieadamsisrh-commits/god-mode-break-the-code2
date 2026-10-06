@@ -5,6 +5,7 @@ import AnimationQaHarness from "./AnimationQaHarness";
 import BayBridgeArena from "./BayBridgeArena";
 import GodModeShell from "./GodModeShell";
 import {COVER_HEIGHT,withCoverOcclusion} from "../lib/cover-occlusion";
+import {GOD_TIERS} from "../lib/gameFramework";
 
 type Session={room:string;code?:string;token:string;slot:number};
 type Config={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
@@ -180,7 +181,7 @@ export default function Game(){
   <div className="stageWrap">
    {!bootReady&&<div className="controllerGate" aria-live="polite"><b>GOD HELMET BOOT</b><small>LOADING COMBAT MEMORY · {boot.done}/{boot.total}</small><small>{boot.label}{boot.failed?` · ${boot.failed} FALLBACK${boot.failed===1?"":"S"}`:""}</small><i style={{display:"block",width:"min(320px,70vw)",height:8,border:"1px solid currentColor",marginTop:10}}><span style={{display:"block",height:"100%",width:`${boot.total?boot.done/boot.total*100:0}%`,background:"currentColor"}}/></i></div>}
    <BayBridgeArena s={hud} menuOpen={studioMenu} onMenuToggle={()=>setStudioMenu(v=>!v)} onAnimationQa={()=>setQaMode(v=>!v)} onDirector={()=>setDirector(v=>!v)} onSprites={()=>setSpritePanel(v=>!v)} onReset={reset}/>\n   <canvas ref={canvas} width={1400} height={868} onPointerMove={point} onPointerDown={e=>{point(e);mouse.current.down=true;(e.currentTarget as HTMLElement).focus();(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)}} onPointerUp={()=>mouse.current.down=false} onPointerCancel={()=>mouse.current.down=false}/>
-   <div className="minimalHud"><b>HP {Math.ceil(p?.hp??100)}</b><span className="padLine">{config.weaveEnabled<.5?"CLASSIC · A SLIDE":"WEAVE EXPERIMENT · A DOUBLE-TAP SLIDE"}</span><i style={{width:`${p?.battery??100}%`}}/><span>BATTERY {Math.ceil(p?.battery??100)}%</span><span>{p?.charging?`CHARGE ${Math.round((p.godCharge||0)*100)}%`:p?.godTime>0?`GOD FRAME ${p.godTime.toFixed(1)}s`:"HOLD Y · POWER UP"}</span><span className="padLine">{padStatus}</span></div>
+   <div className="minimalHud"><b>HP {Math.ceil(p?.hp??100)}</b><span className="padLine">{config.weaveEnabled<.5?"CLASSIC · A SLIDE":"WEAVE EXPERIMENT · A DOUBLE-TAP SLIDE"}</span><i style={{width:`${p?.battery??100}%`}}/><span>BATTERY {Math.ceil(p?.battery??100)}%</span><span>{p?.charging?`CHARGE ${Math.round((p.godCharge||0)*100)}%`:p?.godTime>0?`TIER I · ${p.godTime.toFixed(1)}s`:p?.charging?`${evoStage(p)} · ${Math.round((p.godCharge||0)*100)}%`:"HOLD Y · EVOLVE"}</span><span className="padLine">{padStatus}</span></div>
    {bootReady&&padGate&&<button className="controllerGate" onClick={activateController}>ACTIVATE XBOX CONTROLLER<small>Tap once, then press A or move a stick</small></button>}
    <PlaytestGuide/>
    {qaMode&&<AnimationQaHarness s={hud} onExit={()=>setQaMode(false)}/>}\n   {director&&<aside className="trainingDirector"><div className="panelTitle"><span>TRAINING DIRECTOR</span><b>{config.weaveEnabled<.5?"INSTRUCTOR 142 CLASSIC":"GOD MODE WEAVE TEST"}</b></div>
@@ -248,6 +249,39 @@ function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx|
  const cols=im?Math.max(1,Math.floor(im.naturalWidth/sourceCell)):1,rows=im?Math.max(1,Math.floor(im.naturalHeight/sourceCell)):1,total=Math.max(1,cols*rows);
  const frame=family==="cover"?coverPoseFrame(p,s?.time||0,total):family==="ready"?0:Math.floor((s?.time||0)*(family==="run"?10:7))%total;
  return{state,family,dir,angleDeg:Math.round(dir*15),frame:frame+1,total,file:`${family}-d${String(dir).padStart(2,"0")}.webp`,fallback,expected}}
+
+type EvoStage="BASE"|"IGNITION"|"GATHER"|"DOUBLE_HELIX"|"GROUND_BREAK"|"LEVITATION"|"CRYSTALLINE"|"TIER_READY"|"TIER_I";
+function evoCharge(p:any){return Math.max(0,Math.min(1,Number(p?.godCharge||0)))}
+function evoStage(p:any):EvoStage{if((p?.godTime||0)>0)return"TIER_I";const q=evoCharge(p);if(!p?.charging&&q<=0)return"BASE";if(q<.15)return"IGNITION";if(q<.32)return"GATHER";if(q<.5)return"DOUBLE_HELIX";if(q<.67)return"GROUND_BREAK";if(q<.82)return"LEVITATION";if(q<.96)return"CRYSTALLINE";return"TIER_READY"}
+function helixPoint(p:any,t:number,q:number,phase:number,height:number,radius:number,dir=1){const a=t*(2.2+q*8)*dir+phase;return{x:p.x+Math.cos(a)*radius*(1-q*.2),y:p.y-height+Math.sin(a)*radius*.28}}
+function drawGodGround(g:CanvasRenderingContext2D,p:any,t:number){
+ const q=evoCharge(p),active=p.charging||q>0||(p.godTime||0)>0;if(!active)return;const tier=(p.godTime||0)>0;
+ g.save();g.translate(p.x,p.y+5);const r=20+q*48+(tier?8:0);
+ g.globalAlpha=.24+.46*q;g.strokeStyle="#65f7ff";g.lineWidth=1.2+q*1.8;g.shadowColor="#5ef5ff";g.shadowBlur=8+q*16;
+ g.beginPath();g.ellipse(0,0,r,r*.28,0,0,Math.PI*2);g.stroke();
+ if(q>.48){const n=6+Math.floor(q*8);for(let i=0;i<n;i++){const a=i/n*Math.PI*2+t*.08,r0=10+q*8,r1=22+q*58*(.55+((i*37)%10)/20);g.globalAlpha=.18+.42*q;g.beginPath();g.moveTo(Math.cos(a)*r0,Math.sin(a)*r0*.3);const mx=Math.cos(a+.12)*r1*.58,my=Math.sin(a+.12)*r1*.3*.58;g.lineTo(mx,my);g.lineTo(Math.cos(a-.08)*r1,Math.sin(a-.08)*r1*.3);g.stroke()}}
+ if(q>.82){g.globalAlpha=.18+.3*q;g.strokeStyle="#ff56bd";for(let i=0;i<3;i++){g.rotate(Math.PI/3);g.strokeRect(-r*.42,-r*.12,r*.84,r*.24)}}
+ g.restore();
+}
+function drawGodRear(g:CanvasRenderingContext2D,p:any,t:number){
+ const q=evoCharge(p),tier=(p.godTime||0)>0;if(!p.charging&&q<=0&&!tier)return;const e=tier?1:Math.max(.08,q);
+ g.save();g.globalCompositeOperation="lighter";
+ const bands=q<.15?1:q<.32?2:q<.5?3:4;
+ for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#67f6ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=9+e*18;g.lineWidth=1.3+e*2.1;g.globalAlpha=.2+.42*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(29+e*18)*(1-u*.18),pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);const front=Math.sin(t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4)>0;if(front)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
+ if(e>.62){const count=4+Math.floor(e*8);for(let i=0;i<count;i++){const a=t*(1.2+e*3)+i*2.399,rr=18+(i%4)*9+e*12,h=10+((i*17)%65)*e;g.globalAlpha=.18+.38*e;g.fillStyle=i%3?"#76f8ff":"#ff62c4";g.fillRect(p.x+Math.cos(a)*rr-1,p.y-h+Math.sin(a)*rr*.18-1,2+(i%2),2+(i%2))}}
+ g.restore();
+}
+function drawGodFront(g:CanvasRenderingContext2D,p:any,t:number){
+ const q=evoCharge(p),tier=(p.godTime||0)>0;if(!p.charging&&q<=0&&!tier)return;const e=tier?1:Math.max(.08,q),stage=evoStage(p);
+ g.save();g.globalCompositeOperation="lighter";
+ const bands=q<.15?1:q<.32?2:q<.5?3:4;
+ for(let b=0;b<bands;b++){const col=b%2?"#ff49b6":"#7df8ff",dir=b%2?-1:1;g.strokeStyle=col;g.shadowColor=col;g.shadowBlur=10+e*20;g.lineWidth=1.4+e*2.4;g.globalAlpha=.22+.46*e;g.beginPath();let started=false;for(let k=0;k<=32;k++){const u=k/32,h=8+u*(48+e*48),rad=(29+e*18)*(1-u*.18),ang=t*(2.2+e*8)*dir+b*Math.PI*.72+u*Math.PI*4,pt=helixPoint(p,t,e,b*Math.PI*.72+u*Math.PI*4,h,rad,dir);if(Math.sin(ang)<=0)continue;if(!started){g.moveTo(pt.x,pt.y);started=true}else g.lineTo(pt.x,pt.y)}g.stroke()}
+ if(e>.5){const structures=e>.9?3:e>.7?2:1;for(let j=0;j<structures;j++){const rr=24+j*13+e*10,rot=t*(.5+j*.22)*(j%2?-1:1);g.save();g.translate(p.x,p.y-38-e*18+j*8);g.rotate(rot);g.globalAlpha=.12+.28*e;g.strokeStyle=j%2?"#ff5dbd":"#a8ffff";g.lineWidth=1.2;g.beginPath();const sides=j===0?3:j===1?6:8;for(let i=0;i<=sides;i++){const a=i/sides*Math.PI*2-Math.PI/2,x=Math.cos(a)*rr,y=Math.sin(a)*rr*.45;i?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();g.restore()}}
+ if(e>.68){const n=5+Math.floor(e*8);for(let i=0;i<n;i++){const a=t*(1.8+e*4)+i*2.399,rr=20+(i%5)*8,h=10+((i*13)%78)*e,x=p.x+Math.cos(a)*rr,y=p.y-h+Math.sin(a)*rr*.2;g.save();g.translate(x,y);g.rotate(a);g.globalAlpha=.18+.45*e;g.strokeStyle=i%2?"#ff78ca":"#b7ffff";g.strokeRect(-2,-5,4,10);if(e>.82){g.beginPath();g.moveTo(-5,0);g.lineTo(0,-9);g.lineTo(5,0);g.lineTo(0,9);g.closePath();g.stroke()}g.restore()}}
+ if(stage==="TIER_READY"){g.globalAlpha=.3+.2*Math.sin(t*22);g.strokeStyle="#fff";g.lineWidth=2;g.beginPath();g.arc(p.x,p.y-38,48+Math.sin(t*8)*4,0,Math.PI*2);g.stroke()}
+ if(tier){g.globalAlpha=.22+.12*Math.sin(t*5);g.strokeStyle="#9efeff";g.lineWidth=1.5;g.beginPath();g.ellipse(p.x,p.y-39,36,58,0,0,Math.PI*2);g.stroke()}
+ g.restore();
+}
 function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1){if(!canvas)return;const g=canvas.getContext("2d")!,sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.fillStyle="#070b10";g.fillRect(0,0,1000,620);if(!s)return;
  const renderNow=performance.now();s=presentation(s,renderNow);const cfg=s.config||DEFAULT,p=s.players[0],local={...p};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
  const zoom=Math.max(1.25,Math.min(2.15,cfg.cameraZoom||1.85)),look=0,lookY=0,ga=local.gunFacing??local.aim??0;
@@ -287,7 +321,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time));
  const actors=[
   ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",fn:()=>matter(g,m)})),
-  {y:local.y,kind:"player",fn:()=>fighter(g,local,s.time,cfg)}
+  {y:local.y,kind:"player",fn:()=>{drawGodGround(g,local,s.time);drawGodRear(g,local,s.time);fighter(g,local,s.time,cfg);drawGodFront(g,local,s.time)}}
  ].sort((a,b)=>a.y-b.y);
  actors.forEach(o=>{
   withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?local.coverId:null,o.kind==="player"&&!!(local.input?.coverAim||local.fireState>0||local.recoil>0));
