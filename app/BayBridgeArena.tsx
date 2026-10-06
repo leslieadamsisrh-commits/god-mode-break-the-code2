@@ -42,7 +42,7 @@ export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onR
    <span>{actor.editorMetadata.label} · {actor.material} · {actor.shellProfile}</span>
    <span>WORLD {actor.worldPosition.x}/{actor.worldPosition.y}/{actor.worldPosition.z} · HULL {actor.collisionHull.w}×{actor.collisionHull.h} · MASS {actor.mass}</span>
    <span>ROTATION {Math.round(testAngle*180/Math.PI)}° · VISIBLE {planes.join(" + ")}</span>
-   <span>GRIP {actor.gripCompatible?"YES":"NO"} · THROW {actor.throwable?"YES":"NO"} · BREAK {actor.breakThreshold}</span>
+   <span>GRIP {actor.gripCompatible?"YES":"NO"} · THROW {actor.throwable?"YES":"NO"} · BREAK {actor.breakThreshold}</span><span>RIG SPINE {actor.rig.spine.x0.toFixed(0)}→{actor.rig.spine.x1.toFixed(0)} · RIBS {actor.rig.ribs.length} · COVER RAILS {actor.rig.coverRails.map(r=>r.side+":"+Math.round(r.from*100)+"–"+Math.round(r.to*100)+"%").join(" · ")}</span>
    <div style={{display:"flex",gap:4,pointerEvents:"auto"}}><button onClick={()=>setSelected(v=>(v+1)%BAY_OBJECTS.length)}>NEXT ACTOR</button><button onClick={()=>setTestAngle(v=>(v+Math.PI/4)%(Math.PI*2))}>ROTATE 45°</button></div>
   </div>}
  </div>
