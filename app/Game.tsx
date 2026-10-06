@@ -717,7 +717,16 @@ function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,
   for(const x of [-.35,-.1,.15,.4])line([P(w*x,0,z*.18),P(w*(x+.12),0,z*.8)],"#2c333a",2.2);
   if(meta.shellProfile==="RAILING")for(const x of [-.42,-.14,.14,.42])line([P(w*x,0,z*.12),P(w*x,0,z*.95)],"#303943",2);
  }
- // Profile silhouette pass: authored irregular edges sit inside/around the stable gameplay hull.
+ // ENVIRONMENT RIG 03: internal spine/ribs drive the illustrated envelope.
+ // These guides are not collision. They give each actor a coherent spatial skeleton for future authored art.
+ if(meta.rig){
+  const ribs=meta.rig.ribs||[],frontPts:any[]=[],backPts:any[]=[];
+  for(const r of ribs){const x=-w/2+w*r.t,yy=Math.min(h*.5,r.width*.5),zz=Math.min(z,r.height);frontPts.push(P(x,yy,zz));backPts.push(P(x,-yy,zz))}
+  if(frontPts.length>1){line(frontPts,"#090c11",2.4);line(backPts,"#202a31",1.4)}
+  // Subtle structural ribs create stable plane seams without exposing a debug skeleton.
+  g.globalAlpha=.5;for(const r of ribs.slice(1,-1)){const x=-w/2+w*r.t,yy=Math.min(h*.5,r.width*.5),zz=Math.min(z,r.height);line([P(x,-yy,zz),P(x,yy,zz)],"#111820",.8)}g.globalAlpha=1;
+ } 
+// Profile silhouette pass: authored irregular edges sit inside/around the stable gameplay hull.
  if(meta.shellProfile==="BARRIER"||meta.shellProfile==="DIVIDER"||meta.shellProfile==="BLOCK"){
   const y=frontY,pts=[P(-w*.48,y,z*.9),P(-w*.34,y,z*.96),P(-w*.22,y,z*.87),P(-w*.05,y,z),P(w*.14,y,z*.91),P(w*.3,y,z*.97),P(w*.48,y,z*.84)];
   line(pts,"#090c10",2.4);
