@@ -717,6 +717,23 @@ function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,
   for(const x of [-.35,-.1,.15,.4])line([P(w*x,0,z*.18),P(w*(x+.12),0,z*.8)],"#2c333a",2.2);
   if(meta.shellProfile==="RAILING")for(const x of [-.42,-.14,.14,.42])line([P(w*x,0,z*.12),P(w*x,0,z*.95)],"#303943",2);
  }
+ // Profile silhouette pass: authored irregular edges sit inside/around the stable gameplay hull.
+ if(meta.shellProfile==="BARRIER"||meta.shellProfile==="DIVIDER"||meta.shellProfile==="BLOCK"){
+  const y=frontY,pts=[P(-w*.48,y,z*.9),P(-w*.34,y,z*.96),P(-w*.22,y,z*.87),P(-w*.05,y,z),P(w*.14,y,z*.91),P(w*.3,y,z*.97),P(w*.48,y,z*.84)];
+  line(pts,"#090c10",2.4);
+ }else if(meta.shellProfile==="SEDAN"){
+  const pts=[P(-w*.49,frontY,z*.28),P(-w*.38,frontY,z*.56),P(-w*.18,frontY,z*.82),P(w*.18,frontY,z*.82),P(w*.36,frontY,z*.58),P(w*.49,frontY,z*.3)];
+  line(pts,"#080b10",2.5);
+ }else if(meta.shellProfile==="VAN"||meta.shellProfile==="MODULE"){
+  line([P(-w*.48,frontY,z*.12),P(-w*.46,frontY,z*.92),P(w*.38,frontY,z*.94),P(w*.49,frontY,z*.72),P(w*.49,frontY,z*.12)],"#080b10",2.5);
+ }else if(meta.shellProfile==="GIRDER"){
+  // torn end caps keep the steel actor from reading as a perfect cuboid
+  for(const side of [-1,1]){const x=side*w*.49;line([P(x,-h*.45,z*.1),P(x,-h*.2,z*.38),P(x,-h*.42,z*.72),P(x,h*.15,z*.9),P(x,h*.42,z*.58),P(x,h*.32,z*.18)],"#080b10",2.2)}
+ }else if(meta.shellProfile==="RAILING"){
+  for(const x of [-.42,-.14,.14,.42]){const a=P(w*x,0,z*.12),b=P(w*x,0,z*.96);line([a,b],"#0b1016",2.4)}
+ }else if(meta.shellProfile==="CABINET"||meta.shellProfile==="EQUIPMENT"){
+  const hinge1=P(-w*.3,frontY,z*.68),hinge2=P(-w*.3,frontY,z*.28);g.fillStyle="#070a0d";g.fillRect(hinge1.x-1.5,hinge1.y-2,3,4);g.fillRect(hinge2.x-1.5,hinge2.y-2,3,4);
+ }
  // wet contact/reflection strip — cheap, bounded, material-specific
  const rp=P(0,frontY,0);g.globalCompositeOperation="lighter";g.globalAlpha=.12;g.fillStyle=meta.material==="VEHICLE"?"#ff4f9b":meta.material==="STEEL"?"#61efff":"#d8a17b";g.beginPath();g.ellipse(rp.x,rp.y+5,w*.34,Math.max(2,h*.12),c.a||0,0,Math.PI*2);g.fill();g.restore();
 }
