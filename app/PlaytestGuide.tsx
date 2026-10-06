@@ -2,14 +2,15 @@
 import {useEffect,useState} from "react";
 
 // Bump this batch whenever its tested behavior or instructions change.
-const BATCH="jade-visual-registration-lock-08";
+const BATCH="bay-bridge-comic-depth-arena-01";
 const STORAGE="god_mode_playtest_"+BATCH;
 type Result="untested"|"good"|"issue";
 const TASKS=[
- {title:"Silhouette lock",buttons:"QA COURSE → REGISTRATION QA → idle → all 8 run directions → stop → 45/90/135/180/225/270/315/0 aim",watch:"Crown, shoulders, pelvis, legs, backpack, cape and shotgun should read as one same-sized Jade."},
- {title:"Cape / lower body",buttons:"Diagonals → reverse → slide → Brake → redirect → soft cover → flow L/R → reverse → edge/corner",watch:"Flag cape color/socket pops, outward kick, knee/shin/boot discontinuity, foot skate. Baked defects are reported honestly, not hidden."},
- {title:"Combat rotation",buttons:"Soft → A hard brace → LT → slow 360° both ways → fire each major key",watch:"Torso, helmet, backpack, arms, shotgun and muzzle registration."},
- {title:"Natural acceptance",buttons:"Disable registration guides → play hard 60–90 seconds",watch:"If corrections disappear into play and no P0/P1 regression appears, freeze current Jade and move to the duel."}
+ {title:"Camera comparison",buttons:"Traverse the same route with CAM A → CAM B → CAM C",watch:"Compare Jade/cover readability, bridge scale, depth, aiming clarity and comic-page composition."},
+ {title:"Depth test",buttons:"Move foreground → center → deep roadway → center",watch:"Jade must remain stable while roadway, towers, wrecks, steel and horizon communicate depth."},
+ {title:"Cover shells",buttons:"Move/slide around concrete cover, steel structure and vehicle silhouettes",watch:"Rendered shell may be irregular; collision must remain simple and predictable."},
+ {title:"Combat flow",buttons:"Slide → soft cover → flow → release → Brake → vehicle → A brace → LT → shotgun → escape",watch:"Does this finally feel like a place rather than a Combat Lab?"},
+ {title:"Natural run",buttons:"Play hard 60–90 seconds and record",watch:"Judge the battlefield visual language. Do not retune frozen Jade because of a map issue."}
 ];
 const LABELS:Record<Result,string>={untested:"Untested",good:"✓ Feels good",issue:"Issue reported"};
 export default function PlaytestGuide(){
