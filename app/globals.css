@@ -86,3 +86,10 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .devMenu{position:fixed!important;right:max(10px,env(safe-area-inset-right))!important;bottom:max(10px,env(safe-area-inset-bottom))!important;z-index:89!important}
 .devDropdown{position:fixed!important;right:max(10px,env(safe-area-inset-right))!important;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 42px)!important;max-height:calc(100dvh - 70px)!important;overflow:auto!important;z-index:91!important}
 @media(max-width:800px){.arenaMenu{top:max(6px,env(safe-area-inset-top))!important;right:max(6px,env(safe-area-inset-right))!important}.cameraChip{max-width:42vw!important}.studioDropdown{right:max(6px,env(safe-area-inset-right))!important;top:calc(max(6px,env(safe-area-inset-top)) + 42px)!important;width:min(270px,calc(100vw - 12px))!important}.devMenu{right:max(6px,env(safe-area-inset-right))!important;bottom:max(6px,env(safe-area-inset-bottom))!important}}
+
+/* Emergency stage-local menu: guaranteed above combat canvas on iPad Safari */
+.stageWrap .arenaMenu{position:absolute!important;top:12px!important;right:12px!important;left:auto!important;bottom:auto!important;z-index:9999!important;pointer-events:auto!important;display:flex!important;max-width:calc(100% - 24px)!important}
+.stageWrap .studioMenuButton{position:relative!important;z-index:10001!important;display:block!important;visibility:visible!important;opacity:1!important;min-width:132px!important;min-height:44px!important;background:#06121bf5!important;border:2px solid #67efff!important;color:#fff!important;box-shadow:0 4px 18px #000c!important}
+.stageWrap .cameraChip{display:none!important}
+.stageWrap .studioDropdown{position:absolute!important;top:50px!important;right:0!important;left:auto!important;bottom:auto!important;z-index:10000!important;width:min(310px,calc(100vw - 36px))!important;max-height:min(560px,calc(100vh - 120px))!important;overflow:auto!important;background:#06121bfa!important}
+.devMenu{display:none!important}
