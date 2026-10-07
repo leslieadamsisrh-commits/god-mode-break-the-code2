@@ -719,14 +719,13 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
  const front=[...frontTop,...frontGround.slice().reverse()],back=[...backTop,...backGround.slice().reverse()];
  const top=[...backTop,...frontTop.slice().reverse()];
  const left=[backTop[0],frontTop[0],frontGround[0],backGround[0]],ri=ribs.length-1,right=[backTop[ri],frontTop[ri],frontGround[ri],backGround[ri]];
- g.save();g.translate(c.x,c.y);
+ // cover() already owns the world translation. Keep atlas, rig ink and collision in one local space.
  // Camera-relative eight-angle face routing. Art remains authored; rig determines silhouette.
  if(sector<=1||sector>=7)poly(1,0,front,.96);else poly(2,0,back,.91);
  if(sector>=1&&sector<=4)poly(1,1,right,.92);else poly(0,1,left,.92);
  poly(0,0,top,.94);
  // END atlas reinforces torn/chipped end caps without changing collision.
  if(sector===2||sector===6)poly(2,1,sector===2?right:left,.96);
- g.restore();
 }
 function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
  if(!meta)return;const P=(x:number,y:number,zz:number)=>project(x,y,zz),line=(pts:{x:number;y:number}[],stroke="#0a0d12",width=1.5)=>{g.strokeStyle=stroke;g.lineWidth=width;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke()};
