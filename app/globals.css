@@ -164,3 +164,13 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .touchAButton{position:absolute;right:max(22px,env(safe-area-inset-right));bottom:max(28px,env(safe-area-inset-bottom));width:112px;height:112px;border-radius:56px;pointer-events:auto;border-color:#ff65b9aa;box-shadow:0 0 20px #ff4da744,inset 0 0 18px #62efff22}
 .touchAButton b{display:block;font:900 38px/38px system-ui}.touchAButton small{display:block;margin:7px auto 0;max-width:88px;font:700 8px/10px monospace;letter-spacing:.5px}
 @media (pointer:fine){.touchPlaytestPad{opacity:.38}}
+
+/* COMPOSITION 08 — restore bridge hierarchy; portal is spectacle, bridge is place */
+.bayContainer01 .l0{filter:saturate(.92) brightness(.86)}
+.bayContainer01 .l1{filter:contrast(1.08) brightness(.92);opacity:.88}
+.bayContainer01 .l2{filter:contrast(1.2) saturate(.92) brightness(1.08);opacity:1}
+.bayContainer01 .l2:after{content:"";position:absolute;left:0;right:0;top:31%;height:19%;background:linear-gradient(180deg,#090d13cc,#242b34d9 32%,#0a0e14e8 76%,transparent);clip-path:polygon(0 34%,100% 0,100% 46%,0 82%);filter:drop-shadow(0 8px 8px #0008)}
+.bayContainer01 .dimensionalPortal{opacity:.1!important;filter:saturate(.9)}
+.bayContainer01 .dimensionalMoon{opacity:.13!important}
+.bayContainer01 .l4{opacity:.72}
+.bayContainer01 .steam{opacity:.36!important;filter:blur(18px)!important}
