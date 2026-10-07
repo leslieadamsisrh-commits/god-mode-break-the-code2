@@ -110,6 +110,7 @@ function preload(onProgress?:(s:BootState)=>void){
   const environment=["damaged-jersey","fractured-divider","wrecked-sedan","service-van","maintenance-cabinet","fractured-girder","broken-railing","roadwork-equipment","service-module","maintenance-block"] as const;
   const evolution=[["helix-front","/assets/god-evolution-tier1/helix-front-atlas.svg"],["helix-rear","/assets/god-evolution-tier1/helix-rear-atlas.svg"],["flame","/assets/god-evolution-tier1/flame-atlas.svg"],["geometry","/assets/god-evolution-tier1/geometry-atlas.svg"],["crystal-code","/assets/god-evolution-tier1/crystal-atlas.svg"],["code","/assets/god-evolution-tier1/code-atlas.svg"],["ground-fracture","/assets/god-evolution-tier1/ground-atlas.svg"]] as const;
   const jobs:{label:string;src:string;ready:(im:HTMLImageElement)=>void}[]=[
+   {label:"world-road",src:"/assets/bay-bridge/world/world-road.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-road",im)},
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
@@ -338,6 +339,10 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  const camX=cameraState.x,camY=cameraState.y;
  g.setTransform(sx*zoom,0,0,sy*zoom,(500-camX*zoom)*sx,(310-camY*zoom)*sy);
  
+ // The authored road shares the exact canvas world/camera transform with actors.
+ // Keep the distant bridge band visible; never translate a second CSS floor under Jade.
+ const road=environmentAssets.get("world-road"),roadTop=camY-halfH*.48;
+ if(road?.complete&&road.naturalWidth){g.save();g.beginPath();g.rect(camX-halfW-1,roadTop,halfW*2+2,halfH*2);g.clip();g.drawImage(road,-80,-80,1160,780);g.restore();}
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
  const fullSlide=local.slide>0;
@@ -365,7 +370,10 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  // Draw solid scenery once, then depth-clip each actor against its actual projected faces.
  // A whole-block Y sort cannot describe a character beside a long or rotated wall.
  const covers=s.covers||[];
- [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time));
+ const environmentLights=[...(s.fx||[]).filter((f:any)=>f.type==="muzzle"&&f.life>0).slice(-3).map((f:any)=>({x:f.x,y:f.y,strength:Math.min(1,f.life/.18),color:"#ffd59b"})),...(powerAura(local)>.12?[{x:local.x,y:local.y,strength:Math.min(1,powerAura(local)),color:"#fa64ca"}]:[])];
+ // Wet road light pools sit below physical actors, with screen blending instead of camera bounce.
+ for(const light of environmentLights){g.save();g.globalCompositeOperation="screen";g.globalAlpha=light.strength*.11;g.fillStyle=light.color;g.beginPath();g.ellipse(light.x,light.y+7,44,9,0,0,Math.PI*2);g.fill();g.restore()}
+ [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time,environmentLights));
  const actors=[
   ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",fn:()=>matter(g,m)})),
   {y:local.y,kind:"player",fn:()=>{drawGodGround(g,local,s.time);drawGodRear(g,local,s.time);fighter(g,local,s.time,cfg);drawGodFront(g,local,s.time)}}
@@ -704,68 +712,48 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
 }
 function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
  const im=environmentAssets.get(meta?.renderedShell);if(!im?.complete||!im.naturalWidth||!meta?.rig)return;
- const ribs=meta.rig.ribs||[],a=((c.a||0)%(Math.PI*2)+Math.PI*2)%(Math.PI*2),sector=Math.round(a/(Math.PI/4))%8;
- const poly=(col:number,row:number,pts:{x:number;y:number}[],alpha=1)=>{
-  if(pts.length<3)return;const path=()=>{g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath()};
-  const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
-  g.save();path();g.clip();g.globalAlpha=alpha;g.drawImage(im,col*256,row*128,256,128,minX,minY,Math.max(1,maxX-minX),Math.max(1,maxY-minY));g.restore();
-  path();g.strokeStyle="#070a0e";g.lineWidth=2.4;g.stroke();
+ const ribs=meta.rig.ribs,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
+ // Fixed object-space UVs. Each rib panel projects the same material coordinates
+ // at every angle; two affine triangles handle sloped/irregular quadrilaterals.
+ const triangle=(src:CoverPoint[],dst:CoverPoint[])=>{
+  const [a,b,d]=src,[A,B,D]=dst,ux=b.x-a.x,uy=b.y-a.y,vx=d.x-a.x,vy=d.y-a.y,det=ux*vy-uy*vx;
+  if(Math.abs(det)<1e-6)return;
+  const xx=((B.x-A.x)*vy-(D.x-A.x)*uy)/det,xy=((D.x-A.x)*ux-(B.x-A.x)*vx)/det;
+  const yx=((B.y-A.y)*vy-(D.y-A.y)*uy)/det,yy=((D.y-A.y)*ux-(B.y-A.y)*vx)/det;
+  g.save();g.beginPath();dst.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip();
+  g.transform(xx,yx,xy,yy,A.x-xx*a.x-xy*a.y,A.y-yx*a.x-yy*a.y);g.drawImage(im,0,0);g.restore();
  };
- // Rig-derived shell envelope. The box hull is deliberately NOT the visual silhouette.
- const frontTop=ribs.map((r:any)=>project(-w/2+w*r.t,Math.min(h*.5,r.width*.5),Math.min(z,r.height)));
- const backTop=ribs.map((r:any)=>project(-w/2+w*r.t,-Math.min(h*.5,r.width*.5),Math.min(z,r.height)));
- const frontGround=ribs.map((r:any)=>project(-w/2+w*r.t,Math.min(h*.5,r.width*.5),0));
- const backGround=ribs.map((r:any)=>project(-w/2+w*r.t,-Math.min(h*.5,r.width*.5),0));
- const front=[...frontTop,...frontGround.slice().reverse()],back=[...backTop,...backGround.slice().reverse()];
- const top=[...backTop,...frontTop.slice().reverse()];
- // Rib-to-rib panel seams: the skeleton now defines actual illustrated sub-planes.
- // This prevents long faces from reading as one stretched texture and establishes the future HD mesh.
- const panelSeams=(frontSide:boolean)=>{
-  const hi=frontSide?frontTop:backTop,lo=frontSide?frontGround:backGround;
-  g.save();g.strokeStyle=frontSide?"#080b10":"#172029";g.lineWidth=.8;g.globalAlpha=.48;
-  for(let n=1;n<hi.length-1;n++){g.beginPath();g.moveTo(hi[n].x,hi[n].y);g.lineTo(lo[n].x,lo[n].y);g.stroke()}g.restore();
+ const panel=(col:number,row:number,u0:number,u1:number,pts:CoverPoint[],v0=0,v1=1)=>{
+  const uv=[{x:col*256+u0*256,y:row*128+v0*128},{x:col*256+u1*256,y:row*128+v0*128},{x:col*256+u1*256,y:row*128+v1*128},{x:col*256+u0*256,y:row*128+v1*128}];
+  triangle([uv[0],uv[1],uv[2]],[pts[0],pts[1],pts[2]]);triangle([uv[0],uv[2],uv[3]],[pts[0],pts[2],pts[3]]);
  };
- const left=[backTop[0],frontTop[0],frontGround[0],backGround[0]],ri=ribs.length-1,right=[backTop[ri],frontTop[ri],frontGround[ri],backGround[ri]];
- // cover() already owns the world translation. Keep atlas, rig ink and collision in one local space.
- // Camera-relative eight-angle face routing. Art remains authored; rig determines silhouette.
- if(sector<=1||sector>=7)poly(1,0,front,.96);else poly(2,0,back,.91);
- if(sector>=1&&sector<=4)poly(1,1,right,.92);else poly(0,1,left,.92);
- poly(0,0,top,.94);
- // END atlas reinforces torn/chipped end caps without changing collision.
- if(sector===2||sector===6)poly(2,1,sector===2?right:left,.96);
- panelSeams(sector<=1||sector>=7);
+ const side=co>=0?1:-1,col=side>0?1:2;
+ for(let n=0;n<ribs.length-1;n++){
+  const a=ribs[n],b=ribs[n+1],xa=-w/2+w*a.t,xb=-w/2+w*b.t,ya=side*Math.min(h*.5,a.width*.5),yb=side*Math.min(h*.5,b.width*.5),za=Math.min(z,a.height),zb=Math.min(z,b.height);
+  panel(col,0,a.t,b.t,[project(xa,ya,za),project(xb,yb,zb),project(xb,yb,0),project(xa,ya,0)]);
+ }
+ const r=si>=0?ribs[ribs.length-1]:ribs[0],x=-w/2+w*r.t,y=Math.min(h*.5,r.width*.5),height=Math.min(z,r.height);
+ panel(si>=0?1:0,1,0,1,[project(x,-y,height),project(x,y,height),project(x,y,0),project(x,-y,0)]);
+ for(let n=0;n<ribs.length-1;n++){
+  const a=ribs[n],b=ribs[n+1],xa=-w/2+w*a.t,xb=-w/2+w*b.t,ya=Math.min(h*.5,a.width*.5),yb=Math.min(h*.5,b.width*.5);
+  panel(0,0,a.t,b.t,[project(xa,-ya,Math.min(z,a.height)),project(xb,-yb,Math.min(z,b.height)),project(xb,yb,Math.min(z,b.height)),project(xa,ya,Math.min(z,a.height))]);
+ }
+ // Ink traces the authored envelope, never the invisible rectangular hull.
+ g.save();g.strokeStyle="#080b10";g.lineWidth=1.4;g.lineJoin="round";
+ for(const sign of [-1,1]){g.beginPath();ribs.forEach((r:any,i:number)=>{const p=project(-w/2+w*r.t,sign*Math.min(h*.5,r.width*.5),Math.min(z,r.height));i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y)});g.stroke()}g.restore();
 }
 function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
  if(!meta)return;const P=(x:number,y:number,zz:number)=>project(x,y,zz),line=(pts:{x:number;y:number}[],stroke="#0a0d12",width=1.5)=>{g.strokeStyle=stroke;g.lineWidth=width;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke()};
  const topY=-h/2,frontY=h/2;
  g.save();g.lineJoin="round";g.lineCap="round";
  // Shared ink silhouette / damage language. Collision remains the simple hull.
- g.strokeStyle="#080b10";g.lineWidth=2.2;const corners=[P(-w/2,-h/2,z),P(w/2,-h/2,z),P(w/2,h/2,z),P(-w/2,h/2,z)];line([...corners,corners[0]],"#080b10",2.2);
+ g.strokeStyle="#080b10";g.lineWidth=2.2;
  if(meta.shellProfile==="BARRIER"||meta.shellProfile==="DIVIDER"||meta.shellProfile==="BLOCK"){
   // chipped top, cracks, aggregate/rebar accents
   line([P(-w*.34,frontY,z*.82),P(-w*.25,frontY,z*.55),P(-w*.12,frontY,z*.68),P(-w*.04,frontY,z*.35)],"#171318",1.3);
   line([P(w*.18,frontY,z*.9),P(w*.24,frontY,z*.62),P(w*.36,frontY,z*.48)],"#19151a",1.1);
   g.fillStyle="#b5a99b";for(const x of [-.3,-.08,.22,.38]){const p=P(w*x,frontY,z*(.2+.5*Math.abs(x)));g.fillRect(p.x-1.4,p.y-1.4,2.8,2.8)}
   if(meta.shellProfile==="DIVIDER"){g.strokeStyle="#8b4c43";g.lineWidth=1.2;for(const x of [-.42,.42]){const a=P(w*x,frontY,z*.72),b=P(w*(x+.05),frontY,z*1.08);line([a,b],"#8b4c43",1.2)}}
- }
- if(meta.shellProfile==="SEDAN"||meta.shellProfile==="VAN"){
-  // authored vehicle planes: roof/glass/wheels over the simple box hull
-  const roof=meta.shellProfile==="SEDAN"?z*.78:z*.92,roofW=meta.shellProfile==="SEDAN"?w*.54:w*.72;
-  const a=P(-roofW/2,0,roof),b=P(roofW/2,0,roof),fa=P(-w*.38,frontY,z*.5),fb=P(w*.38,frontY,z*.5);
-  g.fillStyle="#121b26";g.strokeStyle="#71dff055";g.lineWidth=1.2;g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.lineTo(fb.x,fb.y);g.lineTo(fa.x,fa.y);g.closePath();g.fill();g.stroke();
-  for(const x of [-.34,.34]){const p=P(w*x,frontY,4);g.fillStyle="#090b0e";g.beginPath();g.ellipse(p.x,p.y,8,4,c.a||0,0,Math.PI*2);g.fill();g.strokeStyle="#626a70";g.stroke()}
-  line([P(-w*.46,frontY,z*.33),P(w*.46,frontY,z*.3)],"#ff4f9b55",1);
- }
- if(meta.shellProfile==="CABINET"||meta.shellProfile==="MODULE"||meta.shellProfile==="EQUIPMENT"){
-  const a=P(-w*.36,frontY,z*.78),b=P(w*.36,frontY,z*.78),c1=P(w*.36,frontY,z*.18),d=P(-w*.36,frontY,z*.18);g.fillStyle="#161d22";g.globalAlpha=.75;g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.lineTo(c1.x,c1.y);g.lineTo(d.x,d.y);g.closePath();g.fill();g.globalAlpha=1;line([a,b,c1,d,a],"#0a0d10",1.4);
-  const warn=P(0,frontY,z*.48);g.fillStyle="#f0b84a";g.fillRect(warn.x-6,warn.y-2,12,4);
-  if(meta.shellProfile==="MODULE"){for(const x of [-.25,0,.25]){const p=P(w*x,frontY,z*.25);g.fillStyle="#55eaff";g.globalAlpha=.55;g.fillRect(p.x-2,p.y-1,4,2)}g.globalAlpha=1}
- }
- if(meta.shellProfile==="GIRDER"||meta.shellProfile==="RAILING"){
-  line([P(-w*.45,0,z*.8),P(w*.45,0,z*.8)],"#11151b",4);
-  line([P(-w*.45,0,z*.18),P(w*.45,0,z*.18)],"#11151b",4);
-  for(const x of [-.35,-.1,.15,.4])line([P(w*x,0,z*.18),P(w*(x+.12),0,z*.8)],"#2c333a",2.2);
-  if(meta.shellProfile==="RAILING")for(const x of [-.42,-.14,.14,.42])line([P(w*x,0,z*.12),P(w*x,0,z*.95)],"#303943",2);
  }
  // ENVIRONMENT RIG 03: internal spine/ribs drive the illustrated envelope.
  // These guides are not collision. They give each actor a coherent spatial skeleton for future authored art.
@@ -796,7 +784,7 @@ function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,
  // wet contact/reflection strip — cheap, bounded, material-specific
  const rp=P(0,frontY,0);g.globalCompositeOperation="lighter";g.globalAlpha=.12;g.fillStyle=meta.material==="VEHICLE"?"#ff4f9b":meta.material==="STEEL"?"#61efff":"#d8a17b";g.beginPath();g.ellipse(rp.x,rp.y+5,w*.34,Math.max(2,h*.12),c.a||0,0,Math.PI*2);g.fill();g.restore();
 }
-function cover(g:CanvasRenderingContext2D,c:any,t:number){
+function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:number;strength:number;color:string}[]=[]){
  // Rotation is applied to the ground footprint; elevation stays vertical.
  // The lab's camera projection is already represented by this build's world coordinates.
  const im=classicAssets.get("concrete"),meta=bayObject(c.id),material=meta?.material||"CONCRETE",z=meta?.dimensions?.z||COVER_HEIGHT,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
@@ -806,7 +794,8 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number){
  const stage=c.hp/c.maxHp>=.875?0:c.hp/c.maxHp>=.375?1:2;
  const formation=c.generated&&typeof c.born==="number"?classicClamp((t-c.born)/.72,0,1):1;
  g.save();g.translate(c.x,c.y);
- g.fillStyle="#0008";g.beginPath();g.ellipse(0,7,w*.53,h*.6,c.a||0,0,Math.PI*2);g.fill();
+ g.fillStyle="#03060a66";g.beginPath();g.ellipse(5,9,w*.56,h*.64,c.a||0,0,Math.PI*2);g.fill();
+ g.fillStyle="#020408aa";g.beginPath();ground.forEach((p,i)=>i?g.lineTo(p.x,p.y+3):g.moveTo(p.x,p.y+3));g.closePath();g.fill();
  if(c.psychicHeld){g.shadowColor="#ff4aa5";g.shadowBlur=18}
  const pal=material==="STEEL"?["#242b35","#4c5966","#1e2630","#5e6c78","#697682"]:material==="VEHICLE"?["#251d2a","#493248","#211b27","#5d3c55","#6b455d"]:material==="INFRASTRUCTURE"?["#24282c","#4b5155","#202529","#596166","#687075"]:["#343b40","#454c51","#30383d","#697176","#899196"];
  const sides=[
@@ -827,6 +816,11 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number){
   g.strokeStyle="#111a20";g.lineWidth=1.25;g.fillStyle="#141e23";
   for(const fraction of [-.48,.48]){const a=project(w/2*fraction,-h/2,z+.4),b=project(w/2*fraction,h/2,z+.4);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()}
   for(const side of [-1,1])for(const fraction of [-.73,.73]){const p=project(w/2*fraction,side*h/2*.7,z+1);g.beginPath();g.arc(p.x,p.y,1.8,0,Math.PI*2);g.fill();g.strokeStyle="#9caeb2";g.lineWidth=.55;g.stroke()}
+ }
+ // Light only the rig-derived surface facing the source. At most four sources/frame.
+ if(meta)for(const light of lights){const dx=light.x-c.x,dy=light.y-c.y,dist=Math.hypot(dx,dy);if(dist>170)continue;
+  const sign=(-dx*si+dy*co)>=0?1:-1,ribs=meta.rig.ribs,edge=ribs.map(r=>project(-w/2+w*r.t,sign*Math.min(h*.5,r.width*.5),Math.min(z,r.height))),base=ribs.map(r=>project(-w/2+w*r.t,sign*Math.min(h*.5,r.width*.5),0));
+  g.save();g.globalCompositeOperation="screen";g.globalAlpha=light.strength*(1-dist/170)*.22;g.fillStyle=light.color;g.beginPath();[...edge,...base.reverse()].forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.fill();g.restore();
  }
  if(formation<1)for(let n=0;n<38;n++){const a=n*2.399+t*2,r=(1-formation)*(55+n%6*24)*w/332;g.fillStyle=n%2?"#ff4ca5":"#6af2ff";g.fillRect(Math.cos(a)*r,-z*.55+Math.sin(a)*r*.52,2.4,2.4)}
  g.restore();
@@ -853,5 +847,6 @@ function fx(g:CanvasRenderingContext2D,f:any){
  if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){if(f.type==="brake"&&Number.isFinite(f.oldAngle)){const a=f.oldAngle+Math.PI,near=8+i*4,far=30+i*6;g.beginPath();g.moveTo(f.x+Math.cos(a)*near,f.y+Math.sin(a)*near);g.lineTo(f.x+Math.cos(a)*far,f.y+Math.sin(a)*far);g.stroke()}else{const dir=-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else if(f.type==="muzzle"){const a=Number.isFinite(f.angle)?f.angle:0,k=Math.max(0,Math.min(1,f.life/.18));g.save();g.translate(f.x,f.y);g.rotate(a);g.globalCompositeOperation="lighter";g.strokeStyle="#fff3b0";g.shadowColor="#ffcf62";g.shadowBlur=16;g.lineWidth=4;g.globalAlpha=.35+.65*k;g.beginPath();g.moveTo(-5,0);g.lineTo(34+20*k,0);g.stroke();g.fillStyle="#fff7cf";g.beginPath();g.moveTo(2,-10);g.lineTo(44+18*k,0);g.lineTo(2,10);g.lineTo(13,0);g.closePath();g.fill();g.strokeStyle="#ff5ebd";g.lineWidth=2;for(let j=-2;j<=2;j++){const aa=j*.12,len=30+Math.abs(j)*6+18*k;g.beginPath();g.moveTo(5,0);g.lineTo(Math.cos(aa)*len,Math.sin(aa)*len);g.stroke()}g.restore()}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
 
 function arrow(g:CanvasRenderingContext2D,x1:number,y1:number,x2:number,y2:number){const a=Math.atan2(y2-y1,x2-x1);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.beginPath();g.moveTo(x2,y2);g.lineTo(x2-Math.cos(a-.55)*11,y2-Math.sin(a-.55)*11);g.lineTo(x2-Math.cos(a+.55)*11,y2-Math.sin(a+.55)*11);g.closePath();g.fill()}
+
 
 
