@@ -176,7 +176,7 @@ export default function Game(){
  const reset=async()=>{const s=session.current;if(!s)return;try{accept(await post({action:"reset",...s}))}catch{}};
  const save=()=>{localStorage.setItem("god_mode_studio_combat_preset",JSON.stringify(config));setNote("PRESET SAVED LOCALLY");setTimeout(()=>setNote(""),1200)};
  const load=async()=>{try{const p=JSON.parse(localStorage.getItem("god_mode_studio_combat_preset")||"null");if(!p)return setNote("NO PRESET SAVED");const s=session.current;if(s)for(const[k,v]of Object.entries(p))await post({action:"config",...s,patch:{[k]:v}});setConfig({...DEFAULT,...p});setNote("PRESET LOADED")}catch{setNote("PRESET ERROR")}};
- const enterSession=(v:any)=>{const next={room:v.room,code:v.code,token:v.token,slot:v.slot};session.current=next;sessionStorage.setItem("god_mode_studio_session",JSON.stringify(next));seq.current=0;snapshots.length=0;state.current=null;cameraState.ready=false;accept(v);setGameShell(false);setRoomMessage(v.code?"Send the room and code to Player 2":"Joined — host can start the match")};
+ const enterSession=(v:any)=>{const next={room:v.room,code:v.code,token:v.token,slot:v.slot};session.current=next;sessionStorage.setItem("god_mode_studio_session",JSON.stringify(next));seq.current=0;snapshots.length=0;state.current=null;cameraState.ready=false;accept(v);setGameShell(false);document.querySelector("details.fightRoom")?.removeAttribute("open");setRoomMessage(v.code?"Send the room and code to Player 2":"Joined — host can start the match")};
  const practiceFight=async()=>{unlockCombatAudio();try{enterSession(await post({action:"create",name:"Les",mode:"practice"}))}catch(e:any){setRoomMessage(e.message)}};
  const hostFight=async()=>{unlockCombatAudio();try{enterSession(await post({action:"create",name:"Player 1",mode:"duel"}))}catch(e:any){setRoomMessage(e.message)}};
  const joinFight=async()=>{unlockCombatAudio();try{enterSession(await post({action:"join",room:joinRoom,code:joinCode,name:"Player 2"}))}catch(e:any){setRoomMessage(e.message)}};
@@ -402,6 +402,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  let ix=(keyState.KeyD?1:0)-(keyState.KeyA?1:0),iy=(keyState.KeyS?1:0)-(keyState.KeyW?1:0);try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;ix=dz(pad.axes[0]||0);iy=dz(pad.axes[1]||0)}}catch{}const il=Math.hypot(ix,iy)||1;ix/=il;iy/=il;
  for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(e.family);g.save();g.translate(e.x,e.y);g.transform(1,-DECK_SLOPE/DECK_PITCH,0,1/DECK_PITCH,0,0);g.translate(-e.x,-e.y);g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc-3*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc+4*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.restore()}
  const heldCoverIds=new Set((s.players||[]).map((p:any)=>p.gripCoverId).filter(Boolean));
+ for(const f of s.fx||[])if(f.type==="cover-scrape")fx(g,f);
  // Draw solid scenery once, then depth-clip each actor against its actual projected faces.
  // A whole-block Y sort cannot describe a character beside a long or rotated wall.
  const covers=s.covers||[];
@@ -419,7 +420,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
 
 
  for(const sh of s.shots||[])withCoverOcclusion(g,covers,sh.y,s.time,()=>{g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x+(sh.renderOffsetX||0),sh.y-(sh.z||0)/DECK_PITCH);g.lineTo(sh.x+(sh.renderOffsetX||0)-sh.vx*.025,sh.y-(sh.z||0)/DECK_PITCH-sh.vy*.025);g.stroke()},null,false,1/DECK_PITCH);
- for(const f of s.fx||[])if(f.type!=="slide")withCoverOcclusion(g,covers,f.y,s.time,()=>fx(g,f),null,false,1/DECK_PITCH);
+ for(const f of s.fx||[])if(f.type!=="slide"&&f.type!=="cover-scrape")withCoverOcclusion(g,covers,f.y,s.time,()=>fx(g,f),null,false,1/DECK_PITCH);
  drawDeckBoundary(g,true);
  if(s.mode==="duel"||s.mode==="practice"){g.setTransform(sx,0,0,sy,0,0);drawCombatHelmet(g,s,localSlot);}
 }
@@ -866,8 +867,10 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:numb
  if(formation<1)for(let n=0;n<38;n++){const a=n*2.399+t*2,r=(1-formation)*(55+n%6*24)*w/332;g.fillStyle=n%2?"#ff4ca5":"#6af2ff";g.fillRect(Math.cos(a)*r,-z*.55+Math.sin(a)*r*.52,2.4,2.4)}
  g.restore();
 }
-function matter(g:CanvasRenderingContext2D,m:any){g.save();g.translate(m.x,m.y);g.rotate((m.x+m.y)*.015);g.fillStyle=m.kind==="metal"?"#536f82":"#86766e";g.strokeStyle=m.heldBy!==null?"#62f0f0":m.orbitBy!==null?"#ff4aaa":"#0b111a";g.lineWidth=1.7;g.shadowColor=g.strokeStyle;g.shadowBlur=m.heldBy!==null||m.orbitBy!==null?14:0;g.beginPath();for(let i=0;i<7;i++){const a=i*Math.PI*2/7,r=m.r*(i%2?.74:1);i?g.lineTo(Math.cos(a)*r,Math.sin(a)*r):g.moveTo(Math.cos(a)*r,Math.sin(a)*r)}g.closePath();g.fill();g.stroke();g.restore()}
+function matter(g:CanvasRenderingContext2D,m:any){g.save();g.translate(m.x,m.y);g.rotate((m.x+m.y)*.015);g.fillStyle=m.kind==="metal"?"#536f82":"#86766e";g.strokeStyle=m.heldBy!==null?"#62f0f0":m.orbitBy!==null?"#ff4aaa":"#0b111a";g.lineWidth=1.7;g.shadowColor=g.strokeStyle;g.shadowBlur=m.heldBy!==null||m.orbitBy!==null?14:0;g.beginPath();for(let i=0;i<7;i++){const a=i*Math.PI*2/7,r=m.r*(i%2?.74:1);i?g.lineTo(Math.cos(a)*r,Math.sin(a)*r):g.moveTo(Math.cos(a)*r,Math.sin(a)*r)}g.closePath();g.fill();const art=m.sourceArt?environmentAssets.get(m.sourceArt):undefined;if(art?.complete&&art.naturalWidth){const cw=art.naturalWidth/3,ch=art.naturalHeight/2,n=(m.fragment||0)%3;g.save();g.clip();g.drawImage(art,cw+cw*n/3,0,cw/3,ch,-m.r,-m.r,m.r*2,m.r*2);g.restore();}g.stroke();g.restore()}
 function fx(g:CanvasRenderingContext2D,f:any){
+ if(f.type==="cover-scrape"){const fade=Math.min(.65,f.life/1.8);g.save();g.translate(f.x,f.y);g.rotate(f.angle||0);g.globalAlpha=fade;g.strokeStyle="#141a23";g.lineWidth=2;for(const side of [-1,1]){g.beginPath();g.moveTo(-18,side*8);g.lineTo(3,side*8);g.stroke();}g.strokeStyle=f.text==="stone"?"#9f9380":"#939baf";g.lineWidth=.8;g.beginPath();g.moveTo(-17,-7);g.lineTo(2,-7);g.stroke();g.restore();return;}
+
  if(["soft-cover","cover-slam","brace","cover-block"].includes(f.type)){
   const fade=classicClamp(f.life/.25,0,1);g.save();g.translate(f.x,f.y);g.globalAlpha=fade*.55;g.strokeStyle=f.type==="cover-block"?"#ff78ac":"#74dfe6";g.lineWidth=1;
   g.beginPath();g.ellipse(0,2,7+(1-fade)*4,3,0,0,Math.PI*2);g.stroke();g.restore();return;
