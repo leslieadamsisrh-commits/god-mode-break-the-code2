@@ -703,16 +703,29 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
  path();g.strokeStyle="#070a0e";g.lineWidth=2.5;g.stroke();
 }
 function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
- const im=environmentAssets.get(meta?.renderedShell);if(!im?.complete||!im.naturalWidth||!meta)return;
- const P=(x:number,y:number,zz:number)=>project(x,y,zz),a=((c.a||0)%(Math.PI*2)+Math.PI*2)%(Math.PI*2),sector=Math.round(a/(Math.PI/4))%8;
- // Six authored faces: TOP, FRONT, BACK, LEFT, RIGHT, END. Eight-angle routing chooses coherent combinations.
- const face=(col:number,row:number,pts:{x:number;y:number}[],alpha=1)=>{const path=()=>{g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath()};g.save();path();g.clip();const [A,B,,D]=pts;g.globalAlpha=alpha;g.transform((B.x-A.x)/256,(B.y-A.y)/256,(D.x-A.x)/128,(D.y-A.y)/128,A.x,A.y);g.drawImage(im,col*256,row*128,256,128,0,0,256,128);g.restore();path();g.strokeStyle="#080b10";g.lineWidth=2;g.stroke()};
- const co=Math.cos(c.a||0),si=Math.sin(c.a||0),Q=(x:number,y:number,zz:number)=>({x:x*co-y*si,y:x*si+y*co-zz});
- const ground=[Q(-w/2,-h/2,0),Q(w/2,-h/2,0),Q(w/2,h/2,0),Q(-w/2,h/2,0)],top=[Q(-w/2,-h/2,z),Q(w/2,-h/2,z),Q(w/2,h/2,z),Q(-w/2,h/2,z)];
+ const im=environmentAssets.get(meta?.renderedShell);if(!im?.complete||!im.naturalWidth||!meta?.rig)return;
+ const ribs=meta.rig.ribs||[],a=((c.a||0)%(Math.PI*2)+Math.PI*2)%(Math.PI*2),sector=Math.round(a/(Math.PI/4))%8;
+ const poly=(col:number,row:number,pts:{x:number;y:number}[],alpha=1)=>{
+  if(pts.length<3)return;const path=()=>{g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath()};
+  const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+  g.save();path();g.clip();g.globalAlpha=alpha;g.drawImage(im,col*256,row*128,256,128,minX,minY,Math.max(1,maxX-minX),Math.max(1,maxY-minY));g.restore();
+  path();g.strokeStyle="#070a0e";g.lineWidth=2.4;g.stroke();
+ };
+ // Rig-derived shell envelope. The box hull is deliberately NOT the visual silhouette.
+ const frontTop=ribs.map((r:any)=>project(-w/2+w*r.t,Math.min(h*.5,r.width*.5),Math.min(z,r.height)));
+ const backTop=ribs.map((r:any)=>project(-w/2+w*r.t,-Math.min(h*.5,r.width*.5),Math.min(z,r.height)));
+ const frontGround=ribs.map((r:any)=>project(-w/2+w*r.t,Math.min(h*.5,r.width*.5),0));
+ const backGround=ribs.map((r:any)=>project(-w/2+w*r.t,-Math.min(h*.5,r.width*.5),0));
+ const front=[...frontTop,...frontGround.slice().reverse()],back=[...backTop,...backGround.slice().reverse()];
+ const top=[...backTop,...frontTop.slice().reverse()];
+ const left=[backTop[0],frontTop[0],frontGround[0],backGround[0]],ri=ribs.length-1,right=[backTop[ri],frontTop[ri],frontGround[ri],backGround[ri]];
  g.save();g.translate(c.x,c.y);
- face(0,0,top,.9);
- if(sector<=1||sector>=7)face(1,0,[top[3],top[2],ground[2],ground[3]],.95);else face(2,0,[top[0],top[1],ground[1],ground[0]],.9);
- if(sector>=1&&sector<=4)face(1,1,[top[1],top[2],ground[2],ground[1]],.9);else face(0,1,[top[0],top[3],ground[3],ground[0]],.9);
+ // Camera-relative eight-angle face routing. Art remains authored; rig determines silhouette.
+ if(sector<=1||sector>=7)poly(1,0,front,.96);else poly(2,0,back,.91);
+ if(sector>=1&&sector<=4)poly(1,1,right,.92);else poly(0,1,left,.92);
+ poly(0,0,top,.94);
+ // END atlas reinforces torn/chipped end caps without changing collision.
+ if(sector===2||sector===6)poly(2,1,sector===2?right:left,.96);
  g.restore();
 }
 function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
@@ -797,15 +810,17 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number){
  ];
  sides.sort((a,b)=>a.p.reduce((sum,p)=>sum+p.y,0)-b.p.reduce((sum,p)=>sum+p.y,0));
  if(formation<1){g.globalAlpha=Math.max(.07,formation*.85);g.filter=`blur(${Math.round((1-formation)*5)}px)`}
- for(const face of sides)concreteFace(g,im,CONCRETE_FACES[face.kind][stage],face.p,face.fill);
- concreteFace(g,im,CONCRETE_FACES.top[stage],top,pal[4]);g.filter="none";g.globalAlpha=1;g.shadowBlur=0;environmentActorAtlas(g,c,meta,z,w,h,project);environmentActorInk(g,c,meta,z,w,h,project);
- // Original lab cap seams, fastening holes, and edge wear.
- g.strokeStyle="#111a20";g.lineWidth=1.25;g.fillStyle="#141e23";
- for(const fraction of [-.48,.48]){const a=project(w/2*fraction,-h/2,z+.4),b=project(w/2*fraction,h/2,z+.4);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()}
- for(const side of [-1,1])for(const fraction of [-.73,.73]){const p=project(w/2*fraction,side*h/2*.7,z+1);g.beginPath();g.arc(p.x,p.y,1.8,0,Math.PI*2);g.fill();g.strokeStyle="#9caeb2";g.lineWidth=.55;g.stroke()}
- g.strokeStyle="#111a20";g.lineWidth=1.1;g.globalAlpha=.7;
- for(const side of [-1,1])for(const fraction of [-.55,.3]){const p=project(side*w/2,fraction*h/2,z*.68);g.beginPath();g.moveTo(p.x,p.y);g.lineTo(p.x+side*3,p.y+z*.11);g.lineTo(p.x+side*1.4,p.y+z*.2);g.stroke()}
- g.globalAlpha=1;
+ if(meta){
+  // Production Bay actors: invisible cuboid collision, visible rig-derived illustrated shell.
+  environmentActorAtlas(g,c,meta,z,w,h,project);g.filter="none";g.globalAlpha=1;g.shadowBlur=0;environmentActorInk(g,c,meta,z,w,h,project);
+ }else{
+  // Generated/legacy cover retains the proven concrete shell.
+  for(const face of sides)concreteFace(g,im,CONCRETE_FACES[face.kind][stage],face.p,face.fill);
+  concreteFace(g,im,CONCRETE_FACES.top[stage],top,pal[4]);g.filter="none";g.globalAlpha=1;g.shadowBlur=0;
+  g.strokeStyle="#111a20";g.lineWidth=1.25;g.fillStyle="#141e23";
+  for(const fraction of [-.48,.48]){const a=project(w/2*fraction,-h/2,z+.4),b=project(w/2*fraction,h/2,z+.4);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()}
+  for(const side of [-1,1])for(const fraction of [-.73,.73]){const p=project(w/2*fraction,side*h/2*.7,z+1);g.beginPath();g.arc(p.x,p.y,1.8,0,Math.PI*2);g.fill();g.strokeStyle="#9caeb2";g.lineWidth=.55;g.stroke()}
+ }
  if(formation<1)for(let n=0;n<38;n++){const a=n*2.399+t*2,r=(1-formation)*(55+n%6*24)*w/332;g.fillStyle=n%2?"#ff4ca5":"#6af2ff";g.fillRect(Math.cos(a)*r,-z*.55+Math.sin(a)*r*.52,2.4,2.4)}
  g.restore();
 }
