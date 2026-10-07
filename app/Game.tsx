@@ -110,6 +110,7 @@ function preload(onProgress?:(s:BootState)=>void){
   const environment=["damaged-jersey","fractured-divider","wrecked-sedan","service-van","maintenance-cabinet","fractured-girder","broken-railing","roadwork-equipment","service-module","maintenance-block"] as const;
   const evolution=[["helix-front","/assets/god-evolution-tier1/helix-front-atlas.svg"],["helix-rear","/assets/god-evolution-tier1/helix-rear-atlas.svg"],["flame","/assets/god-evolution-tier1/flame-atlas.svg"],["geometry","/assets/god-evolution-tier1/geometry-atlas.svg"],["crystal-code","/assets/god-evolution-tier1/crystal-atlas.svg"],["code","/assets/god-evolution-tier1/code-atlas.svg"],["ground-fracture","/assets/god-evolution-tier1/ground-atlas.svg"]] as const;
   const jobs:{label:string;src:string;fallback?:string;ready:(im:HTMLImageElement)=>void}[]=[
+   {label:"world-bridge",src:"/assets/bay-bridge/manga-v13/world-bridge.webp",fallback:"/assets/bay-bridge/world/world-bridge.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-bridge",im)},
    {label:"world-road",src:"/assets/bay-bridge/manga-v13/world-road.webp",fallback:"/assets/bay-bridge/world/world-road.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-road",im)},
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
@@ -341,12 +342,16 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  
  // The authored road shares the exact canvas world/camera transform with actors.
  // Keep the distant bridge band visible; never translate a second CSS floor under Jade.
- const road=environmentAssets.get("world-road"),roadTop=camY-halfH*.48;
- g.save();g.beginPath();g.rect(camX-halfW-1,roadTop,halfW*2+2,halfH*2);g.clip();
+ const road=environmentAssets.get("world-road"),roadTop=-80;
+ g.save();g.beginPath();g.rect(-80,roadTop,1160,780);g.clip();
  // Solid registered ground survives a slow texture decode; background cannot show through.
  g.fillStyle="#20232e";g.fillRect(-80,-80,1160,780);
  if(road?.complete&&road.naturalWidth)g.drawImage(road,-80,-80,1160,780);
- else{g.strokeStyle="#9c9270";g.lineWidth=2;g.setLineDash([14,16]);for(const y of [250,360]){g.beginPath();g.moveTo(-80,y);g.lineTo(1080,y-35);g.stroke()}g.setLineDash([])}g.restore();
+ else{g.strokeStyle="#9c9270";g.lineWidth=2;g.setLineDash([14,16]);for(const y of [250,360]){g.beginPath();g.moveTo(-80,y);g.lineTo(1080,y-35);g.stroke()}g.setLineDash([])}
+ // Distant pavement haze is anchored to world Y, never to the camera or Jade.
+ const haze=g.createLinearGradient(0,-80,0,130);haze.addColorStop(0,"#35374ee6");haze.addColorStop(1,"#35374e00");g.fillStyle=haze;g.fillRect(-80,-80,1160,210);g.restore();
+ // The massive span registers to the roadway's far end; actors render afterward.
+ const span=environmentAssets.get("world-bridge");if(span?.complete&&span.naturalWidth){g.save();g.globalAlpha=.75;g.drawImage(span,-100,-250,1200,600);g.restore()}
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
  const fullSlide=local.slide>0;
@@ -732,8 +737,8 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
   else{g.fillStyle=meta.material==="CONCRETE"?"#777c82":meta.material==="VEHICLE"?"#59465b":"#4b6071";g.fill()}
   g.restore();
  };
- const panel=(col:number,row:number,u0:number,u1:number,pts:CoverPoint[],v0=0,v1=1)=>{
-  const uv=[{x:(col+u0)*cellW,y:(row+v0)*cellH},{x:(col+u1)*cellW,y:(row+v0)*cellH},{x:(col+u1)*cellW,y:(row+v1)*cellH},{x:(col+u0)*cellW,y:(row+v1)*cellH}];
+ const panel=(col:number,row:number,u0:number,u1:number,pts:CoverPoint[],v0=0,v1=1,farTop=v0)=>{
+  const uv=[{x:(col+u0)*cellW,y:(row+v0)*cellH},{x:(col+u1)*cellW,y:(row+farTop)*cellH},{x:(col+u1)*cellW,y:(row+v1)*cellH},{x:(col+u0)*cellW,y:(row+v1)*cellH}];
   triangle([uv[0],uv[1],uv[2]],[pts[0],pts[1],pts[2]]);triangle([uv[0],uv[2],uv[3]],[pts[0],pts[2],pts[3]]);
   // Restrained plane lighting follows the projected shell, preserving painted ink.
   g.save();g.globalAlpha=col===0&&row===0?.055:.08;g.fillStyle=col===0&&row===0?"#ffc58d":"#17283e";
@@ -742,13 +747,13 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
  const side=co>=0?1:-1,col=side>0?1:2;
  for(let n=0;n<ribs.length-1;n++){
   const a=ribs[n],b=ribs[n+1],xa=-w/2+w*a.t,xb=-w/2+w*b.t,ya=side*Math.min(h*.5,a.width*.5),yb=side*Math.min(h*.5,b.width*.5),za=Math.min(z,a.height),zb=Math.min(z,b.height);
-  panel(col,0,a.t,b.t,[project(xa,ya,za),project(xb,yb,zb),project(xb,yb,0),project(xa,ya,0)]);
+  panel(col,0,a.t,b.t,[project(xa,ya,za),project(xb,yb,zb),project(xb,yb,0),project(xa,ya,0)],1-za/z,1,1-zb/z);
  }
  const r=si>=0?ribs[ribs.length-1]:ribs[0],x=-w/2+w*r.t,y=Math.min(h*.5,r.width*.5),height=Math.min(z,r.height);
  panel(si>=0?1:0,1,0,1,[project(x,-y,height),project(x,y,height),project(x,y,0),project(x,-y,0)]);
  for(let n=0;n<ribs.length-1;n++){
   const a=ribs[n],b=ribs[n+1],xa=-w/2+w*a.t,xb=-w/2+w*b.t,ya=Math.min(h*.5,a.width*.5),yb=Math.min(h*.5,b.width*.5);
-  panel(0,0,a.t,b.t,[project(xa,-ya,Math.min(z,a.height)),project(xb,-yb,Math.min(z,b.height)),project(xb,yb,Math.min(z,b.height)),project(xa,ya,Math.min(z,a.height))]);
+  panel(0,0,meta.material==="VEHICLE"?1-a.t:a.t,meta.material==="VEHICLE"?1-b.t:b.t,[project(xa,-ya,Math.min(z,a.height)),project(xb,-yb,Math.min(z,b.height)),project(xb,yb,Math.min(z,b.height)),project(xa,ya,Math.min(z,a.height))]);
  }
  // Ink traces the authored envelope, never the invisible rectangular hull.
  g.save();g.strokeStyle="#080b10";g.lineWidth=1.4;g.lineJoin="round";

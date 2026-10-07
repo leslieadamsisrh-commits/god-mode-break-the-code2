@@ -205,3 +205,11 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .bayContainer01 .l1{background-image:url('/assets/bay-bridge/manga-v13/world-far.webp')!important;filter:saturate(.75) brightness(.84)!important}
 .bayContainer01 .l2{background-image:url('/assets/bay-bridge/manga-v13/world-bridge.webp')!important;filter:saturate(.9) contrast(1.04)!important}
 .bayContainer01 .l1 .sfSkyline,.bayContainer01 .l1 .bayWater,.bayContainer01 .l1 .farBridge{display:none}
+
+/* Spatial Finish 19: subdued spectacle, legible steel; guide opens on demand. */
+.bayContainer01 .l0{filter:saturate(.7) brightness(.5)!important}
+.bayContainer01 .l2{filter:saturate(.85) contrast(1.12) brightness(1.08)!important}
+.playtestGuide:has(button[aria-expanded="false"]){width:auto;max-width:180px}
+
+/* The bridge now shares the road canvas registration instead of a second CSS transform. */
+.bayContainer01 .l2{visibility:hidden}
