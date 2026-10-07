@@ -213,3 +213,11 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 
 /* The bridge now shares the road canvas registration instead of a second CSS transform. */
 .bayContainer01 .l2{visibility:hidden}
+
+/* Spatial21: distant bay is composed once by the renderer, behind the finite deck. */
+.bayContainer01 .l1{visibility:hidden}
+.bayContainer01 .l0{filter:saturate(.55) brightness(.36)!important}
+
+/* Near architecture stays behind the fighter. True foreground is restricted to outer strips. */
+.bayContainer01 .l4{z-index:2}
+.bayContainer01 .l5{mask-image:linear-gradient(90deg,#000 0%,#000 8%,transparent 13%,transparent 87%,#000 92%,#000 100%);-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 8%,transparent 13%,transparent 87%,#000 92%,#000 100%)}

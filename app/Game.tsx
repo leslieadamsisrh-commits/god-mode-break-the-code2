@@ -7,6 +7,7 @@ import GodModeShell from "./GodModeShell";
 import {COVER_HEIGHT,withCoverOcclusion} from "../lib/cover-occlusion";
 import {GOD_TIERS} from "../lib/gameFramework";
 import {bayObject} from "../lib/bayBridgeMap";
+import {DECK,DECK_PITCH,DECK_SCREEN_Y,unprojectWorld,withUpright,drawDeckBoundary,bayRenderCamera as cameraState} from "../lib/bayBridgePresentation";
 
 type Session={room:string;code?:string;token:string;slot:number};
 type Config={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number};
@@ -31,7 +32,7 @@ const classicAssets=new Map<string,HTMLImageElement>();
 const floorWake:{x:number;y:number;angle:number;age:number}[]=[];
 let slideWasActive=false,slideWord=0,graffiti:any=null;
 function classicGraffiti(e:CanvasRenderingContext2D,t:HTMLImageElement|undefined,n:any,r=1){if(!t?.complete||!t.naturalWidth||n.life<=0)return;let i=CLASSIC_LETTERS[n.word],a=t.naturalHeight/2,o=Math.cos(n.angle),s=Math.sin(n.angle)*.58,c=classicClamp(n.age/.22,0,1),l=classicClamp(n.life/.24,0,1),u=1-Math.min(1,n.age/.2);e.save(),e.globalCompositeOperation=`screen`,e.translate(n.originX,n.originY-8),e.globalAlpha=r*l,e.shadowColor=`#75f6ff`,e.shadowBlur=11,e.strokeStyle=`#f8fbff`,e.lineWidth=1.3,e.beginPath(),e.arc(0,0,5+u*13,0,Math.PI*2),e.stroke();for(let t=0;t<7;t++){let i=t*2.399+n.angle,a=(8+t%3*5)*(1-u*.45);e.fillStyle=t%2?`#ff57b6`:`#72f7ff`,e.globalAlpha=r*l*(.35+u*.55),e.fillRect(Math.cos(i)*a-1,Math.sin(i)*a*.58-1,2+t%2,2+t%2)}for(let u=0;u<i.length;u++){let d=classicClamp((n.age-u*.032)/.16,0,1);if(d<=0)continue;let[f,p]=i[u],m=Math.round(f*t.naturalWidth),h=Math.max(1,Math.round((p-f)*t.naturalWidth)),g=h/a,_=27+u%2,v=classicClamp(g*_*.72,18,29),y=10+c*24+u*15,b=o*y,x=s*y-23-Math.sin(d*Math.PI)*4,ee=1+(1-d)*.28;e.save(),e.translate(b,x),e.rotate(Math.sin(n.angle)*.1),e.shadowColor=u%2?`#ff4eae`:`#67f5ff`,e.shadowBlur=8;for(let i=2;i>0;i--)e.globalAlpha=r*l*d*(.08+i*.035),e.drawImage(t,m,n.word*a,h,a,-v/2-o*i*7,-_/2-s*i*7,v*ee,_);e.globalAlpha=r*l*d*.95,e.drawImage(t,m,n.word*a,h,a,-v/2,-_/2,v*ee,_),e.strokeStyle=u%2?`#ff4eae`:`#67f5ff`,e.lineWidth=1.2,e.globalAlpha=r*l*d*.62,e.beginPath(),e.moveTo(-v*.4-o*4,-s*4),e.lineTo(-v*.4-o*(14+d*8),-s*(14+d*8)),e.stroke(),e.restore()}let d=classicClamp(n.age/.055,0,1),f=n.age<.34?1:classicClamp((.56-n.age)/.22,0,1);if(f>0){let i=1-(1-d)**3,c=n.word?104:94,l=n.word?29:28,u=o*(5+i*8),p=-9+s*(3+i*6)-i*4;e.save(),e.globalCompositeOperation=`source-over`,e.translate(u,p),e.rotate(Math.sin(n.angle)*.045),e.scale(.78+i*.22,.78+i*.22),e.globalAlpha=r*f,e.shadowColor=`#05070c`,e.shadowBlur=3,e.filter=`contrast(1.32) saturate(1.25)`,e.drawImage(t,0,n.word*a,t.naturalWidth,a,-c/2,-l/2,c,l),e.filter=`none`,e.shadowColor=n.word?`#ff48ad`:`#63f4ff`,e.shadowBlur=7,e.globalAlpha=r*f*.42,e.drawImage(t,0,n.word*a,t.naturalWidth,a,-c/2,-l/2,c,l),e.restore()}e.restore()}
-let cameraState={x:500,y:310,ready:false,last:0};let loading=false;
+let loading=false;
 const coverAimVisual=new Map<string,number>();
 const coverTravelPhase=new Map<string,{phase:number,lastT:number,lastSign:number}>();
 type CoverTopology="FACE"|"EDGE"|"CORNER";
@@ -150,7 +151,7 @@ export default function Game(){
  useEffect(()=>{const kd=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement)?.tagName))return;if(["Space","ShiftLeft","ShiftRight"].includes(e.code))e.preventDefault();if(!keys.current[e.code])edges.current[e.code]=true;keys.current[e.code]=true},ku=(e:KeyboardEvent)=>keys.current[e.code]=false;addEventListener("keydown",kd);addEventListener("keyup",ku);return()=>{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}},[]);
  useEffect(()=>{let dead=false;const poll=async()=>{if(dead)return;const s=session.current;if(s)try{const u=new URL("/api/game",location.origin);u.searchParams.set("room",s.room);u.searchParams.set("token",s.token);const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(r.ok)accept(v);else if(r.status===404&&v.error==="ROOM_NOT_FOUND"){session.current=null;sessionStorage.removeItem("god_mode_studio_session");started.current=false;seq.current=0;snapshots.length=0;cameraState.ready=false;await create()}}catch{}setTimeout(poll,80)};poll();return()=>{dead=true}},[accept,create]);
  useEffect(()=>{let raf=0;const uiLoop=()=>{try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const start=!!(pad.buttons[9]?.pressed||pad.buttons[9]?.value>.25);if(start&&!startHeld.current)setStudioMenu(v=>!v);startHeld.current=start}else startHeld.current=false}catch{}raf=requestAnimationFrame(uiLoop)};raf=requestAnimationFrame(uiLoop);return()=>cancelAnimationFrame(raf)},[]);
- useEffect(()=>{let pending=false;const timer=setInterval(async()=>{const s=session.current,g=state.current;if(!bootReady||!s||!g||pending)return;pending=true;const p=g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));i.slide=touchA.current||touchAEdge.current;touchAEdge.current=false;i.aim=Math.atan2(mouse.current.y-p.y,mouse.current.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.powerup=!!keys.current.KeyY||chargePreview.current;
+ useEffect(()=>{let pending=false;const timer=setInterval(async()=>{const s=session.current,g=state.current;if(!bootReady||!s||!g||pending)return;pending=true;const p=g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));i.slide=touchA.current||touchAEdge.current;touchAEdge.current=false;const pointer=unprojectWorld(mouse.current.x,mouse.current.y,cameraState,g.config?.cameraZoom||1.85);i.aim=Math.atan2(pointer.y-p.y,pointer.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.powerup=!!keys.current.KeyY||chargePreview.current;
   try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad&&!studioMenu){i.aim=p.aim;readController(pad,i)}}catch{}
   if(studioMenu){Object.assign(i,{x:0,y:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false})}
   try{accept(await post({action:"input",...s,seq:++seq.current,input:i}))}catch{}finally{pending=false}
@@ -339,30 +340,26 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  if(!cameraState.ready){cameraState.x=targetX;cameraState.y=targetY;cameraState.ready=true}
  const frameDt=cameraState.last?Math.min(.05,(renderNow-cameraState.last)/1000):1/60;cameraState.last=renderNow;const follow=1-Math.exp(-8*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
  const camX=cameraState.x,camY=cameraState.y;
- g.setTransform(sx*zoom,0,0,sy*zoom,(500-camX*zoom)*sx,(310-camY*zoom)*sy);
+ // Distant skyline/water are a restrained screen band, with negligible camera parallax.
+ // Their water extends behind the finite deck; pavement never covers the entire distant world.
+ const far=environmentAssets.get("world-far");
+ if(far?.complete&&far.naturalWidth){g.save();g.setTransform(sx,0,0,sy,0,0);g.fillStyle="#101e31";g.fillRect(0,88,1000,532);g.filter="saturate(.65) brightness(.8)";
+  const dx=-(camX-500)*.025;g.drawImage(far,-100+dx,-170,1200,350);
+  g.drawImage(far,0,far.naturalHeight-75,far.naturalWidth,75,-100+dx,179,1200,441);g.restore();}
+ g.setTransform(sx*zoom,0,0,sy*zoom*DECK_PITCH,(500-camX*zoom)*sx,(DECK_SCREEN_Y-camY*zoom*DECK_PITCH)*sy);
  
- // The authored road shares the exact canvas world/camera transform with actors.
- // Keep the distant bridge band visible; never translate a second CSS floor under Jade.
- const road=environmentAssets.get("world-road"),roadTop=-80;
- g.save();g.beginPath();g.rect(-80,roadTop,1160,780);g.clip();
- // Solid registered ground survives a slow texture decode; background cannot show through.
- g.fillStyle="#20232e";g.fillRect(-80,-80,1160,780);
- if(road?.complete&&road.naturalWidth){g.save();g.transform(1,-.065,.08,1,-25,32);g.drawImage(road,-160,-160,1320,940);g.restore()}
- else{g.strokeStyle="#9c9270";g.lineWidth=2;g.setLineDash([14,16]);for(const y of [250,360]){g.beginPath();g.moveTo(-80,y);g.lineTo(1080,y-35);g.stroke()}g.setLineDash([])}
- // Distant pavement haze is anchored to world Y, never to the camera or Jade.
- const haze=g.createLinearGradient(0,-80,0,130);haze.addColorStop(0,"#35374ee6");haze.addColorStop(1,"#35374e00");g.fillStyle=haze;g.fillRect(-80,-80,1160,210);g.restore();
- // Far bay sits behind the steel at restrained contrast.
- const far=environmentAssets.get("world-far");if(far?.complete&&far.naturalWidth){g.save();g.globalAlpha=.36;g.drawImage(far,-120,-210,1240,290);g.restore()}
- // The massive span registers to the roadway's far end; actors render afterward.
- const span=environmentAssets.get("world-bridge");if(span?.complete&&span.naturalWidth){g.save();g.globalAlpha=.75;g.drawImage(span,-100,-250,1200,600);g.restore()}
- // Illustrated deck edge and cables register to the same world as the roadway.
- g.save();const edgeY=(x:number)=>108-x*.065;
- const rail=(offset:number,color:string,width:number)=>{g.strokeStyle=color;g.lineWidth=width;g.beginPath();g.moveTo(-80,edgeY(-80)+offset);g.lineTo(1080,edgeY(1080)+offset);g.stroke()};
- rail(10,"#080e19",4);rail(5,"#647481",1.5);rail(-3,"#a08b79",2);rail(18,"#07101b",3);rail(-7,"#69b9c8",.8);
- for(let x=-64;x<=1080;x+=48){const y=edgeY(x);g.fillStyle="#172735";g.fillRect(x-3,y-23,6,43);g.strokeStyle="#667884";g.lineWidth=1;g.strokeRect(x-3,y-23,6,43);g.fillStyle="#bd976e";for(const dy of [-16,14]){g.beginPath();g.arc(x,y+dy,1.6,0,Math.PI*2);g.fill()}
-  const cableY=-102.5+97.5*Math.pow((x-500)/600,2);g.strokeStyle="#101c2a";g.lineWidth=3;g.beginPath();g.moveTo(x,y-23);g.lineTo(x,cableY);g.stroke();g.strokeStyle="#778a99";g.lineWidth=.7;g.stroke();}
- g.beginPath();g.moveTo(-100,-5);g.quadraticCurveTo(500,-200,1100,-5);g.strokeStyle="#07101d";g.lineWidth=7;g.stroke();g.strokeStyle="#566c82";g.lineWidth=2;g.stroke();
- const edgeShade=g.createLinearGradient(0,40,0,170);edgeShade.addColorStop(0,"#121d32aa");edgeShade.addColorStop(1,"#121d3200");g.fillStyle=edgeShade;g.fillRect(-80,40,1160,130);g.restore();
+ // Reuse the approved span. Level its authored rising deck line onto the far boundary;
+ // this transform belongs to the bridge elevation, not to the ground plane.
+ const span=environmentAssets.get("world-bridge");
+ if(span?.complete&&span.naturalWidth){g.save();g.globalAlpha=.88;g.transform(1,.034/DECK_PITCH,0,1,0,0);g.drawImage(span,-100,-233/DECK_PITCH,1200,350/DECK_PITCH);g.restore();}
+ // Finite world deck: every playable point and hull is inside these fixed boundaries.
+ const road=environmentAssets.get("world-road");
+ g.save();g.beginPath();g.rect(DECK.left,DECK.far,DECK.right-DECK.left,DECK.near-DECK.far);g.clip();
+ g.fillStyle="#20232e";g.fillRect(0,0,1000,620);
+ if(road?.complete&&road.naturalWidth)g.drawImage(road,0,0,1000,620);
+ else{g.strokeStyle="#9c9270";g.lineWidth=2;g.setLineDash([14,16]);for(const y of [250,360]){g.beginPath();g.moveTo(0,y);g.lineTo(1000,y);g.stroke()}g.setLineDash([])}
+ const haze=g.createLinearGradient(0,0,0,140);haze.addColorStop(0,"#35374e80");haze.addColorStop(1,"#35374e00");g.fillStyle=haze;g.fillRect(0,0,1000,140);g.restore();
+ drawDeckBoundary(g);
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
  const fullSlide=local.slide>0;
@@ -385,7 +382,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  for(const mark of floorWake){if(fxPriority>=2)continue;g.save();g.translate(mark.x,mark.y);g.rotate(mark.angle);g.globalAlpha=mark.age/.27*.68;const ground=classicAssets.get("ground");if(ground)g.drawImage(ground,3*384,0,384,384,-48,-43,96,86);g.strokeStyle="#5ef0ff";g.shadowColor="#ff4bb9";g.shadowBlur=9;for(let n=0;n<3;n++){g.beginPath();g.moveTo(-14-n*5,-8+n*8);g.lineTo(-46-n*9,-13+n*11);g.stroke()}g.restore()}
  if(graffiti)classicGraffiti(g,classicAssets.get("graffiti"),graffiti,.94);
  let ix=(keyState.KeyD?1:0)-(keyState.KeyA?1:0),iy=(keyState.KeyS?1:0)-(keyState.KeyW?1:0);try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const dz=(v:number)=>Math.abs(v)<.18?0:v;ix=dz(pad.axes[0]||0);iy=dz(pad.axes[1]||0)}}catch{}const il=Math.hypot(ix,iy)||1;ix/=il;iy/=il;
- for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(e.family);g.save();g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc-3*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc+4*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.restore()}
+ for(const e of kineticEcho){const im=nearest(e.family,e.dir)||nearest("ready",e.dir);if(!im)continue;const m=spriteCell(im,e.family,e.frame),fade=Math.max(0,e.life/e.maxLife),sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(e.family);g.save();g.translate(e.x,e.y);g.scale(1,1/DECK_PITCH);g.translate(-e.x,-e.y);g.globalAlpha=.22*fade;g.shadowBlur=10;g.shadowColor="#62edf0";g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc-3*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.shadowColor="#ff4aa5";g.globalAlpha=.13*fade;g.drawImage(im,m.sx,m.sy,m.cell,m.cell,e.x-displayCell*registration.groundAnchor.x*sc+4*fade,e.y-displayCell*registration.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.restore()}
  const heldCoverIds=new Set((s.players||[]).map((p:any)=>p.gripCoverId).filter(Boolean));
  // Draw solid scenery once, then depth-clip each actor against its actual projected faces.
  // A whole-block Y sort cannot describe a character beside a long or rotated wall.
@@ -395,16 +392,17 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  for(const light of environmentLights){g.save();g.globalCompositeOperation="screen";g.globalAlpha=light.strength*.11;g.fillStyle=light.color;g.beginPath();g.ellipse(light.x,light.y+7,44,9,0,0,Math.PI*2);g.fill();g.restore()}
  [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time,environmentLights));
  const actors=[
-  ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",fn:()=>matter(g,m)})),
-  {y:local.y,kind:"player",fn:()=>{drawGodGround(g,local,s.time);drawGodRear(g,local,s.time);fighter(g,local,s.time,cfg);drawGodFront(g,local,s.time)}}
+  ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",fn:()=>withUpright(g,m.x,m.y,()=>matter(g,m))})),
+  {y:local.y,kind:"player",fn:()=>{drawGodGround(g,local,s.time);withUpright(g,local.x,local.y,()=>{drawGodRear(g,local,s.time);fighter(g,local,s.time,cfg);drawGodFront(g,local,s.time)})}}
  ].sort((a,b)=>a.y-b.y);
  actors.forEach(o=>{
-  withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?local.coverId:null,o.kind==="player"&&!!(local.input?.coverAim||local.fireState>0||local.recoil>0));
+  withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?local.coverId:null,o.kind==="player"&&!!(local.input?.coverAim||local.fireState>0||local.recoil>0),1/DECK_PITCH);
  });
 
 
- for(const sh of s.shots||[])withCoverOcclusion(g,covers,sh.y,s.time,()=>{g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x+(sh.renderOffsetX||0),sh.y-(sh.z||0));g.lineTo(sh.x+(sh.renderOffsetX||0)-sh.vx*.025,sh.y-(sh.z||0)-sh.vy*.025);g.stroke()});
- for(const f of s.fx||[])if(f.type!=="slide")withCoverOcclusion(g,covers,f.y,s.time,()=>fx(g,f));
+ for(const sh of s.shots||[])withCoverOcclusion(g,covers,sh.y,s.time,()=>{g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x+(sh.renderOffsetX||0),sh.y-(sh.z||0)/DECK_PITCH);g.lineTo(sh.x+(sh.renderOffsetX||0)-sh.vx*.025,sh.y-(sh.z||0)/DECK_PITCH-sh.vy*.025);g.stroke()},null,false,1/DECK_PITCH);
+ for(const f of s.fx||[])if(f.type!=="slide")withCoverOcclusion(g,covers,f.y,s.time,()=>fx(g,f),null,false,1/DECK_PITCH);
+ drawDeckBoundary(g,true);
 }
 function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im?.complete&&im.naturalWidth)return im}}
 function exactSprite(f:string,d:number){const im=jade.get(`${f}-${((d%24)+24)%24}`);return im?.complete&&im.naturalWidth?im:undefined}
@@ -703,7 +701,7 @@ const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pi
  const meta=renderIm?spriteCell(renderIm,renderFamily,0):{cell:125,cols:1,rows:1,frames:1,sx:0,sy:0},frames=meta.frames;
  let frame=bridge?.kind==="cover"?Math.min(frames-1,bridge.frame):bridge?.kind==="slide"?Math.min(frames-1,Math.max(0,Math.floor(bridge.phase*frames))):family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;
  if(!bridge&&family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(family);
- g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6,25*sc,8*sc,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
+ g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6*DECK_PITCH,25*sc,8*sc*DECK_PITCH,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle="#65f4f2";g.shadowColor="#65f4f2";g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
  const splitCover=poseAlpha===0&&p.coverId&&p.coverMode==="braced"&&Math.abs(p.coverSpeed||0)>20&&!!(p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0);
  if(splitCover&&renderIm){const lm=spriteCell(renderIm,renderFamily,frame),lr=spriteRegistration(renderFamily);g.save();g.beginPath();g.rect(-1e4,p.y-31,2e4,1e4);g.clip();g.drawImage(renderIm,lm.sx,lm.sy,lm.cell,lm.cell,p.x-displayCell*lr.groundAnchor.x*sc,p.y-displayCell*lr.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.restore()}
  const packBrake=poseAlpha===0&&drawPack03Brake(g,p,cfg);
@@ -714,7 +712,7 @@ const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pi
  const psychic=!connector&&poseAlpha===0&&drawPsychicPose(g,p,t,cfg);
  if(!connector&&!psychic&&renderIm&&poseAlpha<1){const m=spriteCell(renderIm,renderFamily,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";g.drawImage(renderIm,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*spriteRegistration(renderFamily).groundAnchor.x*sc,p.y-displayCell*spriteRegistration(renderFamily).groundAnchor.y*sc,displayCell*sc,displayCell*sc)}else if(!connector&&!psychic&&!im&&!poseAlpha){presentationQA.missingExact++}
  if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.restore();
- drawPlantPunctuation(g,p,t);g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5,25,8,0,0,Math.PI*2);g.stroke();g.restore()}
+ drawPlantPunctuation(g,p,t);g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5*DECK_PITCH,25,8*DECK_PITCH,0,0,Math.PI*2);g.stroke();g.restore()}
 // Structure Lab concrete-cover-atlas-v2: original face registration, not replacement artwork.
 type CoverPoint={x:number;y:number};
 const CONCRETE_FACES:Record<string,number[][]>={
@@ -782,7 +780,7 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:numb
  // Rotation is applied to the ground footprint; elevation stays vertical.
  // The lab's camera projection is already represented by this build's world coordinates.
  const im=classicAssets.get("concrete"),meta=bayObject(c.id),material=meta?.material||"CONCRETE",z=meta?.dimensions?.z||COVER_HEIGHT,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
- const project=(x:number,y:number,height:number)=>({x:x*co-y*si,y:x*si+y*co-height});
+ const project=(x:number,y:number,height:number)=>({x:x*co-y*si,y:x*si+y*co-height/DECK_PITCH});
  const footprint=[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]];
  const ground=footprint.map(([x,y])=>project(x,y,0)),top=footprint.map(([x,y])=>project(x,y,z));
  const stage=c.hp/c.maxHp>=.875?0:c.hp/c.maxHp>=.375?1:2;
@@ -825,7 +823,7 @@ function fx(g:CanvasRenderingContext2D,f:any){
   const fade=classicClamp(f.life/.25,0,1);g.save();g.translate(f.x,f.y);g.globalAlpha=fade*.55;g.strokeStyle=f.type==="cover-block"?"#ff78ac":"#74dfe6";g.lineWidth=1;
   g.beginPath();g.ellipse(0,2,7+(1-fade)*4,3,0,0,Math.PI*2);g.stroke();g.restore();return;
  }
- g.save();g.translate(f.renderOffsetX||0,-(f.z||0));g.globalAlpha=Math.min(1,f.life*4);
+ g.save();g.translate(f.renderOffsetX||0,-(f.z||0)/DECK_PITCH);g.globalAlpha=Math.min(1,f.life*4);
  if(f.type==="brake"&&Number.isFinite(f.oldAngle)){
   const age=1-classicClamp(f.life/.42,0,1),oa=f.oldAngle,na=f.newAngle??oa,strength=classicClamp((f.entrySpeed||0)/689.15949375,0,1);
   g.save();g.translate(f.x,f.y);

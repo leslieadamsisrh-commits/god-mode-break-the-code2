@@ -199,8 +199,10 @@ function slideAction(s:GameState,n:number,prev:InputState){const p=s.players[n],
  const mag=Math.hypot(i.x,i.y),a=mag>.1?Math.atan2(i.y,i.x):p.gunFacing;
  const doubleTap=(s.time-p.lastSlideTap)<=c.doubleTapWindow;p.lastSlideTap=s.time;
 
- // Soft cover never owns the mobility button: first tap detaches into dash.
+ // Own the soft-cover A edge here, before mobility can release its anchor.
  if(p.coverId&&p.coverMode==="soft"){
+   const anchor=p.coverAnchor,out=anchor&&mag>.18?(i.x*anchor.nx+i.y*anchor.ny)/mag:0;
+   if(anchor&&out<=.15){p.coverMode="braced";p.vx=p.vy=p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n});return true}
    releaseCover(p,s,.055);startDash(p,s,a);return true;
  }
  // Hard brace / planted cover keeps deliberate commitment, but A is still immediate escape.
@@ -318,14 +320,8 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
   }
   else if(p.knock>0){p.knock-=dt;p.vx*=Math.pow(.08,dt);p.vy*=Math.pow(.08,dt)}
   else if(p.exit){stepCoverExit(p,s,d)}
-  else if(p.coverId){
-    // Handle A before walk-away can clear the anchor needed by a kick.
-    if(i.slide&&!prev[n]?.slide){
-      const a=p.coverAnchor,mag=Math.hypot(i.x,i.y),out=a&&mag>.18?(i.x*a.nx+i.y*a.ny)/mag:0;
-      if(p.coverMode==="soft"&&out<=.15){p.coverMode="braced";p.vx=p.vy=0;p.coverSpeed=0;s.fx.push({id:uid(),type:"brace",x:p.x,y:p.y,life:.2,owner:n});moveOnCover(p,s,i,d)}
-      else if(!classicCoverAction(p,s,i))moveOnCover(p,s,i,d);
-    }else moveOnCover(p,s,i,d);
-  }
+  // A edges are handled exactly once by slideAction; LT planting remains in moveOnCover.
+  else if(p.coverId){moveOnCover(p,s,i,d)}
   else if(p.dash>0){
     const dashBefore=p.dash,phase=1-clamp(dashBefore/Math.max(.001,c.dashDuration),0,1);
     p.dash=Math.max(0,p.dash-dt);
@@ -405,6 +401,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
 export function advance(s:GameState,now=Date.now()){let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;if(s.phase==="countdown"){s.countdown=Math.max(0,s.countdown-elapsed);if(!s.countdown)s.phase="playing";return}if(s.phase!=="playing"||(s.mode!=="solo"&&s.players.length<2))return;let prev=s.players.map(p=>({...p.processedInput}));while(elapsed>0){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,prev);s.players.forEach(p=>p.processedInput={...p.input});prev=s.players.map(p=>({...p.input}));elapsed-=dt}}
 export function startOrRematch(s:GameState,slot:number){if(s.mode==="solo"){respawn(s);return}if(slot===0){respawn(s)}}
 export function safeState(s:GameState){return{...s,players:s.players.map(({token,...p})=>p)}}
+
 
 
 
