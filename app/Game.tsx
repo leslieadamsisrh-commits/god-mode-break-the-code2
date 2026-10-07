@@ -718,6 +718,13 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
  const backGround=ribs.map((r:any)=>project(-w/2+w*r.t,-Math.min(h*.5,r.width*.5),0));
  const front=[...frontTop,...frontGround.slice().reverse()],back=[...backTop,...backGround.slice().reverse()];
  const top=[...backTop,...frontTop.slice().reverse()];
+ // Rib-to-rib panel seams: the skeleton now defines actual illustrated sub-planes.
+ // This prevents long faces from reading as one stretched texture and establishes the future HD mesh.
+ const panelSeams=(frontSide:boolean)=>{
+  const hi=frontSide?frontTop:backTop,lo=frontSide?frontGround:backGround;
+  g.save();g.strokeStyle=frontSide?"#080b10":"#172029";g.lineWidth=.8;g.globalAlpha=.48;
+  for(let n=1;n<hi.length-1;n++){g.beginPath();g.moveTo(hi[n].x,hi[n].y);g.lineTo(lo[n].x,lo[n].y);g.stroke()}g.restore();
+ };
  const left=[backTop[0],frontTop[0],frontGround[0],backGround[0]],ri=ribs.length-1,right=[backTop[ri],frontTop[ri],frontGround[ri],backGround[ri]];
  // cover() already owns the world translation. Keep atlas, rig ink and collision in one local space.
  // Camera-relative eight-angle face routing. Art remains authored; rig determines silhouette.
@@ -726,6 +733,7 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
  poly(0,0,top,.94);
  // END atlas reinforces torn/chipped end caps without changing collision.
  if(sector===2||sector===6)poly(2,1,sector===2?right:left,.96);
+ panelSeams(sector<=1||sector>=7);
 }
 function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
  if(!meta)return;const P=(x:number,y:number,zz:number)=>project(x,y,zz),line=(pts:{x:number;y:number}[],stroke="#0a0d12",width=1.5)=>{g.strokeStyle=stroke;g.lineWidth=width;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke()};
