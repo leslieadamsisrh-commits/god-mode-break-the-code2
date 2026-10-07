@@ -93,7 +93,7 @@ let preloadPromise:Promise<BootState>|null=null;
 function loadImage(src:string,onReady:(im:HTMLImageElement)=>void,progress:(ok:boolean)=>void,fallback?:string){
  return new Promise<void>(resolve=>{
   const im=new Image();im.decoding="async";let settled=false;
-  const finish=async(ok:boolean)=>{if(settled)return;settled=true;clearTimeout(timer);if(ok){try{await Promise.race([im.decode(),new Promise(r=>setTimeout(r,900))])}catch{}if(im.naturalWidth)onReady(im);else ok=false}progress(ok);resolve()};
+  const finish=async(ok:boolean)=>{if(settled){if(ok&&im.naturalWidth)onReady(im);return}settled=true;clearTimeout(timer);if(ok){try{await Promise.race([im.decode(),new Promise(r=>setTimeout(r,900))])}catch{}if(im.naturalWidth)onReady(im);else ok=false}progress(ok);resolve()};
   // Full Safari can leave cross-origin Image requests pending indefinitely. Never let one asset deadlock boot.
   const timer=setTimeout(()=>void finish(false),3500);
   let fallbackUsed=false;im.onload=()=>void finish(true);im.onerror=()=>{if(fallback&&!fallbackUsed&&!settled){fallbackUsed=true;im.src=fallback;return}void finish(false)};im.src=src;
@@ -342,7 +342,11 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  // The authored road shares the exact canvas world/camera transform with actors.
  // Keep the distant bridge band visible; never translate a second CSS floor under Jade.
  const road=environmentAssets.get("world-road"),roadTop=camY-halfH*.48;
- if(road?.complete&&road.naturalWidth){g.save();g.beginPath();g.rect(camX-halfW-1,roadTop,halfW*2+2,halfH*2);g.clip();g.drawImage(road,-80,-80,1160,780);g.restore();}
+ g.save();g.beginPath();g.rect(camX-halfW-1,roadTop,halfW*2+2,halfH*2);g.clip();
+ // Solid registered ground survives a slow texture decode; background cannot show through.
+ g.fillStyle="#20232e";g.fillRect(-80,-80,1160,780);
+ if(road?.complete&&road.naturalWidth)g.drawImage(road,-80,-80,1160,780);
+ else{g.strokeStyle="#9c9270";g.lineWidth=2;g.setLineDash([14,16]);for(const y of [250,360]){g.beginPath();g.moveTo(-80,y);g.lineTo(1080,y-35);g.stroke()}g.setLineDash([])}g.restore();
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
  const fullSlide=local.slide>0;
