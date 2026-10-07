@@ -23,7 +23,7 @@ ctx.environmentAssets=new Map(m.BAY_OBJECTS.map(o=>[o.renderedShell,{complete:tr
 let triangles=0;
 for(const o of m.BAY_OBJECTS)for(let k=0;k<32;k++){
  const angle=k*Math.PI/16,co=Math.cos(angle),si=Math.sin(angle),project=(x,y,z)=>({x:x*co-y*si,y:x*si+y*co-z});let points=[],matrix,saves=0;
- const g={save(){saves++},restore(){saves--},beginPath(){points=[]},moveTo(x,y){points.push({x,y})},lineTo(x,y){points.push({x,y})},closePath(){},clip(){assert.equal(points.length,3)},transform(...args){matrix=args},drawImage(){assert(matrix.every(Number.isFinite));triangles++},stroke(){}};
+ const g={save(){saves++},restore(){saves--},beginPath(){points=[]},moveTo(x,y){points.push({x,y})},lineTo(x,y){points.push({x,y})},closePath(){},clip(){assert.equal(points.length,3)},transform(...args){matrix=args},drawImage(im,...crop){assert(matrix.every(Number.isFinite));assert.equal(crop.length,8);assert(crop.every(Number.isFinite));assert(crop[0]>=0&&crop[1]>=0&&crop[2]>0&&crop[3]>0);assert(crop[0]+crop[2]<=im.naturalWidth+.001);assert(crop[1]+crop[3]<=im.naturalHeight+.001);triangles++},stroke(){},fill(){}};
  const before=JSON.stringify(o);ctx.renderAtlas(g,{a:angle},o,o.dimensions.z,o.dimensions.w,o.dimensions.h,project);assert.equal(saves,0);assert.equal(JSON.stringify(o),before);
 }
 console.log(`PASS: frozen combat constants; ${frames} host frames with two input slots, safe snapshots and finite state; ${triangles} rig texture triangles across 10 actors × 32 rotations.`);
@@ -37,3 +37,5 @@ for(const o of m.BAY_OBJECTS)for(let k=0;k<32;k++){
 }
 const cabinet=m.BAY_OBJECTS.find(o=>o.shellProfile==='CABINET'),c={id:cabinet.id,x:500,y:310,w:48,h:58,a:0};assert(ctx.occlude(c,200).some(poly=>inside(poly,500,250)),'tall cabinet must conceal within its authored height');assert(!ctx.occlude(c,200).some(poly=>inside(poly,500,195)),'sky above shell must remain visible');
 console.log(`PASS: ${clips} rig concealment transforms; tall cover height, clear sky, finite geometry and immutable hulls.`);
+
+ctx.environmentAssets.clear();let fallbackFills=0;const fallbackG={save(){},restore(){},beginPath(){},moveTo(){},lineTo(){},closePath(){},clip(){},transform(){},drawImage(){throw Error('Missing art must not draw invalid image')},stroke(){},fill(){fallbackFills++}};for(const o of m.BAY_OBJECTS)ctx.renderAtlas(fallbackG,{a:.6},o,o.dimensions.z,o.dimensions.w,o.dimensions.h,(x,y,z)=>({x,y:y-z}));assert(fallbackFills>0);console.log('PASS: missing textures retain finite rig-shaped surfaces; cropped UV regions stay inside each atlas');

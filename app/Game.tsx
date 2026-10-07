@@ -96,7 +96,7 @@ function loadImage(src:string,onReady:(im:HTMLImageElement)=>void,progress:(ok:b
   const finish=async(ok:boolean)=>{if(settled){if(ok&&im.naturalWidth)onReady(im);return}settled=true;clearTimeout(timer);if(ok){try{await Promise.race([im.decode(),new Promise(r=>setTimeout(r,900))])}catch{}if(im.naturalWidth)onReady(im);else ok=false}progress(ok);resolve()};
   // Full Safari can leave cross-origin Image requests pending indefinitely. Never let one asset deadlock boot.
   const timer=setTimeout(()=>void finish(false),3500);
-  let fallbackUsed=false;im.onload=()=>void finish(true);im.onerror=()=>{if(fallback&&!fallbackUsed&&!settled){fallbackUsed=true;im.src=fallback;return}void finish(false)};im.src=src;
+  let fallbackUsed=false;im.onload=()=>void finish(true);im.onerror=()=>{if(fallback&&!fallbackUsed){fallbackUsed=true;im.src=fallback;return}void finish(false)};im.src=src;
  });
 }
 function preload(onProgress?:(s:BootState)=>void){
@@ -715,8 +715,9 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
  path();g.strokeStyle="#070a0e";g.lineWidth=2.5;g.stroke();
 }
 function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
- const im=environmentAssets.get(meta?.renderedShell);if(!im?.complete||!im.naturalWidth||!meta?.rig)return;
- const cellW=im.naturalWidth/3,cellH=im.naturalHeight/2;
+ const im=environmentAssets.get(meta?.renderedShell);if(!meta?.rig)return;
+ const textured=!!(im?.complete&&im.naturalWidth&&im.naturalHeight);
+ const cellW=textured?im!.naturalWidth/3:256,cellH=textured?im!.naturalHeight/2:128;
  const ribs=meta.rig.ribs,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
  // Fixed object-space UVs. Each rib panel projects the same material coordinates
  // at every angle; two affine triangles handle sloped/irregular quadrilaterals.
@@ -726,11 +727,17 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
   const xx=((B.x-A.x)*vy-(D.x-A.x)*uy)/det,xy=((D.x-A.x)*ux-(B.x-A.x)*vx)/det;
   const yx=((B.y-A.y)*vy-(D.y-A.y)*uy)/det,yy=((D.y-A.y)*ux-(B.y-A.y)*vx)/det;
   g.save();g.beginPath();dst.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip();
-  g.transform(xx,yx,xy,yy,A.x-xx*a.x-xy*a.y,A.y-yx*a.x-yy*a.y);g.drawImage(im,0,0);g.restore();
+  if(textured){g.transform(xx,yx,xy,yy,A.x-xx*a.x-xy*a.y,A.y-yx*a.x-yy*a.y);const left=Math.max(0,Math.min(...src.map(p=>p.x))),top=Math.max(0,Math.min(...src.map(p=>p.y))),right=Math.min(im!.naturalWidth,Math.max(...src.map(p=>p.x))),bottom=Math.min(im!.naturalHeight,Math.max(...src.map(p=>p.y)));
+   if(right>left&&bottom>top)g.drawImage(im!,left,top,right-left,bottom-top,left,top,right-left,bottom-top)}
+  else{g.fillStyle=meta.material==="CONCRETE"?"#777c82":meta.material==="VEHICLE"?"#59465b":"#4b6071";g.fill()}
+  g.restore();
  };
  const panel=(col:number,row:number,u0:number,u1:number,pts:CoverPoint[],v0=0,v1=1)=>{
   const uv=[{x:(col+u0)*cellW,y:(row+v0)*cellH},{x:(col+u1)*cellW,y:(row+v0)*cellH},{x:(col+u1)*cellW,y:(row+v1)*cellH},{x:(col+u0)*cellW,y:(row+v1)*cellH}];
   triangle([uv[0],uv[1],uv[2]],[pts[0],pts[1],pts[2]]);triangle([uv[0],uv[2],uv[3]],[pts[0],pts[2],pts[3]]);
+  // Restrained plane lighting follows the projected shell, preserving painted ink.
+  g.save();g.globalAlpha=col===0&&row===0?.055:.08;g.fillStyle=col===0&&row===0?"#ffc58d":"#17283e";
+  g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.fill();g.restore();
  };
  const side=co>=0?1:-1,col=side>0?1:2;
  for(let n=0;n<ribs.length-1;n++){
