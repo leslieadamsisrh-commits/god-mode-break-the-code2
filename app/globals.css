@@ -182,3 +182,9 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .bayContainer01 .l5{opacity:.58!important}
 .bayContainer01 .foregroundGirder{width:19%!important;height:9%!important}
 .bayContainer01 .foregroundCable{width:30%!important;opacity:.42!important}
+
+/* WORLD ART 10 — authored layers replace prototype foreground/background geometry */
+.bayContainer01 .l2{background-image:url('/assets/bay-bridge/world/world-bridge.svg')!important;background-size:cover!important;background-position:center 20%!important;opacity:1!important}
+.bayContainer01 .l4{background-image:url('/assets/bay-bridge/world/world-near.svg')!important;background-size:cover!important;background-position:center bottom!important;opacity:.72!important}
+.bayContainer01 .l5{background-image:url('/assets/bay-bridge/world/world-foreground.svg')!important;background-size:cover!important;background-position:center bottom!important;opacity:.68!important}
+.bayContainer01 .l2:after{display:none!important}
