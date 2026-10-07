@@ -36,20 +36,20 @@ const obj=(id:string,x:number,y:number,w:number,h:number,rotation:number,shell:s
 });
 export const BAY_OBJECTS:BayMapObject[]=[
  // CENTER: offset waist cover creates a dangerous contest without sealing the lane.
- obj("bay-jersey",342,338,112,34,-.10,"damaged-jersey","CONCRETE","waist","CENTER",7,140,"Damaged Jersey Barrier"),
- obj("bay-divider",658,338,132,36,.10,"fractured-divider","CONCRETE","waist","CENTER",9,170,"Fractured Divider"),
+ obj("bay-jersey",320,326,112,34,-.10,"damaged-jersey","CONCRETE","waist","CENTER",7,140,"Damaged Jersey Barrier"),
+ obj("bay-divider",686,356,132,36,.10,"fractured-divider","CONCRETE","waist","CENTER",9,170,"Fractured Divider"),
  // LEFT FLANK: vehicle chain supports pop-shot boost exchanges with a deliberate gap.
- obj("bay-sedan",402,232,118,48,.08,"wrecked-sedan","VEHICLE","waist","LEFT_FLANK",12,210,"Wrecked Sedan"),
- obj("bay-service-van",748,238,122,52,-.06,"service-van","VEHICLE","tall","LEFT_FLANK",16,250,"Service Vehicle"),
+ obj("bay-sedan",390,214,118,48,.08,"wrecked-sedan","VEHICLE","waist","LEFT_FLANK",12,210,"Wrecked Sedan"),
+ obj("bay-service-van",786,250,122,52,-.06,"service-van","VEHICLE","tall","LEFT_FLANK",16,250,"Service Vehicle"),
  // RIGHT FLANK: mixed heights create Brake/slide routing rather than a continuous wall.
- obj("bay-cabinet",438,468,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","RIGHT_FLANK",9,180,"Maintenance Cabinet"),
- obj("bay-girder",565,455,126,32,.08,"fractured-girder","STEEL","waist","RIGHT_FLANK",15,260,"Fractured Steel Girder"),
- obj("bay-roadwork",292,466,82,46,.10,"roadwork-equipment","INFRASTRUCTURE","waist","RIGHT_FLANK",8,160,"Roadwork Equipment"),
- obj("bay-module",756,458,112,50,-.06,"service-module","STEEL","tall","RIGHT_FLANK",18,280,"Service Module"),
+ obj("bay-cabinet",414,486,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","RIGHT_FLANK",9,180,"Maintenance Cabinet"),
+ obj("bay-girder",586,442,126,32,.08,"fractured-girder","STEEL","waist","RIGHT_FLANK",15,260,"Fractured Steel Girder"),
+ obj("bay-roadwork",254,454,82,46,.10,"roadwork-equipment","INFRASTRUCTURE","waist","RIGHT_FLANK",8,160,"Roadwork Equipment"),
+ obj("bay-module",798,480,112,50,-.06,"service-module","STEEL","tall","RIGHT_FLANK",18,280,"Service Module"),
  // Long sightline is interrupted at its midpoint but remains readable end-to-end.
- obj("bay-railing",505,170,142,28,0,"broken-railing","STEEL","waist","LONG_SIGHT",10,190,"Broken Railing Base"),
+ obj("bay-railing",525,146,142,28,0,"broken-railing","STEEL","waist","LONG_SIGHT",10,190,"Broken Railing Base"),
  // Center-right anchor creates a second cover decision without mirroring the arena mechanically.
- obj("bay-block",582,274,94,42,-.08,"maintenance-block","CONCRETE","waist","CENTER",13,230,"Concrete Maintenance Block")
+ obj("bay-block",600,286,94,42,-.08,"maintenance-block","CONCRETE","waist","CENTER",13,230,"Concrete Maintenance Block")
 ];
 export const BAY_DEPTH_DOMAINS=[
  {id:"L0_SKY",nominalDistance:5000,parallax:.015},
