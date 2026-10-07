@@ -5,26 +5,27 @@ export const DEFAULT_CONFIG:CombatConfig={chargeMoveScale:.67145,chargeMoveRespo
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
 export type Player={shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
-export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number};
+export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
 export type Fx={id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number};
-export type GameState={build:string;mode:"bot"|"solo"|"duel";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
+export type GameState={build:string;mode:"bot"|"solo"|"duel"|"practice";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
 
 const empty=():InputState=>({x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false});
 const clamp=(v:number,a:number,b:number)=>Math.max(a,Math.min(b,v)),wrap=(a:number)=>Math.atan2(Math.sin(a),Math.cos(a)),dist=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y),uid=()=>crypto.randomUUID().slice(0,8);
 const A={left:70,right:930,top:90,bottom:550};
 function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{shells:8,maxShells:8,reserveShells:24,weaponState:"READY",x,y,vx:0,vy:0,aim,hp,battery:100,charging:false,chargeMotion:1,chargeAge:0,godCharge:0,godTime:0,godDuration:0,powerFlash:0,powerReturn:0,powerReleaseAge:0,powerReleaseCharge:0,godFade:0,godFadeStrength:0,powerBlocked:false,lastEnergyAt:-9,dash:0,brake:0,slideSteerCurrent:0,lastSlideTap:-9,slide:0,slideFacing:aim,slideCool:0,kickStage:"none",kickTime:0,kickAngle:aim,kickNx:0,kickNy:0,coverId:null,coverMode:null,coverAnchor:null,coverLock:0,coverSpeed:0,softImpact:0,softImpactAt:-9,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,coverGripAngle:aim,coverGripDist:92,orbitIds:[],knock:0,pinball:0,lastShot:-9,fireBlocked:false,fireState:0,recoil:0,returnToCover:0,boostState:0,brakeState:0,gunFacing:aim,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
-export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo"|"duel"="solo"):GameState{
+export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo"|"duel"|"practice"="solo"):GameState{
  const config={...DEFAULT_CONFIG};
  const players=[player(230,330,0,name,token,false,config.maxHealth)];
- if(mode==="bot")players.push(player(780,330,Math.PI,"RIFT HUNTER","",true,config.maxHealth));
+ if(mode==="bot"||mode==="practice")players.push(player(780,330,Math.PI,"RIFT HUNTER","",true,config.maxHealth));
  const matter:Matter[]=[];[[170,170,"stone"],[330,190,"metal"],[500,160,"stone"],[680,195,"metal"],[800,165,"stone"],[420,470,"metal"],[610,465,"stone"],[760,445,"metal"]].forEach(([x,y,k],i)=>matter.push({id:"m"+i,x:x as number,y:y as number,vx:0,vy:0,r:14,kind:k as any,heldBy:null,orbitBy:null,life:999}));
- const covers:Cover[]=bayCoverState();
+ if(mode==="practice")matter.length=0;
+ const covers:Cover[]=bayCoverState().filter(c=>mode!=="practice"||["bay-sedan","bay-cabinet","bay-jersey"].includes(c.id));
  return{build:"COMBAT-MASTER-STUDIO-01",mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
 }
 export function updateConfig(s:GameState,patch:Partial<CombatConfig>){s.config={...s.config,...patch};for(const p of s.players)p.hp=Math.min(p.hp,s.config.maxHealth)}
-export function joinGame(s:GameState,name:string,token:string){if(s.mode==="solo")throw Error("Solo session is not joinable");const b=s.players.findIndex(p=>p.bot);if(b>=0){s.players[b]={...s.players[b],name,token,bot:false,lastSeq:-1,input:empty(),processedInput:empty()};return}if(s.players.length>1)throw Error("Room is full");s.players.push(player(780,330,Math.PI,name,token,false,s.config.maxHealth))}
+export function joinGame(s:GameState,name:string,token:string){if(s.mode==="practice")throw Error("Practice is not joinable");if(s.mode==="solo")throw Error("Solo session is not joinable");const b=s.players.findIndex(p=>p.bot);if(b>=0){s.players[b]={...s.players[b],name,token,bot:false,lastSeq:-1,input:empty(),processedInput:empty()};return}if(s.players.length>1)throw Error("Room is full");s.players.push(player(780,330,Math.PI,name,token,false,s.config.maxHealth))}
 function respawn(s:GameState){const cfg={...s.config},ids=s.players.map(p=>({name:p.name,token:p.token,bot:p.bot,score:p.score})),fresh=newGame(ids[0].name,ids[0].token,s.lastAt,s.mode);fresh.config=cfg;if(ids[1])fresh.players[1]=player(780,330,Math.PI,ids[1].name,ids[1].token,ids[1].bot,cfg.maxHealth);fresh.players.forEach((p,i)=>p.score=ids[i]?.score||0);fresh.round=s.round+1;fresh.createdAt=s.createdAt;fresh.phase=s.mode==="solo"?"playing":"countdown";Object.assign(s,fresh)}
 export function setInput(s:GameState,slot:number,seq:number,input:Partial<InputState>){const p=s.players[slot];if(!p||seq<=p.lastSeq)return;p.lastSeq=seq;let x=clamp(Number(input.x)||0,-1,1),y=clamp(Number(input.y)||0,-1,1),m=Math.hypot(x,y);if(m>1){x/=m;y/=m}p.input={...empty(),...input,x,y,aim:Number.isFinite(input.aim)?wrap(input.aim as number):p.aim}}
 
@@ -62,7 +63,7 @@ function placeOnCover(p:Player,s:GameState){
  else{lx=-hw-r;ly=hh-a.t}
  const q=worldPoint(c,lx,ly);p.x=q.x;p.y=q.y;
 }
-function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){if(s.time<p.coverLock)return false;const anchor=coverFace(c,p),meta=bayObject(c.id),rail=meta?.rig?.coverRails?.find(r=>({FRONT:"bottom",BACK:"top",LEFT:"left",RIGHT:"right"} as const)[r.side]===anchor.face),railT=anchor.length?anchor.t/anchor.length:.5;if(meta&&(!rail||railT<rail.from||railT>rail.to))return false;const incoming=Math.abs(p.vx*anchor.nx+p.vy*anchor.ny),impact=clamp(incoming/Math.max(1,s.config.slideSpeed),0,1);p.coverId=c.id;p.coverMode=mode;p.coverAnchor=anchor;p.slide=0;p.dash=0;p.softImpact=mode==="soft"?impact:0;p.softImpactAt=s.time;p.vx=p.vy=0;p.coverSpeed=0;p.contact=s.time+.22;p.peek=false;placeOnCover(p,s);s.fx.push({id:uid(),type:mode==="soft"?"soft-cover":"cover-slam",x:p.x,y:p.y,life:.25,entrySpeed:incoming} as any);return true}
+function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){if(s.time<p.coverLock)return false;const anchor=coverFace(c,p),meta=bayObject(c.artId||c.id),rail=meta?.rig?.coverRails?.find(r=>({FRONT:"bottom",BACK:"top",LEFT:"left",RIGHT:"right"} as const)[r.side]===anchor.face),railT=anchor.length?anchor.t/anchor.length:.5;if(meta&&(!rail||railT<rail.from||railT>rail.to))return false;const incoming=Math.abs(p.vx*anchor.nx+p.vy*anchor.ny),impact=clamp(incoming/Math.max(1,s.config.slideSpeed),0,1);p.coverId=c.id;p.coverMode=mode;p.coverAnchor=anchor;p.slide=0;p.dash=0;p.softImpact=mode==="soft"?impact:0;p.softImpactAt=s.time;p.vx=p.vy=0;p.coverSpeed=0;p.contact=s.time+.22;p.peek=false;placeOnCover(p,s);s.fx.push({id:uid(),type:mode==="soft"?"soft-cover":"cover-slam",x:p.x,y:p.y,life:.25,entrySpeed:incoming} as any);return true}
 function releaseCover(p:Player,s:GameState,lock=.18){p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
  const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,moveSpeed=c.moveSpeed*(p.chargeMotion??1),mag=Math.hypot(i.x,i.y),away=i.x*a.nx+i.y*a.ny;
@@ -137,12 +138,24 @@ function slideCapture(p:Player,s:GameState){
 function circleBox(o:{x:number;y:number},r:number,c:Cover){const q=localPoint(c,o.x,o.y),nx=clamp(q.x,-c.w/2,c.w/2),ny=clamp(q.y,-c.h/2,c.h/2),dx=q.x-nx,dy=q.y-ny,d=Math.hypot(dx,dy),ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),lx=d?dx/d:(q.x<0?-1:1),ly=d?dy/d:0;return{hit:d<r,nx:lx*ca-ly*sa,ny:lx*sa+ly*ca,depth:r-d}}
 function collide(p:Player,s:GameState){if(p.coverId||p.exit)return;for(const cv of s.covers){if(s.players.some(q=>q.gripCoverId===cv.id))continue;const q=circleBox(p,18,cv);if(!q.hit)continue;if(s.config.weaveEnabled<.5&&s.time>=p.coverLock){attachCover(p,cv,s,"soft");return}p.x+=q.nx*(q.depth+1);p.y+=q.ny*(q.depth+1)}}
 // Reuse the same rotated footprints for carry/throw contact; no new cover geometry.
+function damageCover(cv:Cover,s:GameState,damage:number){
+ if(cv.hp<=0)return;cv.hp=Math.max(0,cv.hp-damage);if(cv.hp>0)return;
+ const meta=bayObject(cv.artId||cv.id),kind=meta?.material==="CONCRETE"?"stone":"metal";
+ for(const p of s.players){if(p.coverId===cv.id)releaseCover(p,s,.25);if(p.gripCoverId===cv.id)p.gripCoverId=null;if(p.exit?.coverId===cv.id)p.exit=null;}
+ s.fx.push({id:uid(),type:"cover-break",x:cv.x,y:cv.y,life:.8,angle:cv.a,text:kind});
+ const count=Math.min(18,Math.max(0,64-s.matter.length));for(let n=0;n<count;n++){const a=n*2.399+cv.a,speed=50+n%5*24;s.matter.push({id:uid(),x:cv.x+Math.cos(a)*cv.w*.25,y:cv.y+Math.sin(a)*cv.h*.25,vx:Math.cos(a)*speed+(cv.vx||0)*.2,vy:Math.sin(a)*speed+(cv.vy||0)*.2,r:3+n%4,kind,heldBy:null,orbitBy:null,life:5});}
+}
+function coverImpact(cv:Cover,s:GameState,key:string,other?:Cover){
+ if(!combatFight(s)||cv.hp<=0||cv.build>=0||Math.hypot(cv.vx||0,cv.vy||0)<160||cv.hitIds?.includes(key))return;
+ (cv.hitIds??=[]).push(key);const damage=Math.min(100,Math.hypot(cv.vx||0,cv.vy||0)*(bayObject(cv.artId||cv.id)?.mass||9)/90);
+ if(other)damageCover(other,s,damage);damageCover(cv,s,damage);s.fx.push({id:uid(),type:"cover-impact",x:cv.x,y:cv.y,life:.3});
+}
 function settleCover(cv:Cover,s:GameState){
  const ex=Math.abs(Math.cos(cv.a))*cv.w/2+Math.abs(Math.sin(cv.a))*cv.h/2,ey=Math.abs(Math.sin(cv.a))*cv.w/2+Math.abs(Math.cos(cv.a))*cv.h/2;
  const x=clamp(cv.x,A.left+ex,A.right-ex),y=clamp(cv.y,A.top+ey,A.bottom-ey);
- if(x!==cv.x)cv.vx=0;if(y!==cv.y)cv.vy=0;cv.x=x;cv.y=y;
+ if(x!==cv.x||y!==cv.y)coverImpact(cv,s,"boundary");if(x!==cv.x)cv.vx=0;if(y!==cv.y)cv.vy=0;cv.x=x;cv.y=y;
  for(const other of s.covers){
-  if(other.id===cv.id)continue;
+  if(other.id===cv.id||other.hp<=0)continue;
   const axes=[[Math.cos(cv.a),Math.sin(cv.a)],[-Math.sin(cv.a),Math.cos(cv.a)],[Math.cos(other.a),Math.sin(other.a)],[-Math.sin(other.a),Math.cos(other.a)]];
   let depth=Infinity,nx=0,ny=0,overlap=true;
   for(const [ax,ay]of axes){
@@ -151,7 +164,7 @@ function settleCover(cv:Cover,s:GameState){
    if(penetration<=0){overlap=false;break}
    if(penetration<depth){depth=penetration;const sign=delta<0?-1:1;nx=ax*sign;ny=ay*sign}
   }
-  if(overlap){cv.x+=nx*(depth+.1);cv.y+=ny*(depth+.1);const toward=(cv.vx||0)*nx+(cv.vy||0)*ny;if(toward<0){cv.vx=(cv.vx||0)-toward*nx;cv.vy=(cv.vy||0)-toward*ny}}
+  if(overlap){coverImpact(cv,s,other.id,other);cv.x+=nx*(depth+.1);cv.y+=ny*(depth+.1);const toward=(cv.vx||0)*nx+(cv.vy||0)*ny;if(toward<0){cv.vx=(cv.vx||0)-toward*nx;cv.vy=(cv.vy||0)-toward*ny}}
  }
  cv.x=clamp(cv.x,A.left+ex,A.right-ex);cv.y=clamp(cv.y,A.top+ey,A.bottom-ey);
 }
@@ -216,6 +229,7 @@ function slideAction(s:GameState,n:number,prev:InputState){const p=s.players[n],
  startDash(p,s,a);return true;
 }
 // Duel repairs use the existing pellet damage and action cooldown; movement tuning stays fixed.
+function combatFight(s:GameState){return s.mode==="duel"||s.mode==="practice"}
 function duelContact(s:GameState,owner:number,target:Player,damage:number,vx=0,vy=0){
  if(target.hp<=0)return;
  if(target.shield&&target.input.shield&&!target.coverId&&target.battery>0){s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,life:.22,owner});return;}
@@ -225,8 +239,8 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  // Successful immediate brace keeps its original priority over other edges.
  if(slideAction(s,n,prev))return;
  if(i.pinball&&!prev.pinball&&p.battery>=22){p.battery-=22;p.pinball=c.pinballDuration;p.vx=Math.cos(p.aim)*c.pinballSpeed;p.vy=Math.sin(p.aim)*c.pinballSpeed;s.fx.push({id:uid(),type:"pinball",x:p.x,y:p.y,life:.5,owner:n})}
- if((i.melee&&!prev.melee||i.heavy&&!prev.heavy)&&s.time-p.lastMelee>(i.heavy?.85:.38)){p.lastMelee=s.time;s.fx.push({id:uid(),type:i.heavy?"heavy":"melee",x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40,life:.22,owner:n});if(s.mode==="duel"){const target=s.players[1-n],strike={x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40};if(target&&dist(strike,target)<=21&&!s.covers.some(cv=>segmentCover(p,strike,cv)))duelContact(s,n,target,c.shotDamage)}}
- if(i.cover&&!prev.cover&&p.battery>=30){p.battery-=30;const x=clamp(p.x+Math.cos(p.aim)*100-65,A.left,A.right-130),y=clamp(p.y+Math.sin(p.aim)*100-15,A.top,A.bottom-30);const generated=s.covers.filter(c=>c.generated);if(generated.length>=4){const old=generated[0];if(p.coverId===old.id)releaseCover(p,s,.15);s.covers=s.covers.filter(c=>c.id!==old.id)}const used=new Set(s.covers.filter(c=>c.generated).map(c=>c.variant));let variant=0;while(used.has(variant)&&variant<3)variant++;s.covers.push({id:uid(),x:x+65,y:y+15,w:130,h:30,a:p.aim+Math.PI/2,hp:110,maxHp:110,generated:true,build:1,variant,born:s.time});s.fx.push({id:uid(),type:"materialize",x:x+65,y:y+15,life:.7,owner:n})}
+ if((i.melee&&!prev.melee||i.heavy&&!prev.heavy)&&s.time-p.lastMelee>(i.heavy?.85:.38)){p.lastMelee=s.time;s.fx.push({id:uid(),type:i.heavy?"heavy":"melee",x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40,life:.22,owner:n});if(combatFight(s)){const target=s.players[1-n],strike={x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40};if(target&&dist(strike,target)<=21&&!s.covers.some(cv=>segmentCover(p,strike,cv)))duelContact(s,n,target,c.shotDamage)}}
+ if(i.cover&&!prev.cover&&p.battery>=30){p.battery-=30;const x=clamp(p.x+Math.cos(p.aim)*100-65,A.left,A.right-130),y=clamp(p.y+Math.sin(p.aim)*100-15,A.top,A.bottom-30);const generated=s.covers.filter(c=>c.generated);if(generated.length>=4){const old=generated[0];if(p.coverId===old.id)releaseCover(p,s,.15);s.covers=s.covers.filter(c=>c.id!==old.id)}const used=new Set(s.covers.filter(c=>c.generated).map(c=>c.variant));let variant=0;while(used.has(variant)&&variant<3)variant++;s.covers.push({id:uid(),x:x+65,y:y+15,w:130,h:30,a:p.aim+Math.PI/2,hp:110,maxHp:110,generated:true,build:1,variant,born:s.time});if(s.mode==="practice"){const cv=s.covers[s.covers.length-1],source=bayObject("bay-jersey")!;cv.artId=source.id;cv.w=source.collisionHull.w;cv.h=source.collisionHull.h;cv.coverClass=source.coverClass||"waist";}s.fx.push({id:uid(),type:"materialize",x:x+65,y:y+15,life:.7,owner:n})}
  if(!i.fire)p.fireBlocked=false;
  if(!i.grip&&prev.grip){
   if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}p.gripCoverId=null}
@@ -236,7 +250,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
    if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}s.fx.push({id:uid(),type:"matter-drop",x:cv?.x??p.x,y:cv?.y??p.y,life:.24,owner:n});p.gripCoverId=null}
    else if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m)m.heldBy=null;p.gripId=null}
    else{
-     const candidates=s.covers.filter(cv=>(cv.generated||!!bayObject(cv.id)?.gripCompatible)&&!s.players.some((q,j)=>j!==n&&(q.coverId===cv.id||q.gripCoverId===cv.id)));
+     const candidates=s.covers.filter(cv=>(cv.generated||!!bayObject(cv.artId||cv.id)?.gripCompatible)&&!s.players.some((q,j)=>j!==n&&(q.coverId===cv.id||q.gripCoverId===cv.id)));
      // The attached block is deliberate intent; loose debris cannot steal this grab.
      const cv=candidates.find(cv=>cv.id===p.coverId)||candidates.filter(cv=>{const d=dist(cv,p);return d<235&&((cv.x-p.x)*Math.cos(p.gunFacing)+(cv.y-p.y)*Math.sin(p.gunFacing))/Math.max(1,d)>.45}).sort((a,b)=>dist(a,p)-dist(b,p))[0];
      if(cv){if(spendEnergy(p,s,c.gripEnergy)){releaseCover(p,s,.25);p.gripCoverId=cv.id;p.coverGripAngle=cv.a;p.coverGripDist=clamp(dist(cv,p),78,118);cv.vx=cv.vy=0;cv.build=.001;s.fx.push({id:uid(),type:"matter-rip",x:cv.x,y:cv.y,life:.42,owner:n})}}
@@ -247,10 +261,10 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  if(held&&i.fire)p.fireBlocked=true;
  if((i.throwMatter&&!prev.throwMatter)||(held&&i.grip&&i.fire&&!prev.fire)){
    if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv&&spendEnergy(p,s,c.coverThrowEnergy)){
-     const a=p.gunFacing??p.aim,force=c.throwForce*.62*(p.godTime>0?1.25:1),inherit=clamp(c.carryMomentum,0,1);
+     const a=p.gunFacing??p.aim,force=c.throwForce*.62*(p.godTime>0?1.25:1)*(combatFight(s)?Math.sqrt(12/(bayObject(cv.artId||cv.id)?.mass||12)):1),inherit=clamp(c.carryMomentum,0,1);
      // Release where it is: preserve orientation and measured carry velocity.
      cv.vx=Math.cos(a)*force+p.vx*inherit+(cv.vx||0)*(1-inherit);cv.vy=Math.sin(a)*force+p.vy*inherit+(cv.vy||0)*(1-inherit);
-     cv.build=-Math.hypot(cv.vx,cv.vy);s.fx.push({id:uid(),type:"cover-throw",x:cv.x,y:cv.y,life:.55,owner:n,text:"WHAM"});p.gripCoverId=null;
+     cv.throwOwner=n;cv.hitIds=[];cv.build=-Math.hypot(cv.vx,cv.vy);s.fx.push({id:uid(),type:"cover-throw",x:cv.x,y:cv.y,life:.55,owner:n,text:"WHAM"});p.gripCoverId=null;
    }}
    else if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m&&spendEnergy(p,s,c.coverThrowEnergy)){m.heldBy=null;m.vx=Math.cos(p.aim)*c.throwForce*(p.godTime>0?1.25:1);m.vy=Math.sin(p.aim)*c.throwForce*(p.godTime>0?1.25:1);m.life=3;p.gripId=null}}
  }
@@ -287,7 +301,8 @@ function segmentCover(from:{x:number;y:number},to:{x:number;y:number},cv:Cover){
   const u=(-half-start)/delta,v=(half-start)/delta;enter=Math.max(enter,Math.min(u,v));leave=Math.min(leave,Math.max(u,v));if(enter>leave)return false;
  }return leave>=0&&enter<=1;
 }
-function botInput(s:GameState){const n=s.players.findIndex(p=>p.bot);if(n<0)return;const p=s.players[n],t=s.players[1-n];if(!t)return;const a=Math.atan2(t.y-p.y,t.x-p.x),d=dist(p,t);p.input={...empty(),x:Math.cos(a)*(d>260?.7:0),y:Math.sin(a)*(d>260?.7:0),aim:a,fire:d<520&&s.time%1.4<.1}}
+function botInput(s:GameState){const n=s.players.findIndex(p=>p.bot);if(n<0)return;const p=s.players[n],t=s.players[1-n];if(!t)return;const a=Math.atan2(t.y-p.y,t.x-p.x),d=dist(p,t);const blocked=s.covers.some(cv=>cv.hp>0&&segmentCover(p,t,cv)),side=Math.sin(s.time*.7)>=0?1:-1;
+ p.input={...empty(),x:blocked?-Math.sin(a)*side*.65:Math.cos(a)*(d>260?.7:d<140?-.4:0),y:blocked?Math.cos(a)*side*.65:Math.sin(a)*(d>260?.7:d<140?-.4:0),aim:a,fire:!blocked&&d<520&&s.time%1.4<.1,shield:s.mode==="practice"&&!!t.input.fire&&s.time%3<.4};}
 // A fresh Y press cancels voluntary actions; only already-held buttons are
 // consumed until released. New combat inputs and incoming hits still interrupt.
 function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
@@ -305,7 +320,7 @@ function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
 }
 function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInputs=s.players.map(p=>p.input);
  s.players.forEach((p,n)=>p.input=chargeIntent(p,s,rawInputs[n],dt));
- if(s.mode==="duel")s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0);
+ if(combatFight(s))s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0);
  const slow=s.players.some(p=>p.input.slow&&p.battery>0),d=dt*(slow?.52:1);
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId);p.aim=i.aim;powerStep(p,s,dt);
   const coverContext=!!p.coverId;
@@ -329,7 +344,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
   else if(p.exit){stepCoverExit(p,s,d)}
   // A edges are handled exactly once by slideAction; LT planting remains in moveOnCover.
   else if(p.coverId){moveOnCover(p,s,i,d)}
-  else if(s.mode==="duel"&&p.shield&&p.slide<=0&&p.dash<=0){p.vx=p.vy=0;}
+  else if(combatFight(s)&&p.shield&&p.slide<=0&&p.dash<=0){p.vx=p.vy=0;}
   else if(p.dash>0){
     const dashBefore=p.dash,phase=1-clamp(dashBefore/Math.max(.001,c.dashDuration),0,1);
     p.dash=Math.max(0,p.dash-dt);
@@ -388,26 +403,30 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
  }
  for(let n=0;n<s.players.length;n++){
    const p=s.players[n];if(!p.gripCoverId)continue;const cv=s.covers.find(c=>c.id===p.gripCoverId);if(!cv){p.gripCoverId=null;continue}
-   const a=p.gunFacing??p.aim,ox=cv.x,oy=cv.y,blend=Math.min(1,d*c.carryResponse);
-   cv.a+=wrap(a+Math.PI/2-cv.a)*Math.min(1,d*c.carryTurnResponse);
+   const a=p.gunFacing??p.aim,ox=cv.x,oy=cv.y,blend=Math.min(1,d*c.carryResponse*(combatFight(s)?Math.sqrt(9/(bayObject(cv.artId||cv.id)?.mass||9)):1));
+   cv.a+=wrap(a+Math.PI/2-cv.a)*Math.min(1,d*c.carryTurnResponse*(combatFight(s)?Math.sqrt(9/(bayObject(cv.artId||cv.id)?.mass||9)):1));
    cv.x+=(p.x+Math.cos(a)*p.coverGripDist-cv.x)*blend;cv.y+=(p.y+Math.sin(a)*p.coverGripDist-cv.y)*blend;
    settleCover(cv,s);cv.vx=(cv.x-ox)/Math.max(.001,d);cv.vy=(cv.y-oy)/Math.max(.001,d);cv.build=.001;
  }
  for(const cv of s.covers){
-   if(cv.build>=0)continue;
+   if(cv.build>=0||cv.hp<=0)continue;
    cv.vx??=Math.cos(cv.a-Math.PI/2)*-cv.build;cv.vy??=Math.sin(cv.a-Math.PI/2)*-cv.build;
    const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy)*d/8));
-   for(let k=0;k<parts;k++){cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;settleCover(cv,s)}
+   for(let k=0;k<parts;k++){cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
+    if(n===cv.throwOwner||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
+    if(Math.hypot(q.x-clamp(q.x,-cv.w/2,cv.w/2),q.y-clamp(q.y,-cv.h/2,cv.h/2))<=17){(cv.hitIds??=[]).push("player-"+n);const damage=Math.min(100,Math.hypot(cv.vx||0,cv.vy||0)*(bayObject(cv.artId||cv.id)?.mass||9)/90);duelContact(s,cv.throwOwner??1-n,target,damage,(cv.vx||0)*.08,(cv.vy||0)*.08);damageCover(cv,s,damage);cv.vx*=.35;cv.vy*=.35;}
+   }}
    cv.vx*=Math.pow(.09,d);cv.vy*=Math.pow(.09,d);cv.build=-Math.hypot(cv.vx,cv.vy);
    if(-cv.build<35){cv.build=0;cv.vx=cv.vy=0}
  }
  for(const m of s.matter){if(m.heldBy!==null){const p=s.players[m.heldBy];m.x=p.x+Math.cos(p.aim)*70;m.y=p.y+Math.sin(p.aim)*70;continue}if(m.orbitBy!==null){const p=s.players[m.orbitBy],j=p.orbitIds.indexOf(m.id),a=s.time*4+j*2.1;m.x=p.x+Math.cos(a)*62;m.y=p.y+Math.sin(a)*62;continue}m.x+=m.vx*d;m.y+=m.vy*d;m.vx*=Math.pow(.35,d);m.vy*=Math.pow(.35,d);if(m.life<999)m.life-=dt;if(m.x<A.left||m.x>A.right){m.x=clamp(m.x,A.left,A.right);m.vx*=-.6}if(m.y<A.top||m.y>A.bottom){m.y=clamp(m.y,A.top,A.bottom);m.vy*=-.6}}
- for(const sh of s.shots){const from={x:sh.x,y:sh.y};sh.x+=sh.vx*d;sh.y+=sh.vy*d;sh.life-=dt;if(s.covers.some(cv=>cv.id!==sh.clearanceCoverId&&segmentCover(from,sh,cv))){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:sh.x,y:sh.y,life:.18});continue}const target=s.players[1-sh.owner];if(target&&dist(sh,target)<21){if(target.coverId&&target.coverMode==="braced"&&!target.input.coverAim){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:target.x,y:target.y,life:.18});continue}if(s.mode==="duel")duelContact(s,sh.owner,target,sh.damage??c.shotDamage,sh.vx*.1,sh.vy*.1);else{target.hp=Math.max(0,target.hp-(sh.damage??c.shotDamage));target.knock=.26;target.vx+=sh.vx*.1;target.vy+=sh.vy*.1;sh.life=0;s.fx.push({id:uid(),type:"hit",x:target.x,y:target.y,life:.25})}sh.life=0}}
- if(s.mode==="duel"&&s.phase==="playing"&&s.players.some(p=>p.hp<=0)){
+ for(const sh of s.shots){const from={x:sh.x,y:sh.y};sh.x+=sh.vx*d;sh.y+=sh.vy*d;sh.life-=dt;const block=s.covers.find(cv=>cv.hp>0&&cv.id!==sh.clearanceCoverId&&segmentCover(from,sh,cv));if(block){if(combatFight(s))damageCover(block,s,sh.damage??c.shotDamage);sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:sh.x,y:sh.y,life:.18});continue}const target=s.players[1-sh.owner];if(target&&dist(sh,target)<21){if(target.coverId&&target.coverMode==="braced"&&!target.input.coverAim){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:target.x,y:target.y,life:.18});continue}if(combatFight(s))duelContact(s,sh.owner,target,sh.damage??c.shotDamage,sh.vx*.1,sh.vy*.1);else{target.hp=Math.max(0,target.hp-(sh.damage??c.shotDamage));target.knock=.26;target.vx+=sh.vx*.1;target.vy+=sh.vy*.1;sh.life=0;s.fx.push({id:uid(),type:"hit",x:target.x,y:target.y,life:.25})}sh.life=0}}
+ if(combatFight(s)&&s.phase==="playing"&&s.players.some(p=>p.hp<=0)){
   const alive=s.players.map((p,n)=>p.hp>0?n:-1).filter(n=>n>=0);s.winner=alive.length===1?alive[0]:null;
   if(s.winner!==null)s.players[s.winner].score++;s.phase="finished";s.shots=[];
   for(const p of s.players){p.vx=p.vy=0;p.shield=false;}
  }
+ s.covers=s.covers.filter(cv=>cv.hp>0);
  s.players.forEach((p,n)=>p.input=rawInputs[n]);
  s.shots=s.shots.filter(x=>x.life>0);s.matter=s.matter.filter(x=>x.life>0);s.fx.forEach(f=>f.life-=dt);s.fx=s.fx.filter(f=>f.life>0);
 }

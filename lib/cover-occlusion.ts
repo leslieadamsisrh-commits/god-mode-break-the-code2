@@ -17,7 +17,7 @@ function clipFar(poly:Point[],groundY:number){
 // Return the exact visible front-side quads plus the far top polygon. Avoid a convex hull:
 // at rotated corners the hull fills empty screen-space and visually cuts through Jade.
 export function coverOccluders(c:Cover,groundY:number,elevationScale=1):Point[][]{
- const meta=c.id?bayObject(c.id):null;
+ const meta=c.id?bayObject((c as any).artId||c.id):null;
  if(meta){
   const co=Math.cos(c.a||0),si=Math.sin(c.a||0),ribs=meta.rig.ribs,out:Point[][]=[];
   const vertex=(r:typeof ribs[number],side:number)=>{const x=-c.w/2+c.w*r.t,y=side*Math.min(c.h/2,r.width/2);return{x:c.x+x*co-y*si,y:c.y+x*si+y*co,z:Math.min(meta.dimensions.z,r.height)}};

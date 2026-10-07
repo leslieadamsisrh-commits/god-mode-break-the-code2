@@ -165,6 +165,7 @@ export default function Game(){
  const save=()=>{localStorage.setItem("god_mode_studio_combat_preset",JSON.stringify(config));setNote("PRESET SAVED LOCALLY");setTimeout(()=>setNote(""),1200)};
  const load=async()=>{try{const p=JSON.parse(localStorage.getItem("god_mode_studio_combat_preset")||"null");if(!p)return setNote("NO PRESET SAVED");const s=session.current;if(s)for(const[k,v]of Object.entries(p))await post({action:"config",...s,patch:{[k]:v}});setConfig({...DEFAULT,...p});setNote("PRESET LOADED")}catch{setNote("PRESET ERROR")}};
  const enterSession=(v:any)=>{const next={room:v.room,code:v.code,token:v.token,slot:v.slot};session.current=next;sessionStorage.setItem("god_mode_studio_session",JSON.stringify(next));seq.current=0;snapshots.length=0;state.current=null;cameraState.ready=false;accept(v);setGameShell(false);setRoomMessage(v.code?"Send the room and code to Player 2":"Joined — host can start the match")};
+ const practiceFight=async()=>{try{enterSession(await post({action:"create",name:"Les",mode:"practice"}))}catch(e:any){setRoomMessage(e.message)}};
  const hostFight=async()=>{try{enterSession(await post({action:"create",name:"Player 1",mode:"duel"}))}catch(e:any){setRoomMessage(e.message)}};
  const joinFight=async()=>{try{enterSession(await post({action:"join",room:joinRoom,code:joinCode,name:"Player 2"}))}catch(e:any){setRoomMessage(e.message)}};
  const activateController=()=>{canvas.current?.focus();try{const p=[...navigator.getGamepads()].find(Boolean);if(p){setPadStatus(`CONTROLLER: ${p.id||"CONNECTED"}`);setPadGate(false)}else{setPadStatus("CONTROLLER: PRESS A / MOVE STICK");setPadGate(false)}}catch{setPadStatus("CONTROLLER API NOT READY")}};
@@ -209,8 +210,8 @@ export default function Game(){
     </div>
     <button className="touchAButton" aria-label="A boost and slide" onPointerDown={touchADown} onPointerUp={touchAUp} onPointerCancel={touchAUp}><b>A</b><small>BOOST · TAP-TAP SLIDE</small></button>
    </div>}
-   <details className="fightRoom"><summary>PRIVATE FIGHT · {hud?.phase||"READY"}</summary><button onClick={hostFight}>HOST TWO-PLAYER FIGHT</button>{session.current?.code&&<b>ROOM {session.current.room} · CODE {session.current.code}</b>}<input aria-label="Room ID" placeholder="ROOM ID" value={joinRoom} onChange={e=>setJoinRoom(e.target.value.toUpperCase())}/><input aria-label="Room code" placeholder="6-DIGIT CODE" value={joinCode} onChange={e=>setJoinCode(e.target.value)}/><button onClick={joinFight}>JOIN FIGHT</button>{session.current?.slot===0&&hud?.mode==="duel"&&<button disabled={hud.players.length<2} onClick={reset}>START / NEXT ROUND</button>}<small>{roomMessage}</small></details>
-   {hud?.mode==="duel"&&<div className="fightScore">{hud.players.map((f:any,i:number)=><span key={i} style={{borderColor:i?"#ff69bd":"#65efff"}}>{i===session.current?.slot?"YOU":f.name} · HP {Math.ceil(f.hp)} · BAT {Math.ceil(f.battery)} · AMMO {f.shells??0} · WINS {f.score}</span>)}<b>{hud.phase==="countdown"?Math.ceil(hud.countdown):hud.phase==="finished"?(hud.winner===null?"DRAW — HOST: NEXT ROUND":`ROUND WON · ${hud.players[hud.winner]?.name||"PLAYER"} — HOST: NEXT ROUND`):hud.phase==="lobby"?"WAITING FOR PLAYER 2 / HOST START":"ROUND "+hud.round}</b></div>}
+   <details className="fightRoom"><summary>PRIVATE FIGHT · {hud?.phase||"READY"}</summary><button onClick={practiceFight}>THREE-COVER BOT BATTLE</button><button onClick={hostFight}>HOST TWO-PLAYER FIGHT</button>{session.current?.code&&<b>ROOM {session.current.room} · CODE {session.current.code}</b>}<input aria-label="Room ID" placeholder="ROOM ID" value={joinRoom} onChange={e=>setJoinRoom(e.target.value.toUpperCase())}/><input aria-label="Room code" placeholder="6-DIGIT CODE" value={joinCode} onChange={e=>setJoinCode(e.target.value)}/><button onClick={joinFight}>JOIN FIGHT</button>{session.current?.slot===0&&(hud?.mode==="duel"||hud?.mode==="practice")&&<button disabled={hud.players.length<2} onClick={reset}>START / NEXT ROUND</button>}<small>{roomMessage}</small></details>
+   {(hud?.mode==="duel"||hud?.mode==="practice")&&<div className="fightScore">{hud.players.map((f:any,i:number)=><span key={i} style={{borderColor:i?"#ff69bd":"#65efff"}}>{i===session.current?.slot?"YOU":f.name} · HP {Math.ceil(f.hp)} · BAT {Math.ceil(f.battery)} · AMMO {f.shells??0} · WINS {f.score}</span>)}<b>{hud.phase==="countdown"?Math.ceil(hud.countdown):hud.phase==="finished"?(hud.winner===null?"DRAW — HOST: NEXT ROUND":`ROUND WON · ${hud.players[hud.winner]?.name||"PLAYER"} — HOST: NEXT ROUND`):hud.phase==="lobby"?"WAITING FOR PLAYER 2 / HOST START":"ROUND "+hud.round}</b></div>}
    <div className="minimalHud"><b>HP {Math.ceil(p?.hp??100)}</b><span className="padLine">{config.weaveEnabled<.5?"CLASSIC · A SLIDE":"WEAVE EXPERIMENT · A DOUBLE-TAP SLIDE"}</span><i style={{width:`${p?.battery??100}%`}}/><span>BATTERY {Math.ceil(p?.battery??100)}%</span><span>{p?.charging?`CHARGE ${Math.round((p.godCharge||0)*100)}%`:p?.godTime>0?`TIER I · ${p.godTime.toFixed(1)}s`:p?.charging?`${evoStage(p)} · ${Math.round((p.godCharge||0)*100)}%`:"HOLD Y · EVOLVE"}</span><span className="padLine">{padStatus}</span></div>
    {bootReady&&padGate&&<button className="controllerGate" onClick={activateController}>ACTIVATE XBOX CONTROLLER<small>Tap once, then press A or move a stick</small></button>}
    <PlaytestGuide/>
@@ -768,7 +769,7 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
  panel(si>=0?1:0,1,0,1,[project(x,-y,height),project(x,y,height),project(x,y,0),project(x,-y,0)]);
  for(let n=0;n<ribs.length-1;n++){
   const a=ribs[n],b=ribs[n+1],xa=-w/2+w*a.t,xb=-w/2+w*b.t,ya=Math.min(h*.5,a.width*.5),yb=Math.min(h*.5,b.width*.5);
-  panel(0,0,meta.material==="VEHICLE"?1-a.t:a.t,meta.material==="VEHICLE"?1-b.t:b.t,[project(xa,-ya,Math.min(z,a.height)),project(xb,-yb,Math.min(z,b.height)),project(xb,yb,Math.min(z,b.height)),project(xa,ya,Math.min(z,a.height))]);
+  panel(0,0,a.t,b.t,[project(xa,-ya,Math.min(z,a.height)),project(xb,-yb,Math.min(z,b.height)),project(xb,yb,Math.min(z,b.height)),project(xa,ya,Math.min(z,a.height))]);
  }
  // Manga contour weights stay consistent on screen: deck pitch must not flatten the ink.
  // Trace the existing rib shell, with a heavier silhouette and finer roof/side seam.
@@ -798,7 +799,7 @@ function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,
 function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:number;strength:number;color:string}[]=[]){
  // Rotation is applied to the ground footprint; elevation stays vertical.
  // The lab's camera projection is already represented by this build's world coordinates.
- const im=classicAssets.get("concrete"),meta=bayObject(c.id),material=meta?.material||"CONCRETE",z=meta?.dimensions?.z||COVER_HEIGHT,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
+ const im=classicAssets.get("concrete"),meta=bayObject(c.artId||c.id),material=meta?.material||"CONCRETE",z=meta?.dimensions?.z||COVER_HEIGHT,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
  const project=(x:number,y:number,height:number)=>({x:x*co-y*si,y:x*si+y*co-height/DECK_PITCH});
  const footprint=[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]];
  const ground=footprint.map(([x,y])=>project(x,y,0)),top=footprint.map(([x,y])=>project(x,y,z));
@@ -833,6 +834,7 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:numb
   const sign=(-dx*si+dy*co)>=0?1:-1,ribs=meta.rig.ribs,edge=ribs.map(r=>project(-w/2+w*r.t,sign*Math.min(h*.5,r.width*.5),Math.min(z,r.height))),base=ribs.map(r=>project(-w/2+w*r.t,sign*Math.min(h*.5,r.width*.5),0));
   g.save();g.globalCompositeOperation="screen";g.globalAlpha=light.strength*(1-dist/170)*.22;g.fillStyle=light.color;g.beginPath();[...edge,...base.reverse()].forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.fill();g.restore();
  }
+ if(c.psychicHeld||c.hp<c.maxHp*.6)withUpright(g,0,0,()=>{g.save();g.fillStyle="#071018cc";g.fillRect(-w*.3,-z-9,w*.6,3);g.fillStyle=c.hp<c.maxHp*.3?"#ff8263":"#67dce9";g.fillRect(-w*.3,-z-9,w*.6*Math.max(0,c.hp/c.maxHp),3);g.restore()});
  if(formation<1)for(let n=0;n<38;n++){const a=n*2.399+t*2,r=(1-formation)*(55+n%6*24)*w/332;g.fillStyle=n%2?"#ff4ca5":"#6af2ff";g.fillRect(Math.cos(a)*r,-z*.55+Math.sin(a)*r*.52,2.4,2.4)}
  g.restore();
 }
@@ -841,6 +843,10 @@ function fx(g:CanvasRenderingContext2D,f:any){
  if(["soft-cover","cover-slam","brace","cover-block"].includes(f.type)){
   const fade=classicClamp(f.life/.25,0,1);g.save();g.translate(f.x,f.y);g.globalAlpha=fade*.55;g.strokeStyle=f.type==="cover-block"?"#ff78ac":"#74dfe6";g.lineWidth=1;
   g.beginPath();g.ellipse(0,2,7+(1-fade)*4,3,0,0,Math.PI*2);g.stroke();g.restore();return;
+ }
+ if(f.type==="cover-break"||f.type==="cover-impact"){
+  const age=1-classicClamp(f.life/(f.type==="cover-break"?.8:.3),0,1),count=f.type==="cover-break"?38:12;g.save();g.globalAlpha=(1-age)*.8;
+  for(let n=0;n<count;n++){const a=n*2.399+(f.angle||0),r=10+age*(25+n%7*11),z=Math.sin(age*Math.PI)*(8+n%4*5);g.fillStyle=f.text==="stone"?(n%2?"#8d8277":"#3d4149"):(n%3?"#647583":"#d29c78");g.beginPath();g.moveTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r-z/DECK_PITCH);g.lineTo(f.x+Math.cos(a)*r+3+n%3,f.y+Math.sin(a)*r-z/DECK_PITCH+2/DECK_PITCH);g.lineTo(f.x+Math.cos(a)*r-2,f.y+Math.sin(a)*r-z/DECK_PITCH+5/DECK_PITCH);g.closePath();g.fill();}g.restore();return;
  }
  if(f.type==="shield-block"){
   withUpright(g,f.x,f.y,()=>{g.save();g.globalAlpha=classicClamp(f.life/.22,0,1);g.strokeStyle="#baffff";g.lineWidth=2;g.beginPath();g.ellipse(f.x,f.y-31,29+(1-f.life/.22)*12,45,0,0,Math.PI*2);g.stroke();g.restore()});return;
