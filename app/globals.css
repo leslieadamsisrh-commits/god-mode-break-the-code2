@@ -153,3 +153,14 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .bayContainer01 .foregroundGirder{width:24%!important;height:12%!important;left:-7%!important;bottom:-6%!important}
 .bayContainer01 .foregroundCable{right:-18%!important;top:-8%!important;width:36%!important;opacity:.56!important}
 .bayContainer01 .steam{opacity:.55}
+
+/* TOUCH PLAYTEST PAD 01 — temporary inspection controls; same authoritative input path */
+.touchPlaytestPad{position:absolute;inset:0;z-index:48;pointer-events:none;touch-action:none}
+.touchDpad{position:absolute;left:max(16px,env(safe-area-inset-left));bottom:max(18px,env(safe-area-inset-bottom));width:156px;height:156px;pointer-events:auto}
+.touchDpad button,.touchAButton{appearance:none;-webkit-appearance:none;border:2px solid #8cf6ff88;background:#07101ac9;color:#eaffff;box-shadow:0 0 14px #57efff33,inset 0 0 12px #ff4da71f;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);touch-action:none;user-select:none;-webkit-user-select:none}
+.touchDpad button{position:absolute;width:54px;height:54px;border-radius:14px;font-size:20px;font-weight:900}
+.touchDpad .up{left:51px;top:0}.touchDpad .down{left:51px;bottom:0}.touchDpad .left{left:0;top:51px}.touchDpad .right{right:0;top:51px}
+.touchDpad button:active,.touchAButton:active{background:#173145e8;transform:scale(.96)}
+.touchAButton{position:absolute;right:max(22px,env(safe-area-inset-right));bottom:max(28px,env(safe-area-inset-bottom));width:112px;height:112px;border-radius:56px;pointer-events:auto;border-color:#ff65b9aa;box-shadow:0 0 20px #ff4da744,inset 0 0 18px #62efff22}
+.touchAButton b{display:block;font:900 38px/38px system-ui}.touchAButton small{display:block;margin:7px auto 0;max-width:88px;font:700 8px/10px monospace;letter-spacing:.5px}
+@media (pointer:fine){.touchPlaytestPad{opacity:.38}}
