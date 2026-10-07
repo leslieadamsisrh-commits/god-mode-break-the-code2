@@ -210,7 +210,7 @@ export default function Game(){
     <button className="touchAButton" aria-label="A boost and slide" onPointerDown={touchADown} onPointerUp={touchAUp} onPointerCancel={touchAUp}><b>A</b><small>BOOST · TAP-TAP SLIDE</small></button>
    </div>}
    <details className="fightRoom"><summary>PRIVATE FIGHT · {hud?.phase||"READY"}</summary><button onClick={hostFight}>HOST TWO-PLAYER FIGHT</button>{session.current?.code&&<b>ROOM {session.current.room} · CODE {session.current.code}</b>}<input aria-label="Room ID" placeholder="ROOM ID" value={joinRoom} onChange={e=>setJoinRoom(e.target.value.toUpperCase())}/><input aria-label="Room code" placeholder="6-DIGIT CODE" value={joinCode} onChange={e=>setJoinCode(e.target.value)}/><button onClick={joinFight}>JOIN FIGHT</button>{session.current?.slot===0&&hud?.mode==="duel"&&<button disabled={hud.players.length<2} onClick={reset}>START / NEXT ROUND</button>}<small>{roomMessage}</small></details>
-   {hud?.mode==="duel"&&<div className="fightScore">{hud.players.map((f:any,i:number)=><span key={i} style={{borderColor:i?"#ff69bd":"#65efff"}}>{i===session.current?.slot?"YOU":f.name} · HP {Math.ceil(f.hp)} · BAT {Math.ceil(f.battery)} · WINS {f.score}</span>)}<b>{hud.phase==="countdown"?Math.ceil(hud.countdown):hud.phase==="finished"?`ROUND WON · ${hud.players[hud.winner]?.name||"DRAW"}`:hud.phase==="lobby"?"WAITING FOR PLAYER 2 / HOST START":"ROUND "+hud.round}</b></div>}
+   {hud?.mode==="duel"&&<div className="fightScore">{hud.players.map((f:any,i:number)=><span key={i} style={{borderColor:i?"#ff69bd":"#65efff"}}>{i===session.current?.slot?"YOU":f.name} · HP {Math.ceil(f.hp)} · BAT {Math.ceil(f.battery)} · AMMO {f.shells??0} · WINS {f.score}</span>)}<b>{hud.phase==="countdown"?Math.ceil(hud.countdown):hud.phase==="finished"?(hud.winner===null?"DRAW — HOST: NEXT ROUND":`ROUND WON · ${hud.players[hud.winner]?.name||"PLAYER"} — HOST: NEXT ROUND`):hud.phase==="lobby"?"WAITING FOR PLAYER 2 / HOST START":"ROUND "+hud.round}</b></div>}
    <div className="minimalHud"><b>HP {Math.ceil(p?.hp??100)}</b><span className="padLine">{config.weaveEnabled<.5?"CLASSIC · A SLIDE":"WEAVE EXPERIMENT · A DOUBLE-TAP SLIDE"}</span><i style={{width:`${p?.battery??100}%`}}/><span>BATTERY {Math.ceil(p?.battery??100)}%</span><span>{p?.charging?`CHARGE ${Math.round((p.godCharge||0)*100)}%`:p?.godTime>0?`TIER I · ${p.godTime.toFixed(1)}s`:p?.charging?`${evoStage(p)} · ${Math.round((p.godCharge||0)*100)}%`:"HOLD Y · EVOLVE"}</span><span className="padLine">{padStatus}</span></div>
    {bootReady&&padGate&&<button className="controllerGate" onClick={activateController}>ACTIVATE XBOX CONTROLLER<small>Tap once, then press A or move a stick</small></button>}
    <PlaytestGuide/>
@@ -841,6 +841,9 @@ function fx(g:CanvasRenderingContext2D,f:any){
  if(["soft-cover","cover-slam","brace","cover-block"].includes(f.type)){
   const fade=classicClamp(f.life/.25,0,1);g.save();g.translate(f.x,f.y);g.globalAlpha=fade*.55;g.strokeStyle=f.type==="cover-block"?"#ff78ac":"#74dfe6";g.lineWidth=1;
   g.beginPath();g.ellipse(0,2,7+(1-fade)*4,3,0,0,Math.PI*2);g.stroke();g.restore();return;
+ }
+ if(f.type==="shield-block"){
+  withUpright(g,f.x,f.y,()=>{g.save();g.globalAlpha=classicClamp(f.life/.22,0,1);g.strokeStyle="#baffff";g.lineWidth=2;g.beginPath();g.ellipse(f.x,f.y-31,29+(1-f.life/.22)*12,45,0,0,Math.PI*2);g.stroke();g.restore()});return;
  }
  if(f.type==="hit"){
   const age=1-classicClamp(f.life/.25,0,1);g.save();g.translate(f.x,f.y-27/DECK_PITCH);

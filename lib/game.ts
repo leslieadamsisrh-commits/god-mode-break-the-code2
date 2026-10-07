@@ -215,11 +215,17 @@ function slideAction(s:GameState,n:number,prev:InputState){const p=s.players[n],
  }
  startDash(p,s,a);return true;
 }
+// Duel repairs use the existing pellet damage and action cooldown; movement tuning stays fixed.
+function duelContact(s:GameState,owner:number,target:Player,damage:number,vx=0,vy=0){
+ if(target.hp<=0)return;
+ if(target.shield&&target.input.shield&&!target.coverId&&target.battery>0){s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,life:.22,owner});return;}
+ target.hp=Math.max(0,target.hp-damage);target.knock=.26;target.vx+=vx;target.vy+=vy;s.fx.push({id:uid(),type:"hit",x:target.x,y:target.y,life:.25,owner});
+}
 function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],i=p.input,c=s.config;
  // Successful immediate brace keeps its original priority over other edges.
  if(slideAction(s,n,prev))return;
  if(i.pinball&&!prev.pinball&&p.battery>=22){p.battery-=22;p.pinball=c.pinballDuration;p.vx=Math.cos(p.aim)*c.pinballSpeed;p.vy=Math.sin(p.aim)*c.pinballSpeed;s.fx.push({id:uid(),type:"pinball",x:p.x,y:p.y,life:.5,owner:n})}
- if((i.melee&&!prev.melee||i.heavy&&!prev.heavy)&&s.time-p.lastMelee>(i.heavy?.85:.38)){p.lastMelee=s.time;s.fx.push({id:uid(),type:i.heavy?"heavy":"melee",x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40,life:.22,owner:n})}
+ if((i.melee&&!prev.melee||i.heavy&&!prev.heavy)&&s.time-p.lastMelee>(i.heavy?.85:.38)){p.lastMelee=s.time;s.fx.push({id:uid(),type:i.heavy?"heavy":"melee",x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40,life:.22,owner:n});if(s.mode==="duel"){const target=s.players[1-n],strike={x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40};if(target&&dist(strike,target)<=21&&!s.covers.some(cv=>segmentCover(p,strike,cv)))duelContact(s,n,target,c.shotDamage)}}
  if(i.cover&&!prev.cover&&p.battery>=30){p.battery-=30;const x=clamp(p.x+Math.cos(p.aim)*100-65,A.left,A.right-130),y=clamp(p.y+Math.sin(p.aim)*100-15,A.top,A.bottom-30);const generated=s.covers.filter(c=>c.generated);if(generated.length>=4){const old=generated[0];if(p.coverId===old.id)releaseCover(p,s,.15);s.covers=s.covers.filter(c=>c.id!==old.id)}const used=new Set(s.covers.filter(c=>c.generated).map(c=>c.variant));let variant=0;while(used.has(variant)&&variant<3)variant++;s.covers.push({id:uid(),x:x+65,y:y+15,w:130,h:30,a:p.aim+Math.PI/2,hp:110,maxHp:110,generated:true,build:1,variant,born:s.time});s.fx.push({id:uid(),type:"materialize",x:x+65,y:y+15,life:.7,owner:n})}
  if(!i.fire)p.fireBlocked=false;
  if(!i.grip&&prev.grip){
@@ -299,6 +305,7 @@ function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
 }
 function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInputs=s.players.map(p=>p.input);
  s.players.forEach((p,n)=>p.input=chargeIntent(p,s,rawInputs[n],dt));
+ if(s.mode==="duel")s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0);
  const slow=s.players.some(p=>p.input.slow&&p.battery>0),d=dt*(slow?.52:1);
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId);p.aim=i.aim;powerStep(p,s,dt);
   const coverContext=!!p.coverId;
@@ -322,6 +329,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
   else if(p.exit){stepCoverExit(p,s,d)}
   // A edges are handled exactly once by slideAction; LT planting remains in moveOnCover.
   else if(p.coverId){moveOnCover(p,s,i,d)}
+  else if(s.mode==="duel"&&p.shield&&p.slide<=0&&p.dash<=0){p.vx=p.vy=0;}
   else if(p.dash>0){
     const dashBefore=p.dash,phase=1-clamp(dashBefore/Math.max(.001,c.dashDuration),0,1);
     p.dash=Math.max(0,p.dash-dt);
@@ -394,7 +402,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
    if(-cv.build<35){cv.build=0;cv.vx=cv.vy=0}
  }
  for(const m of s.matter){if(m.heldBy!==null){const p=s.players[m.heldBy];m.x=p.x+Math.cos(p.aim)*70;m.y=p.y+Math.sin(p.aim)*70;continue}if(m.orbitBy!==null){const p=s.players[m.orbitBy],j=p.orbitIds.indexOf(m.id),a=s.time*4+j*2.1;m.x=p.x+Math.cos(a)*62;m.y=p.y+Math.sin(a)*62;continue}m.x+=m.vx*d;m.y+=m.vy*d;m.vx*=Math.pow(.35,d);m.vy*=Math.pow(.35,d);if(m.life<999)m.life-=dt;if(m.x<A.left||m.x>A.right){m.x=clamp(m.x,A.left,A.right);m.vx*=-.6}if(m.y<A.top||m.y>A.bottom){m.y=clamp(m.y,A.top,A.bottom);m.vy*=-.6}}
- for(const sh of s.shots){const from={x:sh.x,y:sh.y};sh.x+=sh.vx*d;sh.y+=sh.vy*d;sh.life-=dt;if(s.covers.some(cv=>cv.id!==sh.clearanceCoverId&&segmentCover(from,sh,cv))){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:sh.x,y:sh.y,life:.18});continue}const target=s.players[1-sh.owner];if(target&&dist(sh,target)<21){if(target.coverId&&target.coverMode==="braced"&&!target.input.coverAim){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:target.x,y:target.y,life:.18});continue}target.hp=Math.max(0,target.hp-(sh.damage??c.shotDamage));target.knock=.26;target.vx+=sh.vx*.1;target.vy+=sh.vy*.1;sh.life=0;s.fx.push({id:uid(),type:"hit",x:target.x,y:target.y,life:.25})}}
+ for(const sh of s.shots){const from={x:sh.x,y:sh.y};sh.x+=sh.vx*d;sh.y+=sh.vy*d;sh.life-=dt;if(s.covers.some(cv=>cv.id!==sh.clearanceCoverId&&segmentCover(from,sh,cv))){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:sh.x,y:sh.y,life:.18});continue}const target=s.players[1-sh.owner];if(target&&dist(sh,target)<21){if(target.coverId&&target.coverMode==="braced"&&!target.input.coverAim){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:target.x,y:target.y,life:.18});continue}if(s.mode==="duel")duelContact(s,sh.owner,target,sh.damage??c.shotDamage,sh.vx*.1,sh.vy*.1);else{target.hp=Math.max(0,target.hp-(sh.damage??c.shotDamage));target.knock=.26;target.vx+=sh.vx*.1;target.vy+=sh.vy*.1;sh.life=0;s.fx.push({id:uid(),type:"hit",x:target.x,y:target.y,life:.25})}sh.life=0}}
  if(s.mode==="duel"&&s.phase==="playing"&&s.players.some(p=>p.hp<=0)){
   const alive=s.players.map((p,n)=>p.hp>0?n:-1).filter(n=>n>=0);s.winner=alive.length===1?alive[0]:null;
   if(s.winner!==null)s.players[s.winner].score++;s.phase="finished";s.shots=[];
