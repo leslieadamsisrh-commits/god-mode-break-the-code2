@@ -19,7 +19,7 @@ for(const mode of ['solo','bot']){
  }
 }
 const source=fs.readFileSync('app/Game.tsx','utf8'),fn=source.slice(source.indexOf('function environmentActorAtlas('),source.indexOf('function environmentActorInk('));
-ctx.environmentAssets=new Map(m.BAY_OBJECTS.map(o=>[o.renderedShell,{complete:true,naturalWidth:768}]));vm.runInContext(stripTypeScriptTypes(fn)+'\nglobalThis.renderAtlas=environmentActorAtlas',ctx);
+ctx.environmentAssets=new Map(m.BAY_OBJECTS.map(o=>[o.renderedShell,{complete:true,naturalWidth:2172,naturalHeight:724}]));vm.runInContext(stripTypeScriptTypes(fn)+'\nglobalThis.renderAtlas=environmentActorAtlas',ctx);
 let triangles=0;
 for(const o of m.BAY_OBJECTS)for(let k=0;k<32;k++){
  const angle=k*Math.PI/16,co=Math.cos(angle),si=Math.sin(angle),project=(x,y,z)=>({x:x*co-y*si,y:x*si+y*co-z});let points=[],matrix,saves=0;

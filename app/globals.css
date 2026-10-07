@@ -200,3 +200,8 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 
 /* Ground textures render once through the actor world transform in Composite 12. */
 .bayContainer01 .l3{visibility:hidden}
+
+/* Manga production plates: the world stays atmospheric; tactical actors retain contrast. */
+.bayContainer01 .l1{background-image:url('/assets/bay-bridge/manga-v13/world-far.webp')!important;filter:saturate(.75) brightness(.84)!important}
+.bayContainer01 .l2{background-image:url('/assets/bay-bridge/manga-v13/world-bridge.webp')!important;filter:saturate(.9) contrast(1.04)!important}
+.bayContainer01 .l1 .sfSkyline,.bayContainer01 .l1 .bayWater,.bayContainer01 .l1 .farBridge{display:none}

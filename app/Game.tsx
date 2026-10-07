@@ -90,13 +90,13 @@ const actorAssets=new Map<string,HTMLImageElement>();
 const environmentAssets=new Map<string,HTMLImageElement>();
 type BootState={done:number;total:number;failed:number;label:string};
 let preloadPromise:Promise<BootState>|null=null;
-function loadImage(src:string,onReady:(im:HTMLImageElement)=>void,progress:(ok:boolean)=>void){
+function loadImage(src:string,onReady:(im:HTMLImageElement)=>void,progress:(ok:boolean)=>void,fallback?:string){
  return new Promise<void>(resolve=>{
   const im=new Image();im.decoding="async";let settled=false;
   const finish=async(ok:boolean)=>{if(settled)return;settled=true;clearTimeout(timer);if(ok){try{await Promise.race([im.decode(),new Promise(r=>setTimeout(r,900))])}catch{}if(im.naturalWidth)onReady(im);else ok=false}progress(ok);resolve()};
   // Full Safari can leave cross-origin Image requests pending indefinitely. Never let one asset deadlock boot.
   const timer=setTimeout(()=>void finish(false),3500);
-  im.onload=()=>void finish(true);im.onerror=()=>void finish(false);im.src=src;
+  let fallbackUsed=false;im.onload=()=>void finish(true);im.onerror=()=>{if(fallback&&!fallbackUsed&&!settled){fallbackUsed=true;im.src=fallback;return}void finish(false)};im.src=src;
  });
 }
 function preload(onProgress?:(s:BootState)=>void){
@@ -109,9 +109,9 @@ function preload(onProgress?:(s:BootState)=>void){
   for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;sprites.push({key:`${family}-${d}`,src:"https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n})}
   const environment=["damaged-jersey","fractured-divider","wrecked-sedan","service-van","maintenance-cabinet","fractured-girder","broken-railing","roadwork-equipment","service-module","maintenance-block"] as const;
   const evolution=[["helix-front","/assets/god-evolution-tier1/helix-front-atlas.svg"],["helix-rear","/assets/god-evolution-tier1/helix-rear-atlas.svg"],["flame","/assets/god-evolution-tier1/flame-atlas.svg"],["geometry","/assets/god-evolution-tier1/geometry-atlas.svg"],["crystal-code","/assets/god-evolution-tier1/crystal-atlas.svg"],["code","/assets/god-evolution-tier1/code-atlas.svg"],["ground-fracture","/assets/god-evolution-tier1/ground-atlas.svg"]] as const;
-  const jobs:{label:string;src:string;ready:(im:HTMLImageElement)=>void}[]=[
-   {label:"world-road",src:"/assets/bay-bridge/world/world-road.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-road",im)},
-   ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
+  const jobs:{label:string;src:string;fallback?:string;ready:(im:HTMLImageElement)=>void}[]=[
+   {label:"world-road",src:"/assets/bay-bridge/manga-v13/world-road.webp",fallback:"/assets/bay-bridge/world/world-road.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-road",im)},
+   ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
    ...actor.map(([key,path])=>({label:"actor-"+key,src:path,ready:(im:HTMLImageElement)=>actorAssets.set(key,im)})),
@@ -121,7 +121,7 @@ function preload(onProgress?:(s:BootState)=>void){
   let done=0,failed=0;const total=jobs.length;loading=true;
   const progress=(label:string)=>(ok:boolean)=>{done++;if(!ok)failed++;onProgress?.({done,total,failed,label})};
   // Bounded parallel batches avoid hammering iPad/Safari with 100 simultaneous decodes.
-  for(let i=0;i<jobs.length;i+=12)await Promise.all(jobs.slice(i,i+12).map(j=>loadImage(j.src,j.ready,progress(j.label))));
+  for(let i=0;i<jobs.length;i+=12)await Promise.all(jobs.slice(i,i+12).map(j=>loadImage(j.src,j.ready,progress(j.label),j.fallback)));
   // A remote atlas failure is recoverable because safestSprite holds approved loaded poses.
   // Boot completion is mandatory; individual remote requests are not.
   loading=false;return{done,total,failed,label:"READY"};
@@ -712,6 +712,7 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
 }
 function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
  const im=environmentAssets.get(meta?.renderedShell);if(!im?.complete||!im.naturalWidth||!meta?.rig)return;
+ const cellW=im.naturalWidth/3,cellH=im.naturalHeight/2;
  const ribs=meta.rig.ribs,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
  // Fixed object-space UVs. Each rib panel projects the same material coordinates
  // at every angle; two affine triangles handle sloped/irregular quadrilaterals.
@@ -724,7 +725,7 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
   g.transform(xx,yx,xy,yy,A.x-xx*a.x-xy*a.y,A.y-yx*a.x-yy*a.y);g.drawImage(im,0,0);g.restore();
  };
  const panel=(col:number,row:number,u0:number,u1:number,pts:CoverPoint[],v0=0,v1=1)=>{
-  const uv=[{x:col*256+u0*256,y:row*128+v0*128},{x:col*256+u1*256,y:row*128+v0*128},{x:col*256+u1*256,y:row*128+v1*128},{x:col*256+u0*256,y:row*128+v1*128}];
+  const uv=[{x:(col+u0)*cellW,y:(row+v0)*cellH},{x:(col+u1)*cellW,y:(row+v0)*cellH},{x:(col+u1)*cellW,y:(row+v1)*cellH},{x:(col+u0)*cellW,y:(row+v1)*cellH}];
   triangle([uv[0],uv[1],uv[2]],[pts[0],pts[1],pts[2]]);triangle([uv[0],uv[2],uv[3]],[pts[0],pts[2],pts[3]]);
  };
  const side=co>=0?1:-1,col=side>0?1:2;
@@ -743,46 +744,12 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
  for(const sign of [-1,1]){g.beginPath();ribs.forEach((r:any,i:number)=>{const p=project(-w/2+w*r.t,sign*Math.min(h*.5,r.width*.5),Math.min(z,r.height));i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y)});g.stroke()}g.restore();
 }
 function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
- if(!meta)return;const P=(x:number,y:number,zz:number)=>project(x,y,zz),line=(pts:{x:number;y:number}[],stroke="#0a0d12",width=1.5)=>{g.strokeStyle=stroke;g.lineWidth=width;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke()};
- const topY=-h/2,frontY=h/2;
- g.save();g.lineJoin="round";g.lineCap="round";
- // Shared ink silhouette / damage language. Collision remains the simple hull.
- g.strokeStyle="#080b10";g.lineWidth=2.2;
- if(meta.shellProfile==="BARRIER"||meta.shellProfile==="DIVIDER"||meta.shellProfile==="BLOCK"){
-  // chipped top, cracks, aggregate/rebar accents
-  line([P(-w*.34,frontY,z*.82),P(-w*.25,frontY,z*.55),P(-w*.12,frontY,z*.68),P(-w*.04,frontY,z*.35)],"#171318",1.3);
-  line([P(w*.18,frontY,z*.9),P(w*.24,frontY,z*.62),P(w*.36,frontY,z*.48)],"#19151a",1.1);
-  g.fillStyle="#b5a99b";for(const x of [-.3,-.08,.22,.38]){const p=P(w*x,frontY,z*(.2+.5*Math.abs(x)));g.fillRect(p.x-1.4,p.y-1.4,2.8,2.8)}
-  if(meta.shellProfile==="DIVIDER"){g.strokeStyle="#8b4c43";g.lineWidth=1.2;for(const x of [-.42,.42]){const a=P(w*x,frontY,z*.72),b=P(w*(x+.05),frontY,z*1.08);line([a,b],"#8b4c43",1.2)}}
- }
- // ENVIRONMENT RIG 03: internal spine/ribs drive the illustrated envelope.
- // These guides are not collision. They give each actor a coherent spatial skeleton for future authored art.
- if(meta.rig){
-  const ribs=meta.rig.ribs||[],frontPts:any[]=[],backPts:any[]=[];
-  for(const r of ribs){const x=-w/2+w*r.t,yy=Math.min(h*.5,r.width*.5),zz=Math.min(z,r.height);frontPts.push(P(x,yy,zz));backPts.push(P(x,-yy,zz))}
-  if(frontPts.length>1){line(frontPts,"#090c11",2.4);line(backPts,"#202a31",1.4)}
-  // Subtle structural ribs create stable plane seams without exposing a debug skeleton.
-  g.globalAlpha=.5;for(const r of ribs.slice(1,-1)){const x=-w/2+w*r.t,yy=Math.min(h*.5,r.width*.5),zz=Math.min(z,r.height);line([P(x,-yy,zz),P(x,yy,zz)],"#111820",.8)}g.globalAlpha=1;
- } 
-// Profile silhouette pass: authored irregular edges sit inside/around the stable gameplay hull.
- if(meta.shellProfile==="BARRIER"||meta.shellProfile==="DIVIDER"||meta.shellProfile==="BLOCK"){
-  const y=frontY,pts=[P(-w*.48,y,z*.9),P(-w*.34,y,z*.96),P(-w*.22,y,z*.87),P(-w*.05,y,z),P(w*.14,y,z*.91),P(w*.3,y,z*.97),P(w*.48,y,z*.84)];
-  line(pts,"#090c10",2.4);
- }else if(meta.shellProfile==="SEDAN"){
-  const pts=[P(-w*.49,frontY,z*.28),P(-w*.38,frontY,z*.56),P(-w*.18,frontY,z*.82),P(w*.18,frontY,z*.82),P(w*.36,frontY,z*.58),P(w*.49,frontY,z*.3)];
-  line(pts,"#080b10",2.5);
- }else if(meta.shellProfile==="VAN"||meta.shellProfile==="MODULE"){
-  line([P(-w*.48,frontY,z*.12),P(-w*.46,frontY,z*.92),P(w*.38,frontY,z*.94),P(w*.49,frontY,z*.72),P(w*.49,frontY,z*.12)],"#080b10",2.5);
- }else if(meta.shellProfile==="GIRDER"){
-  // torn end caps keep the steel actor from reading as a perfect cuboid
-  for(const side of [-1,1]){const x=side*w*.49;line([P(x,-h*.45,z*.1),P(x,-h*.2,z*.38),P(x,-h*.42,z*.72),P(x,h*.15,z*.9),P(x,h*.42,z*.58),P(x,h*.32,z*.18)],"#080b10",2.2)}
- }else if(meta.shellProfile==="RAILING"){
-  for(const x of [-.42,-.14,.14,.42]){const a=P(w*x,0,z*.12),b=P(w*x,0,z*.96);line([a,b],"#0b1016",2.4)}
- }else if(meta.shellProfile==="CABINET"||meta.shellProfile==="EQUIPMENT"){
-  const hinge1=P(-w*.3,frontY,z*.68),hinge2=P(-w*.3,frontY,z*.28);g.fillStyle="#070a0d";g.fillRect(hinge1.x-1.5,hinge1.y-2,3,4);g.fillRect(hinge2.x-1.5,hinge2.y-2,3,4);
- }
- // wet contact/reflection strip — cheap, bounded, material-specific
- const rp=P(0,frontY,0);g.globalCompositeOperation="lighter";g.globalAlpha=.12;g.fillStyle=meta.material==="VEHICLE"?"#ff4f9b":meta.material==="STEEL"?"#61efff":"#d8a17b";g.beginPath();g.ellipse(rp.x,rp.y+5,w*.34,Math.max(2,h*.12),c.a||0,0,Math.PI*2);g.fill();g.restore();
+ if(!meta)return;
+ // Detailed ink is authored into the atlas. Only the rig envelope and grounding
+ // remain procedural, avoiding duplicate windows, cracks and rectangular outlines.
+ const rp=project(0,h/2,0);g.save();g.globalCompositeOperation="lighter";g.globalAlpha=.1;
+ g.fillStyle=meta.material==="VEHICLE"?"#ff4f9b":meta.material==="STEEL"?"#61efff":"#d8a17b";
+ g.beginPath();g.ellipse(rp.x,rp.y+5,w*.34,Math.max(2,h*.12),c.a||0,0,Math.PI*2);g.fill();g.restore();
 }
 function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:number;strength:number;color:string}[]=[]){
  // Rotation is applied to the ground footprint; elevation stays vertical.
