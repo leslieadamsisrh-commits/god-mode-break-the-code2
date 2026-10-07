@@ -9,16 +9,18 @@ export function comicProject(x:number,y:number,z=0){
 }
 function laneFor(x:number,y:number){return BAY_LANES.find(l=>x>=l.x0&&x<=l.x1&&y>=l.y0&&y<=l.y1)?.id||"TRANSIT"}
 function visiblePlanes(angle:number){const a=((angle%(Math.PI*2))+Math.PI*2)%(Math.PI*2),front=Math.cos(a)>=0,right=Math.sin(a)>=0;return ["TOP",front?"FRONT":"BACK",right?"RIGHT":"LEFT","DETAIL","DAMAGE"]}
+function depthTransform(x:number,y:number,factor:number){const dx=-(x-500)*factor/10,dy=-(y-310)*factor/6.2;return {transform:`translate3d(${dx.toFixed(3)}%,${dy.toFixed(3)}%,0)`}}
 
 export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onReset,menuOpen,onMenuToggle}:{s:any;onAnimationQa?:()=>void;onDirector?:()=>void;onSprites?:()=>void;onReset?:()=>void;menuOpen:boolean;onMenuToggle:()=>void}){
  const [qa,setQa]=useState(false),[selected,setSelected]=useState(0),[testAngle,setTestAngle]=useState(0),p=s?.players?.[0]||{x:230,y:330},lane=laneFor(p.x||0,p.y||0),near=(s?.covers||[]).map((c:any)=>bayObject(c.id)).filter(Boolean),actor=BAY_OBJECTS[selected%BAY_OBJECTS.length],planes=visiblePlanes(testAngle);
+ const px=Number(p.x||500),py=Number(p.y||310);
  return <div className="bayArena bayContainer01">
-  <div className="bayDepth l0"><div className="dimensionalPortal"/><div className="dimensionalMoon"/><div className="riftClouds"/></div>
-  <div className="bayDepth l1"><div className="sfSkyline"/><div className="bayWater"/><div className="farBridge"/></div>
-  <div className="bayDepth l2"><div className="bayTower left"/><div className="bayTower right"/><div className="bayCables"/><div className="bridgeDeck"/></div>
-  <div className="bayDepth l3"><div className="wetRoad"><i className="laneMark a"/><i className="laneMark b"/><i className="expansionJoint"/><i className="wetReflection cyan"/><i className="wetReflection magenta"/><i className="wetReflection orange"/></div></div>
-  <div className="bayDepth l4"><div className="steam s1"/><div className="steam s2"/></div>
-  <div className="bayDepth l5"><div className="foregroundGirder"/><div className="foregroundCable"/></div>
+  <div className="bayDepth l0" style={depthTransform(px,py,.025)}><div className="dimensionalPortal"/><div className="dimensionalMoon"/><div className="riftClouds"/></div>
+  <div className="bayDepth l1" style={depthTransform(px,py,.08)}><div className="sfSkyline"/><div className="bayWater"/><div className="farBridge"/></div>
+  <div className="bayDepth l2" style={depthTransform(px,py,.22)}><div className="bayTower left"/><div className="bayTower right"/><div className="bayCables"/><div className="bridgeDeck"/></div>
+  <div className="bayDepth l3" style={depthTransform(px,py,1.85)}><div className="wetRoad"><i className="laneMark a"/><i className="laneMark b"/><i className="expansionJoint"/><i className="wetReflection cyan"/><i className="wetReflection magenta"/><i className="wetReflection orange"/></div></div>
+  <div className="bayDepth l4" style={depthTransform(px,py,1.35)}><div className="steam s1"/><div className="steam s2"/></div>
+  <div className="bayDepth l5" style={depthTransform(px,py,2.15)}><div className="foregroundGirder"/><div className="foregroundCable"/></div>
   <div className="arenaMenu">
    <button className="studioMenuButton" onClick={onMenuToggle}>{menuOpen?"✕ CLOSE":"☰ GOD MODE"}</button>
    <div className="cameraChip">CAM B · 31° · COMIC DEPTH · CONTAINER 01</div>
