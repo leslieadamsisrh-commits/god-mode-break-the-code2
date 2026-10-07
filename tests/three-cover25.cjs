@@ -1,5 +1,5 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert/strict'),{stripTypeScriptTypes}=require('node:module');const ctx={Math,crypto:require('crypto').webcrypto};vm.createContext(ctx);for(const f of ['bayBridgeMap','game'])vm.runInContext(stripTypeScriptTypes(fs.readFileSync('lib/'+f+'.ts','utf8')).replace(/^import .*\n/gm,'').replace(/export /g,''),ctx);vm.runInContext('globalThis.a={newGame,advance,setInput,damageCover,anchorForEdge,placeOnCover,edgeActions,startOrRematch};',ctx);const a=ctx.a;
-function setup(){const s=a.newGame('Les','host',1000,'practice');s.phase='playing';s.players[1].bot=false;s.players[0].x=100;s.players[0].y=100;s.players[1].x=800;s.players[1].y=500;return s}
+function setup(){const s=a.newGame('Les','host',1000,'practice');s.phase='playing';s.config.maxHealth=100;s.players.forEach(p=>p.hp=100);s.players[1].bot=false;s.players[0].x=100;s.players[0].y=100;s.players[1].x=800;s.players[1].y=500;return s}
 function tick(s,l={},r={}){a.setInput(s,0,s.players[0].lastSeq+1,l);a.setInput(s,1,s.players[1].lastSeq+1,r);a.advance(s,s.lastAt+16)}
 let s=setup();assert.deepEqual(Array.from(s.covers,c=>c.id).sort(),['bay-cabinet','bay-jersey','bay-sedan']);assert.equal(s.players.length,2);
 for(const id of ['bay-cabinet','bay-jersey','bay-sedan'])for(const angle of [0,Math.PI/2,Math.PI,Math.PI*1.5]){

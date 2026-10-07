@@ -223,3 +223,6 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .bayContainer01 .l5{mask-image:linear-gradient(90deg,#000 0%,#000 8%,transparent 13%,transparent 87%,#000 92%,#000 100%);-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 8%,transparent 13%,transparent 87%,#000 92%,#000 100%)}
 
 .fightRoom{position:absolute;z-index:12;right:12px;top:62px;width:230px;background:#09121ded;border:1px solid #698995;padding:8px;font:11px monospace}.fightRoom summary{cursor:pointer;font-weight:bold}.fightRoom button,.fightRoom input{display:block;width:100%;margin-top:7px;padding:8px;background:#152433;color:#ecffff;border:1px solid #537581}.fightRoom b,.fightRoom small{display:block;margin-top:8px}.fightScore{position:absolute;z-index:11;top:10px;left:50%;transform:translateX(-50%);display:flex;gap:9px;background:#08111ddc;padding:8px;font:10px monospace;max-width:55%;flex-wrap:wrap;justify-content:center}.fightScore span{border-bottom:2px solid;padding-bottom:4px}.fightScore b{width:100%;text-align:center}
+
+/* Combat 26 canvas HUD shares the actual renderer; retain an accessible text status. */
+.fightScore{width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
