@@ -146,3 +146,10 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .bayContainer01 .l1{background-image:url('/assets/bay-bridge/world/world-far.svg')!important;background-size:cover!important;background-position:center bottom!important}
 .bayContainer01 .l2{background-image:url('/assets/bay-bridge/world/world-bridge.svg')!important;background-size:cover!important;background-position:center 20%!important}
 .bayContainer01 .l0 .dimensionalPortal,.bayContainer01 .l0 .dimensionalMoon,.bayContainer01 .l1 .sfSkyline,.bayContainer01 .l1 .farBridge,.bayContainer01 .l2 .bayTower,.bayContainer01 .l2 .bayCables,.bayContainer01 .l2 .bridgeDeck{opacity:.18}
+
+/* BAY BRIDGE INTEGRATION 06 — authored combat road + restrained foreground */
+.bayContainer01 .wetRoad{background-image:url('/assets/bay-bridge/world/world-road.svg')!important;background-size:cover!important;background-position:center!important}
+.bayContainer01 .l5{pointer-events:none;opacity:.82}
+.bayContainer01 .foregroundGirder{width:24%!important;height:12%!important;left:-7%!important;bottom:-6%!important}
+.bayContainer01 .foregroundCable{right:-18%!important;top:-8%!important;width:36%!important;opacity:.56!important}
+.bayContainer01 .steam{opacity:.55}
