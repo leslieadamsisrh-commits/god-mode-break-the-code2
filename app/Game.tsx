@@ -362,7 +362,8 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  });
 
 
- for(const sh of s.shots||[]){g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x+(sh.renderOffsetX||0),sh.y-(sh.z||0));g.lineTo(sh.x+(sh.renderOffsetX||0)-sh.vx*.025,sh.y-(sh.z||0)-sh.vy*.025);g.stroke()}for(const f of s.fx||[])if(f.type!=="slide")fx(g,f);
+ for(const sh of s.shots||[])withCoverOcclusion(g,covers,sh.y,s.time,()=>{g.strokeStyle="#caffff";g.lineWidth=3;g.beginPath();g.moveTo(sh.x+(sh.renderOffsetX||0),sh.y-(sh.z||0));g.lineTo(sh.x+(sh.renderOffsetX||0)-sh.vx*.025,sh.y-(sh.z||0)-sh.vy*.025);g.stroke()});
+ for(const f of s.fx||[])if(f.type!=="slide")withCoverOcclusion(g,covers,f.y,s.time,()=>fx(g,f));
 }
 function nearest(f:string,d:number){for(let o=0;o<12;o++)for(const raw of o?[d+o,d-o]:[d]){const im=jade.get(`${f}-${((raw%24)+24)%24}`);if(im?.complete&&im.naturalWidth)return im}}
 function exactSprite(f:string,d:number){const im=jade.get(`${f}-${((d%24)+24)%24}`);return im?.complete&&im.naturalWidth?im:undefined}
