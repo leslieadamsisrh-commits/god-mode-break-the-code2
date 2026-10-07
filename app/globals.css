@@ -140,3 +140,9 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .bayContainer01 .l5{z-index:8}.foregroundGirder{position:absolute;left:-5%;bottom:-8%;width:36%;height:16%;border-top:18px solid #0d131c;transform:rotate(7deg);box-shadow:0 -3px #ff4e9a33}.foregroundCable{position:absolute;right:-12%;top:-4%;width:48%;height:8px;background:#0b1119;transform:rotate(62deg);opacity:.78}
 .stageWrap>canvas{z-index:4!important}
 .bayContainer01 .l4{z-index:5}.bayContainer01 .l5{z-index:6}
+
+/* BAY BRIDGE DEPTH ART 05 — authored production depth plates */
+.bayContainer01 .l0{background-image:url('/assets/bay-bridge/world/world-sky.svg')!important;background-size:cover!important;background-position:center 18%!important}
+.bayContainer01 .l1{background-image:url('/assets/bay-bridge/world/world-far.svg')!important;background-size:cover!important;background-position:center bottom!important}
+.bayContainer01 .l2{background-image:url('/assets/bay-bridge/world/world-bridge.svg')!important;background-size:cover!important;background-position:center 20%!important}
+.bayContainer01 .l0 .dimensionalPortal,.bayContainer01 .l0 .dimensionalMoon,.bayContainer01 .l1 .sfSkyline,.bayContainer01 .l1 .farBridge,.bayContainer01 .l2 .bayTower,.bayContainer01 .l2 .bayCables,.bayContainer01 .l2 .bridgeDeck{opacity:.18}
