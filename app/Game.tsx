@@ -110,6 +110,7 @@ function preload(onProgress?:(s:BootState)=>void){
   const environment=["damaged-jersey","fractured-divider","wrecked-sedan","service-van","maintenance-cabinet","fractured-girder","broken-railing","roadwork-equipment","service-module","maintenance-block"] as const;
   const evolution=[["helix-front","/assets/god-evolution-tier1/helix-front-atlas.svg"],["helix-rear","/assets/god-evolution-tier1/helix-rear-atlas.svg"],["flame","/assets/god-evolution-tier1/flame-atlas.svg"],["geometry","/assets/god-evolution-tier1/geometry-atlas.svg"],["crystal-code","/assets/god-evolution-tier1/crystal-atlas.svg"],["code","/assets/god-evolution-tier1/code-atlas.svg"],["ground-fracture","/assets/god-evolution-tier1/ground-atlas.svg"]] as const;
   const jobs:{label:string;src:string;fallback?:string;ready:(im:HTMLImageElement)=>void}[]=[
+   {label:"world-far",src:"/assets/bay-bridge/manga-v13/world-far.webp",fallback:"/assets/bay-bridge/world/world-far.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-far",im)},
    {label:"world-bridge",src:"/assets/bay-bridge/manga-v13/world-bridge.webp",fallback:"/assets/bay-bridge/world/world-bridge.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-bridge",im)},
    {label:"world-road",src:"/assets/bay-bridge/manga-v13/world-road.webp",fallback:"/assets/bay-bridge/world/world-road.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-road",im)},
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
@@ -346,12 +347,22 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  g.save();g.beginPath();g.rect(-80,roadTop,1160,780);g.clip();
  // Solid registered ground survives a slow texture decode; background cannot show through.
  g.fillStyle="#20232e";g.fillRect(-80,-80,1160,780);
- if(road?.complete&&road.naturalWidth)g.drawImage(road,-80,-80,1160,780);
+ if(road?.complete&&road.naturalWidth){g.save();g.transform(1,-.065,.08,1,-25,32);g.drawImage(road,-160,-160,1320,940);g.restore()}
  else{g.strokeStyle="#9c9270";g.lineWidth=2;g.setLineDash([14,16]);for(const y of [250,360]){g.beginPath();g.moveTo(-80,y);g.lineTo(1080,y-35);g.stroke()}g.setLineDash([])}
  // Distant pavement haze is anchored to world Y, never to the camera or Jade.
  const haze=g.createLinearGradient(0,-80,0,130);haze.addColorStop(0,"#35374ee6");haze.addColorStop(1,"#35374e00");g.fillStyle=haze;g.fillRect(-80,-80,1160,210);g.restore();
+ // Far bay sits behind the steel at restrained contrast.
+ const far=environmentAssets.get("world-far");if(far?.complete&&far.naturalWidth){g.save();g.globalAlpha=.36;g.drawImage(far,-120,-210,1240,290);g.restore()}
  // The massive span registers to the roadway's far end; actors render afterward.
  const span=environmentAssets.get("world-bridge");if(span?.complete&&span.naturalWidth){g.save();g.globalAlpha=.75;g.drawImage(span,-100,-250,1200,600);g.restore()}
+ // Illustrated deck edge and cables register to the same world as the roadway.
+ g.save();const edgeY=(x:number)=>108-x*.065;
+ const rail=(offset:number,color:string,width:number)=>{g.strokeStyle=color;g.lineWidth=width;g.beginPath();g.moveTo(-80,edgeY(-80)+offset);g.lineTo(1080,edgeY(1080)+offset);g.stroke()};
+ rail(10,"#080e19",4);rail(5,"#647481",1.5);rail(-3,"#a08b79",2);rail(18,"#07101b",3);rail(-7,"#69b9c8",.8);
+ for(let x=-64;x<=1080;x+=48){const y=edgeY(x);g.fillStyle="#172735";g.fillRect(x-3,y-23,6,43);g.strokeStyle="#667884";g.lineWidth=1;g.strokeRect(x-3,y-23,6,43);g.fillStyle="#bd976e";for(const dy of [-16,14]){g.beginPath();g.arc(x,y+dy,1.6,0,Math.PI*2);g.fill()}
+  const cableY=-102.5+97.5*Math.pow((x-500)/600,2);g.strokeStyle="#101c2a";g.lineWidth=3;g.beginPath();g.moveTo(x,y-23);g.lineTo(x,cableY);g.stroke();g.strokeStyle="#778a99";g.lineWidth=.7;g.stroke();}
+ g.beginPath();g.moveTo(-100,-5);g.quadraticCurveTo(500,-200,1100,-5);g.strokeStyle="#07101d";g.lineWidth=7;g.stroke();g.strokeStyle="#566c82";g.lineWidth=2;g.stroke();
+ const edgeShade=g.createLinearGradient(0,40,0,170);edgeShade.addColorStop(0,"#121d32aa");edgeShade.addColorStop(1,"#121d3200");g.fillStyle=edgeShade;g.fillRect(-80,40,1160,130);g.restore();
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
  const fullSlide=local.slide>0;
