@@ -87,6 +87,7 @@ function presentation(s:any,now:number){
 const powerAssets=new Map<string,HTMLImageElement>();
 const evolutionAssets=new Map<string,HTMLImageElement>();
 const actorAssets=new Map<string,HTMLImageElement>();
+const environmentAssets=new Map<string,HTMLImageElement>();
 type BootState={done:number;total:number;failed:number;label:string};
 let preloadPromise:Promise<BootState>|null=null;
 function loadImage(src:string,onReady:(im:HTMLImageElement)=>void,progress:(ok:boolean)=>void){
@@ -106,8 +107,10 @@ function preload(onProgress?:(s:BootState)=>void){
   const classic=[["graffiti","/assets/dimension33-map/slide-graffiti-skeet-skurt-v2.png"],["ground","/assets/shotgun-v57-ground-effects.png"],["concrete","/assets/dimension33-map/concrete-cover-atlas-v2.png"]] as const;
   const sprites:{key:string;src:string}[]=[];
   for(const family of ["ready","run","slide","cover"])for(let d=0;d<24;d++){const n=(family==="run"||family==="slide")&&d===3?`${family}.webp`:`${family}-d${String(d).padStart(2,"0")}.webp`;sprites.push({key:`${family}-${d}`,src:"https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/"+n})}
+  const environment=["damaged-jersey","fractured-divider","wrecked-sedan","service-van","maintenance-cabinet","fractured-girder","broken-railing","roadwork-equipment","service-module","maintenance-block"] as const;
   const evolution=[["helix-front","/assets/god-evolution-tier1/helix-front-atlas.svg"],["helix-rear","/assets/god-evolution-tier1/helix-rear-atlas.svg"],["flame","/assets/god-evolution-tier1/flame-atlas.svg"],["geometry","/assets/god-evolution-tier1/geometry-atlas.svg"],["crystal-code","/assets/god-evolution-tier1/crystal-atlas.svg"],["code","/assets/god-evolution-tier1/code-atlas.svg"],["ground-fracture","/assets/god-evolution-tier1/ground-atlas.svg"]] as const;
   const jobs:{label:string;src:string;ready:(im:HTMLImageElement)=>void}[]=[
+   ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
    ...actor.map(([key,path])=>({label:"actor-"+key,src:path,ready:(im:HTMLImageElement)=>actorAssets.set(key,im)})),
@@ -685,6 +688,19 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
  if(im?.complete&&im.naturalWidth){const [x,y,w,h]=crop,[a,b,,d]=points;g.save();path();g.clip();g.transform((b.x-a.x)/w,(b.y-a.y)/w,(d.x-a.x)/h,(d.y-a.y)/h,a.x,a.y);g.drawImage(im,x,y,w,h,0,0,w,h);g.restore()}
  path();g.strokeStyle="#070a0e";g.lineWidth=2.5;g.stroke();
 }
+function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
+ const im=environmentAssets.get(meta?.renderedShell);if(!im?.complete||!im.naturalWidth||!meta)return;
+ const P=(x:number,y:number,zz:number)=>project(x,y,zz),a=((c.a||0)%(Math.PI*2)+Math.PI*2)%(Math.PI*2),sector=Math.round(a/(Math.PI/4))%8;
+ // Six authored faces: TOP, FRONT, BACK, LEFT, RIGHT, END. Eight-angle routing chooses coherent combinations.
+ const face=(col:number,row:number,pts:{x:number;y:number}[],alpha=1)=>{const path=()=>{g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath()};g.save();path();g.clip();const [A,B,,D]=pts;g.globalAlpha=alpha;g.transform((B.x-A.x)/256,(B.y-A.y)/256,(D.x-A.x)/128,(D.y-A.y)/128,A.x,A.y);g.drawImage(im,col*256,row*128,256,128,0,0,256,128);g.restore();path();g.strokeStyle="#080b10";g.lineWidth=2;g.stroke()};
+ const co=Math.cos(c.a||0),si=Math.sin(c.a||0),Q=(x:number,y:number,zz:number)=>({x:x*co-y*si,y:x*si+y*co-zz});
+ const ground=[Q(-w/2,-h/2,0),Q(w/2,-h/2,0),Q(w/2,h/2,0),Q(-w/2,h/2,0)],top=[Q(-w/2,-h/2,z),Q(w/2,-h/2,z),Q(w/2,h/2,z),Q(-w/2,h/2,z)];
+ g.save();g.translate(c.x,c.y);
+ face(0,0,top,.9);
+ if(sector<=1||sector>=7)face(1,0,[top[3],top[2],ground[2],ground[3]],.95);else face(2,0,[top[0],top[1],ground[1],ground[0]],.9);
+ if(sector>=1&&sector<=4)face(1,1,[top[1],top[2],ground[2],ground[1]],.9);else face(0,1,[top[0],top[3],ground[3],ground[0]],.9);
+ g.restore();
+}
 function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
  if(!meta)return;const P=(x:number,y:number,zz:number)=>project(x,y,zz),line=(pts:{x:number;y:number}[],stroke="#0a0d12",width=1.5)=>{g.strokeStyle=stroke;g.lineWidth=width;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke()};
  const topY=-h/2,frontY=h/2;
@@ -768,7 +784,7 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number){
  sides.sort((a,b)=>a.p.reduce((sum,p)=>sum+p.y,0)-b.p.reduce((sum,p)=>sum+p.y,0));
  if(formation<1){g.globalAlpha=Math.max(.07,formation*.85);g.filter=`blur(${Math.round((1-formation)*5)}px)`}
  for(const face of sides)concreteFace(g,im,CONCRETE_FACES[face.kind][stage],face.p,face.fill);
- concreteFace(g,im,CONCRETE_FACES.top[stage],top,pal[4]);g.filter="none";g.globalAlpha=1;g.shadowBlur=0;environmentActorInk(g,c,meta,z,w,h,project);
+ concreteFace(g,im,CONCRETE_FACES.top[stage],top,pal[4]);g.filter="none";g.globalAlpha=1;g.shadowBlur=0;environmentActorAtlas(g,c,meta,z,w,h,project);environmentActorInk(g,c,meta,z,w,h,project);
  // Original lab cap seams, fastening holes, and edge wear.
  g.strokeStyle="#111a20";g.lineWidth=1.25;g.fillStyle="#141e23";
  for(const fraction of [-.48,.48]){const a=project(w/2*fraction,-h/2,z+.4),b=project(w/2*fraction,h/2,z+.4);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()}
