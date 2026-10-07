@@ -174,3 +174,11 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .bayContainer01 .dimensionalMoon{opacity:.13!important}
 .bayContainer01 .l4{opacity:.72}
 .bayContainer01 .steam{opacity:.36!important;filter:blur(18px)!important}
+
+/* DEPTH ARCHITECTURE 09 — layers now have room to travel without exposing their edges */
+.bayContainer01 .bayDepth{inset:-10%!important;will-change:transform;transition:transform 80ms linear}
+.bayContainer01 .l0{z-index:0}.bayContainer01 .l1{z-index:1}.bayContainer01 .l2{z-index:2}.bayContainer01 .l3{z-index:3}
+.bayContainer01 .l4{z-index:5}.bayContainer01 .l5{z-index:6}
+.bayContainer01 .l5{opacity:.58!important}
+.bayContainer01 .foregroundGirder{width:19%!important;height:9%!important}
+.bayContainer01 .foregroundCable{width:30%!important;opacity:.42!important}
