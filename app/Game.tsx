@@ -764,9 +764,22 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
   const a=ribs[n],b=ribs[n+1],xa=-w/2+w*a.t,xb=-w/2+w*b.t,ya=Math.min(h*.5,a.width*.5),yb=Math.min(h*.5,b.width*.5);
   panel(0,0,meta.material==="VEHICLE"?1-a.t:a.t,meta.material==="VEHICLE"?1-b.t:b.t,[project(xa,-ya,Math.min(z,a.height)),project(xb,-yb,Math.min(z,b.height)),project(xb,yb,Math.min(z,b.height)),project(xa,ya,Math.min(z,a.height))]);
  }
- // Ink traces the authored envelope, never the invisible rectangular hull.
- g.save();g.strokeStyle="#080b10";g.lineWidth=1.4;g.lineJoin="round";
- for(const sign of [-1,1]){g.beginPath();ribs.forEach((r:any,i:number)=>{const p=project(-w/2+w*r.t,sign*Math.min(h*.5,r.width*.5),Math.min(z,r.height));i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y)});g.stroke()}g.restore();
+ // Manga contour weights stay consistent on screen: deck pitch must not flatten the ink.
+ // Trace the existing rib shell, with a heavier silhouette and finer roof/side seam.
+ const contour=(points:CoverPoint[],weight:number)=>{
+  g.save();g.strokeStyle="#080b10";g.lineJoin="round";g.lineCap="round";
+  let path=points;
+  if(typeof g.getTransform==="function"){
+   const m=g.getTransform(),canvas=g.canvas as HTMLCanvasElement,ratio=canvas.width/(canvas.clientWidth||canvas.width);
+   path=points.map(p=>({x:(m.a*p.x+m.c*p.y+m.e)/ratio,y:(m.b*p.x+m.d*p.y+m.f)/ratio}));
+   g.setTransform(ratio,0,0,ratio,0,0);
+  }
+  g.lineWidth=weight;g.beginPath();path.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke();g.restore();
+ };
+ const roofEdge=(sign:number)=>ribs.map((r:any)=>project(-w/2+w*r.t,sign*Math.min(h*.5,r.width*.5),Math.min(z,r.height)));
+ const groundEdge=ribs.map((r:any)=>project(-w/2+w*r.t,side*Math.min(h*.5,r.width*.5),0));
+ contour(roofEdge(-side),2.4);contour(roofEdge(side),1.7);contour(groundEdge,2.4);
+ contour([project(x,-y,height),project(x,-y,0),project(x,y,0),project(x,y,height)],2.4);
 }
 function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
  if(!meta)return;
