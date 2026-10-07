@@ -9,11 +9,12 @@ function mutate(id:string,fn:(s:GameState)=>void){const r=read(id);if(!r)throw E
 function status(e:unknown){const m=String((e as Error)?.message||e);return m==="ROOM_NOT_FOUND"?404:m==="BAD_TOKEN"?403:m==="Room is full"?409:400}
 export async function GET(req:Request){prune();const u=new URL(req.url),id=clean(u.searchParams.get("room"),8),t=String(u.searchParams.get("token")||"");try{let slot=-1;const state=mutate(id,s=>{slot=slotFor(s,t)});return json({slot,state:safeState(state)})}catch(e){return json({error:String((e as Error).message||e)},status(e))}}
 export async function POST(req:Request){let b:any;try{b=await req.json()}catch{return json({error:"Invalid request"},400)}const action=clean(b.action,16),now=Date.now();try{
- if(action==="create"){prune();const mode=b.mode==="bot"?"bot":"solo",id=roomId(),code=joinCode(),hostToken=token(),state=newGame(clean(b.name)||"Les",hostToken,now,mode);rooms.set(id,{id,joinCode:code,state,updatedAt:now});return json({room:id,code,token:hostToken,slot:0,state:safeState(state)},201)}
+ if(action==="create"){prune();const mode=b.mode==="duel"?"duel":b.mode==="bot"?"bot":"solo",id=roomId(),code=joinCode(),hostToken=token(),state=newGame(clean(b.name)||"Les",hostToken,now,mode);rooms.set(id,{id,joinCode:code,state,updatedAt:now});return json({room:id,code,token:hostToken,slot:0,state:safeState(state)},201)}
  if(action==="join"){const id=clean(b.room,8),row=read(id);if(!row||row.joinCode!==clean(b.code,6))throw Error("Wrong room code");const guestToken=token();const state=mutate(id,s=>joinGame(s,clean(b.name)||"Player 2",guestToken));return json({room:id,token:guestToken,slot:1,state:safeState(state)})}
  const id=clean(b.room,8),t=String(b.token||"");
  if(action==="input"){let slot=-1;const state=mutate(id,s=>{slot=slotFor(s,t);setInput(s,slot,Number(b.seq),b.input as Partial<InputState>)});return json({slot,state:safeState(state)})}
  if(action==="config"){let slot=-1;const state=mutate(id,s=>{slot=slotFor(s,t);if(slot!==0)throw Error("HOST_ONLY");updateConfig(s,b.patch as Partial<CombatConfig>)});return json({slot,state:safeState(state)})}
- if(action==="reset"||action==="start"||action==="rematch"){let slot=-1;const state=mutate(id,s=>{slot=slotFor(s,t);startOrRematch(s,slot)});return json({slot,state:safeState(state)})}
+ if(action==="reset"||action==="start"||action==="rematch"){let slot=-1;const state=mutate(id,s=>{slot=slotFor(s,t);if(s.mode==="duel"&&s.players.length<2)throw Error("Waiting for Player 2");startOrRematch(s,slot)});return json({slot,state:safeState(state)})}
  return json({error:"Unknown action"},404)
  }catch(e){return json({error:String((e as Error).message||e)},status(e))}}
+

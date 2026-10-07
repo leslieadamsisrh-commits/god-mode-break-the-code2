@@ -9,19 +9,19 @@ export type Cover={id:string;x:number;y:number;w:number;h:number;a:number;hp:num
 export type Matter={id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
 export type Fx={id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number};
-export type GameState={build:string;mode:"bot"|"solo";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
+export type GameState={build:string;mode:"bot"|"solo"|"duel";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
 
 const empty=():InputState=>({x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false});
 const clamp=(v:number,a:number,b:number)=>Math.max(a,Math.min(b,v)),wrap=(a:number)=>Math.atan2(Math.sin(a),Math.cos(a)),dist=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y),uid=()=>crypto.randomUUID().slice(0,8);
 const A={left:70,right:930,top:90,bottom:550};
 function player(x:number,y:number,aim:number,name:string,token:string,bot=false,hp=100):Player{return{shells:8,maxShells:8,reserveShells:24,weaponState:"READY",x,y,vx:0,vy:0,aim,hp,battery:100,charging:false,chargeMotion:1,chargeAge:0,godCharge:0,godTime:0,godDuration:0,powerFlash:0,powerReturn:0,powerReleaseAge:0,powerReleaseCharge:0,godFade:0,godFadeStrength:0,powerBlocked:false,lastEnergyAt:-9,dash:0,brake:0,slideSteerCurrent:0,lastSlideTap:-9,slide:0,slideFacing:aim,slideCool:0,kickStage:"none",kickTime:0,kickAngle:aim,kickNx:0,kickNy:0,coverId:null,coverMode:null,coverAnchor:null,coverLock:0,coverSpeed:0,softImpact:0,softImpactAt:-9,peek:false,peekEdge:false,contact:0,exit:null,shield:false,gripId:null,gripCoverId:null,coverGripAngle:aim,coverGripDist:92,orbitIds:[],knock:0,pinball:0,lastShot:-9,fireBlocked:false,fireState:0,recoil:0,returnToCover:0,boostState:0,brakeState:0,gunFacing:aim,lastMelee:-9,score:0,rematch:false,input:empty(),processedInput:empty(),lastSeq:-1,name,token,bot}}
-export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo"="solo"):GameState{
+export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo"|"duel"="solo"):GameState{
  const config={...DEFAULT_CONFIG};
  const players=[player(230,330,0,name,token,false,config.maxHealth)];
  if(mode==="bot")players.push(player(780,330,Math.PI,"RIFT HUNTER","",true,config.maxHealth));
  const matter:Matter[]=[];[[170,170,"stone"],[330,190,"metal"],[500,160,"stone"],[680,195,"metal"],[800,165,"stone"],[420,470,"metal"],[610,465,"stone"],[760,445,"metal"]].forEach(([x,y,k],i)=>matter.push({id:"m"+i,x:x as number,y:y as number,vx:0,vy:0,r:14,kind:k as any,heldBy:null,orbitBy:null,life:999}));
  const covers:Cover[]=bayCoverState();
- return{build:"COMBAT-MASTER-STUDIO-01",mode,phase:mode==="solo"?"playing":"countdown",round:1,winner:null,countdown:3,finisher:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
+ return{build:"COMBAT-MASTER-STUDIO-01",mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
 }
 export function updateConfig(s:GameState,patch:Partial<CombatConfig>){s.config={...s.config,...patch};for(const p of s.players)p.hp=Math.min(p.hp,s.config.maxHealth)}
 export function joinGame(s:GameState,name:string,token:string){if(s.mode==="solo")throw Error("Solo session is not joinable");const b=s.players.findIndex(p=>p.bot);if(b>=0){s.players[b]={...s.players[b],name,token,bot:false,lastSeq:-1,input:empty(),processedInput:empty()};return}if(s.players.length>1)throw Error("Room is full");s.players.push(player(780,330,Math.PI,name,token,false,s.config.maxHealth))}
@@ -395,10 +395,15 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
  }
  for(const m of s.matter){if(m.heldBy!==null){const p=s.players[m.heldBy];m.x=p.x+Math.cos(p.aim)*70;m.y=p.y+Math.sin(p.aim)*70;continue}if(m.orbitBy!==null){const p=s.players[m.orbitBy],j=p.orbitIds.indexOf(m.id),a=s.time*4+j*2.1;m.x=p.x+Math.cos(a)*62;m.y=p.y+Math.sin(a)*62;continue}m.x+=m.vx*d;m.y+=m.vy*d;m.vx*=Math.pow(.35,d);m.vy*=Math.pow(.35,d);if(m.life<999)m.life-=dt;if(m.x<A.left||m.x>A.right){m.x=clamp(m.x,A.left,A.right);m.vx*=-.6}if(m.y<A.top||m.y>A.bottom){m.y=clamp(m.y,A.top,A.bottom);m.vy*=-.6}}
  for(const sh of s.shots){const from={x:sh.x,y:sh.y};sh.x+=sh.vx*d;sh.y+=sh.vy*d;sh.life-=dt;if(s.covers.some(cv=>cv.id!==sh.clearanceCoverId&&segmentCover(from,sh,cv))){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:sh.x,y:sh.y,life:.18});continue}const target=s.players[1-sh.owner];if(target&&dist(sh,target)<21){if(target.coverId&&target.coverMode==="braced"&&!target.input.coverAim){sh.life=0;s.fx.push({id:uid(),type:"cover-block",x:target.x,y:target.y,life:.18});continue}target.hp=Math.max(0,target.hp-(sh.damage??c.shotDamage));target.knock=.26;target.vx+=sh.vx*.1;target.vy+=sh.vy*.1;sh.life=0;s.fx.push({id:uid(),type:"hit",x:target.x,y:target.y,life:.25})}}
+ if(s.mode==="duel"&&s.phase==="playing"&&s.players.some(p=>p.hp<=0)){
+  const alive=s.players.map((p,n)=>p.hp>0?n:-1).filter(n=>n>=0);s.winner=alive.length===1?alive[0]:null;
+  if(s.winner!==null)s.players[s.winner].score++;s.phase="finished";s.shots=[];
+  for(const p of s.players){p.vx=p.vy=0;p.shield=false;}
+ }
  s.players.forEach((p,n)=>p.input=rawInputs[n]);
  s.shots=s.shots.filter(x=>x.life>0);s.matter=s.matter.filter(x=>x.life>0);s.fx.forEach(f=>f.life-=dt);s.fx=s.fx.filter(f=>f.life>0);
 }
-export function advance(s:GameState,now=Date.now()){let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;if(s.phase==="countdown"){s.countdown=Math.max(0,s.countdown-elapsed);if(!s.countdown)s.phase="playing";return}if(s.phase!=="playing"||(s.mode!=="solo"&&s.players.length<2))return;let prev=s.players.map(p=>({...p.processedInput}));while(elapsed>0){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,prev);s.players.forEach(p=>p.processedInput={...p.input});prev=s.players.map(p=>({...p.input}));elapsed-=dt}}
+export function advance(s:GameState,now=Date.now()){let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;if(s.phase==="countdown"){s.countdown=Math.max(0,s.countdown-elapsed);if(!s.countdown)s.phase="playing";return}if(s.phase!=="playing"||(s.mode!=="solo"&&s.players.length<2))return;let prev=s.players.map(p=>({...p.processedInput}));while(elapsed>0){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,prev);s.players.forEach(p=>p.processedInput={...p.input});prev=s.players.map(p=>({...p.input}));elapsed-=dt;if(s.phase!=="playing")break}}
 export function startOrRematch(s:GameState,slot:number){if(s.mode==="solo"){respawn(s);return}if(slot===0){respawn(s)}}
 export function safeState(s:GameState){return{...s,players:s.players.map(({token,...p})=>p)}}
 

@@ -15,5 +15,7 @@ for(let row=0;row<a.BAY_OBJECTS.length;row++){const o=a.BAY_OBJECTS[row];for(let
 fs.writeFileSync(path.join(output,'rotations21.png'),rotations.toBuffer('image/png'));
 // Run all angles, moving camera samples and missing texture path through the real draw function.
 let renders=0;for(let angle=0;angle<32;angle++)for(let view=0;view<4;view++){const c=createCanvas(1000,620);for(const cv of s.covers)cv.a=angle*Math.PI/16;s.players[0].x=view%2?930:70;s.players[0].y=view<2?90:550;a.cameraState.ready=false;a.draw(c,s,0,{x:500,y:310,down:false},{},-1,-1);renders++}
+const duel=a.safeState(a.newGame('Player 1','host',1000,'bot'));duel.mode='duel';duel.phase='playing';duel.players.forEach((p,n)=>{p.bot=false;p.x=430+n*100;p.y=350;p.gunFacing=p.aim=n?Math.PI:0;});
+const pair=createCanvas(2000,620),pg=pair.getContext('2d');for(let slot=0;slot<2;slot++){const c=createCanvas(1000,620);a.cameraState.ready=false;a.draw(c,duel,0,{x:500,y:310,down:false},{},-1,-1,slot);pg.drawImage(c,slot*1000,0);}fs.writeFileSync(path.join(output,'duel23.png'),pair.toBuffer('image/png'));
 a.environmentAssets.clear();const c=createCanvas(1000,620);a.draw(c,s,0,{x:500,y:310,down:false},{},-1,-1);fs.writeFileSync(path.join(output,'fallback21.png'),c.toBuffer('image/png'));console.log(`Rendered ${renders} full scene rotation/camera cases, 80 actor review cells and missing-art fallback with actual renderer. Jade uses approved ready d00 audit pose.`);
 })();

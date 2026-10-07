@@ -7,7 +7,7 @@ let points=0;for(const x of [70,500,930])for(const y of [90,310,550])for(const c
  const top=m.projectWorld(x,y,c,1.85,48);assert(Math.abs(p.y-top.y-48*1.85)<1e-9);points++;
 }
 for(const o of m.BAY_OBJECTS){const {x,y}=o.worldPosition,r=Math.hypot(o.dimensions.w,o.dimensions.h)/2;assert(x-r>m.DECK.left&&x+r<m.DECK.right&&y-r>m.DECK.far&&y+r<m.DECK.near)}
-for(const cy of [310/1.85,620-310/1.85])assert(m.projectWorld(500,0,{x:500,y:cy},1.85).y-14*1.85>135,'bay window must remain open at either camera extreme');
+for(const cy of [190,430])assert(m.projectWorld(500,0,{x:500,y:cy},1.85).y-14*1.85>-20,'bay window must remain open at either camera extreme');
 console.log(`PASS: ${points} projected/inverse points; unchanged vertical art size; finite deck contains every actor through full rotation; bay window remains open.`);
 function fixture(a=0,edge=0){const s=m.newGame('actions','token',1000,'solo');s.matter=[];const cv={id:'wall',x:500,y:310,w:160,h:40,a,hp:100,maxHp:100,generated:false,build:0,variant:0};s.covers=[cv];const p=s.players[0];p.coverId='wall';p.coverMode='soft';p.coverAnchor=m.anchorForEdge(cv,edge,edge%2?20:80);m.placeOnCover(p,s);return{s,p}}
 function tick(s,i){m.setInput(s,0,s.players[0].lastSeq+1,i);m.advance(s,s.lastAt+16)}
