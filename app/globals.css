@@ -235,3 +235,9 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .watchControls b{margin-right:auto}.watchControls button{min-height:40px;padding:6px 10px;border:1px solid #698995;background:#152433;color:#ecffff;cursor:pointer}.watchControls button:disabled{opacity:.5}
 .watchControls details{flex:1 0 100%;max-height:min(240px,40vh);overflow:auto}.watchControls summary{cursor:pointer;min-height:40px;padding:12px 4px;font-weight:bold;color:#ff9bdd}.watchControls small{display:block;white-space:normal;margin:6px 0;color:#a8c4cd}
 @media(max-width:800px){.studio.studioWatch{grid-template-rows:54px minmax(0,1fr) auto}.watchControls{font-size:10px}.watchControls button{min-height:44px}}
+
+/*37B: bind the Watch shell to the visible viewport, including mobile browser chrome. */
+.studio.studioWatch{height:100svh;height:100dvh;max-height:100dvh}
+.watchControls{max-height:45dvh;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;padding:6px max(10px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));align-content:start;gap:4px}
+.watchPrimary{position:sticky;top:0;z-index:2;background:#08111d;display:flex;flex-wrap:wrap;gap:6px;align-items:center;width:100%;min-width:0}
+.watchPrimary b{flex:1 0 100%;margin:0;font-size:11px}.watchPrimary button{flex:1 1 auto;min-height:44px;font-weight:bold}.watchPrimary button:first-of-type{border-color:#ff9bdd}.watchControls>small{flex:1 0 100%;margin:2px 0;line-height:1.3}.watchControls details{max-height:25dvh}.watchControls summary{min-height:32px;padding:8px 4px}
