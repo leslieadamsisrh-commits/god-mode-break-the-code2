@@ -5,7 +5,7 @@ import AnimationQaHarness from "./AnimationQaHarness";
 import BayBridgeArena from "./BayBridgeArena";
 import GodModeShell from "./GodModeShell";
 import {COVER_HEIGHT,withCoverOcclusion} from "../lib/cover-occlusion";
-import {gripSelection} from "../lib/game";
+import {gripSelection,psychicField} from "../lib/game";
 import {GOD_TIERS} from "../lib/gameFramework";
 import {bayObject} from "../lib/bayBridgeMap";
 import {DECK,DECK_SLOPE,DECK_PITCH,DECK_SCREEN_Y,unprojectWorld,withUpright,drawDeckBoundary,bayRenderCamera as cameraState} from "../lib/bayBridgePresentation";
@@ -18,12 +18,12 @@ function readController(pad:any,i:any){
  const down=(n:number)=>!!(pad.buttons[n]?.pressed||pad.buttons[n]?.value>.25),dz=(v:number)=>Math.abs(v)<.18?0:v;
  i.x=dz(pad.axes[0]||0);i.y=dz(pad.axes[1]||0);const rx=dz(pad.axes[2]||0),ry=dz(pad.axes[3]||0);if(rx||ry)i.aim=Math.atan2(ry,rx);
  i.slide||=down(0);i.melee||=down(1);i.slow||=down(2);i.powerup||=down(3);i.grip||=down(4);i.cover||=down(5);i.shield||=down(6);i.coverAim||=down(6);i.fire||=down(7);
- // D-pad selectors are reserved: do not trigger their former combat actions.
+ i.fieldCycle||=down(14); // D-pad left cycles psychic reach; other selectors remain reserved.
  return i;
 }
-const INPUT_BUTTONS=["slide","fire","shield","coverAim","melee","heavy","grip","throwMatter","cover","orbit","launchOrbit","pinball","powerup","slow"];
+const INPUT_BUTTONS=["slide","fire","shield","coverAim","melee","heavy","grip","throwMatter","cover","orbit","launchOrbit","pinball","powerup","slow","fieldCycle"];
 function bufferInput(queue:any[],previous:any,input:any){if(INPUT_BUTTONS.some(k=>!!input[k]!==!!previous[k])){queue.push({...input});if(queue.length>16)queue.shift();}return input;}
-const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF:"melee",KeyC:"heavy",KeyQ:"grip",KeyR:"throwMatter",KeyB:"cover",KeyO:"orbit",KeyP:"launchOrbit",Space:"pinball",KeyX:"slow"};
+const keyAction:Record<string,string>={ShiftLeft:"slide",ShiftRight:"slide",KeyF:"melee",KeyC:"heavy",KeyQ:"grip",KeyR:"throwMatter",KeyB:"cover",KeyO:"orbit",KeyP:"launchOrbit",Space:"pinball",KeyX:"slow",ArrowLeft:"fieldCycle"};
 const jade=new Map<string,HTMLImageElement>();
 const lastGoodSprite=new Map<string,{im:HTMLImageElement;dir:number}>();
 type EchoFrame={x:number;y:number;angle:number;family:string;dir:number;frame:number;life:number;maxLife:number;speed:number};
@@ -168,7 +168,7 @@ export default function Game(){
    try{const p=[...navigator.getGamepads()].find(Boolean);if(p){setPadStatus(`CONTROLLER: ${p.id||"CONNECTED"}`);setPadGate(false)}}catch{}
    return()=>{removeEventListener("gamepadconnected",connected as EventListener);removeEventListener("gamepaddisconnected",disconnected as EventListener)}
  },[]);
- useEffect(()=>{const kd=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement)?.tagName))return;if(["Space","ShiftLeft","ShiftRight"].includes(e.code))e.preventDefault();if(!keys.current[e.code])edges.current[e.code]=true;keys.current[e.code]=true},ku=(e:KeyboardEvent)=>keys.current[e.code]=false;addEventListener("keydown",kd);addEventListener("keyup",ku);return()=>{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}},[]);
+ useEffect(()=>{const kd=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement)?.tagName))return;if(["Space","ShiftLeft","ShiftRight","ArrowLeft"].includes(e.code))e.preventDefault();if(!keys.current[e.code])edges.current[e.code]=true;keys.current[e.code]=true},ku=(e:KeyboardEvent)=>keys.current[e.code]=false;addEventListener("keydown",kd);addEventListener("keyup",ku);return()=>{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}},[]);
  useEffect(()=>{let dead=false,source:EventSource|null=null,active:Session|null=null,lastStream=0,busy=false;const timer=setInterval(async()=>{
  const ss=session.current;if(!ss||dead)return;
  if(active!==ss){source?.close();active=ss;streamOpen.current=false;const u=new URL("/api/game/stream",location.origin);u.searchParams.set("room",ss.room);u.searchParams.set("token",ss.token);if(typeof EventSource!=="undefined"){source=new EventSource(u);source.onmessage=e=>{if(dead||session.current!==ss)return;lastStream=performance.now();streamOpen.current=true;setNetStatus("CONNECTED");try{accept(JSON.parse(e.data))}catch{}};source.onerror=()=>{streamOpen.current=false;setNetStatus("RECONNECTING");};}}
@@ -179,9 +179,9 @@ export default function Game(){
  useEffect(()=>{let raf=0;const uiLoop=()=>{try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const start=!!(pad.buttons[9]?.pressed||pad.buttons[9]?.value>.25);if(start&&!startHeld.current)setStudioMenu(v=>!v);startHeld.current=start}else startHeld.current=false}catch{}raf=requestAnimationFrame(uiLoop)};raf=requestAnimationFrame(uiLoop);return()=>cancelAnimationFrame(raf)},[]);
  useEffect(()=>{let pending=false,dead=false,raf=0,latest:any={...EMPTY},previous:any={...EMPTY},owner:Session|null=null;const queue:any[]=[];
  const sample=()=>{const s=session.current,g=state.current;if(s&&g&&bootReady){if(owner!==s){owner=s;queue.length=0;previous={...EMPTY};}
- const p=g.players[s.slot]||g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));i.slide=touchA.current||touchAEdge.current;touchAEdge.current=false;const pointer=unprojectWorld(mouse.current.x,mouse.current.y,cameraState,g.config?.cameraZoom||1.85);i.aim=Math.atan2(pointer.y-p.y,pointer.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.powerup=!!keys.current.KeyY||chargePreview.current;
+ const p=g.players[s.slot]||g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));i.slide=touchA.current||touchAEdge.current;touchAEdge.current=false;const pointer=unprojectWorld(mouse.current.x,mouse.current.y,cameraState,g.config?.cameraZoom||1.85);i.aim=Math.atan2(pointer.y-p.y,pointer.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.slow=!!keys.current.KeyX;i.powerup=!!keys.current.KeyY||chargePreview.current;
   try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad&&!studioMenu){i.aim=p.aim;readController(pad,i)}}catch{}
-  if(studioMenu){Object.assign(i,{x:0,y:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false})}
+  if(studioMenu){Object.assign(i,{x:0,y:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false,fieldCycle:false})}
 
  latest=i;previous=bufferInput(queue,previous,i);}
  raf=requestAnimationFrame(sample);};raf=requestAnimationFrame(sample);
@@ -426,6 +426,8 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  // A whole-block Y sort cannot describe a character beside a long or rotated wall.
  const covers=s.covers||[];
  const environmentLights=[...(s.fx||[]).filter((f:any)=>f.type==="muzzle"&&f.life>0).slice(-3).map((f:any)=>({x:f.x,y:f.y,strength:Math.min(1,f.life/.18),color:"#ffd59b"})),...(powerAura(local)>.12?[{x:local.x,y:local.y,strength:Math.min(1,powerAura(local)),color:"#fa64ca"}]:[])];
+ // Ground-projected reach: this ring matches the authoritative Grip center-distance check.
+ if(local.hp>0&&(s.mode==="duel"||s.mode==="practice"))drawPsychicField(g,local,s);
  if((s.mode==="duel"||s.mode==="practice")&&!local.gripCoverId&&!local.gripId){const selection=gripSelection(p,s),target=selection.cover||selection.matter;if(target){g.save();g.strokeStyle="#8cf8ff";g.globalAlpha=.55;g.lineWidth=1.4;g.setLineDash([5,4]);g.beginPath();g.ellipse(target.x,target.y,("w" in target?Math.hypot(target.w,target.h)/2:target.r+7),"w" in target?target.h/2+8:target.r+7,0,0,Math.PI*2);g.stroke();g.restore();}}
  // Wet road light pools sit below physical actors, with screen blending instead of camera bounce.
  for(const light of environmentLights){g.save();g.globalCompositeOperation="screen";g.globalAlpha=light.strength*.11;g.fillStyle=light.color;g.beginPath();g.ellipse(light.x,light.y+7,44,9,0,0,Math.PI*2);g.fill();g.restore()}
@@ -444,6 +446,13 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  drawDeckBoundary(g,true);
  if(s.mode==="duel"||s.mode==="practice"){g.setTransform(sx,0,0,sy,0,0);drawCombatHelmet(g,s,localSlot);}
 }
+function drawPsychicField(g:CanvasRenderingContext2D,p:any,s:any){
+ const field=psychicField(p),held=s.covers.find((c:any)=>c.id===p.gripCoverId)||s.matter.find((m:any)=>m.id===p.gripId),slowing=s.phase==="playing"&&s.timeScale<.99,active=!!held||slowing||p.input?.grip;
+ g.save();g.beginPath();g.rect(70,90,860,460);g.clip();g.strokeStyle=p.battery<s.config.gripEnergy?"#a17988":slowing?"#bf9cff":"#79e9ee";g.globalAlpha=active?.48:.34;g.lineWidth=active?1.5:1;g.setLineDash(active?[]:[5,10]);g.beginPath();g.arc(p.x,p.y,field.radius,0,Math.PI*2);g.stroke();
+ if(active){g.globalAlpha=.24;g.setLineDash([3,14]);g.lineDashOffset=-s.time*12;g.beginPath();g.arc(p.x,p.y,field.radius-5,0,Math.PI*2);g.stroke();}
+ if(held){const a=p.aim,tx=held.x+Math.cos(a)*95,ty=held.y+Math.sin(a)*95;g.globalAlpha=.8;g.setLineDash([4,5]);g.lineWidth=1.5;g.beginPath();g.moveTo(held.x,held.y);g.lineTo(tx,ty);g.stroke();g.setLineDash([]);g.beginPath();g.moveTo(tx-Math.cos(a-.45)*9,ty-Math.sin(a-.45)*9);g.lineTo(tx,ty);g.lineTo(tx-Math.cos(a+.45)*9,ty-Math.sin(a+.45)*9);g.stroke();}
+ g.restore();
+}
 const batteryVisual=new Map<number,{value:number;trail:number;at:number;round:number;direction:string;changed:number}>();
 function drawCombatHelmet(g:CanvasRenderingContext2D,s:any,slot:number){
  const p=s.players[slot]||s.players[0],critical=Math.max(0,1-p.hp/s.config.maxHealth),recent=(s.events||[]).filter((e:any)=>s.time-e.at<.3),incoming=recent.some((e:any)=>e.kind==="hit"&&e.target===slot);
@@ -454,7 +463,7 @@ function drawCombatHelmet(g:CanvasRenderingContext2D,s:any,slot:number){
  s.players.forEach((f:any,n:number)=>{const x=n===slot?194:516,w=290,color=n===slot?"#68ecf1":"#ec72b8",hp=Math.max(0,f.hp/s.config.maxHealth);g.textAlign="left";g.font="bold 11px monospace";g.fillStyle=color;g.fillText(`${n===slot?"YOU":f.name.slice(0,16)}  ${Math.ceil(f.hp)}/${s.config.maxHealth}  W${f.score}`,x,24);g.fillStyle="#080b13";g.fillRect(x,31,w,8);g.fillStyle=hp<.25?"#ff9169":color;g.fillRect(x,31,w*hp,8);g.fillStyle="#515d76";g.fillRect(x,47,w,3);g.fillStyle="#b697e1";g.fillRect(x,47,w*f.battery/100,3);g.fillStyle="#a6b8c5";g.font="9px monospace";g.fillText(`BAT ${Math.ceil(f.battery)}  ${f.shield?"SHIELD":f.charging?"CHARGING":f.godTime>0?"TIER I":"SHOTGUN ∞"}`,x,64);});
  const previous=batteryVisual.get(slot),dt=previous?Math.max(0,Math.min(.05,s.time-previous.at)):0,value=Math.max(0,Math.min(100,p.battery)),changed=!previous||Math.abs(value-previous.value)>.01?s.time:previous.changed,direction=value>=99.99?"FULL":p.charging?"RECHARGING":previous&&value<previous.value-.01?"DRAINING":previous&&value>previous.value+.01?"RECHARGING":previous&&s.time-changed<.25?previous.direction:"READY",trail=!previous||previous.round!==s.round?value:previous.trail+(value-previous.trail)*(1-Math.exp(-5*dt));batteryVisual.set(slot,{value,trail,at:s.time,round:s.round,direction,changed});
  const bx=28,by=220,bh=170;g.fillStyle="#111521db";g.strokeStyle="#82648a";g.lineWidth=2;g.fillRect(bx-9,by-35,42,bh+75);g.strokeRect(bx-9,by-35,42,bh+75);g.fillStyle="#060c16";g.fillRect(bx,by,15,bh);g.fillStyle="#ef7bb6";g.fillRect(bx,by+bh*(1-trail/100),15,bh*trail/100);g.fillStyle=direction==="RECHARGING"?"#a7ffe1":"#64eaf1";g.fillRect(bx,by+bh*(1-value/100),15,bh*value/100);g.textAlign="center";g.font="bold 9px monospace";g.fillStyle="#d9f6ff";g.fillText("BAT",bx+8,by-18);g.fillText(String(Math.ceil(value)),bx+8,by+bh+18);g.save();g.translate(bx+25,by+bh/2);g.rotate(-Math.PI/2);g.font="8px monospace";g.fillText(direction,0,0);g.restore();
- const held=p.gripCoverId||p.gripId,selection=gripSelection(p,s),selected=selection.cover||selection.matter,hint=(p.gripHintUntil||0)>s.time?p.gripHint:held?"HOLD LB · AIM · FRESH RT TO THROW":selected?"AIMED TARGET · HOLD LB TO GRIP":"AIM AT NEARBY COVER · HOLD LB",low=value<(held?s.config.coverThrowEnergy:s.config.gripEnergy);g.fillStyle="#101927d9";g.fillRect(240,565,520,27);g.textAlign="center";g.fillStyle=low?"#ffc398":"#c1f6ff";g.font="bold 11px monospace";g.fillText(low?"LOW BATTERY · HOLD Y TO RECHARGE":hint,500,583);g.font="9px monospace";g.fillStyle="#93abc0";g.fillText("KINETIC WEAVE · STAGE I · 0–100",500,608);
+ const held=p.gripCoverId||p.gripId,selection=gripSelection(p,s),selected=selection.cover||selection.matter,hint=(p.gripHintUntil||0)>s.time?p.gripHint:held?(p.input?.fire?"RELEASE RT · KEEP LB HELD · TAP RT TO THROW":"HOLD LB · AIM · TAP RT TO THROW"):selected?"AIMED TARGET · HOLD LB TO GRIP":"AIM AT NEARBY COVER · HOLD LB",low=value<(held?s.config.coverThrowEnergy:s.config.gripEnergy);g.fillStyle="#101927d9";g.fillRect(200,552,600,46);g.textAlign="center";g.fillStyle=low?"#ffc398":"#c1f6ff";g.font="bold 11px monospace";g.fillText(low?"LOW BATTERY · HOLD Y TO RECHARGE":hint,500,584);const field=psychicField(p);g.font="bold 10px monospace";g.fillStyle=s.timeScale<.99&&s.phase==="playing"?"#cbaaff":"#a9d4df";g.fillText(`FIELD ${field.level+1}/3 · ${field.name} · ${field.radius}u · D-PAD LEFT   |   ${s.phase==="playing"&&s.timeScale<.99?"WORLD TIME 52%":"HOLD X · SLOW TIME"}`,500,566);g.font="9px monospace";g.fillStyle="#93abc0";g.fillText("KINETIC WEAVE · STAGE I · 0–100",500,608);
  g.textAlign="center";g.fillStyle="#b9dbe5";g.font="bold 10px monospace";g.fillText(`ROUND ${s.round}`,500,91);
  if(critical>.65||incoming){g.globalAlpha=incoming?.42:(critical-.65)*.55;g.strokeStyle=incoming?"#ff82a9":"#dd69a6";g.lineWidth=incoming?6:3;g.beginPath();g.moveTo(22,90);g.quadraticCurveTo(3,310,22,530);g.moveTo(978,90);g.quadraticCurveTo(997,310,978,530);g.stroke();g.globalAlpha=1;}
  const hits=recent.filter((e:any)=>e.owner===slot&&e.kind!=="finish");if(hits.length){const event=hits.at(-1),same=hits.filter((e:any)=>e.kind===event.kind&&e.target===event.target);g.fillStyle=event.kind==="hit"?"#eaffff":event.kind==="shield"?"#7decff":"#d5aa80";g.font="bold 11px monospace";g.fillText(event.kind==="hit"?`${event.region.toUpperCase()} HIT · ${Math.round(same.reduce((n:number,e:any)=>n+e.damage,0))}`:event.kind==="shield"?"SHIELD BLOCK":"COVER IMPACT",500,111);}
@@ -862,7 +871,7 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:numb
  g.save();g.translate(c.x,c.y);
  g.fillStyle="#03060a66";g.beginPath();g.ellipse(5,9,w*.56,h*.64,c.a||0,0,Math.PI*2);g.fill();
  g.fillStyle="#020408aa";g.beginPath();ground.forEach((p,i)=>i?g.lineTo(p.x,p.y+3):g.moveTo(p.x,p.y+3));g.closePath();g.fill();
- if(c.psychicHeld){g.shadowColor="#ff4aa5";g.shadowBlur=18}
+ if(c.psychicHeld){g.save();g.strokeStyle="#74e5ef";g.shadowColor="#ee70b8";g.shadowBlur=5;g.lineWidth=2;g.beginPath();ground.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.stroke();g.restore()}
  const pal=material==="STEEL"?["#242b35","#4c5966","#1e2630","#5e6c78","#697682"]:material==="VEHICLE"?["#251d2a","#493248","#211b27","#5d3c55","#6b455d"]:material==="INFRASTRUCTURE"?["#24282c","#4b5155","#202529","#596166","#687075"]:["#343b40","#454c51","#30383d","#697176","#899196"];
  const sides=[
   {kind:"back",p:[top[0],top[1],ground[1],ground[0]],fill:pal[0]},

@@ -1,10 +1,10 @@
 import {bayCoverState,bayObject} from "./bayBridgeMap";
-export type InputState={x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;powerup:boolean;slow:boolean};
+export type InputState={x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;powerup:boolean;slow:boolean;fieldCycle?:boolean};
 export type CombatConfig={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
 export const DEFAULT_CONFIG:CombatConfig={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:4,holdEnergy:3,coverThrowEnergy:6,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:5,dashEnergy:2,rechargeDelay:.8,rechargeRate:12,weaveEnabled:1,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:430,dashDuration:.16,doubleTapWindow:.28,slideSpeed:490,slideDuration:.50,slideSustain:160,slideSteer:5,slideSteerAngle:.48,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.39,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:420,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player={gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player={fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type Cover={scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
@@ -244,14 +244,21 @@ function duelContact(s:GameState,owner:number,target:Player,damage:number,vx=0,v
  const dealt=Math.min(target.hp,damage);target.hp=Math.max(0,target.hp-damage);target.knock=.26;target.vx+=vx;target.vy+=vy;target.hitUntil=s.time+.18;target.hitAngle=Math.atan2(vy,vx);if(!target.hp)target.deathAt=s.time;
  combatEvent(s,{kind:"hit",owner,target:targetId,region,damage:dealt,...pos});s.fx.push({id:uid(),type:"hit",x:pos.x,y:pos.y,z:pos.z,life:.32,owner,text:region});
 }
+// Field reach is independent of Kinetic Weave progression. Standard retains 235 world units.
+export const PSYCHIC_FIELDS=[{name:"CLOSE",radius:135},{name:"STANDARD",radius:235},{name:"WIDE",radius:335}] as const;
+export function psychicField(p:Player){const level=Number.isInteger(p.fieldLevel)?clamp(p.fieldLevel!,0,2):1;return{level,...PSYCHIC_FIELDS[level]};}
 export function gripSelection(p:Player,s:GameState){
+ const reach=psychicField(p).radius,a=p.aim,end={x:p.x+Math.cos(a)*reach,y:p.y+Math.sin(a)*reach};
+ const forward=(q:{x:number;y:number})=>((q.x-p.x)*Math.cos(a)+(q.y-p.y)*Math.sin(a))/Math.max(1,dist(q,p));
  const candidates=s.covers.filter(cv=>cv.hp>0&&(cv.generated||!!bayObject(cv.artId||cv.id)?.gripCompatible)&&!s.players.some(q=>q!==p&&(q.coverId===cv.id||q.gripCoverId===cv.id)));
- let cover=candidates.find(cv=>cv.id===p.coverId)||candidates.filter(cv=>{const d=dist(cv,p);return d<235&&((cv.x-p.x)*Math.cos(p.gunFacing)+(cv.y-p.y)*Math.sin(p.gunFacing))/Math.max(1,d)>.45}).sort((a,b)=>dist(a,p)-dist(b,p))[0];
- const matter=s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null&&dist(m,p)<105&&((m.x-p.x)*Math.cos(p.gunFacing)+(m.y-p.y)*Math.sin(p.gunFacing))/Math.max(1,dist(m,p))>.45).sort((a,b)=>dist(a,p)-dist(b,p))[0];
- if(combatFight(s)&&cover?.id!==p.coverId&&matter&&dist(matter,p)<(cover?dist(cover,p):Infinity))cover=undefined;
- return{cover,matter};
+ // Aim directly through the rotated whole-object footprint to choose it over incidental rubble.
+ let cover=candidates.find(cv=>cv.id===p.coverId)||candidates.filter(cv=>dist(cv,p)<=reach&&segmentCoverTime(p,end,cv)!==null).sort((a,b)=>dist(a,p)-dist(b,p))[0];
+ const matter=s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null&&dist(m,p)<=reach&&forward(m)>.45).sort((a,b)=>forward(b)-forward(a)||dist(a,p)-dist(b,p))[0];
+ if(!cover&&!matter)cover=candidates.filter(cv=>dist(cv,p)<=reach&&forward(cv)>.45).sort((a,b)=>forward(b)-forward(a)||dist(a,p)-dist(b,p))[0];
+ return{cover,matter:cover?undefined:matter};
 }
 function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],i=p.input,c=s.config;
+ if(i.fieldCycle&&!prev.fieldCycle)p.fieldLevel=(psychicField(p).level+1)%3;
  // Successful immediate brace keeps its original priority over other edges.
  if(slideAction(s,n,prev))return;
  if(i.pinball&&!prev.pinball&&p.battery>=22){p.battery-=22;p.pinball=c.pinballDuration;p.vx=Math.cos(p.aim)*c.pinballSpeed;p.vy=Math.sin(p.aim)*c.pinballSpeed;s.fx.push({id:uid(),type:"pinball",x:p.x,y:p.y,life:.5,owner:n})}
@@ -268,14 +275,14 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
    else{
      const {cover:cv,matter:loose}=gripSelection(p,s);
      if(cv){if(spendEnergy(p,s,c.gripEnergy)){releaseCover(p,s,.25);p.gripCoverId=cv.id;p.coverGripAngle=cv.a;p.coverGripDist=clamp(dist(cv,p),78,118);cv.vx=cv.vy=0;cv.build=.001;s.fx.push({id:uid(),type:"matter-rip",x:cv.x,y:cv.y,life:.42,owner:n})}}
-     else{const m=combatFight(s)?loose:s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null).sort((a,b)=>dist(a,p)-dist(b,p))[0];if(m&&dist(m,p)<105&&spendEnergy(p,s,c.gripEnergy)){p.gripId=m.id;m.heldBy=n}else if(!m){p.gripHint="NO TARGET · AIM CLOSER";p.gripHintUntil=s.time+1.5}}
+     else{const m=combatFight(s)?loose:s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null).sort((a,b)=>dist(a,p)-dist(b,p))[0];if(m&&dist(m,p)<=psychicField(p).radius&&spendEnergy(p,s,c.gripEnergy)){p.gripId=m.id;m.heldBy=n}else if(!m){p.gripHint="NO TARGET · AIM CLOSER";p.gripHintUntil=s.time+1.5}}
    }
  }
  const held=!!(p.gripCoverId||p.gripId);
  if(held&&i.fire)p.fireBlocked=true;
  if((i.throwMatter&&!prev.throwMatter)||(held&&i.grip&&i.fire&&!prev.fire)){
    if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv&&spendEnergy(p,s,c.coverThrowEnergy)){
-     const a=p.gunFacing??p.aim,force=c.throwForce*.62*(p.godTime>0?1.25:1)*(combatFight(s)?Math.sqrt(12/(bayObject(cv.artId||cv.id)?.mass||12)):1),inherit=clamp(c.carryMomentum,0,1);
+     const a=p.aim,force=c.throwForce*.62*(p.godTime>0?1.25:1)*(combatFight(s)?Math.sqrt(12/(bayObject(cv.artId||cv.id)?.mass||12)):1),inherit=clamp(c.carryMomentum,0,1);
      // Release where it is: preserve orientation and measured carry velocity.
      cv.vx=Math.cos(a)*force+p.vx*inherit+(cv.vx||0)*(1-inherit);cv.vy=Math.sin(a)*force+p.vy*inherit+(cv.vy||0)*(1-inherit);
      cv.throwOwner=n;cv.hitIds=[];cv.build=-Math.hypot(cv.vx,cv.vy);s.fx.push({id:uid(),type:"cover-throw",x:cv.x,y:cv.y,life:.55,owner:n,text:"WHAM"});p.gripCoverId=null;
@@ -333,13 +340,13 @@ export function shotPlayerTime(from:{x:number;y:number},to:{x:number;y:number},z
 // Recovered from lab-psychic-cover.js at efecc43: orbit around holder and sweep
 // translation + rotated corners. Current mass response and geometry remain authoritative.
 function carryCoverSwept(cv:Cover,p:Player,s:GameState,dt:number){
- const a=p.gunFacing??p.aim,ox=cv.x,oy=cv.y,oa=cv.a,radius=Math.hypot(cv.x-p.x,cv.y-p.y),angle=Math.atan2(cv.y-p.y,cv.x-p.x),safeRadius=Math.hypot(cv.w,cv.h)/2+19;
+ const a=p.aim,ox=cv.x,oy=cv.y,oa=cv.a,radius=Math.hypot(cv.x-p.x,cv.y-p.y),angle=Math.atan2(cv.y-p.y,cv.x-p.x),safeRadius=Math.hypot(cv.w,cv.h)/2+19;
  const mass=bayObject(cv.artId||cv.id)?.mass||9,response=s.config.carryResponse*Math.sqrt(9/mass),turn=Math.min(3.2,s.config.carryTurnResponse*Math.sqrt(9/mass));
  // Clear the holder radially before turning a freshly ripped close object.
  const orbit=angle+(radius<safeRadius?0:clamp(wrap(a-angle),-turn*dt,turn*dt)),nextRadius=radius+(Math.max(p.coverGripDist,safeRadius)-radius)*(1-Math.exp(-response*dt));
  const dx=p.x+Math.cos(orbit)*nextRadius-cv.x,dy=p.y+Math.sin(orbit)*nextRadius-cv.y,len=Math.hypot(dx,dy),travel=Math.min(len,550*dt),mx=len?dx/len*travel:0,my=len?dy/len*travel:0;
  const da=radius<safeRadius?0:clamp(wrap(a+Math.PI/2-cv.a),-turn*dt,turn*dt),steps=Math.max(1,Math.ceil((travel+Math.abs(da)*Math.hypot(cv.w,cv.h)/2)/3));
- for(let k=1;k<=steps;k++){const candidate={...cv,x:ox+mx*k/steps,y:oy+my*k/steps,a:oa+da*k/steps};if(carryBlocked(candidate,cv,s)){p.gripCoverId=null;p.gripHint="CARRY BLOCKED · REPOSITION";p.gripHintUntil=s.time+1.5;cv.build=0;cv.vx=cv.vy=0;s.fx.push({id:uid(),type:"matter-drop",x:cv.x,y:cv.y,life:.24,text:"CONTACT"});return;}cv.x=candidate.x;cv.y=candidate.y;cv.a=candidate.a;}
+ for(let k=1;k<=steps;k++){const candidate={...cv,x:ox+mx*k/steps,y:oy+my*k/steps,a:oa+da*k/steps};if(carryBlocked(candidate,cv,s)){p.gripHint="CARRY BLOCKED · REPOSITION OR THROW";p.gripHintUntil=s.time+.25;cv.build=.001;cv.vx=cv.vy=0;return;}cv.x=candidate.x;cv.y=candidate.y;cv.a=candidate.a;}
  cv.vx=(cv.x-ox)/Math.max(.001,dt);cv.vy=(cv.y-oy)/Math.max(.001,dt);cv.build=.001;
 }
 function carryBlocked(candidate:Cover,original:Cover,s:GameState){
@@ -390,7 +397,7 @@ function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
 function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInputs=s.players.map(p=>p.input),playerStarts=s.players.map(p=>({x:p.x,y:p.y}));
  s.players.forEach((p,n)=>p.input=chargeIntent(p,s,rawInputs[n],dt));
  if(combatFight(s))s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0);
- const slow=s.players.some(p=>p.input.slow&&p.battery>0),d=dt*(slow?.52:1);
+ const slow=s.players.some(p=>p.hp>0&&p.input.slow&&p.battery>0),d=dt*(slow?.52:1);s.timeScale=slow?.52:1;
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId);p.aim=i.aim;powerStep(p,s,dt);
   const coverContext=!!p.coverId;
   // PASS07: soft cover stays mobile/athletic. A commits hard brace; LT only plants an existing hard brace.
@@ -473,7 +480,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const c=s.config,rawInput
  for(let n=0;n<s.players.length;n++){
    const p=s.players[n];if(!p.gripCoverId)continue;const cv=s.covers.find(c=>c.id===p.gripCoverId);if(!cv){p.gripCoverId=null;continue}
    if(combatFight(s)){carryCoverSwept(cv,p,s,d);continue;}
-   const a=p.gunFacing??p.aim,ox=cv.x,oy=cv.y,blend=Math.min(1,d*c.carryResponse);
+   const a=p.aim,ox=cv.x,oy=cv.y,blend=Math.min(1,d*c.carryResponse);
    cv.a+=wrap(a+Math.PI/2-cv.a)*Math.min(1,d*c.carryTurnResponse);cv.x+=(p.x+Math.cos(a)*p.coverGripDist-cv.x)*blend;cv.y+=(p.y+Math.sin(a)*p.coverGripDist-cv.y)*blend;
    settleCover(cv,s);cv.vx=(cv.x-ox)/Math.max(.001,d);cv.vy=(cv.y-oy)/Math.max(.001,d);cv.build=.001;
  }
