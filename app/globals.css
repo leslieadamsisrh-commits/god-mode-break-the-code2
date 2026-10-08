@@ -228,3 +228,10 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 .fightScore{width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
 
 .combatAudit{position:absolute;right:12px;bottom:12px;z-index:30;max-width:340px;color:#c9e6ed;background:#101523ee;font:11px monospace;padding:8px;border:1px solid #667b93}.combatAudit[open]{max-height:270px;overflow:auto}.combatAudit summary{cursor:pointer}.combatAudit li{margin:5px 0}.combatAudit button{margin-top:8px}
+
+/* Watch controls are interactive, separate from the screen-reader-only score. */
+.studio.studioWatch{grid-template-rows:60px minmax(0,1fr) auto}
+.watchControls{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:6px 10px;background:#08111d;color:#dce9ec;border-top:1px solid #698995;font:11px monospace;min-width:0}
+.watchControls b{margin-right:auto}.watchControls button{min-height:40px;padding:6px 10px;border:1px solid #698995;background:#152433;color:#ecffff;cursor:pointer}.watchControls button:disabled{opacity:.5}
+.watchControls details{flex:1 0 100%;max-height:min(240px,40vh);overflow:auto}.watchControls summary{cursor:pointer;min-height:40px;padding:12px 4px;font-weight:bold;color:#ff9bdd}.watchControls small{display:block;white-space:normal;margin:6px 0;color:#a8c4cd}
+@media(max-width:800px){.studio.studioWatch{grid-template-rows:54px minmax(0,1fr) auto}.watchControls{font-size:10px}.watchControls button{min-height:44px}}
