@@ -1,8 +1,8 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert/strict'),{stripTypeScriptTypes}=require('node:module');
 let now=1000;class Clock extends Date{static now(){return now}}
 const ctx={Math,Date:Clock,crypto:require('crypto').webcrypto,Response,Request,URL};vm.createContext(ctx);
-for(const file of ['lib/bayBridgeMap.ts','lib/game.ts','app/api/game/route.ts'])vm.runInContext(stripTypeScriptTypes(fs.readFileSync(file,'utf8')).replace(/^import .*\n/gm,'').replace(/export /g,''),ctx);
-vm.runInContext('globalThis.api={GET,POST,rooms,advance,startOrRematch};',ctx);
+for(const file of ['lib/bayBridgeMap.ts','lib/game.ts','lib/roomStore.ts','app/api/game/route.ts'])vm.runInContext(stripTypeScriptTypes(fs.readFileSync(file,'utf8')).replace(/^import .*\n/gm,'').replace(/export /g,'').replace(/declare global\{[^\n]*\}\n/g,''),ctx);
+vm.runInContext('const read=readRoom,prune=pruneRooms;globalThis.api={GET,POST,rooms,advance,startOrRematch};',ctx);
 (async()=>{const a=ctx.api;async function post(b){const r=await a.POST(new Request('http://audit/api/game',{method:'POST',body:JSON.stringify(b)}));return{status:r.status,...await r.json()}}
 const host=await post({action:'create',mode:'duel',name:'Les'});assert.equal(host.status,201);assert.equal(host.state.phase,'lobby');assert.equal(host.state.players.length,1);assert(!('token' in host.state.players[0]));
 assert.equal((await post({action:'start',room:host.room,token:host.token})).status,400);
