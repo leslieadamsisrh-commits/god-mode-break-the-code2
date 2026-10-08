@@ -25,3 +25,9 @@ Inspect startup/contact/recovery and turning motion in all eight directions; ver
 ## Current stage
 
 Starting eight-direction punch-contact and glove-release key-pose studies against the runtime reference. No new generated art has been accepted into the renderer. Production remains release 38 until all required registration and verification pass.
+
+## First key-pose audit — 2026-10-08
+
+Generated eight-view punch-contact and left-glove release studies plus a targeted front-facing three-phase punch correction. Front-facing punch now uses readable toward-camera foreshortening. The multi-view sheets still repeat side-facing attacks where front/back attack directions are required, and anatomical hand consistency is not yet accepted. All three files are RGBA and sampled exterior pixels have alpha zero; visual preview colors alone are not proof of an opaque background.
+
+Reject these studies for runtime use: boot laces remain and chest armor/neckline differs from the runtime reference. No new sheets are registered or installed, and no directional release is claimed. Next asset work must correct identity and exact attack direction in small per-direction strips, then validate anchors and animation before accepting a runtime atlas.
