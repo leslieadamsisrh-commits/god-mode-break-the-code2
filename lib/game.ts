@@ -5,23 +5,24 @@ export const GRIP_STRENGTH=1.2; // Grip36 experiment: +20% manipulation/launch; 
 export const DEFAULT_CONFIG:CombatConfig={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:4,holdEnergy:3,coverThrowEnergy:6,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:5,dashEnergy:2,rechargeDelay:.8,rechargeRate:12,weaveEnabled:1,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:430,dashDuration:.16,doubleTapWindow:.28,slideSpeed:490,slideDuration:.50,slideSustain:160,slideSteer:5,slideSteerAngle:.48,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.39,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:420,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player={gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
-export type Cover={hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:{kind:"stone"|"metal";sourceArt?:string;fragment?:number}[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
-export type Matter={throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
-export type Shot={realAge?:number;volleyId?:string;fieldOwners?:number[];projectileScale?:number;id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
+export type Player={meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Cover={attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:{kind:"stone"|"metal";sourceArt?:string;fragment?:number}[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
+export type Matter={attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
+export type Shot={attackId?:string;source?:string;radius?:number;realAge?:number;volleyId?:string;fieldOwners?:number[];projectileScale?:number;id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
 export type Fx={material?:"digital"|"cyber";strength?:number;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number};
 export type HitRegion="low"|"torso"|"head";
-export type CombatEvent={source?:string;seq:number;round:number;at:number;kind:"hit"|"shield"|"cover"|"finish";owner:number;target?:number;region?:HitRegion;damage:number;x:number;y:number;z:number;material?:"stone"|"metal"};
+export type CombatEvent={attackId?:string;source?:string;seq:number;round:number;at:number;kind:"hit"|"shield"|"cover"|"finish";owner:number;target?:number;region?:HitRegion;damage:number;x:number;y:number;z:number;material?:"stone"|"metal"};
 export const REGION_DAMAGE={low:.75,torso:1,head:1.25};
 export const FINISHER_SECONDS=1.25;
 export type GameState={botStrategy?:"baseline"|"adaptive";botExperience?:BotExperience[];botRound?:FightRound;fightRecording?:FightRecording;actionSeq?:number;actions?:ActionOutcome[];actionCounts?:Record<string,number>;energySpent?:number[];watchPaused?:boolean;watchNextAt?:number;events?:CombatEvent[];eventSeq?:number;timeScale?:number;fightUntil?:number;build:string;mode:"bot"|"solo"|"duel"|"practice"|"watch";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
 
-export type ActionOutcome={context?:string;objectClass?:string;distanceBand?:string;spawnSide?:string;opponentBehavior?:string;speed?:number;mass?:number;round:number;seq:number;at:number;wallAt:number;owner:number;action:string;status:"attempted"|"activated"|"rejected"|"buffered"|"cancelled"|"contact"|"recovered";reason?:string;objectId?:string;amount?:number};
-function actionOutcome(s:GameState,owner:number,action:string,status:ActionOutcome["status"],reason?:string,objectId?:string,amount?:number){
- const e:ActionOutcome={round:s.round,seq:(s.actionSeq||0)+1,at:s.time,wallAt:s.lastAt,owner,action,status,...reason?{reason}:{},...objectId?{objectId}:{},...amount!==undefined?{amount}:{}};s.actionSeq=e.seq;recordFightAction(s,e);(s.actions??=[]).push(e);if(s.actions.length>128)s.actions.splice(0,s.actions.length-128);const key=owner+":"+action+":"+status;(s.actionCounts??={})[key]=(s.actionCounts[key]||0)+1;return e;
+export type ActionOutcome={attackId?:string;context?:string;objectClass?:string;distanceBand?:string;spawnSide?:string;opponentBehavior?:string;speed?:number;mass?:number;round:number;seq:number;at:number;wallAt:number;owner:number;action:string;status:"attempted"|"activated"|"rejected"|"buffered"|"cancelled"|"contact"|"missed"|"recovered";reason?:string;objectId?:string;amount?:number};
+function actionOutcome(s:GameState,owner:number,action:string,status:ActionOutcome["status"],reason?:string,objectId?:string,amount?:number,attackId?:string){
+ if(status==="activated"&&action==="throw"){attackId??=uid();const obj=s.covers.find(c=>c.id===objectId)||s.matter.find(m=>m.id===objectId);if(obj)obj.attackId=attackId;else if(reason==="orbit")for(const m of s.matter)if(m.throwOwner===owner&&m.attackId===undefined&&Math.hypot(m.vx,m.vy)>140)m.attackId=attackId;}
+ const e:ActionOutcome={round:s.round,seq:(s.actionSeq||0)+1,at:s.time,wallAt:s.lastAt,owner,action,status,...attackId?{attackId}:{},...reason?{reason}:{},...objectId?{objectId}:{},...amount!==undefined?{amount}:{}};s.actionSeq=e.seq;recordFightAction(s,e);(s.actions??=[]).push(e);if(s.actions.length>128)s.actions.splice(0,s.actions.length-128);const key=owner+":"+action+":"+status;(s.actionCounts??={})[key]=(s.actionCounts[key]||0)+1;return e;
 }
 export function combatDiagnostics(s:GameState){return{round:s.round,phase:s.phase,actionSeq:s.actionSeq||0,actions:s.actions||[],counts:s.actionCounts||{},energySpent:s.energySpent||[],units:{time:"simulation seconds",wallAt:"server milliseconds",energy:"observed battery loss"}};}
-function actionRequests(p:Player,i:InputState,prev:InputState){const out:string[]=[];for(const [key,action] of [["fire",i.grip?"throw":"shotgun"],["throwMatter","throw"],["grip","grip"],["slide","movement"],["shield","shield"],["powerup","charge"],["cover","build"],["orbit","orbit"],["slow","time"],["melee","melee"],["heavy","heavy"],["pinball","pinball"]] as const)if(i[key]&&!prev[key])out.push(action);if(i.powerUse&&!prev.powerUse)out.push(["build","orbit","pinball","heavy"][p.selectedPower||0]);return [...new Set(out)];}
+function actionRequests(p:Player,i:InputState,prev:InputState,time:number){const out:string[]=[];for(const [key,action] of [["fire",i.grip?"throw":(p.blastUntil||0)>time&&(p.blastCharge||0)>0?"glove-blast":"shotgun"],["throwMatter","throw"],["grip","grip"],["slide","movement"],["shield","shield"],["powerup","charge"],["cover","build"],["orbit","orbit"],["slow","time"],["melee","melee"],["heavy","heavy"],["pinball","pinball"]] as const)if(i[key]&&!prev[key])out.push(action);if(i.powerUse&&!prev.powerUse)out.push(["build","orbit","pinball","heavy"][p.selectedPower||0]);return [...new Set(out)];}
 function auditTransitions(s:GameState,before:Player[],requests:string[][],firstSeq:number){
  for(let n=0;n<s.players.length;n++){const p=s.players[n],old=before[n];
   const delta=Math.max(0,old.battery-p.battery);(s.energySpent??=[])[n]=(s.energySpent[n]||0)+delta;
@@ -30,18 +31,18 @@ function auditTransitions(s:GameState,before:Player[],requests:string[][],firstS
   if(old.knock>0&&p.knock<=0)actionOutcome(s,n,"reaction","recovered");
   if(!old.dash&&p.dash>0||!old.slide&&p.slide>0||old.coverId&&!p.coverId)actionOutcome(s,n,"movement","activated",old.coverId?"cover escape":"boost/slide");
   if(old.pinball<=0&&p.pinball>0)actionOutcome(s,n,"pinball","activated");
-  if(old.lastMelee!==p.lastMelee)actionOutcome(s,n,p.input.heavy||old.pendingMelee?.heavy?"heavy":"melee","activated");
+  if(old.lastMelee!==p.lastMelee&&!s.actions?.some(e=>e.seq>firstSeq&&e.owner===n&&e.action==="melee"&&e.status==="activated"))actionOutcome(s,n,p.input.heavy||old.pendingMelee?.heavy?"heavy":"melee","activated");
   if(old.pendingFireUntil!==undefined&&p.pendingFireUntil===undefined&&old.lastShot===p.lastShot)actionOutcome(s,n,"shotgun","cancelled",s.time>old.pendingFireUntil?"buffer expired":"state changed");
-  for(const action of requests[n]){if(s.actions?.some(e=>e.seq>firstSeq&&e.owner===n&&e.action===action&&(e.status==="activated"||e.status==="cancelled")))continue;const buffered=action==="shotgun"&&p.pendingFireUntil!==undefined||(action==="melee"||action==="heavy")&&!!p.pendingMelee;const reason=action==="build"||action==="grip"||action==="throw"?((p.gripHintUntil||0)>=s.time?p.gripHint:"no eligible target/action"):p.charging?"charging":p.knock>0?"reaction":p.battery<=0?"exhausted":"cooldown or incompatible state";actionOutcome(s,n,action,buffered?"buffered":"rejected",reason);}
+  for(const action of requests[n]){if(s.actions?.some(e=>e.seq>firstSeq&&e.owner===n&&e.action===action&&(e.status==="activated"||e.status==="cancelled"||e.status==="buffered"||e.status==="rejected")))continue;const buffered=action==="shotgun"&&p.pendingFireUntil!==undefined||(action==="melee"||action==="heavy")&&!!p.pendingMelee;const reason=action==="build"||action==="grip"||action==="throw"?((p.gripHintUntil||0)>=s.time?p.gripHint:"no eligible target/action"):p.charging?"charging":p.knock>0?"reaction":p.battery<=0?"exhausted":"cooldown or incompatible state";actionOutcome(s,n,action,buffered?"buffered":"rejected",reason);}
  }
 }
 
 // Release37: bounded authoritative evidence; persistent storage is browser-local, never executable code.
-export const FIGHT_SCHEMA=1, BOT_STRATEGY_ID="grip-flow37-v1";
+export const FIGHT_SCHEMA=2, BOT_STRATEGY_ID="combat-flow38-v1";
 export type ExperienceCell={trials:number;contacts:number;damage:number;blocks:number};
 export type BotExperience={schema:number;strategy:string;rounds:number;cells:Record<string,ExperienceCell>};
-type FighterMetrics={intentions:Record<string,number>;actions:Record<string,number>;rejections:Record<string,number>;batterySpent:number;chargingSeconds:number;blockedHoldSeconds:number;heldSeconds:number;longestBlockedHold:number;acquisitionToControl:number[];acquisitionToRelease:number[];launches:number;contacts:number;damage:number;shieldBlocks:number;followUps:number;escapes:number;recoverySeconds:number;releases:Record<string,number>};
-export type FightRound={round:number;duration:number;winner:number|null;spawnSides:string[];strategy:string;profileIds:string[];fighters:FighterMetrics[];evidence:ActionOutcome[];droppedEvidence:number;completed:boolean;trials:{owner:number;key:string;at:number;contact:boolean;damage:number;block:boolean}[];holds:(number|null)[];controlled:boolean[];blockedRun:number[];lastIntent:string[];follow:({at:number;moved:boolean}|null)[];recovering:boolean[]};
+type FighterMetrics={playerDamage:number;coverDamage:number;playerHits:number;coverHits:number;blocks:number;confirmedFollowUps:number;intentions:Record<string,number>;actions:Record<string,number>;rejections:Record<string,number>;batterySpent:number;chargingSeconds:number;blockedHoldSeconds:number;heldSeconds:number;longestBlockedHold:number;acquisitionToControl:number[];acquisitionToRelease:number[];launches:number;contacts:number;damage:number;shieldBlocks:number;followUps:number;escapes:number;recoverySeconds:number;releases:Record<string,number>};
+export type FightRound={round:number;duration:number;winner:number|null;spawnSides:string[];strategy:string;profileIds:string[];fighters:FighterMetrics[];evidence:ActionOutcome[];droppedEvidence:number;completed:boolean;trials:{attackId?:string;owner:number;key:string;at:number;contact:boolean;damage:number;block:boolean}[];holds:(number|null)[];controlled:boolean[];blockedRun:number[];lastIntent:string[];follow:({attackId?:string;at:number;moved:boolean;opening:boolean}|null)[];recovering:boolean[]};
 export type FightRecording={schema:number;release:string;commit:string|null;config:CombatConfig;strategy:string;active:boolean;target:number;abandoned:number;rounds:FightRound[];startingExperience:BotExperience[];finalExperience?:BotExperience[]};
 const freshExperience=():BotExperience=>({schema:FIGHT_SCHEMA,strategy:BOT_STRATEGY_ID,rounds:0,cells:{}});
 const copy=<T,>(v:T):T=>JSON.parse(JSON.stringify(v));
@@ -52,16 +53,17 @@ export function validateExperience(raw:unknown):BotExperience[]{
 }
 function profileId(p:BotExperience){let h=2166136261;for(const ch of JSON.stringify(p)){h=Math.imul(h^ch.charCodeAt(0),16777619);}return BOT_STRATEGY_ID+"-"+(h>>>0).toString(16);}
 function ensureExperience(s:GameState){return s.botExperience??=(s.players.map(()=>freshExperience()));}
-function newMetrics():FighterMetrics{return{intentions:{},actions:{},rejections:{},batterySpent:0,chargingSeconds:0,blockedHoldSeconds:0,heldSeconds:0,longestBlockedHold:0,acquisitionToControl:[],acquisitionToRelease:[],launches:0,contacts:0,damage:0,shieldBlocks:0,followUps:0,escapes:0,recoverySeconds:0,releases:{}};}
+function newMetrics():FighterMetrics{return{playerDamage:0,coverDamage:0,playerHits:0,coverHits:0,blocks:0,confirmedFollowUps:0,intentions:{},actions:{},rejections:{},batterySpent:0,chargingSeconds:0,blockedHoldSeconds:0,heldSeconds:0,longestBlockedHold:0,acquisitionToControl:[],acquisitionToRelease:[],launches:0,contacts:0,damage:0,shieldBlocks:0,followUps:0,escapes:0,recoverySeconds:0,releases:{}};}
 function ensureFightRound(s:GameState){if(s.mode!=="watch"&&s.mode!=="practice")return;const profiles=ensureExperience(s);return s.botRound??={round:s.round,duration:0,winner:null,spawnSides:s.players.map(p=>p.x<500?"left":"right"),strategy:s.botStrategy||"baseline",profileIds:profiles.map(profileId),fighters:s.players.map(newMetrics),evidence:[],droppedEvidence:0,completed:false,trials:[],holds:s.players.map(()=>null),controlled:s.players.map(()=>false),blockedRun:s.players.map(()=>0),lastIntent:s.players.map(()=>""),follow:s.players.map(()=>null),recovering:s.players.map(()=>false)};}
 function fightContext(s:GameState,n:number,objectId?:string){const p=s.players[n],t=s.players[1-n],held=s.covers.find(c=>c.id===(objectId||p.gripCoverId)),range=t?dist(p,t):0;const objectClass=held?.artId?.includes("sedan")?"sedan":held?.artId?.includes("cabinet")?"cabinet":held?"jersey":"matter",distanceBand=range<180?"near":range<330?"mid":"far",incoming=s.shots.some(sh=>sh.owner!==n&&dist(sh,p)<125),context=incoming?"incoming":t&&s.covers.some(c=>c.hp>0&&segmentCover(p,t,c))?"blocked":"open",opponentBehavior=t?.charging?"charging":t?.shield?"guarding":"moving",spawnSide=s.botRound?.spawnSides[n]||(p.x<500?"left":"right");return{context,objectClass,distanceBand,spawnSide,opponentBehavior};}
 function contextKey(e:ReturnType<typeof fightContext>,style:string){return[e.context,e.objectClass,e.distanceBand,e.spawnSide,e.opponentBehavior,style].join("/");}
 function recordFightAction(s:GameState,e:ActionOutcome){const r=ensureFightRound(s);if(!r||e.owner<0||e.owner>=r.fighters.length||r.completed)return;Object.assign(e,fightContext(s,e.owner,e.objectId));const f=r.fighters[e.owner],key=e.action+":"+e.status;f.actions[key]=(f.actions[key]||0)+1;
  if(e.status==="rejected"){const reason=e.reason||"unspecified";if(Object.keys(f.rejections).length<32||reason in f.rejections)f.rejections[reason]=(f.rejections[reason]||0)+1;}
  if(e.status==="activated"&&e.action==="grip"){r.holds[e.owner]=e.at;r.controlled[e.owner]=false;}
- if(e.status==="activated"&&(e.action==="throw"||e.action==="place")){const kind=e.reason?.startsWith("gesture ")?e.reason.slice(8):"explicit";f.releases[kind]=(f.releases[kind]||0)+1;if(e.action==="throw"){f.launches++;r.follow[e.owner]={at:e.at,moved:false};}const began=r.holds[e.owner];if(began!==null&&f.acquisitionToRelease.length<64)f.acquisitionToRelease.push(Math.max(0,e.at-began));r.holds[e.owner]=null;
-  if(r.trials.length<96)r.trials.push({owner:e.owner,key:contextKey(fightContext(s,e.owner,e.objectId),kind),at:e.at,contact:false,damage:0,block:false});}
- if(e.status==="contact"){f.contacts++;f.damage+=e.amount||0;if(e.reason==="shield")f.shieldBlocks++;const trial=[...r.trials].reverse().find(t=>t.owner===e.owner&&e.at-t.at<2);if(trial&&e.action.includes("throw")){trial.contact=true;trial.damage+=e.amount||0;trial.block||=e.reason==="shield";}const follow=r.follow[e.owner];if(follow&&follow.moved&&e.at-follow.at<2&&(e.action==="shotgun"||e.action==="melee")&&e.reason==="hit"){f.followUps++;r.follow[e.owner]=null;}}
+ if(e.status==="activated"&&(e.action==="throw"||e.action==="place")){const kind=e.reason?.startsWith("gesture ")?e.reason.slice(8):"explicit";f.releases[kind]=(f.releases[kind]||0)+1;if(e.action==="throw"){f.launches++;r.follow[e.owner]={attackId:e.attackId,at:e.at,moved:false,opening:false};}const began=r.holds[e.owner];if(began!==null&&f.acquisitionToRelease.length<64)f.acquisitionToRelease.push(Math.max(0,e.at-began));r.holds[e.owner]=null;
+  if(r.trials.length<96)r.trials.push({attackId:e.attackId,owner:e.owner,key:contextKey(fightContext(s,e.owner,e.objectId),kind),at:e.at,contact:false,damage:0,block:false});}
+ if(e.status==="contact"){f.contacts++;f.damage+=e.amount||0;if(e.reason==="shield")f.shieldBlocks++;if(e.reason==="hit"){f.playerHits++;f.playerDamage+=e.amount||0;}else if(e.reason==="cover"){f.coverHits++;f.coverDamage+=e.amount||0;}else if(e.reason==="shield")f.blocks++;const trial=e.attackId?r.trials.find(t=>t.attackId===e.attackId):undefined;if(trial&&e.action.includes("throw")){trial.contact||=e.reason==="hit"||e.reason==="shield";if(e.reason==="hit")trial.damage+=e.amount||0;trial.block||=e.reason==="shield";}const follow=r.follow[e.owner];if(follow&&e.attackId===follow.attackId&&e.action.includes("throw")&&(e.reason==="hit"||e.reason==="cover")&&(e.amount||0)>0)follow.opening=true;if(follow&&follow.moved&&e.at-follow.at<2&&(e.action==="shotgun"||e.action==="melee")&&e.reason==="hit"){f.followUps++;if(follow.opening)f.confirmedFollowUps++;r.follow[e.owner]=null;}}
+ if(e.action==="grip"&&e.status==="cancelled"){r.holds[e.owner]=null;r.controlled[e.owner]=false;}
  if(e.action==="movement"&&e.status==="activated"&&r.follow[e.owner])r.follow[e.owner]!.moved=true;
  if(e.action==="reaction"&&e.status==="recovered")r.recovering[e.owner]=true;
  // First320 events retained per round; aggregates continue. Bounds apply whether recording or not.
@@ -88,7 +90,7 @@ function preferredGripStyle(s:GameState,n:number,base:number){const p=ensureExpe
 }
 export function fightMemorySummary(s:GameState){if(s.mode!=="watch"&&s.mode!=="practice")return undefined;return{schema:FIGHT_SCHEMA,strategy:BOT_STRATEGY_ID,mode:s.botStrategy||"baseline",experienceRounds:(s.botExperience||[]).map(p=>p.rounds),recording:!!s.fightRecording?.active,completed:s.fightRecording?.rounds.length||0,target:10,reportReady:s.fightRecording?.rounds.length===10,abandoned:s.fightRecording?.abandoned||0};}
 export function fightMemoryControl(s:GameState,operation:string,profiles?:unknown,commit:string|null=null){if(s.mode!=="watch")throw Error("WATCH_ONLY");
- if(operation==="record"){if(s.fightRecording?.active)throw Error("RECORDING_ACTIVE");respawn(s);s.fightRecording={schema:FIGHT_SCHEMA,release:"Psychic Grip Flow & Bot Memory37",commit,config:copy(s.config),strategy:BOT_STRATEGY_ID,active:true,target:10,abandoned:0,rounds:[],startingExperience:copy(ensureExperience(s))};return;}
+ if(operation==="record"){if(s.fightRecording?.active)throw Error("RECORDING_ACTIVE");respawn(s);s.fightRecording={schema:FIGHT_SCHEMA,release:"Combat Flow & Melee38",commit,config:copy(s.config),strategy:BOT_STRATEGY_ID,active:true,target:10,abandoned:0,rounds:[],startingExperience:copy(ensureExperience(s))};return;}
  if(s.fightRecording?.active)throw Error("FINISH_RECORDING_FIRST");
  if(operation==="baseline")s.botStrategy="baseline";else if(operation==="adaptive"){if(profiles!==undefined)s.botExperience=validateExperience(profiles);s.botStrategy="adaptive";}else if(operation==="reset"){s.botExperience=s.players.map(freshExperience);s.botStrategy="baseline";}else throw Error("UNKNOWN_MEMORY_CONTROL");respawn(s);
 }
@@ -231,12 +233,12 @@ function damageCover(cv:Cover,s:GameState,damage:number){
  const meta=bayObject(cv.artId||cv.id),kind=meta?.material==="CONCRETE"?"stone":"metal";
  for(const p of s.players){if(p.coverId===cv.id)releaseCover(p,s,.25);if(p.gripCoverId===cv.id)p.gripCoverId=null;if(p.exit?.coverId===cv.id)p.exit=null;}
  s.fx.push({id:uid(),type:"cover-break",x:cv.x,y:cv.y,life:.8,angle:cv.a,text:kind});
- const count=Math.min(combatFight(s)?3:18,Math.max(0,64-s.matter.length));for(let n=0;n<count;n++){const a=n*2.399+cv.a,speed=50+n%5*24;s.matter.push({id:uid(),x:cv.x+Math.cos(a)*cv.w*.25,y:cv.y+Math.sin(a)*cv.h*.25,vx:Math.cos(a)*speed+(cv.vx||0)*.2,vy:Math.sin(a)*speed+(cv.vy||0)*.2,r:combatFight(s)?11:3+n%4,kind:cv.matterSources?.[n]?.kind||kind,heldBy:null,orbitBy:null,life:combatFight(s)?999:5,...combatFight(s)?{sourceArt:cv.matterSources?.[n]?.sourceArt||meta?.renderedShell,fragment:cv.matterSources?.[n]?.fragment??n,throwOwner:cv.throwOwner,hitIds:[]}:{}});}
+ const count=Math.min(combatFight(s)?3:18,Math.max(0,64-s.matter.length));for(let n=0;n<count;n++){const a=n*2.399+cv.a,speed=50+n%5*24;s.matter.push({id:uid(),x:cv.x+Math.cos(a)*cv.w*.25,y:cv.y+Math.sin(a)*cv.h*.25,vx:Math.cos(a)*speed+(cv.vx||0)*.2,vy:Math.sin(a)*speed+(cv.vy||0)*.2,r:combatFight(s)?11:3+n%4,kind:cv.matterSources?.[n]?.kind||kind,heldBy:null,orbitBy:null,life:combatFight(s)?999:5,...combatFight(s)?{sourceArt:cv.matterSources?.[n]?.sourceArt||meta?.renderedShell,fragment:cv.matterSources?.[n]?.fragment??n,throwOwner:cv.throwOwner,attackId:cv.attackId,hitIds:[]}:{}});}
 }
 function coverImpact(cv:Cover,s:GameState,key:string,other?:Cover){
  if(!combatFight(s)||cv.hp<=0||cv.build>=0||Math.hypot(cv.vx||0,cv.vy||0)<160||cv.hitIds?.includes(key))return;
  (cv.hitIds??=[]).push(key);const damage=Math.min(100,Math.hypot(cv.vx||0,cv.vy||0)*(bayObject(cv.artId||cv.id)?.mass||9)/90);
- if(other){damageCover(other,s,damage);if(other.build<0)(other.hitIds??=[]).push(cv.id);}damageCover(cv,s,damage);combatEvent(s,{kind:"cover",source:"cover-throw",owner:cv.throwOwner??-1,damage,x:cv.x,y:cv.y,z:12,material:other&&bayObject(other.artId||other.id)?.material!=="CONCRETE"?"metal":"stone"});s.fx.push({id:uid(),type:"cover-impact",x:cv.x,y:cv.y,life:.3});
+ if(other){damageCover(other,s,damage);if(other.build<0)(other.hitIds??=[]).push(cv.id);}damageCover(cv,s,damage);combatEvent(s,{kind:"cover",source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??-1,damage,x:cv.x,y:cv.y,z:12,material:other&&bayObject(other.artId||other.id)?.material!=="CONCRETE"?"metal":"stone"});s.fx.push({id:uid(),type:"cover-impact",x:cv.x,y:cv.y,life:.3});
 }
 function settleCover(cv:Cover,s:GameState){
  const ex=Math.abs(Math.cos(cv.a))*cv.w/2+Math.abs(Math.sin(cv.a))*cv.h/2,ey=Math.abs(Math.sin(cv.a))*cv.w/2+Math.abs(Math.cos(cv.a))*cv.h/2;
@@ -270,10 +272,10 @@ function powerStep(p:Player,s:GameState,dt:number){
  const interrupted=!!(i.fire||i.slide||i.melee||i.heavy||i.grip||i.cover||i.shield||i.coverAim||i.slow||i.pinball||p.knock>0||p.slide>0||p.dash>0||p.exit||p.kickStage!=="none");
  if(p.charging&&(!i.powerup||interrupted)){
   if(!interrupted&&p.godCharge>=.35&&p.battery>0){p.godDuration=c.godDuration*p.godCharge;p.godTime=p.godDuration;p.powerFlash=.65;s.fx.push({id:uid(),type:"god-awaken",x:p.x,y:p.y,life:.5,text:"GOD FRAME"})}
-  p.powerReleaseAge=p.chargeAge;p.powerReleaseCharge=p.godCharge;p.charging=false;p.powerReturn=interrupted?0:.24;p.chargeAge=0;p.godCharge=0;if(interrupted){p.powerBlocked=true;p.powerFlash=0;}
+  if(!p.blastCharge)p.blastChargeProgress=0;p.powerReleaseAge=p.chargeAge;p.powerReleaseCharge=p.godCharge;p.charging=false;p.powerReturn=interrupted?0:.24;p.chargeAge=0;p.godCharge=0;if(interrupted){p.powerBlocked=true;p.powerFlash=0;}
  }
  if(i.powerup&&!p.charging&&!p.powerBlocked&&(!p.godTime||refill)&&!interrupted){const remaining=p.battery<99.999?clamp(p.battery/100,0,1):0;p.godTime=0;p.powerFlash=0;p.charging=true;p.chargeAge=remaining>.001?.35+remaining*c.powerChargeSeconds:0;p.godCharge=remaining;p.powerReturn=0}
- if(p.charging){p.chargeAge+=dt;p.godCharge=clamp((p.chargeAge-.35)/Math.max(.1,c.powerChargeSeconds),0,1);p.battery=Math.min(100,p.battery+c.powerRecharge*dt);p.lastEnergyAt=s.time;if(p.coverId)p.peek=false}
+ if(p.charging){if((p.blastCharge||0)<1){p.blastChargeProgress=Math.min(1,(p.blastChargeProgress||0)+dt/GLOVE_BLAST_38.manufactureSeconds);if(p.blastChargeProgress>=1){p.blastCharge=1;}}p.chargeAge+=dt;p.godCharge=clamp((p.chargeAge-.35)/Math.max(.1,c.powerChargeSeconds),0,1);p.battery=Math.min(100,p.battery+c.powerRecharge*dt);p.lastEnergyAt=s.time;if(p.coverId)p.peek=false}
  const target=p.charging?clamp(c.chargeMoveScale??.67145,.35,.85):1;
  p.chargeMotion=(p.chargeMotion??1)+(target-(p.chargeMotion??1))*(1-Math.exp(-clamp(c.chargeMoveResponse??8,3,16)*dt));
 }
@@ -316,18 +318,52 @@ function slideAction(s:GameState,n:number,prev:InputState){const p=s.players[n],
  }
  startDash(p,s,a);return true;
 }
+export const MELEE_38=[
+ {name:"PUNCH",startup:.08,active:.07,recovery:.14,range:62,damage:18,push:35},
+ {name:"DRIVING KICK",startup:.10,active:.08,recovery:.17,range:70,damage:20,push:45},
+ {name:"UPPERCUT",startup:.12,active:.08,recovery:.18,range:62,damage:24,push:50},
+ {name:"TURNING KICK",startup:.14,active:.09,recovery:.23,range:76,damage:28,push:95},
+] as const;
+export const GLOVE_BLAST_38={damage:38,speed:650,lifetime:.7,manufactureSeconds:1.2,window:.65};
+export type MeleeCombo={stage:number;started:number;angle:number;attackId:string;tested:boolean;queued:boolean};
+function meleeStart(s:GameState,n:number,stage:number){const p=s.players[n];p.meleeCombo={stage,started:s.time,angle:p.aim,attackId:uid(),tested:false,queued:false};p.lastMelee=s.time;p.pendingFireUntil=undefined;p.meleeNextStage=undefined;actionOutcome(s,n,"melee","activated",MELEE_38[stage].name,undefined,undefined,p.meleeCombo.attackId);}
+function meleeInput(s:GameState,n:number,prev:InputState){const p=s.players[n],i=p.input;
+ if(i.fire&&!prev.fire&&!i.grip&&!i.throwMatter&&!p.gripCoverId&&!p.gripId&&!p.orbitIds.length&&(p.blastUntil||0)>s.time&&(p.blastCharge||0)>0&&!p.charging&&p.knock<=0&&!p.shield){
+  const attackId=uid(),a=p.aim;p.blastCharge=0;p.blastChargeProgress=0;p.blastUntil=0;p.blastPoseAt=s.time;p.meleeCombo=undefined;p.meleeNextStage=undefined;p.fireBlocked=true;p.pendingFireUntil=undefined;
+  s.shots.push({id:uid(),attackId,source:"glove-blast",owner:n,x:p.x+Math.cos(a)*26,y:p.y+Math.sin(a)*26,vx:Math.cos(a)*GLOVE_BLAST_38.speed,vy:Math.sin(a)*GLOVE_BLAST_38.speed,life:GLOVE_BLAST_38.lifetime,z:36*s.config.spriteScale,damage:GLOVE_BLAST_38.damage,realAge:0});
+  actionOutcome(s,n,"glove-blast","activated","one stored charge consumed",undefined,undefined,attackId);s.fx.push({id:uid(),type:"glove-muzzle",x:p.x,y:p.y,z:36*s.config.spriteScale,angle:a,life:.25,owner:n});return;
+ }
+ if(!i.melee||prev.melee)return;
+ if(p.charging||p.knock>0||p.coverId||p.gripCoverId||p.gripId||p.orbitIds.length||i.shield||i.slide||i.grip||i.heavy){actionOutcome(s,n,"melee","rejected",p.knock>0?"reaction":"incompatible state");return;}
+ const m=p.meleeCombo;
+ if(m){const spec=MELEE_38[m.stage],age=s.time-m.started,total=spec.startup+spec.active+spec.recovery;if(m.stage<3&&!m.queued&&age>=total-.18){m.queued=true;actionOutcome(s,n,"melee","buffered","one continuation",undefined,undefined,m.attackId);}else actionOutcome(s,n,"melee","rejected",m.queued?"continuation already queued":"outside continuation window");return;}
+ meleeStart(s,n,(p.meleeNextUntil||0)>s.time?p.meleeNextStage??0:0);
+}
+function meleeStep(s:GameState,n:number){const p=s.players[n],m=p.meleeCombo;if(!m)return;
+ if(p.hp<=0||p.knock>0||p.charging||p.input.shield||p.input.slide||p.input.grip||p.coverId||p.gripId||p.gripCoverId||p.orbitIds.length){actionOutcome(s,n,"melee","cancelled",p.knock>0?"incoming hit":"state changed",undefined,undefined,m.attackId);p.meleeCombo=undefined;p.meleeNextStage=undefined;p.meleeNextUntil=0;return;}
+ const spec=MELEE_38[m.stage],age=s.time-m.started;
+ if(!m.tested&&age>=spec.startup&&age<=spec.startup+spec.active+.025){m.tested=true;const end={x:p.x+Math.cos(m.angle)*spec.range,y:p.y+Math.sin(m.angle)*spec.range},t=s.players[1-n];let block:Cover|undefined,nearest=Infinity;
+  for(const cv of s.covers){if(cv.hp<=0)continue;const q=segmentCoverTime(p,end,cv);if(q!==null&&q<nearest){nearest=q;block=cv;}}
+  const contact=t&&t.hp>0?sweptCircle(p,end,t,t,20):null;
+  if(contact!==null&&contact<nearest){const hp=t.hp;duelContact(s,n,t,spec.damage,Math.cos(m.angle)*spec.push,Math.sin(m.angle)*spec.push,"torso",undefined,"melee",m.attackId);if(m.stage===3&&t.hp<hp){p.blastUntil=s.time+GLOVE_BLAST_38.window;}}
+  else if(block){damageCover(block,s,spec.damage);combatEvent(s,{kind:"cover",source:"melee",attackId:m.attackId,owner:n,damage:spec.damage,x:end.x,y:end.y,z:25,material:bayObject(block.artId||block.id)?.material==="CONCRETE"?"stone":"metal"});}
+  else actionOutcome(s,n,"melee","missed","whiff",undefined,undefined,m.attackId);
+  s.fx.push({id:uid(),type:"melee-strike",x:end.x,y:end.y,z:30,angle:m.angle,life:.14,owner:n,text:spec.name});
+ }
+ if(age>=spec.startup+spec.active+spec.recovery){p.meleeCombo=undefined;p.meleeNextStage=m.stage<3?m.stage+1:undefined;p.meleeNextUntil=s.time+.22;if(m.queued&&m.stage<3)meleeStart(s,n,m.stage+1);else actionOutcome(s,n,"melee","recovered",spec.name,undefined,undefined,m.attackId);}
+}
 // Duel repairs use the existing pellet damage and action cooldown; movement tuning stays fixed.
 function combatFight(s:GameState){return true} // One collision/physics contract across practice, duel and roam.
 function combatEvent(s:GameState,event:Omit<CombatEvent,"seq"|"round"|"at">){
- if(event.kind!=="finish")actionOutcome(s,event.owner,event.source||"contact","contact",event.kind,event.target!==undefined?"player-"+event.target:undefined,event.damage);
+ if(event.kind!=="finish")actionOutcome(s,event.owner,event.source||"contact","contact",event.kind,event.target!==undefined?"player-"+event.target:undefined,event.damage,event.attackId);
  const e={...event,seq:(s.eventSeq||0)+1,round:s.round,at:s.time};s.eventSeq=e.seq;(s.events??=[]).push(e);s.events=s.events.slice(-64);return e;
 }
-function duelContact(s:GameState,owner:number,target:Player,damage:number,vx=0,vy=0,region:HitRegion="torso",point?:{x:number;y:number;z:number},source="contact"){
+function duelContact(s:GameState,owner:number,target:Player,damage:number,vx=0,vy=0,region:HitRegion="torso",point?:{x:number;y:number;z:number},source="contact",attackId?:string){
  if(target.hp<=0)return;
  const pos=point||{x:target.x,y:target.y,z:36*s.config.spriteScale},targetId=s.players.indexOf(target);
- if(target.shield&&target.input.shield&&!target.coverId&&target.battery>0){combatEvent(s,{kind:"shield",source,owner,target:targetId,damage:0,...pos});s.fx.push({id:uid(),type:"shield-block",x:pos.x,y:pos.y,z:pos.z,life:.22,owner});return;}
+ if(target.shield&&target.input.shield&&!target.coverId&&target.battery>0){combatEvent(s,{kind:"shield",source,attackId,owner,target:targetId,damage:0,...pos});s.fx.push({id:uid(),type:"shield-block",x:pos.x,y:pos.y,z:pos.z,life:.22,owner});return;}
  const dealt=Math.min(target.hp,damage);target.hp=Math.max(0,target.hp-damage);if(s.time-(target.lastContactAt??-9)>.35)target.reactionDeadline=s.time+.60;target.lastContactAt=s.time;target.knock=Math.min(.26,Math.max(0,(target.reactionDeadline??s.time)-s.time));target.vx+=vx;target.vy+=vy;target.hitUntil=s.time+.18;target.hitAngle=Math.atan2(vy,vx);if(!target.hp)target.deathAt=s.time;
- combatEvent(s,{kind:"hit",source,owner,target:targetId,region,damage:dealt,...pos});const burst=s.fx.find(f=>f.type==="hit"&&f.owner===owner&&f.life>=.319&&dist(f,pos)<35);if(burst)burst.strength=Math.min(100,(burst.strength||0)+dealt);else s.fx.push({id:uid(),type:"hit",x:pos.x,y:pos.y,z:pos.z,life:.32,owner,text:region,material:target.bot?"cyber":"digital",angle:Math.atan2(vy,vx),strength:dealt});
+ combatEvent(s,{kind:"hit",source,attackId,owner,target:targetId,region,damage:dealt,...pos});const burst=s.fx.find(f=>f.type==="hit"&&f.owner===owner&&f.life>=.319&&dist(f,pos)<35);if(burst)burst.strength=Math.min(100,(burst.strength||0)+dealt);else s.fx.push({id:uid(),type:"hit",x:pos.x,y:pos.y,z:pos.z,life:.32,owner,text:region,material:target.bot?"cyber":"digital",angle:Math.atan2(vy,vx),strength:dealt});
  // One bounded floor stain per confirmed burst; shields never reach this branch.
  if(target.bot){const last=s.fx.find(f=>f.type==="cyber-stain"&&f.owner===owner&&dist(f,target)<28&&f.life>3.94);if(!last){const stains=s.fx.filter(f=>f.type==="cyber-stain");if(stains.length>=12)s.fx=s.fx.filter(f=>f!==stains[0]);s.fx.push({id:uid(),type:"cyber-stain",x:target.x,y:target.y,life:4,angle:Math.atan2(vy,vx),owner});}}
 }
@@ -390,14 +426,15 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  slideAction(s,n,prev);
  if(i.pinball&&!prev.pinball&&p.battery<22)spendEnergy(p,s,22);
  if(i.pinball&&!prev.pinball&&p.battery>=22){p.battery-=22;p.pinball=c.pinballDuration;p.vx=Math.cos(p.aim)*c.pinballSpeed;p.vy=Math.sin(p.aim)*c.pinballSpeed;s.fx.push({id:uid(),type:"pinball",x:p.x,y:p.y,life:.5,owner:n})}
- if(i.melee&&!prev.melee||i.heavy&&!prev.heavy)p.pendingMelee={heavy:!!i.heavy,until:s.time+.12};
+ meleeInput(s,n,prev);
+ // Heavy gauntlet keeps its existing separate power path.
+ if(i.heavy&&!prev.heavy)p.pendingMelee={heavy:true,until:s.time+.18};
  const pending=p.pendingMelee;
- if(pending&&pending.until<s.time)p.pendingMelee=undefined;
- else if(pending&&!p.charging&&p.knock<=0&&s.time-p.lastMelee>(pending.heavy?.85:.38)){
-  p.pendingMelee=undefined;p.lastMelee=s.time;const heavy=pending.heavy;
-  s.fx.push({id:uid(),type:heavy?"heavy":"melee",x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40,life:.22,owner:n});
-  const target=s.players[1-n],strike={x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40};
-  if(target&&dist(strike,target)<=21&&!s.covers.some(cv=>segmentCover(p,strike,cv)))duelContact(s,n,target,heavy?34:18,Math.cos(p.aim)*(heavy?520:280),Math.sin(p.aim)*(heavy?520:280),"torso",undefined,heavy?"heavy":"melee");
+ if(pending&&pending.until<s.time){p.pendingMelee=undefined;actionOutcome(s,n,"heavy","cancelled","buffer expired");}
+ else if(pending&&!p.charging&&p.knock<=0&&!p.meleeCombo&&s.time-p.lastMelee>.85){
+  p.pendingMelee=undefined;p.lastMelee=s.time;const strike={x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40},target=s.players[1-n];
+  s.fx.push({id:uid(),type:"heavy",...strike,life:.22,owner:n});
+  if(target&&dist(strike,target)<=21&&!s.covers.some(cv=>segmentCover(p,strike,cv)))duelContact(s,n,target,34,Math.cos(p.aim)*520,Math.sin(p.aim)*520,"torso",undefined,"heavy",uid());
  }
  if(i.cover&&!prev.cover)buildFieldCover(p,s,n);
  if(!i.fire)p.fireBlocked=false;
@@ -428,7 +465,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  if(i.orbit&&!prev.orbit){if(p.orbitIds.length)releaseOrbit(p,s);else if(p.gripCoverId){p.gripHint="RELEASE LB · DROP COVER BEFORE ORBIT";p.gripHintUntil=s.time+1.5;}else{const ms=fieldMatter(p,s).slice(0,3);if(ms.length&&spendEnergy(p,s,c.gripEnergy*ms.length)){p.gripId=null;p.orbitIds=ms.map(m=>m.id);ms.forEach(m=>{m.heldBy=null;m.orbitBy=n;m.vx=m.vy=0})}else if(!ms.length){p.gripHint="NO MATTER INSIDE FIELD";p.gripHintUntil=s.time+1.5;}}}
  const orbitThrow=p.orbitIds.length&&i.grip&&i.fire&&!prev.fire;
  if(p.orbitIds.length&&i.grip&&i.fire)p.fireBlocked=true;
- if(((i.launchOrbit&&!prev.launchOrbit)||orbitThrow)&&p.orbitIds.length&&spendEnergy(p,s,c.coverThrowEnergy)){p.orbitIds.forEach((id,j)=>{const m=s.matter.find(m=>m.id===id);if(m){m.orbitBy=null;m.throwOwner=n;m.hitIds=[];m.vx=Math.cos(p.aim+(j-1)*.12)*c.throwForce*1.05;m.vy=Math.sin(p.aim+(j-1)*.12)*c.throwForce*1.05;m.life=999}});p.orbitIds=[];actionOutcome(s,n,"throw","activated","orbit",undefined,c.coverThrowEnergy);}
+ if(((i.launchOrbit&&!prev.launchOrbit)||orbitThrow)&&p.orbitIds.length&&spendEnergy(p,s,c.coverThrowEnergy)){p.orbitIds.forEach((id,j)=>{const m=s.matter.find(m=>m.id===id);if(m){m.orbitBy=null;m.throwOwner=n;m.attackId=undefined;m.hitIds=[];m.vx=Math.cos(p.aim+(j-1)*.12)*c.throwForce*1.05;m.vy=Math.sin(p.aim+(j-1)*.12)*c.throwForce*1.05;m.life=999}});p.orbitIds=[];actionOutcome(s,n,"throw","activated","orbit",undefined,c.coverThrowEnergy);}
 
 }
 function muzzleSocket(p:Player){
@@ -472,9 +509,9 @@ function sweptCircle(from:{x:number;y:number},to:{x:number;y:number},start:{x:nu
  const x=from.x-start.x,y=from.y-start.y,dx=to.x-from.x-(end.x-start.x),dy=to.y-from.y-(end.y-start.y),c=x*x+y*y-radius*radius;
  if(c<=0)return 0;const a=dx*dx+dy*dy;if(a<1e-12)return null;const b=2*(x*dx+y*dy),disc=b*b-4*a*c;if(disc<0)return null;const t=(-b-Math.sqrt(disc))/(2*a);return t>=0&&t<=1?t:null;
 }
-export function shotPlayerTime(from:{x:number;y:number},to:{x:number;y:number},z:number,p:Player,start:{x:number;y:number},scale=.82){
+export function shotPlayerTime(from:{x:number;y:number},to:{x:number;y:number},z:number,p:Player,start:{x:number;y:number},scale=.82,radius=0){
  const r=bodyRegions(p,scale).find(r=>z>=r.min&&z<=r.max);if(!r)return null;const shield=p.shield&&p.input.shield&&!p.coverId&&p.battery>0;
- const t=sweptCircle(from,to,start,p,shield?30:r.r);return t===null?null:{t,region:r.region};
+ const t=sweptCircle(from,to,start,p,(shield?30:r.r)+radius);return t===null?null:{t,region:r.region};
 }
 // Grip 35: stick direction + magnitude selects a radial target; neutral holds it.
 // Legacy clients without these axes keep their aim-driven carry and explicit RT throw.
@@ -543,8 +580,8 @@ function matterContactSwept(m:Matter,from:{x:number;y:number},s:GameState,starts
  for(const c of s.covers){if(c.hp<=0||m.hitIds?.includes(c.id))continue;const t=segmentCoverTime(from,m,{...c,w:c.w+2*m.r,h:c.h+2*m.r});if(t!==null&&t<nearest){nearest=t;cv=c;}}
  if(speed>170)for(let n=0;n<s.players.length;n++){const p=s.players[n];if(n===m.throwOwner||p.hp<=0||m.hitIds?.includes("player-"+n))continue;const t=sweptCircle(from,m,starts[n],p,m.r+19);if(t!==null&&t<nearest){nearest=t;target=p;slot=n;cv=undefined;}}
  if(!Number.isFinite(nearest))return;m.x=from.x+(m.x-from.x)*nearest;m.y=from.y+(m.y-from.y)*nearest;
- if(target){(m.hitIds??=[]).push("player-"+slot);duelContact(s,m.throwOwner??-1,target,22,m.vx/speed*360,m.vy/speed*360,"low",{x:m.x,y:m.y,z:8},"matter-throw");m.vx*=.25;m.vy*=.25;}
- else if(cv){(m.hitIds??=[]).push(cv.id);damageCover(cv,s,28);m.vx*=-.45;m.vy*=-.45;const material=m.kind;combatEvent(s,{kind:"cover",source:"matter-throw",owner:m.throwOwner??-1,damage:28,x:m.x,y:m.y,z:8,material});s.fx.push({id:uid(),type:"cover-hit",x:m.x,y:m.y,z:8,life:.25,text:material});}
+ if(target){(m.hitIds??=[]).push("player-"+slot);duelContact(s,m.throwOwner??-1,target,22,m.vx/speed*360,m.vy/speed*360,"low",{x:m.x,y:m.y,z:8},"matter-throw",m.attackId);m.vx*=.25;m.vy*=.25;}
+ else if(cv){(m.hitIds??=[]).push(cv.id);damageCover(cv,s,28);m.vx*=-.45;m.vy*=-.45;const material=m.kind;combatEvent(s,{kind:"cover",source:"matter-throw",attackId:m.attackId,owner:m.throwOwner??-1,damage:28,x:m.x,y:m.y,z:8,material});s.fx.push({id:uid(),type:"cover-hit",x:m.x,y:m.y,z:8,life:.25,text:material});}
 }
 // Spectator bots issue ordinary authoritative inputs, never fabricated damage or teleports.
 function watchBotInput(s:GameState,n:number,opponent:InputState){
@@ -554,7 +591,8 @@ function watchBotInput(s:GameState,n:number,opponent:InputState){
 
  if(fresh.some(e=>e.action==="throw"&&e.status==="activated")){p.botReleaseUntil=s.time+.09;p.botFollowUntil=s.time+1.3;}
  if(fresh.some(e=>e.action==="build"&&e.status==="rejected")){p.botBuildFailures=(p.botBuildFailures||0)+1;p.botNextBuild=s.time+.65;p.botBuildAt=undefined;p.botEscapeUntil=s.time+.65;}
- if(fresh.some(e=>e.status==="contact"&&e.reason==="shield"))p.botFollowUntil=0;
+ if(fresh.some(e=>e.status==="contact"&&e.reason==="shield")){p.botFollowUntil=0;p.botEscapeUntil=s.time+.4;}
+ if(fresh.some(e=>e.action.includes("throw")&&e.status==="contact"&&e.reason==="hit"))p.botFollowUntil=s.time+1.1;
  const blockedIncoming=(s.events||[]).some(e=>e.kind==="shield"&&e.target===n&&s.time-e.at<.16);if(blockedIncoming)p.botCounterUntil=s.time+.4;
  const base={...empty(),aim:a,x:blocked?-Math.sin(a)*side*.8:Math.cos(a)*(range>260?.8:range<150?-.35:0),y:blocked?Math.cos(a)*side*.8:Math.sin(a)*(range>260?.8:range<150?-.35:0)};
  const set=(intent:string,i:Partial<InputState>)=>{p.botIntent=intent;p.input={...base,...i};};
@@ -564,9 +602,19 @@ function watchBotInput(s:GameState,n:number,opponent:InputState){
  const route=p.botRouteSide??side,escaping=s.time<(p.botEscapeUntil||0);
  if(blocked||escaping){let best=-Infinity;for(const angle of [a+route*Math.PI/2,a+route*.8,a-route*.8,a-route*Math.PI/2,a+Math.PI,a]){const x=Math.cos(angle)*.8,y=Math.sin(angle)*.8;if(!safe(x,y))continue;const score=escaping?Math.cos(angle-a-route*Math.PI/2):Math.cos(angle-a)*.4+Math.sin(angle-a)*route*.6;if(score>best){best=score;base.x=x;base.y=y;}}if(!Number.isFinite(best)){base.x=base.y=0;}}
  const own=s.covers.filter(cv=>cv.constructOwner===n&&cv.hp>0),resources=fieldMatter(p,s),recipe=resources.filter(m=>m.kind==="stone").length>=2&&resources.some(m=>m.kind==="metal");
+ if((p.blastUntil||0)>s.time&&(p.blastCharge||0)>0&&!blocked){set("TURNING KICK → GLOVE BLAST",{fire:!p.processedInput.fire,x:0,y:0});return;}
+ if(p.meleeCombo){const spec=MELEE_38[p.meleeCombo.stage],age=s.time-p.meleeCombo.started,total=spec.startup+spec.active+spec.recovery;set("PHYSICAL COMBO → "+spec.name,{melee:p.meleeCombo.stage<3&&age>=total-.15&&!p.meleeCombo.queued&&!p.processedInput.melee,fire:false,x:range>55?Math.cos(a)*.25:0,y:range>55?Math.sin(a)*.25:0});return;}
+ if(range<74&&!blocked&&p.knock<=0&&!p.charging&&s.time>=(p.botRecoverAfter||0)&&!p.gripCoverId&&!p.gripId&&!p.orbitIds.length){set("CLOSE OPENING → PHYSICAL COMBO",{melee:!p.processedInput.melee,fire:false,x:0,y:0});return;}
  // Commit to a recharge until 90 or a bounded interruption window; never fire/shield while holding Y.
  if(p.battery<32||(recipe&&own.length<2&&p.battery<43)||p.charging){p.botRechargeUntil??=s.time+4;}
- if(p.botRechargeUntil!==undefined){if(p.battery>=90||s.time>=p.botRechargeUntil){p.botRechargeUntil=undefined;p.botNextBuild=s.time+.25;set(p.battery>=90?"CHARGE COMPLETE → RE-ENGAGE":"RECHARGE WINDOW → REPOSITION",{x:base.x,y:base.y});return;}const rx=-Math.cos(a)*.65,ry=-Math.sin(a)*.65;if(p.powerBlocked&&p.processedInput.powerup){set("CHARGE INTERRUPTED → RESTART",{powerup:false,x:safe(rx,ry)?rx:base.x,y:safe(rx,ry)?ry:base.y});return;}set("RETREAT → RECHARGE",{powerup:true,x:safe(rx,ry)?rx:base.x,y:safe(rx,ry)?ry:base.y});return;}
+ if(p.botRechargeUntil!==undefined){
+  if(p.battery>=80||s.time>=p.botRechargeUntil){p.botRechargeUntil=undefined;p.botNextBuild=s.time+.8;p.botRecoverAfter=s.time+.5;set(p.battery>=80?"CHARGE COMPLETE → RE-ENGAGE":"RECHARGE WINDOW → REPOSITION",{x:base.x,y:base.y});return;}
+  const incoming=s.shots.some(sh=>sh.owner!==n&&sh.life>0&&dist(sh,p)<150);
+  const exposed=!blocked&&range<300,unsafe=p.knock>0||incoming||exposed;
+  if(unsafe){p.botRecoverAfter=s.time+.3;const rx=-Math.cos(a)*.8,ry=-Math.sin(a)*.8;set("BREAK LINE → SAFE RECHARGE",{powerup:false,x:safe(rx,ry)?rx:base.x,y:safe(rx,ry)?ry:base.y,slide:p.battery>=s.config.dashEnergy&&s.time>=(p.botEscapeUntil||0)&&!p.processedInput.slide});if(p.input.slide)p.botEscapeUntil=s.time+.8;return;}
+  if(s.time<(p.botRecoverAfter||0)||p.powerBlocked){set("RECOVER → REPOSITION",{powerup:false});return;}
+  set("PROTECTED WINDOW → RECHARGE",{powerup:true,x:blocked?0:base.x,y:blocked?0:base.y});return;
+ }
  // Observe actual completed creation, then acquire that same shell with ordinary Grip input.
  if(p.botBuildAt!==undefined&&!p.botBuildId){const built=own.find(cv=>(cv.born??-1)>=p.botBuildAt-.05);if(built)p.botBuildId=built.id;else if(s.time-p.botBuildAt>.2)p.botBuildAt=undefined;}
  if(p.botBuildId&&!p.gripCoverId){const built=s.covers.find(cv=>cv.id===p.botBuildId&&cv.hp>0);if(!built||dist(built,p)>psychicField(p).radius){p.botBuildId=undefined;p.botBuildAt=undefined;}else if(s.time-(p.botBuildAt||0)<2.2){set("CONSTRUCT → PSYCHIC GRIP",{x:0,y:0,aim:Math.atan2(built.y-p.y,built.x-p.x),grip:!p.processedInput.grip});return;}else{p.botBuildId=undefined;p.botBuildAt=undefined;}}
@@ -583,7 +631,7 @@ function watchBotInput(s:GameState,n:number,opponent:InputState){
   set(settle?"GRIP → ARC → SETTLE":ready?style===0?"PLACE → RELEASE LB":style===1?"SLIDE → RELEASE LB":"FLING → RELEASE LB":explicit?"BLOCKED GRIP → RT THROW":"GRIP → PUSH OUTWARD",{grip:!ready,fire:explicit,gripX:Math.cos(angle)*magnitude,gripY:Math.sin(angle)*magnitude,x:blocked?base.x:arcStep?strafeX:0,y:blocked?base.y:arcStep?strafeY:0});return;}
  p.botGripSince=undefined;p.botBuildId=undefined;p.botBuildAt=undefined;
  if(s.time<(p.botReleaseUntil||0)){set("THROW → RELEASE TRIGGER",{fire:false});return;}
- if(s.time<(p.botFollowUntil||0)){set("THROW → ADVANCE → ATTACK",{x:blocked?base.x:Math.cos(a),y:blocked?base.y:Math.sin(a),slide:range>200&&!p.processedInput.slide&&p.dash<=0&&p.slide<=0,fire:!blocked,melee:range<62&&!p.processedInput.melee});return;}
+ if(s.time<(p.botFollowUntil||0)){set("THROW → ADVANCE → ATTACK",{x:blocked?base.x:Math.cos(a),y:blocked?base.y:Math.sin(a),slide:range>200&&!p.processedInput.slide&&p.dash<=0&&p.slide<=0,fire:!blocked&&range>=74,melee:range<74&&!p.processedInput.melee});return;}
  if(p.coverId){set(p.coverMode==="soft"?"SOFT COVER → BRACE":"BRACE → EXPOSE → FIRE",{slide:p.coverMode==="soft",coverAim:true,fire:!blocked||p.coverMode==="braced",x:0,y:0});if(cycle>9){set("COVER → ESCAPE",{slide:!p.processedInput.slide,x:-Math.cos(a),y:-Math.sin(a)});}return;}
  const incoming=s.shots.some(sh=>sh.owner!==n&&sh.life>0&&Math.hypot(sh.x-p.x,sh.y-p.y)<125&&((p.x-sh.x)*sh.vx+(p.y-sh.y)*sh.vy)>0);
  const incomingCover=s.covers.some(cv=>cv.hp>0&&cv.build<0&&cv.throwOwner!==n&&Math.hypot(cv.vx||0,cv.vy||0)>160&&dist(cv,p)<Math.hypot(cv.w,cv.h)/2+125&&((p.x-cv.x)*(cv.vx||0)+(p.y-cv.y)*(cv.vy||0))>0);
@@ -613,7 +661,7 @@ function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
  const actions=["fire","shield","coverAim","slide","melee","heavy","grip","throwMatter","cover","orbit","launchOrbit","pinball","slow","powerUse"];
  if(fresh&&!p.powerBlocked&&p.knock<=0&&(!p.godTime||p.godTime>dt&&p.battery>s.config.godDrain*dt)){
   p.chargeSuppressed=actions.filter(key=>(raw as any)[key]);
-  p.timeFieldActive=false;p.pendingMelee=undefined;p.pendingFireUntil=undefined;releaseOrbit(p,s);p.slide=p.dash=p.pinball=p.brake=0;p.exit=null;p.kickStage="none";p.kickTime=0;p.shield=false;p.peek=false;
+  p.timeFieldActive=false;p.meleeCombo=undefined;p.meleeNextStage=undefined;p.blastUntil=0;p.pendingMelee=undefined;p.pendingFireUntil=undefined;releaseOrbit(p,s);p.slide=p.dash=p.pinball=p.brake=0;p.exit=null;p.kickStage="none";p.kickTime=0;p.shield=false;p.peek=false;
   if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}p.gripCoverId=null}
   if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m){m.heldBy=null;m.vx=m.vy=0;m.throwOwner=undefined;}p.gripId=null}
  }
@@ -621,7 +669,7 @@ function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
  else{p.chargeSuppressed=(p.chargeSuppressed||[]).filter(key=>(raw as any)[key]);for(const key of p.chargeSuppressed)(i as any)[key]=false}
  return i;
 }
-function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.map(p=>({...p,orbitIds:[...p.orbitIds]})),requests=s.players.map((p,n)=>actionRequests(p,p.input,prev[n]||empty())),firstSeq=s.actionSeq||0;requests.forEach((xs,n)=>xs.forEach(action=>actionOutcome(s,n,action,"attempted")));const c=s.config,rawInputs=s.players.map(p=>p.input),playerStarts=s.players.map(p=>({x:p.x,y:p.y}));
+function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.map(p=>({...p,orbitIds:[...p.orbitIds]})),requests=s.players.map((p,n)=>actionRequests(p,p.input,prev[n]||empty(),s.time)),firstSeq=s.actionSeq||0;requests.forEach((xs,n)=>xs.forEach(action=>actionOutcome(s,n,action,"attempted")));const c=s.config,rawInputs=s.players.map(p=>p.input),playerStarts=s.players.map(p=>({x:p.x,y:p.y}));
  s.players.forEach((p,n)=>p.input=chargeIntent(p,s,rawInputs[n],dt));
  if(combatFight(s))s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0);
  const d=dt;s.timeScale=1; // Projectile time never slows bodies or action timers.
@@ -684,9 +732,10 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
   }
   else{const chargeMove=p.chargeMotion??1,r=1-Math.exp(-c.response*d),m=Math.hypot(i.x,i.y);p.vx+=(i.x*c.moveSpeed*chargeMove-p.vx)*r;p.vy+=(i.y*c.moveSpeed*chargeMove-p.vy)*r;if(m<.05){p.vx*=Math.pow(c.stopDrag,d);p.vy*=Math.pow(c.stopDrag,d)}p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)}
   const holding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(holding&&!wasHolding){p.psychicStartedAt=s.time;p.psychicReturnUntil=0}else if(!holding&&wasHolding)p.psychicReturnUntil=s.time+.16;
+  meleeStep(s,n);
   if(p.pendingFireUntil!==undefined&&(s.time>p.pendingFireUntil||p.hp<=0||p.charging||i.grip||p.gripId||p.gripCoverId||p.orbitIds.length||p.fireBlocked))p.pendingFireUntil=undefined;
-  if(i.fire&&!prev[n]?.fire&&!p.charging&&!i.grip&&!p.gripId&&!p.gripCoverId&&!p.orbitIds.length&&!p.fireBlocked)p.pendingFireUntil=s.time+.12;
-  if((i.fire||p.pendingFireUntil!==undefined)&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&!p.gripId&&!p.gripCoverId&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
+  if(i.fire&&!prev[n]?.fire&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&!i.grip&&!p.gripId&&!p.gripCoverId&&!p.orbitIds.length&&!p.fireBlocked)p.pendingFireUntil=s.time+.12;
+  if((i.fire||p.pendingFireUntil!==undefined)&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&!p.gripId&&!p.gripCoverId&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
    const attachedCover=p.coverId?s.covers.find(cv=>cv.id===p.coverId):undefined;
    const muzzle=muzzleSocket(p),physical=coverMuzzleClearance(p,attachedCover,muzzle,p.gunFacing);
    // PASS06 TRIGGER AUTHORITY: cover never vetoes a ready trigger. If exposure
@@ -697,12 +746,12 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
    if(exposedD03)muzzle.x=p.x+(1688-1363)*artUnit;
    if(neighbor)muzzle.x=p.x+(neighbor.muzzle[0]-neighbor.anchor[0])*neighborUnit;
    const renderOffsetX=0,shotHeight=neighbor?(muzzle.y-p.y)+(neighbor.anchor[1]-neighbor.muzzle[1])*neighborUnit:exposedD03?(muzzle.y-p.y)+(814-250)*artUnit:clearance?Math.max(44*c.spriteScale,15616/332+4):44*c.spriteScale;
-   p.pendingFireUntil=undefined;actionOutcome(s,n,"shotgun","activated");p.lastShot=s.time;p.fireState=.11;p.recoil=.12;p.weaponState="FIRE";
+   const volleyId=uid();p.pendingFireUntil=undefined;actionOutcome(s,n,"shotgun","activated",undefined,undefined,undefined,volleyId);p.lastShot=s.time;p.fireState=.11;p.recoil=.12;p.weaponState="FIRE";
    // Foundation only: counters are explicit/configurable, but EMPTY/RELOAD gating is deferred
    // until the duel-balance pass so this playtest measures trigger/cadence without a reload interruption.
    if(typeof p.shells==="number")p.shells=Math.max(0,p.shells-1);
    if(p.coverId)p.returnToCover=.28;
-   const volleyId=uid();for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),volleyId,realAge:0,owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,damage:c.shotDamage*(p.godTime>0?c.godDamage:1),z:shotHeight,renderOffsetX,clearanceCoverId:clearance})}
+   for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),attackId:volleyId,source:"shotgun",volleyId,realAge:0,owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,damage:c.shotDamage*(p.godTime>0?c.godDamage:1),z:shotHeight,renderOffsetX,clearanceCoverId:clearance})}
    s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.18,owner:n,z:shotHeight,renderOffsetX,text:"BOOM",angle:p.gunFacing});
   }
  }
@@ -720,8 +769,8 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
     if(n===cv.throwOwner||s.players[n].hp<=0||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
     if(Math.hypot(q.x-clamp(q.x,-cv.w/2,cv.w/2),q.y-clamp(q.y,-cv.h/2,cv.h/2))<=17){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*(bayObject(cv.artId||cv.id)?.mass||9)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=target.battery;
      // One shield contest per release: impact consumes energy; an overwhelmed block passes residual force.
-     if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",source:"cover-throw",owner:cv.throwOwner??1-n,target:n,damage:0,x:target.x,y:target.y,z:28});s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:28,life:.22,owner:cv.throwOwner});}
-     else{const residual=shielding?1-available/Math.max(.001,cost):1;if(shielding){target.battery=0;target.lastEnergyAt=s.time;target.shield=false;s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:28,life:.22,owner:cv.throwOwner});}duelContact(s,cv.throwOwner??1-n,target,damage*residual,(cv.vx||0)*.25*residual,(cv.vy||0)*.25*residual,"torso",undefined,"cover-throw");}
+     if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??1-n,target:n,damage:0,x:target.x,y:target.y,z:28});s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:28,life:.22,owner:cv.throwOwner});}
+     else{const residual=shielding?1-available/Math.max(.001,cost):1;if(shielding){target.battery=0;target.lastEnergyAt=s.time;target.shield=false;s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:28,life:.22,owner:cv.throwOwner});}duelContact(s,cv.throwOwner??1-n,target,damage*residual,(cv.vx||0)*.25*residual,(cv.vy||0)*.25*residual,"torso",undefined,"cover-throw",cv.attackId);}
      damageCover(cv,s,damage);cv.vx*=shielding?.2:.35;cv.vy*=shielding?.2:.35;}
    }}
    if(combatFight(s)&&Math.hypot(cv.vx,cv.vy)>80&&s.time-(cv.scarAt??-9)>.09){cv.scarAt=s.time;const scars=s.fx.filter(f=>f.type==="cover-scrape");if(scars.length<24)s.fx.push({id:uid(),type:"cover-scrape",x:cv.x,y:cv.y,life:1.8,angle:Math.atan2(cv.vy,cv.vx),text:bayObject(cv.artId||cv.id)?.material==="CONCRETE"?"stone":"metal"});}
@@ -742,10 +791,10 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
   const segments=projectileSegments(sh,fields.filter(f=>sh.fieldOwners?.includes(f.slot)),dt);
   for(const segment of segments){if(sh.life<=0)break;const from={x:sh.x,y:sh.y};sh.x=segment.x;sh.y=segment.y;sh.life-=segment.travelTime;sh.projectileScale=segment.scale;
   const z=sh.z??36*c.spriteScale,target=s.players[1-sh.owner];let nearest=Infinity,block:Cover|undefined;
-  for(const cv of s.covers){if(cv.hp<=0||cv.id===sh.clearanceCoverId)continue;const height=bayObject(cv.artId||cv.id)?.dimensions.z??(cv.coverClass==="tall"?78:15616/332);if(z>height)continue;const t=segmentCoverTime(from,sh,cv);if(t!==null&&t<nearest){nearest=t;block=cv}}
-  const hit=target&&target.hp>0?shotPlayerTime(from,sh,z,{...target,x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.end,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.end},{x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.start,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.start},c.spriteScale):null;
-  if(hit&&hit.t<nearest){const point={x:from.x+(sh.x-from.x)*hit.t,y:from.y+(sh.y-from.y)*hit.t,z};duelContact(s,sh.owner,target,(sh.damage??c.shotDamage)*REGION_DAMAGE[hit.region],sh.vx*.1,sh.vy*.1,hit.region,point,"shotgun");sh.life=0;}
-  else if(block){const point={x:from.x+(sh.x-from.x)*nearest,y:from.y+(sh.y-from.y)*nearest,z},material=bayObject(block.artId||block.id)?.material==="CONCRETE"?"stone":"metal";damageCover(block,s,sh.damage??c.shotDamage);combatEvent(s,{kind:"cover",source:"shotgun",owner:sh.owner,damage:sh.damage??c.shotDamage,material,...point});sh.life=0;s.fx.push({id:uid(),type:"cover-hit",life:.25,owner:sh.owner,text:material,...point});}
+  for(const cv of s.covers){if(cv.hp<=0||cv.id===sh.clearanceCoverId)continue;const height=bayObject(cv.artId||cv.id)?.dimensions.z??(cv.coverClass==="tall"?78:15616/332);if(z>height)continue;const t=segmentCoverTime(from,sh,sh.source==="glove-blast"?{...cv,w:cv.w+16,h:cv.h+16}:cv);if(t!==null&&t<nearest){nearest=t;block=cv}}
+  const hit=target&&target.hp>0?shotPlayerTime(from,sh,z,{...target,x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.end,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.end},{x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.start,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.start},c.spriteScale,sh.source==="glove-blast"?8:0):null;
+  if(hit&&hit.t<nearest){const point={x:from.x+(sh.x-from.x)*hit.t,y:from.y+(sh.y-from.y)*hit.t,z};duelContact(s,sh.owner,target,(sh.damage??c.shotDamage)*REGION_DAMAGE[hit.region],sh.vx*.1,sh.vy*.1,hit.region,point,sh.source||"shotgun",sh.attackId||sh.volleyId);sh.life=0;}
+  else if(block){const point={x:from.x+(sh.x-from.x)*nearest,y:from.y+(sh.y-from.y)*nearest,z},material=bayObject(block.artId||block.id)?.material==="CONCRETE"?"stone":"metal";damageCover(block,s,sh.damage??c.shotDamage);combatEvent(s,{kind:"cover",source:sh.source||"shotgun",attackId:sh.attackId||sh.volleyId,owner:sh.owner,damage:sh.damage??c.shotDamage,material,...point});sh.life=0;s.fx.push({id:uid(),type:"cover-hit",life:.25,owner:sh.owner,text:material,...point});}
  }
  }
 
@@ -754,7 +803,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
   if(s.winner!==null)s.players[s.winner].score++;s.phase="finisher";s.finisher=FINISHER_SECONDS;s.timeScale=1;s.shots=[];
   const dead=s.players.find(p=>p.hp<=0)!;combatEvent(s,{kind:"finish",owner:s.winner??-1,damage:0,x:dead.x,y:dead.y,z:30});
   for(const cv of s.covers)if(cv.constructOwner!==undefined&&s.players[cv.constructOwner]?.hp<=0&&cv.hp>0)dissolveFieldCover(cv,s);
-  for(const p of s.players){p.timeFieldActive=false;p.timePellets=p.timeVolleys=0;p.pendingMelee=undefined;p.pendingFireUntil=undefined;p.input=empty();p.processedInput=empty();p.shield=false;if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}}p.gripCoverId=null;p.gripId=null;p.orbitIds=[];}
+  for(const p of s.players){p.timeFieldActive=false;p.timePellets=p.timeVolleys=0;p.meleeCombo=undefined;p.meleeNextStage=undefined;p.blastUntil=0;p.pendingMelee=undefined;p.pendingFireUntil=undefined;p.input=empty();p.processedInput=empty();p.shield=false;if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}}p.gripCoverId=null;p.gripId=null;p.orbitIds=[];}
   for(const m of s.matter){m.heldBy=null;m.orbitBy=null;}
  }
  // Recovered 12-unit hover and response14. Visual only: all collision hulls stay on the deck.

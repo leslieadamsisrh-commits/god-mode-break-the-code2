@@ -25,7 +25,7 @@ for(const shield of [false,true]){const s=scene();s.players[1].x=350;s.players[1
 {const s=scene();tick(s,{slow:true});a.startOrRematch(s,0);assert(!s.players[0].timeFieldActive);assert.equal(s.shots.length,0);}
 {const s=scene();const sh=bullet(s);sh.realAge=7.999;tick(s,{});assert.equal(s.shots.length,0);}
 // Bounded melee buffer executes once; continued hits cannot renew knock forever.
-{const s=scene();s.players[0].lastMelee=0;s.time=.30;tick(s,{melee:true});assert(s.players[0].pendingMelee);for(let n=0;n<10;n++)tick(s,{});assert(!s.players[0].pendingMelee);assert.equal(s.fx.filter(f=>f.type==='melee').length,1);}
+{const s=scene();tick(s,{melee:true});assert(s.players[0].meleeCombo);for(let n=0;n<25;n++)tick(s,{});assert(!s.players[0].meleeCombo);assert.equal(s.actions.filter(e=>e.action==='melee'&&e.status==='activated').length,1);}
 {const s=scene();for(let n=0;n<50;n++){a.duelContact(s,0,s.players[1],.1);tick(s,{});}assert.equal(s.players[1].knock,0,'continued pressure has a finite movement lock');}
 // Real shotgun accumulation/release: cadence and damage remain authoritative.
 {const s=scene();s.players[1].x=610;s.players[1].y=310;tick(s,{slow:true,fire:true,aim:0});for(let n=0;n<75;n++)tick(s,{fire:true,aim:0});const volleys=new Set(s.shots.map(b=>b.volleyId));assert.equal(volleys.size,4);assert.equal(s.shots.length,28);assert.equal(s.players[1].hp,420);const cost=100-s.players[0].battery;tick(s,{slow:true,aim:0});for(let n=0;n<40;n++)tick(s,{aim:0});assert(s.players[1].hp<420);assert(s.events.some(e=>e.kind==='hit'));console.log('MEASURE 31: four-volley setup',JSON.stringify({batterySpent:+cost.toFixed(2),damageAfterRelease:420-s.players[1].hp}));}
