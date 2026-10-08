@@ -226,3 +226,5 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 
 /* Combat 26 canvas HUD shares the actual renderer; retain an accessible text status. */
 .fightScore{width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
+
+.combatAudit{position:absolute;right:12px;bottom:12px;z-index:30;max-width:340px;color:#c9e6ed;background:#101523ee;font:11px monospace;padding:8px;border:1px solid #667b93}.combatAudit[open]{max-height:270px;overflow:auto}.combatAudit summary{cursor:pointer}.combatAudit li{margin:5px 0}.combatAudit button{margin-top:8px}
