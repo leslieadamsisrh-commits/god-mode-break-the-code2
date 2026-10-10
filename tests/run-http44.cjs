@@ -1,0 +1,6 @@
+const {spawn}=require('child_process'),assert=require('assert/strict');
+const server=spawn(process.execPath,['node_modules/next/dist/bin/next','start','-H','127.0.0.1','-p','3262'],{env:{...process.env,PORT:'3262'},stdio:['ignore','pipe','pipe']});
+let ready=false;server.stdout.on('data',b=>{if(b.toString().includes('Ready'))ready=true;});server.stderr.on('data',b=>process.stderr.write(b));
+function test(file){return new Promise((resolve,reject)=>{const p=spawn(process.execPath,[file,'http://127.0.0.1:3262'],{stdio:'inherit'});p.on('exit',code=>code===0?resolve():reject(Error(file+' exited '+code)));});}
+(async()=>{for(let n=0;n<100&&!ready;n++)await new Promise(r=>setTimeout(r,100));assert(ready,'server boot');const results=await Promise.allSettled([test('tests/http44.cjs'),test('tests/http42.cjs'),test('tests/http38.cjs')]);for(const r of results)if(r.status==='rejected')throw r.reason;})().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.kill('SIGTERM'));
+

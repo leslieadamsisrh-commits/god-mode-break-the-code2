@@ -6,11 +6,11 @@ function scene(n=0){const s=a.newGame('Les','token',1000,'practice');s.phase='pl
 function kit(s){s.matter=['stone','stone','metal'].map((kind,n)=>({id:'m'+n,kind,x:330,y:330+n*10,vx:0,vy:0,r:11,heldBy:null,orbitBy:null,life:999}));}
 function tick(s,n,i){a.setInput(s,n,s.players[n].lastSeq+1,i);a.advance(s,s.lastAt+1000/60);}
 for(const n of [0,1])for(const reinforced of [false,true])for(const shape of [0,1]){
- const s=scene(n),p=s.players[n];p.coverShape=shape;if(reinforced)kit(s);a.buildFieldCover(p,s,n);assert.equal(s.covers.length,1);const cv=s.covers[0];assert.equal(cv.maxHp,reinforced?360:280);assert.equal(cv.matterSources.length,reinforced?3:0);assert.equal(p.battery,70);assert.equal(cv.w,112*(shape?.72:1));
+ const s=scene(n),p=s.players[n];p.coverShape=shape;if(reinforced)kit(s);a.buildFieldCover(p,s,n);assert.equal(s.covers.length,1);const cv=s.covers[0];assert.equal(cv.maxHp,reinforced?360:280);assert.equal(cv.matterSources.length,3);assert.equal(p.battery,70);assert.equal(cv.w,112*(shape?.72:1));
  // Seven ordinary 10-damage pellets per volley: two must not destroy fresh cover.
  for(let k=0;k<14;k++)a.damageCover(cv,s,10);assert(cv.hp>0);assert(a.coverDamageStage(cv.hp,cv.maxHp)>0);
  const hp=cv.hp;a.damageCover(cv,s,NaN);a.damageCover(cv,s,-1);assert.equal(cv.hp,hp);
- a.damageCover(cv,s,999);assert.equal(cv.hp,0);assert.equal(s.matter.length,reinforced?3:0,'projection never manufactures collectible matter');a.damageCover(cv,s,999);assert.equal(s.matter.length,reinforced?3:0);assert(s.fx.some(f=>f.type==='cover-break'));
+ a.damageCover(cv,s,999);assert.equal(cv.hp,0);assert.equal(s.matter.length,3,'physical cover returns its recorded finite units');a.damageCover(cv,s,999);assert.equal(s.matter.length,3);assert(s.fx.some(f=>f.type==='cover-break'));
 }
 // Actual shotgun projectiles hit the constructed barrier before reaching its owner.
 for(const reinforced of [false,true]){
@@ -42,4 +42,4 @@ const ui=fs.readFileSync('app/Game.tsx','utf8');vm.runInContext(stripTypeScriptT
 for(const [button,key] of [[0,'slide'],[1,'melee'],[3,'powerup'],[4,'grip'],[5,'cover'],[6,'shield'],[7,'fire'],[12,'weaponCycle'],[13,'powerCycle'],[14,'fieldCycle'],[15,'coverShapeCycle']]){const pad={buttons:Array.from({length:16},(_,n)=>({pressed:n===button,value:n===button?1:0})),axes:[.8,.4,-1,0]},i=c.read(pad,{...a.empty()});assert(i[key],button+'/'+key);assert.equal(i.x,.8);assert.equal(i.y,.4);assert.equal(Math.abs(i.aim),Math.PI);if(button===5)assert(!i.powerUse);}
 s=scene();tick(s,0,{coverShapeCycle:true});assert.equal(s.players[0].coverShape,1);tick(s,0,{coverShapeCycle:true});assert.equal(s.players[0].coverShape,1);assert.equal(s.covers.length,0);tick(s,0,{});tick(s,0,{coverShapeCycle:true});assert.equal(s.players[0].coverShape,0);
 assert.deepEqual([360,288,198,108,0].map(hp=>a.coverDamageStage(hp,360)),[0,1,2,3,4]);
-console.log('PASS41: projected/reinforced economy, 2-volley survival, shapes/edges, rollback, '+checks+' rotated attachment/escape cases, zero-battery A, charge, collapse/rematch and controller mapping.');
+console.log('PASS41: finite-peel/reinforced economy (44 contract), 2-volley survival, shapes/edges, rollback, '+checks+' rotated attachment/escape cases, zero-battery A, charge, collapse/rematch and controller mapping.');
