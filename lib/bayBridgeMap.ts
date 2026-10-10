@@ -65,5 +65,6 @@ export function bayCoverState(){
  return BAY_OBJECTS.map(o=>({id:o.id,protected45:!!o.editorMetadata.locked,x:o.worldPosition.x,y:o.worldPosition.y,w:o.collisionHull.w,h:o.collisionHull.h,a:o.rotation,hp:o.breakThreshold,maxHp:o.breakThreshold,generated:false,build:0,variant:o.material==="STEEL"?3:o.material==="VEHICLE"?2:o.material==="INFRASTRUCTURE"?1:0,coverClass:o.coverClass as "waist"|"tall"}));
 }
 const generatedShell45=obj("war-generated-shell45",0,0,112,34,0,"damaged-jersey","CONCRETE","waist","CENTER",7,140,"Generated Concrete Shell");
-export function bayObject(id:string){return id===generatedShell45.id?generatedShell45:BAY_OBJECTS.find(o=>o.id===id)}
+const floorShell46=obj("floor-panel46",0,0,80,54,0,"damaged-jersey","CONCRETE","waist","CENTER",7,280,"Extracted Floor Slab");floorShell46.dimensions.z=14;floorShell46.rig=rigFor("BLOCK",80,54,14);
+export function bayObject(id:string){return id===floorShell46.id?floorShell46:id===generatedShell45.id?generatedShell45:BAY_OBJECTS.find(o=>o.id===id)}
 

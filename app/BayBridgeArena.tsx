@@ -1,6 +1,6 @@
 "use client";
 import {useState} from "react";
-import {projectWorld,bayRenderCamera,DECK_PITCH} from "../lib/bayBridgePresentation";
+import {projectWorld,bayRenderCamera} from "../lib/bayBridgePresentation";
 import {BAY_CAMERA,BAY_DEPTH_DOMAINS,BAY_LANES,BAY_OBJECTS,BAY_SPAWNS,bayObject} from "../lib/bayBridgeMap";
 
 export function comicProject(x:number,y:number,z=0){
@@ -24,10 +24,10 @@ export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onR
     <hr/><button onClick={onReset}><strong>RESET</strong><span>Reset current playtest</span></button>
    </div>}
   </div>
-  {qa&&<div className="arenaQa"><b>WAR GAMES ARENA 45</b>
+  {qa&&<div className="arenaQa"><b>WAR GAMES FLOOR 46</b>
    <span>WORLD {Number(p.x||0).toFixed(1)}, {Number(p.y||0).toFixed(1)}, 0 · LANE {lane}</span>
    <span>PROJECT {JSON.stringify(comicProject(p.x||0,p.y||0,0))}</span>
-   <span>CAMERA B · GROUND PITCH {DECK_PITCH} · ZOOM 1.85 · SCALE CLAMP {BAY_CAMERA.combatScaleMin}–{BAY_CAMERA.combatScaleMax}</span>
+   <span>CAMERA B · REGISTERED STADIUM PERSPECTIVE · ZOOM 1.85 · SCALE CLAMP {BAY_CAMERA.combatScaleMin}–{BAY_CAMERA.combatScaleMax}</span>
    <span>DEPTH {BAY_DEPTH_DOMAINS.map(d=>d.id+":"+d.nominalDistance).join(" · ")}</span>
    <span>SPAWNS {BAY_SPAWNS.map(x=>x.id+" "+x.x+"/"+x.y).join(" · ")}</span>
    <span>OBJECTS {near.map((o:any)=>o.id+":"+o.material+"/"+o.renderedShell).join(" · ")}</span>

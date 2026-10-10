@@ -2,17 +2,33 @@
 export const DECK_PITCH=.52;
 export const DECK_SCREEN_Y=430;
 export const DECK_SLOPE=.08;
-export const bayRenderCamera={x:500,y:310,ready:false,last:0};
+export const bayRenderCamera={x:500,y:310,ready:false,last:0,zoom:1.85};
 export const DECK={left:0,right:1000,far:0,near:620} as const;
 export function projectWorld(x:number,y:number,camera:{x:number;y:number},zoom:number,z=0){
- return{x:500+(x-camera.x)*zoom,y:DECK_SCREEN_Y+((y-camera.y)*DECK_PITCH+(x-camera.x)*DECK_SLOPE)*zoom-z*zoom};
+ const p=arenaPoint46(x,y),c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;
+ return{x:500+(p.x-c.x)*scale,y:DECK_SCREEN_Y+(p.y-c.y)*scale-z*zoom};
 }
 export function unprojectWorld(x:number,y:number,camera:{x:number;y:number},zoom:number){
- return{x:camera.x+(x-500)/zoom,y:camera.y+((y-DECK_SCREEN_Y)/zoom-(x-500)/zoom*DECK_SLOPE)/DECK_PITCH};
+ const c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;
+ return arenaInverse46(c.x+(x-500)/scale,c.y+(y-DECK_SCREEN_Y)/scale);
 }
+// Floor corners in the original1536x1024 artwork; the artwork is never stretched.
+const ARENA_Q46=1-596/836,ARENA_K46=720*(1-ARENA_Q46)-285;
+export function arenaPoint46(x:number,y:number){const t=y/620,d=1-ARENA_Q46*t;return{x:768+(x-500)*.596/d,y:(285+ARENA_K46*t)/d};}
+export function arenaInverse46(x:number,y:number){const t=(y-285)/(ARENA_K46+y*ARENA_Q46),d=1-ARENA_Q46*t;return{x:500+(x-768)*d/.596,y:t*620};}
+export function arenaJacobian46(x:number,y:number){const d=1-ARENA_Q46*y/620;return{x:.596/d,xy:(x-500)*.596*ARENA_Q46/(620*d*d),y:(ARENA_K46+285*ARENA_Q46)/(620*d*d)};}
+const sceneContexts46=new WeakMap<object,{sx:number;sy:number;tx:number;ty:number;anchorX:number;anchorY:number}>();
+export function setArenaContext46(g:CanvasRenderingContext2D,camera:{x:number;y:number},zoom:number,sx:number,sy:number){const c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;sceneContexts46.set(g,{sx:sx*scale,sy:sy*scale,tx:(500-c.x*scale)*sx,ty:(DECK_SCREEN_Y-c.y*scale)*sy,anchorX:camera.x,anchorY:camera.y});setWorld46(g,camera.x,camera.y);}
+export function setWorld46(g:CanvasRenderingContext2D,x:number,y:number){const c=sceneContexts46.get(g);if(!c)return;const p=arenaPoint46(x,y),j=arenaJacobian46(x,y);g.setTransform(c.sx*j.x,0,c.sx*j.xy,c.sy*j.y,c.tx+c.sx*(p.x-j.x*x-j.xy*y),c.ty+c.sy*(p.y-j.y*y));}
+export function relativeWorld46(x:number,y:number,dx:number,dy:number){const a=arenaPoint46(x,y),b=arenaPoint46(x+dx,y+dy),j=arenaJacobian46(x,y),ry=(b.y-a.y)/j.y;return{x:(b.x-a.x-j.xy*ry)/j.x,y:ry};}
+export function withWorld46(g:CanvasRenderingContext2D,x:number,y:number,draw:()=>void){const c=sceneContexts46.get(g);if(!c){draw();return;}const ox=c.anchorX,oy=c.anchorY;g.save();c.anchorX=x;c.anchorY=y;setWorld46(g,x,y);draw();c.anchorX=ox;c.anchorY=oy;g.restore();}
+export function vertical46(x:number,y:number,z:number){const j=arenaJacobian46(x,y);return{x:j.xy*1.536*z/(j.x*j.y),y:-1.536*z/j.y};}
+export function screenVector46(x:number,y:number,sx:number,sy:number){const j=arenaJacobian46(x,y),dy=sy/j.y,dx=(sx-j.xy*dy)/j.x,m=Math.min(1,Math.hypot(sx,sy)),n=Math.hypot(dx,dy)||1;return{x:dx/n*m,y:dy/n*m};}
 // Upright art retains the approved size; only its contact plane changes pitch.
 export function withUpright(g:CanvasRenderingContext2D,x:number,y:number,draw:()=>void){
- g.save();g.translate(x,y);g.transform(1,-DECK_SLOPE/DECK_PITCH,0,1/DECK_PITCH,0,0);g.translate(-x,-y);draw();g.restore();
+ const c=sceneContexts46.get(g);if(!c){g.save();g.translate(x,y);g.transform(1,-DECK_SLOPE/DECK_PITCH,0,1/DECK_PITCH,0,0);g.translate(-x,-y);draw();g.restore();return;}
+ const run=()=>{const j=arenaJacobian46(c.anchorX,c.anchorY),size=1.536;g.save();g.translate(x,y);g.transform(size/j.x,0,-j.xy*size/(j.x*j.y),size/j.y,0,0);g.translate(-x,-y);draw();g.restore();};
+ if(x===0&&y===0)run();else withWorld46(g,x,y,run);
 }
 
 // Structural walls are anchored at actual world boundaries, outside the playable inset.
