@@ -1,11 +1,12 @@
 const fs=require('fs'),vm=require('vm'),ts=require('typescript'),assert=require('assert/strict'),{stripTypeScriptTypes}=require('node:module'),{performance}=require('perf_hooks'),{createCanvas,loadImage}=require(process.env.CANVAS_MODULE);
 (async()=>{
-const c={exports:{},Math,performance,navigator:{getGamepads:()=>[]},crypto:require('crypto').webcrypto,setTimeout,clearTimeout};vm.createContext(c);
-for(const f of ['bayBridgeMap','bayBridgePresentation','cover-occlusion','game'])vm.runInContext(stripTypeScriptTypes(fs.readFileSync('lib/'+f+'.ts','utf8')).replace(/^import .*\n/gm,'').replace(/export /g,''),c);
+const c={exports:{},Math,performance,navigator:{getGamepads:()=>[]},crypto:require('crypto').webcrypto,setTimeout,clearTimeout,document:{createElement:()=>createCanvas(1,1)}};vm.createContext(c);
+for(const f of ['bayBridgeMap','bayBridgePresentation','warGamesPresentation45','cover-occlusion','game'])vm.runInContext(stripTypeScriptTypes(fs.readFileSync('lib/'+f+'.ts','utf8')).replace(/^import .*\n/gm,'').replace(/export /g,''),c);
 vm.runInContext('const cameraState=bayRenderCamera;',c);
 vm.runInContext(ts.transpileModule(fs.readFileSync('app/Game.tsx','utf8').replace(/^import .*\n/gm,''),{compilerOptions:{jsx:ts.JsxEmit.React,target:ts.ScriptTarget.ES2020,module:ts.ModuleKind.CommonJS}}).outputText+';globalThis.a={matter,updateChips42,drawChip42,chips42,environmentAssets,newGame,setInput,advance,draw,safeState,jade,BAY_OBJECTS,cameraState,cover,fx};',c);
 const a=c.a;async function im(file){const i=await loadImage(file);Object.defineProperties(i,{complete:{value:true},naturalWidth:{value:i.width},naturalHeight:{value:i.height}});return i;}
 a.environmentAssets.set('matter42',await im('public/assets/matter42/tumble-atlas.webp'));
+a.environmentAssets.set('war-foundation45',await im('public/assets/war-games45/foundation.webp'));
 for(const shell of ['world-road','world-bridge','world-far',...new Set(a.BAY_OBJECTS.map(o=>o.renderedShell))])a.environmentAssets.set(shell,await im('public/assets/bay-bridge/manga-v13/'+shell+'.webp'));
 const jade=await im('../reference/jade-ready-d03.webp');for(let n=0;n<24;n++)a.jade.set('ready-'+n,jade);
 const output=process.argv[2]||'../matter42-review';fs.mkdirSync(output,{recursive:true});fs.mkdirSync(output+'/frames',{recursive:true});

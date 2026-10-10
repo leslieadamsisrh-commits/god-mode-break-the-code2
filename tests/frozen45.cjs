@@ -1,0 +1,10 @@
+// Supply the exact Ground Peel44 lib/game.ts. The environment is intentionally
+// identical and empty: arena geometry, material placement and bot paths changed.
+const fs=require('fs'),vm=require('vm'),assert=require('assert/strict'),{stripTypeScriptTypes}=require('node:module');
+assert(process.argv[2],'Supply exact44 game.ts');
+function load(file){const c={Math,crypto:{randomUUID:()=> 'fixed'}};vm.createContext(c);for(const text of [fs.readFileSync('lib/bayBridgeMap.ts','utf8'),fs.readFileSync(file,'utf8')])vm.runInContext(stripTypeScriptTypes(text).replace(/^import .*\n/gm,'').replace(/export /g,''),c);vm.runInContext('globalThis.a={newGame,setInput,advance}',c);return c.a;}
+const old=load(process.argv[2]),next=load('lib/game.ts');let checks=0;
+for(const pattern of ['weave','shield','grip','fire','power','outward']){const a=old.newGame('x','t',1000,'solo'),b=next.newGame('x','t',1000,'solo');assert.equal(JSON.stringify(a.config),JSON.stringify(b.config));for(const s of [a,b]){s.covers=[];s.matter=[];s.groundSources44=[];s.players=s.players.slice(0,1);Object.assign(s.players[0],{x:230,y:330});}
+if(pattern==='outward')for(const s of [a,b]){s.covers=[{id:'wall',x:500,y:310,w:120,h:40,a:0,hp:100,maxHp:100,generated:false,build:0,variant:0}];Object.assign(s.players[0],{x:500,y:271.5,coverId:'wall',coverMode:'soft',coverAnchor:{edge:0,t:60,length:120,nx:0,ny:-1,tx:1,ty:0,face:'top',offset:0,half:60}});}
+for(let k=0;k<300;k++){const phase=k%90,i={x:Math.cos(k*.02),y:Math.sin(k*.02),aim:k*.01,slide:phase===0||phase===10};if(pattern==='shield')i.shield=phase<60;if(pattern==='grip')i.grip=phase<60;if(pattern==='fire')i.fire=phase%29===0;if(pattern==='power')i.powerup=phase<60;if(pattern==='outward'){i.x=0;i.y=-1;i.slide=k===0;}for(const [m,s] of [[old,a],[next,b]]){m.setInput(s,0,s.players[0].lastSeq+1,i);m.advance(s,s.lastAt+16);}assert.equal(JSON.stringify(b.players[0]),JSON.stringify(a.players[0]),`${pattern}/${k}`);checks++;}}
+console.log('PASS45 isolated freeze: '+checks+' exact full-player frames/config against supplied44; no claim of identical changed-environment outcomes.');

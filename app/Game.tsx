@@ -9,6 +9,7 @@ import {FIGHT_SCHEMA,BOT_STRATEGY_ID,gripSelection,psychicField,fieldMatter,cove
 import {LocalCombat,isLocalMode} from "../lib/localCombat";
 import {GOD_TIERS} from "../lib/gameFramework";
 import {bayObject} from "../lib/bayBridgeMap";
+import {drawWarBackdrop45,drawWarFloor45} from "../lib/warGamesPresentation45";
 import {DECK,DECK_SLOPE,DECK_PITCH,DECK_SCREEN_Y,unprojectWorld,withUpright,drawDeckBoundary,bayRenderCamera as cameraState} from "../lib/bayBridgePresentation";
 
 const FIGHT_STORAGE="god_mode_fight_memory38";
@@ -124,9 +125,7 @@ function preload(onProgress?:(s:BootState)=>void){
   const evolution=[["helix-front","/assets/god-evolution-tier1/helix-front-atlas.svg"],["helix-rear","/assets/god-evolution-tier1/helix-rear-atlas.svg"],["flame","/assets/god-evolution-tier1/flame-atlas.svg"],["geometry","/assets/god-evolution-tier1/geometry-atlas.svg"],["crystal-code","/assets/god-evolution-tier1/crystal-atlas.svg"],["code","/assets/god-evolution-tier1/code-atlas.svg"],["ground-fracture","/assets/god-evolution-tier1/ground-atlas.svg"]] as const;
   const jobs:{label:string;src:string;fallback?:string;ready:(im:HTMLImageElement)=>void}[]=[
    {label:"matter42",src:"/assets/matter42/tumble-atlas.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("matter42",im)},
-   {label:"world-far",src:"/assets/bay-bridge/manga-v13/world-far.webp",fallback:"/assets/bay-bridge/world/world-far.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-far",im)},
-   {label:"world-bridge",src:"/assets/bay-bridge/manga-v13/world-bridge.webp",fallback:"/assets/bay-bridge/world/world-bridge.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-bridge",im)},
-   {label:"world-road",src:"/assets/bay-bridge/manga-v13/world-road.webp",fallback:"/assets/bay-bridge/world/world-road.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("world-road",im)},
+   {label:"war-foundation45",src:"/assets/war-games45/foundation.webp",fallback:"/assets/war-games45/approved-empty.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("war-foundation45",im)},
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...["front-right","rear-left"].map(key=>({label:"melee38-"+key,src:"/assets/melee38/"+key+".webp",ready:(im:HTMLImageElement)=>powerAssets.set("melee38-"+key,im)})),
@@ -196,7 +195,7 @@ function drawDefense43(g:CanvasRenderingContext2D,s:any,slot:number){
  const cv=defendedCover43(s,slot);
  if(cv){const ratio=Math.max(0,Math.min(1,cv.hp/Math.max(1,cv.maxHp))),stage=coverDamageStage(cv.hp,cv.maxHp),label=["INTACT","CHIPPED","FRACTURED","CRITICAL"][stage]||"CRITICAL";
   const attached=p.coverId===cv.id,captured=s.players.some((q:any,n:number)=>n!==slot&&q.gripCoverId===cv.id),state=captured?"CAPTURED":attached?"ATTACHED":"NEARBY";
-  g.globalAlpha=1;g.textAlign="left";g.font="bold 9px monospace";g.fillStyle="#111722df";g.fillRect(73,277,154,60);g.fillStyle=stage===3?"#ffd39e":"#bdeaf2";g.fillText(state+" · "+label,80,289);g.fillStyle="#060b13";g.fillRect(80,296,137,5);g.fillStyle=stage===3?"#ffd39e":"#9ed4df";g.fillRect(80,296,137*ratio,5);g.fillStyle="#d8e3ec";g.font="8px monospace";g.fillText(Math.ceil(cv.hp)+" HP · ANGLE MATTERS",80,313);g.fillText(attached?"A / LEFT STICK · ESCAPE":"A · SLIDE / ATTACH",80,329);
+  g.globalAlpha=1;g.textAlign="left";g.font="bold 9px monospace";g.fillStyle="#111722df";g.fillRect(73,277,154,60);g.fillStyle=stage===3?"#ffd39e":"#bdeaf2";g.fillText(state+" · "+label,80,289);g.fillStyle="#060b13";g.fillRect(80,296,137,5);g.fillStyle=stage===3?"#ffd39e":"#9ed4df";g.fillRect(80,296,137*ratio,5);g.fillStyle="#d8e3ec";g.font="8px monospace";g.fillText(cv.protected45?"ANCHORED · ANGLE MATTERS":Math.ceil(cv.hp)+" HP · ANGLE MATTERS",80,313);g.fillText(attached?"A / LEFT STICK · ESCAPE":"A · SLIDE / ATTACH",80,329);
  }
  g.restore();
 }
@@ -232,7 +231,7 @@ export default function Game(){
  if(seen.room!==room||seen.round!==incoming.round){seen.room=room;seen.round=incoming.round;seen.seq=incoming.eventSeq||0;seen.cue="";}
  else{const fresh=(incoming.events||[]).filter((e:any)=>e.seq>seen.seq&&incoming.time-e.at<.3);seen.seq=Math.max(seen.seq,incoming.eventSeq||0);const cue=pickFeedback43(fresh,session.current?.slot||0,incoming);if(cue){combatTone(cue.kind,cue.angle);hapticFeedback43(cue);}}
  const cue=incoming.phase==="countdown"?String(Math.ceil(incoming.countdown)):incoming.phase==="playing"&&incoming.time<(incoming.fightUntil||0)?"fight":"";if(cue&&cue!==seen.cue)combatTone(cue);seen.cue=cue;
- if(!incoming.local)recordSnapshot(incoming,at);state.current=v.state;seq.current=Math.max(seq.current,incoming.players[session.current?.slot||0]?.lastSeq||0);lastAccept.current=at;if(incoming.phase==="countdown"&&hudPhase.current!=="countdown")document.querySelector("details.fightRoom")?.removeAttribute("open");if(at-hudAt.current>100||incoming.phase!==hudPhase.current){setHud(v.state);hudAt.current=at;hudPhase.current=incoming.phase;}if(JSON.stringify(v.state.config)!==JSON.stringify(configRef.current)){configRef.current=v.state.config;setConfig(v.state.config||DEFAULT);}setStatus(incoming.build==="COMBAT-MASTER-STUDIO-44"?"COMBAT 44 · GROUND PEEL":incoming.build==="COMBAT-MASTER-STUDIO-43"?"COMBAT 43 · DEFENSE / FEEDBACK":incoming.build==="COMBAT-MASTER-STUDIO-42"?"COMBAT 42 LIVE · LIVING MATTER":"COMBAT MASTER LIVE")}},[]);
+ if(!incoming.local)recordSnapshot(incoming,at);state.current=v.state;seq.current=Math.max(seq.current,incoming.players[session.current?.slot||0]?.lastSeq||0);lastAccept.current=at;if(incoming.phase==="countdown"&&hudPhase.current!=="countdown")document.querySelector("details.fightRoom")?.removeAttribute("open");if(at-hudAt.current>100||incoming.phase!==hudPhase.current){setHud(v.state);hudAt.current=at;hudPhase.current=incoming.phase;}if(JSON.stringify(v.state.config)!==JSON.stringify(configRef.current)){configRef.current=v.state.config;setConfig(v.state.config||DEFAULT);}setStatus(incoming.build==="COMBAT-MASTER-STUDIO-45"?"COMBAT 45 · WAR GAMES":incoming.build==="COMBAT-MASTER-STUDIO-44"?"COMBAT 44 · GROUND PEEL":incoming.build==="COMBAT-MASTER-STUDIO-43"?"COMBAT 43 · DEFENSE / FEEDBACK":incoming.build==="COMBAT-MASTER-STUDIO-42"?"COMBAT 42 LIVE · LIVING MATTER":"COMBAT MASTER LIVE")}},[]);
  const create=useCallback(async()=>{if(started.current)return;started.current=true;try{let saved:any=null;try{saved=JSON.parse(sessionStorage.getItem("god_mode_studio_session")||"null")}catch{}const invite=new URLSearchParams(location.hash.slice(1)),invitedRoom=invite.get("room"),inviteToken=invite.get("invite");const requestedWatch=new URLSearchParams(location.search).get("watch")==="1";if(saved&&(saved.local||isLocalMode(saved.mode))){saved=null;sessionStorage.removeItem("god_mode_studio_session");}if(saved&&(!requestedWatch||saved.mode==="watch")&&(!invitedRoom||saved.room===invitedRoom)){try{session.current=saved;const u=new URL("/api/game",location.origin);u.searchParams.set("room",saved.room);u.searchParams.set("token",saved.token);const r=await fetch(u,{cache:"no-store"});if(r.ok){const restored=await r.json();accept(restored);if(restored.state?.mode==="duel"||restored.state?.mode==="practice"||restored.state?.mode==="watch"){setGameShell(false);if(restored.state?.mode==="watch")setPadGate(false);}return}}catch{}if(saved.mode==="watch")setMemoryNotice("Previous watch room expired or restarted; live round reset. Completed reports remain saved.");session.current=null;sessionStorage.removeItem("god_mode_studio_session")}const v=invitedRoom&&inviteToken?await post({action:"join",room:invitedRoom,invite:inviteToken,name:"Player 2"}):await post({action:"create",name:"Les",mode:requestedWatch?"watch":"solo",...requestedWatch?{memoryProfile:readFightMemory()?.profiles,memoryMode:readFightMemory()?.mode}:{}}),s={room:v.room,code:v.code,invite:v.invite,token:v.token,slot:v.slot,mode:v.state?.mode,local:!!v.local};if(invitedRoom||requestedWatch){setGameShell(false);setPadGate(false);}session.current=s;sessionStorage.setItem("god_mode_studio_session",JSON.stringify(s));accept(v)}catch(e:any){started.current=false;setStatus(e.message)}},[accept,post]);
  useEffect(()=>{let dead=false;(async()=>{setStatus("GOD HELMET BOOT");const result=await preload(v=>{if(!dead)setBoot(v)});if(dead)return;setBoot(result);setBootReady(true);setStatus(result.failed?"BOOT READY · FALLBACKS AVAILABLE":"HELMET ONLINE");await create()})();return()=>{dead=true}},[create]);
  useEffect(()=>{
@@ -469,25 +468,12 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  if(!cameraState.ready){cameraState.x=targetX;cameraState.y=targetY;cameraState.ready=true}
  const frameDt=cameraState.last?Math.min(.05,(renderNow-cameraState.last)/1000):1/60;cameraState.last=renderNow;const follow=1-Math.exp(-8*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
  const camX=cameraState.x,camY=cameraState.y;
- // Distant skyline/water are a restrained screen band, with negligible camera parallax.
- // Their water extends behind the finite deck; pavement never covers the entire distant world.
- const far=environmentAssets.get("world-far");
- if(far?.complete&&far.naturalWidth){g.save();g.setTransform(sx,0,0,sy,0,0);g.fillStyle="#101e31";g.fillRect(0,88,1000,532);const dx=-(camX-500)*.025,backdrop=cachedSkyline(far);
-  if(backdrop)g.drawImage(backdrop,-100+dx,-170);else{g.filter="saturate(.65) brightness(.8)";g.drawImage(far,-100+dx,-170,1200,350);g.drawImage(far,0,far.naturalHeight-75,far.naturalWidth,75,-100+dx,179,1200,441);}g.restore();}
+ const arena45=environmentAssets.get("war-foundation45");drawWarBackdrop45(g,arena45);
  g.setTransform(sx*zoom,sy*zoom*DECK_SLOPE,0,sy*zoom*DECK_PITCH,(500-camX*zoom)*sx,(DECK_SCREEN_Y-camY*zoom*DECK_PITCH-camX*zoom*DECK_SLOPE)*sy);
- 
- // Reuse the approved span. Level its authored rising deck line onto the far boundary;
- // this transform belongs to the bridge elevation, not to the ground plane.
- const span=environmentAssets.get("world-bridge");
- if(span?.complete&&span.naturalWidth){g.save();g.globalAlpha=.88;g.transform(1,.034/DECK_PITCH,0,1,0,0);g.drawImage(span,-100,-233/DECK_PITCH,1200,350/DECK_PITCH);g.restore();}
- // Finite world deck: every playable point and hull is inside these fixed boundaries.
- const road=environmentAssets.get("world-road");
- g.save();g.beginPath();g.rect(DECK.left,DECK.far,DECK.right-DECK.left,DECK.near-DECK.far);g.clip();
- g.fillStyle="#20232e";g.fillRect(0,0,1000,620);
- if(road?.complete&&road.naturalWidth)g.drawImage(road,0,0,1000,620);
- else{g.strokeStyle="#9c9270";g.lineWidth=2;g.setLineDash([14,16]);for(const y of [250,360]){g.beginPath();g.moveTo(0,y);g.lineTo(1000,y);g.stroke()}g.setLineDash([])}
- const haze=g.createLinearGradient(0,0,0,140);haze.addColorStop(0,"#35374e80");haze.addColorStop(1,"#35374e00");g.fillStyle=haze;g.fillRect(0,0,1000,140);g.restore();
+ drawWarFloor45(g,arena45);
+ // Keep the non-playable televised stadium rim visible without changing combat zoom.
  drawDeckBoundary(g);
+ g.save();g.setTransform(sx,0,0,sy,0,0);drawWarBackdrop45(g,arena45);g.restore();
  drawGround44(g,s);
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
