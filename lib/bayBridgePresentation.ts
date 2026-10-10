@@ -2,11 +2,14 @@
 export const DECK_PITCH=.52;
 export const DECK_SCREEN_Y=430;
 export const DECK_SLOPE=.08;
+// Stadium47: physical height and upright assets share one smaller presentation
+// unit. Floor positions/footprints and gameplay dimensions remain unchanged.
+export const ARENA_UPRIGHT_SCALE47=.64;
 export const bayRenderCamera={x:500,y:310,ready:false,last:0,zoom:1.85};
 export const DECK={left:0,right:1000,far:0,near:620} as const;
 export function projectWorld(x:number,y:number,camera:{x:number;y:number},zoom:number,z=0){
  const p=arenaPoint46(x,y),c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;
- return{x:500+(p.x-c.x)*scale,y:DECK_SCREEN_Y+(p.y-c.y)*scale-z*zoom};
+ return{x:500+(p.x-c.x)*scale,y:DECK_SCREEN_Y+(p.y-c.y)*scale-z*zoom*ARENA_UPRIGHT_SCALE47};
 }
 export function unprojectWorld(x:number,y:number,camera:{x:number;y:number},zoom:number){
  const c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;
@@ -22,12 +25,12 @@ export function setArenaContext46(g:CanvasRenderingContext2D,camera:{x:number;y:
 export function setWorld46(g:CanvasRenderingContext2D,x:number,y:number){const c=sceneContexts46.get(g);if(!c)return;const p=arenaPoint46(x,y),j=arenaJacobian46(x,y);g.setTransform(c.sx*j.x,0,c.sx*j.xy,c.sy*j.y,c.tx+c.sx*(p.x-j.x*x-j.xy*y),c.ty+c.sy*(p.y-j.y*y));}
 export function relativeWorld46(x:number,y:number,dx:number,dy:number){const a=arenaPoint46(x,y),b=arenaPoint46(x+dx,y+dy),j=arenaJacobian46(x,y),ry=(b.y-a.y)/j.y;return{x:(b.x-a.x-j.xy*ry)/j.x,y:ry};}
 export function withWorld46(g:CanvasRenderingContext2D,x:number,y:number,draw:()=>void){const c=sceneContexts46.get(g);if(!c){draw();return;}const ox=c.anchorX,oy=c.anchorY;g.save();c.anchorX=x;c.anchorY=y;setWorld46(g,x,y);draw();c.anchorX=ox;c.anchorY=oy;g.restore();}
-export function vertical46(x:number,y:number,z:number){const j=arenaJacobian46(x,y);return{x:j.xy*1.536*z/(j.x*j.y),y:-1.536*z/j.y};}
+export function vertical46(x:number,y:number,z:number){const j=arenaJacobian46(x,y),size=1.536*ARENA_UPRIGHT_SCALE47;return{x:j.xy*size*z/(j.x*j.y),y:-size*z/j.y};}
 export function screenVector46(x:number,y:number,sx:number,sy:number){const j=arenaJacobian46(x,y),dy=sy/j.y,dx=(sx-j.xy*dy)/j.x,m=Math.min(1,Math.hypot(sx,sy)),n=Math.hypot(dx,dy)||1;return{x:dx/n*m,y:dy/n*m};}
-// Upright art retains the approved size; only its contact plane changes pitch.
+// Preserve artwork proportions and contact anchors at the stadium's body scale.
 export function withUpright(g:CanvasRenderingContext2D,x:number,y:number,draw:()=>void){
  const c=sceneContexts46.get(g);if(!c){g.save();g.translate(x,y);g.transform(1,-DECK_SLOPE/DECK_PITCH,0,1/DECK_PITCH,0,0);g.translate(-x,-y);draw();g.restore();return;}
- const run=()=>{const j=arenaJacobian46(c.anchorX,c.anchorY),size=1.536;g.save();g.translate(x,y);g.transform(size/j.x,0,-j.xy*size/(j.x*j.y),size/j.y,0,0);g.translate(-x,-y);draw();g.restore();};
+ const run=()=>{const j=arenaJacobian46(c.anchorX,c.anchorY),size=1.536*ARENA_UPRIGHT_SCALE47;g.save();g.translate(x,y);g.transform(size/j.x,0,-j.xy*size/(j.x*j.y),size/j.y,0,0);g.translate(-x,-y);draw();g.restore();};
  if(x===0&&y===0)run();else withWorld46(g,x,y,run);
 }
 

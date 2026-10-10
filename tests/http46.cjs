@@ -1,6 +1,6 @@
 const assert=require('assert/strict'),base=process.argv[2]||'http://127.0.0.1:3266',sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function post(body){const r=await fetch(base+'/api/game',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});assert(r.ok);return r.json();}
-(async()=>{const h=await post({action:'create',mode:'duel',name:'Les46'}),g=await post({action:'join',room:h.room,invite:h.invite,name:'James46'}),seq=[0,0],cs=[h,g];assert.equal(h.state.build,'COMBAT-MASTER-STUDIO-46');
+(async()=>{const h=await post({action:'create',mode:'duel',name:'Les46'}),g=await post({action:'join',room:h.room,invite:h.invite,name:'James46'}),seq=[0,0],cs=[h,g];assert.equal(h.state.build,process.env.GOD_MODE_EXPECT_BUILD||'COMBAT-MASTER-STUDIO-46');
 async function input(slot,i){return(await post({action:'input',room:h.room,token:cs[slot].token,seq:++seq[slot],input:i})).state;}
 async function state(slot=0){return(await fetch(base+'/api/game?room='+h.room+'&token='+cs[slot].token).then(r=>r.json())).state;}
 for(let k=0;k<120&&(await state()).phase!=='playing';k++){await input(0,{});await input(1,{});await sleep(40);}assert.equal((await state()).phase,'playing');

@@ -24,7 +24,7 @@ export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onR
     <hr/><button onClick={onReset}><strong>RESET</strong><span>Reset current playtest</span></button>
    </div>}
   </div>
-  {qa&&<div className="arenaQa"><b>WAR GAMES FLOOR 46</b>
+  {qa&&<div className="arenaQa"><b>WAR GAMES SCALE 47</b>
    <span>WORLD {Number(p.x||0).toFixed(1)}, {Number(p.y||0).toFixed(1)}, 0 · LANE {lane}</span>
    <span>PROJECT {JSON.stringify(comicProject(p.x||0,p.y||0,0))}</span>
    <span>CAMERA B · REGISTERED STADIUM PERSPECTIVE · ZOOM 1.85 · SCALE CLAMP {BAY_CAMERA.combatScaleMin}–{BAY_CAMERA.combatScaleMax}</span>
