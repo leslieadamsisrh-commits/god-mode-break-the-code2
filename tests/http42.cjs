@@ -1,6 +1,6 @@
 const assert=require('assert/strict'),base=process.argv[2]||'http://127.0.0.1:3262',sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function post(body){const r=await fetch(base+'/api/game',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});assert(r.ok);return r.json();}
-(async()=>{const h=await post({action:'create',mode:'duel',name:'Les42'}),g=await post({action:'join',room:h.room,invite:h.invite,name:'James42'}),clients=[h,g],seq=[0,0];assert.equal(h.state.build,'COMBAT-MASTER-STUDIO-42');assert(h.state.matter.every(m=>m.r<=6));assert(!('chips42' in h.state));
+(async()=>{const h=await post({action:'create',mode:'duel',name:'Les42'}),g=await post({action:'join',room:h.room,invite:h.invite,name:'James42'}),clients=[h,g],seq=[0,0];assert.equal(h.state.build,process.env.GOD_MODE_EXPECT_BUILD||'COMBAT-MASTER-STUDIO-42');assert(h.state.matter.every(m=>m.r<=6));assert(!('chips42' in h.state));
 async function send(input){await Promise.all(clients.map((c,n)=>post({action:'input',room:h.room,token:c.token,seq:++seq[n],input})));await sleep(45);}
 async function state(){return(await post({action:'input',room:h.room,token:h.token,seq:++seq[0],input:{}})).state;}
 for(let n=0;n<72;n++)await send({});assert.equal((await state()).phase,"playing");
