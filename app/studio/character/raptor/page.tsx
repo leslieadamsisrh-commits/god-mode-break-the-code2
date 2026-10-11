@@ -39,6 +39,6 @@ export default function RaptorSpriteQa(){
  <p style={{fontSize:12,color:"#94aab6"}}>These review checkboxes are local, unsaved notes; checking them does not install sprites or certify game readiness.</p>
  </section>
  </div>
- <p style={{marginTop:26}}><Link href="/studio/character" style={{color:"#ff72bb"}}>← CHARACTER LAB</Link>　<Link href="/studio/combat" style={{color:"#75dff2"}}>COMBAT LAB →</Link></p>
+ <p style={{marginTop:26}}><Link href="/studio/character/raptor/movement" style={{color:"#75dff2"}}>OPEN MOVEMENT REGISTRATION LAB →</Link></p><p><Link href="/studio/character" style={{color:"#ff72bb"}}>← CHARACTER LAB</Link>　<Link href="/studio/combat" style={{color:"#75dff2"}}>COMBAT LAB →</Link></p>
  </div></main>;
 }
