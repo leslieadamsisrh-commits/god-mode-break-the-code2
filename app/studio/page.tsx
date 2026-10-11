@@ -9,7 +9,7 @@ export default function StudioHome(){
  <p style={{color:"#a3c2ce",marginBottom:24}}>One game. Simple choices. Your existing gameplay is preserved.</p>
  <div style={{display:"grid",gap:12}}>
  <a href="/" style={{...linkStyle,background:"#10333b",border:"2px solid #63edf0"}}>▶ PLAY GOD MODE <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>Existing playable game with Jade</small></a>
- <a href="/studio/combat/raptor" style={{...linkStyle,background:"#351b37",border:"2px solid #ff6bb7"}}>🦖 RAPTOR MOVEMENT TEST <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>Temporary vector character · Same local combat simulation · NOT approved Raptor sprites yet</small></a>
+ <a href="/studio/combat/raptor/real" style={{...linkStyle,background:"#351b37",border:"2px solid #ff6bb7"}}>🦖 RAPTOR REAL-GAME TEST <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>Actual GOD MODE arena and controls · Jade artwork until validated Raptor sprites are installed</small></a>
  <a href="/studio/combat" style={{...linkStyle,background:"#162537",border:"1px solid #4d7485"}}>⚙ DEVELOPER TOOLS <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>Combat QA and sprite registration · Optional</small></a>
  </div>
  <section style={{border:"1px solid #345267",padding:18,borderRadius:12,marginTop:24,background:"#101c29"}}>
