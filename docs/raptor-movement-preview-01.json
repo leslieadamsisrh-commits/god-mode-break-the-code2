@@ -1,0 +1,44 @@
+{
+  "batch": "Raptor Movement Preview 01",
+  "visualAuthority": "Raptor Art V3.0",
+  "source": "Approved Batch 01 infographic",
+  "sourceType": "composite concept sheet",
+  "frames": [
+    "R001",
+    "R002",
+    "R003",
+    "R004",
+    "R005",
+    "R006"
+  ],
+  "playback": {
+    "sequence": [
+      "R001",
+      "R002",
+      "R003",
+      "R004",
+      "R005",
+      "R006",
+      "R005",
+      "R004",
+      "R003",
+      "R002"
+    ],
+    "type": "rough motion preview",
+    "gameplayDriven": false
+  },
+  "status": {
+    "conceptFrames": 6,
+    "cleanAlphaFrames": 0,
+    "engineReadyFrames": 0,
+    "integrated": false
+  },
+  "requirements": [
+    "Replace embedded checkerboard with true alpha",
+    "Preserve red monocle, olive stripes, carapace, SMG and raised tail",
+    "Separate FX and floor shadow",
+    "Normalize root, feet, head and muzzle registration",
+    "Use Jade's shared movement simulation; do not duplicate physics",
+    "Validate actual run cycle and slide transitions at game scale"
+  ]
+}
