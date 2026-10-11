@@ -68,6 +68,20 @@ export default function RaptorSparring(){
       g.fillRect(-cw/2,-ch/2,cw,ch);g.strokeRect(-cw/2,-ch/2,cw,ch);
       g.restore();
      }
+     // Visualize projectiles and matter directly from the existing simulation, not a parallel combat model.
+     for(const shot of local.state.shots){
+      const x=sx(shot.x),y=sy(shot.y);
+      if(x< -12||x>w+12||y< -12||y>h+12)continue;
+      g.fillStyle="#ffcc76";g.shadowColor="#ff9d48";g.shadowBlur=12;
+      g.beginPath();g.arc(x,y,Math.max(2,Math.min(6,(shot.radius||3)*scale)),0,Math.PI*2);g.fill();
+     }
+     g.shadowBlur=0;
+     for(const matter of local.state.matter){
+      const x=sx(matter.x),y=sy(matter.y);
+      if(x< -12||x>w+12||y< -12||y>h+12)continue;
+      g.fillStyle=matter.kind==="metal"?"#a5d8e8":"#a99478";
+      g.beginPath();g.arc(x,y,Math.max(3,matter.r*scale),0,Math.PI*2);g.fill();
+     }
      // All player bodies are marked so any additional simulated actors are visible.
      for(let i=1;i<local.state.players.length;i++){
       const other=local.state.players[i];
@@ -80,6 +94,7 @@ export default function RaptorSparring(){
       g.fillStyle="#fff";g.font="12px monospace";g.fillText("SHARED PHYSICS • "+(skinRef.current==="raptor"?"RAPTOR PLACEHOLDER":"JADE PLACEHOLDER"),12,22);
       g.fillText("x "+p.x.toFixed(0)+"  y "+p.y.toFixed(0)+"  speed "+Math.hypot(p.vx,p.vy).toFixed(0),12,40);
       g.fillText("pose "+pose+"   slide "+p.slide.toFixed(2)+"   covers "+local.state.covers.length,12,58);
+      g.fillText("HP "+p.hp.toFixed(0)+"   BATTERY "+p.battery.toFixed(0)+"   shots "+local.state.shots.length,12,76);
      }
     }
    }
@@ -93,7 +108,7 @@ export default function RaptorSparring(){
  const btn=(key:keyof Buttons,label:string)=><button onPointerDown={touch(key)} onPointerUp={release(key)} onPointerCancel={release(key)} onLostPointerCapture={()=>controls.current[key]=false} style={{minHeight:56,minWidth:70,background:"#203b4c",border:"1px solid #6edce9",color:"white",borderRadius:10,fontWeight:800,touchAction:"none"}}>{label}</button>;
  return <main style={{position:"fixed",inset:0,overflowY:"auto",background:"#070c15",color:"#e9f7fb",fontFamily:"Arial,sans-serif",padding:"max(14px,env(safe-area-inset-top)) 14px 30px",touchAction:"pan-y"}}>
  <div style={{maxWidth:900,margin:"0 auto"}}><small style={{color:"#ff64b2"}}>GOD MODE / RAPTOR COMBAT LAB / EXPERIMENT</small><h1 style={{margin:"10px 0"}}>MOVEMENT SPARRING TEST</h1>
- <p role="status" style={{color:"#74e8ef",fontWeight:800}}>{padStatus}</p><p style={{color:"#a5c3cf"}}>{status}. The camera follows your character and displays simulated cover as solid blocks. This is collision-debug geometry with a pose-responsive VECTOR character. Approved raptor sprites and versus mode are not installed.</p>
+ <p role="status" style={{color:"#74e8ef",fontWeight:800}}>{padStatus}</p><p style={{color:"#a5c3cf"}}>{status}. The camera follows your character. Cover, projectiles, matter, health and battery now display from the same simulation. Character is still a VECTOR placeholder; approved sprite artwork and versus mode are not installed.</p>
  <div style={{display:"flex",gap:8,marginBottom:12}}><button onClick={()=>setSkin("raptor")} style={{padding:12,background:skin==="raptor"?"#84305c":"#263744",color:"white",border:0,borderRadius:8}}>RAPTOR</button><button onClick={()=>setSkin("jade")} style={{padding:12,background:skin==="jade"?"#84305c":"#263744",color:"white",border:0,borderRadius:8}}>JADE</button></div>
  <canvas ref={canvas} width={800} height={420} style={{display:"block",width:"100%",height:"auto",aspectRatio:"800/420",border:"2px solid #385c6e",borderRadius:10}}/>
  <div style={{display:"flex",justifyContent:"space-between",gap:12,flexWrap:"wrap",marginTop:12}}>
