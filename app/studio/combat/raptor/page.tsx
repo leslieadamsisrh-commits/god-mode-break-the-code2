@@ -47,9 +47,33 @@ export default function RaptorSparring(){
      const input={x:Math.max(-1,Math.min(1,lx+Number(b.right)-Number(b.left))),y:Math.max(-1,Math.min(1,ly+Number(b.down)-Number(b.up))),aim:lastAim.current,fire:b.fire||pressed(7),slide:b.slide||pressed(0),shield:b.shield||pressed(6),coverAim:false,melee:pressed(1),heavy:false,grip:pressed(4),throwMatter:false,cover:pressed(5),orbit:false,launchOrbit:false,pinball:false,powerup:pressed(3),slow:false};
      try{local.frame(now,input,[])}catch(e){setStatus("Simulation paused: "+(e instanceof Error?e.message:"unknown error"));sim.current=null}
      const w=c.width,h=c.height;g.fillStyle="#091521";g.fillRect(0,0,w,h);
-     g.strokeStyle="#254051";g.lineWidth=1;for(let x=0;x<w;x+=40){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke()}for(let y=0;y<h;y+=40){g.beginPath();g.moveTo(0,y);g.lineTo(w,y);g.stroke()}
      const p=local.state.players[0];
-     if(p){const px=w/2+(p.x-500)*.55,py=h/2+(p.y-330)*.45;g.save();g.translate(px,py);
+     // Follow the actual simulation position. Every obstacle uses the same world-to-screen projection.
+     const scale=.55,originX=p?p.x:500,originY=p?p.y:330;
+     const sx=(x:number)=>w/2+(x-originX)*scale;
+     const sy=(y:number)=>h/2+(y-originY)*scale;
+     g.strokeStyle="#254051";g.lineWidth=1;
+     const startX=Math.floor((originX-w/2/scale)/80)*80;
+     const endX=originX+w/2/scale;
+     const startY=Math.floor((originY-h/2/scale)/80)*80;
+     const endY=originY+h/2/scale;
+     for(let x=startX;x<=endX;x+=80){g.beginPath();g.moveTo(sx(x),0);g.lineTo(sx(x),h);g.stroke()}
+     for(let y=startY;y<=endY;y+=80){g.beginPath();g.moveTo(0,sy(y));g.lineTo(w,sy(y));g.stroke()}
+     // Debug collision geometry, not final arena art. Rotate each cover by its simulation angle.
+     for(const cover of local.state.covers){
+      g.save();g.translate(sx(cover.x),sy(cover.y));g.rotate(cover.a||0);
+      const cw=cover.w*scale,ch=cover.h*scale;
+      g.fillStyle=cover.generated?"#61466c":"#52616b";g.strokeStyle=cover.generated?"#ff6bb6":"#92c8d4";g.lineWidth=2;
+      g.fillRect(-cw/2,-ch/2,cw,ch);g.strokeRect(-cw/2,-ch/2,cw,ch);
+      g.restore();
+     }
+     // All player bodies are marked so any additional simulated actors are visible.
+     for(let i=1;i<local.state.players.length;i++){
+      const other=local.state.players[i];
+      g.fillStyle="#fa765d";g.beginPath();g.arc(sx(other.x),sy(other.y),12,0,Math.PI*2);g.fill();
+      g.fillStyle="#fff";g.font="11px monospace";g.fillText(other.name||"ACTOR "+i,sx(other.x)+15,sy(other.y)-12);
+     }
+     if(p){const px=sx(p.x),py=sy(p.y);g.save();g.translate(px,py);
       g.fillStyle="#02060988";g.beginPath();g.ellipse(0,14,24,7,0,0,Math.PI*2);g.fill();
       const isR=skinRef.current==="raptor";g.fillStyle=isR?"#879452":"#dce5f4";g.strokeStyle=isR?"#ff4ba7":"#5ee6f4";g.lineWidth=3;
       g.beginPath();g.ellipse(0,-9,13,21,.25,0,Math.PI*2);g.fill();g.stroke();
@@ -60,7 +84,7 @@ export default function RaptorSparring(){
       g.restore();
       g.fillStyle="#fff";g.font="12px monospace";g.fillText("SHARED PHYSICS • "+(skinRef.current==="raptor"?"RAPTOR PLACEHOLDER":"JADE PLACEHOLDER"),12,22);
       g.fillText("x "+p.x.toFixed(0)+"  y "+p.y.toFixed(0)+"  speed "+Math.hypot(p.vx,p.vy).toFixed(0),12,40);
-      g.fillText("slide "+p.slide.toFixed(2)+"   shield "+(p.shield?"ON":"OFF"),12,58);
+      g.fillText("slide "+p.slide.toFixed(2)+"   shield "+(p.shield?"ON":"OFF")+"   covers "+local.state.covers.length,12,58);
      }
     }
    }
@@ -74,7 +98,7 @@ export default function RaptorSparring(){
  const btn=(key:keyof Buttons,label:string)=><button onPointerDown={touch(key)} onPointerUp={release(key)} onPointerCancel={release(key)} onLostPointerCapture={()=>controls.current[key]=false} style={{minHeight:56,minWidth:70,background:"#203b4c",border:"1px solid #6edce9",color:"white",borderRadius:10,fontWeight:800,touchAction:"none"}}>{label}</button>;
  return <main style={{position:"fixed",inset:0,overflowY:"auto",background:"#070c15",color:"#e9f7fb",fontFamily:"Arial,sans-serif",padding:"max(14px,env(safe-area-inset-top)) 14px 30px",touchAction:"pan-y"}}>
  <div style={{maxWidth:900,margin:"0 auto"}}><small style={{color:"#ff64b2"}}>GOD MODE / RAPTOR COMBAT LAB / EXPERIMENT</small><h1 style={{margin:"10px 0"}}>MOVEMENT SPARRING TEST</h1>
- <p role="status" style={{color:"#74e8ef",fontWeight:800}}>{padStatus}</p><p style={{color:"#a5c3cf"}}>{status}. This tests a character placeholder against the existing local combat simulation. Approved raptor artwork and a second fighter are not yet installed.</p>
+ <p role="status" style={{color:"#74e8ef",fontWeight:800}}>{padStatus}</p><p style={{color:"#a5c3cf"}}>{status}. The camera follows your character and displays simulated cover as solid blocks. This is collision-debug geometry, not final arena art. Approved raptor sprites and versus mode are not installed.</p>
  <div style={{display:"flex",gap:8,marginBottom:12}}><button onClick={()=>setSkin("raptor")} style={{padding:12,background:skin==="raptor"?"#84305c":"#263744",color:"white",border:0,borderRadius:8}}>RAPTOR</button><button onClick={()=>setSkin("jade")} style={{padding:12,background:skin==="jade"?"#84305c":"#263744",color:"white",border:0,borderRadius:8}}>JADE</button></div>
  <canvas ref={canvas} width={800} height={420} style={{display:"block",width:"100%",height:"auto",aspectRatio:"800/420",border:"2px solid #385c6e",borderRadius:10}}/>
  <div style={{display:"flex",justifyContent:"space-between",gap:12,flexWrap:"wrap",marginTop:12}}>
