@@ -14,6 +14,8 @@ export default function RaptorSparring(){
  const padStatusRef=useRef("");
  const lastAim=useRef(0);
  const [skin,setSkin]=useState<"raptor"|"jade">("raptor");
+ const [showDebug,setShowDebug]=useState(false);
+ const [showTouch,setShowTouch]=useState(false);
  const skinRef=useRef(skin);
  useEffect(()=>{skinRef.current=skin},[skin]);
  useEffect(()=>{
@@ -106,15 +108,32 @@ export default function RaptorSparring(){
  const touch=(key:keyof Buttons)=>(e:React.PointerEvent<HTMLButtonElement>)=>{e.preventDefault();controls.current[key]=true;e.currentTarget.setPointerCapture(e.pointerId)};
  const release=(key:keyof Buttons)=>(e:React.PointerEvent<HTMLButtonElement>)=>{e.preventDefault();controls.current[key]=false};
  const btn=(key:keyof Buttons,label:string)=><button onPointerDown={touch(key)} onPointerUp={release(key)} onPointerCancel={release(key)} onLostPointerCapture={()=>controls.current[key]=false} style={{minHeight:56,minWidth:70,background:"#203b4c",border:"1px solid #6edce9",color:"white",borderRadius:10,fontWeight:800,touchAction:"none"}}>{label}</button>;
- return <main style={{position:"fixed",inset:0,overflowY:"auto",background:"#070c15",color:"#e9f7fb",fontFamily:"Arial,sans-serif",padding:"max(14px,env(safe-area-inset-top)) 14px 30px",touchAction:"pan-y"}}>
- <div style={{maxWidth:900,margin:"0 auto"}}><small style={{color:"#ff64b2"}}>GOD MODE / RAPTOR COMBAT LAB / EXPERIMENT</small><h1 style={{margin:"10px 0"}}>MOVEMENT SPARRING TEST</h1>
- <p role="status" style={{color:"#74e8ef",fontWeight:800}}>{padStatus}</p><p style={{color:"#a5c3cf"}}>{status}. The camera follows your character. Cover, projectiles, matter, health and battery now display from the same simulation. Character is still a VECTOR placeholder; approved sprite artwork and versus mode are not installed.</p>
- <div style={{display:"flex",gap:8,marginBottom:12}}><button onClick={()=>setSkin("raptor")} style={{padding:12,background:skin==="raptor"?"#84305c":"#263744",color:"white",border:0,borderRadius:8}}>RAPTOR</button><button onClick={()=>setSkin("jade")} style={{padding:12,background:skin==="jade"?"#84305c":"#263744",color:"white",border:0,borderRadius:8}}>JADE</button></div>
- <canvas ref={canvas} width={800} height={420} style={{display:"block",width:"100%",height:"auto",aspectRatio:"800/420",border:"2px solid #385c6e",borderRadius:10}}/>
- <div style={{display:"flex",justifyContent:"space-between",gap:12,flexWrap:"wrap",marginTop:12}}>
+ return <main style={{position:"fixed",inset:0,display:"flex",flexDirection:"column",overflow:"hidden",background:"#070c15",color:"#e9f7fb",fontFamily:"Arial,sans-serif",padding:"max(6px,env(safe-area-inset-top)) 8px max(6px,env(safe-area-inset-bottom))"}}>
+ <header style={{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap",minHeight:54,padding:"6px 8px",background:"#091522",borderBottom:"1px solid #36556a"}}>
+ <a href="/studio/combat" style={{padding:"10px 12px",color:"#ff87c5",textDecoration:"none",border:"1px solid #704462",borderRadius:8,touchAction:"manipulation"}}>← LABS</a>
+ <strong style={{fontSize:14,letterSpacing:1,flex:"1 1 170px"}}>RAPTOR COMBAT LAB</strong>
+ <button onClick={()=>setSkin("raptor")} style={{padding:"10px 12px",border:"1px solid #ff6bb8",borderRadius:8,color:"white",background:skin==="raptor"?"#84305c":"#263744"}}>RAPTOR</button>
+ <button onClick={()=>setSkin("jade")} style={{padding:"10px 12px",border:"1px solid #5ae9f0",borderRadius:8,color:"white",background:skin==="jade"?"#236375":"#263744"}}>JADE</button>
+ <button onClick={()=>setShowDebug(v=>!v)} aria-expanded={showDebug} style={{padding:"10px 12px",border:"1px solid #647d91",borderRadius:8,color:"white",background:"#233443"}}>{showDebug?"HIDE QA":"QA / INFO"}</button>
+ </header>
+ <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:8,padding:"5px 8px",background:"#101c2a",fontSize:12}}>
+ <span role="status" style={{color:padStatus.startsWith("Xbox controller detected")?"#7bffda":"#ffcf85",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{padStatus}</span>
+ <button onClick={()=>setShowTouch(v=>!v)} style={{padding:"6px 10px",flexShrink:0,background:"#2c4255",border:"1px solid #5e8191",color:"white",borderRadius:7}}>{showTouch?"HIDE TOUCH":"TOUCH CONTROLS"}</button>
+ </div>
+ <div style={{position:"relative",flex:"1 1 0",minHeight:0,display:"flex",alignItems:"center",justifyContent:"center",background:"#060d17"}}>
+ <canvas ref={canvas} width={800} height={420} style={{display:"block",width:"100%",height:"100%",objectFit:"contain",border:"1px solid #365a70",touchAction:"none"}}/>
+ {showDebug&&<aside style={{position:"absolute",top:8,right:8,width:"min(330px,85%)",maxHeight:"80%",overflowY:"auto",padding:14,background:"#071421ed",border:"1px solid #ff6bb8",borderRadius:10,fontSize:12,zIndex:3}}>
+ <strong>RAPTOR LAB / DEVELOPMENT QA</strong>
+ <p>{status}</p><p>Visible cover, projectiles, matter, health and battery are read from the shared simulation.</p>
+ <p>Current character is a schematic vector placeholder, not approved Raptor V3.0 sprites. Two-character sparring is not installed.</p>
+ <p>Keyboard: WASD/arrows, Space slide, J fire, K shield. Xbox: left stick move, right stick aim, A slide, B melee, LT shield, RT fire, LB Grip, RB cover, Y charge.</p>
+ <p>For Xbox input on iPad, open this Railway URL directly in Safari rather than ChatGPT's embedded browser.</p>
+ </aside>}
+ </div>
+ {showTouch&&<div style={{display:"flex",justifyContent:"space-between",gap:12,flexWrap:"wrap",padding:8,background:"#0d1a29"}}>
  <div style={{display:"grid",gridTemplateColumns:"repeat(3,70px)",gap:5}}><span/>{btn("up","▲")}<span/>{btn("left","◀")}{btn("down","▼")}{btn("right","▶")}</div>
  <div style={{display:"flex",gap:8,alignItems:"center",flexWrap:"wrap"}}>{btn("slide","SLIDE")}{btn("fire","FIRE")}{btn("shield","SHIELD")}</div>
- </div>
- <p style={{fontSize:12,color:"#8faab8"}}>Keyboard: WASD / arrows, Space slide, J fire, K shield. Touch and Xbox Gamepad API input supported in this prototype. B melee, LB Grip, RB cover, Y charge. This is not yet the full versus mode.</p>
- <Link href="/studio/combat" style={{color:"#ff79b7",display:"block",padding:15}}>← COMBAT LAB</Link></div></main>;
+ </div>}
+ <div style={{padding:"4px 8px",fontSize:10,color:"#93aab7",background:"#08111c"}}>SHARED COMBAT SIMULATION · VECTOR TEST CHARACTER · NO GAMEPLAY RETUNING</div>
+ </main>;
 }
