@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import {useEffect,useRef,useState} from "react";
-import {RAPTOR_POSES} from "../../../../lib/raptorPresentation";
+import {RAPTOR_POSES} from "../../../../../lib/raptorPresentation";
 type Inspection={file:string;url:string;width:number;height:number;alpha:boolean;transparentPixels:number;edgePixels:number;anchorX:number;anchorY:number};
 const INITIAL=RAPTOR_POSES.slice(0,6);
 export default function RaptorMovementRegistration(){
