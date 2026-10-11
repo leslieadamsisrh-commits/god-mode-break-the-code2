@@ -12,6 +12,6 @@ export default function CharacterLab(){
  <p style={{color:"#a2bdc7"}}>Roster reference and visual QA staging. No new sprite generation or combat-stat modifications. Game-ready directional sprite previews are a later milestone.</p>
  <div style={{display:"grid",gap:12}}>{roster.map(([name,detail])=><section key={name} style={{border:"1px solid #294454",background:"#111c2a",borderRadius:10,padding:16}}><strong>{name}</strong><p style={{color:"#b0c5cc",marginBottom:0}}>{detail}</p></section>)}</div>
  <p style={{borderLeft:"3px solid #6ce4e5",padding:14,background:"#10232b"}}>UNIVERSAL PARITY: Identical competitive movement, health, damage, power availability, timings and collision. Different character visuals and sounds only.</p>
- <p><Link style={{color:"#ff70bb"}} href="/studio">← STUDIO LABS</Link></p>
+ <p><Link style={{color:"#6ce4e5"}} href="/studio/character/raptor">OPEN RAPTOR SPRITE QA →</Link></p><p><Link style={{color:"#ff70bb"}} href="/studio">← STUDIO LABS</Link></p>
  </div></main>;
 }
