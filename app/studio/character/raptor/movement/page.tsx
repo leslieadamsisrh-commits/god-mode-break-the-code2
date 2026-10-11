@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import {useEffect,useRef,useState} from "react";
 import {RAPTOR_POSES} from "../../../../../lib/raptorPresentation";
 type Inspection={file:string;url:string;width:number;height:number;alpha:boolean;transparentPixels:number;edgePixels:number;anchorX:number;anchorY:number};
@@ -39,7 +38,7 @@ export default function RaptorMovementRegistration(){
   const url=URL.createObjectURL(new Blob([JSON.stringify(manifest,null,2)],{type:"application/json"}));
   const a=document.createElement("a");a.href=url;a.download="raptor-movement-registration-draft.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
  }
- return <main style={{minHeight:"100dvh",overflowY:"auto",background:"#090d15",color:"#edf8fc",padding:"clamp(16px,4vw,36px)",fontFamily:"Arial,sans-serif"}}>
+ return <main style={{position:"fixed",inset:0,zIndex:100,overflowY:"auto",WebkitOverflowScrolling:"touch",touchAction:"pan-y",background:"#090d15",color:"#edf8fc",padding:"clamp(16px,4vw,36px)",fontFamily:"Arial,sans-serif"}}>
  <div style={{maxWidth:1050,margin:"0 auto"}}>
  <small style={{color:"#ff5fb4",letterSpacing:2}}>GOD MODE / RAPTOR MOVEMENT / BATCH 01</small>
  <h1>SPRITE REGISTRATION LAB</h1>
@@ -67,6 +66,6 @@ export default function RaptorMovementRegistration(){
  <button onClick={exportManifest} disabled={!Object.keys(files).length} style={{padding:12,background:"#793057",border:0,borderRadius:7,color:"#fff"}}>EXPORT DRAFT REGISTRATION JSON</button>
  </section>
  </div>
- <p style={{marginTop:24}}><Link style={{color:"#ff75bd"}} href="/studio/character/raptor">← RAPTOR QA</Link>　<Link style={{color:"#72e7ed"}} href="/studio">STUDIO LABS</Link></p>
+ <p style={{marginTop:24}}><a style={{color:"#ff75bd"}} href="/studio/character/raptor">← RAPTOR QA</a>　<a style={{color:"#72e7ed"}} href="/studio">STUDIO LABS</a></p>
  </div></main>;
 }
