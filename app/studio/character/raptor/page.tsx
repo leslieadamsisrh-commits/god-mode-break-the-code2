@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import {useState} from "react";
 const POSES=[
  ["R031","Light hit","Impact FX separate"],
@@ -16,7 +15,7 @@ export default function RaptorSpriteQa(){
  const [background,setBackground]=useState<"checker"|"light"|"dark">("checker");
  const p=POSES[pose];
  const complete=REQUIREMENTS.every(x=>checks[p[0]+x]);
- return <main style={{minHeight:"100dvh",overflowY:"auto",background:"#070b12",color:"#eaf5fa",padding:"clamp(16px,4vw,42px)",fontFamily:"Arial,sans-serif"}}>
+ return <main style={{position:"fixed",inset:0,zIndex:100,overflowY:"auto",WebkitOverflowScrolling:"touch",touchAction:"pan-y",background:"#070b12",color:"#eaf5fa",padding:"clamp(16px,4vw,42px)",fontFamily:"Arial,sans-serif"}}>
  <div style={{maxWidth:940,margin:"0 auto"}}>
  <small style={{color:"#ff4aa5",letterSpacing:2}}>GOD MODE / RAPTOR COMBAT LAB / ASSET QA</small>
  <h1 style={{marginBottom:4}}>RAPTOR SPRITE INSPECTOR</h1>
@@ -39,6 +38,6 @@ export default function RaptorSpriteQa(){
  <p style={{fontSize:12,color:"#94aab6"}}>These review checkboxes are local, unsaved notes; checking them does not install sprites or certify game readiness.</p>
  </section>
  </div>
- <p style={{marginTop:26}}><Link href="/studio/character/raptor/movement" style={{color:"#75dff2"}}>OPEN MOVEMENT REGISTRATION LAB →</Link></p><p><Link href="/studio/character" style={{color:"#ff72bb"}}>← CHARACTER LAB</Link>　<Link href="/studio/combat" style={{color:"#75dff2"}}>COMBAT LAB →</Link></p>
+ <p style={{marginTop:26}}><a href="/studio/character/raptor/movement" style={{color:"#75dff2"}}>OPEN MOVEMENT REGISTRATION LAB →</a></p><p><a href="/studio/character" style={{color:"#ff72bb"}}>← CHARACTER LAB</a>　<a href="/studio/combat" style={{color:"#75dff2"}}>COMBAT LAB →</a></p>
  </div></main>;
 }
