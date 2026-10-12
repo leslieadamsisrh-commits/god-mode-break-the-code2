@@ -22,7 +22,7 @@ function leg(bones:Record<RaptorBone,RigTransform>,side:"left"|"right",p:number,
  const stance=cycle<.64,u=stance?cycle/.64:(cycle-.64)/.36;
  const travel=stance?1-2*u:-1+2*smooth(u);
  const footX=amp*travel;
- const footY=stance?0:-Math.sin(Math.PI*u)*(5+8*motion);
+ const footY=stance?0:-Math.sin(Math.PI*u)*13*motion;
  const hipX=side==="left"?-7:7,hipY=0;
  const dx=footX-hipX,dy=36+footY-hipY;
  const upper=27,lower=30;
