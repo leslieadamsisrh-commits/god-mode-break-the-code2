@@ -562,8 +562,11 @@ function releaseGripGesture(p:Player,s:GameState,n:number,previous:InputState){
  // Settled placement, cancellation, a direction reversal and stale packets never launch.
  const gx=previous.gripX||0,gy=previous.gripY||0,aligned=(gx*dx+gy*dy)/r>0.1;
  const outward=((object.vx||0)-p.vx)*dx/r+((object.vy||0)-p.vy)*dy/r;
- const moving=!!p.gripGesture&&!p.gripCancelRelease&&p.knock<=0&&p.hp>0&&!p.charging&&aligned&&outward>20&&s.time-(p.gripDriveAt??-9)<.16&&radial>.1;
- const launch=moving&&Math.hypot(gx,gy)>.82&&drive>90&&radial>.3;
+ // Player intent drives release: a directed stick gesture throws, neutral release places.
+ // Do not require a narrowly timed outward velocity spike; keep cancel/knockout safe.
+ const directed=Math.hypot(gx,gy)>.24;
+ const moving=!!p.gripGesture&&!p.gripCancelRelease&&p.knock<=0&&p.hp>0&&!p.charging&&directed;
+ const launch=moving&&Math.hypot(gx,gy)>.70;
  const propelled=moving&&spendEnergy(p,s,s.config.coverThrowEnergy),kind=propelled?(launch?"launch":"slide"):"drop";
  let vx=0,vy=0;
  if(propelled){const mass=cv?(bayObject(cv.artId||cv.id)?.mass||9):3,impulse=launch?s.config.throwForce*.62*Math.sqrt(12/mass)*(p.godTime>0?1.25:1):0,carry=launch?.3:.65;
