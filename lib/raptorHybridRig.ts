@@ -16,43 +16,44 @@ const empty=():Record<RaptorBone,RigTransform>=>Object.fromEntries(B.map(b=>[b,{
 /** A grounded two-step gait. One leg cycles half a stride behind the other.
  * Y is positive downward; the root stays fixed while planted feet keep ground height.
  */
-function leg(bones:Record<RaptorBone,RigTransform>,side:"left"|"right",p:number,amp:number){
+function leg(bones:Record<RaptorBone,RigTransform>,side:"left"|"right",p:number,amp:number,motion:number){
  const cycle=(p+(side==="right"?.5:0))%1;
- const stance=cycle<.6;
- const u=stance?cycle/.6:(cycle-.6)/.4;
- const footX=amp*(stance?1-2*u:-1+2*smooth(u));
- const footY=stance?0:-Math.sin(Math.PI*u)*amp*.33;
+ // A long, weight-bearing stance followed by a compact lifted recovery.
+ const stance=cycle<.64,u=stance?cycle/.64:(cycle-.64)/.36;
+ const travel=stance?1-2*u:-1+2*smooth(u);
+ const footX=amp*travel;
+ const footY=stance?0:-Math.sin(Math.PI*u)*(5+8*motion);
  const hipX=side==="left"?-7:7,hipY=0;
  const dx=footX-hipX,dy=36+footY-hipY;
- const upper=25,lower=27;
+ const upper=27,lower=30;
  const reach=clamp(Math.hypot(dx,dy),.01,upper+lower-.01);
  const base=Math.atan2(dy,dx);
  const bend=Math.acos(clamp((upper*upper+reach*reach-lower*lower)/(2*upper*reach),-1,1));
- const thigh=base-bend;
+ const thigh=base-(side==="left"?1:-1)*bend;
  const kneeX=hipX+Math.cos(thigh)*upper,kneeY=hipY+Math.sin(thigh)*upper;
  const shin=Math.atan2(36+footY-kneeY,footX-kneeX);
  bones[(side+"Thigh") as RaptorBone]={x:hipX,y:hipY,angle:thigh};
  bones[(side+"Shin") as RaptorBone]={x:kneeX,y:kneeY,angle:shin};
- bones[(side+"Foot") as RaptorBone]={x:footX,y:36+footY,angle:stance?0:-.16*Math.sin(Math.PI*u)};
+ bones[(side+"Foot") as RaptorBone]={x:footX,y:36+footY,angle:stance?0:-.18*Math.sin(Math.PI*u)};
  return stance;
 }
 export function evaluateRaptorRig(input:MotionInput):RigPose{
  const bones=empty(),motion=clamp(input.speed/Math.max(1,input.runSpeed),0,1);
- const phase=((input.time*(input.state==="idle"?.25:1.15+2.25*motion))%1+1)%1;
+ const phase=((input.time*2.0)%1+1)%1;
  const a=phase*TAU;
- const contactL=leg(bones,"left",phase,input.state==="idle"?2:11+16*motion);
- const contactR=leg(bones,"right",phase,input.state==="idle"?2:11+16*motion);
+ const contactL=leg(bones,"left",phase,input.state==="idle"?0:9+15*motion,motion);
+ const contactR=leg(bones,"right",phase,input.state==="idle"?0:9+15*motion,motion);
  bones.root={x:0,y:0,angle:0};
- bones.torso={x:0,y:-13,angle:.025*Math.sin(a*2)};
+ bones.torso={x:0,y:-13,angle:.012*Math.sin(a*2)*motion};
  bones.neck={x:16,y:-20,angle:.04*Math.sin(a+.6)};
- bones.head={x:27,y:-26+Math.sin(a+.45)*1.9*motion,angle:.035*Math.sin(a+.65)};
+ bones.head={x:27,y:-26+Math.sin(a+.45)*1.2*motion,angle:.02*Math.sin(a+.65)*motion};
  bones.jaw={x:35,y:-22,angle:.03*Math.sin(a)};
  const aimOffset=clamp(input.aim-input.facing,-.5,.5);
  bones.leftUpperArm={x:9,y:-15,angle:.10*Math.sin(a-.55)*motion};
  bones.rightUpperArm={x:13,y:-15,angle:-.09*Math.sin(a-.55)*motion};
  bones.leftForearm={x:21,y:-8,angle:aimOffset*.4};
  bones.rightForearm={x:23,y:-8,angle:aimOffset*.4};
- bones.weapon={x:28,y:-8+Math.sin(a-.55)*1.2*motion,angle:aimOffset};
+ bones.weapon={x:28,y:-8+Math.sin(a-.55)*.6*motion,angle:aimOffset};
  let tx=-15,ty=-12;
  for(let i=0;i<6;i++){
   const sway=Math.sin(a+i*.42)*.09*motion;
