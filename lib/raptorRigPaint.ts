@@ -23,8 +23,8 @@ export function paintRaptorRig(g:CanvasRenderingContext2D,p:RigPose,showJoints:b
  // The tail is a chain: each section follows its own phased vertical offset.
  for(let i=5;i>=0;i--){
   const q=b[("tail"+i) as keyof typeof b],prev=i===0?{x:-12,y:-12}:b[("tail"+(i-1)) as keyof typeof b];
-  line(prev.x,prev.y,q.x-9,q.y-1,Math.max(4,14-i*1.65),"#24302a");
-  line(prev.x,prev.y,q.x-9,q.y-1,Math.max(3,11-i*1.45),"#8b9950");
+  line(prev.x,prev.y,q.x,q.y,Math.max(4,14-i*1.65),"#24302a");
+  line(prev.x,prev.y,q.x,q.y,Math.max(3,11-i*1.45),"#8b9950");
   if(i%2===0)line(q.x-5,q.y-4,q.x-11,q.y+4,3,"#30342a");
   if(showJoints)joint(q.x,q.y);
  }
@@ -39,7 +39,7 @@ export function paintRaptorRig(g:CanvasRenderingContext2D,p:RigPose,showJoints:b
  leg("right");
  // Neck and head independent of torso motion.
  const h=b.head;
- line(16,-18,h.x-5,h.y+4,10,"#7b8d54");
+ line(14,-20,h.x-7,h.y+3,13,"#26332a");line(14,-20,h.x-7,h.y+3,10,"#7b8d54");
  g.save();g.translate(h.x,h.y);g.rotate(h.angle);
  ellipse(1,0,16,10,"#839453",-.08);ellipse(8,5,11,3.5,"#d5b27d",.14);
  g.fillStyle="#111820";g.beginPath();g.moveTo(3,7);g.lineTo(17,6);g.lineTo(11,11);g.closePath();g.fill();
@@ -47,12 +47,16 @@ export function paintRaptorRig(g:CanvasRenderingContext2D,p:RigPose,showJoints:b
  ellipse(3,-7,8,4,"#292c33");ellipse(9,-3,4.3,4.3,"#ff4b63");ellipse(9,-3,1.7,1.7,"#ffe8b7");
  g.restore();
  // Separate arm segments and gun, stabilized against run bounce.
- const arm=b.rightUpperArm,w=b.weapon;
- line(13,-16,23,-8+Math.sin(p.phase*Math.PI/6)*1.5,8,"#849452");
- ellipse(22,-9,5,5,"#b6bbc0");
+ const arm=b.rightUpperArm,w=b.weapon,near=b.leftUpperArm;
+ const elbow={x:(arm.x+w.x)/2,y:(arm.y+w.y)/2+5};
+ line(arm.x,arm.y,elbow.x,elbow.y,11,"#26302d");
+ line(arm.x,arm.y,elbow.x,elbow.y,8,"#849452");
+ line(elbow.x,elbow.y,w.x-6,w.y+2,8,"#76835d");
+ ellipse(elbow.x,elbow.y,5,5,"#b6bbc0");
+ line(near.x,near.y,w.x-10,w.y+5,7,"#6d804b");
  g.save();g.translate(w.x,w.y);g.rotate(w.angle);
  ellipse(3,1,24,5,"#161d27");g.fillStyle="#858b96";g.fillRect(-7,-4,27,5);
  g.fillStyle="#ef5368";g.fillRect(4,-3,9,2);g.fillStyle="#121820";g.fillRect(20,-2,13,6);
  g.fillStyle="#a9aeb7";g.fillRect(24,-1,9,2);g.restore();
- if(showJoints){joint(0,0);joint(arm.x,arm.y);joint(w.x,w.y);joint(h.x,h.y)}
+ if(showJoints){joint(0,0);joint(arm.x,arm.y);joint(elbow.x,elbow.y);joint(near.x,near.y);joint(w.x,w.y);joint(h.x,h.y)}
 }
