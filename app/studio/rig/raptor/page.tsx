@@ -21,7 +21,9 @@ export default function HybridRigPreview(){
    g.save();g.translate(390,245);g.scale(2.3,2.3);
    const b=p.bones;
    g.strokeStyle="#243b4a";g.lineWidth=.5;g.beginPath();g.moveTo(-155,36);g.lineTo(155,36);g.stroke();
-   // Independently articulated procedural Raptor parts; approved PNG art pending.\n   paintRaptorRig(g,p,jointRef.current);\n   g.restore();
+   // Independently articulated procedural Raptor parts; approved PNG art pending.
+   paintRaptorRig(g,p,jointRef.current);
+   g.restore();
    g.fillStyle="#f6f6fa";g.font="16px monospace";g.fillText("12-PHASE RIG  /  "+String(p.phase+1).padStart(2,"0"),18,26);
    g.fillStyle="#a7c6d4";g.font="12px monospace";g.fillText("CONTACT: "+p.contact.toUpperCase()+"  |  COSMETIC MOTION ONLY",18,46);
    g.fillText("ARTICULATED RAPTOR TEST — APPROVED PAINTED LAYERS PENDING",18,405);
