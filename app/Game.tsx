@@ -1,6 +1,8 @@
 "use client";
 import {useCallback,useEffect,useRef,useState} from "react";
 import PlaytestGuide from "./PlaytestGuide";
+import {evaluateRaptorRig} from "../lib/raptorHybridRig";
+import {paintRaptorRig} from "../lib/raptorRigPaint";
 import AnimationQaHarness from "./AnimationQaHarness";
 import BayBridgeArena from "./BayBridgeArena";
 import GodModeShell from "./GodModeShell";
@@ -207,7 +209,8 @@ function combatTone(kind:string,angle?:number){
  const frequency=kind==="cover-defense"?155:kind==="damage"?95:kind==="block"?950:kind==="hit"?330:kind==="shield"?780:kind==="cover"?130:kind==="finish"?90:kind==="fight"?660:440;
  osc.type=kind==="cover"?"triangle":"sine";osc.frequency.setValueAtTime(frequency,now);osc.frequency.exponentialRampToValueAtTime(Math.max(40,frequency*.65),now+.09);gain.gain.setValueAtTime(.045,now);gain.gain.exponentialRampToValueAtTime(.001,now+.13);osc.connect(gain);const pan=a.createStereoPanner?.();if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!):0;gain.connect(pan);pan.connect(a.destination);}else gain.connect(a.destination);osc.start(now);osc.stop(now+.14);osc.onended=()=>{osc.disconnect();gain.disconnect();pan?.disconnect()};
 }
-export default function Game(){
+export default function Game({character="jade"}:{character?:"jade"|"raptor"}={}){
+ const characterRef=useRef(character);characterRef.current=character;
  const [sound43,setSound43]=useState(true),[rumble43,setRumble43]=useState(false);
  useEffect(()=>{const visibility43=()=>{frames43.last=0;frames43.active=false;};document.addEventListener("visibilitychange",visibility43);return()=>document.removeEventListener("visibilitychange",visibility43);},[]);
  useEffect(()=>{try{const saved=JSON.parse(localStorage.getItem("god-mode-feedback43")||"null");if(saved){feedbackPrefs43.sound=saved.sound!==false;feedbackPrefs43.haptics=saved.haptics===true;setSound43(feedbackPrefs43.sound);setRumble43(feedbackPrefs43.haptics);}}catch{}},[]);
@@ -262,7 +265,7 @@ export default function Game(){
  const timer=setInterval(async()=>{const ss=session.current;if(dead||pending||!ss||ss.local||!bootReady||state.current?.mode==="watch")return;pending=true;const input=queue.shift()||latest;try{const reply=await post({action:"input",...ss,seq:++seq.current,input});if(!dead&&session.current===ss&&!streamOpen.current)accept(reply);}catch{queue.length=0;}finally{pending=false;}},33);
  const pauseLocal=()=>{if(document.hidden&&localCombat.current){queue.length=0;latest={...EMPTY};previous={...EMPTY};localCombat.current.pause();keys.current={};edges.current={};touchMove.current={x:0,y:0};touchA.current=false;touchAEdge.current=false;}};document.addEventListener("visibilitychange",pauseLocal);
  return()=>{dead=true;cancelAnimationFrame(raf);clearInterval(timer);document.removeEventListener("visibilitychange",pauseLocal);localCombat.current?.pause();};},[accept,post,bootReady,studioMenu]);
- useEffect(()=>{let id=0;const loop=(stamp:number)=>{const start=performance.now();draw(canvas.current,state.current,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current,session.current?.slot||0);const s=state.current;recordFrame43(stamp,performance.now()-start,(session.current?.room||"")+"/"+s?.round,!document.hidden&&!!s&&["playing","finisher"].includes(s.phase));id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[]);
+ useEffect(()=>{let id=0;const loop=(stamp:number)=>{const start=performance.now();draw(canvas.current,state.current,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current,session.current?.slot||0,characterRef.current);const s=state.current;recordFrame43(stamp,performance.now()-start,(session.current?.room||"")+"/"+s?.round,!document.hidden&&!!s&&["playing","finisher"].includes(s.phase));id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[]);
  const point=(e:React.PointerEvent)=>{const c=canvas.current;if(!c)return;const r=c.getBoundingClientRect();mouse.current.x=(e.clientX-r.left)/r.width*1000;mouse.current.y=(e.clientY-r.top)/r.height*620};
  const patch=async(key:keyof Config,value:number)=>{const next={...config,[key]:value};setConfig(next);const s=session.current;if(s)try{accept(await post({action:"config",...s,patch:{[key]:value}}))}catch{}};
  const applyMovementPreset=async(name:string)=>{const preset=MOVEMENT_PRESETS[name];if(!preset)return;const movementKeys=new Set(Object.values(MOVEMENT_PRESETS).flatMap(p=>Object.keys(p)));const values:Partial<Config>={};for(const k of movementKeys)values[k as keyof Config]=DEFAULT[k as keyof Config];Object.assign(values,preset);const saved=session.current;if(!saved)return;try{accept(await post({action:"config",...saved,patch:values}));setTestPass({});setNote(name+" APPLIED")}catch(e:any){setNote(e.message||"PRESET FAILED")}};
@@ -461,7 +464,7 @@ function cachedSkyline(im:HTMLImageElement){
  g.filter="saturate(.65) brightness(.8)";g.drawImage(im,0,0,1200,350);
  g.drawImage(im,0,im.naturalHeight-75,im.naturalWidth,75,0,349,1200,441);skylineCache.set(im,c);return c;
 }
-function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
+function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade"){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
  const renderNow=performance.now();s=presentation(s,renderNow);const cfg=s.config||DEFAULT,p=s.players[localSlot]||s.players[0],local={...p,id:"fighter-"+localSlot};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
  const zoom=s.mode==="watch"?Math.min(1.85,800/(Math.abs(s.players[0].x-s.players[1].x)+180),260/(Math.abs(s.players[0].y-s.players[1].y)*DECK_PITCH+Math.abs(s.players[0].x-s.players[1].x)*DECK_SLOPE+100)):Math.max(1.25,Math.min(2.15,cfg.cameraZoom||1.85)),look=0,lookY=0,ga=local.gunFacing??local.aim??0;
  const halfW=500/zoom,halfH=310/zoom,targetX=s.mode==="watch"?(s.players[0].x+s.players[1].x)/2:Math.max(halfW,Math.min(1000-halfW,local.x+Math.cos(ga)*look)),targetY=s.mode==="watch"?(s.players[0].y+s.players[1].y)/2:Math.max(190,Math.min(430,local.y+Math.sin(ga)*lookY));
@@ -508,7 +511,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>withWorld46(g,c.x,c.y,()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time,environmentLights)));
  const actors=[
   ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",fn:()=>withUpright(g,m.x,m.y,()=>matter(g,m))})),
-  ...s.players.map((raw:any,index:number)=>{const actor=index===localSlot?local:{...raw,id:"fighter-"+index};return{y:actor.y,kind:"player",player:actor,fn:()=>{drawGodGround(g,actor,s.time);withUpright(g,actor.x,actor.y,()=>{if(actor.hp>0){drawGodRear(g,actor,s.time);fighter(g,actor,s.time,cfg);drawGodFront(g,actor,s.time)}else{g.save();const age=Math.max(0,s.time-(actor.deathAt??s.time)),fade=Math.max(.12,1-age/1.5);g.globalAlpha=fade;for(let n=0;n<28;n++){const a=n*2.399,r=8+age*(15+n%5*9);g.fillStyle=actor.bot?(n%3===0?"#d9e1e7":n%2?"#84324f":"#151b26"):(n%3===0?"#f0eaff":n%2?"#65efff":"#ff69bd");const x=actor.x+Math.cos(a)*r,y=actor.y-12-n*1.7+Math.sin(a)*r*.5+age*age*17;if(actor.bot){g.beginPath();g.ellipse(x,y,2+n%3,1+n%2,a,0,Math.PI*2);g.fill()}else g.fillRect(x,y,2+n%3,2+n%2)}g.restore();}g.save();g.fillStyle=index===0?"#65efff":"#ff69bd";g.font="bold 8px monospace";g.textAlign="center";g.fillText(s.mode==="watch"?actor.name:index===localSlot?"YOU":actor.name,actor.x,actor.y-84);g.restore()})}}})
+  ...s.players.map((raw:any,index:number)=>{const actor=index===localSlot?local:{...raw,id:"fighter-"+index};return{y:actor.y,kind:"player",player:actor,fn:()=>{drawGodGround(g,actor,s.time);withUpright(g,actor.x,actor.y,()=>{if(actor.hp>0){drawGodRear(g,actor,s.time);fighter(g,actor,s.time,cfg,index===localSlot?character:"jade");drawGodFront(g,actor,s.time)}else{g.save();const age=Math.max(0,s.time-(actor.deathAt??s.time)),fade=Math.max(.12,1-age/1.5);g.globalAlpha=fade;for(let n=0;n<28;n++){const a=n*2.399,r=8+age*(15+n%5*9);g.fillStyle=actor.bot?(n%3===0?"#d9e1e7":n%2?"#84324f":"#151b26"):(n%3===0?"#f0eaff":n%2?"#65efff":"#ff69bd");const x=actor.x+Math.cos(a)*r,y=actor.y-12-n*1.7+Math.sin(a)*r*.5+age*age*17;if(actor.bot){g.beginPath();g.ellipse(x,y,2+n%3,1+n%2,a,0,Math.PI*2);g.fill()}else g.fillRect(x,y,2+n%3,2+n%2)}g.restore();}g.save();g.fillStyle=index===0?"#65efff":"#ff69bd";g.font="bold 8px monospace";g.textAlign="center";g.fillText(s.mode==="watch"?actor.name:index===localSlot?"YOU":actor.name,actor.x,actor.y-84);g.restore()})}}})
  ].sort((a,b)=>a.y-b.y);
  actors.forEach(o=>{
   withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?(o as any).player.coverId:null,o.kind==="player"&&!!((o as any).player.input?.coverAim||(o as any).player.fireState>0||(o as any).player.recoil>0),1/DECK_PITCH);
@@ -843,7 +846,19 @@ function actorContinuity(p:any,family:string,dir:number,t:number){
  // Tiny presentation-only settle dampens donor-family silhouette bounce without changing gameplay root.
  return{settle,y:(1-settle)*1.1};
 }
-function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);
+function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade"){
+ if(character==="raptor"){
+  const speed=Math.hypot(p.vx||0,p.vy||0),sliding=p.slide>0||p.pinball>0;
+  const rig=evaluateRaptorRig({time:t,speed,runSpeed:300,facing:p.facing||0,aim:p.aim||0,state:sliding?"slide":speed>30?"run":"idle"});
+  g.save();
+  const visual=coverVisualOffset(p);g.translate(visual.x+p.x,visual.y+p.y);
+  g.scale(cfg.spriteScale*.80,cfg.spriteScale*.80);
+  g.rotate(p.facing||0);
+  paintRaptorRig(g,rig,false);
+  g.restore();
+  return;
+ }
+ const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);
  if((p.hitUntil||0)>t){const strength=Math.min(1,(p.hitUntil-t)/.18);g.translate(Math.cos(p.hitAngle||0)*strength*2.5,Math.sin(p.hitAngle||0)*strength*1.5);g.filter="brightness(1.35) saturate(.85)";}
 
  if(p.coverId&&p.coverMode==="soft"){
