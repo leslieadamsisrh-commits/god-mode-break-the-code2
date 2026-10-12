@@ -404,9 +404,9 @@ export function gripSelection(p:Player,s:GameState){
  const candidates=s.covers.filter(cv=>!cv.protected45&&cv.hp>0&&(cv.generated||!!bayObject(cv.artId||cv.id)?.gripCompatible)&&!s.players.some(q=>q!==p&&(q.coverId===cv.id||q.gripCoverId===cv.id)));
  // Aim directly through the rotated whole-object footprint to choose it over incidental rubble.
  let cover=candidates.find(cv=>cv.id===p.coverId)||candidates.filter(cv=>dist(cv,p)<=reach&&segmentCoverTime(p,end,cv)!==null).sort((a,b)=>dist(a,p)-dist(b,p))[0];
- const matter=s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null&&dist(m,p)<=reach&&forward(m)>.45).sort((a,b)=>forward(b)-forward(a)||dist(a,p)-dist(b,p))[0];
+ const matter=s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null&&dist(m,p)<=reach&&forward(m)>.45).sort((a,b)=>dist(a,p)-dist(b,p)||forward(b)-forward(a))[0];
  const panel=!cover?(s.groundSources44||[]).filter(q=>q.panel46&&q.remaining===q.initial&&dist(q,p)<=reach&&segmentCoverTime(p,end,{x:q.x,y:q.y,w:80,h:54,a:0,hp:1} as Cover)!==null&&!s.covers.some(cv=>cv.hp>0&&circleBox(q,8,cv).hit)).sort((a,b)=>dist(a,p)-dist(b,p))[0]:undefined;
- if(!cover&&!matter&&!panel)cover=candidates.filter(cv=>dist(cv,p)<=reach&&forward(cv)>.45).sort((a,b)=>forward(b)-forward(a)||dist(a,p)-dist(b,p))[0];
+ if(!cover&&!matter&&!panel)cover=candidates.filter(cv=>dist(cv,p)<=reach&&forward(cv)>.45).sort((a,b)=>dist(a,p)-dist(b,p)||forward(b)-forward(a))[0];
  return{cover,matter:cover||panel?undefined:matter,panel};
 }
 function extractPanel46(p:Player,s:GameState,n:number,q:GroundSource44){
