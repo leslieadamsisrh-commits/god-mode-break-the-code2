@@ -857,16 +857,28 @@ function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){
  const age=active?t-m.started:0;
  const thrust=active?Math.max(0,Math.min(1,(age-.025)/.085)):0;
  const sc=cfg.spriteScale||1;
+ // Eight-direction anatomical wind-up: hips anchor, shoulder turns, elbow coils,
+ // fist retracts and then drives forward. Presentation only; gameplay root never moves.
+ const facing=aim,fx=Math.cos(facing),fy=Math.sin(facing);
  const px=p.x,py=p.y-23*sc;
+ const twist=(holding?charge*.34:charge*(1-thrust)*.34);
+ const sx=px-fx*(3+twist*13)*sc,sy=py-fy*(3+twist*9)*sc;
+ const elbowDistance=(holding?13+charge*9:12+thrust*8)*sc;
+ const ex=sx-fx*elbowDistance+(-fy)*(7+charge*4)*sc;
+ const ey=sy-fy*elbowDistance+fx*(7+charge*4)*sc;
  const pull=holding?(9+charge*15)*sc:0;
  const reach=(16+thrust*(21+charge*19))*sc-pull;
- const hx=px+Math.cos(aim)*reach,hy=py+Math.sin(aim)*reach;
+ const hx=px+fx*reach,hy=py+fy*reach;
  g.save();
  g.lineCap="round";
- g.strokeStyle="#141a28";g.lineWidth=(11+charge*5)*sc;
- g.beginPath();g.moveTo(px,py);g.lineTo(hx,hy);g.stroke();
- g.strokeStyle="#a7aebd";g.lineWidth=(7+charge*4)*sc;
- g.beginPath();g.moveTo(px,py);g.lineTo(hx,hy);g.stroke();
+ g.strokeStyle="#141a28";g.lineWidth=(12+charge*5)*sc;
+ g.beginPath();g.moveTo(sx,sy);g.lineTo(ex,ey);g.lineTo(hx,hy);g.stroke();
+ g.strokeStyle="#a7aebd";g.lineWidth=(8+charge*3)*sc;
+ g.beginPath();g.moveTo(sx,sy);g.lineTo(ex,ey);g.lineTo(hx,hy);g.stroke();
+ // Shoulder counterrotation and armor plate make the wind-up read as body-driven.
+ g.save();g.translate(sx,sy);g.rotate(facing+twist);
+ g.fillStyle="#333d50";g.strokeStyle="#f267a9";g.lineWidth=1.6*sc;
+ g.beginPath();g.ellipse(0,0,(8+charge*3)*sc,6*sc,0,0,Math.PI*2);g.fill();g.stroke();g.restore();
  const radius=(7+charge*8+thrust*5)*sc;
  g.shadowColor="#ff53b5";g.shadowBlur=(7+charge*18)*sc;
  g.fillStyle="#f2a5d8";g.beginPath();g.arc(hx,hy,radius,0,Math.PI*2);g.fill();
