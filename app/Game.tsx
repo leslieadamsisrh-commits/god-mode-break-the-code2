@@ -848,7 +848,7 @@ function actorContinuity(p:any,family:string,dir:number,t:number){
 }
 // Direction-aware Power Glove wind-up presentation. Temporary vector overlay,
 // not an approved directional sprite; combat collision and damage stay authoritative.
-function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){
+function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade"){
  const holding=p.gloveHoldStarted!==undefined&&p.input?.melee;
  const m=p.meleeCombo,active=!!m&&m.gloveCharge!==undefined;
  if(!holding&&!active)return;
@@ -856,11 +856,32 @@ function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){
  const aim=active?(m?.angle??p.aim):p.aim;
  const age=active?t-m.started:0;
  const thrust=active?Math.max(0,Math.min(1,(age-.025)/.085)):0;
+ const release=active?Math.max(0,1-Math.abs(age-.105)/.10):0;
  const sc=cfg.spriteScale||1;
+ const accent=character==="raptor"?"#e45b67":"#ff53b5";
+ // Grounded weight transfer: planted foot anchors, rear heel load, forward hip drive.
+ // Presentation-only geometry; never alter actual player coordinates or hitboxes.
+ const ux=Math.cos(aim),uy=Math.sin(aim),sideX=-uy,sideY=ux;
+ const weight=holding?charge*.65:release;
+ const rootX=p.x,rootY=p.y+3*sc;
+ g.save();g.lineCap="round";
+ for(const side of [-1,1]){
+  const footX=rootX+sideX*side*10*sc-ux*(side===-1?9*weight:-4*weight)*sc;
+  const footY=rootY+sideY*side*5*sc+uy*(side===-1?6*weight:3*weight)*sc;
+  g.fillStyle="#202b38";g.strokeStyle=accent;g.lineWidth=1.5*sc;
+  g.beginPath();g.ellipse(footX,footY,10*sc,3.2*sc,aim,0,Math.PI*2);g.fill();g.stroke();
+ }
+ const hipX=rootX-ux*6*weight*sc,hipY=p.y-12*sc;
+ const chestX=rootX+ux*(4+release*9)*sc,chestY=p.y-30*sc;
+ g.strokeStyle="#222b3b";g.lineWidth=13*sc;
+ g.beginPath();g.moveTo(hipX,hipY);g.lineTo(chestX,chestY);g.stroke();
+ g.strokeStyle=character==="raptor"?"#8d995b":"#9ca8bb";g.lineWidth=8*sc;
+ g.beginPath();g.moveTo(hipX,hipY);g.lineTo(chestX,chestY);g.stroke();
+ g.restore();
  // Eight-direction anatomical wind-up: hips anchor, shoulder turns, elbow coils,
  // fist retracts and then drives forward. Presentation only; gameplay root never moves.
  const facing=aim,fx=Math.cos(facing),fy=Math.sin(facing);
- const px=p.x,py=p.y-23*sc;
+ const px=p.x+ux*release*7*sc,py=p.y-23*sc;
  const twist=(holding?charge*.34:charge*(1-thrust)*.34);
  const sx=px-fx*(3+twist*13)*sc,sy=py-fy*(3+twist*9)*sc;
  const elbowDistance=(holding?13+charge*9:12+thrust*8)*sc;
@@ -880,9 +901,19 @@ function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){
  g.fillStyle="#333d50";g.strokeStyle="#f267a9";g.lineWidth=1.6*sc;
  g.beginPath();g.ellipse(0,0,(8+charge*3)*sc,6*sc,0,0,Math.PI*2);g.fill();g.stroke();g.restore();
  const radius=(7+charge*8+thrust*5)*sc;
- g.shadowColor="#ff53b5";g.shadowBlur=(7+charge*18)*sc;
+ g.shadowColor=accent;g.shadowBlur=(7+charge*18)*sc;
  g.fillStyle="#f2a5d8";g.beginPath();g.arc(hx,hy,radius,0,Math.PI*2);g.fill();
  g.strokeStyle="#5eeaff";g.lineWidth=2*sc;g.beginPath();g.arc(hx,hy,radius+4*sc,0,Math.PI*2*charge);g.stroke();
+ // Hit punctuation at the authored contact window; no extra damage or collision.
+ if(active&&release>0){
+  g.globalAlpha=release*(.35+.65*charge);
+  g.strokeStyle=accent;g.lineWidth=(2+charge*4)*sc;
+  for(let i=0;i<6;i++){
+   const a=aim+(i-2.5)*Math.PI/5,near=radius+5*sc,far=radius+(14+charge*25)*sc;
+   g.beginPath();g.moveTo(hx+Math.cos(a)*near,hy+Math.sin(a)*near);g.lineTo(hx+Math.cos(a)*far,hy+Math.sin(a)*far);g.stroke();
+  }
+  g.globalAlpha=1;
+ }
  g.restore();
 }
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade"){
@@ -895,7 +926,7 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
   g.rotate(p.facing||0);
   paintRaptorRig(g,rig,false);
   g.restore();
-  drawGloveWindup(g,p,t,cfg);
+  drawGloveWindup(g,p,t,cfg,"raptor");
   return;
  }
  const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);
@@ -932,7 +963,7 @@ const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pi
  const connector=meleeArt||packBrake||packAim||packRetract||exposure||poseAlpha===0&&drawCoverConnector(g,p,cfg,splitCover);
  const psychic=!connector&&poseAlpha===0&&drawPsychicPose(g,p,t,cfg);
  if(!connector&&!psychic&&renderIm&&poseAlpha<1){const m=spriteCell(renderIm,renderFamily,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";(()=>{const paint=()=>g.drawImage(renderIm,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*spriteRegistration(renderFamily).groundAnchor.x*sc,p.y-displayCell*spriteRegistration(renderFamily).groundAnchor.y*sc,displayCell*sc,displayCell*sc);if(family!=="run"||p.shield||p.gripCoverId||p.gripId||p.charging){paint();return;}const key=p.id||p.name,travel=Math.atan2(p.vy,p.vx),prev=turnVisual.get(key)||{angle:travel,at:t,bank:0},dt=Math.max(0,Math.min(.05,t-prev.at)),rate=dt>.001?angleDelta(travel,prev.angle)/dt:0,target=Math.max(-.035,Math.min(.035,rate*.007))*Math.min(1,speed/222.7),bank=prev.bank+(target-prev.bank)*(1-Math.exp(-12*dt));turnVisual.set(key,{angle:travel,at:t,bank});const waist=p.y-25*sc;g.save();g.beginPath();g.rect(-1e4,waist,2e4,1e4);g.clip();paint();g.restore();g.save();g.beginPath();g.rect(-1e4,-1e4,2e4,1e4+waist);g.clip();g.translate(p.x,waist);g.rotate(bank);g.translate(-p.x,-waist);paint();g.restore();})()}else if(!connector&&!psychic&&!im&&!poseAlpha){presentationQA.missingExact++}
- if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.globalAlpha=1;drawGloveWindup(g,p,t,cfg);g.restore();
+ if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.globalAlpha=1;drawGloveWindup(g,p,t,cfg,"jade");g.restore();
  drawPlantPunctuation(g,p,t);g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5*DECK_PITCH,25,8*DECK_PITCH,0,0,Math.PI*2);g.stroke();g.restore()}
 // Structure Lab concrete-cover-atlas-v2: original face registration, not replacement artwork.
 type CoverPoint={x:number;y:number};
