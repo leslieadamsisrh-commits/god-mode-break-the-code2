@@ -846,6 +846,33 @@ function actorContinuity(p:any,family:string,dir:number,t:number){
  // Tiny presentation-only settle dampens donor-family silhouette bounce without changing gameplay root.
  return{settle,y:(1-settle)*1.1};
 }
+// Direction-aware Power Glove wind-up presentation. Temporary vector overlay,
+// not an approved directional sprite; combat collision and damage stay authoritative.
+function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config){
+ const holding=p.gloveHoldStarted!==undefined&&p.input?.melee;
+ const m=p.meleeCombo,active=!!m&&m.gloveCharge!==undefined;
+ if(!holding&&!active)return;
+ const charge=Math.max(0,Math.min(1,holding?(p.gloveCharge||0):(m?.gloveCharge||0)));
+ const aim=active?(m?.angle??p.aim):p.aim;
+ const age=active?t-m.started:0;
+ const thrust=active?Math.max(0,Math.min(1,(age-.025)/.085)):0;
+ const sc=cfg.spriteScale||1;
+ const px=p.x,py=p.y-23*sc;
+ const pull=holding?(9+charge*15)*sc:0;
+ const reach=(16+thrust*(21+charge*19))*sc-pull;
+ const hx=px+Math.cos(aim)*reach,hy=py+Math.sin(aim)*reach;
+ g.save();
+ g.lineCap="round";
+ g.strokeStyle="#141a28";g.lineWidth=(11+charge*5)*sc;
+ g.beginPath();g.moveTo(px,py);g.lineTo(hx,hy);g.stroke();
+ g.strokeStyle="#a7aebd";g.lineWidth=(7+charge*4)*sc;
+ g.beginPath();g.moveTo(px,py);g.lineTo(hx,hy);g.stroke();
+ const radius=(7+charge*8+thrust*5)*sc;
+ g.shadowColor="#ff53b5";g.shadowBlur=(7+charge*18)*sc;
+ g.fillStyle="#f2a5d8";g.beginPath();g.arc(hx,hy,radius,0,Math.PI*2);g.fill();
+ g.strokeStyle="#5eeaff";g.lineWidth=2*sc;g.beginPath();g.arc(hx,hy,radius+4*sc,0,Math.PI*2*charge);g.stroke();
+ g.restore();
+}
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade"){
  if(character==="raptor"){
   const speed=Math.hypot(p.vx||0,p.vy||0),sliding=p.slide>0||p.pinball>0;
@@ -856,6 +883,7 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
   g.rotate(p.facing||0);
   paintRaptorRig(g,rig,false);
   g.restore();
+  drawGloveWindup(g,p,t,cfg);
   return;
  }
  const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);
@@ -892,7 +920,7 @@ const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pi
  const connector=meleeArt||packBrake||packAim||packRetract||exposure||poseAlpha===0&&drawCoverConnector(g,p,cfg,splitCover);
  const psychic=!connector&&poseAlpha===0&&drawPsychicPose(g,p,t,cfg);
  if(!connector&&!psychic&&renderIm&&poseAlpha<1){const m=spriteCell(renderIm,renderFamily,frame);g.globalAlpha=1-poseAlpha;g.imageSmoothingEnabled=true;g.imageSmoothingQuality="high";(()=>{const paint=()=>g.drawImage(renderIm,m.sx,m.sy,m.cell,m.cell,p.x-displayCell*spriteRegistration(renderFamily).groundAnchor.x*sc,p.y-displayCell*spriteRegistration(renderFamily).groundAnchor.y*sc,displayCell*sc,displayCell*sc);if(family!=="run"||p.shield||p.gripCoverId||p.gripId||p.charging){paint();return;}const key=p.id||p.name,travel=Math.atan2(p.vy,p.vx),prev=turnVisual.get(key)||{angle:travel,at:t,bank:0},dt=Math.max(0,Math.min(.05,t-prev.at)),rate=dt>.001?angleDelta(travel,prev.angle)/dt:0,target=Math.max(-.035,Math.min(.035,rate*.007))*Math.min(1,speed/222.7),bank=prev.bank+(target-prev.bank)*(1-Math.exp(-12*dt));turnVisual.set(key,{angle:travel,at:t,bank});const waist=p.y-25*sc;g.save();g.beginPath();g.rect(-1e4,waist,2e4,1e4);g.clip();paint();g.restore();g.save();g.beginPath();g.rect(-1e4,-1e4,2e4,1e4+waist);g.clip();g.translate(p.x,waist);g.rotate(bank);g.translate(-p.x,-waist);paint();g.restore();})()}else if(!connector&&!psychic&&!im&&!poseAlpha){presentationQA.missingExact++}
- if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.restore();
+ if(poseAlpha>0){g.globalAlpha=poseAlpha;drawPowerPose(g,p,cfg)}g.globalAlpha=1;drawGloveWindup(g,p,t,cfg);g.restore();
  drawPlantPunctuation(g,p,t);g.strokeStyle="#ff4aa5";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5*DECK_PITCH,25,8*DECK_PITCH,0,0,Math.PI*2);g.stroke();g.restore()}
 // Structure Lab concrete-cover-atlas-v2: original face registration, not replacement artwork.
 type CoverPoint={x:number;y:number};
