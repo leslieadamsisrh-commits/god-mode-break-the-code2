@@ -345,7 +345,7 @@ function meleeInput(s:GameState,n:number,prev:InputState){const p=s.players[n],i
  }
  // POWER GLOVE 01: B holds charge, release commits exactly one strike.
  // No automatic kick-chain; old MELEE_38 remains available for rollback.
- const invalid=p.charging||p.knock>0||p.coverId||p.gripCoverId||p.gripId||p.orbitIds.length||i.shield||i.slide||i.grip||i.heavy;
+ const invalid=p.hp<=0||p.charging||p.knock>0||p.coverId||p.gripCoverId||p.gripId||p.orbitIds.length||i.shield||i.slide||i.grip||i.heavy;
  if(i.melee&&!prev.melee){
   if(invalid||p.meleeCombo){actionOutcome(s,n,"melee","rejected","incompatible state");return;}
   p.gloveHoldStarted=s.time;p.gloveCharge=0;return;
@@ -365,7 +365,7 @@ function meleeInput(s:GameState,n:number,prev:InputState){const p=s.players[n],i
 }
 function meleeStep(s:GameState,n:number){const p=s.players[n],m=p.meleeCombo;if(!m)return;
  if(p.hp<=0||p.knock>0||p.charging||p.input.shield||p.input.slide||p.input.grip||p.coverId||p.gripId||p.gripCoverId||p.orbitIds.length){actionOutcome(s,n,"melee","cancelled",p.knock>0?"incoming hit":"state changed",undefined,undefined,m.attackId);p.meleeCombo=undefined;p.meleeNextStage=undefined;p.meleeNextUntil=0;return;}
- const spec=MELEE_38[0],charge=clamp(m.gloveCharge||0,0,1),age=s.time-m.started;
+ const spec=MELEE_38[0],charge=clamp(m.gloveCharge||0,0,1),age=s.time-m.started,heavyRecovery=charge*.18;
  if(!m.tested&&age>=spec.startup&&age<=spec.startup+spec.active+.025){m.tested=true;const end={x:p.x+Math.cos(m.angle)*(spec.range+charge*12),y:p.y+Math.sin(m.angle)*(spec.range+charge*12)},t=s.players[1-n];let block:Cover|undefined,nearest=Infinity;
   for(const cv of s.covers){if(cv.hp<=0)continue;const q=segmentCoverTime(p,end,cv);if(q!==null&&q<nearest){nearest=q;block=cv;}}
   const contact=t&&t.hp>0?sweptCircle(p,end,t,t,20):null;
@@ -374,7 +374,7 @@ function meleeStep(s:GameState,n:number){const p=s.players[n],m=p.meleeCombo;if(
   else actionOutcome(s,n,"melee","missed","whiff",undefined,undefined,m.attackId);
   s.fx.push({id:uid(),type:"melee-strike",x:end.x,y:end.y,z:30,angle:m.angle,life:.14,owner:n,text:spec.name});
  }
- if(age>=spec.startup+spec.active+spec.recovery){p.meleeCombo=undefined;p.meleeNextStage=undefined;p.meleeNextUntil=0;actionOutcome(s,n,"melee","recovered",spec.name,undefined,undefined,m.attackId);}
+ if(age>=spec.startup+spec.active+spec.recovery+heavyRecovery){p.meleeCombo=undefined;p.meleeNextStage=undefined;p.meleeNextUntil=0;actionOutcome(s,n,"melee","recovered",spec.name,undefined,undefined,m.attackId);}
 }
 // Duel repairs use the existing pellet damage and action cooldown; movement tuning stays fixed.
 function combatFight(s:GameState){return true} // One collision/physics contract across practice, duel and roam.
