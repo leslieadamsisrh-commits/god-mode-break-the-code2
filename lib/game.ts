@@ -352,7 +352,13 @@ function meleeInput(s:GameState,n:number,prev:InputState){const p=s.players[n],i
  }
  if(i.melee&&p.gloveHoldStarted!==undefined){
   if(invalid){p.gloveHoldStarted=undefined;p.gloveCharge=0;actionOutcome(s,n,"melee","cancelled","charge interrupted");return;}
-  p.gloveCharge=clamp((s.time-p.gloveHoldStarted)/.9,0,1);return;
+  const previousCharge=p.gloveCharge||0;
+  p.gloveCharge=clamp((s.time-p.gloveHoldStarted)/.9,0,1);
+  // Three readable wind-up milestones; visual effects only, never extra hits.
+  for(const threshold of [.33,.66,1]){
+   if(previousCharge<threshold&&p.gloveCharge>=threshold)s.fx.push({id:uid(),type:"glove-muzzle",x:p.x,y:p.y,z:34*s.config.spriteScale,angle:p.aim,life:.28+threshold*.15,owner:n,text:threshold===1?"MAX":""});
+  }
+  return;
  }
  if(!i.melee&&prev.melee&&p.gloveHoldStarted!==undefined){
   const charge=clamp((s.time-p.gloveHoldStarted)/.9,0,1);
@@ -372,7 +378,7 @@ function meleeStep(s:GameState,n:number){const p=s.players[n],m=p.meleeCombo;if(
   if(contact!==null&&contact<nearest){const hp=t.hp;duelContact(s,n,t,spec.damage+charge*28,Math.cos(m.angle)*(spec.push+charge*175),Math.sin(m.angle)*(spec.push+charge*175),"torso",undefined,"melee",m.attackId);if(charge>.85&&t.hp<hp){p.blastUntil=s.time+GLOVE_BLAST_38.window;}}
   else if(block){damageCover(block,s,spec.damage+charge*28);combatEvent(s,{kind:"cover",source:"melee",attackId:m.attackId,owner:n,damage:spec.damage+charge*28,x:end.x,y:end.y,z:25,material:bayObject(block.artId||block.id)?.material==="CONCRETE"?"stone":"metal"});}
   else actionOutcome(s,n,"melee","missed","whiff",undefined,undefined,m.attackId);
-  s.fx.push({id:uid(),type:"melee-strike",x:end.x,y:end.y,z:30,angle:m.angle,life:.14,owner:n,text:spec.name});
+  s.fx.push({id:uid(),type:"melee-strike",x:end.x,y:end.y,z:30,angle:m.angle,life:.14+charge*.22,owner:n,text:charge>.8?"GOD FIST":charge>.3?"POWER HIT":spec.name});
  }
  if(age>=spec.startup+spec.active+spec.recovery+heavyRecovery){p.meleeCombo=undefined;p.meleeNextStage=undefined;p.meleeNextUntil=0;actionOutcome(s,n,"melee","recovered",spec.name,undefined,undefined,m.attackId);}
 }
