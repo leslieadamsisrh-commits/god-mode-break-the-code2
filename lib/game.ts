@@ -557,26 +557,31 @@ function gripDrive(p:Player,s:GameState,object:{x:number;y:number;vx?:number;vy?
 function releaseGripGesture(p:Player,s:GameState,n:number,previous:InputState){
  const cv=s.covers.find(cv=>cv.id===p.gripCoverId),m=s.matter.find(m=>m.id===p.gripId),object=cv||m;
  if(!object){p.gripCancelRelease=false;return;}
- const dx=object.x-p.x,dy=object.y-p.y,r=Math.hypot(dx,dy)||1,minimum=cv?Math.hypot(cv.w,cv.h)/2+19:42,maximum=psychicField(p).radius-8;
- const radial=clamp((r-minimum)/Math.max(1,maximum-minimum),0,1),drive=p.gripDrive||0;
- // Settled placement, cancellation, a direction reversal and stale packets never launch.
- const gx=previous.gripX||0,gy=previous.gripY||0,aligned=(gx*dx+gy*dy)/r>0.1;
- const outward=((object.vx||0)-p.vx)*dx/r+((object.vy||0)-p.vy)*dy/r;
- // Player intent drives release: a directed stick gesture throws, neutral release places.
- // Do not require a narrowly timed outward velocity spike; keep cancel/knockout safe.
- const directed=Math.hypot(gx,gy)>.24;
- const moving=!!p.gripGesture&&!p.gripCancelRelease&&p.knock<=0&&p.hp>0&&!p.charging&&directed;
- const launch=moving&&Math.hypot(gx,gy)>.70;
- const propelled=moving&&spendEnergy(p,s,s.config.coverThrowEnergy),kind=propelled?(launch?"launch":"slide"):"drop";
+ // KINETIC COVER 02: one intentional gesture, one clear result.
+ // Stick neutral means place. Directed release means a full throw toward the stick.
+ // Preserve cancellation, energy costs, momentum inheritance and authoritative impacts.
+ const gx=previous.gripX||0,gy=previous.gripY||0,stick=Math.hypot(gx,gy);
+ const valid=!p.gripCancelRelease&&p.knock<=0&&p.hp>0&&!p.charging;
+ const wantsThrow=valid&&stick>.24;
+ const propelled=wantsThrow&&spendEnergy(p,s,s.config.coverThrowEnergy);
+ const kind=propelled?"launch":"drop";
  let vx=0,vy=0;
- if(propelled){const mass=cv?(bayObject(cv.artId||cv.id)?.mass||9):3,impulse=launch?s.config.throwForce*.62*Math.sqrt(12/mass)*(p.godTime>0?1.25:1):0,carry=launch?.3:.65;
-  vx=((object.vx||0)*carry+dx/r*impulse)*GRIP_STRENGTH;vy=((object.vy||0)*carry+dy/r*impulse)*GRIP_STRENGTH;const speed=Math.hypot(vx,vy),cap=(launch?720:240)*GRIP_STRENGTH;if(speed>cap){vx*=cap/speed;vy*=cap/speed;}}
+ if(propelled){
+  const a=Math.atan2(gy,gx),mass=cv?(bayObject(cv.artId||cv.id)?.mass||9):3;
+  const impulse=s.config.throwForce*.62*Math.sqrt(12/mass)*(p.godTime>0?1.25:1)*GRIP_STRENGTH;
+  const inherit=clamp(s.config.carryMomentum,0,1);
+  vx=Math.cos(a)*impulse+p.vx*inherit+(object.vx||0)*.15;
+  vy=Math.sin(a)*impulse+p.vy*inherit+(object.vy||0)*.15;
+  const speed=Math.hypot(vx,vy),cap=720*GRIP_STRENGTH;
+  if(speed>cap){vx*=cap/speed;vy*=cap/speed;}
+ }
  if(p.input.fire)p.fireBlocked=true;p.pendingFireUntil=undefined;
  object.vx=vx;object.vy=vy;object.throwOwner=propelled?n:undefined;object.hitIds=[];
  if(cv)cv.build=propelled?-Math.hypot(vx,vy):0;if(m)m.heldBy=null;
  p.gripCoverId=null;p.gripId=null;p.gripGesture=false;p.gripCancelRelease=false;p.gripDrive=0;p.gripReleaseKind=kind;p.gripReleaseUntil=s.time+.6;
- const release=actionOutcome(s,n,propelled?"throw":"place","activated","gesture "+kind,object.id,propelled?s.config.coverThrowEnergy:0);release.speed=Math.hypot(vx,vy);release.mass=cv?(bayObject(cv.artId||cv.id)?.mass||9):3;
- s.fx.push({id:uid(),type:propelled?"cover-throw":"matter-drop",x:object.x,y:object.y,life:propelled?.4:.22,owner:n,text:launch?"WHAM":propelled?"SKRR":""});
+ const release=actionOutcome(s,n,propelled?"throw":"place","activated","gesture "+kind,object.id,propelled?s.config.coverThrowEnergy:0);
+ release.speed=Math.hypot(vx,vy);release.mass=cv?(bayObject(cv.artId||cv.id)?.mass||9):3;
+ s.fx.push({id:uid(),type:propelled?"cover-throw":"matter-drop",x:object.x,y:object.y,life:propelled?.4:.22,owner:n,text:propelled?"WHAM":""});
 }
 // Recovered from lab-psychic-cover.js at efecc43: orbit around holder and sweep
 // translation + rotated corners. Current mass response and geometry remain authoritative.
