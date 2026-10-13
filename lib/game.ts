@@ -351,6 +351,7 @@ function meleeInput(s:GameState,n:number,prev:InputState){const p=s.players[n],i
   p.gloveHoldStarted=s.time;p.gloveCharge=0;return;
  }
  if(i.melee&&p.gloveHoldStarted!==undefined){
+  if(invalid){p.gloveHoldStarted=undefined;p.gloveCharge=0;actionOutcome(s,n,"melee","cancelled","charge interrupted");return;}
   p.gloveCharge=clamp((s.time-p.gloveHoldStarted)/.9,0,1);return;
  }
  if(!i.melee&&prev.melee&&p.gloveHoldStarted!==undefined){
