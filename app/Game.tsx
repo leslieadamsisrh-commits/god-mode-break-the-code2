@@ -918,6 +918,20 @@ function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,ch
  }
  g.restore();
 }
+// Low-resolution Raptor presentation uses the existing approved motion rig.
+// This is an optional pixel treatment, not a replacement painted character.
+let raptorPixelCanvas:HTMLCanvasElement|null=null;
+function paintRaptor16Bit(g:CanvasRenderingContext2D,rig:ReturnType<typeof evaluateRaptorRig>){
+ if(typeof document==="undefined"){paintRaptorRig(g,rig,false);return;}
+ if(!raptorPixelCanvas){raptorPixelCanvas=document.createElement("canvas");raptorPixelCanvas.width=144;raptorPixelCanvas.height=128;}
+ const c=raptorPixelCanvas,ctx=c.getContext("2d");
+ if(!ctx){paintRaptorRig(g,rig,false);return;}
+ ctx.clearRect(0,0,c.width,c.height);
+ ctx.save();ctx.translate(95,64);ctx.scale(.6,.6);paintRaptorRig(ctx,rig,false);ctx.restore();
+ const old=g.imageSmoothingEnabled;g.imageSmoothingEnabled=false;
+ g.drawImage(c,-95/.6,-64/.6,c.width/.6,c.height/.6);
+ g.imageSmoothingEnabled=old;
+}
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade"){
  if(character==="raptor"){
   const speed=Math.hypot(p.vx||0,p.vy||0),sliding=p.slide>0||p.pinball>0;
@@ -937,7 +951,7 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
    g.save();g.translate(visual.x+p.x,visual.y+p.y);
    g.drawImage(painted!,ix*440,iy*350,440,350,-225*scale,-322*scale,440*scale,350*scale);
    g.restore();
-  }else{paintRaptorRig(g,rig,false);g.restore();}
+  }else{paintRaptor16Bit(g,rig);g.restore();}
   drawGloveWindup(g,p,t,cfg,"raptor");
   return;
  }
