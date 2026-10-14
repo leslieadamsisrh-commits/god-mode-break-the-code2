@@ -101,6 +101,7 @@ function presentation(s:any,now:number){
  return {...base,time:a.state.time+(b.state.time-a.state.time)*blend,players,covers:mix(base.covers||[],b.state.covers||[]),matter:mix(base.matter||[],b.state.matter||[]),shots:mix(base.shots||[],b.state.shots||[])};
 }
 const powerAssets=new Map<string,HTMLImageElement>();
+const raptorRunPainted=new Map<string,HTMLImageElement>(); // Optional approved atlas, never block game boot.
 const evolutionAssets=new Map<string,HTMLImageElement>();
 const actorAssets=new Map<string,HTMLImageElement>();
 const environmentAssets=new Map<string,HTMLImageElement>();
@@ -131,6 +132,7 @@ function preload(onProgress?:(s:BootState)=>void){
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...["front-right","rear-left"].map(key=>({label:"melee38-"+key,src:"/assets/melee38/"+key+".webp",ready:(im:HTMLImageElement)=>powerAssets.set("melee38-"+key,im)})),
+   {label:"raptor-painted-run-right",src:"/assets/raptor-approved/raptor_run_right_atlas.png",ready:(im:HTMLImageElement)=>raptorRunPainted.set("right",im)},
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
    ...actor.map(([key,path])=>({label:"actor-"+key,src:path,ready:(im:HTMLImageElement)=>actorAssets.set(key,im)})),
    ...classic.map(([key,path])=>({label:key,src:"https://jade-v1-combat-lab-v142.leslieadams-isrh.chatgpt.site"+path,ready:(im:HTMLImageElement)=>classicAssets.set(key,im)})),
@@ -924,8 +926,18 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
   const visual=coverVisualOffset(p);g.translate(visual.x+p.x,visual.y+p.y);
   g.scale(cfg.spriteScale*.80,cfg.spriteScale*.80);
   g.rotate(p.facing||0);
-  paintRaptorRig(g,rig,false);
-  g.restore();
+  // Prefer the original painted twelve-frame run only when the approved asset exists.
+  // The fallback retains the verified hybrid rig for missing directions or failed loads.
+  const painted=raptorRunPainted.get("right");
+  const facing=(p.facing||0),delta=Math.atan2(Math.sin(facing),Math.cos(facing));
+  const usePainted=!!painted&&painted.naturalWidth===1760&&painted.naturalHeight===1050&&speed>30&&!sliding&&Math.abs(delta)<Math.PI/4&&!p.meleeCombo&&p.gloveHoldStarted===undefined;
+  if(usePainted){
+   g.restore();
+   const frame=Math.floor(t*12)%12,ix=frame%4,iy=Math.floor(frame/4),scale=cfg.spriteScale*.8;
+   g.save();g.translate(visual.x+p.x,visual.y+p.y);
+   g.drawImage(painted!,ix*440,iy*350,440,350,-225*scale,-322*scale,440*scale,350*scale);
+   g.restore();
+  }else{paintRaptorRig(g,rig,false);g.restore();}
   drawGloveWindup(g,p,t,cfg,"raptor");
   return;
  }
