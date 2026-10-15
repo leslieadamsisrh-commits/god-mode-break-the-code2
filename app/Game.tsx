@@ -935,16 +935,18 @@ function paintRaptor16Bit(g:CanvasRenderingContext2D,rig:ReturnType<typeof evalu
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade"){
  if(character==="raptor"){
   const speed=Math.hypot(p.vx||0,p.vy||0),sliding=p.slide>0||p.pinball>0;
+  const hit=p.knock>0||(p.hitUntil||0)>t;
   const rig=evaluateRaptorRig({time:t,speed,runSpeed:300,facing:p.facing||0,aim:p.aim||0,state:sliding?"slide":speed>30?"run":"idle"});
   g.save();
   const visual=coverVisualOffset(p);g.translate(visual.x+p.x,visual.y+p.y);
   g.scale(cfg.spriteScale*.80,cfg.spriteScale*.80);
+  if(hit)g.translate(-3,3);
   g.rotate(p.facing||0);
   // Prefer the original painted twelve-frame run only when the approved asset exists.
   // The fallback retains the verified hybrid rig for missing directions or failed loads.
   const painted=raptorRunPainted.get("right");
   const facing=(p.facing||0),delta=Math.atan2(Math.sin(facing),Math.cos(facing));
-  const usePainted=!!painted&&painted.naturalWidth===1760&&painted.naturalHeight===1050&&speed>30&&!sliding&&Math.abs(delta)<Math.PI/4&&!p.meleeCombo&&p.gloveHoldStarted===undefined;
+  const usePainted=!hit&&!p.gripId&&!p.gripCoverId&&!p.charging&&!p.shield&&!!painted&&painted.naturalWidth===1760&&painted.naturalHeight===1050&&speed>30&&!sliding&&Math.abs(delta)<Math.PI/4&&!p.meleeCombo&&p.gloveHoldStarted===undefined;
   if(usePainted){
    g.restore();
    const frame=Math.floor(t*12)%12,ix=frame%4,iy=Math.floor(frame/4),scale=cfg.spriteScale*.8;
