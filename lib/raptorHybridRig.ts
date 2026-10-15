@@ -39,7 +39,7 @@ function leg(bones:Record<RaptorBone,RigTransform>,side:"left"|"right",p:number,
 }
 export function evaluateRaptorRig(input:MotionInput):RigPose{
  const bones=empty(),motion=clamp(input.speed/Math.max(1,input.runSpeed),0,1);
- const phase=((input.time*2.0)%1+1)%1;
+ const phase=input.state==="idle"?0:((input.time*2.0)%1+1)%1;
  const a=phase*TAU;
  const contactL=leg(bones,"left",phase,input.state==="idle"?0:9+15*motion,motion);
  const contactR=leg(bones,"right",phase,input.state==="idle"?0:9+15*motion,motion);
@@ -48,7 +48,8 @@ export function evaluateRaptorRig(input:MotionInput):RigPose{
  bones.neck={x:16,y:-20,angle:.04*Math.sin(a+.6)};
  bones.head={x:27,y:-26+Math.sin(a+.45)*1.2*motion,angle:.02*Math.sin(a+.65)*motion};
  bones.jaw={x:35,y:-22,angle:.03*Math.sin(a)};
- const aimOffset=clamp(input.aim-input.facing,-.5,.5);
+ const aimDelta=Math.atan2(Math.sin(input.aim-input.facing),Math.cos(input.aim-input.facing));
+ const aimOffset=clamp(aimDelta,-.5,.5);
  bones.leftUpperArm={x:9,y:-15,angle:.10*Math.sin(a-.55)*motion};
  bones.rightUpperArm={x:13,y:-15,angle:-.09*Math.sin(a-.55)*motion};
  bones.leftForearm={x:21,y:-8,angle:aimOffset*.4};
