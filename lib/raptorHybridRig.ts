@@ -59,8 +59,10 @@ export function evaluateRaptorRig(input:MotionInput):RigPose{
  bones.weapon={x:28,y:-8+Math.sin(a-.55)*.6*motion,angle:aimOffset};
  let tx=-15,ty=-12;
  for(let i=0;i<6;i++){
-  const sway=Math.sin(a+i*.42)*.09*motion;
-  const angle=-.12-i*.09+sway;
+  // Each link follows the previous one with a delayed counterbalance wave.
+  // Keep all six segments connected and avoid exaggerated tail whipping.
+  const sway=Math.sin(a*.65-i*.48)*.055*motion;
+  const angle=-.12-i*.085+sway;
   tx-=Math.cos(angle)*12;ty+=Math.sin(angle)*12;
   bones[("tail"+i) as RaptorBone]={x:tx,y:ty,angle};
  }
