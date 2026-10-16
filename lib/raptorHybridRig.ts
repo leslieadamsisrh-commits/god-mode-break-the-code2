@@ -22,19 +22,21 @@ function leg(bones:Record<RaptorBone,RigTransform>,side:"left"|"right",p:number,
  const stance=cycle<.64,u=stance?cycle/.64:(cycle-.64)/.36;
  const travel=stance?1-2*u:-1+2*smooth(u);
  const footX=amp*travel;
- const footY=stance?0:-Math.sin(Math.PI*u)*13*motion;
+ const footY=stance?0:-Math.pow(Math.sin(Math.PI*u),1.2)*13*motion;
  const hipX=side==="left"?-7:7,hipY=0;
  const dx=footX-hipX,dy=36+footY-hipY;
  const upper=27,lower=30;
  const reach=clamp(Math.hypot(dx,dy),.01,upper+lower-.01);
  const base=Math.atan2(dy,dx);
  const bend=Math.acos(clamp((upper*upper+reach*reach-lower*lower)/(2*upper*reach),-1,1));
- const thigh=base-(side==="left"?1:-1)*bend;
+ // Digitigrade knees bend forward consistently in the character's local profile.
+ // Reversing the bend for the far leg previously produced an unnatural scissor gait.
+ const thigh=base-bend;
  const kneeX=hipX+Math.cos(thigh)*upper,kneeY=hipY+Math.sin(thigh)*upper;
  const shin=Math.atan2(36+footY-kneeY,footX-kneeX);
  bones[(side+"Thigh") as RaptorBone]={x:hipX,y:hipY,angle:thigh};
  bones[(side+"Shin") as RaptorBone]={x:kneeX,y:kneeY,angle:shin};
- bones[(side+"Foot") as RaptorBone]={x:footX,y:36+footY,angle:stance?0:-.18*Math.sin(Math.PI*u)};
+ bones[(side+"Foot") as RaptorBone]={x:footX,y:36+footY,angle:stance?0:-.12*Math.sin(Math.PI*u)};
  return stance;
 }
 export function evaluateRaptorRig(input:MotionInput):RigPose{
