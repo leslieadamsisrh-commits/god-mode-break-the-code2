@@ -480,7 +480,7 @@ function buildFieldCover(p:Player,s:GameState,n:number){
  const reinforced=false,used:Matter[]=[];
  // When nearby finite cells are depleted, preserve first-press cover using the
  // active psychic field's projected-matter fallback. No free physical debris is minted.
- const components:ConstructMatter44[]=slab?slab.matterSources!.map(m=>({...m,originX:slab.x,originY:slab.y})):used.map(m=>({kind:m.kind,sourceArt:m.sourceArt,fragment:m.fragment,unitId:m.unitId||m.id,groundId:m.groundId,originX:m.x,originY:m.y}));
+ const components:ConstructMatter44[]=slab?(slab.matterSources||[]).map(m=>({...m,originX:slab.x,originY:slab.y})):[];
  if(!slab&&!used.length&&s.groundSources44!==undefined){let needed=GROUND_44.unitsPerCover;for(const source of sources){const taken=Math.min(needed,source.remaining);for(let k=0;k<taken;k++)components.push({kind:"stone",sourceArt:"damaged-jersey",fragment:k,unitId:source.id+"-"+(source.initial-source.remaining+k),groundId:source.id,originX:source.x+(k-1)*9,originY:source.y});source.remaining-=taken;source.revision=(source.revision||0)+1;source.state=source.remaining===0?"extracted":"fractured";source.peeledAt=s.time;source.angle=cv.a;needed-=taken;if(!needed)break;}}
  if(slab){cv.hp=cv.maxHp*Math.max(0,Math.min(1,slab.hp/slab.maxHp));s.covers=s.covers.filter(q=>q.id!==slab.id);p.gripCoverId=null;p.gripGesture=false;}
  const ids=new Set(used.map(m=>m.id));if(reinforced)cv.hp=cv.maxHp=COVER_41.reinforcedHp;cv.matterSources=components.map(({originX,originY,...component})=>component);cv.assembly44=components;cv.stamp44=n;cv.construction44=used.length?"salvage":"peel";
