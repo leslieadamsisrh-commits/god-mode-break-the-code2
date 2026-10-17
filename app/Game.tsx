@@ -468,10 +468,24 @@ function cachedSkyline(im:HTMLImageElement){
 }
 function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"="default"){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
  const renderNow=performance.now();s=presentation(s,renderNow);const cfg=s.config||DEFAULT,p=s.players[localSlot]||s.players[0],local={...p,id:"fighter-"+localSlot};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
- const zoom=cameraPreset==="close"?2.9:s.mode==="watch"?Math.min(1.85,800/(Math.abs(s.players[0].x-s.players[1].x)+180),260/(Math.abs(s.players[0].y-s.players[1].y)*DECK_PITCH+Math.abs(s.players[0].x-s.players[1].x)*DECK_SLOPE+100)):Math.max(1.25,Math.min(2.15,cfg.cameraZoom||1.85)),look=0,lookY=0,ga=local.gunFacing??local.aim??0;
- const halfW=500/zoom,halfH=310/zoom,targetX=cameraPreset!=="close"&&s.mode==="watch"?(s.players[0].x+s.players[1].x)/2:Math.max(halfW,Math.min(1000-halfW,local.x+Math.cos(ga)*look)),targetY=cameraPreset!=="close"&&s.mode==="watch"?(s.players[0].y+s.players[1].y)/2:Math.max(190,Math.min(430,local.y+Math.sin(ga)*lookY));
+ // BUILD 16: independent player camera. Never expose the entire arena to keep an opponent visible.
+ // The old Shotgun Lab close framing is the anchor; proximity and impact only tighten it.
+ const enemy=s.players.find((q:any)=>q!==p&&q.hp>0);
+ const separation=enemy?Math.hypot(enemy.x-local.x,enemy.y-local.y):999;
+ const nearFactor=Math.max(0,Math.min(1,(300-separation)/200));
+ const impact=(s.events||[]).some((e:any)=>e.at!==undefined&&s.time-e.at>=0&&s.time-e.at<.18&&
+  (e.kind==="hit"||e.kind==="finish")&&(e.damage||0)>=20&&(e.owner===localSlot||e.target===localSlot));
+ const baseZoom=cameraPreset==="close"?2.65:2.35;
+ const targetZoom=Math.min(3.15,baseZoom+nearFactor*.32+(impact?.18:0));
+ const frameDt=cameraState.last?Math.min(.05,(renderNow-cameraState.last)/1000):1/60;
+ cameraState.last=renderNow;
+ const zoomFollow=1-Math.exp(-(impact?13:5)*frameDt);
+ const zoom=cameraState.ready?cameraState.zoom+(targetZoom-cameraState.zoom)*zoomFollow:targetZoom;
+ const ga=local.gunFacing??local.aim??0,look=0,lookY=0;
+ const halfW=500/zoom,targetX=Math.max(halfW,Math.min(1000-halfW,local.x+Math.cos(ga)*look));
+ const targetY=Math.max(135,Math.min(485,local.y+Math.sin(ga)*lookY));
  if(!cameraState.ready){cameraState.x=targetX;cameraState.y=targetY;cameraState.ready=true}
- const frameDt=cameraState.last?Math.min(.05,(renderNow-cameraState.last)/1000):1/60;cameraState.last=renderNow;const follow=1-Math.exp(-8*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
+ const follow=1-Math.exp(-8*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
  const camX=cameraState.x,camY=cameraState.y;
  const arena45=environmentAssets.get("war-foundation45");cameraState.zoom=zoom;g=beginWarScene46(canvas,arena45,{x:camX,y:camY},zoom);
  drawGround44(g,s);
