@@ -489,6 +489,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  const camX=cameraState.x,camY=cameraState.y;
  const arena45=environmentAssets.get("war-foundation45");cameraState.zoom=zoom;g=beginWarScene46(canvas,arena45,{x:camX,y:camY},zoom);
  drawGround44(g,s);
+ drawKineticCyclone18(g,s);
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
  const fullSlide=local.slide>0;
@@ -1023,6 +1024,26 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
  path();g.strokeStyle="#070a0e";g.lineWidth=2.5;g.stroke();
 }
 // Ground44: shallow scars and three recognizable production fragments; no extra particles.
+// Golden Cover 18: presentation-only cyclone, independent of authoritative cover collision.
+function drawKineticCyclone18(g:CanvasRenderingContext2D,s:any){
+ for(const cv of s.covers||[]){
+  if(!cv.generated||cv.born===undefined||!cv.assembly44)continue;
+  const age=s.time-cv.born;if(age<0||age>.30)continue;
+  const u=Math.max(0,Math.min(1,age/.28)),count=Math.min(12,Math.max(6,(cv.assembly44?.length||0)*3));
+  g.save();g.translate(cv.x,cv.y);
+  for(let k=0;k<count;k++){
+   const phase=k/count*Math.PI*2+u*Math.PI*3;
+   const radius=(1-u)*65+8;
+   const x=Math.cos(phase)*radius,y=Math.sin(phase)*radius*.52-(1-u)*28;
+   g.save();g.translate(x,y);g.rotate(phase+u*3);
+   g.globalAlpha=Math.min(1,(1-u)*1.7+.15);
+   g.fillStyle=k%3===0?"#6fdde8":k%3===1?"#a1a8b0":"#646a72";
+   g.fillRect(-5,-3,10,6);g.restore();
+  }
+  g.strokeStyle="#6de7f0";g.globalAlpha=(1-u)*.75;g.lineWidth=2;
+  g.beginPath();g.ellipse(0,0,25+(1-u)*38,12+(1-u)*18,u*3,0,Math.PI*2);g.stroke();g.restore();
+ }
+}
 function drawGround44(g:CanvasRenderingContext2D,s:any){
  for(const source of s.groundSources44||[])withWorld46(g,source.x,source.y,()=>{
   if(source.id?.startsWith("floor15-")){
