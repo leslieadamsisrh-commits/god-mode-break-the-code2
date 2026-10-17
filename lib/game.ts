@@ -134,8 +134,8 @@ export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo
  if(mode==="bot"||mode==="practice"||mode==="watch")players.push(player(770,330,Math.PI,"RIFT HUNTER","",true,config.maxHealth));
  if(mode==="watch"){players[0].bot=true;players[0].name="CYAN BOT";players[1].name="MAGENTA BOT";}
  // Eight finite recipes in mirrored salvage clusters; no passive material spawning.
- const matter:Matter[]=[];for(let side=0;side<2;side++)for(const [station,[x,y]] of [[170,460],[240,400],[370,470],[400,150]].entries())for(let j=0;j<3;j++)matter.push({id:`salvage-${side}-${station}-${j}`,x:side?1000-x-j*18:x+j*18,y,vx:0,vy:0,r:5+j%2,kind:j===2?"metal":"stone",heldBy:null,orbitBy:null,life:999,sourceArt:j===2?"maintenance-cabinet":"damaged-jersey",fragment:j});
- const covers:Cover[]=bayCoverState();
+ const matter:Matter[]=[];if(mode==="duel"||mode==="watch")for(let side=0;side<2;side++)for(const [station,[x,y]] of [[170,460],[240,400],[370,470],[400,150]].entries())for(let j=0;j<3;j++)matter.push({id:`salvage-${side}-${station}-${j}`,x:side?1000-x-j*18:x+j*18,y,vx:0,vy:0,r:5+j%2,kind:j===2?"metal":"stone",heldBy:null,orbitBy:null,life:999,sourceArt:j===2?"maintenance-cabinet":"damaged-jersey",fragment:j});
+ const covers:Cover[]=mode==="duel"||mode==="watch"?bayCoverState():[]; // Clear single-player practice arena; preserve multiplayer maps.
  return{build:"COMBAT-MASTER-STUDIO-47",groundSources44:groundSources44(),mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,events:[],eventSeq:0,actions:[],actionCounts:{},energySpent:[],actionSeq:0,timeScale:1,fightUntil:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
 }
 export function updateConfig(s:GameState,patch:Partial<CombatConfig>){s.config={...s.config,...patch};for(const p of s.players)p.hp=Math.min(p.hp,s.config.maxHealth)}
@@ -469,7 +469,10 @@ function buildFieldCover(p:Player,s:GameState,n:number){
  const reject=(text:string)=>{p.gripHint=text;p.gripHintUntil=s.time+1.5};
  if(p.battery<COVER_41.buildEnergy){reject("BUILD NEEDS 30 BATTERY · HOLD Y");return;}
  if(s.covers.filter(c=>c.constructOwner===n&&c.hp>0).length>=2){reject("2/2 CONSTRUCTS · BREAK OR RECYCLE FIRST");return;}
- const cv=constructionPlacement(p,s,n,p.aim,uid());
+ // Build 17: RB cover faces the player's actual locomotion/front, not a stale shot aim.
+ const moveMagnitude=Math.hypot(p.input.x,p.input.y);
+ const front=moveMagnitude>.18?Math.atan2(p.input.y,p.input.x):p.facing;
+ const cv=constructionPlacement(p,s,n,Number.isFinite(front)?front:p.aim,uid());
  if(!cv){reject("NO BUILD SPACE · AIM AT OPEN ROAD");return;}
  const slab=s.covers.find(q=>q.id===p.gripCoverId&&q.floorPanel46&&q.hp>0),sources=peelSources44(p,s),groundReady=sources.reduce((total,q)=>total+q.remaining,0)>=GROUND_44.unitsPerCover,reinforced=!slab&&!groundReady&&stones.length===2&&!!metal,looseStone=matter.filter(m=>m.kind==="stone").slice(0,3),used=slab||groundReady?[]:reinforced?[...stones,metal!]:looseStone.length===3?looseStone:[];
  // Complete loose recipes first; ground is a finite emergency source. Legacy snapshots
