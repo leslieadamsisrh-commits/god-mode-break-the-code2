@@ -481,12 +481,11 @@ function buildFieldCover(p:Player,s:GameState,n:number){
  const availableUnits=sources.reduce((total,source)=>total+source.remaining,0);
  if(!slab&&availableUnits<GROUND_44.unitsPerCover){reject("NO MATTER IN FIELD · MOVE OR RECYCLE DEBRIS");return;}
  const reinforced=false,used:Matter[]=[];
- // When nearby finite cells are depleted, preserve first-press cover using the
- // active psychic field's projected-matter fallback. No free physical debris is minted.
+ // Each construction reserves three actual floor units; no projected physical matter fallback.
  const components:ConstructMatter44[]=slab?(slab.matterSources||[]).map(m=>({...m,originX:slab.x,originY:slab.y})):[];
  if(!slab&&!used.length&&s.groundSources44!==undefined){let needed=GROUND_44.unitsPerCover;for(const source of sources){const taken=Math.min(needed,source.remaining);for(let k=0;k<taken;k++)components.push({kind:"stone",sourceArt:"damaged-jersey",fragment:k,unitId:source.id+"-"+(source.initial-source.remaining+k),groundId:source.id,originX:source.x+(k-1)*9,originY:source.y});source.remaining-=taken;source.revision=(source.revision||0)+1;source.state=source.remaining===0?"extracted":"fractured";source.peeledAt=s.time;source.angle=cv.a;needed-=taken;if(!needed)break;}}
  if(slab){cv.hp=cv.maxHp*Math.max(0,Math.min(1,slab.hp/slab.maxHp));s.covers=s.covers.filter(q=>q.id!==slab.id);p.gripCoverId=null;p.gripGesture=false;}
- const ids=new Set(used.map(m=>m.id));if(reinforced)cv.hp=cv.maxHp=COVER_41.reinforcedHp;cv.matterSources=components.map(({originX,originY,...component})=>component);cv.assembly44=components;cv.stamp44=n;cv.construction44=used.length?"salvage":"peel";
+ const ids=new Set(used.map(m=>m.id));if(reinforced)cv.hp=cv.maxHp=COVER_41.reinforcedHp;cv.matterSources=components.map(({originX,originY,...component})=>component);cv.assembly44=components;cv.stamp44=n;cv.construction44="peel";
  s.matter=s.matter.filter(m=>!ids.has(m.id));s.players.forEach(q=>{if(q.gripId&&ids.has(q.gripId))q.gripId=null;q.orbitIds=q.orbitIds.filter(id=>!ids.has(id));});spendEnergy(p,s,COVER_41.buildEnergy);s.covers.push(cv);p.gripHint="KINETIC COVER · LB GRIP / A SLIDE";p.gripHintUntil=s.time+1.5;actionOutcome(s,n,"build","activated",reinforced?"reinforced":components.length?cv.construction44:"projected",cv.id,COVER_41.buildEnergy);s.fx.push({id:uid(),type:"materialize",x:cv.x,y:cv.y,life:.28,owner:n,angle:cv.a});
 }
 function dissolveFieldCover(cv:Cover,s:GameState){damageCover(cv,s,cv.hp);const f=s.fx.findLast(f=>f.type==="cover-break"&&f.x===cv.x&&f.y===cv.y);if(f)f.type="cover-dissolve";}
