@@ -465,10 +465,11 @@ function constructionPlacement(p:Player,s:GameState,n:number,aim:number,id="plac
  for(let d=100;d<=psychicField(p).radius;d+=20){cv.x=p.x+Math.cos(aim)*d;cv.y=p.y+Math.sin(aim)*d;if(!carryBlocked(cv,cv,s))return cv;}
 }
 function buildFieldCover(p:Player,s:GameState,n:number){
- const matter=fieldMatter(p,s),stones=matter.filter(m=>m.kind==="stone").slice(0,2),metal=matter.find(m=>m.kind==="metal");
+ // Cover construction pulls directly from the authoritative floor ledger.
  const reject=(text:string)=>{p.gripHint=text;p.gripHintUntil=s.time+1.5};
  if(p.battery<COVER_41.buildEnergy){reject("BUILD NEEDS 30 BATTERY · HOLD Y");return;}
- if(s.covers.filter(c=>c.constructOwner===n&&c.hp>0).length>=2){reject("2/2 CONSTRUCTS · BREAK OR RECYCLE FIRST");return;}
+ const maxConstructs=(s.mode==="solo"||s.mode==="practice"||s.mode==="bot")?1:2;
+ if(s.covers.filter(c=>c.constructOwner===n&&c.hp>0).length>=maxConstructs){reject("COVER ACTIVE · LB GRIP / THROW OR BREAK TO REBUILD");return;}
  // Build 17: RB cover faces the player's actual locomotion/front, not a stale shot aim.
  const moveMagnitude=Math.hypot(p.input.x,p.input.y);
  const front=moveMagnitude>.18?Math.atan2(p.input.y,p.input.x):p.gunFacing;
@@ -477,6 +478,8 @@ function buildFieldCover(p:Player,s:GameState,n:number){
  // Golden Cover 18: ground/environment automatically supplies matter. Loose rocks are optional.
  const slab=s.covers.find(q=>q.id===p.gripCoverId&&q.floorPanel46&&q.hp>0);
  const sources=peelSources44(p,s);
+ const availableUnits=sources.reduce((total,source)=>total+source.remaining,0);
+ if(!slab&&availableUnits<GROUND_44.unitsPerCover){reject("NO MATTER IN FIELD · MOVE OR RECYCLE DEBRIS");return;}
  const reinforced=false,used:Matter[]=[];
  // When nearby finite cells are depleted, preserve first-press cover using the
  // active psychic field's projected-matter fallback. No free physical debris is minted.
