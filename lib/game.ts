@@ -523,7 +523,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  if(!i.fire)p.fireBlocked=false;
  if(!i.grip&&prev.grip){releaseGripGesture(p,s,n,prev);}
 
- if(i.grip&&!prev.grip&&!p.orbitIds.length){
+ if(i.grip&&!prev.grip&&!i.cover&&!p.orbitIds.length){
    if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}s.fx.push({id:uid(),type:"matter-drop",x:cv?.x??p.x,y:cv?.y??p.y,life:.24,owner:n});p.gripCoverId=null}
    else if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m){m.heldBy=null;m.vx=m.vy=0;m.throwOwner=undefined;}p.gripId=null}
    else{
