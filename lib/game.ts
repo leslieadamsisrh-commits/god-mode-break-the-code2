@@ -471,7 +471,7 @@ function buildFieldCover(p:Player,s:GameState,n:number){
  if(s.covers.filter(c=>c.constructOwner===n&&c.hp>0).length>=2){reject("2/2 CONSTRUCTS · BREAK OR RECYCLE FIRST");return;}
  const cv=constructionPlacement(p,s,n,p.aim,uid());
  if(!cv){reject("NO BUILD SPACE · AIM AT OPEN ROAD");return;}
- const slab=s.covers.find(q=>q.id===p.gripCoverId&&q.floorPanel46&&q.hp>0),reinforced=!slab&&stones.length===2&&!!metal,looseStone=matter.filter(m=>m.kind==="stone").slice(0,3),used=slab?[]:reinforced?[...stones,metal!]:looseStone.length===3?looseStone:[],sources=peelSources44(p,s);
+ const slab=s.covers.find(q=>q.id===p.gripCoverId&&q.floorPanel46&&q.hp>0),sources=peelSources44(p,s),groundReady=sources.reduce((total,q)=>total+q.remaining,0)>=GROUND_44.unitsPerCover,reinforced=!slab&&!groundReady&&stones.length===2&&!!metal,looseStone=matter.filter(m=>m.kind==="stone").slice(0,3),used=slab||groundReady?[]:reinforced?[...stones,metal!]:looseStone.length===3?looseStone:[];
  // Complete loose recipes first; ground is a finite emergency source. Legacy snapshots
  // without the new ledger retain their old non-collectible projection contract.
  if(!slab&&!used.length&&s.groundSources44!==undefined&&sources.reduce((n,q)=>n+q.remaining,0)<GROUND_44.unitsPerCover){reject("NO MATTER IN FIELD · MOVE TO FRESH GROUND");return;}
@@ -511,14 +511,19 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
    .sort((a,b)=>Math.hypot(a.x-aimX,a.y-aimY)-Math.hypot(b.x-aimX,b.y-aimY)||a.id.localeCompare(b.id))[0];
   if(candidate&&Math.hypot(candidate.x-aimX,candidate.y-aimY)<=80){
    const needed=candidate.initial-candidate.remaining;
+   const available=(s.matter||[]).filter(m=>m.kind==="stone"&&m.heldBy===null&&m.orbitBy===null&&dist(m,candidate)<=psychicField(p).radius).slice(0,needed);
+   if(available.length<needed){p.gripHint="REBUILD NEEDS LOOSE STONE · THROW OR BREAK COVER";p.gripHintUntil=s.time+1.5;}
+   else {
    const cost=needed*5;
    if(spendEnergy(p,s,cost)){
+    const ids=new Set(available.map(m=>m.id));s.matter=s.matter.filter(m=>!ids.has(m.id));
     candidate.remaining=candidate.initial;candidate.revision=(candidate.revision||0)+1;candidate.state="intact";
     candidate.peeledAt=s.time;candidate.angle=p.aim;
     s.fx.push({id:uid(),type:"materialize",x:candidate.x,y:candidate.y,life:.55,owner:n,angle:p.aim});
     actionOutcome(s,n,"floor-rebuild","activated","energy reconstruction",candidate.id,cost);
    }
-  }else buildFieldCover(p,s,n);
+   }
+  }else {p.gripHint="AIM AT DAMAGED FLOOR TO REBUILD";p.gripHintUntil=s.time+1.2;}
  }else if(i.cover&&!prev.cover)buildFieldCover(p,s,n);
  if(!i.fire)p.fireBlocked=false;
  if(!i.grip&&prev.grip){releaseGripGesture(p,s,n,prev);}
