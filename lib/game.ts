@@ -471,18 +471,20 @@ function buildFieldCover(p:Player,s:GameState,n:number){
  if(s.covers.filter(c=>c.constructOwner===n&&c.hp>0).length>=2){reject("2/2 CONSTRUCTS · BREAK OR RECYCLE FIRST");return;}
  // Build 17: RB cover faces the player's actual locomotion/front, not a stale shot aim.
  const moveMagnitude=Math.hypot(p.input.x,p.input.y);
- const front=moveMagnitude>.18?Math.atan2(p.input.y,p.input.x):p.facing;
+ const front=moveMagnitude>.18?Math.atan2(p.input.y,p.input.x):p.gunFacing;
  const cv=constructionPlacement(p,s,n,Number.isFinite(front)?front:p.aim,uid());
  if(!cv){reject("NO BUILD SPACE · AIM AT OPEN ROAD");return;}
- const slab=s.covers.find(q=>q.id===p.gripCoverId&&q.floorPanel46&&q.hp>0),sources=peelSources44(p,s),groundReady=sources.reduce((total,q)=>total+q.remaining,0)>=GROUND_44.unitsPerCover,reinforced=!slab&&!groundReady&&stones.length===2&&!!metal,looseStone=matter.filter(m=>m.kind==="stone").slice(0,3),used=slab||groundReady?[]:reinforced?[...stones,metal!]:looseStone.length===3?looseStone:[];
- // Complete loose recipes first; ground is a finite emergency source. Legacy snapshots
- // without the new ledger retain their old non-collectible projection contract.
- if(!slab&&!used.length&&s.groundSources44!==undefined&&sources.reduce((n,q)=>n+q.remaining,0)<GROUND_44.unitsPerCover){reject("NO MATTER IN FIELD · MOVE TO FRESH GROUND");return;}
+ // Golden Cover 18: ground/environment automatically supplies matter. Loose rocks are optional.
+ const slab=s.covers.find(q=>q.id===p.gripCoverId&&q.floorPanel46&&q.hp>0);
+ const sources=peelSources44(p,s);
+ const reinforced=false,used:Matter[]=[];
+ // When nearby finite cells are depleted, preserve first-press cover using the
+ // active psychic field's projected-matter fallback. No free physical debris is minted.
  const components:ConstructMatter44[]=slab?slab.matterSources!.map(m=>({...m,originX:slab.x,originY:slab.y})):used.map(m=>({kind:m.kind,sourceArt:m.sourceArt,fragment:m.fragment,unitId:m.unitId||m.id,groundId:m.groundId,originX:m.x,originY:m.y}));
  if(!slab&&!used.length&&s.groundSources44!==undefined){let needed=GROUND_44.unitsPerCover;for(const source of sources){const taken=Math.min(needed,source.remaining);for(let k=0;k<taken;k++)components.push({kind:"stone",sourceArt:"damaged-jersey",fragment:k,unitId:source.id+"-"+(source.initial-source.remaining+k),groundId:source.id,originX:source.x+(k-1)*9,originY:source.y});source.remaining-=taken;source.revision=(source.revision||0)+1;source.state=source.remaining===0?"extracted":"fractured";source.peeledAt=s.time;source.angle=cv.a;needed-=taken;if(!needed)break;}}
  if(slab){cv.hp=cv.maxHp*Math.max(0,Math.min(1,slab.hp/slab.maxHp));s.covers=s.covers.filter(q=>q.id!==slab.id);p.gripCoverId=null;p.gripGesture=false;}
  const ids=new Set(used.map(m=>m.id));if(reinforced)cv.hp=cv.maxHp=COVER_41.reinforcedHp;cv.matterSources=components.map(({originX,originY,...component})=>component);cv.assembly44=components;cv.stamp44=n;cv.construction44=used.length?"salvage":"peel";
- s.matter=s.matter.filter(m=>!ids.has(m.id));s.players.forEach(q=>{if(q.gripId&&ids.has(q.gripId))q.gripId=null;q.orbitIds=q.orbitIds.filter(id=>!ids.has(id));});spendEnergy(p,s,COVER_41.buildEnergy);s.covers.push(cv);p.gripHint=reinforced?"SALVAGE FORMED · 360 HP":components.length?"GROUND / STONE FORMED · 280 HP":"PROJECTED COVER · 280 HP";p.gripHintUntil=s.time+1.5;actionOutcome(s,n,"build","activated",reinforced?"reinforced":components.length?cv.construction44:"projected",cv.id,COVER_41.buildEnergy);s.fx.push({id:uid(),type:"materialize",x:cv.x,y:cv.y,life:components.length?GROUND_44.assemblySeconds:.72,owner:n,angle:cv.a});
+ s.matter=s.matter.filter(m=>!ids.has(m.id));s.players.forEach(q=>{if(q.gripId&&ids.has(q.gripId))q.gripId=null;q.orbitIds=q.orbitIds.filter(id=>!ids.has(id));});spendEnergy(p,s,COVER_41.buildEnergy);s.covers.push(cv);p.gripHint="KINETIC COVER · LB GRIP / A SLIDE";p.gripHintUntil=s.time+1.5;actionOutcome(s,n,"build","activated",reinforced?"reinforced":components.length?cv.construction44:"projected",cv.id,COVER_41.buildEnergy);s.fx.push({id:uid(),type:"materialize",x:cv.x,y:cv.y,life:.28,owner:n,angle:cv.a});
 }
 function dissolveFieldCover(cv:Cover,s:GameState){damageCover(cv,s,cv.hp);const f=s.fx.findLast(f=>f.type==="cover-break"&&f.x===cv.x&&f.y===cv.y);if(f)f.type="cover-dissolve";}
 function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],i=p.input,c=s.config;
