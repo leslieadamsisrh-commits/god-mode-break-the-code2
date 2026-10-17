@@ -3,10 +3,28 @@ export type InputState={coverShapeCycle?:boolean;gripX?:number;gripY?:number;x:n
 export type CombatConfig={chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
 export const GRIP_STRENGTH=1.2; // Grip36 experiment: +20% manipulation/launch; field reach and costs unchanged.
 // Ground44 is a finite surface layer, never a hole or a collision obstacle.
-export type GroundSource44={id:string;x:number;y:number;remaining:number;initial:number;peeledAt?:number;angle?:number;panel46?:boolean};
+export type GroundSource44={id:string;x:number;y:number;remaining:number;initial:number;peeledAt?:number;angle?:number;panel46?:boolean;revision?:number;material?:"concrete";state?:"intact"|"fractured"|"extracted"|"reconstructing"};
 export type ConstructMatter44={kind:"stone"|"metal";sourceArt?:string;fragment?:number;unitId?:string;groundId?:string;originX?:number;originY?:number};
 export const GROUND_44={unitsPerCover:3,assemblySeconds:.24} as const;
-function groundSources44():GroundSource44[]{return [180,340,500,660,820].flatMap((x,col)=>[170,330,490].map((y,row)=>({id:`ground44-${col}-${row}`,x,y,remaining:3,initial:3,...col===2&&row===1?{panel46:true}:{}})));}
+// Living Battlefield 15: sparse, deterministic floor ledger; no physics bodies per cell.
+const FLOOR15={minX:80,maxX:920,minY:90,maxY:570,step:80} as const;
+function groundSources44():GroundSource44[]{
+ const cells:GroundSource44[]=[];
+ for(let y=FLOOR15.minY,row=0;y<=FLOOR15.maxY;y+=FLOOR15.step,row++)
+  for(let x=FLOOR15.minX,col=0;x<=FLOOR15.maxX;x+=FLOOR15.step,col++)
+   cells.push({id:`floor15-${col}-${row}`,x,y,remaining:3,initial:3,material:"concrete",state:"intact",revision:0,...col===5&&row===3?{panel46:true}:{}});
+ return cells;
+}
+export function floorCellAt15(s:GameState,x:number,y:number){
+ return (s.groundSources44||[]).filter(c=>Math.abs(c.x-x)<=FLOOR15.step/2&&Math.abs(c.y-y)<=FLOOR15.step/2)
+  .sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y))[0];
+}
+export function floorLine15(s:GameState,x:number,y:number,angle:number,range:number){
+ const cells:GroundSource44[]=[];const seen=new Set<string>();
+ for(let d=0;d<=range;d+=FLOOR15.step/2){const c=floorCellAt15(s,x+Math.cos(angle)*d,y+Math.sin(angle)*d);
+  if(c&&!seen.has(c.id)){seen.add(c.id);cells.push(c);}}
+ return cells;
+}
 export const DEFAULT_CONFIG:CombatConfig={chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:4,holdEnergy:3,coverThrowEnergy:6,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:5,dashEnergy:2,rechargeDelay:.8,rechargeRate:12,weaveEnabled:1,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:430,dashDuration:.16,doubleTapWindow:.28,slideSpeed:490,slideDuration:.50,slideSustain:160,slideSteer:5,slideSteerAngle:.48,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.39,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:420,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
@@ -458,7 +476,7 @@ function buildFieldCover(p:Player,s:GameState,n:number){
  // without the new ledger retain their old non-collectible projection contract.
  if(!slab&&!used.length&&s.groundSources44!==undefined&&sources.reduce((n,q)=>n+q.remaining,0)<GROUND_44.unitsPerCover){reject("NO MATTER IN FIELD · MOVE TO FRESH GROUND");return;}
  const components:ConstructMatter44[]=slab?slab.matterSources!.map(m=>({...m,originX:slab.x,originY:slab.y})):used.map(m=>({kind:m.kind,sourceArt:m.sourceArt,fragment:m.fragment,unitId:m.unitId||m.id,groundId:m.groundId,originX:m.x,originY:m.y}));
- if(!slab&&!used.length&&s.groundSources44!==undefined){let needed=GROUND_44.unitsPerCover;for(const source of sources){const taken=Math.min(needed,source.remaining);for(let k=0;k<taken;k++)components.push({kind:"stone",sourceArt:"damaged-jersey",fragment:k,unitId:source.id+"-"+(source.initial-source.remaining+k),groundId:source.id,originX:source.x+(k-1)*9,originY:source.y});source.remaining-=taken;source.peeledAt=s.time;source.angle=cv.a;needed-=taken;if(!needed)break;}}
+ if(!slab&&!used.length&&s.groundSources44!==undefined){let needed=GROUND_44.unitsPerCover;for(const source of sources){const taken=Math.min(needed,source.remaining);for(let k=0;k<taken;k++)components.push({kind:"stone",sourceArt:"damaged-jersey",fragment:k,unitId:source.id+"-"+(source.initial-source.remaining+k),groundId:source.id,originX:source.x+(k-1)*9,originY:source.y});source.remaining-=taken;source.revision=(source.revision||0)+1;source.state=source.remaining===0?"extracted":"fractured";source.peeledAt=s.time;source.angle=cv.a;needed-=taken;if(!needed)break;}}
  if(slab){cv.hp=cv.maxHp*Math.max(0,Math.min(1,slab.hp/slab.maxHp));s.covers=s.covers.filter(q=>q.id!==slab.id);p.gripCoverId=null;p.gripGesture=false;}
  const ids=new Set(used.map(m=>m.id));if(reinforced)cv.hp=cv.maxHp=COVER_41.reinforcedHp;cv.matterSources=components.map(({originX,originY,...component})=>component);cv.assembly44=components;cv.stamp44=n;cv.construction44=used.length?"salvage":"peel";
  s.matter=s.matter.filter(m=>!ids.has(m.id));s.players.forEach(q=>{if(q.gripId&&ids.has(q.gripId))q.gripId=null;q.orbitIds=q.orbitIds.filter(id=>!ids.has(id));});spendEnergy(p,s,COVER_41.buildEnergy);s.covers.push(cv);p.gripHint=reinforced?"SALVAGE FORMED · 360 HP":components.length?"GROUND / STONE FORMED · 280 HP":"PROJECTED COVER · 280 HP";p.gripHintUntil=s.time+1.5;actionOutcome(s,n,"build","activated",reinforced?"reinforced":components.length?cv.construction44:"projected",cv.id,COVER_41.buildEnergy);s.fx.push({id:uid(),type:"materialize",x:cv.x,y:cv.y,life:components.length?GROUND_44.assemblySeconds:.72,owner:n,angle:cv.a});
