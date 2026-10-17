@@ -503,7 +503,23 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
   s.fx.push({id:uid(),type:"heavy",...strike,life:.22,owner:n});
   if(target&&dist(strike,target)<=21&&!s.covers.some(cv=>segmentCover(p,strike,cv)))duelContact(s,n,target,34,Math.cos(p.aim)*520,Math.sin(p.aim)*520,"torso",undefined,"heavy",uid());
  }
- if(i.cover&&!prev.cover)buildFieldCover(p,s,n);
+ // Contextual floor restoration: LB + RB while aiming at a depleted nearby cell.
+ // No new button. Never override a held object or ordinary RB construction.
+ if(i.cover&&!prev.cover&&i.grip&&!p.gripId&&!p.gripCoverId&&!p.orbitIds.length){
+  const aimX=p.x+Math.cos(p.aim)*95,aimY=p.y+Math.sin(p.aim)*95;
+  const candidate=(s.groundSources44||[]).filter(c=>c.remaining<c.initial&&dist(c,p)<=psychicField(p).radius)
+   .sort((a,b)=>Math.hypot(a.x-aimX,a.y-aimY)-Math.hypot(b.x-aimX,b.y-aimY)||a.id.localeCompare(b.id))[0];
+  if(candidate&&Math.hypot(candidate.x-aimX,candidate.y-aimY)<=80){
+   const needed=candidate.initial-candidate.remaining;
+   const cost=needed*5;
+   if(spendEnergy(p,s,cost)){
+    candidate.remaining=candidate.initial;candidate.revision=(candidate.revision||0)+1;candidate.state="intact";
+    candidate.peeledAt=s.time;candidate.angle=p.aim;
+    s.fx.push({id:uid(),type:"materialize",x:candidate.x,y:candidate.y,life:.55,owner:n,angle:p.aim});
+    actionOutcome(s,n,"floor-rebuild","activated","energy reconstruction",candidate.id,cost);
+   }
+  }else buildFieldCover(p,s,n);
+ }else if(i.cover&&!prev.cover)buildFieldCover(p,s,n);
  if(!i.fire)p.fireBlocked=false;
  if(!i.grip&&prev.grip){releaseGripGesture(p,s,n,prev);}
 
