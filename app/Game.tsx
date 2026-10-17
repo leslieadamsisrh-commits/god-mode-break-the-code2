@@ -1009,7 +1009,16 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
  path();g.strokeStyle="#070a0e";g.lineWidth=2.5;g.stroke();
 }
 // Ground44: shallow scars and three recognizable production fragments; no extra particles.
-function drawGround44(g:CanvasRenderingContext2D,s:any){for(const source of s.groundSources44||[])withWorld46(g,source.x,source.y,()=>drawGroundSource46(g,source,s));}
+function drawGround44(g:CanvasRenderingContext2D,s:any){
+ for(const source of s.groundSources44||[])withWorld46(g,source.x,source.y,()=>{
+  if(source.id?.startsWith("floor15-")){
+   g.save();g.strokeStyle=source.remaining===source.initial?"#6d7c8838":"#ef6ea0bb";
+   g.lineWidth=source.remaining===source.initial?.65:1.6;
+   g.strokeRect(-38,-26,76,52);g.restore();
+  }
+  drawGroundSource46(g,source,s);
+ });
+}
 function drawGroundSource46(g:CanvasRenderingContext2D,source:any,s:any){
  if(source.panel46){g.save();g.translate(source.x,source.y);g.lineWidth=1;
   if(source.remaining===source.initial){g.strokeStyle="#272631aa";g.strokeRect(-40,-27,80,54);g.strokeStyle="#81ced266";for(const x of [-39,32]){g.beginPath();g.moveTo(x,-25);g.lineTo(x+7,-25);g.stroke();}}
