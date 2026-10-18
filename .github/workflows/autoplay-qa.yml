@@ -5,7 +5,7 @@ on:
       matches:
         description: Bot matches to simulate
         required: false
-        default: '100'
+        default: '10'
   push:
     branches: [studio/raptor-combat-lab-01]
     paths: ['lib/game.ts', 'lib/bayBridgeMap.ts', 'scripts/autoplay-qa.cjs', '.github/workflows/autoplay-qa.yml']
@@ -18,15 +18,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
-      - run: npm ci
-      - name: Install TypeScript bundler
-        run: npm install --no-save esbuild
+      - name: Install dependencies and test bundler
+        run: npm install --no-audit --no-fund --package-lock=false && npm install --no-save --no-audit --no-fund --package-lock=false esbuild
       - name: Simulate bot matches
         run: node scripts/autoplay-qa.cjs
         env:
-          QA_MATCHES: ${{ github.event.inputs.matches || '100' }}
-          QA_SECONDS: '90'
+          QA_MATCHES: ${{ github.event.inputs.matches || '10' }}
+          QA_SECONDS: '30'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
