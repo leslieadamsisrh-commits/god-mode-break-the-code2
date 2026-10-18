@@ -1,0 +1,34 @@
+name: GOD MODE AutoPlay QA
+on:
+  workflow_dispatch:
+    inputs:
+      matches:
+        description: Bot matches to simulate
+        required: false
+        default: '100'
+  push:
+    branches: [studio/raptor-combat-lab-01]
+    paths: ['lib/game.ts', 'lib/bayBridgeMap.ts', 'scripts/autoplay-qa.cjs', '.github/workflows/autoplay-qa.yml']
+jobs:
+  headless-autoplay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Install TypeScript bundler
+        run: npm install --no-save esbuild
+      - name: Simulate bot matches
+        run: node scripts/autoplay-qa.cjs
+        env:
+          QA_MATCHES: ${{ github.event.inputs.matches || '100' }}
+          QA_SECONDS: '90'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: autoplay-telemetry
+          path: qa-output/
