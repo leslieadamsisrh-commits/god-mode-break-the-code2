@@ -36,20 +36,35 @@ const obj=(id:string,x:number,y:number,w:number,h:number,rotation:number,shell:s
 });
 const shelter45=(id:string,x:number)=>({...obj(id,x,330,34,118,0,"maintenance-block","CONCRETE","tall","CENTER",100,9999,"Anchored Spawn Shelter"),gripCompatible:false,throwable:false,editorMetadata:{label:"Anchored Spawn Shelter",locked:true}});
 // Legacy export names are retained for existing combat/render imports, not an old map.
+// Dimension 33 Arena Evolution — reference-locked symmetric combat topology.
+// Previous geometry remains recoverable in Git history. Gameplay is mirrored around x=500.
 export const BAY_OBJECTS:BayMapObject[]=[
+ // Mirrored spawn-side defensive shelters and industrial flank nodes.
  shelter45("war-shelter-a",290),shelter45("war-shelter-b",710),
- obj("bay-jersey",350,200,112,34,0,"damaged-jersey","CONCRETE","waist","LEFT_FLANK",7,140,"North West Arena Slab"),
- obj("war-north-east",650,200,112,34,0,"damaged-jersey","CONCRETE","waist","LEFT_FLANK",7,140,"North East Arena Slab"),
- obj("war-south-west",350,460,112,34,0,"damaged-jersey","CONCRETE","waist","RIGHT_FLANK",7,140,"South West Arena Slab"),
- obj("war-south-east",650,460,112,34,0,"damaged-jersey","CONCRETE","waist","RIGHT_FLANK",7,140,"South East Arena Slab"),
- obj("war-center-nw",405,285,92,34,0,"fractured-divider","CONCRETE","waist","CENTER",9,170,"Contest North West"),
- obj("war-center-ne",595,285,92,34,0,"fractured-divider","CONCRETE","waist","CENTER",9,170,"Contest North East"),
- obj("war-center-sw",405,375,92,34,0,"fractured-divider","CONCRETE","waist","CENTER",9,170,"Contest South West"),
- obj("war-center-se",595,375,92,34,0,"fractured-divider","CONCRETE","waist","CENTER",9,170,"Contest South East"),
- obj("bay-cabinet",190,150,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","LEFT_FLANK",9,180,"West North Industrial Node"),
- obj("war-node-ne",810,150,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","LEFT_FLANK",9,180,"East North Industrial Node"),
- obj("war-node-sw",190,510,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","RIGHT_FLANK",9,180,"West South Industrial Node"),
- obj("war-node-se",810,510,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","RIGHT_FLANK",9,180,"East South Industrial Node")
+ obj("d33-west-north-node",190,158,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","LEFT_FLANK",9,180,"West Industrial Node"),
+ obj("d33-east-north-node",810,158,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","LEFT_FLANK",9,180,"East Industrial Node"),
+ obj("d33-west-south-node",190,502,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","RIGHT_FLANK",9,180,"West Salvage Node"),
+ obj("d33-east-south-node",810,502,48,58,0,"maintenance-cabinet","INFRASTRUCTURE","tall","RIGHT_FLANK",9,180,"East Salvage Node"),
+ // Northern and southern platform approaches: symmetrical low cover at stair feet.
+ obj("d33-north-west-step",435,170,68,28,0,"damaged-jersey","CONCRETE","waist","LEFT_FLANK",7,140,"North Platform West Approach"),
+ obj("d33-north-east-step",565,170,68,28,0,"damaged-jersey","CONCRETE","waist","LEFT_FLANK",7,140,"North Platform East Approach"),
+ obj("d33-south-west-step",435,490,68,28,0,"damaged-jersey","CONCRETE","waist","RIGHT_FLANK",7,140,"South Platform West Approach"),
+ obj("d33-south-east-step",565,490,68,28,0,"damaged-jersey","CONCRETE","waist","RIGHT_FLANK",7,140,"South Platform East Approach"),
+ // Primary lane cover: mirrored left/right and north/south.
+ obj("d33-nw-primary",355,235,98,30,0,"damaged-jersey","CONCRETE","waist","LEFT_FLANK",7,160,"North West Primary Cover"),
+ obj("d33-ne-primary",645,235,98,30,0,"damaged-jersey","CONCRETE","waist","LEFT_FLANK",7,160,"North East Primary Cover"),
+ obj("d33-sw-primary",355,425,98,30,0,"damaged-jersey","CONCRETE","waist","RIGHT_FLANK",7,160,"South West Primary Cover"),
+ obj("d33-se-primary",645,425,98,30,0,"damaged-jersey","CONCRETE","waist","RIGHT_FLANK",7,160,"South East Primary Cover"),
+ // Central circular combat objective represented by four radial, destructible segments.
+ obj("d33-center-nw",446,288,70,26,-.5,"fractured-divider","CONCRETE","waist","CENTER",9,180,"Central Ring NW"),
+ obj("d33-center-ne",554,288,70,26,.5,"fractured-divider","CONCRETE","waist","CENTER",9,180,"Central Ring NE"),
+ obj("d33-center-sw",446,372,70,26,.5,"fractured-divider","CONCRETE","waist","CENTER",9,180,"Central Ring SW"),
+ obj("d33-center-se",554,372,70,26,-.5,"fractured-divider","CONCRETE","waist","CENTER",9,180,"Central Ring SE"),
+ // Outer flank gates leave open lanes between cover clusters.
+ obj("d33-west-north-flank",290,300,64,34,0,"fractured-divider","CONCRETE","waist","LEFT_FLANK",8,145,"West North Flank"),
+ obj("d33-east-north-flank",710,300,64,34,0,"fractured-divider","CONCRETE","waist","LEFT_FLANK",8,145,"East North Flank"),
+ obj("d33-west-south-flank",290,360,64,34,0,"fractured-divider","CONCRETE","waist","RIGHT_FLANK",8,145,"West South Flank"),
+ obj("d33-east-south-flank",710,360,64,34,0,"fractured-divider","CONCRETE","waist","RIGHT_FLANK",8,145,"East South Flank")
 ];
 // Authored low arena slabs, distinct from unchanged46u generated protection.
 for(const o of BAY_OBJECTS)if(o.coverClass==="waist"){o.dimensions.z=32;o.rig=rigFor(o.shellProfile,o.dimensions.w,o.dimensions.h,32);}
