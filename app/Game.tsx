@@ -129,6 +129,7 @@ function preload(onProgress?:(s:BootState)=>void){
   const jobs:{label:string;src:string;fallback?:string;ready:(im:HTMLImageElement)=>void}[]=[
    {label:"matter42",src:"/assets/matter42/tumble-atlas.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("matter42",im)},
    {label:"war-foundation45",src:"/assets/dimension33/arena-evolution.svg",fallback:"/assets/war-games45/foundation.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("war-foundation45",im)},
+   {label:"d33-cover-preview",src:"/assets/dimension33/cover-straight-a-preview.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("d33-cover-preview",im)},
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...["front-right","rear-left"].map(key=>({label:"melee38-"+key,src:"/assets/melee38/"+key+".webp",ready:(im:HTMLImageElement)=>powerAssets.set("melee38-"+key,im)})),
@@ -1208,6 +1209,15 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:numb
 function coverUncached46(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:number;strength:number;color:string}[]=[]){
  // Rotation is applied to the ground footprint; elevation stays vertical.
  // The lab's camera projection is already represented by this build's world coordinates.
+ // Art integration preview: reuse authoritative collision, show approved source cutout only
+ // on the four primary concrete covers. Damaged/held objects keep their live renderer.
+ const preview=environmentAssets.get("d33-cover-preview");
+ if(preview?.complete&&preview.naturalWidth&&/^d33-(nw|ne|sw|se)-primary$/.test(c.id)&&c.hp===c.maxHp&&!c.psychicHeld){
+  g.save();g.translate(c.x,c.y);g.rotate(c.a||0);
+  const artW=c.w,artH=artW*64/86;
+  g.drawImage(preview,-artW/2,-artH+8,artW,artH);
+  g.restore();return;
+ }
  const im=classicAssets.get("concrete"),meta=bayObject(c.artId||c.id),material=meta?.material||"CONCRETE",z=meta?.dimensions?.z||COVER_HEIGHT,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
  const project=(x:number,y:number,height:number)=>{const r=relativeWorld46(c.x,c.y,x*co-y*si,x*si+y*co),v=vertical46(c.x,c.y,height);return{x:r.x+v.x,y:r.y+v.y};};
  const footprint=[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]];
