@@ -488,6 +488,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  const follow=1-Math.exp(-8*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
  const camX=cameraState.x,camY=cameraState.y;
  const arena45=environmentAssets.get("war-foundation45");cameraState.zoom=zoom;g=beginWarScene46(canvas,arena45,{x:camX,y:camY},zoom);
+ drawDimension33Architecture(g);
  drawGround44(g,s);
  drawKineticCyclone18(g,s);
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
@@ -1049,6 +1050,34 @@ function drawKineticCyclone18(g:CanvasRenderingContext2D,s:any){
   g.ellipse(0,0,23+(1-u)*25,12+(1-u)*15,u*3,0,Math.PI*2);g.stroke();g.restore();
   g.restore();
  }
+}
+// Dimension 33 reference-map architectural pass: world-registered decoration.
+// No new collisions, elevation rules, or visibility cheats; those require separate QA.
+function drawDimension33Architecture(g:CanvasRenderingContext2D){
+ const plate=(x:number,y:number,w:number,h:number,accent:string)=>{
+  withWorld46(g,x,y,()=>{g.save();
+   g.fillStyle="#1d2932c9";g.strokeStyle="#687784";g.lineWidth=2;
+   g.fillRect(-w/2,-h/2,w,h);g.strokeRect(-w/2,-h/2,w,h);
+   g.strokeStyle=accent;g.lineWidth=1.5;g.strokeRect(-w/2+5,-h/2+5,w-10,h-10);
+   for(let k=-w/2+15;k<w/2-8;k+=22){g.strokeStyle="#52636c";g.beginPath();g.moveTo(k,-h/2+7);g.lineTo(k+8,h/2-7);g.stroke();}
+   g.restore();});
+ };
+ // The central machinery ring is decorative and leaves the existing walkable center open.
+ withWorld46(g,500,330,()=>{g.save();g.strokeStyle="#9a7558";g.lineWidth=9;
+  g.beginPath();g.ellipse(0,0,67,49,0,0,Math.PI*2);g.stroke();
+  g.strokeStyle="#4c7181";g.lineWidth=3;g.beginPath();g.ellipse(0,0,52,36,0,0,Math.PI*2);g.stroke();
+  for(let k=0;k<12;k++){const a=k*Math.PI/6;g.fillStyle="#a88c6b";g.fillRect(Math.cos(a)*59-3,Math.sin(a)*43-3,6,6);}
+  g.restore();});
+ // Mirrored north/south platform footprints and stair approaches.
+ plate(500,119,138,48,"#c59459");plate(500,541,138,48,"#c59459");
+ for(const y of [157,503])withWorld46(g,500,y,()=>{g.save();
+  for(let j=0;j<5;j++){g.fillStyle=j%2?"#77858b":"#53616b";g.fillRect(-25,-21+j*8,50,6);}
+  g.restore();});
+ // Industrial and salvage zones, mirrored across the two spawn halves.
+ for(const x of [143,857])for(const y of [155,505])plate(x,y,70,53,x<500?"#56cddd":"#dc69ac");
+ // Directional lane markers are subdued; not collision geometry.
+ for(const x of [304,696])for(const y of [270,390])withWorld46(g,x,y,()=>{g.save();
+  g.strokeStyle="#b6a58a88";g.lineWidth=3;g.beginPath();g.moveTo(-14,0);g.lineTo(14,0);g.stroke();g.restore();});
 }
 function drawGround44(g:CanvasRenderingContext2D,s:any){
  for(const source of s.groundSources44||[])withWorld46(g,source.x,source.y,()=>{
