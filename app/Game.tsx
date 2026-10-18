@@ -1025,23 +1025,29 @@ function concreteFace(g:CanvasRenderingContext2D,im:HTMLImageElement|undefined,c
 }
 // Ground44: shallow scars and three recognizable production fragments; no extra particles.
 // Golden Cover 18: presentation-only cyclone, independent of authoritative cover collision.
+// Build 19: source-linked cyclone; fragments move from the actual reserved cells
+// to the authoritative cover object. Visuals do not mint additional physical matter.
 function drawKineticCyclone18(g:CanvasRenderingContext2D,s:any){
  for(const cv of s.covers||[]){
-  if(!cv.generated||cv.born===undefined||!cv.assembly44)continue;
-  const age=s.time-cv.born;if(age<0||age>.30)continue;
-  const u=Math.max(0,Math.min(1,age/.28)),count=Math.min(12,Math.max(6,(cv.assembly44?.length||0)*3));
-  g.save();g.translate(cv.x,cv.y);
-  for(let k=0;k<count;k++){
-   const phase=k/count*Math.PI*2+u*Math.PI*3;
-   const radius=(1-u)*65+8;
-   const x=Math.cos(phase)*radius,y=Math.sin(phase)*radius*.52-(1-u)*28;
-   g.save();g.translate(x,y);g.rotate(phase+u*3);
-   g.globalAlpha=Math.min(1,(1-u)*1.7+.15);
-   g.fillStyle=k%3===0?"#6fdde8":k%3===1?"#a1a8b0":"#646a72";
+  if(!cv.generated||cv.born===undefined||!cv.assembly44?.length)continue;
+  const age=s.time-cv.born;if(age<0||age>.28)continue;
+  const u=Math.max(0,Math.min(1,age/.28)),ease=u*u*(3-2*u);
+  g.save();
+  for(let k=0;k<Math.min(12,cv.assembly44.length*3);k++){
+   const source=cv.assembly44[k%cv.assembly44.length];
+   const sx=source.originX??cv.x,sy=source.originY??cv.y;
+   const spin=u*Math.PI*4+k*2.399,rad=(1-u)*28;
+   const x=sx+(cv.x-sx)*ease+Math.cos(spin)*rad;
+   const y=sy+(cv.y-sy)*ease+Math.sin(spin)*rad*.6-(1-u)*14;
+   g.save();g.translate(x,y);g.rotate(spin);
+   g.globalAlpha=Math.min(1,(1-u)*1.8+.12);
+   g.fillStyle=source.kind==="metal"?"#b5c8cf":k%3===0?"#7dd9e2":"#92949a";
    g.fillRect(-5,-3,10,6);g.restore();
   }
-  g.strokeStyle="#6de7f0";g.globalAlpha=(1-u)*.75;g.lineWidth=2;
-  g.beginPath();g.ellipse(0,0,25+(1-u)*38,12+(1-u)*18,u*3,0,Math.PI*2);g.stroke();g.restore();
+  g.save();g.translate(cv.x,cv.y);g.strokeStyle="#6de7f0";
+  g.globalAlpha=(1-u)*.7;g.lineWidth=2;g.beginPath();
+  g.ellipse(0,0,23+(1-u)*25,12+(1-u)*15,u*3,0,Math.PI*2);g.stroke();g.restore();
+  g.restore();
  }
 }
 function drawGround44(g:CanvasRenderingContext2D,s:any){
