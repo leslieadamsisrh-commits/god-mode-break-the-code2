@@ -614,7 +614,7 @@ export function shotPlayerTime(from:{x:number;y:number},to:{x:number;y:number},z
 function gripTarget(p:Player,s:GameState,minimum:number){
  const i=p.input,analog=Number.isFinite(i.gripX)&&Number.isFinite(i.gripY),max=Math.max(minimum,psychicField(p).radius-8);
  if(analog){p.gripGesture=true;const magnitude=Math.hypot(i.gripX!,i.gripY!);if(magnitude>.05){p.coverGripAngle=Math.atan2(i.gripY!,i.gripX!);p.coverGripDist=minimum+(max-minimum)*clamp(magnitude,0,1);}}
- return {angle:analog?p.coverGripAngle:p.aim,radius:clamp(p.coverGripDist,minimum,max),maximum:max};
+ return {angle:analog?p.coverGripAngle:p.gunFacing,radius:clamp(p.coverGripDist,minimum,max),maximum:max};
 }
 function gripDrive(p:Player,s:GameState,object:{x:number;y:number;vx?:number;vy?:number},radial:number){
  const dx=object.x-p.x,dy=object.y-p.y,r=Math.hypot(dx,dy)||1,out=((object.vx||0)-p.vx)*dx/r+((object.vy||0)-p.vy)*dy/r;
