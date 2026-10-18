@@ -1,0 +1,96 @@
+{
+  "schema": "dimension33-art-registration-v1",
+  "status": "CANDIDATE_NOT_DEPLOYED",
+  "source": "approved Dimension 33 concept art",
+  "artPack": "Dimension33_Runtime_Atlas_Pass10.zip",
+  "coordinateSystem": "game world 1000x620",
+  "renderAnchor": "bottom_center",
+  "collisionPolicy": "keep existing bayBridgeMap hulls",
+  "warning": "34 of 34 extracted sprite silhouettes touch original crop boundary; inspect and repair before deployment. Atlas PNGs are not yet present in repository.",
+  "placements": {
+    "d33-nw-primary": {
+      "asset": "concrete/straight_a",
+      "x": 355,
+      "y": 235,
+      "collisionWidth": 98,
+      "collisionHeight": 30
+    },
+    "d33-ne-primary": {
+      "asset": "concrete/straight_b",
+      "x": 645,
+      "y": 235,
+      "collisionWidth": 98,
+      "collisionHeight": 30
+    },
+    "d33-sw-primary": {
+      "asset": "concrete/straight_a",
+      "x": 355,
+      "y": 425,
+      "collisionWidth": 98,
+      "collisionHeight": 30
+    },
+    "d33-se-primary": {
+      "asset": "concrete/straight_b",
+      "x": 645,
+      "y": 425,
+      "collisionWidth": 98,
+      "collisionHeight": 30
+    },
+    "d33-center-nw": {
+      "asset": "concrete/corner_l",
+      "x": 446,
+      "y": 288,
+      "collisionWidth": 70,
+      "collisionHeight": 26
+    },
+    "d33-center-ne": {
+      "asset": "concrete/corner_r",
+      "x": 554,
+      "y": 288,
+      "collisionWidth": 70,
+      "collisionHeight": 26
+    },
+    "d33-center-sw": {
+      "asset": "concrete/corner_l",
+      "x": 446,
+      "y": 372,
+      "collisionWidth": 70,
+      "collisionHeight": 26
+    },
+    "d33-center-se": {
+      "asset": "concrete/corner_r",
+      "x": 554,
+      "y": 372,
+      "collisionWidth": 70,
+      "collisionHeight": 26
+    },
+    "d33-west-north-node": {
+      "asset": "industrial/industrial_crate",
+      "x": 190,
+      "y": 158,
+      "collisionWidth": 48,
+      "collisionHeight": 58
+    },
+    "d33-east-north-node": {
+      "asset": "industrial/industrial_crate",
+      "x": 810,
+      "y": 158,
+      "collisionWidth": 48,
+      "collisionHeight": 58
+    },
+    "d33-west-south-node": {
+      "asset": "industrial/salvage_stack",
+      "x": 190,
+      "y": 502,
+      "collisionWidth": 48,
+      "collisionHeight": 58
+    },
+    "d33-east-south-node": {
+      "asset": "industrial/salvage_stack",
+      "x": 810,
+      "y": 502,
+      "collisionWidth": 48,
+      "collisionHeight": 58
+    }
+  }
+}
