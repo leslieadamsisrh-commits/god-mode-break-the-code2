@@ -12,6 +12,7 @@ import {LocalCombat,isLocalMode} from "../lib/localCombat";
 import {GOD_TIERS} from "../lib/gameFramework";
 import {bayObject} from "../lib/bayBridgeMap";
 import {D33_BARRIER_A20,usesBarrierA20,drawBarrierA20} from "../lib/dimension33Environment20";
+import {D33_ATLASES20,d33ImageKey20,artRevision20,drawMapCover20,drawMapArchitecture20,getFloorImage20} from '../lib/dimension33MapArt20';
 import {beginWarScene46,finishWarScene46} from "../lib/warGamesPresentation45";
 import {DECK,DECK_SLOPE,DECK_PITCH,DECK_SCREEN_Y,arenaPoint46,relativeWorld46,vertical46,withWorld46,screenVector46,unprojectWorld,withUpright,bayRenderCamera as cameraState} from "../lib/bayBridgePresentation";
 
@@ -132,6 +133,7 @@ function preload(onProgress?:(s:BootState)=>void){
    {label:"war-foundation45",src:"/assets/dimension33/arena-evolution.svg",fallback:"/assets/war-games45/foundation.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("war-foundation45",im)},
    {label:"d33-cover-preview",src:"/assets/dimension33/cover-straight-a-preview.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("d33-cover-preview",im)},
    {label:D33_BARRIER_A20.key,src:D33_BARRIER_A20.path,ready:(im:HTMLImageElement)=>environmentAssets.set(D33_BARRIER_A20.key,im)},
+   ...D33_ATLASES20.map(name=>({label:d33ImageKey20(name),src:'/assets/dimension33/map20/'+name+'.webp',ready:(im:HTMLImageElement)=>environmentAssets.set(d33ImageKey20(name),im)})),
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...["front-right","rear-left"].map(key=>({label:"melee38-"+key,src:"/assets/melee38/"+key+".webp",ready:(im:HTMLImageElement)=>powerAssets.set("melee38-"+key,im)})),
@@ -478,7 +480,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  const nearFactor=Math.max(0,Math.min(1,(300-separation)/200));
  const impact=(s.events||[]).some((e:any)=>e.at!==undefined&&s.time-e.at>=0&&s.time-e.at<.18&&
   (e.kind==="hit"||e.kind==="finish")&&(e.damage||0)>=20&&(e.owner===localSlot||e.target===localSlot));
- const baseZoom=cameraPreset==="close"?2.65:2.35;
+ const baseZoom=cameraPreset==="close"?2.2:1.95;
  const targetZoom=Math.min(3.15,baseZoom+nearFactor*.32+(impact?.18:0));
  const frameDt=cameraState.last?Math.min(.05,(renderNow-cameraState.last)/1000):1/60;
  cameraState.last=renderNow;
@@ -490,7 +492,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  if(!cameraState.ready){cameraState.x=targetX;cameraState.y=targetY;cameraState.ready=true}
  const follow=1-Math.exp(-8*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
  const camX=cameraState.x,camY=cameraState.y;
- const arena45=environmentAssets.get("war-foundation45");cameraState.zoom=zoom;g=beginWarScene46(canvas,arena45,{x:camX,y:camY},zoom);
+ const arena45=environmentAssets.get("war-foundation45");cameraState.zoom=zoom;g=beginWarScene46(canvas,arena45,{x:camX,y:camY},zoom,environmentAssets);
  drawDimension33Architecture(g);
  drawGround44(g,s);
  drawKineticCyclone18(g,s);
@@ -1059,6 +1061,7 @@ function drawKineticCyclone18(g:CanvasRenderingContext2D,s:any){
 // Dimension 33 playable environment slice: architectural surfaces registered to world.
 // Visual geometry is separated from authoritative collision until verified.
 function drawDimension33Architecture(g:CanvasRenderingContext2D){
+ if(drawMapArchitecture20(g,environmentAssets))return;
  const platform=(x:number,y:number,w:number,h:number)=>{
   withWorld46(g,x,y,()=>{g.save();
    const rise=15;
@@ -1119,7 +1122,7 @@ function drawGroundSource46(g:CanvasRenderingContext2D,source:any,s:any){
   g.restore();return;}
  if(source.remaining===source.initial)return;const age=Math.max(0,s.time-(source.peeledAt??-9));g.save();g.translate(source.x,source.y);g.rotate(source.angle||0);g.fillStyle="#11141ccd";g.strokeStyle=age<.24?"#91dfe6":"#565963";g.lineWidth=1;g.beginPath();g.moveTo(-24,-11);g.lineTo(18,-14);g.lineTo(27,5);g.lineTo(12,13);g.lineTo(-21,10);g.closePath();g.fill();g.stroke();g.strokeStyle="#8a858466";g.beginPath();g.moveTo(-20,8);g.lineTo(12,11);g.lineTo(23,4);g.stroke();g.restore();}
 function floorTexture46(g:CanvasRenderingContext2D,c:any,points:CoverPoint[]){
- const im=environmentAssets.get("war-foundation45");if(!im?.complete||!im.naturalWidth)return;
+ const im=getFloorImage20(environmentAssets)||environmentAssets.get("war-foundation45");if(!im||!('naturalWidth' in im?im.naturalWidth:im.width))return;
  const origin=c.floorPanel46,uv=[[-40,-27],[40,-27],[40,27],[-40,27]].map(([x,y])=>arenaPoint46(origin.originX+x,origin.originY+y));
  for(const ids of [[0,1,2],[0,2,3]]){const [a,b,d]=ids.map(i=>uv[i]),[A,B,D]=ids.map(i=>points[i]),det=(b.x-a.x)*(d.y-a.y)-(d.x-a.x)*(b.y-a.y),xx=((B.x-A.x)*(d.y-a.y)-(D.x-A.x)*(b.y-a.y))/det,xy=((D.x-A.x)*(b.x-a.x)-(B.x-A.x)*(d.x-a.x))/det,yx=((B.y-A.y)*(d.y-a.y)-(D.y-A.y)*(b.y-a.y))/det,yy=((D.y-A.y)*(b.x-a.x)-(B.y-A.y)*(d.x-a.x))/det;
   g.save();g.beginPath();[A,B,D].forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip();g.transform(xx,yx,xy,yy,A.x-xx*a.x-xy*a.y,A.y-yx*a.x-yy*a.y);g.drawImage(im,0,0,1536,1024);g.restore();}
@@ -1202,13 +1205,14 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:numb
  // Cache only intact, settled scenery. Held/damaged/forming/lit structures retain
  // their live renderer. Bound the cache; never cache an authoritative game object.
  if(typeof document!=="undefined"&&!c.generated&&!c.floorPanel46&&!c.psychicHeld&&c.build===0&&!(c.hover>.1)&&c.hp===c.maxHp&&!lights.length){
-  const key=[c.artId||c.id,c.x,c.y,c.w,c.h,c.a,c.hp,c.stamp44,environmentAssets.get(D33_BARRIER_A20.key)?.naturalWidth||0,environmentAssets.get(bayObject(c.artId||c.id)?.renderedShell||'')?.naturalWidth||0].join('/');let hit=coverCache46.get(key);
+  const key=[c.artId||c.id,c.x,c.y,c.w,c.h,c.a,c.hp,c.stamp44,artRevision20(environmentAssets),environmentAssets.get(D33_BARRIER_A20.key)?.naturalWidth||0,environmentAssets.get(bayObject(c.artId||c.id)?.renderedShell||'')?.naturalWidth||0].join('/');let hit=coverCache46.get(key);
   if(!hit){const z=bayObject(c.artId||c.id)?.dimensions.z||COVER_HEIGHT,v=vertical46(c.x,c.y,z),r=Math.hypot(c.w,c.h)*.65,x=-r-Math.abs(v.x)-16,y=-r+v.y-16,w=(r+Math.abs(v.x)+16)*2,h=r*2-v.y+40,canvas=document.createElement('canvas');canvas.width=Math.ceil(w*2);canvas.height=Math.ceil(h*2);const cg=canvas.getContext('2d')!;cg.setTransform(2,0,0,2,-(c.x+x)*2,-(c.y+y)*2);coverUncached46(cg,c,t,lights);hit={canvas,x,y,w:canvas.width/2,h:canvas.height/2};if(coverCache46.size>=32)coverCache46.delete(coverCache46.keys().next().value!);coverCache46.set(key,hit);}
   g.drawImage(hit.canvas,c.x+hit.x,c.y+hit.y,hit.w,hit.h);return;
  }
  coverUncached46(g,c,t,lights);
 }
 function coverUncached46(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:number;strength:number;color:string}[]=[]){
+ if(drawMapCover20(g,environmentAssets,c))return;
  const barrier20=environmentAssets.get(D33_BARRIER_A20.key);
  if(barrier20?.complete&&barrier20.naturalWidth&&usesBarrierA20(c)){
   const co=Math.cos(c.a||0),si=Math.sin(c.a||0),z=bayObject(c.artId||c.id)?.dimensions.z||COVER_HEIGHT;

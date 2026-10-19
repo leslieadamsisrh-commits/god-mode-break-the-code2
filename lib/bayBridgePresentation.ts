@@ -2,6 +2,9 @@
 export const DECK_PITCH=.52;
 export const DECK_SCREEN_Y=430;
 export const DECK_SLOPE=.08;
+// Lower three-quarter camera: presentation depth only, never gameplay coordinates.
+export const ARENA_DEPTH20=.68;
+export const ARENA_SHEAR20=.22;
 // Stadium47: physical height and upright assets share one smaller presentation
 // unit. Floor positions/footprints and gameplay dimensions remain unchanged.
 export const ARENA_UPRIGHT_SCALE47=.64;
@@ -17,9 +20,9 @@ export function unprojectWorld(x:number,y:number,camera:{x:number;y:number},zoom
 }
 // Floor corners in the original1536x1024 artwork; the artwork is never stretched.
 const ARENA_Q46=1-596/836,ARENA_K46=720*(1-ARENA_Q46)-285;
-export function arenaPoint46(x:number,y:number){const t=y/620,d=1-ARENA_Q46*t;return{x:768+(x-500)*.596/d,y:(285+ARENA_K46*t)/d};}
-export function arenaInverse46(x:number,y:number){const t=(y-285)/(ARENA_K46+y*ARENA_Q46),d=1-ARENA_Q46*t;return{x:500+(x-768)*d/.596,y:t*620};}
-export function arenaJacobian46(x:number,y:number){const d=1-ARENA_Q46*y/620;return{x:.596/d,xy:(x-500)*.596*ARENA_Q46/(620*d*d),y:(ARENA_K46+285*ARENA_Q46)/(620*d*d)};}
+export function arenaPoint46(x:number,y:number){const t=y/620,d=1-ARENA_Q46*t;return{x:768+(x-500+ARENA_SHEAR20*(y-310))*.596/d,y:285+((285+ARENA_K46*t)/d-285)*ARENA_DEPTH20};}
+export function arenaInverse46(x:number,y:number){const originalY=285+(y-285)/ARENA_DEPTH20,t=(originalY-285)/(ARENA_K46+originalY*ARENA_Q46),d=1-ARENA_Q46*t;return{x:500+(x-768)*d/.596-ARENA_SHEAR20*(t*620-310),y:t*620};}
+export function arenaJacobian46(x:number,y:number){const d=1-ARENA_Q46*y/620;return{x:.596/d,xy:.596*(ARENA_SHEAR20/d+(x-500+ARENA_SHEAR20*(y-310))*ARENA_Q46/(620*d*d)),y:ARENA_DEPTH20*(ARENA_K46+285*ARENA_Q46)/(620*d*d)};}
 const sceneContexts46=new WeakMap<object,{sx:number;sy:number;tx:number;ty:number;anchorX:number;anchorY:number}>();
 export function setArenaContext46(g:CanvasRenderingContext2D,camera:{x:number;y:number},zoom:number,sx:number,sy:number){const c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;sceneContexts46.set(g,{sx:sx*scale,sy:sy*scale,tx:(500-c.x*scale)*sx,ty:(DECK_SCREEN_Y-c.y*scale)*sy,anchorX:camera.x,anchorY:camera.y});setWorld46(g,camera.x,camera.y);}
 export function setWorld46(g:CanvasRenderingContext2D,x:number,y:number){const c=sceneContexts46.get(g);if(!c)return;const p=arenaPoint46(x,y),j=arenaJacobian46(x,y);g.setTransform(c.sx*j.x,0,c.sx*j.xy,c.sy*j.y,c.tx+c.sx*(p.x-j.x*x-j.xy*y),c.ty+c.sy*(p.y-j.y*y));}
@@ -44,3 +47,4 @@ export function drawDeckBoundary(g:CanvasRenderingContext2D,near=false){
  if(!near)for(const x of [0,1000]){g.fillStyle="#111d2a";g.beginPath();g.moveTo(x,0);g.lineTo(x,620);g.lineTo(x,620-z);g.lineTo(x,-z);g.closePath();g.fill();g.strokeStyle="#657885";g.lineWidth=5;g.beginPath();g.moveTo(x,-z);g.lineTo(x,620-z);g.stroke()}
  g.restore();
 }
+

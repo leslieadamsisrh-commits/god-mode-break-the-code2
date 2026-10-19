@@ -1,0 +1,10 @@
+{
+ "baseCommit":"a9b148f3f02b03cd0f4c7effc331235c401acd5a",
+ "scope":"Dimension 33 artwork and camera presentation",
+ "camera":{"projectedDepthScale":0.68,"sidewaysGroundShear":0.22,"closeZoom":2.2,"defaultZoom":1.95,"previousCloseZoom":2.65},
+ "layout":{"combatSpace":[1000,620],"authoredCoverObjects":22,"collisionChanges":false,"simulationChanges":false,"surrounds":"Scenery extended outside the combat bounds; extra framing exposes more of the existing floor."},
+ "art":{"runtimeAtlases":8,"sourceFrameInventory":97,"installation":"Selected registered frames only; not all inventory entries are enabled.","cover":"Artwork on static authored cover; moving/held/generated and unsupported damage cases retain previous renderers.","floor":"Opaque modular panels with intentional dark joints; no seamless tiling claim.","architecture":"Existing scenery anchors plus non-colliding stadium surrounds; no new traversable elevation."},
+ "checks":{"projectionAndInputRoundTrips":441,"movementAndFireSmoke":"passed","missingArtFallback":"rendered without errors","damageStates":"rendered and inspected","graphicalEvidence":"Direct execution of Game.tsx draw() using a headless Canvas implementation. Captures cover center, north, south, west, east, close cover, damage and fallback."},
+ "unverified":["Browser gameplay and input feel","Physical controller","Multiplayer network session","iPad frame rate","All inventory directions and damage families"],
+ "deployment":"Not deployed. Previous Railway approval-system block remains unresolved."
+}
