@@ -1,0 +1,44 @@
+{
+  "schema": "dimension33-approved-source-v2",
+  "source": "Latest user-approved Dimension 33 environment asset sheet",
+  "scope": "environment-only",
+  "preserve": [
+    "Jade and Raptor designs",
+    "movement and hitboxes",
+    "camera",
+    "multiplayer"
+  ],
+  "groups": [
+    "floor_tiles",
+    "concrete_barrier_a",
+    "concrete_barrier_b",
+    "metal_casing",
+    "corners",
+    "tall_slabs",
+    "industrial_metal",
+    "industrial_crates",
+    "pipe_cover",
+    "machinery",
+    "forklift",
+    "platforms",
+    "stairs",
+    "bridges",
+    "central_tower",
+    "watchtower",
+    "props",
+    "destruction",
+    "overhead",
+    "skyline"
+  ],
+  "sourcePackage": "Dimension33_Approved_Extraction.zip",
+  "installation": {
+    "existing": "single concrete preview on authored cover",
+    "newArt": "not installed",
+    "reason": "source sheet crops contain multiple objects and labels; need isolation and transparency QA"
+  },
+  "rules": [
+    "Do not promote cropped panels as finished sprites",
+    "Reuse authoritative cover hulls",
+    "Check close camera and collisions after each family"
+  ]
+}
