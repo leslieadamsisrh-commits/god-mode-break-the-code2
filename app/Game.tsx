@@ -11,6 +11,7 @@ import {FIGHT_SCHEMA,BOT_STRATEGY_ID,gripSelection,psychicField,fieldMatter,cove
 import {LocalCombat,isLocalMode} from "../lib/localCombat";
 import {GOD_TIERS} from "../lib/gameFramework";
 import {bayObject} from "../lib/bayBridgeMap";
+import {D33_BARRIER_A20,usesBarrierA20,drawBarrierA20} from "../lib/dimension33Environment20";
 import {beginWarScene46,finishWarScene46} from "../lib/warGamesPresentation45";
 import {DECK,DECK_SLOPE,DECK_PITCH,DECK_SCREEN_Y,arenaPoint46,relativeWorld46,vertical46,withWorld46,screenVector46,unprojectWorld,withUpright,bayRenderCamera as cameraState} from "../lib/bayBridgePresentation";
 
@@ -130,6 +131,7 @@ function preload(onProgress?:(s:BootState)=>void){
    {label:"matter42",src:"/assets/matter42/tumble-atlas.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("matter42",im)},
    {label:"war-foundation45",src:"/assets/dimension33/arena-evolution.svg",fallback:"/assets/war-games45/foundation.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("war-foundation45",im)},
    {label:"d33-cover-preview",src:"/assets/dimension33/cover-straight-a-preview.svg",ready:(im:HTMLImageElement)=>environmentAssets.set("d33-cover-preview",im)},
+   {label:D33_BARRIER_A20.key,src:D33_BARRIER_A20.path,ready:(im:HTMLImageElement)=>environmentAssets.set(D33_BARRIER_A20.key,im)},
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...["front-right","rear-left"].map(key=>({label:"melee38-"+key,src:"/assets/melee38/"+key+".webp",ready:(im:HTMLImageElement)=>powerAssets.set("melee38-"+key,im)})),
@@ -1200,13 +1202,19 @@ function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:numb
  // Cache only intact, settled scenery. Held/damaged/forming/lit structures retain
  // their live renderer. Bound the cache; never cache an authoritative game object.
  if(typeof document!=="undefined"&&!c.generated&&!c.floorPanel46&&!c.psychicHeld&&c.build===0&&!(c.hover>.1)&&c.hp===c.maxHp&&!lights.length){
-  const key=[c.artId||c.id,c.x,c.y,c.w,c.h,c.a,c.hp,c.stamp44,environmentAssets.get(bayObject(c.artId||c.id)?.renderedShell||'')?.naturalWidth||0].join('/');let hit=coverCache46.get(key);
+  const key=[c.artId||c.id,c.x,c.y,c.w,c.h,c.a,c.hp,c.stamp44,environmentAssets.get(D33_BARRIER_A20.key)?.naturalWidth||0,environmentAssets.get(bayObject(c.artId||c.id)?.renderedShell||'')?.naturalWidth||0].join('/');let hit=coverCache46.get(key);
   if(!hit){const z=bayObject(c.artId||c.id)?.dimensions.z||COVER_HEIGHT,v=vertical46(c.x,c.y,z),r=Math.hypot(c.w,c.h)*.65,x=-r-Math.abs(v.x)-16,y=-r+v.y-16,w=(r+Math.abs(v.x)+16)*2,h=r*2-v.y+40,canvas=document.createElement('canvas');canvas.width=Math.ceil(w*2);canvas.height=Math.ceil(h*2);const cg=canvas.getContext('2d')!;cg.setTransform(2,0,0,2,-(c.x+x)*2,-(c.y+y)*2);coverUncached46(cg,c,t,lights);hit={canvas,x,y,w:canvas.width/2,h:canvas.height/2};if(coverCache46.size>=32)coverCache46.delete(coverCache46.keys().next().value!);coverCache46.set(key,hit);}
   g.drawImage(hit.canvas,c.x+hit.x,c.y+hit.y,hit.w,hit.h);return;
  }
  coverUncached46(g,c,t,lights);
 }
 function coverUncached46(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:number;strength:number;color:string}[]=[]){
+ const barrier20=environmentAssets.get(D33_BARRIER_A20.key);
+ if(barrier20?.complete&&barrier20.naturalWidth&&usesBarrierA20(c)){
+  const co=Math.cos(c.a||0),si=Math.sin(c.a||0),z=bayObject(c.artId||c.id)?.dimensions.z||COVER_HEIGHT;
+  drawBarrierA20(g,barrier20,c,z,(x,y,height)=>{const r=relativeWorld46(c.x,c.y,x*co-y*si,x*si+y*co),v=vertical46(c.x,c.y,height);return{x:c.x+r.x+v.x,y:c.y+r.y+v.y};});
+  return;
+ }
  // Rotation is applied to the ground footprint; elevation stays vertical.
  // The lab's camera projection is already represented by this build's world coordinates.
  // Art integration preview: reuse authoritative collision, show approved source cutout only
@@ -1365,6 +1373,7 @@ function fxBody47(g:CanvasRenderingContext2D,f:any){
  if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){if(f.type==="brake"&&Number.isFinite(f.oldAngle)){const a=f.oldAngle+Math.PI,near=8+i*4,far=30+i*6;g.beginPath();g.moveTo(f.x+Math.cos(a)*near,f.y+Math.sin(a)*near);g.lineTo(f.x+Math.cos(a)*far,f.y+Math.sin(a)*far);g.stroke()}else{const dir=-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else if(f.type==="muzzle"){const a=Number.isFinite(f.angle)?f.angle:0,k=Math.max(0,Math.min(1,f.life/.18));g.save();g.translate(f.x,f.y);g.rotate(a);g.globalCompositeOperation="lighter";g.strokeStyle="#fff3b0";g.shadowColor="#ffcf62";g.shadowBlur=16;g.lineWidth=4;g.globalAlpha=.35+.65*k;g.beginPath();g.moveTo(-5,0);g.lineTo(34+20*k,0);g.stroke();g.fillStyle="#fff7cf";g.beginPath();g.moveTo(2,-10);g.lineTo(44+18*k,0);g.lineTo(2,10);g.lineTo(13,0);g.closePath();g.fill();g.strokeStyle="#ff5ebd";g.lineWidth=2;for(let j=-2;j<=2;j++){const aa=j*.12,len=30+Math.abs(j)*6+18*k;g.beginPath();g.moveTo(5,0);g.lineTo(Math.cos(aa)*len,Math.sin(aa)*len);g.stroke()}g.restore()}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
 
 function arrow(g:CanvasRenderingContext2D,x1:number,y1:number,x2:number,y2:number){const a=Math.atan2(y2-y1,x2-x1);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.beginPath();g.moveTo(x2,y2);g.lineTo(x2-Math.cos(a-.55)*11,y2-Math.sin(a-.55)*11);g.lineTo(x2-Math.cos(a+.55)*11,y2-Math.sin(a+.55)*11);g.closePath();g.fill()}
+
 
 
 

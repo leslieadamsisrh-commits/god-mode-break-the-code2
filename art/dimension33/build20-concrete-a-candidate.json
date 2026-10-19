@@ -1,0 +1,113 @@
+{
+  "schema": "dimension33-environment-build20",
+  "status": "candidate: projection-fixture-verified, browser-gameplay-unverified",
+  "asset": {
+    "key": "d33-barrier-a20",
+    "path": "/assets/dimension33/build20/concrete-barrier-a.webp",
+    "sha256": "b847e59b013ff6192bd4a8100719a7030effd9e71be5730a59684d615d934a9b",
+    "frame": [
+      0,
+      0,
+      1536,
+      1024
+    ],
+    "material": "CONCRETE",
+    "damageState": "intact",
+    "sourceContacts": [
+      [
+        206,
+        874
+      ],
+      [
+        1407,
+        676
+      ],
+      [
+        206,
+        286
+      ]
+    ],
+    "source": "User-uploaded Dimension 33 JPEG, 1536x1024; isolated barrier appearance approved in conversation",
+    "provenance": "Imagegen isolation/reconstruction; not a pixel-identical crop; WebP export preserves alpha",
+    "sourceUpload": "0BE94043-9A65-4BAD-B2BB-DC2AFB72F4A9(1).jpeg"
+  },
+  "registration": [
+    {
+      "collisionObjectRef": "d33-nw-primary",
+      "worldPosition": [
+        355,
+        235
+      ],
+      "worldFootprint": [
+        98,
+        30
+      ],
+      "rotation": 0,
+      "renderAnchor": "front collision face contact landmarks",
+      "scale": "affine source contacts to existing projected hull and height",
+      "occlusionLayer": "existing cover/actor depth clipping",
+      "fallback": "existing renderer for damage, held, moving, rotated, generated, missing asset"
+    },
+    {
+      "collisionObjectRef": "d33-ne-primary",
+      "worldPosition": [
+        645,
+        235
+      ],
+      "worldFootprint": [
+        98,
+        30
+      ],
+      "rotation": 0,
+      "renderAnchor": "front collision face contact landmarks",
+      "scale": "affine source contacts to existing projected hull and height",
+      "occlusionLayer": "existing cover/actor depth clipping",
+      "fallback": "existing renderer for damage, held, moving, rotated, generated, missing asset"
+    },
+    {
+      "collisionObjectRef": "d33-sw-primary",
+      "worldPosition": [
+        355,
+        425
+      ],
+      "worldFootprint": [
+        98,
+        30
+      ],
+      "rotation": 0,
+      "renderAnchor": "front collision face contact landmarks",
+      "scale": "affine source contacts to existing projected hull and height",
+      "occlusionLayer": "existing cover/actor depth clipping",
+      "fallback": "existing renderer for damage, held, moving, rotated, generated, missing asset"
+    },
+    {
+      "collisionObjectRef": "d33-se-primary",
+      "worldPosition": [
+        645,
+        425
+      ],
+      "worldFootprint": [
+        98,
+        30
+      ],
+      "rotation": 0,
+      "renderAnchor": "front collision face contact landmarks",
+      "scale": "affine source contacts to existing projected hull and height",
+      "occlusionLayer": "existing cover/actor depth clipping",
+      "fallback": "existing renderer for damage, held, moving, rotated, generated, missing asset"
+    }
+  ],
+  "verification": {
+    "typescript": "passed",
+    "projectionFixtures": "captured and inspected; anchor offset corrected",
+    "selectorFallbacks": 7,
+    "browserGameplay": "blocked: browser cannot reach local runtime; Chromium download invalid",
+    "deployment": "not attempted"
+  },
+  "remaining": [
+    "damage variants",
+    "concrete B/corners/half wall/tall slab",
+    "browser close-camera occlusion and cache review",
+    "remaining environment families"
+  ]
+}
