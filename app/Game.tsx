@@ -1212,10 +1212,17 @@ function coverUncached46(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:num
  // Art integration preview: reuse authoritative collision, show approved source cutout only
  // on the four primary concrete covers. Damaged/held objects keep their live renderer.
  const preview=environmentAssets.get("d33-cover-preview");
- if(preview?.complete&&preview.naturalWidth&&/^d33-(nw|ne|sw|se)-primary$/.test(c.id)&&c.hp===c.maxHp&&!c.psychicHeld){
+ if(preview?.complete&&preview.naturalWidth&&/^d33-(?:nw|ne|sw|se)-primary$|^d33-(?:north|south)-(?:west|east)-step$|^d33-center-(?:nw|ne|sw|se)$|^d33-(?:west|east)-(?:north|south)-flank$/.test(c.id)&&c.hp>0&&!c.psychicHeld){
   g.save();g.translate(c.x,c.y);g.rotate(c.a||0);
   const artW=c.w,artH=artW*64/86;
+  const ratio=c.hp/Math.max(1,c.maxHp);
+  // Damage retains original game authority; tint/scars signal wear, not extra collision.
+  g.globalAlpha=ratio<.35?.72:1;
   g.drawImage(preview,-artW/2,-artH+8,artW,artH);
+  if(ratio<.875){
+   g.strokeStyle=ratio<.375?"#16171c":"#2b2b30";g.lineWidth=ratio<.375?2.5:1.5;
+   g.beginPath();g.moveTo(-artW*.2,-artH*.7);g.lineTo(-artW*.08,-artH*.43);g.lineTo(artW*.07,-artH*.52);g.lineTo(artW*.19,-artH*.2);g.stroke();
+  }
   g.restore();return;
  }
  const im=classicAssets.get("concrete"),meta=bayObject(c.artId||c.id),material=meta?.material||"CONCRETE",z=meta?.dimensions?.z||COVER_HEIGHT,w=c.w,h=c.h,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
