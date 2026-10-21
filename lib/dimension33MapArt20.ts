@@ -1,6 +1,7 @@
 import frames from './dimension33Frames20.json';
 import {arenaPoint46,arenaJacobian46,relativeWorld46,vertical46,withWorld46,withUpright} from './bayBridgePresentation';
 import {bayObject} from './bayBridgeMap';
+import {D33_SCENERY21} from './dimension33Registration21';
 
 type Images=Map<string,HTMLImageElement>;
 type Point={x:number;y:number};
@@ -71,31 +72,23 @@ export function drawMapCover20(g:CanvasRenderingContext2D,images:Images,c:any){
 }
 
 // Architecture is scenery at existing visual anchors; it creates no new collision/elevation.
-function prop20(g:CanvasRenderingContext2D,images:Images,key:string,x:number,y:number,width:number){
+function prop20(g:CanvasRenderingContext2D,images:Images,key:string,x:number,y:number,height:number){
  const item=frame20(images,key);if(!item)return false;
- const {f,im}=item,[sx,sy,sw,sh]=f.rect,j=arenaJacobian46(x,y),w=width*j.x/(1.536*.64),h=w*sh/sw;
- withUpright(g,x,y,()=>{g.save();g.translate(x,y);g.drawImage(im,sx,sy,sw,sh,-w*f.pivot.x/sw,-h*f.pivot.y/sh,w,h);g.restore();});
+ const {f,im}=item,[sx,sy,sw,sh]=f.rect,h=height,w=h*sw/sh;
+ withUpright(g,x,y,()=>{g.save();g.translate(x,y);g.drawImage(im,sx,sy,sw,sh,-w*.5,-h*(sh-16)/sh,w,h);g.restore();});
  return true;
 }
 export function drawMapArchitecture20(g:CanvasRenderingContext2D,images:Images){
  if(!frame20(images,'architecture/north-platform')||!frame20(images,'architecture/south-platform'))return false;
- // The stadium surrounds extend past the existing 1000x620 combat floor.
- for(const x of [-125,1125])prop20(g,images,'architecture/industrial-facade',x,160,180);
- prop20(g,images,'architecture/watchtower-magenta',15,52,74);
- prop20(g,images,'architecture/watchtower-cyan',985,52,74);
- prop20(g,images,'architecture/bridge-front',185,38,205);
- prop20(g,images,'architecture/bridge-alternate',815,38,205);
- // The 33 tower is beyond the north combat boundary, leaving the central fight unobstructed.
- prop20(g,images,'architecture/central-tower-33-front',500,48,220);
- prop20(g,images,'architecture/north-platform',500,116,158);
- prop20(g,images,'architecture/stair-module-a',500,177,60);
- prop20(g,images,'architecture/south-platform',500,544,158);
- prop20(g,images,'architecture/stair-module-b',500,483,60);
- for(const x of [150,850])for(const y of [163,497]){
-  prop20(g,images,'industrial/industrial-crate-front',x,y,44);
-  prop20(g,images,'props/lamp-post',x+(x<500?-36:36),y-12,18);
- }
- prop20(g,images,'props/crowd-screen',705,5,114);
+ // Decorative stands stay beyond playable ground. Clip projected scenery out
+ // of the physical combat floor, so it cannot imply non-existent cover/stairs.
+ withWorld46(g,500,310,()=>{g.save();g.beginPath();g.rect(-10000,-10000,20000,20000);
+ const bounds=[[70,90],[930,90],[930,550],[70,550]].map(([x,y])=>{const r=relativeWorld46(500,310,x-500,y-310);return{x:500+r.x,y:310+r.y};});
+ bounds.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip('evenodd');
+ g.globalAlpha=.78;
+ for(const prop of D33_SCENERY21)prop20(g,images,prop.key,prop.x,prop.y,prop.height);
+ for(const x of [32,968])for(const y of [163,497])prop20(g,images,'props/lamp-post',x,y,100);
+ g.restore();});
  return true;
 }
 
