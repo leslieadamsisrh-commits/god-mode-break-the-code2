@@ -85,7 +85,7 @@ export function drawMapArchitecture20(g:CanvasRenderingContext2D,images:Images){
  withWorld46(g,500,310,()=>{g.save();g.beginPath();g.rect(-10000,-10000,20000,20000);
  const bounds=[[70,90],[930,90],[930,550],[70,550]].map(([x,y])=>{const r=relativeWorld46(500,310,x-500,y-310);return{x:500+r.x,y:310+r.y};});
  bounds.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip('evenodd');
- g.globalAlpha=.68;
+ g.globalAlpha=.48;
  for(const prop of D33_SCENERY21)prop20(g,images,prop.key,prop.x,prop.y,prop.height);
  for(const x of [32,968])for(const y of [163,497])prop20(g,images,'props/lamp-post',x,y,100);
  g.restore();});
@@ -99,14 +99,21 @@ export function getFloorImage20(images:Images){
  if(floorCache20?.revision===revision)return floorCache20.canvas;
  const world=document.createElement('canvas');world.width=1000;world.height=620;
  const wg=world.getContext('2d')!;wg.fillStyle='#171f2c';wg.fillRect(0,0,1000,620);
- for(let y=0;y<620;y+=54)for(let x=0;x<1000;x+=80){
-  const key=x<160?'casing-cyan':x>=840?'casing-magenta':Math.abs(x+40-500)<100?'grating':y<108||y>=486?'industrial-plating':(x/80+y/54)%4===0?'cracked-concrete':'concrete';
+ // Smaller modules establish human scale without changing floor cells/matter.
+ const tileW=40,tileH=27;
+ for(let y=0;y<620;y+=tileH)for(let x=0;x<1000;x+=tileW){
+  const key=x<80?'casing-cyan':x>=920?'casing-magenta':Math.abs(x+tileW/2-500)<40?'grating':y<81||y>=540?'industrial-plating':(x/tileW+y/tileH)%4===0?'cracked-concrete':'concrete';
   const item=frame20(images,'floor/'+key)||frame20(images,'floor/concrete');if(!item)continue;
-  const [sx,sy,w,h]=item.f.rect;wg.drawImage(item.im,sx,sy,w,h,x,y,80,54);
+  const [sx,sy,w,h]=item.f.rect;wg.drawImage(item.im,sx,sy,w,h,x,y,tileW,tileH);
   // Authored panel joints make these modular surfaces; no seamless-texture claim.
-  wg.strokeStyle='#101925';wg.lineWidth=1.4;wg.strokeRect(x,y,80,54);
+  wg.strokeStyle='#101925';wg.lineWidth=.6;wg.strokeRect(x,y,tileW,tileH);
  }
  wg.fillStyle='#07101a55';wg.fillRect(0,0,1000,620);
+ // Restrained spill from existing flank lighting. Baked into the shared floor
+ // image so lifted floor panels retain the same material and texture scale.
+ for(const [x,color] of [[80,'#41dce81c'],[920,'#ee4caa1c']] as const){
+  const light=wg.createLinearGradient(x-110,0,x+110,0);light.addColorStop(0,'#0000');light.addColorStop(.5,color);light.addColorStop(1,'#0000');wg.fillStyle=light;wg.fillRect(x-110,0,220,620);
+ }
  const canvas=document.createElement('canvas');canvas.width=1536;canvas.height=1024;const cg=canvas.getContext('2d')!;
  for(let y=0;y<620;y+=62)for(let x=0;x<1000;x+=100){
   const src=[{x,y},{x:x+100,y},{x:x+100,y:y+62},{x,y:y+62}],dst=src.map(p=>arenaPoint46(p.x,p.y));

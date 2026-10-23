@@ -1,4 +1,5 @@
 import {PSYCHIC_POWERS, psychicField} from './game';
+import {arenaJacobian46} from './bayBridgePresentation';
 
 // A reconnect with a held selector is not a fresh press. Keep levels so the
 // existing authoritative edge detector and network input queue remain in charge.
@@ -52,11 +53,16 @@ export function drawSelection22(g:CanvasRenderingContext2D,p:any,s:any,slot:numb
 export function encounterCamera22(p:any,enemy:any,close:boolean){
  const separation=enemy?Math.hypot(enemy.x-p.x,enemy.y-p.y):Infinity;
  const near=Math.max(0,Math.min(1,(300-separation)/200));
- const zoom=close?2.65+near*.12:1.95+near*.32;
+ // Close playtest: a substantial change in body screen height, with a small
+ // bounded retreat for an opponent near the edge. Default camera is unchanged.
+ const zoom=close?3.40+near*.20:1.95+near*.32;
  const angle=p.gunFacing??p.aim??0;
  const dx=Math.cos(angle)*22+Math.max(-18,Math.min(18,(p.vx||0)*.045));
  const dy=Math.sin(angle)*16+Math.max(-12,Math.min(12,(p.vy||0)*.035));
  const weight=enemy&&separation<300?.13:0;
- const half=500/zoom;
- return {zoom,x:Math.max(half,Math.min(1000-half,p.x+dx+(enemy?enemy.x-p.x:0)*weight)),y:Math.max(135,Math.min(485,p.y+dy+(enemy?enemy.y-p.y:0)*weight))};
+ const y=Math.max(close?100:135,Math.min(close?540:485,p.y+dy+(enemy?enemy.y-p.y:0)*weight+(close?22:0)));
+ // The floor is projective, so 500/zoom is not its visible world half-width.
+ // Correct edge framing without changing projection or the physical boundary.
+ const half=close?Math.min(450,500/(1000/1536*zoom*arenaJacobian46(p.x,y).x)):500/zoom;
+ return {zoom,x:Math.max(half,Math.min(1000-half,p.x+dx+(enemy?enemy.x-p.x:0)*weight)),y};
 }

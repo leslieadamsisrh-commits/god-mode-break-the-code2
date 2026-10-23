@@ -16,6 +16,25 @@ async function image(p){const im=await loadImage(p);Object.defineProperties(im,{
  const jadeFile=process.env.JADE_QA_IMAGE||'.qa/ready-d03.webp';qaJade.set('ready-3',await image(jadeFile));
  const fresh=()=>{const s=newGame('QA','qa',1000,'watch');s.local=true;s.phase='playing';s.time=2;s.players.forEach((p,n)=>Object.assign(p,{bot:false,x:440+n*120,y:330,aim:Math.PI/4,gunFacing:Math.PI/4}));return s;};
  const render=(name,s,skin='jade')=>{const only=process.argv.indexOf('--only');if(only>=0&&!process.argv[only+1].split(',').includes(name))return;bayRenderCamera.ready=false;qaCache.clear();const c=createCanvas(Number(process.env.QA_WIDTH)||1000,Number(process.env.QA_HEIGHT)||620);qaDraw(c,s,2000,{x:500,y:310,down:false},{},-1,-1,0,skin,'close');fs.writeFileSync('.qa/'+tag+'-'+name+'.jpg',c.toBuffer('image/jpeg',90));};
+ if(process.argv.includes('--motion')){
+  // Identical deterministic presentation route in both revisions. These are
+  // scripted render states, not proof of controller input or collision behavior.
+  const dir='.qa/'+tag+'-motion';fs.mkdirSync(dir,{recursive:true});
+  const s=fresh(),p=s.players[0],enemy=s.players[1],cv=s.covers.find(c=>c.id==='d33-nw-primary');
+  const route=[[230,330],[230,210],[450,210],[500,330],[650,440],[800,440],[600,330]];
+  const c=createCanvas(Number(process.env.QA_WIDTH)||1000,Number(process.env.QA_HEIGHT)||620);bayRenderCamera.ready=false;qaCache.clear();
+  let clock=2000;Object.defineProperty(global,'performance',{configurable:true,value:{now:()=>clock}});
+  for(let n=0;n<240;n++){
+   const t=n/20,k=Math.min(route.length-2,Math.floor(t/2)),f=Math.min(1,(t-k*2)/2),a=route[k],b=route[k+1];
+   Object.assign(p,{x:a[0]+(b[0]-a[0])*f,y:a[1]+(b[1]-a[1])*f,vx:(b[0]-a[0])/2,vy:(b[1]-a[1])/2});
+   Object.assign(enemy,{x:Math.min(880,p.x+130),y:p.y});s.time=2+t;clock=2000+t*1000;
+   if(t>=8&&t<10){p.gripCoverId=cv.id;Object.assign(cv,{x:p.x+55,y:p.y,build:-1,vx:p.vx,vy:p.vy,a:.3});}
+   if(t>=10){p.gripCoverId=null;Object.assign(cv,{x:855+(t-10)*100,y:440,build:-1,throwOwner:0,vx:200,vy:0,a:.3+(t-10)});}
+   qaDraw(c,s,clock,{x:500,y:310,down:false},{},-1,-1,0,'jade','close');
+   fs.writeFileSync(dir+'/'+String(n).padStart(4,'0')+'.jpg',c.toBuffer('image/jpeg',85));
+  }
+  console.log('PASS scripted 12-second presentation sequence; not simulated gameplay or browser capture.');return;
+ }
  for(const [name,x,y] of [['center',440,330],['north',440,145],['south',440,485],['west',190,330],['east',750,330]]){const s=fresh();s.players[0].x=x;s.players[0].y=y;s.players[1].x=x+100;s.players[1].y=y;render(name,s);}
  for(const mode of ['scale','held','thrown','damage','destruction']){const s=fresh(),cv=s.covers.find(c=>c.id==='d33-nw-primary');assert(cv);Object.assign(cv,{x:500,y:330,a:0});s.players[0].x=410;s.players[1].x=610;
   if(mode==='held'){s.players[0].gripCoverId=cv.id;Object.assign(cv,{build:-1,vx:40,vy:0,a:.4});}

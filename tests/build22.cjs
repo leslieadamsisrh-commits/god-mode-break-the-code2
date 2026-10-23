@@ -26,7 +26,7 @@ let s=fixture(),p=s.players[0],cv={id:'fixture',x:400,y:330,w:100,h:24,a:0,z:32,
 function impact(vx,vy){const s=fixture(),moving={...cv,id:'moving',x:450,y:330,w:40,build:-1,vx,vy,throwOwner:0},wall={...cv,id:'wall',x:480,y:330,w:40};s.covers=[moving,wall];a.coverImpact(moving,s,wall.id,wall,{x:-1,y:0});return {s,moving,fx:s.fx.at(-1)};}
 const solid=impact(400,0),glance=impact(40,400);assert.equal(solid.fx.x,460);assert.equal(solid.fx.y,330);assert.equal(solid.fx.strength,1);assert(glance.fx.strength<.2);assert.equal(solid.moving.hp,240);assert.equal(solid.fx.text,'metal');
 const cards=selectionCards22(p,s);assert.equal(cards.length,4);assert.equal(cards[0].name,'SHOTGUN');assert.equal(cards[3].name,'WIDE');
-for(const x of [100,500,900])for(const y of [100,330,520]){const c=encounterCamera22({x,y,aim:0,vx:222,vy:0},{x:x+100,y},true);assert(c.zoom>=2.65&&c.zoom<=2.77+1e-9);assert(Number.isFinite(c.x)&&Number.isFinite(c.y));}
+for(const x of [100,500,900])for(const y of [100,330,520]){const c=encounterCamera22({x,y,aim:0,vx:222,vy:0},{x:x+100,y},true);assert(c.zoom>=3.40&&c.zoom<=3.60+1e-9);assert(Number.isFinite(c.x)&&Number.isFinite(c.y));}
 // Exercise the actual API handlers as two authenticated clients, with deterministic clock.
 (async()=>{const {POST,GET}=require('../app/api/game/route.ts'),store=require('../lib/roomStore.ts');let now=100000;const original=Date.now;Date.now=()=>now;
  const post=async b=>{const r=await POST(new Request('http://qa/api/game',{method:'POST',body:JSON.stringify(b)}));return {status:r.status,...await r.json()};};

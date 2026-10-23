@@ -16,6 +16,7 @@ import {D33_ATLASES20,d33ImageKey20,artRevision20,drawMapCover20,drawMapArchitec
 import {coverMaterial21} from '../lib/dimension33Registration21';
 import {drawInteractions21} from '../lib/dimension33Readability21';
 import {SelectorGate22,drawSelection22,encounterCamera22} from '../lib/combatPresentation22';
+import {fitCombatViewport23} from '../lib/combatViewport23';
 import {beginWarScene46,finishWarScene46} from "../lib/warGamesPresentation45";
 import {DECK,DECK_SLOPE,DECK_PITCH,DECK_SCREEN_Y,arenaPoint46,relativeWorld46,vertical46,withWorld46,screenVector46,unprojectWorld,withUpright,bayRenderCamera as cameraState} from "../lib/bayBridgePresentation";
 
@@ -228,6 +229,11 @@ function combatTone(kind:string,angle?:number){
  osc.type=kind==="cover"?"triangle":"sine";osc.frequency.setValueAtTime(frequency,now);osc.frequency.exponentialRampToValueAtTime(Math.max(40,frequency*.65),now+.09);gain.gain.setValueAtTime(.045,now);gain.gain.exponentialRampToValueAtTime(.001,now+.13);osc.connect(gain);const pan=a.createStereoPanner?.();if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!):0;gain.connect(pan);pan.connect(a.destination);}else gain.connect(a.destination);osc.start(now);osc.stop(now+.14);osc.onended=()=>{osc.disconnect();gain.disconnect();pan?.disconnect()};
 }
 export default function Game({character="jade",cameraPreset="default"}:{character?:"jade"|"raptor";cameraPreset?:"default"|"close"}={}){
+ useEffect(()=>{
+  const el=canvas.current,parent=el?.parentElement;if(!el||!parent)return;
+  const fit=()=>{const size=fitCombatViewport23(parent.clientWidth,parent.clientHeight);Object.assign(el.style,{position:'absolute',left:'50%',top:'50%',transform:'translate(-50%, -50%)',width:size.width+'px',height:size.height+'px'});};
+  const observer=new ResizeObserver(fit);observer.observe(parent);fit();return()=>observer.disconnect();
+ },[]);
  const characterRef=useRef(character);characterRef.current=character;const cameraPresetRef=useRef(cameraPreset);cameraPresetRef.current=cameraPreset;
  const [sound43,setSound43]=useState(true),[rumble43,setRumble43]=useState(false);
  useEffect(()=>{const visibility43=()=>{frames43.last=0;frames43.active=false;};document.addEventListener("visibilitychange",visibility43);return()=>document.removeEventListener("visibilitychange",visibility43);},[]);

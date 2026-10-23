@@ -13,7 +13,7 @@ const faces={
   top:[{x:64,y:52},{x:163,y:36},{x:204,y:55},{x:176,y:74}] as Quad,
   end:[{x:188,y:78},{x:211,y:63},{x:211,y:126},{x:186,y:137}] as Quad},
 };
-export function coverMaterial21(images:Map<string,HTMLImageElement>,c:{id:string;artId?:string;floorPanel46?:unknown}){
+export function coverMaterial21(images:Map<string,HTMLImageElement>,c:{id:string;artId?:string;floorPanel46?:unknown;w?:number;h?:number}){
  if(c.floorPanel46)return null;
  const id=c.artId||c.id;
  if(!/^(d33-|war-shelter-|war-generated-shell45$)/.test(id))return null;
@@ -21,7 +21,10 @@ export function coverMaterial21(images:Map<string,HTMLImageElement>,c:{id:string
  const frame=(frames as any)[spec.key],image=images.get('d33-map20-'+frame.atlas);
  if(!image?.complete||!image.naturalWidth)return null;
  return {image,key:spec.key,point:(col:number,row:number,u:number,v:number)=>{
-  const q=row===1?spec.end:col===0?spec.top:spec.front;
+  // The shelter's long axis runs along h. Its long side needs the broad
+  // painted face, not a narrow end stretched across 118 world units.
+  const longSide=(c.h||0)>(c.w||Infinity)*2;
+  const q=row===1?(longSide?spec.front:spec.end):col===0?spec.top:longSide?spec.end:spec.front;
   return{x:frame.rect[0]+(1-v)*(q[0].x+(q[1].x-q[0].x)*u)+v*(q[3].x+(q[2].x-q[3].x)*u),
    y:frame.rect[1]+(1-v)*(q[0].y+(q[1].y-q[0].y)*u)+v*(q[3].y+(q[2].y-q[3].y)*u)};
  }};
