@@ -264,15 +264,22 @@ function damageCover(cv:Cover,s:GameState,damage:number){
  s.fx.push({id:uid(),type:"cover-break",x:cv.x,y:cv.y,life:.8,angle:cv.a,text:kind});
  const count=Math.min(cv.matterSources?.length??0,Math.max(0,(s.groundSources44!==undefined?128:64)-s.matter.length));for(let n=0;n<count;n++){const a=n*2.399+cv.a,speed=50+n%5*24;s.matter.push({id:uid(),x:cv.x+Math.cos(a)*cv.w*.25,y:cv.y+Math.sin(a)*cv.h*.25,vx:Math.cos(a)*speed+(cv.vx||0)*.2,vy:Math.sin(a)*speed+(cv.vy||0)*.2,r:combatFight(s)?5+n%2:3+n%4,kind:cv.matterSources?.[n]?.kind||kind,heldBy:null,orbitBy:null,life:combatFight(s)?999:5,...combatFight(s)?{unitId:cv.matterSources?.[n]?.unitId,groundId:cv.matterSources?.[n]?.groundId,sourceArt:cv.matterSources?.[n]?.sourceArt||meta?.renderedShell,fragment:cv.matterSources?.[n]?.fragment??n,throwOwner:cv.throwOwner,attackId:cv.attackId,hitIds:[]}:{}});}
 }
-function coverImpact(cv:Cover,s:GameState,key:string,other?:Cover){
+function coverImpact(cv:Cover,s:GameState,key:string,other?:Cover,normal?:{x:number;y:number}){
  if(!combatFight(s)||cv.hp<=0||cv.build>=0||Math.hypot(cv.vx||0,cv.vy||0)<160||cv.hitIds?.includes(key))return;
  (cv.hitIds??=[]).push(key);const damage=Math.min(100,Math.hypot(cv.vx||0,cv.vy||0)*(bayObject(cv.artId||cv.id)?.mass||9)/90);
- if(other){damageCover(other,s,damage);if(other.build<0)(other.hitIds??=[]).push(cv.id);}damageCover(cv,s,damage);combatEvent(s,{kind:"cover",source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??-1,damage,x:cv.x,y:cv.y,z:12,material:other&&bayObject(other.artId||other.id)?.material!=="CONCRETE"?"metal":"stone"});s.fx.push({id:uid(),type:"cover-impact",x:cv.x,y:cv.y,life:.3});
+ // Feedback uses the contacted face, not the moving object's center. Damage,
+ // stopping, ownership and collision response remain exactly as before.
+ const target=other||cv,meta=bayObject(target.artId||target.id),material=meta?.material==='CONCRETE'||target.floorPanel46||target.generated?'stone':'metal';
+ let point={x:cv.x,y:cv.y};
+ if(other){const q=localPoint(other,cv.x,cv.y),x=clamp(q.x,-other.w/2,other.w/2),y=clamp(q.y,-other.h/2,other.h/2),co=Math.cos(other.a),si=Math.sin(other.a);point={x:other.x+x*co-y*si,y:other.y+x*si+y*co};}
+ else if(normal){point={x:normal.x>0?A.left:normal.x<0?A.right:cv.x,y:normal.y>0?A.top:normal.y<0?A.bottom:cv.y};}
+ const speed=Math.hypot(cv.vx||0,cv.vy||0),strength=normal?clamp(-((cv.vx||0)*normal.x+(cv.vy||0)*normal.y)/Math.max(1,speed),.12,1):1;
+ if(other){damageCover(other,s,damage);if(other.build<0)(other.hitIds??=[]).push(cv.id);}damageCover(cv,s,damage);combatEvent(s,{kind:"cover",source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??-1,damage,...point,z:12,material});s.fx.push({id:uid(),type:"cover-impact",...point,z:12,life:.3,text:material,strength,angle:Math.atan2(cv.vy||0,cv.vx||0)});
 }
 function settleCover(cv:Cover,s:GameState){
  const ex=Math.abs(Math.cos(cv.a))*cv.w/2+Math.abs(Math.sin(cv.a))*cv.h/2,ey=Math.abs(Math.sin(cv.a))*cv.w/2+Math.abs(Math.cos(cv.a))*cv.h/2;
  const x=clamp(cv.x,A.left+ex,A.right-ex),y=clamp(cv.y,A.top+ey,A.bottom-ey);
- if(x!==cv.x||y!==cv.y)coverImpact(cv,s,"boundary");if(x!==cv.x)cv.vx=0;if(y!==cv.y)cv.vy=0;cv.x=x;cv.y=y;
+ if(x!==cv.x||y!==cv.y)coverImpact(cv,s,"boundary",undefined,{x:x!==cv.x?Math.sign(x-cv.x):0,y:y!==cv.y?Math.sign(y-cv.y):0});if(x!==cv.x)cv.vx=0;if(y!==cv.y)cv.vy=0;cv.x=x;cv.y=y;
  for(const other of s.covers){
   if(other.id===cv.id||other.hp<=0)continue;
   const axes=[[Math.cos(cv.a),Math.sin(cv.a)],[-Math.sin(cv.a),Math.cos(cv.a)],[Math.cos(other.a),Math.sin(other.a)],[-Math.sin(other.a),Math.cos(other.a)]];
@@ -283,7 +290,7 @@ function settleCover(cv:Cover,s:GameState){
    if(penetration<=0){overlap=false;break}
    if(penetration<depth){depth=penetration;const sign=delta<0?-1:1;nx=ax*sign;ny=ay*sign}
   }
-  if(overlap){coverImpact(cv,s,other.id,other);if(other.hp<=0&&cv.hp>0){cv.vx=(cv.vx||0)*.55;cv.vy=(cv.vy||0)*.55;continue;}cv.x+=nx*(depth+.1);cv.y+=ny*(depth+.1);const toward=(cv.vx||0)*nx+(cv.vy||0)*ny;if(toward<0){cv.vx=(cv.vx||0)-toward*nx;cv.vy=(cv.vy||0)-toward*ny}}
+  if(overlap){coverImpact(cv,s,other.id,other,{x:nx,y:ny});if(other.hp<=0&&cv.hp>0){cv.vx=(cv.vx||0)*.55;cv.vy=(cv.vy||0)*.55;continue;}cv.x+=nx*(depth+.1);cv.y+=ny*(depth+.1);const toward=(cv.vx||0)*nx+(cv.vy||0)*ny;if(toward<0){cv.vx=(cv.vx||0)-toward*nx;cv.vy=(cv.vy||0)-toward*ny}}
  }
  cv.x=clamp(cv.x,A.left+ex,A.right-ex);cv.y=clamp(cv.y,A.top+ey,A.bottom-ey);
 }
@@ -973,7 +980,16 @@ export function advance(s:GameState,now=Date.now()){
  if(s.phase!=="playing"||(s.mode!=="solo"&&s.players.length<2))return;
  let prev=s.players.map(p=>({...p.processedInput}));while(elapsed>1e-9){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,prev);s.players.forEach(p=>p.processedInput={...p.input});prev=s.players.map(p=>({...p.input}));elapsed-=dt;if(s.phase!=="playing"){if(s.phase==="finisher")aftermath(s,elapsed);break;}}
 }
-export function startOrRematch(s:GameState,slot:number){if(s.mode==="solo"){respawn(s);return}if(slot===0){respawn(s)}}
+export function startOrRematch(s:GameState,slot:number){
+ if(s.mode==='solo'){respawn(s);return;}
+ if(slot!==0)return;
+ // A completed private first-to-three starts a new match. Ordinary next-round
+ // requests retain scores; bots and ten-round watch reports retain their flow.
+ if(s.mode==='duel'&&s.phase==='finished'&&s.players.some(p=>p.score>=3)){
+  s.players.forEach(p=>p.score=0);s.round=0;
+ }
+ respawn(s);
+}
 export function safeState(s:GameState){const {actions,actionCounts,energySpent,botExperience,botRound,fightRecording,...publicState}=s;const lab21=repulseView21(s);return{...publicState,...lab21?{lab21}:{},fightMemory:fightMemorySummary(s),players:s.players.map(({token,...p})=>p)}}
 
 

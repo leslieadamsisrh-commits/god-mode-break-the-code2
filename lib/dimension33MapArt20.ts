@@ -85,7 +85,7 @@ export function drawMapArchitecture20(g:CanvasRenderingContext2D,images:Images){
  withWorld46(g,500,310,()=>{g.save();g.beginPath();g.rect(-10000,-10000,20000,20000);
  const bounds=[[70,90],[930,90],[930,550],[70,550]].map(([x,y])=>{const r=relativeWorld46(500,310,x-500,y-310);return{x:500+r.x,y:310+r.y};});
  bounds.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip('evenodd');
- g.globalAlpha=.78;
+ g.globalAlpha=.68;
  for(const prop of D33_SCENERY21)prop20(g,images,prop.key,prop.x,prop.y,prop.height);
  for(const x of [32,968])for(const y of [163,497])prop20(g,images,'props/lamp-post',x,y,100);
  g.restore();});
