@@ -1147,13 +1147,13 @@ function floorTexture46(g:CanvasRenderingContext2D,c:any,points:CoverPoint[]){
  const im=getFloorImage20(environmentAssets)||environmentAssets.get("war-foundation45");if(!im||!('naturalWidth' in im?im.naturalWidth:im.width))return;
  const origin=c.floorPanel46,uv=[[-40,-27],[40,-27],[40,27],[-40,27]].map(([x,y])=>arenaPoint46(origin.originX+x,origin.originY+y));
  for(const ids of [[0,1,2],[0,2,3]]){const [a,b,d]=ids.map(i=>uv[i]),[A,B,D]=ids.map(i=>points[i]),det=(b.x-a.x)*(d.y-a.y)-(d.x-a.x)*(b.y-a.y),xx=((B.x-A.x)*(d.y-a.y)-(D.x-A.x)*(b.y-a.y))/det,xy=((D.x-A.x)*(b.x-a.x)-(B.x-A.x)*(d.x-a.x))/det,yx=((B.y-A.y)*(d.y-a.y)-(D.y-A.y)*(b.y-a.y))/det,yy=((D.y-A.y)*(b.x-a.x)-(B.y-A.y)*(d.x-a.x))/det;
-  g.save();g.beginPath();[A,B,D].forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip();g.transform(xx,yx,xy,yy,A.x-xx*a.x-xy*a.y,A.y-yx*a.x-yy*a.y);g.drawImage(im,0,0,1536,1024);g.restore();}
+  g.save();g.beginPath();[A,B,D].forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip();g.transform(xx,yx,xy,yy,A.x-xx*a.x-xy*a.y,A.y-yx*a.x-yy*a.y);g.drawImage(im,0,0);g.restore();}
  g.strokeStyle="#14151c";g.lineWidth=1;g.beginPath();points.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.stroke();
 }
 function drawAssembly44(g:CanvasRenderingContext2D,c:any,t:number,z:number){const q=classicClamp((t-c.born)/.24,0,1),ease=1-Math.pow(1-q,3);for(const [n,source] of c.assembly44.entries()){const x=(source.originX-c.x)*(1-ease)+(n-1)*c.w*.24*ease,y=(source.originY-c.y)*(1-ease)+c.h*.65*ease;g.save();g.globalAlpha=(1-q)*.95;withUpright(g,x,y,()=>matter(g,{...source,x,y,r:14,spin:q*Math.PI*2+n,heldBy:null,orbitBy:null,height:Math.sin(q*Math.PI)*10}));g.restore();}}
 function drawStamp44(g:CanvasRenderingContext2D,c:any,points:CoverPoint[]){if(c.stamp44===undefined)return;const [a,b,,d]=points;g.save();g.globalAlpha*=c.stampPhase44??1;g.beginPath();points.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip();g.transform((b.x-a.x)/32,(b.y-a.y)/32,(d.x-a.x)/22,(d.y-a.y)/22,a.x,a.y);g.lineJoin="round";g.lineWidth=2;g.strokeStyle="#080c12";g.beginPath();g.moveTo(5,3);g.lineTo(27,3);g.lineTo(30,10);g.lineTo(24,18);g.lineTo(8,18);g.lineTo(2,10);g.closePath();g.stroke();g.translate(.6,-.6);g.lineWidth=1;g.strokeStyle=c.stamp44===0?"#8ab8bd":"#bd87a5";g.stroke();g.beginPath();g.moveTo(8,8);g.lineTo(24,8);g.lineTo(21,12);g.lineTo(11,12);g.closePath();g.stroke();g.beginPath();g.moveTo(16,12);g.lineTo(16,17);g.stroke();const stage=coverDamageStage(c.hp,c.maxHp);if(stage){g.strokeStyle="#14171e";g.lineWidth=1.4;g.beginPath();g.moveTo(9,0);g.lineTo(12,7);g.lineTo(10,13);g.lineTo(17,22);g.stroke();}g.restore();}
 function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:number,w:number,h:number,project:(x:number,y:number,height:number)=>{x:number;y:number}){
- const material21=coverMaterial21(environmentAssets,c),im=material21?.image||environmentAssets.get(meta?.renderedShell);if(!meta?.rig)return;
+ const material21=coverMaterial21(environmentAssets,c);let im=material21?.image||environmentAssets.get(meta?.renderedShell);if(!meta?.rig)return;
  const textured=!!(im?.complete&&im.naturalWidth&&im.naturalHeight);
  const cellW=textured?im!.naturalWidth/3:256,cellH=textured?im!.naturalHeight/2:128;
  const ribs=meta.rig.ribs,co=Math.cos(c.a||0),si=Math.sin(c.a||0);
@@ -1171,6 +1171,7 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
   g.restore();
  };
  const panel=(col:number,row:number,u0:number,u1:number,pts:CoverPoint[],v0=0,v1=1,farTop=v0)=>{
+  if(material21)im=material21.imageFor(col,row);
   const uv=material21?[material21.point(col,row,u0,v0),material21.point(col,row,u1,farTop),material21.point(col,row,u1,v1),material21.point(col,row,u0,v1)]:[{x:(col+u0)*cellW,y:(row+v0)*cellH},{x:(col+u1)*cellW,y:(row+farTop)*cellH},{x:(col+u1)*cellW,y:(row+v1)*cellH},{x:(col+u0)*cellW,y:(row+v1)*cellH}];
   triangle([uv[0],uv[1],uv[2]],[pts[0],pts[1],pts[2]]);triangle([uv[0],uv[2],uv[3]],[pts[0],pts[2],pts[3]]);
   // Stable object-space fractures: no animation jitter, no collision holes.
@@ -1190,12 +1191,29 @@ function environmentActorAtlas(g:CanvasRenderingContext2D,c:any,meta:any,z:numbe
   const a=ribs[n],b=ribs[n+1],xa=-w/2+w*a.t,xb=-w/2+w*b.t,ya=side*Math.min(h*.5,a.width*.5),yb=side*Math.min(h*.5,b.width*.5),za=Math.min(z,a.height),zb=Math.min(z,b.height);
   panel(col,0,a.t,b.t,[project(xa,ya,za),project(xb,yb,zb),project(xb,yb,0),project(xa,ya,0)],1-za/z,1,1-zb/z);
  }
+ // Small amber fixtures belong to the face, not an enlarged painted roof.
+ // Their six-by-three world-unit footprint stays constant on every cover size.
+ if(meta.material==='CONCRETE')for(const lx of [-w*.30,w*.30]){
+  const yy=side*h*.48,zz=z*.78;
+  const lamp=[project(lx-3,yy,zz+1.5),project(lx+3,yy,zz+1.5),project(lx+3,yy,zz-1.5),project(lx-3,yy,zz-1.5)];
+  g.save();g.fillStyle='#ffad43';g.strokeStyle='#191c22';g.lineWidth=1;
+  g.beginPath();lamp.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.fill();g.stroke();g.restore();
+ }
  const sy=side*h*.5;drawStamp44(g,c,[project(-w*.16,sy,z*.70),project(w*.16,sy,z*.70),project(w*.16,sy,z*.26),project(-w*.16,sy,z*.26)]);
  const r=si>=0?ribs[ribs.length-1]:ribs[0],x=-w/2+w*r.t,y=Math.min(h*.5,r.width*.5),height=Math.min(z,r.height);
  panel(si>=0?1:0,1,0,1,[project(x,-y,height),project(x,y,height),project(x,y,0),project(x,-y,0)]);
  for(let n=0;n<ribs.length-1;n++){
   const a=ribs[n],b=ribs[n+1],xa=-w/2+w*a.t,xb=-w/2+w*b.t,ya=Math.min(h*.5,a.width*.5),yb=Math.min(h*.5,b.width*.5);
   panel(0,0,a.t,b.t,[project(xa,-ya,Math.min(z,a.height)),project(xb,-yb,Math.min(z,b.height)),project(xb,yb,Math.min(z,b.height)),project(xa,ya,Math.min(z,a.height))]);
+  // Preserve the approved painted cap/lights only along a narrow trim band.
+  // The remaining roof stays a broad flat material, so bevels cannot balloon.
+  if(material21){
+   im=material21.image;
+   const trim=Math.min(3,h*.12),za=Math.min(z,a.height),zb=Math.min(z,b.height);
+   const dst=[project(xa,side*(ya-trim),za),project(xb,side*(yb-trim),zb),project(xb,side*yb,zb),project(xa,side*ya,za)];
+   const uv=[material21.trimPoint(a.t,0),material21.trimPoint(b.t,0),material21.trimPoint(b.t,1),material21.trimPoint(a.t,1)];
+   triangle([uv[0],uv[1],uv[2]],[dst[0],dst[1],dst[2]]);triangle([uv[0],uv[2],uv[3]],[dst[0],dst[2],dst[3]]);
+  }
  }
  // Manga contour weights stay consistent on screen: deck pitch must not flatten the ink.
  // Trace the existing rib shell, with a heavier silhouette and finer roof/side seam.

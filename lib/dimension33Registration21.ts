@@ -20,11 +20,16 @@ export function coverMaterial21(images:Map<string,HTMLImageElement>,c:{id:string
  const spec=id.endsWith('-node')?faces.cabinet:faces.concrete;
  const frame=(frames as any)[spec.key],image=images.get('d33-map20-'+frame.atlas);
  if(!image?.complete||!image.naturalWidth)return null;
- return {image,key:spec.key,point:(col:number,row:number,u:number,v:number)=>{
-  // The shelter's long axis runs along h. Its long side needs the broad
-  // painted face, not a narrow end stretched across 118 world units.
-  const longSide=(c.h||0)>(c.w||Infinity)*2;
-  const q=row===1?(longSide?spec.front:spec.end):col===0?spec.top:longSide?spec.end:spec.front;
+ // Broad roofs use the approved flat plating tile, never an enlarged painted
+ // bevel/light strip. End panels use a broad concrete face or equipment plating.
+ const flat=(frames as any)['floor/industrial-plating'];
+ const flatImage=images.get('d33-map20-'+flat.atlas);
+ const useFlat=(col:number,row:number)=>!!flatImage?.complete&&!!flatImage.naturalWidth&&((col===0&&row===0)||(row===1&&spec===faces.cabinet));
+ const uv=(q:Quad,u:number,v:number)=>({x:frame.rect[0]+(1-v)*(q[0].x+(q[1].x-q[0].x)*u)+v*(q[3].x+(q[2].x-q[3].x)*u),y:frame.rect[1]+(1-v)*(q[0].y+(q[1].y-q[0].y)*u)+v*(q[3].y+(q[2].y-q[3].y)*u)});
+ return {image,key:spec.key,trimPoint:(u:number,v:number)=>uv(spec.top,u,v),imageFor:(col:number,row:number)=>useFlat(col,row)?flatImage!:image,point:(col:number,row:number,u:number,v:number)=>{
+  if(useFlat(col,row))return{x:flat.rect[0]+8+u*(flat.rect[2]-16),y:flat.rect[1]+8+v*(flat.rect[3]-16)};
+  // Reuse concrete panel material without stretching a narrow sculpted end cap.
+  const q=col===0&&row===0?spec.top:spec.front;
   return{x:frame.rect[0]+(1-v)*(q[0].x+(q[1].x-q[0].x)*u)+v*(q[3].x+(q[2].x-q[3].x)*u),
    y:frame.rect[1]+(1-v)*(q[0].y+(q[1].y-q[0].y)*u)+v*(q[3].y+(q[2].y-q[3].y)*u)};
  }};
@@ -33,20 +38,23 @@ export function coverMaterial21(images:Map<string,HTMLImageElement>,c:{id:string
 // Upright heights use the same presentation unit as fighter feet-to-helmet
 // height. Footprints and physical heights of combat objects remain authoritative.
 export const D33_SCENERY21=[
+ ...[280,460,1040,1220].map(x=>({key:'architecture/railing',x,y:80,height:38})),
+ {key:'architecture/industrial-facade',x:-100,y:420,height:220},
+ {key:'architecture/industrial-facade',x:1600,y:420,height:220},
  // Solid service buildings connect the rear perimeter beneath the bridges.
  // Decorative only, behind the combat boundary; no new collision/traversal.
- {key:'architecture/industrial-facade',x:170,y:-70,height:140},
- {key:'architecture/industrial-facade',x:830,y:-70,height:140},
+ {key:'architecture/industrial-facade',x:300,y:-70,height:140},
+ {key:'architecture/industrial-facade',x:1200,y:-70,height:140},
  {key:'architecture/industrial-facade',x:-170,y:75,height:260},
- {key:'architecture/industrial-facade',x:1170,y:75,height:260},
+ {key:'architecture/industrial-facade',x:1670,y:75,height:260},
  {key:'architecture/watchtower-magenta',x:25,y:68,height:205},
- {key:'architecture/watchtower-cyan',x:975,y:68,height:205},
+ {key:'architecture/watchtower-cyan',x:1475,y:68,height:205},
  {key:'architecture/bridge-front',x:185,y:35,height:140},
- {key:'architecture/bridge-alternate',x:815,y:35,height:140},
- {key:'architecture/central-tower-33-front',x:500,y:12,height:310},
- {key:'architecture/north-platform',x:500,y:78,height:150},
- {key:'architecture/stair-module-a',x:500,y:86,height:130},
- {key:'architecture/south-platform',x:500,y:830,height:150},
- {key:'architecture/stair-module-b',x:500,y:710,height:130},
- {key:'props/crowd-screen',x:760,y:0,height:90},
+ {key:'architecture/bridge-alternate',x:1315,y:35,height:140},
+ {key:'architecture/central-tower-33-front',x:750,y:12,height:310},
+ {key:'architecture/north-platform',x:750,y:78,height:150},
+ {key:'architecture/stair-module-a',x:750,y:86,height:130},
+ {key:'architecture/south-platform',x:750,y:1050,height:150},
+ {key:'architecture/stair-module-b',x:750,y:930,height:130},
+ {key:'props/crowd-screen',x:1010,y:0,height:90},
 ] as const;

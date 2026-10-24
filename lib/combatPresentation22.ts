@@ -1,3 +1,4 @@
+import {D33_WORLD25} from './dimension33World25';
 import {PSYCHIC_POWERS, psychicField} from './game';
 import {arenaJacobian46} from './bayBridgePresentation';
 
@@ -60,9 +61,9 @@ export function encounterCamera22(p:any,enemy:any,close:boolean){
  const dx=Math.cos(angle)*22+Math.max(-18,Math.min(18,(p.vx||0)*.045));
  const dy=Math.sin(angle)*16+Math.max(-12,Math.min(12,(p.vy||0)*.035));
  const weight=enemy&&separation<300?.13:0;
- const y=Math.max(close?100:135,Math.min(close?540:485,p.y+dy+(enemy?enemy.y-p.y:0)*weight+(close?22:0)));
+ const y=Math.max(close?100:135,Math.min(close?D33_WORLD25.height-80:D33_WORLD25.height-135,p.y+dy+(enemy?enemy.y-p.y:0)*weight+(close?22:0)));
  // The floor is projective, so 500/zoom is not its visible world half-width.
  // Correct edge framing without changing projection or the physical boundary.
  const half=close?Math.min(450,500/(1000/1536*zoom*arenaJacobian46(p.x,y).x)):500/zoom;
- return {zoom,x:Math.max(half,Math.min(1000-half,p.x+dx+(enemy?enemy.x-p.x:0)*weight)),y};
+ return {zoom,x:Math.max(half,Math.min(D33_WORLD25.width-half,p.x+dx+(enemy?enemy.x-p.x:0)*weight)),y};
 }

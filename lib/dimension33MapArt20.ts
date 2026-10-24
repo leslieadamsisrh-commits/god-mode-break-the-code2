@@ -1,3 +1,4 @@
+import {D33_WORLD25,D33_BOUNDS25} from './dimension33World25';
 import frames from './dimension33Frames20.json';
 import {arenaPoint46,arenaJacobian46,relativeWorld46,vertical46,withWorld46,withUpright} from './bayBridgePresentation';
 import {bayObject,BAY_DEPTH_DOMAINS} from './bayBridgeMap';
@@ -100,7 +101,8 @@ export function drawMapArchitecture20(g:CanvasRenderingContext2D,images:Images){
  // Decorative stands stay beyond playable ground. Clip projected scenery out
  // of the physical combat floor, so it cannot imply non-existent cover/stairs.
  withWorld46(g,500,310,()=>{g.save();g.beginPath();g.rect(-10000,-10000,20000,20000);
- const bounds=[[70,90],[930,90],[930,550],[70,550]].map(([x,y])=>{const r=relativeWorld46(500,310,x-500,y-310);return{x:500+r.x,y:310+r.y};});
+ const {left,right,top,bottom}=D33_BOUNDS25;
+ const bounds=[[left,top],[right,top],[right,bottom],[left,bottom]].map(([x,y])=>{const r=relativeWorld46(500,310,x-500,y-310);return{x:500+r.x,y:310+r.y};});
  bounds.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip('evenodd');
  g.globalAlpha=1;
  // Contact shadows belong to scenery anchors, outside the same playable inset.
@@ -108,7 +110,7 @@ export function drawMapArchitecture20(g:CanvasRenderingContext2D,images:Images){
   g.save();g.fillStyle='#050b1470';g.beginPath();g.ellipse(prop.x,prop.y,prop.height*.30,12,0,0,Math.PI*2);g.fill();g.restore();
  });
  for(const prop of [...D33_SCENERY21].sort((a,b)=>a.y-b.y))prop20(g,images,prop.key,prop.x,prop.y,prop.height);
- for(const x of [32,968])for(const y of [163,497])prop20(g,images,'props/lamp-post',x,y,100);
+ for(const x of [32,1468])for(const y of [190,650])prop20(g,images,'props/lamp-post',x,y,100);
  g.restore();});
  return true;
 }
@@ -118,26 +120,26 @@ export function getFloorImage20(images:Images){
  if(typeof document==='undefined'||!frame20(images,'floor/concrete')||!frame20(images,'floor/grating'))return null;
  const revision=images.get(d33ImageKey20('floor'))!.naturalWidth;
  if(floorCache20?.revision===revision)return floorCache20.canvas;
- const world=document.createElement('canvas');world.width=1000;world.height=620;
- const wg=world.getContext('2d')!;wg.fillStyle='#171f2c';wg.fillRect(0,0,1000,620);
+ const world=document.createElement('canvas');world.width=D33_WORLD25.width;world.height=D33_WORLD25.height;
+ const wg=world.getContext('2d')!;wg.fillStyle='#171f2c';wg.fillRect(0,0,world.width,world.height);
  // Smaller modules establish human scale without changing floor cells/matter.
  const tileW=40,tileH=27;
- for(let y=0;y<620;y+=tileH)for(let x=0;x<1000;x+=tileW){
-  const key=x<80?'casing-cyan':x>=920?'casing-magenta':Math.abs(x+tileW/2-500)<40?'grating':y<81||y>=540?'industrial-plating':(x/tileW+y/tileH)%4===0?'cracked-concrete':'concrete';
+ for(let y=0;y<world.height;y+=tileH)for(let x=0;x<world.width;x+=tileW){
+  const key=x<80?'casing-cyan':x>=world.width-80?'casing-magenta':Math.abs(x+tileW/2-D33_WORLD25.centerX)<40?'grating':y<81||y>=world.height-80?'industrial-plating':(x/tileW+y/tileH)%4===0?'cracked-concrete':'concrete';
   const item=frame20(images,'floor/'+key)||frame20(images,'floor/concrete');if(!item)continue;
   const [sx,sy,w,h]=item.f.rect;wg.drawImage(item.im,sx,sy,w,h,x,y,tileW,tileH);
   // Authored panel joints make these modular surfaces; no seamless-texture claim.
   wg.strokeStyle='#101925';wg.lineWidth=.6;wg.strokeRect(x,y,tileW,tileH);
  }
- wg.fillStyle='#07101a55';wg.fillRect(0,0,1000,620);
+ wg.fillStyle='#07101a55';wg.fillRect(0,0,world.width,world.height);
  // Restrained spill from existing flank lighting. Baked into the shared floor
  // image so lifted floor panels retain the same material and texture scale.
- for(const [x,color] of [[80,'#41dce81c'],[920,'#ee4caa1c']] as const){
-  const light=wg.createLinearGradient(x-110,0,x+110,0);light.addColorStop(0,'#0000');light.addColorStop(.5,color);light.addColorStop(1,'#0000');wg.fillStyle=light;wg.fillRect(x-110,0,220,620);
+ for(const [x,color] of [[80,'#41dce81c'],[D33_WORLD25.width-80,'#ee4caa1c']] as const){
+  const light=wg.createLinearGradient(x-110,0,x+110,0);light.addColorStop(0,'#0000');light.addColorStop(.5,color);light.addColorStop(1,'#0000');wg.fillStyle=light;wg.fillRect(x-110,0,220,world.height);
  }
- const canvas=document.createElement('canvas');canvas.width=1536;canvas.height=1024;const cg=canvas.getContext('2d')!;
- for(let y=0;y<620;y+=62)for(let x=0;x<1000;x+=100){
-  const src=[{x,y},{x:x+100,y},{x:x+100,y:y+62},{x,y:y+62}],dst=src.map(p=>arenaPoint46(p.x,p.y));
+ const canvas=document.createElement('canvas');canvas.width=2304;canvas.height=1280;const cg=canvas.getContext('2d')!;
+ for(let y=0;y<world.height;y+=60)for(let x=0;x<world.width;x+=100){
+  const src=[{x,y},{x:x+100,y},{x:x+100,y:y+60},{x,y:y+60}],dst=src.map(p=>arenaPoint46(p.x,p.y));
   for(const indices of [[0,1,2],[0,2,3]])triangle20(cg,world,indices.map(i=>src[i]),indices.map(i=>dst[i]));
  }
  floorCache20={revision,canvas};return canvas;

@@ -1,3 +1,4 @@
+import {D33_BOUNDS25,D33_SPAWNS25} from './dimension33World25';
 export type DepthDomain="L0_SKY"|"L1_FAR"|"L2_BRIDGE"|"L3_COMBAT"|"L4_NEAR"|"L5_FOREGROUND";
 export type BayMaterial="CONCRETE"|"STEEL"|"VEHICLE"|"ROADWAY"|"INFRASTRUCTURE";
 export type BayLane="LEFT_FLANK"|"CENTER"|"RIGHT_FLANK"|"LONG_SIGHT";
@@ -10,13 +11,13 @@ export type BayMapObject={
  breakThreshold:number;gripCompatible:boolean;throwable:boolean;destructionFamily:string;editorMetadata:{label:string;locked?:boolean};
 };
 export const BAY_CAMERA={id:"CAMERA_B",pitch:31,yaw:-25,combatScaleMin:.96,combatScaleMax:1.035,weakPerspective:true} as const;
-export const BAY_BOUNDS={left:70,right:930,top:90,bottom:550} as const;
-export const BAY_SPAWNS=[{id:"A",x:230,y:330,z:0},{id:"B",x:770,y:330,z:0}] as const;
+export const BAY_BOUNDS=D33_BOUNDS25;
+export const BAY_SPAWNS=D33_SPAWNS25;
 export const BAY_LANES=[
- {id:"LEFT_FLANK",x0:120,y0:150,x1:880,y1:260},
- {id:"CENTER",x0:150,y0:260,x1:850,y1:410},
- {id:"RIGHT_FLANK",x0:120,y0:410,x1:880,y1:520},
- {id:"LONG_SIGHT",x0:250,y0:115,x1:760,y1:175}
+ {id:'LEFT_FLANK',x0:150,y0:150,x1:1350,y1:320},
+ {id:'CENTER',x0:300,y0:320,x1:1200,y1:540},
+ {id:'RIGHT_FLANK',x0:150,y0:540,x1:1350,y1:730},
+ {id:'LONG_SIGHT',x0:400,y0:100,x1:1100,y1:180}
 ] as const;
 const profile=(shell:string):BayMapObject["shellProfile"]=>shell.includes("sedan")?"SEDAN":shell.includes("van")?"VAN":shell.includes("cabinet")?"CABINET":shell.includes("girder")?"GIRDER":shell.includes("railing")?"RAILING":shell.includes("equipment")?"EQUIPMENT":shell.includes("module")?"MODULE":shell.includes("block")?"BLOCK":shell.includes("divider")?"DIVIDER":"BARRIER";
 function rigFor(profile:BayMapObject["shellProfile"],w:number,h:number,z:number):BayMapObject["rig"]{
@@ -66,6 +67,16 @@ export const BAY_OBJECTS:BayMapObject[]=[
  obj("d33-west-south-flank",290,360,64,34,0,"fractured-divider","CONCRETE","waist","RIGHT_FLANK",8,145,"West South Flank"),
  obj("d33-east-south-flank",710,360,64,34,0,"fractured-divider","CONCRETE","waist","RIGHT_FLANK",8,145,"East South Flank")
 ];
+// Recompose encounters by role; preserve every object's hull and physical height.
+for(const o of BAY_OBJECTS){
+ const p=o.worldPosition,side=p.x<500?-1:1;
+ if(o.id.startsWith('war-shelter')){p.x=750+side*350;p.y=430;}
+ else if(o.id.endsWith('-node')){p.x=750+side*500;p.y=p.y<330?210:650;}
+ else if(o.id.includes('-center-')){p.x=750+side*95;p.y=p.y<330?365:495;}
+ else if(o.id.endsWith('-primary')){p.x=750+side*245;p.y=p.y<330?285:575;}
+ else if(o.id.endsWith('-step')){p.x=750+side*95;p.y=p.y<330?170:690;}
+ else if(o.id.endsWith('-flank')){p.x=750+side*440;p.y=p.y<330?355:505;}
+}
 // Authored low arena slabs, distinct from unchanged46u generated protection.
 for(const o of BAY_OBJECTS)if(o.coverClass==="waist"){o.dimensions.z=32;o.rig=rigFor(o.shellProfile,o.dimensions.w,o.dimensions.h,32);}
 export const BAY_DEPTH_DOMAINS=[
@@ -82,4 +93,5 @@ export function bayCoverState(){
 const generatedShell45=obj("war-generated-shell45",0,0,112,34,0,"damaged-jersey","CONCRETE","waist","CENTER",7,140,"Generated Concrete Shell");
 const floorShell46=obj("floor-panel46",0,0,80,54,0,"damaged-jersey","CONCRETE","waist","CENTER",7,280,"Extracted Floor Slab");floorShell46.dimensions.z=14;floorShell46.rig=rigFor("BLOCK",80,54,14);
 export function bayObject(id:string){return id===floorShell46.id?floorShell46:id===generatedShell45.id?generatedShell45:BAY_OBJECTS.find(o=>o.id===id)}
+
 

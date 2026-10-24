@@ -1,4 +1,5 @@
-// Presentation coordinates only. Authoritative gameplay stays on the 1000 × 620 map.
+import {D33_WORLD25} from './dimension33World25';
+// Projection calibration stays fixed; world bounds are independent of viewport size.
 export const DECK_PITCH=.52;
 export const DECK_SCREEN_Y=430;
 export const DECK_SLOPE=.08;
@@ -9,7 +10,7 @@ export const ARENA_SHEAR20=.22;
 // unit. Floor positions/footprints and gameplay dimensions remain unchanged.
 export const ARENA_UPRIGHT_SCALE47=.64;
 export const bayRenderCamera={x:500,y:310,ready:false,last:0,zoom:1.85};
-export const DECK={left:0,right:1000,far:0,near:620} as const;
+export const DECK={left:0,right:D33_WORLD25.width,far:0,near:D33_WORLD25.height} as const;
 export function projectWorld(x:number,y:number,camera:{x:number;y:number},zoom:number,z=0){
  const p=arenaPoint46(x,y),c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;
  return{x:500+(p.x-c.x)*scale,y:DECK_SCREEN_Y+(p.y-c.y)*scale-z*zoom*ARENA_UPRIGHT_SCALE47};
@@ -41,10 +42,10 @@ export function withUpright(g:CanvasRenderingContext2D,x:number,y:number,draw:()
 export function drawDeckBoundary(g:CanvasRenderingContext2D,near=false){
  const y=near?DECK.near:DECK.far,z=14/DECK_PITCH;
  g.save();g.fillStyle="#101c28";g.strokeStyle="#667482";g.lineWidth=1;
- g.beginPath();g.moveTo(0,y);g.lineTo(1000,y);g.lineTo(1000,y-z);g.lineTo(0,y-z);g.closePath();g.fill();g.stroke();
- g.strokeStyle="#ac8f73";g.lineWidth=2;g.beginPath();g.moveTo(0,y-z);g.lineTo(1000,y-z);g.stroke();
- for(let x=12;x<1000;x+=48){g.fillStyle="#354554";g.fillRect(x-2,y-z,4,z);g.fillStyle="#b09a76";g.fillRect(x-1,y-z+8,2,3)}
- if(!near)for(const x of [0,1000]){g.fillStyle="#111d2a";g.beginPath();g.moveTo(x,0);g.lineTo(x,620);g.lineTo(x,620-z);g.lineTo(x,-z);g.closePath();g.fill();g.strokeStyle="#657885";g.lineWidth=5;g.beginPath();g.moveTo(x,-z);g.lineTo(x,620-z);g.stroke()}
+ g.beginPath();g.moveTo(0,y);g.lineTo(DECK.right,y);g.lineTo(DECK.right,y-z);g.lineTo(0,y-z);g.closePath();g.fill();g.stroke();
+ g.strokeStyle="#ac8f73";g.lineWidth=2;g.beginPath();g.moveTo(0,y-z);g.lineTo(DECK.right,y-z);g.stroke();
+ for(let x=12;x<DECK.right;x+=48){g.fillStyle="#354554";g.fillRect(x-2,y-z,4,z);g.fillStyle="#b09a76";g.fillRect(x-1,y-z+8,2,3)}
+ if(!near)for(const x of [0,DECK.right]){g.fillStyle="#111d2a";g.beginPath();g.moveTo(x,0);g.lineTo(x,DECK.near);g.lineTo(x,DECK.near-z);g.lineTo(x,-z);g.closePath();g.fill();g.strokeStyle="#657885";g.lineWidth=5;g.beginPath();g.moveTo(x,-z);g.lineTo(x,DECK.near-z);g.stroke()}
  g.restore();
 }
 
