@@ -15,6 +15,11 @@ async function image(p){const im=await loadImage(p);Object.defineProperties(im,{
  qaAssets.set('war-foundation45',await image('public/assets/dimension33/arena-evolution.svg'));
  const jadeFile=process.env.JADE_QA_IMAGE||'.qa/ready-d03.webp';qaJade.set('ready-3',await image(jadeFile));
  const fresh=()=>{const s=newGame('QA','qa',1000,'watch');s.local=true;s.phase='playing';s.time=2;s.players.forEach((p,n)=>Object.assign(p,{bot:false,x:440+n*120,y:330,aim:Math.PI/4,gunFacing:Math.PI/4}));return s;};
+ if(process.argv.includes('--bench')){
+  const c=createCanvas(1000,620),s=fresh(),times=[];bayRenderCamera.ready=false;
+  for(let n=0;n<10;n++){const start=performance.now();qaDraw(c,s,2000,{x:500,y:310,down:false},{},-1,-1,0,'jade','close');if(n>=2)times.push(performance.now()-start);}
+  times.sort((a,b)=>a-b);console.log(JSON.stringify({tag,backend:'napi-rs headless; not browser FPS',samples:times.length,medianMs:(times[3]+times[4])/2,maxMs:times.at(-1)}));return;
+ }
  const render=(name,s,skin='jade')=>{const only=process.argv.indexOf('--only');if(only>=0&&!process.argv[only+1].split(',').includes(name))return;bayRenderCamera.ready=false;qaCache.clear();const c=createCanvas(Number(process.env.QA_WIDTH)||1000,Number(process.env.QA_HEIGHT)||620);qaDraw(c,s,2000,{x:500,y:310,down:false},{},-1,-1,0,skin,'close');fs.writeFileSync('.qa/'+tag+'-'+name+'.jpg',c.toBuffer('image/jpeg',90));};
  if(process.argv.includes('--motion')){
   // Identical deterministic presentation route in both revisions. These are

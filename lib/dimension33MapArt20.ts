@@ -1,6 +1,6 @@
 import frames from './dimension33Frames20.json';
 import {arenaPoint46,arenaJacobian46,relativeWorld46,vertical46,withWorld46,withUpright} from './bayBridgePresentation';
-import {bayObject} from './bayBridgeMap';
+import {bayObject,BAY_DEPTH_DOMAINS} from './bayBridgeMap';
 import {D33_SCENERY21} from './dimension33Registration21';
 
 type Images=Map<string,HTMLImageElement>;
@@ -72,10 +72,27 @@ export function drawMapCover20(g:CanvasRenderingContext2D,images:Images,c:any){
 }
 
 // Architecture is scenery at existing visual anchors; it creates no new collision/elevation.
+// Cache a color treatment, not transparency. source-atop preserves the original
+// silhouette/openings and alpha, while solid walls continue to hide scenery.
+const sceneryCache24=new WeakMap<object,Map<string,HTMLCanvasElement>>();
+export function sceneryFrame24(im:HTMLImageElement,key:string,rect:number[]){
+ let cache=sceneryCache24.get(im);if(!cache){cache=new Map();sceneryCache24.set(im,cache);}
+ const existing=cache.get(key);if(existing)return existing;
+ if(typeof document==='undefined')return null;
+ const [sx,sy,w,h]=rect,canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+ const g=canvas.getContext('2d');if(!g)return null;
+ g.drawImage(im,sx,sy,w,h,0,0,w,h);
+ g.globalCompositeOperation='source-atop';g.fillStyle='#172334';g.globalAlpha=.20;g.fillRect(0,0,w,h);
+ g.globalAlpha=1;g.globalCompositeOperation='source-over';cache.set(key,canvas);return canvas;
+}
 function prop20(g:CanvasRenderingContext2D,images:Images,key:string,x:number,y:number,height:number){
  const item=frame20(images,key);if(!item)return false;
  const {f,im}=item,[sx,sy,sw,sh]=f.rect,h=height,w=h*sw/sh;
- withUpright(g,x,y,()=>{g.save();g.translate(x,y);g.drawImage(im,sx,sy,sw,sh,-w*.5,-h*(sh-16)/sh,w,h);g.restore();});
+ const pivot=f.pivot||{x:sw/2,y:sh-16},treated=sceneryFrame24(im,key,f.rect);
+ withUpright(g,x,y,()=>{g.save();g.globalAlpha=1;g.translate(x,y);
+ if(treated)g.drawImage(treated,-w*pivot.x/sw,-h*pivot.y/sh,w,h);
+ else g.drawImage(im,sx,sy,sw,sh,-w*pivot.x/sw,-h*pivot.y/sh,w,h);
+ g.restore();});
  return true;
 }
 export function drawMapArchitecture20(g:CanvasRenderingContext2D,images:Images){
@@ -85,8 +102,12 @@ export function drawMapArchitecture20(g:CanvasRenderingContext2D,images:Images){
  withWorld46(g,500,310,()=>{g.save();g.beginPath();g.rect(-10000,-10000,20000,20000);
  const bounds=[[70,90],[930,90],[930,550],[70,550]].map(([x,y])=>{const r=relativeWorld46(500,310,x-500,y-310);return{x:500+r.x,y:310+r.y};});
  bounds.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip('evenodd');
- g.globalAlpha=.48;
- for(const prop of D33_SCENERY21)prop20(g,images,prop.key,prop.x,prop.y,prop.height);
+ g.globalAlpha=1;
+ // Contact shadows belong to scenery anchors, outside the same playable inset.
+ for(const prop of D33_SCENERY21)withWorld46(g,prop.x,prop.y,()=>{
+  g.save();g.fillStyle='#050b1470';g.beginPath();g.ellipse(prop.x,prop.y,prop.height*.30,12,0,0,Math.PI*2);g.fill();g.restore();
+ });
+ for(const prop of [...D33_SCENERY21].sort((a,b)=>a.y-b.y))prop20(g,images,prop.key,prop.x,prop.y,prop.height);
  for(const x of [32,968])for(const y of [163,497])prop20(g,images,'props/lamp-post',x,y,100);
  g.restore();});
  return true;
@@ -121,12 +142,18 @@ export function getFloorImage20(images:Images){
  }
  floorCache20={revision,canvas};return canvas;
 }
-export function drawMapBackdrop20(g:CanvasRenderingContext2D,images:Images){
+export function skylineOffset24(camera:{x:number;y:number}){
+ const far=BAY_DEPTH_DOMAINS.find(d=>d.id==='L1_FAR')!;
+ return (arenaPoint46(camera.x,camera.y).x-768)*(1-far.parallax);
+}
+export function drawMapBackdrop20(g:CanvasRenderingContext2D,images:Images,camera={x:500,y:310}){
  const floor=getFloorImage20(images);if(!floor)return false;
  g.fillStyle='#101427';g.fillRect(-600,-600,2736,2224);
  for(const [n,key] of ['skyline-left','skyline-front','skyline-back','skyline-right'].entries()){
   const skyline=frame20(images,'skyline/'+key);if(!skyline)continue;
-  const [sx,sy,w,h]=skyline.f.rect;g.drawImage(skyline.im,sx,sy,w,h,(n-1)*768,5,768,280);
+  // Reuse the authored far-layer horizontal parallax. Keep the skyline's base
+  // height registered to the horizon; neither floor nor input projection changes.
+  const [sx,sy,w,h]=skyline.f.rect;g.drawImage(skyline.im,sx,sy,w,h,(n-1)*768+skylineOffset24(camera),5,768,280);
  }
  g.drawImage(floor,0,0);return true;
 }

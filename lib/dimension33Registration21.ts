@@ -33,6 +33,10 @@ export function coverMaterial21(images:Map<string,HTMLImageElement>,c:{id:string
 // Upright heights use the same presentation unit as fighter feet-to-helmet
 // height. Footprints and physical heights of combat objects remain authoritative.
 export const D33_SCENERY21=[
+ // Solid service buildings connect the rear perimeter beneath the bridges.
+ // Decorative only, behind the combat boundary; no new collision/traversal.
+ {key:'architecture/industrial-facade',x:170,y:-70,height:140},
+ {key:'architecture/industrial-facade',x:830,y:-70,height:140},
  {key:'architecture/industrial-facade',x:-170,y:75,height:260},
  {key:'architecture/industrial-facade',x:1170,y:75,height:260},
  {key:'architecture/watchtower-magenta',x:25,y:68,height:205},
@@ -41,8 +45,8 @@ export const D33_SCENERY21=[
  {key:'architecture/bridge-alternate',x:815,y:35,height:140},
  {key:'architecture/central-tower-33-front',x:500,y:12,height:310},
  {key:'architecture/north-platform',x:500,y:78,height:150},
- {key:'architecture/stair-module-a',x:500,y:86,height:75},
+ {key:'architecture/stair-module-a',x:500,y:86,height:130},
  {key:'architecture/south-platform',x:500,y:830,height:150},
- {key:'architecture/stair-module-b',x:500,y:710,height:75},
+ {key:'architecture/stair-module-b',x:500,y:710,height:130},
  {key:'props/crowd-screen',x:760,y:0,height:90},
 ] as const;
