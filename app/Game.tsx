@@ -15,7 +15,7 @@ import {D33_BARRIER_A20,usesBarrierA20,drawBarrierA20} from "../lib/dimension33E
 import {D33_ATLASES20,d33ImageKey20,artRevision20,drawMapCover20,drawMapArchitecture20,getFloorImage20} from '../lib/dimension33MapArt20';
 import {coverMaterial21} from '../lib/dimension33Registration21';
 import {drawInteractions21} from '../lib/dimension33Readability21';
-import {SelectorGate22,drawSelection22,encounterCamera22} from '../lib/combatPresentation22';
+import {SelectorGate22,drawSelection22,encounterCamera22,kineticCamera26} from '../lib/combatPresentation22';
 import {fitCombatViewport23} from '../lib/combatViewport23';
 import {beginWarScene46,finishWarScene46} from "../lib/warGamesPresentation45";
 import {DECK,DECK_SLOPE,DECK_PITCH,DECK_SCREEN_Y,arenaPoint46,relativeWorld46,vertical46,withWorld46,screenVector46,unprojectWorld,withUpright,bayRenderCamera as cameraState} from "../lib/bayBridgePresentation";
@@ -228,7 +228,7 @@ function combatTone(kind:string,angle?:number){
  const frequency=kind==="cover-defense"?155:kind==="damage"?95:kind==="block"?950:kind==="hit"?330:kind==="shield"?780:kind==="cover"?130:kind==="finish"?90:kind==="fight"?660:440;
  osc.type=kind==="cover"?"triangle":"sine";osc.frequency.setValueAtTime(frequency,now);osc.frequency.exponentialRampToValueAtTime(Math.max(40,frequency*.65),now+.09);gain.gain.setValueAtTime(.045,now);gain.gain.exponentialRampToValueAtTime(.001,now+.13);osc.connect(gain);const pan=a.createStereoPanner?.();if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!):0;gain.connect(pan);pan.connect(a.destination);}else gain.connect(a.destination);osc.start(now);osc.stop(now+.14);osc.onended=()=>{osc.disconnect();gain.disconnect();pan?.disconnect()};
 }
-export default function Game({character="jade",cameraPreset="default"}:{character?:"jade"|"raptor";cameraPreset?:"default"|"close"}={}){
+export default function Game({character="jade",cameraPreset="default"}:{character?:"jade"|"raptor";cameraPreset?:"default"|"close"|"kinetic"}={}){
  useEffect(()=>{
   const el=canvas.current,parent=el?.parentElement;if(!el||!parent)return;
   const fit=()=>{const size=fitCombatViewport23(parent.clientWidth,parent.clientHeight);Object.assign(el.style,{position:'absolute',left:'50%',top:'50%',transform:'translate(-50%, -50%)',width:size.width+'px',height:size.height+'px'});};
@@ -492,11 +492,11 @@ function cachedSkyline(im:HTMLImageElement){
  g.filter="saturate(.65) brightness(.8)";g.drawImage(im,0,0,1200,350);
  g.drawImage(im,0,im.naturalHeight-75,im.naturalWidth,75,0,349,1200,441);skylineCache.set(im,c);return c;
 }
-function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"="default",debug21=false){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
+function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"|"kinetic"="default",debug21=false){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
  const renderNow=performance.now();s={...presentation(s,renderNow),debug21};const cfg=s.config||DEFAULT,p=s.players[localSlot]||s.players[0],local={...p,id:"fighter-"+localSlot};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
  // Independent close camera with stable encounter framing and bounded look-ahead.
  const enemy=s.players.find((q:any)=>q!==p&&q.hp>0);
- const encounter=encounterCamera22(local,enemy,cameraPreset==="close");
+ const encounter=cameraPreset==="kinetic"?kineticCamera26(local,enemy):encounterCamera22(local,enemy,cameraPreset==="close");
  const targetZoom=encounter.zoom;
  const frameDt=cameraState.last?Math.min(.05,(renderNow-cameraState.last)/1000):1/60;
  cameraState.last=renderNow;
