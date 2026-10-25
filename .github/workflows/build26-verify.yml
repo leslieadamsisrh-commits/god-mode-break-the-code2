@@ -1,0 +1,23 @@
+name: Build 26 candidate verification
+on:
+  push:
+    branches:
+      - studio/build26-kinetic-recovery-candidate
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies (repository has no root lockfile)
+        run: npm install --no-audit --no-fund
+      - name: Next.js production build
+        run: npm run build
+      - name: Focused kinetic camera tests
+        run: node tests/build26.cjs
+      - name: Build 25 arena regressions
+        run: node tests/build25.cjs
