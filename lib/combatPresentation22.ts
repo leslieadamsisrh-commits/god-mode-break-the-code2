@@ -67,3 +67,16 @@ export function encounterCamera22(p:any,enemy:any,close:boolean){
  const half=close?Math.min(450,500/(1000/1536*zoom*arenaJacobian46(p.x,y).x)):500/zoom;
  return {zoom,x:Math.max(half,Math.min(D33_WORLD25.width-half,p.x+dx+(enemy?enemy.x-p.x:0)*weight)),y};
 }
+
+export function kineticCamera26(p:any,enemy:any){
+ const separation=enemy?Math.hypot(enemy.x-p.x,enemy.y-p.y):Infinity;
+ const t=Math.max(0,Math.min(1,(300-separation)/160));
+ const close=t*t*(3-2*t),zoom=1.95+1.45*close;
+ const angle=p.gunFacing??p.aim??0,lead=120-75*close;
+ const dx=Math.cos(angle)*lead+Math.max(-12,Math.min(12,(p.vx||0)*.025));
+ const dy=Math.sin(angle)*lead+Math.max(-9,Math.min(9,(p.vy||0)*.02));
+ const weight=enemy&&separation<300?.10*close:0;
+ const x=p.x+dx+(enemy?enemy.x-p.x:0)*weight,y=p.y+dy+(enemy?enemy.y-p.y:0)*weight;
+ const half=Math.min(D33_WORLD25.width/2,500/(1000/1536*zoom*Math.max(.001,arenaJacobian46(p.x,p.y).x)));
+ return {zoom,x:Math.max(half,Math.min(D33_WORLD25.width-half,x)),y:Math.max(85,Math.min(D33_WORLD25.height-85,y))};
+}
