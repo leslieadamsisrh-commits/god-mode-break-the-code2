@@ -20,9 +20,9 @@ export function selectionCards22(p:any,s:any){
  const cost=power===0?'30 BAT':power===1?`${s.config.gripEnergy}/PIECE + ${s.config.holdEnergy}/SEC`:power===2?'22 BAT':power===3?'0 BAT':power===4?`${8+.2*(p.timePellets||0)} BAT/SEC`:`${s.lab21?.repulse?.cost??16} BAT`;
  return [
   {key:'weapon',label:'UP · WEAPON',name:'SHOTGUN',detail:'RT FIRE',value:p.selectedWeapon||0},
-  {key:'power',label:'DOWN · POWER',name:power===5?'REPULSE · LAB':PSYCHIC_POWERS[power]||PSYCHIC_POWERS[0],detail:'X · '+cost,value:power},
+  {key:'power',label:s.config.legacyPowers?'DOWN · POWER':'X · BULLET TIME',name:s.config.legacyPowers?(power===5?'REPULSE · LAB':PSYCHIC_POWERS[power]||PSYCHIC_POWERS[0]):'BULLET TIME',detail:s.config.legacyPowers?'X · '+cost:'8 BAT · 2 SEC',value:power},
   {key:'field',label:'LEFT · AREA',name:['SMALL','MEDIUM','LARGE'][field.level],detail:`${field.radius}u REACH`,value:field.level},
-  {key:'shape',label:'RIGHT · COVER',name:p.coverShape===1?'COMPACT':'WIDE',detail:'RB · 30 BAT',value:p.coverShape||0},
+  {key:'shape',label:'RIGHT · COVER',name:p.coverShape===1?'COMPACT':'WIDE',detail:'RB · 20 BAT',value:p.coverShape||0},
  ];
 }
 

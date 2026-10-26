@@ -248,3 +248,5 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 
 /* Keep navigation accessible above the canvas, and the editor header unobscured. */
 body:has(.arenaBuilder27c) nav[aria-label="Studio access"]{display:none}
+
+.touchTime27g,.touchJump27g{position:absolute;right:24px;pointer-events:auto;touch-action:none;min-width:112px;min-height:44px;border:2px solid #7beaf1;background:#101b32e8;color:#edfcff;border-radius:12px;font:700 12px monospace}.touchTime27g{bottom:208px;border-color:#c6a5ff}.touchJump27g{bottom:154px}
