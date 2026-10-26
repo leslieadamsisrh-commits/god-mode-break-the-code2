@@ -1,4 +1,5 @@
 "use client";
+import {barrelSocket27d} from "../lib/ballistics27d";
 import {useCallback,useEffect,useRef,useState} from "react";
 import ArenaBuilder27c from "./ArenaBuilder27c";
 import {type ArenaLayout27c} from "../lib/arenaLayout27c";
@@ -23,7 +24,7 @@ import {drawInteractions21} from '../lib/dimension33Readability21';
 import {SelectorGate22,drawSelection22,encounterCamera22,kineticCamera26,stableEncounter27b,minimumZoom27b,type CameraMemory27b} from '../lib/combatPresentation22';
 import {fitCombatViewport23} from '../lib/combatViewport23';
 import {beginWarScene46,finishWarScene46} from "../lib/warGamesPresentation45";
-import {DECK,DECK_SLOPE,DECK_PITCH,DECK_SCREEN_Y,arenaPoint46,arenaJacobian46,relativeWorld46,vertical46,withWorld46,screenVector46,unprojectWorld,withUpright,bayRenderCamera as cameraState} from "../lib/bayBridgePresentation";
+import {DECK,DECK_SLOPE,DECK_PITCH,DECK_SCREEN_Y,arenaPoint46,arenaJacobian46,relativeWorld46,vertical46,withWorld46,screenVector46,projectWorld,unprojectWorld,withUpright,bayRenderCamera as cameraState} from "../lib/bayBridgePresentation";
 
 const FIGHT_STORAGE="god_mode_fight_memory38";
 function readFightMemory(){try{const raw=localStorage.getItem(FIGHT_STORAGE);if(!raw)return null;if(raw.length>2000000)throw Error("Memory exceeds storage limit");const v=JSON.parse(raw);if(v.schema!==FIGHT_SCHEMA||v.strategy!==BOT_STRATEGY_ID)return null;return v;}catch{return null;}}
@@ -288,8 +289,10 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
  useEffect(()=>{let raf=0;const uiLoop=()=>{try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const start=!!(pad.buttons[9]?.pressed||pad.buttons[9]?.value>.25);if(start&&!startHeld.current)setStudioMenu(v=>!v);startHeld.current=start}else startHeld.current=false}catch{}raf=requestAnimationFrame(uiLoop)};raf=requestAnimationFrame(uiLoop);return()=>cancelAnimationFrame(raf)},[]);
  useEffect(()=>{let pending=false,dead=false,raf=0,latest:any={...EMPTY},previous:any={...EMPTY},owner:Session|null=null;const queue:any[]=[];
  const sample=()=>{const s=session.current,g=state.current;if(s&&g&&bootReady&&!document.hidden){if(owner!==s){owner=s;queue.length=0;previous={...EMPTY};}
- const p=g.players[s.slot]||g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));i.jump=touchJump.current;touchJump.current=false;i.slide=touchA.current||touchAEdge.current;touchAEdge.current=false;const pointer=unprojectWorld(mouse.current.x,mouse.current.y+(p.z||0)*cameraState.zoom*.64,cameraState,cameraState.ready?cameraState.zoom:g.config?.cameraZoom||1.85);i.aim=Math.atan2(pointer.y-p.y,pointer.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.gripX=Math.cos(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.gripY=Math.sin(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.slow=!!keys.current.KeyX;i.powerup=!!keys.current.KeyY||chargePreview.current;
-  try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;const selectors=selectorGate22.current.sample(studioMenu?null:pad||null);if(pad&&!studioMenu){i.aim=p.aim;readController(pad,i,selectors);if(Math.hypot(i.gripX||0,i.gripY||0)>.15){const v=screenVector46(p.x,p.y,i.gripX,i.gripY);i.aim=Math.atan2(v.y,v.x);i.gripX=v.x;i.gripY=v.y;}}}catch{}
+ const p=g.players[s.slot]||g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));i.jump=touchJump.current;touchJump.current=false;i.slide=touchA.current||touchAEdge.current;touchAEdge.current=false;const muzzle=barrelSocket27d(p,g.config?.spriteScale||.82),zoom=cameraState.ready?cameraState.zoom:g.config?.cameraZoom||1.85;let aimZ=muzzle.z;
+ for(const [slot,target] of g.players.entries()){if(slot===s.slot||target.hp<=0)continue;const feet=projectWorld(target.x,target.y,cameraState,zoom,target.z||0),height=78*(g.config?.spriteScale||.82)*(target.slide>0?.58:1),width=22*zoom*.64;if(Math.abs(mouse.current.x-feet.x)<=width&&mouse.current.y<=feet.y&&mouse.current.y>=feet.y-height*zoom*.64){aimZ=(target.z||0)+(feet.y-mouse.current.y)/(zoom*.64);break;}}
+ const pointer=unprojectWorld(mouse.current.x,mouse.current.y+aimZ*zoom*.64,cameraState,zoom);i.aimX=pointer.x;i.aimY=pointer.y;i.aimZ=aimZ;i.aim=Math.atan2(pointer.y-muzzle.y,pointer.x-muzzle.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.gripX=Math.cos(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.gripY=Math.sin(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.slow=!!keys.current.KeyX;i.powerup=!!keys.current.KeyY||chargePreview.current;
+  try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;const selectors=selectorGate22.current.sample(studioMenu?null:pad||null);if(pad&&!studioMenu){delete i.aimX;delete i.aimY;delete i.aimZ;i.aim=p.aim;readController(pad,i,selectors);if(Math.hypot(i.gripX||0,i.gripY||0)>.15){const v=screenVector46(p.x,p.y,i.gripX,i.gripY);i.aim=Math.atan2(v.y,v.x);i.gripX=v.x;i.gripY=v.y;}}}catch{}
   if(studioMenu||builderRef.current){Object.assign(i,{x:0,y:0,jump:false,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false,fieldCycle:false,powerCycle:false,weaponCycle:false,powerUse:false,coverShapeCycle:false})}
 
  latest=i;previous=bufferInput(queue,previous,i);if(s.local&&localCombat.current&&!builderRef.current){accept(localCombat.current.frame(performance.now(),latest,queue));}}
@@ -1417,7 +1420,7 @@ function fxBody47(g:CanvasRenderingContext2D,f:any){
   for(let n=0;n<12;n++){const a=n*2.399,travel=5+age*(13+n%4*7),x=Math.cos(a)*travel,y=(Math.sin(a)*travel+age*age*16)/DECK_PITCH;g.fillStyle=f.type==="hit"?(n%2?"#b5f4ff":"#f092c8"):stone?(n%2?"#978a7b":"#d0bba0"):(n%2?"#ffe4a7":"#f09066");g.fillRect(x,y,1.5+n%3,1.5/DECK_PITCH);}
   g.strokeStyle=f.type==="hit"?"#eeffff":"#fff0c5";g.lineWidth=1.4;g.beginPath();g.moveTo(-6,-6/DECK_PITCH);g.lineTo(6,6/DECK_PITCH);g.moveTo(6,-6/DECK_PITCH);g.lineTo(-6,6/DECK_PITCH);g.stroke();g.restore();return;
  }
- g.save();g.translate(f.renderOffsetX||0,-(f.z||0)/DECK_PITCH);g.globalAlpha=Math.min(1,f.life*4);
+ g.save();const lift=vertical46(f.x,f.y,f.z||0);g.translate((f.renderOffsetX||0)+lift.x,lift.y);g.globalAlpha=Math.min(1,f.life*4);
  if(f.type==="brake"&&Number.isFinite(f.oldAngle)){
   const age=1-classicClamp(f.life/.42,0,1),oa=f.oldAngle,na=f.newAngle??oa,strength=classicClamp((f.entrySpeed||0)/689.15949375,0,1);
   g.save();g.translate(f.x,f.y);
