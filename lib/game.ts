@@ -1,3 +1,4 @@
+import {resolveSupports27e} from './arenaStructures27e';
 import {barrelSocket27d,cylinderTime27d,coverTime27d} from './ballistics27d';
 import {chaseLayout27c,instantiateLayout27c,validateLayout27c,type ArenaLayout27c} from './arenaLayout27c';
 import {integrateVertical,surfaceShotTime,type ElevationState} from './verticalCombat27b';
@@ -718,10 +719,11 @@ function scatterMatter42(m:Matter,s:GameState,starts:{x:number;y:number}[],dt:nu
 // Brother Build 768e3c3: flying matter deals 22 to fighters, 28 to cover,
 // with 360 impulse and .45 cover rebound. Sweeps/ownership make that port safe.
 function matterContactSwept(m:Matter,from:{x:number;y:number},s:GameState,starts:{x:number;y:number}[]){
- const speed=Math.hypot(m.vx,m.vy);if(speed<=140)return;let nearest=Infinity,cv:Cover|undefined,target:Player|undefined,slot=-1;
+ const speed=Math.hypot(m.vx,m.vy);if(speed<=140)return;let nearest=surfaceShotTime({...from,z:Math.max(1,m.height||8)},{x:m.x,y:m.y,z:Math.max(1,m.height||8)}),cv:Cover|undefined,target:Player|undefined,slot=-1;
  for(const c of s.covers){if(c.hp<=0||m.hitIds?.includes(c.id))continue;const t=segmentCoverTime(from,m,{...c,w:c.w+2*m.r,h:c.h+2*m.r});if(t!==null&&t<nearest){nearest=t;cv=c;}}
  if(speed>170)for(let n=0;n<s.players.length;n++){const p=s.players[n];if(n===m.throwOwner||p.hp<=0||(p.z||0)>24||m.hitIds?.includes("player-"+n))continue;const t=sweptCircle(from,m,starts[n],p,m.r+19);if(t!==null&&t<nearest){nearest=t;target=p;slot=n;cv=undefined;}}
  if(!Number.isFinite(nearest))return;m.x=from.x+(m.x-from.x)*nearest;m.y=from.y+(m.y-from.y)*nearest;
+ if(!target&&!cv){m.vx*=-.45;m.vy*=-.45;}
  if(target){(m.hitIds??=[]).push("player-"+slot);duelContact(s,m.throwOwner??-1,target,22,m.vx/speed*360,m.vy/speed*360,"low",{x:m.x,y:m.y,z:8},"matter-throw",m.attackId);m.vx*=.25;m.vy*=.25;}
  else if(cv){(m.hitIds??=[]).push(cv.id);damageCover(cv,s,28);m.vx*=-.45;m.vy*=-.45;const material=m.kind;combatEvent(s,{kind:"cover",source:"matter-throw",attackId:m.attackId,owner:m.throwOwner??-1,damage:28,x:m.x,y:m.y,z:8,material});s.fx.push({id:uid(),type:"cover-hit",x:m.x,y:m.y,z:8,life:.25,text:material});}
 }
@@ -879,6 +881,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
   }
   else{const chargeMove=p.chargeMotion??1,r=1-Math.exp(-c.response*d),m=Math.hypot(i.x,i.y);p.vx+=(i.x*c.moveSpeed*chargeMove-p.vx)*r;p.vy+=(i.y*c.moveSpeed*chargeMove-p.vy)*r;if(m<.05){p.vx*=Math.pow(c.stopDrag,d);p.vy*=Math.pow(c.stopDrag,d)}p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)}
   const holding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(holding&&!wasHolding){p.psychicStartedAt=s.time;p.psychicReturnUntil=0}else if(!holding&&wasHolding)p.psychicReturnUntil=s.time+.16;
+  resolveSupports27e(p);
   Object.assign(p,integrateVertical(p,playerStarts[n],jump,dt));
   meleeStep(s,n);
   if(p.pendingFireUntil!==undefined&&(s.time>p.pendingFireUntil||p.hp<=0||p.charging||i.grip||p.gripId||p.gripCoverId||p.orbitIds.length||p.fireBlocked))p.pendingFireUntil=undefined;

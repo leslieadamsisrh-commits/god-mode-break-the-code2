@@ -15,7 +15,7 @@ function frame20(images:Images,key:string){
 export function artRevision20(images:Images){return D33_ATLASES20.reduce((n,k)=>n+(images.get(d33ImageKey20(k))?.naturalWidth||0),0);}
 
 // One common affine mapping for artwork, floor sampling, and authoritative hulls.
-function triangle20(g:CanvasRenderingContext2D,im:CanvasImageSource,src:Point[],dst:Point[]){
+export function triangle20(g:CanvasRenderingContext2D,im:CanvasImageSource,src:Point[],dst:Point[]){
  const [a,b,d]=src,[A,B,D]=dst,ux=b.x-a.x,uy=b.y-a.y,vx=d.x-a.x,vy=d.y-a.y,det=ux*vy-vx*uy;
  if(Math.abs(det)<.00001)return;
  const xx=((B.x-A.x)*vy-(D.x-A.x)*uy)/det,xy=((D.x-A.x)*ux-(B.x-A.x)*vx)/det;
@@ -123,15 +123,15 @@ export function getFloorImage20(images:Images){
  const world=document.createElement('canvas');world.width=D33_WORLD25.width;world.height=D33_WORLD25.height;
  const wg=world.getContext('2d')!;wg.fillStyle='#171f2c';wg.fillRect(0,0,world.width,world.height);
  // Smaller modules establish human scale without changing floor cells/matter.
- const tileW=40,tileH=27;
+ const tileW=120,tileH=81;
  for(let y=0;y<world.height;y+=tileH)for(let x=0;x<world.width;x+=tileW){
-  const key=x<80?'casing-cyan':x>=world.width-80?'casing-magenta':Math.abs(x+tileW/2-D33_WORLD25.centerX)<40?'grating':y<81||y>=world.height-80?'industrial-plating':(x/tileW+y/tileH)%4===0?'cracked-concrete':'concrete';
+  const key=x<80?'casing-cyan':x>=world.width-80?'casing-magenta':Math.abs(x+tileW/2-D33_WORLD25.centerX)<40?'grating':y<81||y>=world.height-80?'industrial-plating':(x/tileW+y/tileH)%7===0?'grating':'industrial-plating';
   const item=frame20(images,'floor/'+key)||frame20(images,'floor/concrete');if(!item)continue;
   const [sx,sy,w,h]=item.f.rect;wg.drawImage(item.im,sx,sy,w,h,x,y,tileW,tileH);
   // Authored panel joints make these modular surfaces; no seamless-texture claim.
   wg.strokeStyle='#101925';wg.lineWidth=.6;wg.strokeRect(x,y,tileW,tileH);
  }
- wg.fillStyle='#07101a55';wg.fillRect(0,0,world.width,world.height);
+ wg.fillStyle='#07101a33';wg.fillRect(0,0,world.width,world.height);
  // Restrained spill from existing flank lighting. Baked into the shared floor
  // image so lifted floor panels retain the same material and texture scale.
  for(const [x,color] of [[80,'#41dce81c'],[D33_WORLD25.width-80,'#ee4caa1c']] as const){
@@ -159,3 +159,4 @@ export function drawMapBackdrop20(g:CanvasRenderingContext2D,images:Images,camer
  }
  g.drawImage(floor,0,0);return true;
 }
+

@@ -38,7 +38,6 @@ export function coverMaterial21(images:Map<string,HTMLImageElement>,c:{id:string
 // Upright heights use the same presentation unit as fighter feet-to-helmet
 // height. Footprints and physical heights of combat objects remain authoritative.
 export const D33_SCENERY21=[
- ...[280,460,1040,1220].map(x=>({key:'architecture/railing',x,y:80,height:38})),
  {key:'architecture/industrial-facade',x:-100,y:420,height:220},
  {key:'architecture/industrial-facade',x:1600,y:420,height:220},
  // Solid service buildings connect the rear perimeter beneath the bridges.
@@ -49,12 +48,7 @@ export const D33_SCENERY21=[
  {key:'architecture/industrial-facade',x:1670,y:75,height:260},
  {key:'architecture/watchtower-magenta',x:25,y:68,height:205},
  {key:'architecture/watchtower-cyan',x:1475,y:68,height:205},
- {key:'architecture/bridge-front',x:185,y:35,height:140},
- {key:'architecture/bridge-alternate',x:1315,y:35,height:140},
  {key:'architecture/central-tower-33-front',x:750,y:12,height:310},
- {key:'architecture/north-platform',x:750,y:78,height:150},
- {key:'architecture/stair-module-a',x:750,y:86,height:130},
- {key:'architecture/south-platform',x:750,y:1050,height:150},
- {key:'architecture/stair-module-b',x:750,y:930,height:130},
  {key:'props/crowd-screen',x:1010,y:0,height:90},
 ] as const;
+

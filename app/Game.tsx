@@ -1,4 +1,5 @@
 "use client";
+import {drawStructures27e,withStructureOcclusion27e} from '../lib/arenaPresentation27e';
 import {barrelSocket27d} from "../lib/ballistics27d";
 import {useCallback,useEffect,useRef,useState} from "react";
 import ArenaBuilder27c from "./ArenaBuilder27c";
@@ -10,8 +11,6 @@ import {paintRaptorRig} from "../lib/raptorRigPaint";
 import AnimationQaHarness from "./AnimationQaHarness";
 import BayBridgeArena from "./BayBridgeArena";
 import GodModeShell from "./GodModeShell";
-import {COMBAT_SURFACES} from "../lib/verticalCombat27b";
-import {height as surfaceHeight27b} from "../lib/elevation27a";
 import {COVER_HEIGHT,withCoverOcclusion} from "../lib/cover-occlusion";
 import {FIGHT_SCHEMA,BOT_STRATEGY_ID,gripSelection,psychicField,fieldMatter,coverDamageStage,constructionSupply44,constructionPreview21,PSYCHIC_POWERS} from "../lib/game";
 import {LocalCombat,isLocalMode} from "../lib/localCombat";
@@ -518,7 +517,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  const arena45=environmentAssets.get("war-foundation45");cameraState.zoom=zoom;g=beginWarScene46(canvas,arena45,{x:camX,y:camY},zoom,environmentAssets);
  drawDimension33Architecture(g);
  drawGround44(g,s);
- drawElevatedSurfaces27b(g);
+ drawStructures27e(g,environmentAssets);
  drawKineticCyclone18(g,s);
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
@@ -555,17 +554,17 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  drawInteractions21(g,s,localSlot);
  // Wet road light pools sit below physical actors, with screen blending instead of camera bounce.
  for(const light of environmentLights){g.save();g.globalCompositeOperation="screen";g.globalAlpha=light.strength*.11;g.fillStyle=light.color;g.beginPath();g.ellipse(light.x,light.y+7,44,9,0,0,Math.PI*2);g.fill();g.restore()}
- [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>withWorld46(g,c.x,c.y,()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time,environmentLights)));
+ [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>withStructureOcclusion27e(g,c,()=>withWorld46(g,c.x,c.y,()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id)},s.time,environmentLights))));
  const actors=[
-  ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",fn:()=>withUpright(g,m.x,m.y,()=>matter(g,m))})),
+  ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",player:{x:m.x,y:m.y,z:m.height||0},fn:()=>withUpright(g,m.x,m.y,()=>matter(g,m))})),
   ...s.players.map((raw:any,index:number)=>{const actor=index===localSlot?local:{...raw,id:"fighter-"+index};return{y:actor.y,kind:"player",player:actor,fn:()=>{drawGodGround(g,actor,s.time);withUpright(g,actor.x,actor.y,()=>{g.translate(0,-(actor.z||0));if(actor.hp>0){drawGodRear(g,actor,s.time);fighter(g,actor,s.time,cfg,index===localSlot?character:"jade");drawGodFront(g,actor,s.time)}else{g.save();const age=Math.max(0,s.time-(actor.deathAt??s.time)),fade=Math.max(.12,1-age/1.5);g.globalAlpha=fade;for(let n=0;n<28;n++){const a=n*2.399,r=8+age*(15+n%5*9);g.fillStyle=actor.bot?(n%3===0?"#d9e1e7":n%2?"#84324f":"#151b26"):(n%3===0?"#f0eaff":n%2?"#65efff":"#ff69bd");const x=actor.x+Math.cos(a)*r,y=actor.y-12-n*1.7+Math.sin(a)*r*.5+age*age*17;if(actor.bot){g.beginPath();g.ellipse(x,y,2+n%3,1+n%2,a,0,Math.PI*2);g.fill()}else g.fillRect(x,y,2+n%3,2+n%2)}g.restore();}g.save();g.fillStyle=index===0?"#65efff":"#ff69bd";g.font="bold 8px monospace";g.textAlign="center";g.fillText(s.mode==="watch"?actor.name:index===localSlot?"YOU":actor.name,actor.x,actor.y-84);g.restore()})}}})
  ].sort((a,b)=>a.y-b.y);
  actors.forEach(o=>{
-  withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?(o as any).player.coverId:null,o.kind==="player"&&!!((o as any).player.input?.coverAim||(o as any).player.fireState>0||(o as any).player.recoil>0),1/DECK_PITCH);
+  withStructureOcclusion27e(g,(o as any).player||{x:0,y:o.y,z:0},()=>withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?(o as any).player.coverId:null,o.kind==="player"&&!!((o as any).player.input?.coverAim||(o as any).player.fireState>0||(o as any).player.recoil>0),1/DECK_PITCH));
  });
 
 
- for(const sh of s.shots||[])withCoverOcclusion(g,covers,sh.y,s.time,()=>withWorld46(g,sh.x,sh.y,()=>drawShot(g,sh)),null,false,1/DECK_PITCH);
+ for(const sh of s.shots||[])withStructureOcclusion27e(g,sh,()=>withCoverOcclusion(g,covers,sh.y,s.time,()=>withWorld46(g,sh.x,sh.y,()=>drawShot(g,sh)),null,false,1/DECK_PITCH));
  for(const f of s.fx||[])if(f.type!=="slide"&&f.type!=="cover-scrape"&&f.type!=="cyber-stain")withCoverOcclusion(g,covers,f.y,s.time,()=>withWorld46(g,f.x,f.y,()=>fx(g,f)),null,false,1/DECK_PITCH);
  g=finishWarScene46(canvas);drawCombatHelmet(g,s,localSlot);
 }
@@ -1442,12 +1441,3 @@ function arrow(g:CanvasRenderingContext2D,x1:number,y1:number,x2:number,y2:numbe
 
 
 
-function drawElevatedSurfaces27b(g:CanvasRenderingContext2D){
- for(const surface of COMBAT_SURFACES){if(surface.id==='ground')continue;const anchor=surface.polygon[0];withWorld46(g,anchor.x,anchor.y,()=>{
-  const points=surface.polygon.map(p=>{const r=relativeWorld46(anchor.x,anchor.y,p.x-anchor.x,p.y-anchor.y),v=vertical46(anchor.x,anchor.y,surfaceHeight27b(surface,p));return{x:anchor.x+r.x+v.x,y:anchor.y+r.y+v.y};});
-  g.save();g.lineWidth=2;g.strokeStyle='#07131e';g.fillStyle=surface.rise?'#466070':'#293c50';g.beginPath();points.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.fill();g.stroke();
-  g.strokeStyle='#69dce5';g.lineWidth=1;g.beginPath();g.moveTo(points[0].x,points[0].y);g.lineTo(points[1].x,points[1].y);g.stroke();
-  if(surface.rise){for(let i=1;i<9;i++){const y=anchor.y+i*10;const row=[anchor.x,surface.polygon[1].x].map(x=>{const r=relativeWorld46(anchor.x,anchor.y,x-anchor.x,y-anchor.y),v=vertical46(anchor.x,anchor.y,surfaceHeight27b(surface,{x,y}));return{x:anchor.x+r.x+v.x,y:anchor.y+r.y+v.y};});g.beginPath();g.moveTo(row[0].x,row[0].y);g.lineTo(row[1].x,row[1].y);g.stroke();}}
-  g.restore();
- });}
-}
