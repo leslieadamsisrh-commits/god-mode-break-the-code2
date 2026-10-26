@@ -11,7 +11,7 @@ export default function StudioHome(){
  <a href="/" style={{...linkStyle,background:"#10333b",border:"2px solid #63edf0"}}>▶ PLAY GOD MODE <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>Existing playable game with Jade</small></a>
  <a href="/studio/combat/raptor/real" style={{...linkStyle,background:"#351b37",border:"2px solid #ff6bb7"}}>🦖 RAPTOR REAL-GAME TEST <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>Actual GOD MODE arena and controls · Jade artwork until validated Raptor sprites are installed</small></a>
  <a href="/studio/rig/raptor" style={{...linkStyle,background:"#24243f",border:"2px solid #9a81ff"}}>🦴 RAPTOR SKELETAL RIG <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>12-phase animated rig · Play/Pause · Speed · Joint display · Temporary vector art</small></a>
- <a href="/studio/combat" style={{...linkStyle,background:"#162537",border:"1px solid #4d7485"}}>⚙ DEVELOPER TOOLS <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>Combat QA and sprite registration · Optional</small></a>
+ <a href="/studio/elevation" style={{...linkStyle,background:"#163a45",border:"2px solid #63edf0"}}>↗ XYZ ELEVATION LAB <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>Build 27A · stairs, bridge, jump and fall physics prototype</small></a>\n <a href="/studio/combat" style={{...linkStyle,background:"#162537",border:"1px solid #4d7485"}}>⚙ DEVELOPER TOOLS <small style={{display:"block",fontSize:13,fontWeight:400,marginTop:7}}>Combat QA and sprite registration · Optional</small></a>
  </div>
  <section style={{border:"1px solid #345267",padding:18,borderRadius:12,marginTop:24,background:"#101c29"}}>
  <strong>RAPTOR ART STATUS</strong>
