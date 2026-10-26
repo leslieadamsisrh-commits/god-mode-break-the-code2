@@ -87,3 +87,24 @@ export function kineticCamera26(p:any,enemy:any){
  const half=Math.min(D33_WORLD25.width/2,500/(1000/1536*zoom*jac));
  return {zoom,x:Math.max(half,Math.min(D33_WORLD25.width-half,x)),y:Math.max(85,Math.min(D33_WORLD25.height-85,y))};
 }
+
+
+import {unprojectWorld} from './bayBridgePresentation';
+export function viewport27b(camera:{x:number;y:number},zoom:number){
+ const points=[[0,0],[1000,0],[1000,620],[0,620]].map(([x,y])=>unprojectWorld(x,y,camera,zoom));
+ return {width:Math.max(...points.map(p=>p.x))-Math.min(...points.map(p=>p.x)),height:Math.max(...points.map(p=>p.y))-Math.min(...points.map(p=>p.y))};
+}
+export function minimumZoom27b(camera:{x:number;y:number}){
+ let lo=1,hi=20;for(let i=0;i<24;i++){const mid=(lo+hi)/2,v=viewport27b(camera,mid);if(v.width>750||v.height>420)lo=mid;else hi=mid;}return hi;
+}
+export type CameraMemory27b={angle?:number;zoomTarget?:number;elevation?:number;opponent?:number};
+export function stableEncounter27b(p:any,players:any[],slot:number,m:CameraMemory27b,dt:number){
+ if(m.opponent===undefined||!players[m.opponent]||players[m.opponent].hp<=0||m.opponent===slot)m.opponent=players.findIndex((q,n)=>n!==slot&&q.hp>0);
+ const enemy=players[m.opponent],angle=p.gunFacing??p.aim??0;
+ m.angle??=angle;m.angle+=Math.atan2(Math.sin(angle-m.angle),Math.cos(angle-m.angle))*(1-Math.exp(-5*dt));
+ const target=kineticCamera26({...p,gunFacing:m.angle},enemy);
+ const min=minimumZoom27b(target),desired=min*(1+(target.zoom-2.55)*.17);
+ if(m.zoomTarget===undefined||Math.abs(desired-m.zoomTarget)>.06)m.zoomTarget=desired;
+ m.elevation??=p.z||0;m.elevation+=((p.z||0)-m.elevation)*(1-Math.exp(-5*dt));
+ return {...target,zoom:m.zoomTarget,elevation:m.elevation};
+}
