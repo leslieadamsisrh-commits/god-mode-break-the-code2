@@ -11,7 +11,7 @@ function visiblePlanes(angle:number){const a=((angle%(Math.PI*2))+Math.PI*2)%(Ma
 
 export default function BayBridgeArena({s,onArenaBuilder,onAnimationQa,onDirector,onSprites,onReset,menuOpen,onMenuToggle}:{s:any;onArenaBuilder?:()=>void;onAnimationQa?:()=>void;onDirector?:()=>void;onSprites?:()=>void;onReset?:()=>void;menuOpen:boolean;onMenuToggle:()=>void}){
  const [qa,setQa]=useState(false),[selected,setSelected]=useState(0),[testAngle,setTestAngle]=useState(0),p=s?.players?.[0]||{x:230,y:330},lane=laneFor(p.x||0,p.y||0),near=(s?.covers||[]).map((c:any)=>bayObject(c.id)).filter(Boolean),actor=BAY_OBJECTS[selected%BAY_OBJECTS.length],planes=visiblePlanes(testAngle);
- return <div className="bayArena bayContainer01 warArena45">
+ return <><div className="bayArena bayContainer01 warArena45"/>
   <div className="arenaMenu">
    <button className="studioMenuButton" onClick={onMenuToggle}>{menuOpen?"✕ CLOSE":"☰ GOD MODE"}</button>
    <div className="cameraChip">CAM B · 1.85</div>
@@ -38,7 +38,7 @@ export default function BayBridgeArena({s,onArenaBuilder,onAnimationQa,onDirecto
    <span>GRIP {actor.gripCompatible?"YES":"NO"} · THROW {actor.throwable?"YES":"NO"} · BREAK {actor.breakThreshold}</span><span>RIG SPINE {actor.rig.spine.x0.toFixed(0)}→{actor.rig.spine.x1.toFixed(0)} · RIBS {actor.rig.ribs.length} · COVER RAILS {actor.rig.coverRails.map(r=>r.side+":"+Math.round(r.from*100)+"–"+Math.round(r.to*100)+"%").join(" · ")}</span>
    <div style={{display:"flex",gap:4,pointerEvents:"auto"}}><button onClick={()=>setSelected(v=>(v+1)%BAY_OBJECTS.length)}>NEXT ACTOR</button><button onClick={()=>setTestAngle(v=>(v+Math.PI/4)%(Math.PI*2))}>ROTATE 45°</button></div>
   </div>}
- </div>
+ </>
 }
 
 
