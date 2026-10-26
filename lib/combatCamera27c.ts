@@ -2,7 +2,9 @@ import {arenaPoint46,arenaInverse46,projectWorld} from './bayBridgePresentation'
 import {height} from './elevation27a';
 import {COMBAT_SURFACES} from './verticalCombat27b';
 export type Camera27c={x:number;y:number;zoom:number;ready:boolean;aimX?:number;aimY?:number;supportZ?:number;zoomTarget?:number;opponent?:number};
-export const CAMERA27C={hunt:6.7,engage:6.9,clash:7.1,zoomRate:.65,safe:{left:160,right:840,top:105,bottom:510},anchorY:435};
+// Readability takes priority over the old half-arena footprint constraint.
+// The previous 6.7–7.1 zoom doubled Jade and cover on iPad.
+export const CAMERA27C={hunt:3.2,engage:3.4,clash:3.6,zoomRate:.65,safe:{left:160,right:840,top:105,bottom:510},anchorY:435};
 const clamp=(x:number,a:number,b:number)=>Math.max(a,Math.min(b,x));
 export function updateCamera27c(c:Camera27c,p:any,players:any[],slot:number,dt:number){
  if(!c.ready){c.aimX=undefined;c.aimY=undefined;c.supportZ=undefined;c.zoomTarget=undefined;c.opponent=undefined;}
