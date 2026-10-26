@@ -50,5 +50,5 @@ export const D33_SCENERY21=[
  {key:'architecture/watchtower-cyan',x:1475,y:68,height:205},
  {key:'architecture/central-tower-33-front',x:750,y:12,height:310},
  {key:'props/crowd-screen',x:1010,y:0,height:90},
-] as const;
+].map(p=>({...p,x:p.x*2200/1500,y:p.y*1100/840}));
 

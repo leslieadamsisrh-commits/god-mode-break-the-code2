@@ -1,0 +1,14 @@
+const fs=require('fs'),ts=require('typescript'),assert=require('node:assert/strict');global.crypto??=require('node:crypto').webcrypto;require.extensions['.ts']=(m,p)=>m._compile(ts.transpileModule(fs.readFileSync(p,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,p);
+const G=require('../lib/game.ts');
+function setup(){const s=G.newGame('h','h',0,'solo');s.covers=[];s.groundSources44=[];s.players[0].x=750;s.players[0].y=430;s.players[0].aim=s.players[0].gunFacing=0;return s;}
+function step(s,input,frames=1){G.setInput(s,0,(s.players[0].lastSeq||0)+1,{x:0,y:0,aim:0,...input});for(let i=0;i<frames;i++)G.advance(s,s.lastAt+1000/60);}
+let s=setup(),p=s.players[0];step(s,{cover:true});assert(p.gripCoverId,'RB must automatically hold');let id=p.gripCoverId;assert.equal(s.covers.length,1);assert(p.battery>79&&p.battery<81);step(s,{},12);assert.equal(p.gripCoverId,id,'RB release must not drop');assert(s.covers[0].hover>8);step(s,{cover:true});assert.equal(p.gripCoverId,null,'RB again places');const before=p.battery;step(s,{},120);assert(p.battery>before,'placed cover must allow passive regeneration');assert(s.covers[0].hp>0);p.x=1100;step(s,{},2);assert(s.covers[0].hp>0,'placed cover survives leaving field');
+s=setup();p=s.players[0];step(s,{cover:true});step(s,{},2);step(s,{fire:true});assert.equal(p.gripCoverId,null,'RT alone throws');assert(s.covers[0].build<0);assert.equal(s.shots.length,0,'throw must not fire shotgun');
+console.log('PASS27F energy-only build, automatic hold, persistent RB hold, RB placement, RT throw, no shotgun leak, no placed upkeep, regeneration, distance persistence');
+const S=require('../lib/arenaStructures27e.ts'),A=require('../lib/arenaLayout27c.ts');
+for(const side of ['north','south']){s=setup();p=s.players[0];p.x=1100;p.y=(side==='north'?315:525)*1100/840;step(s,{y:side==='north'?-1:1},65);assert.equal(p.z,72,side+' full combat stair climb');assert.equal(p.supportSurfaceId,side+'-platform');}
+const old={version:1,name:'Legacy',placements:[{id:'keep-me',objectId:'floor-panel46',x:750,y:430,rotation:0,z:0,surfaceId:'ground'}]};const migrated=A.validateLayout27c(old);assert.equal(migrated.version,2);assert.equal(migrated.placements[0].id,'keep-me');assert.equal(migrated.placements[0].x,1100);assert.deepEqual(A.validateLayout27c(migrated),migrated);
+assert.throws(()=>A.validateLayout27c({...old,placements:[{...old.placements[0],objectId:'fake'}]},true));
+console.log('PASS27F actual combat north/south stairs, versioned layout migration, stable IDs, migration idempotence, repair validation');
+assert(S.coverStructureBlocked27f({x:1100,y:230,w:90,h:28,a:0},78),'tall cover cannot pass through deck');assert(!S.coverStructureBlocked27f({x:1100,y:563,w:90,h:28,a:0},78),'center carry route clear');
+console.log('PASS27F cover structure clearance');

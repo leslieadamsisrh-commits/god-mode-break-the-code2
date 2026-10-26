@@ -10,7 +10,9 @@ export const COMBAT_SURFACES:Surface[]=[
  }),
  {id:'west-walkway',polygon:[{x:250,y:160},{x:540,y:160},{x:540,y:205},{x:250,y:205}],height:72,walkable:true},
  {id:'east-walkway',polygon:[{x:960,y:160},{x:1250,y:160},{x:1250,y:205},{x:960,y:205}],height:72,walkable:true},
-];
+ ...[{id:'west-side-route',x:250,y:205,w:70,h:450},{id:'east-side-route',x:1180,y:205,w:70,h:450},{id:'south-west-link',x:250,y:655,w:290,h:45},{id:'south-east-link',x:960,y:655,w:290,h:45}].map(q=>({id:q.id,polygon:[{x:q.x,y:q.y},{x:q.x+q.w,y:q.y},{x:q.x+q.w,y:q.y+q.h},{x:q.x,y:q.y+q.h}],height:72,walkable:true})),
+
+].map((s:Surface)=>({...s,polygon:s.polygon.map(p=>({x:p.x*2200/1500,y:p.y*1100/840})),...(s.rise?{rise:{...s.rise,from:s.rise.from*1100/840,to:s.rise.to*1100/840}}:{})}));
 
 // Height units match upright Jade. Existing surface heights and jump tuning stay fixed.
 export const DECK_THICKNESS27E=6;
@@ -39,9 +41,9 @@ export function foregroundFace27e(face:Face27e,y:number):Vertex27e[]{
  for(let n=0;n<p.length;n++){const a=p[n],b=p[(n+1)%p.length],ai=a.y>y+.01,bi=b.y>y+.01;if(ai)result.push(a);if(ai!==bi){const t=(y+.01-a.y)/(b.y-a.y);result.push({x:a.x+(b.x-a.x)*t,y:y+.01,z:a.z+(b.z-a.z)*t});}}
  return result;
 }
-export function resolveSupports27e(p:{x:number;y:number;z:number},radius=18,bodyHeight=63.96){
+export function resolveSupports27e(p:{x:number;y:number;z:number;supportSurfaceId?:string|null;grounded?:boolean},radius=18,bodyHeight=63.96){
  const solids=[...SUPPORTS27E,...COMBAT_SURFACES.filter(s=>s.id!=='ground'&&!s.rise).map(s=>{const xs=s.polygon.map(p=>p.x),ys=s.polygon.map(p=>p.y);return{id:s.id,x:(Math.min(...xs)+Math.max(...xs))/2,y:(Math.min(...ys)+Math.max(...ys))/2,w:Math.max(...xs)-Math.min(...xs),h:Math.max(...ys)-Math.min(...ys),bottom:s.height-DECK_THICKNESS27E,top:s.height};})];
- for(const c of solids){if(p.z>=c.top||p.z+bodyHeight<=c.bottom)continue;const dx=p.x-c.x,dy=p.y-c.y,ex=c.w/2+radius,ey=c.h/2+radius;if(Math.abs(dx)>=ex||Math.abs(dy)>=ey)continue;if(ex-Math.abs(dx)<ey-Math.abs(dy))p.x=c.x+(dx<0?-ex:ex);else p.y=c.y+(dy<0?-ey:ey);}
+ for(const c of solids){if(c.bottom>0&&p.grounded&&p.supportSurfaceId?.endsWith('-stairs'))continue;if(p.z>=c.top||p.z+bodyHeight<=c.bottom)continue;const dx=p.x-c.x,dy=p.y-c.y,ex=c.w/2+radius,ey=c.h/2+radius;if(Math.abs(dx)>=ex||Math.abs(dy)>=ey)continue;if(ex-Math.abs(dx)<ey-Math.abs(dy))p.x=c.x+(dx<0?-ex:ex);else p.y=c.y+(dy<0?-ey:ey);}
 }
 export function slabShotTime27e(from:Vertex27e,to:Vertex27e){
  let first=Infinity;
@@ -52,4 +54,10 @@ export function slabShotTime27e(from:Vertex27e,to:Vertex27e){
  for(const plane of planes){const a=plane(from),b=plane(to);if(a<0&&b<0){leave=-1;break;}if(a<0)enter=Math.max(enter,a/(a-b));else if(b<0)leave=Math.min(leave,a/(a-b));}if(enter<=leave)first=Math.min(first,enter);
  }
  return first;
+}
+
+// Ground-level carried cover uses the same structure bounds as traversal.
+export function coverStructureBlocked27f(c:{x:number;y:number;w:number;h:number;a:number},bodyHeight:number){
+ const solids=[...SUPPORTS27E,...COMBAT_SURFACES.filter(s=>s.id!=='ground').map(s=>{const xs=s.polygon.map(p=>p.x),ys=s.polygon.map(p=>p.y);return {x:(Math.min(...xs)+Math.max(...xs))/2,y:(Math.min(...ys)+Math.max(...ys))/2,w:Math.max(...xs)-Math.min(...xs),h:Math.max(...ys)-Math.min(...ys),bottom:s.rise?0:s.height-DECK_THICKNESS27E,top:s.rise?72:s.height};})];
+ return solids.some(b=>{if(bodyHeight<=b.bottom)return false;return [0,Math.PI/2,c.a,c.a+Math.PI/2].every(a=>{const x=Math.cos(a),y=Math.sin(a),r=Math.abs(Math.cos(a-c.a))*c.w/2+Math.abs(Math.sin(a-c.a))*c.h/2,br=Math.abs(x)*b.w/2+Math.abs(y)*b.h/2;return Math.abs((c.x-b.x)*x+(c.y-b.y)*y)<r+br;});});
 }

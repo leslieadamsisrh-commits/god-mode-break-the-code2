@@ -15,12 +15,12 @@ function frame20(images:Images,key:string){
 export function artRevision20(images:Images){return D33_ATLASES20.reduce((n,k)=>n+(images.get(d33ImageKey20(k))?.naturalWidth||0),0);}
 
 // One common affine mapping for artwork, floor sampling, and authoritative hulls.
-export function triangle20(g:CanvasRenderingContext2D,im:CanvasImageSource,src:Point[],dst:Point[]){
+export function triangle20(g:CanvasRenderingContext2D,im:CanvasImageSource,src:Point[],dst:Point[],bleed=0){
  const [a,b,d]=src,[A,B,D]=dst,ux=b.x-a.x,uy=b.y-a.y,vx=d.x-a.x,vy=d.y-a.y,det=ux*vy-vx*uy;
  if(Math.abs(det)<.00001)return;
  const xx=((B.x-A.x)*vy-(D.x-A.x)*uy)/det,xy=((D.x-A.x)*ux-(B.x-A.x)*vx)/det;
  const yx=((B.y-A.y)*vy-(D.y-A.y)*uy)/det,yy=((D.y-A.y)*ux-(B.y-A.y)*vx)/det;
- g.save();g.beginPath();dst.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip();
+ const center={x:dst.reduce((n,p)=>n+p.x,0)/3,y:dst.reduce((n,p)=>n+p.y,0)/3};const clip=dst.map(p=>{const dx=p.x-center.x,dy=p.y-center.y,d=Math.hypot(dx,dy)||1;return{x:p.x+dx/d*bleed,y:p.y+dy/d*bleed};});g.save();g.beginPath();clip.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.clip();
  g.transform(xx,yx,xy,yy,A.x-xx*a.x-xy*a.y,A.y-yx*a.x-yy*a.y);g.drawImage(im,0,0);g.restore();
 }
 
@@ -117,30 +117,30 @@ export function drawMapArchitecture20(g:CanvasRenderingContext2D,images:Images){
 
 let floorCache20:{revision:number;canvas:HTMLCanvasElement}|null=null;
 export function getFloorImage20(images:Images){
- if(typeof document==='undefined'||!frame20(images,'floor/concrete')||!frame20(images,'floor/grating'))return null;
- const revision=images.get(d33ImageKey20('floor'))!.naturalWidth;
+ if(typeof document==='undefined')return null;
+ const revision=images.get(d33ImageKey20('floor'))?.naturalWidth||1;
  if(floorCache20?.revision===revision)return floorCache20.canvas;
  const world=document.createElement('canvas');world.width=D33_WORLD25.width;world.height=D33_WORLD25.height;
  const wg=world.getContext('2d')!;wg.fillStyle='#171f2c';wg.fillRect(0,0,world.width,world.height);
- // Smaller modules establish human scale without changing floor cells/matter.
- const tileW=120,tileH=81;
- for(let y=0;y<world.height;y+=tileH)for(let x=0;x<world.width;x+=tileW){
-  const key=x<80?'casing-cyan':x>=world.width-80?'casing-magenta':Math.abs(x+tileW/2-D33_WORLD25.centerX)<40?'grating':y<81||y>=world.height-80?'industrial-plating':(x/tileW+y/tileH)%7===0?'grating':'industrial-plating';
-  const item=frame20(images,'floor/'+key)||frame20(images,'floor/concrete');if(!item)continue;
-  const [sx,sy,w,h]=item.f.rect;wg.drawImage(item.im,sx,sy,w,h,x,y,tileW,tileH);
-  // Authored panel joints make these modular surfaces; no seamless-texture claim.
-  wg.strokeStyle='#101925';wg.lineWidth=.6;wg.strokeRect(x,y,tileW,tileH);
- }
- wg.fillStyle='#07101a33';wg.fillRect(0,0,world.width,world.height);
+ // Large authored zones: no repeated atlas motif across the combat floor.
+ const center=D33_WORLD25.centerX;
+ const base=wg.createLinearGradient(0,0,0,world.height);base.addColorStop(0,'#36424e');base.addColorStop(.5,'#45515b');base.addColorStop(1,'#303c48');wg.fillStyle=base;wg.fillRect(0,0,world.width,world.height);
+ const zones=[{x:80,y:100,w:world.width-160,h:world.height-200,c:'#49545c'},{x:80,y:100,w:230,h:world.height-200,c:'#293f4b'},{x:world.width-310,y:100,w:230,h:world.height-200,c:'#403444'}];
+ for(const q of zones){wg.fillStyle=q.c;wg.fillRect(q.x,q.y,q.w,q.h);wg.strokeStyle='#182936';wg.lineWidth=3;wg.strokeRect(q.x,q.y,q.w,q.h);}
+ wg.strokeStyle='#293641';wg.lineWidth=1.5;
+ for(const x of [310,center-220,center+220,world.width-310]){wg.beginPath();wg.moveTo(x,110);wg.lineTo(x,world.height-110);wg.stroke();}
+ for(const y of [210,world.height*.48,world.height-210]){wg.beginPath();wg.moveTo(310,y);wg.lineTo(world.width-310,y);wg.stroke();}
+ wg.save();wg.translate(center,D33_WORLD25.centerY);wg.strokeStyle='#8b9ca344';wg.lineWidth=4;wg.beginPath();wg.arc(0,0,150,0,Math.PI*2);wg.stroke();wg.fillStyle='#94a5ab33';wg.font='bold 120px sans-serif';wg.textAlign='center';wg.textBaseline='middle';wg.fillText('33',0,0);wg.restore();
+ for(const [x,color] of [[305,'#62ced0'],[world.width-305,'#d77aaf']] as const){wg.fillStyle=color;wg.fillRect(x,230,3,world.height-460);}
  // Restrained spill from existing flank lighting. Baked into the shared floor
  // image so lifted floor panels retain the same material and texture scale.
  for(const [x,color] of [[80,'#41dce81c'],[D33_WORLD25.width-80,'#ee4caa1c']] as const){
   const light=wg.createLinearGradient(x-110,0,x+110,0);light.addColorStop(0,'#0000');light.addColorStop(.5,color);light.addColorStop(1,'#0000');wg.fillStyle=light;wg.fillRect(x-110,0,220,world.height);
  }
- const canvas=document.createElement('canvas');canvas.width=2304;canvas.height=1280;const cg=canvas.getContext('2d')!;
+ const canvas=document.createElement('canvas');canvas.width=4096;canvas.height=2048;const cg=canvas.getContext('2d')!;
  for(let y=0;y<world.height;y+=60)for(let x=0;x<world.width;x+=100){
   const src=[{x,y},{x:x+100,y},{x:x+100,y:y+60},{x,y:y+60}],dst=src.map(p=>arenaPoint46(p.x,p.y));
-  for(const indices of [[0,1,2],[0,2,3]])triangle20(cg,world,indices.map(i=>src[i]),indices.map(i=>dst[i]));
+  for(const indices of [[0,1,2],[0,2,3]])triangle20(cg,world,indices.map(i=>src[i]),indices.map(i=>dst[i]),1.25);
  }
  floorCache20={revision,canvas};return canvas;
 }
