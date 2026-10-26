@@ -68,15 +68,22 @@ export function encounterCamera22(p:any,enemy:any,close:boolean){
  return {zoom,x:Math.max(half,Math.min(D33_WORLD25.width-half,p.x+dx+(enemy?enemy.x-p.x:0)*weight)),y};
 }
 
+// Build 27B: camera targets remain presentation-only. Wide mode is intentionally
+// tighter than Build 26, and distant opponents never force a map-wide retreat.
 export function kineticCamera26(p:any,enemy:any){
  const separation=enemy?Math.hypot(enemy.x-p.x,enemy.y-p.y):Infinity;
- const t=Math.max(0,Math.min(1,(300-separation)/160));
- const close=t*t*(3-2*t),zoom=1.95+1.45*close;
- const angle=p.gunFacing??p.aim??0,lead=120-75*close;
- const dx=Math.cos(angle)*lead+Math.max(-12,Math.min(12,(p.vx||0)*.025));
- const dy=Math.sin(angle)*lead+Math.max(-9,Math.min(9,(p.vy||0)*.02));
- const weight=enemy&&separation<300?.10*close:0;
- const x=p.x+dx+(enemy?enemy.x-p.x:0)*weight,y=p.y+dy+(enemy?enemy.y-p.y:0)*weight;
- const half=Math.min(D33_WORLD25.width/2,500/(1000/1536*zoom*Math.max(.001,arenaJacobian46(p.x,p.y).x)));
+ const t=Math.max(0,Math.min(1,(310-separation)/185));
+ const engage=t*t*(3-2*t);
+ const zoom=2.55+0.70*engage;
+ const angle=p.gunFacing??p.aim??0;
+ const lead=92-50*engage;
+ const dx=Math.cos(angle)*lead+Math.max(-8,Math.min(8,(p.vx||0)*.015));
+ const dy=Math.sin(angle)*lead*.75+Math.max(-6,Math.min(6,(p.vy||0)*.012));
+ // Small engagement bias: no discontinuous target weighting at a distance threshold.
+ const weight=.06*engage;
+ const x=p.x+dx+(enemy?enemy.x-p.x:0)*weight;
+ const y=p.y+dy+(enemy?enemy.y-p.y:0)*weight;
+ const jac=Math.max(.001,arenaJacobian46(p.x,p.y).x);
+ const half=Math.min(D33_WORLD25.width/2,500/(1000/1536*zoom*jac));
  return {zoom,x:Math.max(half,Math.min(D33_WORLD25.width-half,x)),y:Math.max(85,Math.min(D33_WORLD25.height-85,y))};
 }

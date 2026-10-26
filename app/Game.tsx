@@ -500,11 +500,12 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  const targetZoom=encounter.zoom;
  const frameDt=cameraState.last?Math.min(.05,(renderNow-cameraState.last)/1000):1/60;
  cameraState.last=renderNow;
- const zoomFollow=1-Math.exp(-5*frameDt);
- const zoom=cameraState.ready?cameraState.zoom+(targetZoom-cameraState.zoom)*zoomFollow:targetZoom;
+ const zoomFollow=1-Math.exp(-3.1*frameDt);
+ const zoomDelta=cameraState.ready?(targetZoom-cameraState.zoom)*zoomFollow:0;
+ const zoom=cameraState.ready?cameraState.zoom+Math.max(-.85*frameDt,Math.min(.85*frameDt,zoomDelta)):targetZoom;
  const targetX=encounter.x,targetY=encounter.y;
  if(!cameraState.ready){cameraState.x=targetX;cameraState.y=targetY;cameraState.ready=true}
- const follow=1-Math.exp(-8*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
+ const follow=1-Math.exp(-6*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
  const camX=cameraState.x,camY=cameraState.y;
  const arena45=environmentAssets.get("war-foundation45");cameraState.zoom=zoom;g=beginWarScene46(canvas,arena45,{x:camX,y:camY},zoom,environmentAssets);
  drawDimension33Architecture(g);
