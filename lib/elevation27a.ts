@@ -7,8 +7,8 @@ export const SURFACES:Surface[]=[rect('ground',0,0,900,560,0),{...rect('stairs',
 export const SPAWN:Body={x:90,y:280,z:0,vz:0,grounded:true,supportSurfaceId:'ground'};
 export const inside=(p:Point,s:Surface)=>{let ok=false;for(let i=0,j=s.polygon.length-1;i<s.polygon.length;j=i++){const a=s.polygon[i],b=s.polygon[j];if(((a.y>p.y)!==(b.y>p.y))&&(p.x<(b.x-a.x)*(p.y-a.y)/(b.y-a.y)+a.x))ok=!ok;}return ok};
 export const height=(s:Surface,p:Point)=>{if(!s.rise)return s.height;const r=s.rise,v=p[r.axis],t=Math.max(0,Math.min(1,(v-r.from)/(r.to-r.from)));return r.low+(r.high-r.low)*t};
-export function advanceElevation(body:Body,input:{x:number;y:number;jump?:boolean},dt=STEP,surfaces=SURFACES):Body{
- const p={...body};const len=Math.hypot(input.x,input.y)||1,dx=input.x/len*165*dt,dy=input.y/len*165*dt;
+export function advanceElevation(body:Body,input:{x:number;y:number;jump?:boolean;speed?:number},dt=STEP,surfaces=SURFACES):Body{
+ const p={...body};const len=Math.hypot(input.x,input.y)||1,dx=input.x/len*(input.speed??165)*dt,dy=input.y/len*(input.speed??165)*dt;
  const next={x:Math.max(10,Math.min(890,p.x+dx)),y:Math.max(10,Math.min(550,p.y+dy))};
  const available=surfaces.filter(s=>s.walkable&&inside(next,s));
  const prior=surfaces.find(s=>s.id===p.supportSurfaceId);
