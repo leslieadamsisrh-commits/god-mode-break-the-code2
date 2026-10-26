@@ -1,4 +1,4 @@
-import {advance,newGame,safeState,setInput,startOrRematch,updateConfig,combatDiagnostics,type GameState,type InputState} from "./game";
+import {applyArenaLayout27c,advance,newGame,safeState,setInput,startOrRematch,updateConfig,combatDiagnostics,type GameState,type InputState} from "./game";
 import {registerRepulseLab21,configureRepulse21} from './repulse21';
 
 // Same combat authority, hosted on this device for single-player modes.
@@ -21,7 +21,8 @@ export class LocalCombat {
  }
  command(body:any){
   if(body.token!==this.token||body.room!==this.room)throw Error("BAD_LOCAL_SESSION");
-  if(body.action==="config")updateConfig(this.state,body.patch||{});
+  if(body.action==="arenaLayout"){applyArenaLayout27c(this.state,body.layout,true);this.pause();}
+  else if(body.action==="config")updateConfig(this.state,body.patch||{});
   else if(body.action==='repulse21')configureRepulse21(this.state,body.enabled===true,body.patch||{});
   else if(["reset","start","rematch"].includes(body.action)){startOrRematch(this.state,0);this.pause();}
   else throw Error("Unsupported local action");
@@ -29,4 +30,5 @@ export class LocalCombat {
  }
  diagnostics(){return combatDiagnostics(this.state);}
 }
+
 

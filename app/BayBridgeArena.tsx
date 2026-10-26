@@ -9,7 +9,7 @@ export function comicProject(x:number,y:number,z=0){
 function laneFor(x:number,y:number){return BAY_LANES.find(l=>x>=l.x0&&x<=l.x1&&y>=l.y0&&y<=l.y1)?.id||"TRANSIT"}
 function visiblePlanes(angle:number){const a=((angle%(Math.PI*2))+Math.PI*2)%(Math.PI*2),front=Math.cos(a)>=0,right=Math.sin(a)>=0;return ["TOP",front?"FRONT":"BACK",right?"RIGHT":"LEFT","DETAIL","DAMAGE"]}
 
-export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onReset,menuOpen,onMenuToggle}:{s:any;onAnimationQa?:()=>void;onDirector?:()=>void;onSprites?:()=>void;onReset?:()=>void;menuOpen:boolean;onMenuToggle:()=>void}){
+export default function BayBridgeArena({s,onArenaBuilder,onAnimationQa,onDirector,onSprites,onReset,menuOpen,onMenuToggle}:{s:any;onArenaBuilder?:()=>void;onAnimationQa?:()=>void;onDirector?:()=>void;onSprites?:()=>void;onReset?:()=>void;menuOpen:boolean;onMenuToggle:()=>void}){
  const [qa,setQa]=useState(false),[selected,setSelected]=useState(0),[testAngle,setTestAngle]=useState(0),p=s?.players?.[0]||{x:230,y:330},lane=laneFor(p.x||0,p.y||0),near=(s?.covers||[]).map((c:any)=>bayObject(c.id)).filter(Boolean),actor=BAY_OBJECTS[selected%BAY_OBJECTS.length],planes=visiblePlanes(testAngle);
  return <div className="bayArena bayContainer01 warArena45">
   <div className="arenaMenu">
@@ -17,7 +17,7 @@ export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onR
    <div className="cameraChip">CAM B · 1.85</div>
    {menuOpen&&<div className="studioDropdown">
     <button className="menuClose" onClick={onMenuToggle}><strong>✕ CLOSE MENU</strong><span>Return to full-screen play</span></button>
-    <b>PLAY</b><button className="active" onClick={onMenuToggle}><strong>DIMENSION 33 · WAR GAMES</strong><span>1v1 arena candidate · matching routes · anchored shelter</span></button>
+    <button onClick={onArenaBuilder}><strong>ARENA BUILDER</strong><span>Place cover · save layouts · randomize</span></button><b>PLAY</b><button className="active" onClick={onMenuToggle}><strong>DIMENSION 33 · WAR GAMES</strong><span>1v1 arena candidate · matching routes · anchored shelter</span></button>
     <b>TRAINING</b><button onClick={onAnimationQa}><strong>ANIMATION QA</strong><span>Movement / registration diagnostics</span></button>
     <hr/><b>DEV</b><button onClick={()=>setQa(v=>!v)}><strong>{qa?"✓ ":""}MAP CONTAINER QA</strong><span>Projection · depth · lanes · cover schema</span></button>
     <button onClick={onDirector}><strong>DIRECTOR</strong><span>Combat tests · previews</span></button><button onClick={onSprites}><strong>SPRITES</strong><span>Runtime routing inspector</span></button>
@@ -40,4 +40,5 @@ export default function BayBridgeArena({s,onAnimationQa,onDirector,onSprites,onR
   </div>}
  </div>
 }
+
 

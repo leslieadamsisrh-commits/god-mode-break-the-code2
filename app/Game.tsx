@@ -1,5 +1,8 @@
 "use client";
 import {useCallback,useEffect,useRef,useState} from "react";
+import ArenaBuilder27c from "./ArenaBuilder27c";
+import {type ArenaLayout27c} from "../lib/arenaLayout27c";
+import {updateCamera27c} from "../lib/combatCamera27c";
 import PlaytestGuide from "./PlaytestGuide";
 import {evaluateRaptorRig} from "../lib/raptorHybridRig";
 import {paintRaptorRig} from "../lib/raptorRigPaint";
@@ -253,6 +256,7 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
  const [joinRoom,setJoinRoom]=useState(""),[joinCode,setJoinCode]=useState(""),[roomMessage,setRoomMessage]=useState("");
  const startHeld=useRef(false);const canvas=useRef<HTMLCanvasElement>(null),session=useRef<Session|null>(null),state=useRef<any>(null),seq=useRef(0),keys=useRef<Record<string,boolean>>({}),edges=useRef<Record<string,boolean>>({}),mouse=useRef({x:500,y:310,down:false}),lastAccept=useRef(performance.now()),started=useRef(false);const touchMove=useRef({x:0,y:0}),touchDirs=useRef(new Map<number,{x:number;y:number}>()),touchA=useRef(false),touchAEdge=useRef(false),touchJump=useRef(false);
  const [hud,setHud]=useState<any>(null),[qaMode,setQaMode]=useState(false),[studioMenu,setStudioMenu]=useState(false),[gameShell,setGameShell]=useState(true),[status,setStatus]=useState("BOOTING"),[boot,setBoot]=useState<BootState>({done:0,total:112,failed:0,label:"INITIALIZING HELMET"}),[bootReady,setBootReady]=useState(false),[director,setDirector]=useState(false),[spritePanel,setSpritePanel]=useState(false),[config,setConfig]=useState<Config>(DEFAULT),[note,setNote]=useState(""),[padStatus,setPadStatus]=useState("CONTROLLER: WAITING"),[padGate,setPadGate]=useState(true),[testPass,setTestPass]=useState<Record<string,boolean>>({});
+ const [builderOpen,setBuilderOpen]=useState(false);const builderRef=useRef(false);builderRef.current=builderOpen;
  const debugRef21=useRef(false);const [debug21,setDebug21]=useState(false);
  const selectorGate22=useRef(new SelectorGate22());
  const localCombat=useRef<LocalCombat|null>(null);
@@ -273,7 +277,7 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
    try{const p=[...navigator.getGamepads()].find(Boolean);if(p){setPadStatus(`CONTROLLER: ${p.id||"CONNECTED"}`);setPadGate(false)}}catch{}
    return()=>{removeEventListener("gamepadconnected",connected as EventListener);removeEventListener("gamepaddisconnected",disconnected as EventListener)}
  },[]);
- useEffect(()=>{const kd=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement)?.tagName))return;if(["Space","ShiftLeft","ShiftRight","ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.code))e.preventDefault();if(!keys.current[e.code])edges.current[e.code]=true;keys.current[e.code]=true},ku=(e:KeyboardEvent)=>keys.current[e.code]=false;addEventListener("keydown",kd);addEventListener("keyup",ku);return()=>{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}},[]);
+ useEffect(()=>{const kd=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement)?.tagName))return;if(["Space","ShiftLeft","ShiftRight","ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.code))e.preventDefault();if(builderRef.current)return;if(!keys.current[e.code])edges.current[e.code]=true;keys.current[e.code]=true},ku=(e:KeyboardEvent)=>keys.current[e.code]=false;addEventListener("keydown",kd);addEventListener("keyup",ku);return()=>{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}},[]);
  useEffect(()=>{let dead=false,source:EventSource|null=null,active:Session|null=null,lastStream=0,busy=false;const timer=setInterval(async()=>{
  const ss=session.current;if(ss?.local){source?.close();source=null;active=null;streamOpen.current=false;setNetStatus("LOCAL · NO NETWORK");return;}if(!ss||dead)return;
  if(active!==ss){source?.close();active=ss;streamOpen.current=false;const u=new URL("/api/game/stream",location.origin);u.searchParams.set("room",ss.room);u.searchParams.set("token",ss.token);if(typeof EventSource!=="undefined"){source=new EventSource(u);source.onmessage=e=>{if(dead||session.current!==ss)return;lastStream=performance.now();streamOpen.current=true;setNetStatus("CONNECTED");try{accept(JSON.parse(e.data))}catch{}};source.onerror=()=>{streamOpen.current=false;setNetStatus("RECONNECTING");};}}
@@ -286,17 +290,19 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
  const sample=()=>{const s=session.current,g=state.current;if(s&&g&&bootReady&&!document.hidden){if(owner!==s){owner=s;queue.length=0;previous={...EMPTY};}
  const p=g.players[s.slot]||g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));i.jump=touchJump.current;touchJump.current=false;i.slide=touchA.current||touchAEdge.current;touchAEdge.current=false;const pointer=unprojectWorld(mouse.current.x,mouse.current.y+(p.z||0)*cameraState.zoom*.64,cameraState,cameraState.ready?cameraState.zoom:g.config?.cameraZoom||1.85);i.aim=Math.atan2(pointer.y-p.y,pointer.x-p.x);i.fire=mouse.current.down;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!edges.current[k];edges.current={};i.grip=!!keys.current.KeyQ;i.gripX=Math.cos(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.gripY=Math.sin(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.slow=!!keys.current.KeyX;i.powerup=!!keys.current.KeyY||chargePreview.current;
   try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;const selectors=selectorGate22.current.sample(studioMenu?null:pad||null);if(pad&&!studioMenu){i.aim=p.aim;readController(pad,i,selectors);if(Math.hypot(i.gripX||0,i.gripY||0)>.15){const v=screenVector46(p.x,p.y,i.gripX,i.gripY);i.aim=Math.atan2(v.y,v.x);i.gripX=v.x;i.gripY=v.y;}}}catch{}
-  if(studioMenu){Object.assign(i,{x:0,y:0,jump:false,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false,fieldCycle:false,powerCycle:false,weaponCycle:false,powerUse:false,coverShapeCycle:false})}
+  if(studioMenu||builderRef.current){Object.assign(i,{x:0,y:0,jump:false,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false,fieldCycle:false,powerCycle:false,weaponCycle:false,powerUse:false,coverShapeCycle:false})}
 
- latest=i;previous=bufferInput(queue,previous,i);if(s.local&&localCombat.current){accept(localCombat.current.frame(performance.now(),latest,queue));}}
+ latest=i;previous=bufferInput(queue,previous,i);if(s.local&&localCombat.current&&!builderRef.current){accept(localCombat.current.frame(performance.now(),latest,queue));}}
  raf=requestAnimationFrame(sample);};raf=requestAnimationFrame(sample);
  const timer=setInterval(async()=>{const ss=session.current;if(dead||pending||!ss||ss.local||!bootReady||state.current?.mode==="watch")return;pending=true;const input=queue.shift()||latest;try{const reply=await post({action:"input",...ss,seq:++seq.current,input});if(!dead&&session.current===ss&&!streamOpen.current)accept(reply);}catch{queue.length=0;}finally{pending=false;}},33);
  const pauseLocal=()=>{if(document.hidden){queue.length=0;latest={...EMPTY};previous={...EMPTY};localCombat.current?.pause();selectorGate22.current.sample(null);keys.current={};edges.current={};mouse.current.down=false;touchMove.current={x:0,y:0};touchA.current=false;touchAEdge.current=false;}};document.addEventListener("visibilitychange",pauseLocal);
- return()=>{dead=true;cancelAnimationFrame(raf);clearInterval(timer);document.removeEventListener("visibilitychange",pauseLocal);localCombat.current?.pause();};},[accept,post,bootReady,studioMenu]);
+ return()=>{dead=true;cancelAnimationFrame(raf);clearInterval(timer);document.removeEventListener("visibilitychange",pauseLocal);localCombat.current?.pause();};},[accept,post,bootReady,studioMenu,builderOpen]);
  useEffect(()=>{let id=0;const loop=(stamp:number)=>{const start=performance.now();draw(canvas.current,state.current,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current,session.current?.slot||0,characterRef.current,cameraPresetRef.current,debugRef21.current);const s=state.current;recordFrame43(stamp,performance.now()-start,(session.current?.room||"")+"/"+s?.round,!document.hidden&&!!s&&["playing","finisher"].includes(s.phase));id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[]);
  const point=(e:React.PointerEvent)=>{const c=canvas.current;if(!c)return;const r=c.getBoundingClientRect();mouse.current.x=(e.clientX-r.left)/r.width*1000;mouse.current.y=(e.clientY-r.top)/r.height*620};
  const patch=async(key:keyof Config,value:number)=>{const next={...config,[key]:value};setConfig(next);const s=session.current;if(s)try{accept(await post({action:"config",...s,patch:{[key]:value}}))}catch{}};
  const applyMovementPreset=async(name:string)=>{const preset=MOVEMENT_PRESETS[name];if(!preset)return;const movementKeys=new Set(Object.values(MOVEMENT_PRESETS).flatMap(p=>Object.keys(p)));const values:Partial<Config>={};for(const k of movementKeys)values[k as keyof Config]=DEFAULT[k as keyof Config];Object.assign(values,preset);const saved=session.current;if(!saved)return;try{accept(await post({action:"config",...saved,patch:values}));setTestPass({});setNote(name+" APPLIED")}catch(e:any){setNote(e.message||"PRESET FAILED")}};
+ const openBuilder=()=>{keys.current={};edges.current={};mouse.current.down=false;touchMove.current={x:0,y:0};touchA.current=false;touchAEdge.current=false;touchJump.current=false;touchDirs.current.clear();localCombat.current?.pause();setStudioMenu(false);setGameShell(false);setBuilderOpen(true);};
+ const playLayout=async(layout:ArenaLayout27c)=>{const ss=session.current;if(!ss)throw Error("Game is still starting");const reply=await post({action:"arenaLayout",...ss,layout});accept(reply);cameraState.ready=false;setBuilderOpen(false);localCombat.current?.pause();};
  const reset=async()=>{const s=session.current;if(!s)return;try{accept(await post({action:"reset",...s}))}catch{}};
  const repulseLab21=async(enabled:boolean,patch:Record<string,number>={})=>{const ss=session.current;if(!ss?.local)return;try{accept(await post({action:"repulse21",...ss,enabled,patch}));setAuditStatus("");}catch(e:any){setAuditStatus(e.message);}};
  const save=()=>{localStorage.setItem("god_mode_studio_combat_preset",JSON.stringify(config));setNote("PRESET SAVED LOCALLY");setTimeout(()=>setNote(""),1200)};
@@ -341,11 +347,13 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
  ]) as [string,boolean][];
  useEffect(()=>{if(!p)return;setTestPass(prev=>{let changed=false,next={...prev};for(const [name,active] of tests)if(active&&!next[name]){next[name]=true;changed=true}return changed?next:prev})},[p?.dash,p?.slide,p?.slideSteerCurrent,p?.brake,p?.coverId,p?.coverMode,p?.coverSpeed,p?.input?.coverAim,p?.fireState,p?.kickStage,p?.exit,p?.gripCoverId,hud?.fx,config.weaveEnabled]);
  return <main className={hud?.mode==="watch"?"studio studioWatch":"studio"} style={hud?.mode==="watch"&&visibleHeight?{height:visibleHeight}:undefined}>
-  {gameShell&&<GodModeShell onPlay={()=>setGameShell(false)} onTraining={()=>{setGameShell(false);setQaMode(true)}} onSettings={()=>setStudioMenu(true)} onDirector={()=>{setGameShell(false);setDirector(true)}}/>}
+  {builderOpen&&<ArenaBuilder27c initial={state.current?.arenaLayout} onClose={()=>{setBuilderOpen(false);localCombat.current?.pause();}} onPlay={playLayout}/>}
+  {gameShell&&<GodModeShell onPlay={()=>setGameShell(false)} onTraining={()=>{setGameShell(false);setQaMode(true)}} onSettings={()=>setStudioMenu(true)} onArenaBuilder={openBuilder} onDirector={()=>{setGameShell(false);setDirector(true)}}/>}
   <header><div><small>GOD MODE: BREAK THE CODE</small><b>V142 STRUCTURE LAB · COMBAT STUDIO</b></div><span>{status}</span></header>
   <div className="stageWrap">
    {!bootReady&&<div className="controllerGate" aria-live="polite"><b>GOD HELMET BOOT</b><small>LOADING COMBAT MEMORY · {boot.done}/{boot.total}</small><small>{boot.label}{boot.failed?` · ${boot.failed} FALLBACK${boot.failed===1?"":"S"}`:""}</small><i style={{display:"block",width:"min(320px,70vw)",height:8,border:"1px solid currentColor",marginTop:10}}><span style={{display:"block",height:"100%",width:`${boot.total?boot.done/boot.total*100:0}%`,background:"currentColor"}}/></i></div>}
-   <BayBridgeArena s={hud} menuOpen={studioMenu} onMenuToggle={()=>setStudioMenu(v=>!v)} onAnimationQa={()=>setQaMode(v=>!v)} onDirector={()=>setDirector(v=>!v)} onSprites={()=>setSpritePanel(v=>!v)} onReset={reset}/>\n   <canvas ref={canvas} width={1400} height={868} onPointerMove={point} onPointerDown={e=>{unlockCombatAudio();point(e);mouse.current.down=true;(e.currentTarget as HTMLElement).focus();(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)}} onPointerUp={()=>mouse.current.down=false} onPointerCancel={()=>mouse.current.down=false}/>
+   <BayBridgeArena onArenaBuilder={openBuilder} s={hud} menuOpen={studioMenu} onMenuToggle={()=>setStudioMenu(v=>!v)} onAnimationQa={()=>setQaMode(v=>!v)} onDirector={()=>setDirector(v=>!v)} onSprites={()=>setSpritePanel(v=>!v)} onReset={reset}/>
+   <canvas ref={canvas} width={1400} height={868} onPointerMove={point} onPointerDown={e=>{unlockCombatAudio();if(builderRef.current)return;point(e);mouse.current.down=true;(e.currentTarget as HTMLElement).focus();(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)}} onPointerUp={()=>mouse.current.down=false} onPointerCancel={()=>mouse.current.down=false}/>
    {!gameShell&&!studioMenu&&hud?.mode!=="watch"&&<div className="touchPlaytestPad" aria-label="Touch playtest movement controls">
     <div className="touchDpad">
      <button className="up" aria-label="Move up" onPointerDown={e=>touchDirDown(e,0,-1)} onPointerUp={touchDirUp} onPointerCancel={touchDirUp}>▲</button>
@@ -501,17 +509,9 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  // Independent close camera with stable encounter framing and bounded look-ahead.
  const frameDt=cameraState.last?Math.max(0,Math.min(.05,(renderNow-cameraState.last)/1000)):1/60;
  if(!cameraState.ready){for(const k of Object.keys(cameraMemory27b))delete (cameraMemory27b as any)[k];}
- const encounter=stableEncounter27b(local,s.players,localSlot,cameraMemory27b,frameDt);
- const targetZoom=encounter.zoom;
+ updateCamera27c(cameraState,local,s.players,localSlot,frameDt);
  cameraState.last=renderNow;
- const zoomFollow=1-Math.exp(-3.1*frameDt);
- const zoomDelta=cameraState.ready?(targetZoom-cameraState.zoom)*zoomFollow:0;
- let zoom=cameraState.ready?cameraState.zoom+Math.max(-.85*frameDt,Math.min(.85*frameDt,zoomDelta)):targetZoom;
- const targetX=encounter.x,targetY=encounter.y-encounter.elevation*.98304/Math.max(.1,arenaJacobian46(encounter.x,encounter.y).y);
- if(!cameraState.ready){cameraState.x=targetX;cameraState.y=targetY;cameraState.ready=true}
- const follow=1-Math.exp(-6*frameDt);cameraState.x+=(targetX-cameraState.x)*follow;cameraState.y+=(targetY-cameraState.y)*follow;
- const camX=cameraState.x,camY=cameraState.y;
- zoom=Math.max(zoom,minimumZoom27b({x:camX,y:camY}));
+ const zoom=cameraState.zoom,camX=cameraState.x,camY=cameraState.y;
  const arena45=environmentAssets.get("war-foundation45");cameraState.zoom=zoom;g=beginWarScene46(canvas,arena45,{x:camX,y:camY},zoom,environmentAssets);
  drawDimension33Architecture(g);
  drawGround44(g,s);
