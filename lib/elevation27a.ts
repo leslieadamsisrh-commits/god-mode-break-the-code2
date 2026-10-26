@@ -12,9 +12,9 @@ export function advanceElevation(body:Body,input:{x:number;y:number;jump?:boolea
  const next={x:Math.max(10,Math.min(890,p.x+dx)),y:Math.max(10,Math.min(550,p.y+dy))};
  const available=surfaces.filter(s=>s.walkable&&inside(next,s));
  const prior=surfaces.find(s=>s.id===p.supportSurfaceId);
- const support=available.find(s=>s.id===p.supportSurfaceId);
+ const ramp=available.find(s=>s.rise&&Math.abs(height(s,next)-p.z)<=5);\n const support=ramp&&p.grounded?ramp:available.find(s=>s.id===p.supportSurfaceId);
  let floor=support?height(support,next):null;
- if(p.grounded&&support&&floor!==null&&Math.abs(floor-p.z)<=Math.max(5,165*dt*.65)){p.x=next.x;p.y=next.y;p.z=floor;p.vz=0;}
+ if(p.grounded&&support&&floor!==null&&Math.abs(floor-p.z)<=Math.max(5,165*dt*.65)){p.x=next.x;p.y=next.y;p.z=floor;p.vz=0;p.supportSurfaceId=support!.id;}
  else if(p.grounded){const linked=available.filter(s=>Math.abs(height(s,next)-p.z)<3).sort((a,b)=>height(b,next)-height(a,next))[0];if(linked){p.x=next.x;p.y=next.y;p.z=height(linked,next);p.supportSurfaceId=linked.id;}else{p.x=next.x;p.y=next.y;p.grounded=false;p.supportSurfaceId=null;}}
  else{p.x=next.x;p.y=next.y;}
  if(p.grounded&&input.jump){p.grounded=false;p.vz=JUMP_SPEED;p.supportSurfaceId=null;}
