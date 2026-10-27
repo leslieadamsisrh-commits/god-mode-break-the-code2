@@ -1,3 +1,4 @@
+import {SHAPES27J,RIP_TIME27J,splitBarrier27j,type Section27j} from './psychicMatter27j';
 import {resolveSupports27e,coverStructureBlocked27f,coverSupport27h} from './arenaStructures27e';
 import {barrelSocket27d,cylinderTime27d,coverTime27d} from './ballistics27d';
 import {chaseLayout27c,instantiateLayout27c,validateLayout27c,type ArenaLayout27c} from './arenaLayout27c';
@@ -35,9 +36,9 @@ export function floorLine15(s:GameState,x:number,y:number,angle:number,range:num
 export const DEFAULT_CONFIG:CombatConfig={legacyPowers:0,chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:4,holdEnergy:.5,coverThrowEnergy:6,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:5,dashEnergy:2,rechargeDelay:.5,rechargeRate:18,weaveEnabled:1,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:430,dashDuration:.16,doubleTapWindow:.28,slideSpeed:490,slideDuration:.50,slideSustain:160,slideSteer:5,slideSteerAngle:.48,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.39,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:420,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player=ElevationState & {timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player=ElevationState & {ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type FloorSlab46={floorPanel46?:{sourceId:string;originX:number;originY:number;creator:number}};
-export type Cover=FloorSlab46 & {z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
+export type Cover=FloorSlab46 & {height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={unitId?:string;groundId?:string;groundScatter?:boolean;spin?:number;spinVelocity?:number;height?:number;liftVelocity?:number;scatterAt?:number;attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={vz?:number;attackId?:string;source?:string;radius?:number;realAge?:number;volleyId?:string;fieldOwners?:number[];projectileScale?:number;id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
 export type Fx={material?:"digital"|"cyber";strength?:number;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number};
@@ -257,7 +258,7 @@ function slideCapture(p:Player,s:GameState){
  for(const c of s.covers){if(c.hp<=0||s.players.some(q=>q.gripCoverId===c.id))continue;const a=coverFace(c,p);if(a.gap<=COVER_41.captureGap&&p.vx*a.nx+p.vy*a.ny<-40&&attachCover(p,c,s,"soft"))return;}
 }
 function circleBox(o:{x:number;y:number},r:number,c:Cover){const q=localPoint(c,o.x,o.y),nx=clamp(q.x,-c.w/2,c.w/2),ny=clamp(q.y,-c.h/2,c.h/2),dx=q.x-nx,dy=q.y-ny,d=Math.hypot(dx,dy),ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),lx=d?dx/d:(q.x<0?-1:1),ly=d?dy/d:0;return{hit:d<r,nx:lx*ca-ly*sa,ny:lx*sa+ly*ca,depth:r-d}}
-function collide(p:Player,s:GameState){if(p.coverId||p.exit)return;for(const cv of s.covers){if(s.players.some(q=>q.gripCoverId===cv.id)||(p.z||0)>(cv.z||0)+(cv.hover||0)+(bayObject(cv.artId||cv.id)?.dimensions.z??78)||p.z+64<(cv.z||0))continue;const q=circleBox(p,18,cv);if(!q.hit)continue;p.x+=q.nx*(q.depth+1);p.y+=q.ny*(q.depth+1)}}
+function collide(p:Player,s:GameState){if(p.coverId||p.exit)return;for(const cv of s.covers){if(s.players.some(q=>q.gripCoverId===cv.id)||(p.z||0)>(cv.z||0)+(cv.hover||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)||p.z+64<(cv.z||0))continue;const q=circleBox(p,18,cv);if(!q.hit)continue;p.x+=q.nx*(q.depth+1);p.y+=q.ny*(q.depth+1)}}
 // Reuse the same rotated footprints for carry/throw contact; no new cover geometry.
 export const COVER_41={projectedHp:280,reinforcedHp:360,buildEnergy:20,captureGap:8,releaseIntent:.6} as const;
 export function coverDamageStage(hp:number,maxHp:number){const ratio=hp/Math.max(1,maxHp);return hp<=0?4:ratio>.8?0:ratio>.55?1:ratio>.3?2:3;}
@@ -283,6 +284,7 @@ function coverImpact(cv:Cover,s:GameState,key:string,other?:Cover,normal?:{x:num
  if(other){damageCover(other,s,damage);if(other.build<0)(other.hitIds??=[]).push(cv.id);}damageCover(cv,s,damage);combatEvent(s,{kind:"cover",source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??-1,damage,...point,z:12,material});s.fx.push({id:uid(),type:"cover-impact",...point,z:12,life:.3,text:material,strength,angle:Math.atan2(cv.vy||0,cv.vx||0)});
 }
 function settleCover(cv:Cover,s:GameState){
+ if(cv.anchored27j){cv.vx=cv.vy=0;return;}
  const ex=Math.abs(Math.cos(cv.a))*cv.w/2+Math.abs(Math.sin(cv.a))*cv.h/2,ey=Math.abs(Math.sin(cv.a))*cv.w/2+Math.abs(Math.cos(cv.a))*cv.h/2;
  const x=clamp(cv.x,A.left+ex,A.right-ex),y=clamp(cv.y,A.top+ey,A.bottom-ey);
  if(x!==cv.x||y!==cv.y)coverImpact(cv,s,"boundary",undefined,{x:x!==cv.x?Math.sign(x-cv.x):0,y:y!==cv.y?Math.sign(y-cv.y):0});if(x!==cv.x)cv.vx=0;if(y!==cv.y)cv.vy=0;cv.x=x;cv.y=y;
@@ -293,7 +295,7 @@ function settleCover(cv:Cover,s:GameState){
   for(const [ax,ay]of axes){
    const radius=(c:Cover)=>Math.abs(ax*Math.cos(c.a)+ay*Math.sin(c.a))*c.w/2+Math.abs(-ax*Math.sin(c.a)+ay*Math.cos(c.a))*c.h/2;
    const delta=(cv.x-other.x)*ax+(cv.y-other.y)*ay,penetration=radius(cv)+radius(other)-Math.abs(delta);
-   if(penetration<=0){overlap=false;break}
+   if(penetration<=.01){overlap=false;break}
    if(penetration<depth){depth=penetration;const sign=delta<0?-1:1;nx=ax*sign;ny=ay*sign}
   }
   if(overlap){coverImpact(cv,s,other.id,other,{x:nx,y:ny});if(other.hp<=0&&cv.hp>0){cv.vx=(cv.vx||0)*.55;cv.vy=(cv.vy||0)*.55;continue;}cv.x+=nx*(depth+.1);cv.y+=ny*(depth+.1);const toward=(cv.vx||0)*nx+(cv.vy||0)*ny;if(toward<0){cv.vx=(cv.vx||0)-toward*nx;cv.vy=(cv.vy||0)-toward*ny}}
@@ -405,7 +407,7 @@ function meleeStep(s:GameState,n:number){const p=s.players[n],m=p.meleeCombo;if(
  if(p.hp<=0||p.knock>0||p.charging||((p.input.shield||p.input.slide||p.input.grip)&&m.hit27g&&s.time-m.started>=MELEE_38[0].startup+MELEE_38[0].active)||p.coverId||p.gripId||p.gripCoverId||p.orbitIds.length){actionOutcome(s,n,"melee","cancelled",p.knock>0?"incoming hit":"state changed",undefined,undefined,m.attackId);p.meleeCombo=undefined;p.bufferMelee27g=undefined;p.meleeNextStage=undefined;p.meleeNextUntil=0;return;}
  const spec=MELEE_38[0],charge=clamp(m.gloveCharge||0,0,1),age=s.time-m.started,heavyRecovery=charge*.18;
  if(!m.tested&&age>=spec.startup&&age<=spec.startup+spec.active+.025){m.tested=true;const end={x:p.x+Math.cos(m.angle)*(spec.range+charge*12),y:p.y+Math.sin(m.angle)*(spec.range+charge*12)},t=s.players[1-n];let block:Cover|undefined,nearest=Infinity;
-  for(const cv of s.covers){if(cv.hp<=0||p.z+32<(cv.z||0)||p.z+32>(cv.z||0)+(bayObject(cv.artId||cv.id)?.dimensions.z??78))continue;const q=segmentCoverTime(p,end,cv);if(q!==null&&q<nearest){nearest=q;block=cv;}}
+  for(const cv of s.covers){if(cv.hp<=0||p.z+32<(cv.z||0)||p.z+32>(cv.z||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78))continue;const q=segmentCoverTime(p,end,cv);if(q!==null&&q<nearest){nearest=q;block=cv;}}
   const structureT=surfaceShotTime({x:p.x,y:p.y,z:p.z+32},{...end,z:p.z+32});if(structureT<nearest){nearest=structureT;block=undefined;}const contact=t&&t.hp>0&&Math.abs(t.z-p.z)<48?sweptCircle(p,end,t,t,20):null;
   if(contact!==null&&contact<nearest){const hp=t.hp;duelContact(s,n,t,spec.damage+charge*28,Math.cos(m.angle)*(spec.push+charge*175),Math.sin(m.angle)*(spec.push+charge*175),"torso",undefined,"melee",m.attackId);m.hit27g=t.hp<hp;if(charge>.85&&t.hp<hp){p.blastUntil=s.time+GLOVE_BLAST_38.window;}}
   else if(block){damageCover(block,s,spec.damage+charge*28);combatEvent(s,{kind:"cover",source:"melee",attackId:m.attackId,owner:n,damage:spec.damage+charge*28,x:end.x,y:end.y,z:25,material:bayObject(block.artId||block.id)?.material==="CONCRETE"?"stone":"metal"});}
@@ -453,13 +455,35 @@ export function psychicField(p:Player){const level=Number.isInteger(p.fieldLevel
 export function gripSelection(p:Player,s:GameState){
  const reach=psychicField(p).radius,a=p.aim,end={x:p.x+Math.cos(a)*reach,y:p.y+Math.sin(a)*reach};
  const forward=(q:{x:number;y:number})=>((q.x-p.x)*Math.cos(a)+(q.y-p.y)*Math.sin(a))/Math.max(1,dist(q,p));
- const candidates=s.covers.filter(cv=>!cv.protected45&&cv.hp>0&&(cv.generated||!!bayObject(cv.artId||cv.id)?.gripCompatible)&&!s.players.some(q=>q!==p&&(q.coverId===cv.id||q.gripCoverId===cv.id)));
+ const candidates=s.covers.filter(cv=>!cv.protected45&&cv.hp>0&&(!cv.section27j?.anchored&&(cv.generated||!!bayObject(cv.artId||cv.id)?.gripCompatible))&&!s.players.some(q=>q!==p&&(q.coverId===cv.id||q.gripCoverId===cv.id)));
  // Aim directly through the rotated whole-object footprint to choose it over incidental rubble.
  let cover=candidates.find(cv=>cv.id===p.coverId)||candidates.filter(cv=>dist(cv,p)<=reach&&segmentCoverTime(p,end,cv)!==null).sort((a,b)=>dist(a,p)-dist(b,p))[0];
  const matter=s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null&&dist(m,p)<=reach&&forward(m)>.45).sort((a,b)=>dist(a,p)-dist(b,p)||forward(b)-forward(a))[0];
  const panel=!cover?(s.groundSources44||[]).filter(q=>q.panel46&&q.remaining===q.initial&&dist(q,p)<=reach&&segmentCoverTime(p,end,{x:q.x,y:q.y,w:80,h:54,a:0,hp:1} as Cover)!==null&&!s.covers.some(cv=>cv.hp>0&&circleBox(q,8,cv).hit)).sort((a,b)=>dist(a,p)-dist(b,p))[0]:undefined;
  if(!cover&&!matter&&!panel)cover=candidates.filter(cv=>dist(cv,p)<=reach&&forward(cv)>.45).sort((a,b)=>dist(a,p)-dist(b,p)||forward(b)-forward(a))[0];
  return{cover,matter:cover||panel?undefined:matter,panel};
+}
+function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
+ if(cv.hp<=0||!cv.anchored27j||cv.section27j)return 'SECTION UNAVAILABLE';
+ if(cv.ripOwner27j!==undefined&&cv.ripOwner27j!==n)return 'SECTION CLAIMED';
+ if(p.hp<=0||p.knock>0||p.charging||p.shield||p.slide>0||p.gripCoverId)return 'RIP INTERRUPTED';
+ if(dist(p,cv)>psychicField(p).radius||Math.abs(p.z-(cv.z||0))>64)return 'OUT OF REACH';
+ const from={x:p.x,y:p.y,z:p.z+40},to={x:cv.x,y:cv.y,z:(cv.z||0)+24};
+ if(Number.isFinite(surfaceShotTime(from,to))||s.covers.some(c=>c.id!==cv.id&&c.hp>0&&segmentCoverTime(p,cv,c)!==null))return 'RIP LINE BLOCKED';
+ if(p.battery<s.config.gripEnergy)return 'LOW BATTERY';return null;
+}
+function beginRip27j(p:Player,s:GameState,n:number,cv:Cover){if(p.ripTarget27j)return;const reason=ripReason27j(p,s,n,cv);if(reason){p.gripHint=reason;p.gripHintUntil=s.time+1.5;return;}cv.ripOwner27j=n;cv.ripAt27j=s.time;p.ripTarget27j=cv.id;p.gripHint='TEARING CENTER SECTION';p.gripHintUntil=s.time+1;}
+function stepRip27j(p:Player,s:GameState,n:number){if(!p.ripTarget27j)return;const cv=s.covers.find(c=>c.id===p.ripTarget27j);const cancel=()=>{if(cv&&cv.ripOwner27j===n){cv.ripOwner27j=undefined;cv.ripAt27j=undefined;}p.ripTarget27j=undefined;};
+ if(!cv||ripReason27j(p,s,n,cv)){cancel();return;}if(s.time-(cv.ripAt27j||0)<RIP_TIME27J)return;
+ const pieces=splitBarrier27j(cv),chunk=pieces[1];
+ // Reserve the existing source footprint; no teleport through an intervening wall.
+ if(coverStructureBlocked27f(chunk,chunk.height27j||48)||s.players.some(q=>circleBox(q,18,chunk).hit)){cancel();p.gripHint='RIP CLEARANCE BLOCKED';p.gripHintUntil=s.time+1.5;return;}
+ if(!spendEnergy(p,s,s.config.gripEnergy)){cancel();return;}
+ s.covers=s.covers.filter(c=>c.id!==cv.id);s.covers.push(...pieces);
+ for(const q of s.players)if(q.coverId===cv.id)releaseCover(q,s,.25);
+ p.ripTarget27j=undefined;releaseCover(p,s,.25);p.gripCoverId=chunk.id;p.coverGripDist=clamp(dist(p,chunk),78,psychicField(p).radius-8);p.coverGripAngle=Math.atan2(chunk.y-p.y,chunk.x-p.x);p.gripGesture=false;chunk.build=.001;
+ p.gripHint='RIPPED CHUNK · RB PLACE / RT THROW';p.gripHintUntil=s.time+1.5;
+ actionOutcome(s,n,'rip','activated','center section',chunk.id,s.config.gripEnergy);combatEvent(s,{kind:'cover',source:'rip',owner:n,damage:0,x:cv.x,y:cv.y,z:(cv.z||0)+24,material:'stone'});s.fx.push({id:uid(),type:'matter-rip',x:cv.x,y:cv.y,z:cv.z||0,life:.28,owner:n});
 }
 function extractPanel46(p:Player,s:GameState,n:number,q:GroundSource44){
  const cv:Cover={id:uid(),x:q.x,y:q.y,w:80,h:54,a:0,hp:280,maxHp:280,generated:false,build:0,variant:0,artId:"floor-panel46",coverClass:"waist",born:s.time,stamp44:n,floorPanel46:{sourceId:q.id,originX:q.x,originY:q.y,creator:n},matterSources:Array.from({length:3},(_,k)=>({kind:"stone",sourceArt:"damaged-jersey",fragment:k,unitId:q.id+"-"+k,groundId:q.id}))};
@@ -475,7 +499,7 @@ export function peelSources44(p:Player,s:GameState){return (s.groundSources44||[
 export function constructionSupply44(p:Player,s:GameState){const loose=fieldMatter(p,s);return{reinforced:loose.filter(m=>m.kind==="stone").length>=2&&loose.some(m=>m.kind==="metal"),looseStone:loose.filter(m=>m.kind==="stone").length,groundUnits:peelSources44(p,s).reduce((n,q)=>n+q.remaining,0)};}
 function releaseOrbit(p:Player,s:GameState){for(const id of p.orbitIds){const m=s.matter.find(m=>m.id===id);if(m){m.orbitBy=null;m.vx=m.vy=0}}p.orbitIds=[];}
 function constructionPlacement(p:Player,s:GameState,n:number,aim:number,id="placement",blocked?:string[]):Cover|undefined{
- const source=bayObject("war-generated-shell45")!,cv:Cover={id,z:p.z,x:0,y:0,w:source.collisionHull.w*(p.coverShape===1?.72:1),h:source.collisionHull.h,a:aim+Math.PI/2,hp:COVER_41.projectedHp,maxHp:COVER_41.projectedHp,generated:true,build:1,variant:0,born:s.time,artId:source.id,coverClass:source.coverClass||"waist",constructOwner:n};
+ const source=bayObject("war-generated-shell45")!,cv:Cover={id,z:p.z,x:0,y:0,w:SHAPES27J[p.coverShape||0].w,h:SHAPES27J[p.coverShape||0].h,height27j:SHAPES27J[p.coverShape||0].height27j,a:aim+Math.PI/2,hp:COVER_41.projectedHp,maxHp:COVER_41.projectedHp,generated:true,build:1,variant:0,born:s.time,artId:source.id,coverClass:source.coverClass||"waist",constructOwner:n};
  for(let d=100;d<=psychicField(p).radius;d+=20){cv.x=p.x+Math.cos(aim)*d;cv.y=p.y+Math.sin(aim)*d;const support=coverSupport27h(cv);cv.z=surfaceHeight27h(support,cv);const reason=Number.isFinite(surfaceShotTime({x:p.x,y:p.y,z:p.z+48},{x:cv.x,y:cv.y,z:(cv.z||0)+48}))?"STRUCTURE BLOCKS CONSTRUCTION":carryBlockReason21(cv,cv,s);if(!reason)return cv;blocked?.push(reason);}
 }
 export function constructionPreview21(p:Player,s:GameState,n:number){
@@ -526,7 +550,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  if(i.weaponCycle&&!prev.weaponCycle){p.selectedWeapon=0;p.gripHint="SHOTGUN · ONLY VERIFIED WEAPON";p.gripHintUntil=s.time+1.2;}
  if((i.slow&&!prev.slow)||(!c.legacyPowers&&i.powerUse&&!prev.powerUse))toggleTime27g(p,s);
  if(c.legacyPowers&&i.powerUse&&!prev.powerUse){const power=PSYCHIC_POWERS[p.selectedPower||0];if(power==="BUILD COVER")i.cover=true;else if(power==="ORBIT")i.orbit=true;else if(power==="PINBALL")i.pinball=true;else if(power==="HEAVY GAUNTLET")i.heavy=true;else if(power==="BULLET TIME"){if(p.timeFieldActive)p.timeFieldActive=false;else if(p.hp>0&&p.battery>0&&!p.charging)p.timeFieldActive=true;}}
- if(i.coverShapeCycle&&!prev.coverShapeCycle)p.coverShape=(p.coverShape===1?0:1);
+ if(i.coverShapeCycle&&!prev.coverShapeCycle){const next=((p.coverShape||0)+1)%3,held=s.covers.find(cv=>cv.id===p.gripCoverId);if(!held)p.coverShape=next;else if(!held.generated){p.gripHint="NATURAL CHUNK · PLACE OR THROW";p.gripHintUntil=s.time+1.5;}else if(s.time>=(held.reshapeAt27j??-1)+.4){const candidate={...held,...SHAPES27J[next]};const reason=carryBlockReason21(candidate,held,s);if(!reason){held.reshapeFrom27j={w:held.w,h:held.h,height27j:held.height27j||48};held.reshapePending27j=next;held.reshapeAt27j=s.time;p.gripHint="RESHAPING · HOLD STEADY";}else p.gripHint=reason;p.gripHintUntil=s.time+1.5;}}
  if(i.fieldCycle&&!prev.fieldCycle)p.fieldLevel=(psychicField(p).level+1)%3;
  // Successful immediate brace keeps its original priority over other edges.
  slideAction(s,n,prev);
@@ -576,7 +600,8 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
    else if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m){m.heldBy=null;m.vx=m.vy=0;m.throwOwner=undefined;}p.gripId=null}
    else{
      const {cover:cv,matter:loose,panel}=gripSelection(p,s);
-     if(cv){if(spendEnergy(p,s,c.gripEnergy)){releaseCover(p,s,.25);p.gripCoverId=cv.id;p.coverGripAngle=Math.atan2(cv.y-p.y,cv.x-p.x);p.coverGripDist=clamp(dist(cv,p),78,psychicField(p).radius-8);p.gripGesture=false;p.gripDrive=0;p.gripDriveAt=-9;cv.throwOwner=undefined;cv.hitIds=[];cv.vx=cv.vy=0;cv.build=.001;s.fx.push({id:uid(),type:"matter-rip",x:cv.x,y:cv.y,life:.42,owner:n})}}
+     if(cv?.anchored27j){beginRip27j(p,s,n,cv);}
+     else if(cv){if(spendEnergy(p,s,c.gripEnergy)){releaseCover(p,s,.25);p.gripCoverId=cv.id;p.coverGripAngle=Math.atan2(cv.y-p.y,cv.x-p.x);p.coverGripDist=clamp(dist(cv,p),78,psychicField(p).radius-8);p.gripGesture=false;p.gripDrive=0;p.gripDriveAt=-9;cv.throwOwner=undefined;cv.hitIds=[];cv.vx=cv.vy=0;cv.build=.001;s.fx.push({id:uid(),type:"matter-rip",x:cv.x,y:cv.y,life:.42,owner:n})}}
      else if(panel)extractPanel46(p,s,n,panel);
      else{const m=combatFight(s)?loose:s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null).sort((a,b)=>dist(a,p)-dist(b,p))[0];if(m&&dist(m,p)<=psychicField(p).radius&&spendEnergy(p,s,c.gripEnergy)){p.gripId=m.id;p.coverGripDist=clamp(dist(m,p),42,psychicField(p).radius-8);p.coverGripAngle=p.aim;p.gripGesture=false;p.gripDrive=0;p.gripDriveAt=-9;m.throwOwner=undefined;m.hitIds=[];m.vx=m.vy=0;m.heldBy=n}else if(!m){p.gripHint="NO TARGET · AIM CLOSER";p.gripHintUntil=s.time+1.5}}
    }
@@ -653,6 +678,8 @@ function gripDrive(p:Player,s:GameState,object:{x:number;y:number;vx?:number;vy?
 function releaseGripGesture(p:Player,s:GameState,n:number,previous:InputState){
  const cv=s.covers.find(cv=>cv.id===p.gripCoverId),m=s.matter.find(m=>m.id===p.gripId),object=cv||m;
  if(!object){p.gripCancelRelease=false;return;}
+ // Constructed shields and ripped sections persist; explicit RB/RT or a fresh Grip releases them.
+ if(cv&&(cv.generated||cv.section27j)){p.gripGesture=false;p.gripCancelRelease=false;return;}
  // KINETIC COVER 02: one intentional gesture, one clear result.
  // Stick neutral means place. Directed release means a full throw toward the stick.
  // Preserve cancellation, energy costs, momentum inheritance and authoritative impacts.
@@ -700,12 +727,12 @@ function carryCoverSwept(cv:Cover,p:Player,s:GameState,dt:number){
 }
 function carryBlocked(candidate:Cover,original:Cover,s:GameState){return carryBlockReason21(candidate,original,s)!==null;}
 function carryBlockReason21(candidate:Cover,original:Cover,s:GameState){
- if(coverStructureBlocked27f(candidate,(bayObject(candidate.artId||candidate.id)?.dimensions.z??78)+(candidate.hover||0)))return 'STRUCTURE CLEARANCE';
+ if(coverStructureBlocked27f(candidate,(candidate.height27j??bayObject(candidate.artId||candidate.id)?.dimensions.z??78)+(candidate.hover||0)))return 'STRUCTURE CLEARANCE';
  const ex=Math.abs(Math.cos(candidate.a))*candidate.w/2+Math.abs(Math.sin(candidate.a))*candidate.h/2,ey=Math.abs(Math.sin(candidate.a))*candidate.w/2+Math.abs(Math.cos(candidate.a))*candidate.h/2;
  if(candidate.x-ex<A.left||candidate.x+ex>A.right||candidate.y-ey<A.top||candidate.y+ey>A.bottom)return 'ARENA EDGE';
  if(s.players.some(p=>p.hp>0&&p.z+64>(candidate.z||0)&&p.z<(candidate.z||0)+78&&circleBox(p,18,candidate).hit))return 'FIGHTER IN FOOTPRINT';
  for(const b of s.covers){if(b.id===original.id||b.hp<=0||Math.abs((b.z||0)-(candidate.z||0))>78)continue;let overlap=true;
-  for(const angle of [candidate.a,candidate.a+Math.PI/2,b.a,b.a+Math.PI/2]){const ax=Math.cos(angle),ay=Math.sin(angle),r=(c:Cover)=>Math.abs(ax*Math.cos(c.a)+ay*Math.sin(c.a))*c.w/2+Math.abs(-ax*Math.sin(c.a)+ay*Math.cos(c.a))*c.h/2;if(Math.abs((candidate.x-b.x)*ax+(candidate.y-b.y)*ay)>=r(candidate)+r(b)){overlap=false;break}}
+  for(const angle of [candidate.a,candidate.a+Math.PI/2,b.a,b.a+Math.PI/2]){const ax=Math.cos(angle),ay=Math.sin(angle),r=(c:Cover)=>Math.abs(ax*Math.cos(c.a)+ay*Math.sin(c.a))*c.w/2+Math.abs(-ax*Math.sin(c.a)+ay*Math.cos(c.a))*c.h/2;if(Math.abs((candidate.x-b.x)*ax+(candidate.y-b.y)*ay)>=r(candidate)+r(b)-.01){overlap=false;break}}
   if(overlap)return 'EXISTING COVER';
  }return null;
 }
@@ -840,6 +867,13 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
  stepRepulse21(s,repulseHooks21(s));
  const d=dt;s.timeScale=1; // Projectile time never slows bodies or action timers.
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(p.hp<=0)p.timeFieldActive=false;if(p.timeFieldActive&&s.time>=(p.timeUntil27g??Infinity)){p.timeFieldActive=false;p.timeReady27g=s.time+PROJECTILE_TIME.cooldown;}if(i.shield&&!prev[n]?.shield&&s.time>=(p.shieldReady27g||0)){p.shieldAt27g=s.time;p.shieldReady27g=s.time+.65;}p.aim=i.aim;powerStep(p,s,dt);
+  stepRip27j(p,s,n);
+  const reshaping=s.covers.find(cv=>cv.id===p.gripCoverId&&cv.reshapePending27j!==undefined);
+  if(reshaping){const next=reshaping.reshapePending27j!,target=SHAPES27J[next],from=reshaping.reshapeFrom27j!,t=clamp((s.time-(reshaping.reshapeAt27j||0))/.24,0,1),k=t*t*(3-2*t),candidate={...reshaping,w:from.w+(target.w-from.w)*k,h:from.h+(target.h-from.h)*k,height27j:from.height27j+(target.height27j-from.height27j)*k},reason=carryBlockReason21(candidate,reshaping,s);
+   if(reason){reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPE STOPPED · '+reason;p.gripHintUntil=s.time+1.2;}
+   else{Object.assign(reshaping,{w:candidate.w,h:candidate.h,height27j:candidate.height27j});reshaping.coverClass=candidate.height27j>60?'tall':'waist';if(t>=1){p.coverShape=next;reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPED · SAME HEALTH';p.gripHintUntil=s.time+1.2;}}
+   i.fire=false;i.throwMatter=false;i.cover=false;
+  }
   const jump=!!i.jump&&!prev[n]?.jump&&p.hp>0&&p.knock<=0;
   if(jump&&p.grounded){p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.exit=null;p.coverLock=s.time+.18;}
   const coverContext=!!p.coverId;
@@ -935,8 +969,8 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
    if(cv.build>=0||cv.hp<=0)continue;
    cv.vx??=Math.cos(cv.a-Math.PI/2)*-cv.build;cv.vy??=Math.sin(cv.a-Math.PI/2)*-cv.build;
    const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy)*d/8));
-   for(let k=0;k<parts&&cv.hp>0;k++){const ox=cv.x,oy=cv.y;cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;if(coverStructureBlocked27f(cv,(bayObject(cv.artId||cv.id)?.dimensions.z??78)+(cv.hover||0))){cv.x=ox;cv.y=oy;coverImpact(cv,s,'structure');cv.vx=cv.vy=0;}settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
-    if(n===cv.throwOwner||s.players[n].hp<=0||(s.players[n].z||0)>(cv.z||0)+(bayObject(cv.artId||cv.id)?.dimensions.z??78)||s.players[n].z+64<(cv.z||0)||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
+   for(let k=0;k<parts&&cv.hp>0;k++){const ox=cv.x,oy=cv.y;cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;if(coverStructureBlocked27f(cv,(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)+(cv.hover||0))){cv.x=ox;cv.y=oy;coverImpact(cv,s,'structure');cv.vx=cv.vy=0;}settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
+    if(n===cv.throwOwner||s.players[n].hp<=0||(s.players[n].z||0)>(cv.z||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)||s.players[n].z+64<(cv.z||0)||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
     if(Math.hypot(q.x-clamp(q.x,-cv.w/2,cv.w/2),q.y-clamp(q.y,-cv.h/2,cv.h/2))<=17){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*(bayObject(cv.artId||cv.id)?.mass||9)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=target.battery;
      // One shield contest per release: impact consumes energy; an overwhelmed block passes residual force.
      if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",incomingAngle:Math.atan2(-(cv.vy||0),-(cv.vx||0)),source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??1-n,target:n,damage:0,x:target.x,y:target.y,z:target.z+28});s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}
@@ -963,7 +997,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
   const segments=projectileSegments(sh,fields.filter(f=>sh.fieldOwners?.includes(f.slot)),dt);
   for(const segment of segments){if(sh.life<=0)break;const from={x:sh.x,y:sh.y,z:sh.z??36*c.spriteScale};sh.z=from.z+(sh.vz||0)*segment.travelTime;sh.x=segment.x;sh.y=segment.y;sh.life-=segment.travelTime;sh.projectileScale=segment.scale;
   const z=sh.z??36*c.spriteScale,target=s.players[1-sh.owner];let nearest=Infinity,block:Cover|undefined;
-  for(const cv of s.covers){if(cv.hp<=0||cv.id===sh.clearanceCoverId)continue;const height=bayObject(cv.artId||cv.id)?.dimensions.z??(cv.coverClass==="tall"?78:15616/332);const base=(cv.z||0)+(cv.hover||0);const t=coverTime27d({...from,z:from.z-base},{...sh,z:z-base},cv,height,sh.source==="glove-blast"?8:0);if(t!==null&&t<nearest){nearest=t;block=cv}}
+  for(const cv of s.covers){if(cv.hp<=0||cv.id===sh.clearanceCoverId)continue;const height=cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??(cv.coverClass==="tall"?78:15616/332);const base=(cv.z||0)+(cv.hover||0);const t=coverTime27d({...from,z:from.z-base},{...sh,z:z-base},cv,height,sh.source==="glove-blast"?8:0);if(t!==null&&t<nearest){nearest=t;block=cv}}
   const platformTime=surfaceShotTime(from,{x:sh.x,y:sh.y,z});nearest=Math.min(nearest,platformTime);
   const hit=target&&target.hp>0?shotPlayerTime(from,sh,z,{...target,z:playerStarts[1-sh.owner].z+(target.z-playerStarts[1-sh.owner].z)*segment.end,x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.end,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.end},{z:playerStarts[1-sh.owner].z+(target.z-playerStarts[1-sh.owner].z)*segment.start,x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.start,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.start},c.spriteScale,sh.source==="glove-blast"?8:0):null;
   if(hit&&hit.t<nearest){const point={x:from.x+(sh.x-from.x)*hit.t,y:from.y+(sh.y-from.y)*hit.t,z:from.z+(z-from.z)*hit.t};const parry=target.shield&&target.input.shield&&!target.coverId&&target.battery>0&&s.time-(target.shieldAt27g??-9)<=.12;duelContact(s,sh.owner,target,(sh.damage??c.shotDamage)*REGION_DAMAGE[hit.region],sh.vx*.1,sh.vy*.1,hit.region,point,sh.source||"shotgun",sh.attackId||sh.volleyId);if(parry){sh.owner=s.players.indexOf(target);sh.vx=-sh.vx;sh.vy=-sh.vy;sh.vz=-(sh.vz||0);sh.x=point.x;sh.y=point.y;sh.z=point.z;sh.clearanceCoverId=undefined;break;}else sh.life=0;}

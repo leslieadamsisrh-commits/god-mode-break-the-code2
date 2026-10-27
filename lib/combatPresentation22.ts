@@ -22,7 +22,7 @@ export function selectionCards22(p:any,s:any){
   {key:'weapon',label:'UP · WEAPON',name:'SHOTGUN',detail:'RT FIRE',value:p.selectedWeapon||0},
   {key:'power',label:s.config.legacyPowers?'DOWN · POWER':'X · BULLET TIME',name:s.config.legacyPowers?(power===5?'REPULSE · LAB':PSYCHIC_POWERS[power]||PSYCHIC_POWERS[0]):'BULLET TIME',detail:s.config.legacyPowers?'X · '+cost:'8 BAT · 2 SEC',value:power},
   {key:'field',label:'LEFT · AREA',name:['SMALL','MEDIUM','LARGE'][field.level],detail:`${field.radius}u REACH`,value:field.level},
-  {key:'shape',label:'RIGHT · COVER',name:p.coverShape===1?'COMPACT':'WIDE',detail:'RB · 20 BAT',value:p.coverShape||0},
+  {key:'shape',label:'RIGHT · COVER',name:['WIDE WALL','TALL SLAB','COMPACT BLOCK'][p.coverShape||0],detail:'RB · 20 BAT',value:p.coverShape||0},
  ];
 }
 

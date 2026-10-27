@@ -18,6 +18,7 @@ function clipFar(poly:Point[],groundY:number){
 // Return the exact visible front-side quads plus the far top polygon. Avoid a convex hull:
 // at rotated corners the hull fills empty screen-space and visually cuts through Jade.
 export function coverOccluders(c:Cover,groundY:number,elevationScale=1):Point[][]{
+ if((c as any).anchored27j||(c as any).section27j||(c as any).height27j){const q=c as any,height=q.height27j??bayObject(q.artId||q.id)?.dimensions.z??48,base=(q.z||0)+(q.hover||0),floor=floorCorners(c);const project=(p:Point,z:number)=>{const r=relativeWorld46(c.x,c.y,p.x-c.x,p.y-c.y),v=vertical46(c.x,c.y,z);return{x:c.x+r.x+v.x,y:c.y+r.y+v.y};};const clipped=clipFar(floor,groundY),out:Point[][]=[];if(clipped.length>=3)out.push(clipped.map(p=>project(p,base+height)));for(let n=0;n<floor.length;n++){const a=floor[n],b=floor[(n+1)%4];if(a.y<=groundY+EPS&&b.y<=groundY+EPS)continue;const edge=(u:Point,v:Point)=>{if(u.y>groundY+EPS)return u;const t=(groundY+EPS-u.y)/(v.y-u.y);return{x:u.x+(v.x-u.x)*t,y:groundY+EPS};};const aa=edge(a,b),bb=edge(b,a);out.push([project(aa,base),project(bb,base),project(bb,base+height),project(aa,base+height)]);}return out;}
  const meta=c.id?bayObject((c as any).artId||c.id):null;
  if(meta){
   const co=Math.cos(c.a||0),si=Math.sin(c.a||0),ribs=meta.rig.ribs,out:Point[][]=[];
