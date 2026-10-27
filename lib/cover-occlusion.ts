@@ -28,7 +28,7 @@ export function coverOccluders(c:Cover,groundY:number,elevationScale=1):Point[][
    const poly=[vertex(ribs[n],-1),vertex(ribs[n+1],-1),vertex(ribs[n+1],1),vertex(ribs[n],1)],clipped:typeof poly=[];
    for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length],ain=a.y>groundY+EPS,bin=b.y>groundY+EPS;if(ain)clipped.push(a);if(ain!==bin){const t=(groundY+EPS-a.y)/(b.y-a.y);clipped.push({x:a.x+(b.x-a.x)*t,y:groundY+EPS,z:a.z+(b.z-a.z)*t})}}
    if(clipped.length<3)continue;
-   const point=(p:typeof clipped[number],height:number)=>{const r=relativeWorld46(c.x,c.y,p.x-c.x,p.y-c.y),v=vertical46(c.x,c.y,height+Math.max(0,Math.min(12,(c as any).hover||0)));return{x:c.x+r.x+v.x,y:c.y+r.y+v.y};};
+   const point=(p:typeof clipped[number],height:number)=>{const r=relativeWorld46(c.x,c.y,p.x-c.x,p.y-c.y),v=vertical46(c.x,c.y,height+((c as any).z||0)+Math.max(0,Math.min(12,(c as any).hover||0)));return{x:c.x+r.x+v.x,y:c.y+r.y+v.y};};
    out.push(clipped.map(p=>point(p,p.z)));
    for(let i=0;i<clipped.length;i++){const a=clipped[i],b=clipped[(i+1)%clipped.length];out.push([point(a,0),point(b,0),point(b,b.z),point(a,a.z)])}
   }
@@ -65,3 +65,4 @@ export function withCoverOcclusion(g:CanvasRenderingContext2D,covers:Cover[],gro
  }
  g.setTransform(base);draw();g.restore();
 }
+

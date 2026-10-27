@@ -12,12 +12,14 @@ export function placementError27c(p:Placement27c,others:Placement27c[]){
  const poly=footprint27c(p,14);
  if(poly.some(v=>v.x<BAY_BOUNDS.left||v.x>BAY_BOUNDS.right||v.y<BAY_BOUNDS.top||v.y>BAY_BOUNDS.bottom))return 'Outside arena';
  if(BAY_SPAWNS.some(s=>Math.hypot(s.x-p.x,s.y-p.y)<125))return 'Keep spawn clear';
- if(COMBAT_SURFACES.some(s=>s.id!=='ground'&&overlap(poly,s.polygon)))return 'Keep stairs and elevated routes clear';
+ if(COMBAT_SURFACES.some(s=>s.id!=='ground'&&overlap(poly,s.polygon)))return 'Move object clear of terrace, stairs or bridge passage';
  if(others.some(o=>o.id!==p.id&&overlap(poly,footprint27c(o,14))))return 'Objects need more space';
  return '';
 }
+const structureGrid27h=new Set<string>();
+for(let y=0;y<29;y++)for(let x=0;x<65;x++){const px=120+x*30,py=135+y*30;if(COMBAT_SURFACES.some(s=>s.id!=='ground'&&overlap([{x:px-20,y:py-20},{x:px+20,y:py-20},{x:px+20,y:py+20},{x:px-20,y:py+20}],s.polygon)))structureGrid27h.add(x+','+y);}
 export function routesConnected27c(ps:Placement27c[]){
- const step=30,cols=65,rows=29,blocked=new Set<string>();
+ const step=30,cols=65,rows=29,blocked=new Set<string>(structureGrid27h);
  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){const px=120+x*step,py=135+y*step;if(ps.some(p=>{const o=bayObject(p.objectId)!,dx=px-p.x,dy=py-p.y,co=Math.cos(p.rotation),si=Math.sin(p.rotation);return Math.abs(dx*co+dy*si)<o.collisionHull.w/2+22&&Math.abs(-dx*si+dy*co)<o.collisionHull.h/2+22;}))blocked.add(x+','+y);}
  const index=(p:{x:number;y:number})=>[Math.round((p.x-120)/step),Math.round((p.y-135)/step)];const [sx,sy]=index(BAY_SPAWNS[0]),queue=[[sx,sy]],seen=new Set([sx+','+sy]);
  for(let i=0;i<queue.length;i++){const [x,y]=queue[i];for(const [dx,dy]of [[1,0],[-1,0],[0,1],[0,-1]]){const xx=x+dx,yy=y+dy,k=xx+','+yy;if(xx>=0&&xx<cols&&yy>=0&&yy<rows&&!blocked.has(k)&&!seen.has(k)){seen.add(k);queue.push([xx,yy]);}}}
@@ -35,8 +37,8 @@ export function validateLayout27c(raw:unknown,repairDraft=false):ArenaLayout27c{
 export function randomLayout27c(seed:string,count=14):ArenaLayout27c{
  let h=2166136261;for(const c of seed)h=Math.imul(h^c.charCodeAt(0),16777619);const rnd=()=>{h+=0x6D2B79F5;let t=h;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};
  const placements:Placement27c[]=[];const desired=Math.max(4,Math.min(MAX_OBJECTS27C,Math.round(count)||14));
- for(let attempt=0;attempt<800&&placements.length<desired;attempt++){const p:Placement27c={id:'piece-'+placements.length,objectId:CATALOG27C[Math.floor(rnd()*CATALOG27C.length)].id,x:300+Math.floor(rnd()*1600/10)*10,y:390+Math.floor(rnd()*370/10)*10,rotation:Math.floor(rnd()*8)*Math.PI/4,z:0,surfaceId:'ground'};if(!placementError27c(p,placements)&&routesConnected27c([...placements,p]))placements.push(p);}
+ for(let attempt=0;attempt<800&&placements.length<desired;attempt++){const p:Placement27c={id:'piece-'+placements.length,objectId:CATALOG27C[Math.floor(rnd()*CATALOG27C.length)].id,x:250+Math.floor(rnd()*1700/10)*10,y:220+Math.floor(rnd()*650/10)*10,rotation:Math.floor(rnd()*8)*Math.PI/4,z:0,surfaceId:'ground'};if(!placementError27c(p,placements)&&routesConnected27c([...placements,p]))placements.push(p);}
  return validateLayout27c({version:2,name:'Random '+seed.slice(0,32),seed,placements});
 }
-export function chaseLayout27c():ArenaLayout27c{return {...randomLayout27c('CHASE-27C',16),name:"Chase’s Setup"};}
+export function chaseLayout27c():ArenaLayout27c{return validateLayout27c({version:2,name:"Chase’s Setup",placements:[[760,390],[760,735],[1800,390],[1800,735],[810,240],[1390,860]].map(([x,y],n)=>({id:'chase-27h-'+n,objectId:n%2?'floor-panel46':'d33-nw-primary',x,y,rotation:n<4?Math.PI/2:0,z:0,surfaceId:'ground'}))});}
 export function instantiateLayout27c(layout:ArenaLayout27c){return layout.placements.map(p=>{const o=bayObject(p.objectId)!;return {id:'arena-'+p.id,artId:o.id,x:p.x,y:p.y,w:o.collisionHull.w,h:o.collisionHull.h,a:p.rotation,hp:o.breakThreshold,maxHp:o.breakThreshold,generated:false,build:0,variant:o.material==='INFRASTRUCTURE'?1:0,coverClass:o.coverClass as 'waist'|'tall'};});}

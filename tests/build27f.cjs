@@ -6,9 +6,9 @@ let s=setup(),p=s.players[0];step(s,{cover:true});assert(p.gripCoverId,'RB must 
 s=setup();p=s.players[0];step(s,{cover:true});step(s,{},2);step(s,{fire:true});assert.equal(p.gripCoverId,null,'RT alone throws');assert(s.covers[0].build<0);assert.equal(s.shots.length,0,'throw must not fire shotgun');
 console.log('PASS27F energy-only build, automatic hold, persistent RB hold, RB placement, RT throw, no shotgun leak, no placed upkeep, regeneration, distance persistence');
 const S=require('../lib/arenaStructures27e.ts'),A=require('../lib/arenaLayout27c.ts');
-for(const side of ['north','south']){s=setup();p=s.players[0];p.x=1100;p.y=(side==='north'?315:525)*1100/840;step(s,{y:side==='north'?-1:1},65);assert.equal(p.z,72,side+' full combat stair climb');assert.equal(p.supportSurfaceId,side+'-platform');}
-const old={version:1,name:'Legacy',placements:[{id:'keep-me',objectId:'floor-panel46',x:750,y:430,rotation:0,z:0,surfaceId:'ground'}]};const migrated=A.validateLayout27c(old);assert.equal(migrated.version,2);assert.equal(migrated.placements[0].id,'keep-me');assert.equal(migrated.placements[0].x,1100);assert.deepEqual(A.validateLayout27c(migrated),migrated);
+for(const side of ['north','south']){s=setup();p=s.players[0];p.x=1100;p.y=side==='north'?240:860;step(s,{y:side==='north'?1:-1},85);assert.equal(p.z,72,side+' full combat stair climb');assert.equal(p.supportSurfaceId,'central-terrace');}
+const old={version:1,name:'Legacy',placements:[{id:'keep-me',objectId:'floor-panel46',x:750,y:430,rotation:0,z:0,surfaceId:'ground'}]};const migrated=A.validateLayout27c(old,true);assert.equal(migrated.version,2);assert.equal(migrated.placements[0].id,'keep-me');assert.equal(migrated.placements[0].x,1100);assert.deepEqual(A.validateLayout27c(migrated,true),migrated);
 assert.throws(()=>A.validateLayout27c({...old,placements:[{...old.placements[0],objectId:'fake'}]},true));
 console.log('PASS27F actual combat north/south stairs, versioned layout migration, stable IDs, migration idempotence, repair validation');
-assert(S.coverStructureBlocked27f({x:1100,y:230,w:90,h:28,a:0},78),'tall cover cannot pass through deck');assert(!S.coverStructureBlocked27f({x:1100,y:563,w:90,h:28,a:0},78),'center carry route clear');
+assert(S.coverStructureBlocked27f({x:1100,y:550,w:90,h:28,a:0},78),'tall cover cannot pass through deck');assert(!S.coverStructureBlocked27f({x:750,y:563,w:90,h:28,a:0},78),'center carry route clear');
 console.log('PASS27F cover structure clearance');

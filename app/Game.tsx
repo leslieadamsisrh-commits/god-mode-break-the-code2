@@ -1,5 +1,5 @@
 "use client";
-import {drawStructures27e,withStructureOcclusion27e} from '../lib/arenaPresentation27e';
+import {drawStructures27e,withStructureOcclusion27e,drawConcealedSpark27h} from '../lib/arenaPresentation27e';
 import {barrelSocket27d} from "../lib/ballistics27d";
 import {useCallback,useEffect,useRef,useState} from "react";
 import ArenaBuilder27c from "./ArenaBuilder27c";
@@ -560,7 +560,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
   ...s.players.map((raw:any,index:number)=>{const actor=index===localSlot?local:{...raw,id:"fighter-"+index};return{y:actor.y,kind:"player",player:actor,fn:()=>{drawGodGround(g,actor,s.time);withUpright(g,actor.x,actor.y,()=>{g.translate(0,-(actor.z||0));if(actor.hp>0){drawGodRear(g,actor,s.time);fighter(g,actor,s.time,cfg,index===localSlot?character:"jade");drawGodFront(g,actor,s.time)}else{g.save();const age=Math.max(0,s.time-(actor.deathAt??s.time)),fade=Math.max(.12,1-age/1.5);g.globalAlpha=fade;for(let n=0;n<28;n++){const a=n*2.399,r=8+age*(15+n%5*9);g.fillStyle=actor.bot?(n%3===0?"#d9e1e7":n%2?"#84324f":"#151b26"):(n%3===0?"#f0eaff":n%2?"#65efff":"#ff69bd");const x=actor.x+Math.cos(a)*r,y=actor.y-12-n*1.7+Math.sin(a)*r*.5+age*age*17;if(actor.bot){g.beginPath();g.ellipse(x,y,2+n%3,1+n%2,a,0,Math.PI*2);g.fill()}else g.fillRect(x,y,2+n%3,2+n%2)}g.restore();}g.save();g.fillStyle=index===0?"#65efff":"#ff69bd";g.font="bold 8px monospace";g.textAlign="center";g.fillText(s.mode==="watch"?actor.name:index===localSlot?"YOU":actor.name,actor.x,actor.y-84);g.restore()})}}})
  ].sort((a,b)=>a.y-b.y);
  actors.forEach(o=>{
-  if(o.kind==="player"&&(o as any).player===local&&local.hp>0){g.save();g.globalAlpha=.28;g.filter="sepia(1) saturate(2) hue-rotate(120deg)";withCoverOcclusion(g,covers,o.y,s.time,o.fn,local.coverId,false,1/DECK_PITCH);g.restore();}
+  if(o.kind==="player"&&(o as any).player===local&&local.hp>0)drawConcealedSpark27h(g,local,s.time);
   withStructureOcclusion27e(g,(o as any).player||{x:0,y:o.y,z:0},()=>withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?(o as any).player.coverId:null,o.kind==="player"&&!!((o as any).player.input?.coverAim||(o as any).player.fireState>0||(o as any).player.recoil>0),1/DECK_PITCH));
  });
 
@@ -1251,7 +1251,8 @@ function environmentActorInk(g:CanvasRenderingContext2D,c:any,meta:any,z:number,
  g.beginPath();g.ellipse(rp.x,rp.y+5,w*.34,Math.max(2,h*.12),c.a||0,0,Math.PI*2);g.fill();g.restore();
 }
 const coverCache46=new Map<string,{canvas:HTMLCanvasElement;x:number;y:number;w:number;h:number}>();
-function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:number;strength:number;color:string}[]=[]){
+function cover(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:number;strength:number;color:string}[]=[]){g.save();const lift=vertical46(c.x,c.y,c.z||0);g.translate(lift.x,lift.y);coverGround27h(g,c,t,lights);g.restore();}
+function coverGround27h(g:CanvasRenderingContext2D,c:any,t:number,lights:{x:number;y:number;strength:number;color:string}[]=[]){
  // Cache only intact, settled scenery. Held/damaged/forming/lit structures retain
  // their live renderer. Bound the cache; never cache an authoritative game object.
  if(typeof document!=="undefined"&&!c.generated&&!c.floorPanel46&&!c.psychicHeld&&c.build===0&&!(c.hover>.1)&&c.hp===c.maxHp&&!lights.length){

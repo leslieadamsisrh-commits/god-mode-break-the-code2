@@ -5,7 +5,7 @@ async function get(c){const r=await fetch(base+'/api/game?room='+c.room+'&token=
 (async()=>{
  const h=await request({action:'create',mode:'duel',name:'27C HOST'},201),host={room:h.room,token:h.token};
  const layout=structuredClone(h.state.arenaLayout);layout.name='HTTP shared layout';layout.placements=layout.placements.slice(0,8);
- const changed=await request({action:'arenaLayout',...host,layout});assert.equal(changed.state.covers.length,8);
+ const changed=await request({action:'arenaLayout',...host,layout});assert.equal(changed.state.covers.length,layout.placements.length);
  const j=await request({action:'join',room:h.room,code:h.code,name:'27C GUEST'}),guest={room:h.room,token:j.token};
  assert.deepEqual(j.state.arenaLayout,changed.state.arenaLayout);assert.deepEqual(j.state.covers,changed.state.covers);
  assert.equal((await request({action:'arenaLayout',...guest,layout},400)).error,'HOST_ONLY');
