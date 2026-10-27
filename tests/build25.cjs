@@ -9,7 +9,7 @@ const {coverMaterial21}=require('../lib/dimension33Registration21.ts');
 for(const o of BAY_OBJECTS){const {x,y}=o.worldPosition,{w,h}=o.dimensions;assert(x-w/2>A.left&&x+w/2<A.right&&y-h/2>A.top&&y+h/2<A.bottom);assert(BAY_OBJECTS.some(p=>Math.abs(p.worldPosition.x-(1500-x))<1e-8&&p.worldPosition.y===y),'unmirrored object '+o.id);}
 const s=newGame('QA','qa',1000,'solo');assert.equal(s.players[0].x,BAY_SPAWNS[0].x);assert(s.groundSources44.some(q=>q.x>1300&&q.y>650));
 // Exercise real movement and collision at all expanded boundaries.
-for(const [x,y,dx,dy] of [[1400,430,1,0],[100,430,-1,0],[750,120,0,-1],[750,740,0,1]]){
+for(const [x,y,dx,dy] of [[1400,430,1,0],[100,430,-1,0],[500,120,0,-1],[500,740,0,1]]){
  Object.assign(s.players[0],{x,y,vx:0,vy:0});for(let n=0;n<90;n++){setInput(s,0,s.players[0].lastSeq+1,{x:dx,y:dy});advance(s,s.lastAt+1000/60);}
  const p=s.players[0];assert(p.x>=A.left&&p.x<=A.right&&p.y>=A.top&&p.y<=A.bottom);
  if(dx>0)assert(p.x>1000,'old right wall remains');if(dy>0)assert(p.y>620,'old bottom wall remains');

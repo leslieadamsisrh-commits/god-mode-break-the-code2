@@ -12,7 +12,7 @@ export function placementError27c(p:Placement27c,others:Placement27c[]){
  const poly=footprint27c(p,14);
  if(poly.some(v=>v.x<BAY_BOUNDS.left||v.x>BAY_BOUNDS.right||v.y<BAY_BOUNDS.top||v.y>BAY_BOUNDS.bottom))return 'Outside arena';
  if(BAY_SPAWNS.some(s=>Math.hypot(s.x-p.x,s.y-p.y)<125))return 'Keep spawn clear';
- if(COMBAT_SURFACES.some(s=>s.id!=='ground'&&overlap(poly,s.polygon)))return 'Move object clear of terrace, stairs or bridge passage';
+ if(COMBAT_SURFACES.some(s=>s.id!=='ground'&&overlap(poly,s.polygon)))return 'Move object clear of platforms, stairs and landings';
  if(others.some(o=>o.id!==p.id&&overlap(poly,footprint27c(o,14))))return 'Objects need more space';
  return '';
 }
@@ -40,5 +40,5 @@ export function randomLayout27c(seed:string,count=14):ArenaLayout27c{
  for(let attempt=0;attempt<800&&placements.length<desired;attempt++){const p:Placement27c={id:'piece-'+placements.length,objectId:CATALOG27C[Math.floor(rnd()*CATALOG27C.length)].id,x:250+Math.floor(rnd()*1700/10)*10,y:220+Math.floor(rnd()*650/10)*10,rotation:Math.floor(rnd()*8)*Math.PI/4,z:0,surfaceId:'ground'};if(!placementError27c(p,placements)&&routesConnected27c([...placements,p]))placements.push(p);}
  return validateLayout27c({version:2,name:'Random '+seed.slice(0,32),seed,placements});
 }
-export function chaseLayout27c():ArenaLayout27c{return validateLayout27c({version:2,name:"Chase’s Setup",placements:[[760,390],[760,735],[1800,390],[1800,735],[810,240],[1390,860]].map(([x,y],n)=>({id:'chase-27h-'+n,objectId:n%2?'floor-panel46':'d33-nw-primary',x,y,rotation:n<4?Math.PI/2:0,z:0,surfaceId:'ground'}))});}
+export function chaseLayout27c():ArenaLayout27c{return validateLayout27c({version:2,name:"Chase’s Setup",placements:[[600,390],[600,735],[1600,390],[1600,735],[330,820],[1870,820]].map(([x,y],n)=>({id:'chase-27h-'+n,objectId:n%2?'floor-panel46':'d33-nw-primary',x,y,rotation:n<4?Math.PI/2:0,z:0,surfaceId:'ground'}))});}
 export function instantiateLayout27c(layout:ArenaLayout27c){return layout.placements.map(p=>{const o=bayObject(p.objectId)!;return {id:'arena-'+p.id,artId:o.id,x:p.x,y:p.y,w:o.collisionHull.w,h:o.collisionHull.h,a:p.rotation,hp:o.breakThreshold,maxHp:o.breakThreshold,generated:false,build:0,variant:o.material==='INFRASTRUCTURE'?1:0,coverClass:o.coverClass as 'waist'|'tall'};});}

@@ -1,16 +1,17 @@
 import {type Surface,height,inside} from './elevation27a';
 const rect=(id:string,x:number,y:number,w:number,h:number,z:number):Surface=>({id,polygon:[{x,y},{x:x+w,y},{x:x+w,y:y+h},{x,y:y+h}],height:z,walkable:true});
-// One central stronghold, two broad approaches and one short, clearly open crossing.
+// Two solid end terraces: 128 height units = two 63.96-unit combat bodies.
+// The middle stays flat; four broad ramps connect directly to flush landings.
 export const COMBAT_SURFACES:Surface[]=[
  rect('ground',0,0,2200,1100,0),
- rect('central-terrace',900,430,400,240,72),
- {...rect('north-stairs',980,270,240,160,0),rise:{axis:'y',from:270,to:430,low:0,high:72}},
- {...rect('south-stairs',980,670,240,160,0),rise:{axis:'y',from:830,to:670,low:0,high:72}},
- rect('east-bridge',1300,490,130,120,72),
- rect('east-landing',1430,490,140,120,72),
- {...rect('east-stairs',1430,330,140,160,0),rise:{axis:'y',from:330,to:490,low:0,high:72}},
+ rect('north-platform',740,0,720,280,128),
+ rect('south-platform',740,820,720,280,128),
+ ...[780,1220].flatMap((x,i)=>[
+  {...rect('north-stairs-'+i,x,280,200,180,0),rise:{axis:'y' as const,from:460,to:280,low:0,high:128}},
+  {...rect('south-stairs-'+i,x,640,200,180,0),rise:{axis:'y' as const,from:640,to:820,low:0,high:128}},
+ ]),
 ];
-export const openDeck27h=(s:Surface)=>s.id==='east-bridge';
+export const openDeck27h=(_s:Surface)=>false;
 export const structureBottom27h=(s:Surface)=>openDeck27h(s)?s.height-DECK_THICKNESS27E:0;
 export function structureSolids27h():Solid27e[]{return STATIC_SOLIDS27H;}
 function makeSolids27h():Solid27e[]{return [...SUPPORTS27E,...COMBAT_SURFACES.filter(s=>s.id!=='ground'&&!s.rise).map(s=>{const xs=s.polygon.map(p=>p.x),ys=s.polygon.map(p=>p.y);return{id:s.id,x:(Math.min(...xs)+Math.max(...xs))/2,y:(Math.min(...ys)+Math.max(...ys))/2,w:Math.max(...xs)-Math.min(...xs),h:Math.max(...ys)-Math.min(...ys),bottom:structureBottom27h(s),top:s.height};})];}

@@ -19,8 +19,8 @@ export function drawStructures27e(g:CanvasRenderingContext2D,images:Map<string,H
  const line=(a:{x:number;y:number},b:{x:number;y:number},color:string,width=1)=>{g.beginPath();const A=point({...a,z:height(s,a)+.1}),B=point({...b,z:height(s,b)+.1});g.moveTo(A.x,A.y);g.lineTo(B.x,B.y);g.strokeStyle=color;g.lineWidth=width;g.stroke();};
  if(s.rise){for(let n=0;n<=9;n++){const y=y0+(y1-y0)*n/9;line({x:x0+2,y},{x:x1-2,y},n===0||n===9?'#caa165':'#819098',1.3);}}
  else{for(let x=x0+140;x<x1;x+=140)line({x,y:y0+2},{x,y:y1-2},'#17242e');for(let y=y0+110;y<y1;y+=110)line({x:x0+2,y},{x:x1-2,y},'#17242e');}
- if(s.id==='central-terrace'){for(const y of [y0+18,y1-18])line({x:x0+18,y},{x:x1-18,y},'#7891a0',1);for(const x of [x0+18,x1-18])line({x,y:y0+18},{x,y:y1-18},'#7891a0',1);}
- if(!s.rise){line({x:x0+3,y:y0+4},{x:x1-3,y:y0+4},s.id.includes('west')?'#66dce4':s.id.includes('east')?'#df72b7':'#7695ad',1.6);}
+ if(s.id.endsWith('-platform')){for(const y of [y0+18,y1-18])line({x:x0+18,y},{x:x1-18,y},'#7891a0',1);for(const x of [x0+18,x1-18])line({x,y:y0+18},{x,y:y1-18},'#7891a0',1);}
+ if(!s.rise){line({x:x0+3,y:y0+4},{x:x1-3,y:y0+4},s.id.includes('north')?'#66dce4':s.id.includes('south')?'#df72b7':'#7695ad',1.6);}
  // Flush edge lights; no decorative railing implying an invisible barrier.
  for(let x=x0+8;x<x1-8;x+=40)line({x,y:y1-2},{x:Math.min(x+12,x1-4),y:y1-2},'#e8ac60',2);
  }

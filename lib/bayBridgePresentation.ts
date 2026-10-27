@@ -19,11 +19,18 @@ export function unprojectWorld(x:number,y:number,camera:{x:number;y:number},zoom
  const c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;
  return arenaInverse46(c.x+(x-500)/scale,c.y+(y-DECK_SCREEN_Y)/scale);
 }
-// Floor corners in the original1536x1024 artwork; the artwork is never stretched.
-const ARENA_Q46=1-596/836,ARENA_K46=720*(1-ARENA_Q46)-285;
-export function arenaPoint46(x:number,y:number){const t=y/620,d=1-ARENA_Q46*t;return{x:768+(x-500+ARENA_SHEAR20*(y-310))*.596/d,y:285+((285+ARENA_K46*t)/d-285)*ARENA_DEPTH20};}
-export function arenaInverse46(x:number,y:number){const originalY=285+(y-285)/ARENA_DEPTH20,t=(originalY-285)/(ARENA_K46+originalY*ARENA_Q46),d=1-ARENA_Q46*t;return{x:500+(x-768)*d/.596-ARENA_SHEAR20*(t*620-310),y:t*620};}
-export function arenaJacobian46(x:number,y:number){const d=1-ARENA_Q46*y/620;return{x:.596/d,xy:.596*(ARENA_SHEAR20/d+(x-500+ARENA_SHEAR20*(y-310))*ARENA_Q46/(620*d*d)),y:ARENA_DEPTH20*(ARENA_K46+285*ARENA_Q46)/(620*d*d)};}
+// 27I: affine three-quarter projection, calibrated to the old projection at
+// arena center. The old rational denominator extrapolated a 620-deep artwork
+// across 1100 world units, stretching foreground hulls while upright art stayed
+// constant. Shared constant Jacobian keeps floors, hulls and inverse aim aligned.
+const Q27I=1-596/836,K27I=720*(1-Q27I)-285;
+const CY27I=550,D27I=1-Q27I*CY27I/620;
+const SX27I=.596/D27I;
+const SY27I=ARENA_DEPTH20*(K27I+285*Q27I)/(620*D27I*D27I);
+const SHEAR27I=SX27I*ARENA_SHEAR20;
+export function arenaPoint46(x:number,y:number){return{x:1536+(x-1100)*SX27I+(y-CY27I)*SHEAR27I,y:700+(y-CY27I)*SY27I};}
+export function arenaInverse46(x:number,y:number){const dy=(y-700)/SY27I;return{x:1100+(x-1536-dy*SHEAR27I)/SX27I,y:CY27I+dy};}
+export function arenaJacobian46(_x:number,_y:number){return{x:SX27I,xy:SHEAR27I,y:SY27I};}
 const sceneContexts46=new WeakMap<object,{sx:number;sy:number;tx:number;ty:number;anchorX:number;anchorY:number}>();
 export function setArenaContext46(g:CanvasRenderingContext2D,camera:{x:number;y:number},zoom:number,sx:number,sy:number){const c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;sceneContexts46.set(g,{sx:sx*scale,sy:sy*scale,tx:(500-c.x*scale)*sx,ty:(DECK_SCREEN_Y-c.y*scale)*sy,anchorX:camera.x,anchorY:camera.y});setWorld46(g,camera.x,camera.y);}
 export function setWorld46(g:CanvasRenderingContext2D,x:number,y:number){const c=sceneContexts46.get(g);if(!c)return;const p=arenaPoint46(x,y),j=arenaJacobian46(x,y);g.setTransform(c.sx*j.x,0,c.sx*j.xy,c.sy*j.y,c.tx+c.sx*(p.x-j.x*x-j.xy*y),c.ty+c.sy*(p.y-j.y*y));}
@@ -48,4 +55,5 @@ export function drawDeckBoundary(g:CanvasRenderingContext2D,near=false){
  if(!near)for(const x of [0,DECK.right]){g.fillStyle="#111d2a";g.beginPath();g.moveTo(x,0);g.lineTo(x,DECK.near);g.lineTo(x,DECK.near-z);g.lineTo(x,-z);g.closePath();g.fill();g.strokeStyle="#657885";g.lineWidth=5;g.beginPath();g.moveTo(x,-z);g.lineTo(x,DECK.near-z);g.stroke()}
  g.restore();
 }
+
 

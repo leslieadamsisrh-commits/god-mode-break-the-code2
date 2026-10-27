@@ -761,6 +761,9 @@ function watchBotInput(s:GameState,n:number,opponent:InputState){
  const safe=(x:number,y:number)=>{const q={x:p.x+x*55,y:p.y+y*55};return q.x>=A.left+20&&q.x<=A.right-20&&q.y>=A.top+20&&q.y<=A.bottom-20&&!s.covers.some(cv=>cv.hp>0&&segmentCover(p,q,{...cv,w:cv.w+30,h:cv.h+30}));};
  const route=p.botRouteSide??side,escaping=s.time<(p.botEscapeUntil||0);
  if(blocked||escaping){let best=-Infinity;for(const angle of [a+route*Math.PI/2,a+route*.8,a-route*.8,a-route*Math.PI/2,a+Math.PI,a]){const x=Math.cos(angle)*.8,y=Math.sin(angle)*.8;if(!safe(x,y))continue;const score=escaping?Math.cos(angle-a-route*Math.PI/2):Math.cos(angle-a)*.4+Math.sin(angle-a)*route*.6;if(score>best){best=score;base.x=x;base.y=y;}}if(!Number.isFinite(best)){base.x=base.y=0;}}
+ // Establish the opening exchange before optional salvage/ability demonstrations.
+ // This prevents distant bots idling in power cycles across the expanded arena.
+ if(range>450&&!blocked&&!p.gripCoverId&&!p.gripId&&!p.coverId&&safe(base.x,base.y)){set("APPROACH → ESTABLISH EXCHANGE",{fire:false});return;}
  const own=s.covers.filter(cv=>cv.constructOwner===n&&cv.hp>0),resources=fieldMatter(p,s),recipe=resources.filter(m=>m.kind==="stone").length>=2&&resources.some(m=>m.kind==="metal");
  if((p.blastUntil||0)>s.time&&(p.blastCharge||0)>0&&!blocked){set("TURNING KICK → GLOVE BLAST",{fire:!p.processedInput.fire,x:0,y:0});return;}
  if(p.meleeCombo){set("GLOVE STRIKE → RECOVERY",{melee:false,fire:false,x:0,y:0});return;}

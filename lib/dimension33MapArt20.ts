@@ -146,7 +146,7 @@ export function getFloorImage20(images:Images){
 }
 export function skylineOffset24(camera:{x:number;y:number}){
  const far=BAY_DEPTH_DOMAINS.find(d=>d.id==='L1_FAR')!;
- return (arenaPoint46(camera.x,camera.y).x-768)*(1-far.parallax);
+ return (arenaPoint46(camera.x,camera.y).x-arenaPoint46(D33_WORLD25.centerX,D33_WORLD25.centerY).x)*(1-far.parallax);
 }
 export function drawMapBackdrop20(g:CanvasRenderingContext2D,images:Images,camera={x:500,y:310}){
  const floor=getFloorImage20(images);if(!floor)return false;
