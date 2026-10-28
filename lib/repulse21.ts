@@ -1,3 +1,4 @@
+import {canPay31} from "./matchRules31";
 import type {GameState,InputState,ActionOutcome} from './game';
 
 export type RepulseSettings21={range:number;cost:number;cooldown:number};
@@ -30,7 +31,7 @@ export function startRepulse21(s:GameState,n:number,hooks:Hooks){
  const reject=(reason:string)=>hooks.emit(n,'rejected',reason);
  if(s.time<(lab.ready.get(n)||0)||lab.casts.has(n)){reject('Repulse recovering');return;}
  if(p.hp<=0||p.knock>0||p.charging||p.shield||p.coverId||p.gripId||p.gripCoverId||p.orbitIds.length||p.meleeCombo||p.gloveHoldStarted!==undefined||p.slide>0||p.dash>0||p.pinball>0||p.exit||p.kickStage!=='none'){reject('Repulse requires a free standing action');return;}
- if(p.battery<lab.settings.cost){reject('Repulse needs battery');return;}
+ if(!canPay31(s,p,lab.settings.cost)){reject('Repulse needs battery');return;}
  if(!hooks.spend(n,lab.settings.cost))return;
  lab.ready.set(n,s.time+lab.settings.cooldown);lab.casts.set(n,{impactAt:s.time+.12,recoverUntil:s.time+.34,angle:p.aim,resolved:false});
  p.pendingFireUntil=undefined;p.pendingMelee=undefined;
@@ -68,3 +69,4 @@ export function stepRepulse21(s:GameState,hooks:Hooks){
   if(s.time>=cast.recoverUntil){lab.casts.delete(n);hooks.emit(n,'recovered','Repulse recovery complete');}
  }
 }
+

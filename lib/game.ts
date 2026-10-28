@@ -1,3 +1,4 @@
+import {type MatchRules31,validateRules31,unlimited31,availableEnergy31,canPay31,debitEnergy31,SPARRING31} from "./matchRules31";
 import {SHAPES27J,RIP_TIME27J,splitBarrier27j,type Section27j} from './psychicMatter27j';
 import {resolveSupports27e,coverStructureBlocked27f,coverSupport27h} from './arenaStructures27e';
 import {barrelSocket27d,cylinderTime27d,coverTime27d} from './ballistics27d';
@@ -37,7 +38,7 @@ export function floorLine15(s:GameState,x:number,y:number,angle:number,range:num
 export const DEFAULT_CONFIG:CombatConfig={legacyPowers:0,chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:4,holdEnergy:.5,coverThrowEnergy:6,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:5,dashEnergy:2,rechargeDelay:.5,rechargeRate:18,weaveEnabled:1,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:430,dashDuration:.16,doubleTapWindow:.28,slideSpeed:490,slideDuration:.50,slideSustain:160,slideSteer:5,slideSteerAngle:.48,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.39,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:420,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player=ElevationState & {ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player=ElevationState & {sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type FloorSlab46={floorPanel46?:{sourceId:string;originX:number;originY:number;creator:number}};
 export type Cover=FloorSlab46 & {height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={unitId?:string;groundId?:string;groundScatter?:boolean;spin?:number;spinVelocity?:number;height?:number;liftVelocity?:number;scatterAt?:number;attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
@@ -47,12 +48,14 @@ export type HitRegion="low"|"torso"|"head";
 export type CombatEvent={parry?:boolean;incomingAngle?:number;attackId?:string;source?:string;seq:number;round:number;at:number;kind:"hit"|"shield"|"cover"|"finish";owner:number;target?:number;region?:HitRegion;damage:number;x:number;y:number;z:number;material?:"stone"|"metal"};
 export const REGION_DAMAGE={low:.75,torso:1,head:1.25};
 export const FINISHER_SECONDS=1.25;
-export type GameState={arenaLayout?:ArenaLayout27c;groundSources44?:GroundSource44[];botStrategy?:"baseline"|"adaptive";botExperience?:BotExperience[];botRound?:FightRound;fightRecording?:FightRecording;actionSeq?:number;actions?:ActionOutcome[];actionCounts?:Record<string,number>;energySpent?:number[];watchPaused?:boolean;watchNextAt?:number;events?:CombatEvent[];eventSeq?:number;timeScale?:number;fightUntil?:number;build:string;mode:"bot"|"solo"|"duel"|"practice"|"watch";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
+export type GameState={rules31?:MatchRules31;arenaLayout?:ArenaLayout27c;groundSources44?:GroundSource44[];botStrategy?:"baseline"|"adaptive";botExperience?:BotExperience[];botRound?:FightRound;fightRecording?:FightRecording;actionSeq?:number;actions?:ActionOutcome[];actionCounts?:Record<string,number>;energySpent?:number[];watchPaused?:boolean;watchNextAt?:number;events?:CombatEvent[];eventSeq?:number;timeScale?:number;fightUntil?:number;build:string;mode:"bot"|"solo"|"duel"|"practice"|"watch";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
 
-export type ActionOutcome={attackId?:string;context?:string;objectClass?:string;distanceBand?:string;spawnSide?:string;opponentBehavior?:string;speed?:number;mass?:number;round:number;seq:number;at:number;wallAt:number;owner:number;action:string;status:"attempted"|"activated"|"rejected"|"buffered"|"cancelled"|"contact"|"missed"|"recovered";reason?:string;objectId?:string;amount?:number};
+export type ActionOutcome={nominalEnergy?:number;attackId?:string;context?:string;objectClass?:string;distanceBand?:string;spawnSide?:string;opponentBehavior?:string;speed?:number;mass?:number;round:number;seq:number;at:number;wallAt:number;owner:number;action:string;status:"attempted"|"activated"|"rejected"|"buffered"|"cancelled"|"contact"|"missed"|"recovered";reason?:string;objectId?:string;amount?:number};
 function actionOutcome(s:GameState,owner:number,action:string,status:ActionOutcome["status"],reason?:string,objectId?:string,amount?:number,attackId?:string){
  if(status==="activated"&&action==="throw"){attackId??=uid();const obj=s.covers.find(c=>c.id===objectId)||s.matter.find(m=>m.id===objectId);if(obj)obj.attackId=attackId;else if(reason==="orbit")for(const m of s.matter)if(m.throwOwner===owner&&m.attackId===undefined&&Math.hypot(m.vx,m.vy)>140)m.attackId=attackId;}
- const e:ActionOutcome={round:s.round,seq:(s.actionSeq||0)+1,at:s.time,wallAt:s.lastAt,owner,action,status,...attackId?{attackId}:{},...reason?{reason}:{},...objectId?{objectId}:{},...amount!==undefined?{amount}:{}};s.actionSeq=e.seq;recordFightAction(s,e);(s.actions??=[]).push(e);if(s.actions.length>128)s.actions.splice(0,s.actions.length-128);const key=owner+":"+action+":"+status;(s.actionCounts??={})[key]=(s.actionCounts[key]||0)+1;return e;
+ const nominalEnergy=status==="activated"&&["rip","peel","build","floor-rebuild","throw","place"].includes(action)?amount:undefined;
+ if(unlimited31(s)&&nominalEnergy!==undefined)amount=0;
+ const e:ActionOutcome={...nominalEnergy!==undefined?{nominalEnergy}:{},round:s.round,seq:(s.actionSeq||0)+1,at:s.time,wallAt:s.lastAt,owner,action,status,...attackId?{attackId}:{},...reason?{reason}:{},...objectId?{objectId}:{},...amount!==undefined?{amount}:{}};s.actionSeq=e.seq;recordFightAction(s,e);(s.actions??=[]).push(e);if(s.actions.length>128)s.actions.splice(0,s.actions.length-128);const key=owner+":"+action+":"+status;(s.actionCounts??={})[key]=(s.actionCounts[key]||0)+1;return e;
 }
 export function combatDiagnostics(s:GameState){return{round:s.round,phase:s.phase,actionSeq:s.actionSeq||0,actions:s.actions||[],counts:s.actionCounts||{},energySpent:s.energySpent||[],units:{time:"simulation seconds",wallAt:"server milliseconds",energy:"observed battery loss"}};}
 function actionRequests(p:Player,i:InputState,prev:InputState,time:number,legacy=false){const out:string[]=[];for(const [key,action] of [["fire",i.grip?"throw":(p.blastUntil||0)>time&&(p.blastCharge||0)>0?"glove-blast":"shotgun"],["throwMatter","throw"],["grip","grip"],["slide","movement"],["shield","shield"],["powerup","charge"],["cover","build"],["orbit","orbit"],["slow","time"],["melee","melee"],["heavy","heavy"],["pinball","pinball"]] as const)if(i[key]&&!prev[key])out.push(action);if(i.powerUse&&!prev.powerUse)out.push(legacy?["build","orbit","pinball","heavy","time","repulse"][p.selectedPower||0]:"time");return [...new Set(out)];}
@@ -145,11 +148,17 @@ export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo
  // Eight finite recipes in mirrored salvage clusters; no passive material spawning.
  const matter:Matter[]=[];if(mode==="duel"||mode==="watch")for(let side=0;side<2;side++)for(const [station,[x,y]] of [[170,460],[240,400],[370,470],[400,150]].entries())for(let j=0;j<3;j++)matter.push({id:`salvage-${side}-${station}-${j}`,x:side?D33_WORLD25.width-x-j*18:x+j*18,y:y+100,vx:0,vy:0,r:5+j%2,kind:j===2?"metal":"stone",heldBy:null,orbitBy:null,life:999,sourceArt:j===2?"maintenance-cabinet":"damaged-jersey",fragment:j});
  const arenaLayout=chaseLayout27c();const covers:Cover[]=instantiateLayout27c(arenaLayout); // Clear single-player practice arena; preserve multiplayer maps.
- return{arenaLayout,build:"BUILD-27H-CENTRAL-TERRACE",groundSources44:groundSources44(),mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,events:[],eventSeq:0,actions:[],actionCounts:{},energySpent:[],actionSeq:0,timeScale:1,fightUntil:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
+ return{arenaLayout,build:"BUILD-31-CONTROLLED-SPARRING",groundSources44:groundSources44(),mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,events:[],eventSeq:0,actions:[],actionCounts:{},energySpent:[],actionSeq:0,timeScale:1,fightUntil:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
+}
+export function setMatchRules31(s:GameState,value:unknown,slot:number){
+ if(slot!==0)throw Error("HOST_ONLY");
+ if(s.phase!=="lobby"&&s.phase!=="finished")throw Error("RULES_LOCKED_DURING_ROUND");
+ s.rules31=validateRules31(value);
+ if(unlimited31(s))s.players.forEach(p=>p.battery=100);
 }
 export function updateConfig(s:GameState,patch:Partial<CombatConfig>){s.config={...s.config,...patch};for(const p of s.players)p.hp=Math.min(p.hp,s.config.maxHealth)}
 export function joinGame(s:GameState,name:string,token:string){if(s.mode==="watch")throw Error("Spectator session is not joinable");if(s.mode==="practice")throw Error("Practice is not joinable");if(s.mode==="solo")throw Error("Solo session is not joinable");const b=s.players.findIndex(p=>p.bot);if(b>=0){s.players[b]={...s.players[b],name,token,bot:false,lastSeq:-1,input:empty(),processedInput:empty()};return}if(s.players.length>1)throw Error("Room is full");s.players.push(player(BAY_SPAWNS[1].x,BAY_SPAWNS[1].y,Math.PI,name,token,false,s.config.maxHealth))}
-function respawn(s:GameState){if(s.fightRecording?.active&&s.phase!=="finished")s.fightRecording.abandoned++;const cfg={...s.config},ids=s.players.map(p=>({name:p.name,token:p.token,bot:p.bot,score:p.score})),fresh=newGame(ids[0].name,ids[0].token,s.lastAt,s.mode);fresh.arenaLayout=validateLayout27c(s.arenaLayout||chaseLayout27c());fresh.covers=instantiateLayout27c(fresh.arenaLayout);fresh.config=cfg;fresh.players[0].hp=cfg.maxHealth;if(ids[1])fresh.players[1]=player(BAY_SPAWNS[1].x,BAY_SPAWNS[1].y,Math.PI,ids[1].name,ids[1].token,ids[1].bot,cfg.maxHealth);fresh.players.forEach((p,i)=>p.score=ids[i]?.score||0);fresh.round=s.round+1;fresh.createdAt=s.createdAt;fresh.botRound=undefined;fresh.watchNextAt=undefined;fresh.botStrategy=s.botStrategy;fresh.botExperience=s.botExperience;fresh.fightRecording=s.fightRecording;if(fresh.fightRecording?.active&&fresh.fightRecording.rounds.length%2===1){[fresh.players[0].x,fresh.players[1].x]=[fresh.players[1].x,fresh.players[0].x];fresh.players.forEach((p,i)=>p.aim=p.gunFacing=i?0:Math.PI);}fresh.phase=s.mode==="solo"?"playing":"countdown";Object.assign(s,fresh)}
+function respawn(s:GameState){if(s.fightRecording?.active&&s.phase!=="finished")s.fightRecording.abandoned++;const cfg={...s.config},ids=s.players.map(p=>({name:p.name,token:p.token,bot:p.bot,score:p.score})),fresh=newGame(ids[0].name,ids[0].token,s.lastAt,s.mode);fresh.arenaLayout=validateLayout27c(s.arenaLayout||chaseLayout27c());fresh.covers=instantiateLayout27c(fresh.arenaLayout);fresh.config=cfg;fresh.rules31=s.rules31?{...s.rules31}:undefined;fresh.players[0].hp=cfg.maxHealth;if(ids[1])fresh.players[1]=player(BAY_SPAWNS[1].x,BAY_SPAWNS[1].y,Math.PI,ids[1].name,ids[1].token,ids[1].bot,cfg.maxHealth);fresh.players.forEach((p,i)=>p.score=ids[i]?.score||0);fresh.round=s.round+1;fresh.createdAt=s.createdAt;fresh.botRound=undefined;fresh.watchNextAt=undefined;fresh.botStrategy=s.botStrategy;fresh.botExperience=s.botExperience;fresh.fightRecording=s.fightRecording;if(fresh.fightRecording?.active&&fresh.fightRecording.rounds.length%2===1){[fresh.players[0].x,fresh.players[1].x]=[fresh.players[1].x,fresh.players[0].x];fresh.players.forEach((p,i)=>p.aim=p.gunFacing=i?0:Math.PI);}fresh.phase=s.mode==="solo"?"playing":"countdown";Object.assign(s,fresh)}
 export function setInput(s:GameState,slot:number,seq:number,input:Partial<InputState>){const p=s.players[slot];if(!p||s.mode==="watch"||seq<=p.lastSeq)return;p.lastSeq=seq;p.gripCancelRelease=false;let x=clamp(Number(input.x)||0,-1,1),y=clamp(Number(input.y)||0,-1,1),m=Math.hypot(x,y);if(m>1){x/=m;y/=m}let gripAxes:Partial<InputState>={};if(Number.isFinite(input.gripX)&&Number.isFinite(input.gripY)){let gx=clamp(input.gripX!,-1,1),gy=clamp(input.gripY!,-1,1),gm=Math.hypot(gx,gy);if(gm>1){gx/=gm;gy/=gm;}gripAxes={gripX:gx,gripY:gy};}const aimPoint=Number.isFinite(input.aimX)&&Number.isFinite(input.aimY)&&Number.isFinite(input.aimZ)?{aimX:clamp(input.aimX!,-500,2000),aimY:clamp(input.aimY!,-500,1500),aimZ:clamp(input.aimZ!,0,500)}:{aimX:undefined,aimY:undefined,aimZ:undefined};p.input={...empty(),...input,...aimPoint,gripX:undefined,gripY:undefined,...gripAxes,x,y,aim:Number.isFinite(input.aim)?wrap(input.aim as number):p.aim}}
 
 function localPoint(c:Cover,x:number,y:number){const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),dx=x-c.x,dy=y-c.y;return{x:dx*ca+dy*sa,y:-dx*sa+dy*ca}}
@@ -230,8 +239,8 @@ function classicCoverAction(p:Player,s:GameState,i:InputState){
  const kind=normal>.15?"outward":tan>.55&&normal>=-.05?"past":"blocked";
  if(kind==="blocked"){s.fx.push({id:uid(),type:"cover-block",x:p.x,y:p.y,life:.18});return false}
  // Every valid escape has a free base; charge funds only the bounded boost.
- const cost=Math.min(Math.max(0,p.battery),Math.max(0,s.config.slideEnergy)),scale=.55+.45*(s.config.slideEnergy>0?cost/s.config.slideEnergy:1);
- p.battery=Math.max(0,p.battery-cost);if(cost>0)p.lastEnergyAt=s.time;p.kickScale=scale;
+ const cost=Math.min(Math.max(0,availableEnergy31(s,p,s.config.slideEnergy)),Math.max(0,s.config.slideEnergy)),scale=.55+.45*(s.config.slideEnergy>0?cost/s.config.slideEnergy:1);
+ debitEnergy31(s,p,cost);if(cost>0)p.lastEnergyAt=s.time;p.kickScale=scale;
  releaseCover(p,s,.25);p.coverLock=s.time+.25;p.slideSteerCurrent=0;
  if(kind==="past"){
    const sign=ax*a.tx+ay*a.ty<0?-1:1;p.kickAngle=Math.atan2(ay,ax);p.kickNx=a.nx;p.kickNy=a.ny;p.kickStage="burst";p.kickTime=.13;p.vx=Math.cos(p.kickAngle)*408*scale;p.vy=Math.sin(p.kickAngle)*408*scale;p.slideFacing=p.kickAngle;p.slideCool=.94;p.exit=null;s.fx.push({id:uid(),type:"dash",x:p.x,y:p.y,life:.22,text:"BURST"});return true
@@ -303,7 +312,7 @@ function settleCover(cv:Cover,s:GameState){
  }
  cv.x=clamp(cv.x,A.left+ex,A.right-ex);cv.y=clamp(cv.y,A.top+ey,A.bottom-ey);
 }
-function spendEnergy(p:Player,s:GameState,cost:number){if(p.battery<cost){s.fx.push({id:uid(),type:"low-energy",x:p.x,y:p.y,life:.3,text:"LOW CHARGE"});p.gripHint="LOW BATTERY · HOLD Y";p.gripHintUntil=s.time+1.5;return false}p.battery=Math.max(0,p.battery-cost);p.lastEnergyAt=s.time;return true}
+function spendEnergy(p:Player,s:GameState,cost:number){if(!canPay31(s,p,cost)){s.fx.push({id:uid(),type:"low-energy",x:p.x,y:p.y,life:.3,text:"LOW CHARGE"});p.gripHint="LOW BATTERY · HOLD Y";p.gripHintUntil=s.time+1.5;return false}debitEnergy31(s,p,cost);p.lastEnergyAt=s.time;return true}
 // Charge is vulnerable; timers use real time, never slow-time simulation time.
 function powerStep(p:Player,s:GameState,dt:number){
  const i=p.input,c=s.config;
@@ -312,7 +321,7 @@ function powerStep(p:Player,s:GameState,dt:number){
  // Fresh Y can refill mid-window; a held Y still cannot restart at expiry.
  const refill=i.powerup&&!p.processedInput.powerup&&!p.powerBlocked&&p.godTime>dt&&p.battery>c.godDrain*dt;
  if(p.godTime>0&&i.powerup&&!refill)p.powerBlocked=true;
- if(p.godTime>0){const glow=.6*Math.min(1,p.godTime/Math.max(.01,p.godDuration||12));p.godTime=Math.max(0,p.godTime-dt);p.battery=Math.max(0,p.battery-c.godDrain*dt);p.lastEnergyAt=s.time;if(!p.godTime||p.battery<=0){p.godTime=0;p.godFade=.45;p.godFadeStrength=glow}}
+ if(p.godTime>0){const glow=.6*Math.min(1,p.godTime/Math.max(.01,p.godDuration||12));p.godTime=Math.max(0,p.godTime-dt);debitEnergy31(s,p,c.godDrain*dt);p.lastEnergyAt=s.time;if(!p.godTime||p.battery<=0){p.godTime=0;p.godFade=.45;p.godFadeStrength=glow}}
  if((p.powerFlash>0||p.powerReturn>0)&&(i.fire||i.slide||i.grip||i.melee||i.cover||i.shield||i.coverAim||p.knock>0)){p.powerFlash=0;p.powerReturn=0}
  const interrupted=!!(i.powerUse||i.fire||i.slide||i.melee||i.heavy||i.grip||i.cover||i.shield||i.coverAim||i.slow||i.pinball||p.knock>0||p.slide>0||p.dash>0||p.exit||p.kickStage!=="none");
  if(p.charging&&(!i.powerup||interrupted)){
@@ -325,19 +334,19 @@ function powerStep(p:Player,s:GameState,dt:number){
  p.chargeMotion=(p.chargeMotion??1)+(target-(p.chargeMotion??1))*(1-Math.exp(-clamp(c.chargeMoveResponse??8,3,16)*dt));
 }
 // A rejected slide consumes only its own action, not grip/drop or build edges.
-function mobilityScale(p:Player,c:CombatConfig,cost:number,min=.34){
- const available=Math.max(0,Math.min(cost,p.battery)),ratio=cost>0?available/cost:1;
- if(available>0){p.battery=Math.max(0,p.battery-available)}
+function mobilityScale(p:Player,s:GameState,cost:number,min=.34){
+ const available=Math.max(0,Math.min(cost,availableEnergy31(s,p,cost))),ratio=cost>0?available/cost:1;
+ if(available>0){debitEnergy31(s,p,available)}
  return min+(1-min)*ratio;
 }
 function startDash(p:Player,s:GameState,a:number){
- const c=s.config,scale=mobilityScale(p,c,c.dashEnergy,.36);
+ const c=s.config,scale=mobilityScale(p,s,c.dashEnergy,.36);
  p.dash=c.dashDuration*(.72+.28*scale);p.boostState=p.dash+.08;p.slideSteerCurrent=0;p.slideFacing=a;
  const speed=c.dashSpeed*scale;p.vx=Math.cos(a)*speed;p.vy=Math.sin(a)*speed;
  p.lastEnergyAt=s.time;s.fx.push({id:uid(),type:"dash",x:p.x,y:p.y,life:.22,owner:s.players.indexOf(p),text:"ZIP!"});
 }
 function startClassicSlide(p:Player,s:GameState,a:number){
- const c=s.config,scale=mobilityScale(p,c,c.slideEnergy,.52);
+ const c=s.config,scale=mobilityScale(p,s,c.slideEnergy,.52);
  p.dash=0;p.slideSteerCurrent=0;p.slide=c.slideDuration*(.84+.16*scale);p.slideFacing=a;
  const launch=c.slideSpeed*scale;p.vx=Math.cos(a)*launch;p.vy=Math.sin(a)*launch;p.slideCool=c.slideDuration;
  p.lastEnergyAt=s.time;s.fx.push({id:uid(),type:"slide",x:p.x,y:p.y,life:.48,owner:s.players.indexOf(p),text:Math.floor(s.time)%2?"SKURT!":"SKEET"});
@@ -465,13 +474,14 @@ export function gripSelection(p:Player,s:GameState){
  return{cover,matter:cover||panel?undefined:matter,panel};
 }
 export function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
+ if(s.covers.filter(c=>c.hp>0).length+2>96)return 'OBJECT LIMIT';
  if(cv.hp<=0||!cv.anchored27j||cv.section27j)return 'SECTION UNAVAILABLE';
  if(cv.ripOwner27j!==undefined&&cv.ripOwner27j!==n)return 'SECTION CLAIMED';
  if(p.hp<=0||p.knock>0||p.charging||p.shield||p.slide>0||p.gripCoverId)return 'RIP INTERRUPTED';
  if(dist(p,cv)>psychicField(p).radius||Math.abs(p.z-(cv.z||0))>64)return 'OUT OF REACH';
  const from={x:p.x,y:p.y,z:p.z+40},to={x:cv.x,y:cv.y,z:(cv.z||0)+24};
  if(Number.isFinite(surfaceShotTime(from,to))||s.covers.some(c=>c.id!==cv.id&&c.hp>0&&coverTime27d({...from,z:from.z-(c.z||0)-(c.hover||0)},{...to,z:to.z-(c.z||0)-(c.hover||0)},c,c.height27j??bayObject(c.artId||c.id)?.dimensions.z??48)!==null))return 'RIP LINE BLOCKED';
- if(p.battery<s.config.gripEnergy)return 'LOW BATTERY';return null;
+ if(!canPay31(s,p,s.config.gripEnergy))return 'LOW BATTERY';return null;
 }
 function beginRip27j(p:Player,s:GameState,n:number,cv:Cover){if(p.ripTarget27j)return;const reason=ripReason27j(p,s,n,cv);if(reason){p.gripHint=reason;p.gripHintUntil=s.time+1.5;return;}cv.ripOwner27j=n;cv.ripAt27j=s.time;p.ripTarget27j=cv.id;p.gripHint='TEARING CENTER SECTION';p.gripHintUntil=s.time+1;}
 function stepRip27j(p:Player,s:GameState,n:number){if(!p.ripTarget27j)return;const cv=s.covers.find(c=>c.id===p.ripTarget27j);const cancel=()=>{if(cv&&cv.ripOwner27j===n){cv.ripOwner27j=undefined;cv.ripAt27j=undefined;}p.ripTarget27j=undefined;};
@@ -487,6 +497,7 @@ function stepRip27j(p:Player,s:GameState,n:number){if(!p.ripTarget27j)return;con
  actionOutcome(s,n,'rip','activated','center section',chunk.id,s.config.gripEnergy);combatEvent(s,{kind:'cover',source:'rip',owner:n,damage:0,x:cv.x,y:cv.y,z:(cv.z||0)+24,material:'stone'});s.fx.push({id:uid(),type:'matter-rip',x:cv.x,y:cv.y,z:cv.z||0,life:.28,owner:n});
 }
 function extractPanel46(p:Player,s:GameState,n:number,q:GroundSource44){
+ if(s.covers.filter(c=>c.hp>0).length>=96){p.gripHint="OBJECT LIMIT · BREAK OR REUSE COVER";p.gripHintUntil=s.time+1.5;return;}
  const cv:Cover={id:uid(),x:q.x,y:q.y,w:80,h:54,a:0,hp:280,maxHp:280,generated:false,build:0,variant:0,artId:"floor-panel46",coverClass:"waist",born:s.time,stamp44:n,floorPanel46:{sourceId:q.id,originX:q.x,originY:q.y,creator:n},matterSources:Array.from({length:3},(_,k)=>({kind:"stone",sourceArt:"damaged-jersey",fragment:k,unitId:q.id+"-"+k,groundId:q.id}))};
  if(q.remaining!==3||carryBlocked(cv,cv,s)){p.gripHint="FLOOR PANEL BLOCKED · STEP CLEAR";p.gripHintUntil=s.time+1.5;return;}
  if(!spendEnergy(p,s,s.config.gripEnergy))return;
@@ -509,7 +520,7 @@ export function constructionPreview21(p:Player,s:GameState,n:number){
  const limit=4;
  const slab=s.covers.find(q=>q.id===p.gripCoverId&&q.floorPanel46&&q.hp>0);
  const groundUnits=peelSources44(p,s).reduce((total,q)=>total+q.remaining,0);
- const reason=p.battery<COVER_41.buildEnergy?'BUILD NEEDS 20 BATTERY · HOLD Y':
+ const reason=s.covers.filter(c=>c.hp>0).length>=96?"OBJECT LIMIT · BREAK OR REUSE COVER":!canPay31(s,p,COVER_41.buildEnergy)?'BUILD NEEDS 20 BATTERY · HOLD Y':
   s.covers.filter(c=>c.constructOwner===n&&c.hp>0).length>=limit?'COVER ACTIVE · LB GRIP / THROW OR BREAK TO REBUILD':
   !cover?'NO BUILD SPACE · '+[...new Set(blocked)].join(' / '):
   null;
@@ -550,13 +561,13 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  if(c.legacyPowers&&i.powerUse&&!prev.powerUse&&p.selectedPower===5&&repulseEnabled21(s)){startRepulse21(s,n,repulseHooks21(s));Object.assign(i,repulseInput21(s,n,i));}
  if(i.weaponCycle&&!prev.weaponCycle){p.selectedWeapon=0;p.gripHint="SHOTGUN · ONLY VERIFIED WEAPON";p.gripHintUntil=s.time+1.2;}
  if((i.slow&&!prev.slow)||(!c.legacyPowers&&i.powerUse&&!prev.powerUse))toggleTime27g(p,s);
- if(c.legacyPowers&&i.powerUse&&!prev.powerUse){const power=PSYCHIC_POWERS[p.selectedPower||0];if(power==="BUILD COVER")i.cover=true;else if(power==="ORBIT")i.orbit=true;else if(power==="PINBALL")i.pinball=true;else if(power==="HEAVY GAUNTLET")i.heavy=true;else if(power==="BULLET TIME"){if(p.timeFieldActive)p.timeFieldActive=false;else if(p.hp>0&&p.battery>0&&!p.charging)p.timeFieldActive=true;}}
+ if(c.legacyPowers&&i.powerUse&&!prev.powerUse){const power=PSYCHIC_POWERS[p.selectedPower||0];if(power==="BUILD COVER")i.cover=true;else if(power==="ORBIT")i.orbit=true;else if(power==="PINBALL")i.pinball=true;else if(power==="HEAVY GAUNTLET")i.heavy=true;else if(power==="BULLET TIME"){if(unlimited31(s)){toggleTime27g(p,s);}else if(p.timeFieldActive)p.timeFieldActive=false;else if(p.hp>0&&p.battery>0&&!p.charging)p.timeFieldActive=true;}}
  if(i.coverShapeCycle&&!prev.coverShapeCycle){const next=((p.coverShape||0)+1)%3,held=s.covers.find(cv=>cv.id===p.gripCoverId);if(!held)p.coverShape=next;else if(!held.generated){p.gripHint="NATURAL CHUNK · PLACE OR THROW";p.gripHintUntil=s.time+1.5;}else if(held.reshapePending27j===undefined&&s.time>=(held.reshapeAt27j??-1)+.4){const candidate={...held,...SHAPES27J[next]};const reason=carryBlockReason21(candidate,held,s);if(!reason){held.reshapeFrom27j={w:held.w,h:held.h,height27j:held.height27j||48};held.reshapePending27j=next;held.reshapeAt27j=s.time;p.gripHint="RESHAPING · HOLD STEADY";}else p.gripHint=reason;p.gripHintUntil=s.time+1.5;}}
  if(i.fieldCycle&&!prev.fieldCycle)p.fieldLevel=(psychicField(p).level+1)%3;
  // Successful immediate brace keeps its original priority over other edges.
  slideAction(s,n,prev);
- if(i.pinball&&!prev.pinball&&p.battery<22)spendEnergy(p,s,22);
- if(i.pinball&&!prev.pinball&&p.battery>=22){p.battery-=22;p.pinball=c.pinballDuration;p.vx=Math.cos(p.aim)*c.pinballSpeed;p.vy=Math.sin(p.aim)*c.pinballSpeed;s.fx.push({id:uid(),type:"pinball",x:p.x,y:p.y,life:.5,owner:n})}
+ if(i.pinball&&!prev.pinball&&!canPay31(s,p,22))spendEnergy(p,s,22);
+ if(i.pinball&&!prev.pinball&&canPay31(s,p,22)){debitEnergy31(s,p,22);p.pinball=c.pinballDuration;p.vx=Math.cos(p.aim)*c.pinballSpeed;p.vy=Math.sin(p.aim)*c.pinballSpeed;s.fx.push({id:uid(),type:"pinball",x:p.x,y:p.y,life:.5,owner:n})}
  meleeInput(s,n,prev);
  // Heavy gauntlet keeps its existing separate power path.
  if(i.heavy&&!prev.heavy)p.pendingMelee={heavy:true,until:s.time+.18};
@@ -828,7 +839,7 @@ function watchBotInput(s:GameState,n:number,opponent:InputState){
  if(p.coverId){set(p.coverMode==="soft"?"SOFT COVER → BRACE":"BRACE → EXPOSE → FIRE",{slide:p.coverMode==="soft",coverAim:true,fire:!blocked||p.coverMode==="braced",x:0,y:0});if(cycle>9){set("COVER → ESCAPE",{slide:!p.processedInput.slide,x:-Math.cos(a),y:-Math.sin(a)});}return;}
  const incoming=s.shots.some(sh=>sh.owner!==n&&sh.life>0&&Math.hypot(sh.x-p.x,sh.y-p.y)<125&&((p.x-sh.x)*sh.vx+(p.y-sh.y)*sh.vy)>0);
  const incomingCover=s.covers.some(cv=>cv.hp>0&&cv.build<0&&cv.throwOwner!==n&&Math.hypot(cv.vx||0,cv.vy||0)>160&&dist(cv,p)<Math.hypot(cv.w,cv.h)/2+125&&((p.x-cv.x)*(cv.vx||0)+(p.y-cv.y)*(cv.vy||0))>0);
- if((incoming||incomingCover)&&!p.coverId&&p.battery>=22&&s.time>=(p.botNextGuard||0)){p.botGuardUntil=s.time+(incomingCover?.32:.22);p.botNextGuard=s.time+1.8;}
+ if((incoming||incomingCover)&&!p.coverId&&canPay31(s,p,22)&&s.time>=(p.botNextGuard||0)){p.botGuardUntil=s.time+(incomingCover?.32:.22);p.botNextGuard=s.time+1.8;}
  if(s.time<(p.botGuardUntil||0)){set(incomingCover?"INCOMING COVER → SHIELD":"INCOMING SHOTS → SHIELD",{shield:true,x:0,y:0,fire:false});return;}
  if(!blocked&&p.battery>=43&&(t.charging||s.time<(p.botCounterUntil||0))){set(t.charging?"PUNISH EXPOSED CHARGE":"SHIELD BLOCK → COUNTER",{shield:false,fire:true,x:range>230?Math.cos(a)*.8:0,y:range>230?Math.sin(a)*.8:0,melee:range<62&&!p.processedInput.melee});return;}
  if(own.length<2&&recipe&&p.battery>=43&&s.time>=(p.botNextBuild??(2.2+n*.4))&&!p.processedInput.cover){const angle=[a+side*Math.PI/3,a-side*Math.PI/3,a+side*Math.PI/2,a-side*Math.PI/2,a+Math.PI].find(angle=>constructionPlacement(p,s,n,angle));if(angle!==undefined){p.botBuildAt=s.time;p.botNextBuild=s.time+6;set("SALVAGE → BUILD COVER",{cover:true,x:Math.cos(angle)*.2,y:Math.sin(angle)*.2,aim:angle});return;}p.botNextBuild=s.time+.65;p.botEscapeUntil=s.time+.65;set("NO BUILD SPACE → REPOSITION",{x:base.x,y:base.y});return;}
@@ -843,6 +854,17 @@ function watchBotInput(s:GameState,n:number,opponent:InputState){
  set(guard?"SHIELD → COUNTER":heavy?"HEAVY GAUNTLET → SHOTGUN":range<62?"MELEE → SHOTGUN":blocked?"FLANK BLOCKED SIGHTLINE":"ADVANCE → SHOTGUN",{shield:guard,fire:!guard&&!blocked&&range<450&&(s.time+n*.25)%1.1<.45,heavy:heavy&&!p.processedInput.heavy,melee:!heavy&&range<62&&!p.processedInput.melee,slide:range>330&&!blocked&&(s.time+n*.3)%4<.03});
 }
 function botInput(s:GameState){
+ if((s.mode==="practice"||s.mode==="bot")&&s.rules31?.opponent!==undefined&&s.rules31.opponent!=="full"){
+  const prior=s.players.map(p=>({...p.input}));
+  s.players.forEach((p,n)=>{if(!p.bot)return;
+   if(s.rules31!.opponent==="target"){p.input={...empty(),aim:p.aim};p.botIntent="TARGET · NO ATTACKS";return;}
+   if(s.time%SPARRING31.cycleSeconds>=SPARRING31.offenseSeconds){p.input={...empty(),aim:p.aim};p.botIntent="SPARRING · RECOVERY WINDOW";return;}
+   if(s.time<(p.sparDecision31||0))return;
+   p.sparDecision31=s.time+SPARRING31.decisionSeconds;
+   watchBotInput(s,n,prior[1-n]);p.input.x*=SPARRING31.moveScale;p.input.y*=SPARRING31.moveScale;
+  });return;
+ }
+
  if(s.mode==="watch"||s.mode==="practice"){const prior=s.players.map(p=>({...p.input}));for(let n=0;n<s.players.length;n++)if(s.players[n].bot)watchBotInput(s,n,prior[1-n]);return;}
  const n=s.players.findIndex(p=>p.bot);if(n<0)return;const p=s.players[n],t=s.players[1-n];if(!t)return;const a=Math.atan2(t.y-p.y,t.x-p.x),d=dist(p,t),blocked=s.covers.some(cv=>cv.hp>0&&segmentCover(p,t,cv)),side=Math.sin(s.time*.7)>=0?1:-1;
  p.input={...empty(),x:blocked?-Math.sin(a)*side*.65:Math.cos(a)*(d>260?.7:d<140?-.4:0),y:blocked?Math.cos(a)*side*.65:Math.sin(a)*(d>260?.7:d<140?-.4:0),aim:a,fire:!blocked&&d<520&&s.time%1.4<.1};
@@ -869,7 +891,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
  stepRepulse21(s,repulseHooks21(s));
  for(const cv of s.covers)if(cv.reshapePending27j!==undefined&&!s.players.some(p=>p.hp>0&&p.gripCoverId===cv.id)){cv.reshapePending27j=undefined;cv.reshapeFrom27j=undefined;}
  const d=dt;s.timeScale=1; // Projectile time never slows bodies or action timers.
- for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(p.hp<=0)p.timeFieldActive=false;if(p.timeFieldActive&&s.time>=(p.timeUntil27g??Infinity)){p.timeFieldActive=false;p.timeReady27g=s.time+PROJECTILE_TIME.cooldown;}if(i.shield&&!prev[n]?.shield&&s.time>=(p.shieldReady27g||0)){p.shieldAt27g=s.time;p.shieldReady27g=s.time+.65;}p.aim=i.aim;powerStep(p,s,dt);
+ for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(p.hp<=0)p.timeFieldActive=false;if(unlimited31(s)&&p.timeFieldActive&&p.timeUntil27g===undefined)p.timeUntil27g=s.time+PROJECTILE_TIME.duration;if(p.timeFieldActive&&s.time>=(p.timeUntil27g??Infinity)){p.timeFieldActive=false;p.timeReady27g=s.time+PROJECTILE_TIME.cooldown;}if(i.shield&&!prev[n]?.shield&&s.time>=(p.shieldReady27g||0)){p.shieldAt27g=s.time;p.shieldReady27g=s.time+.65;}p.aim=i.aim;powerStep(p,s,dt);
   stepRip27j(p,s,n);
   const reshaping=s.covers.find(cv=>cv.id===p.gripCoverId&&cv.reshapePending27j!==undefined);
   if(reshaping){
@@ -895,7 +917,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
   else if(p.coverId&&p.coverMode==="braced"&&i.coverAim)p.gunFacing=i.aim;
   else{const maxTwist=145*Math.PI/180,deltaAim=Math.atan2(Math.sin(i.aim-moveAngle),Math.cos(i.aim-moveAngle));p.gunFacing=moveAngle+clamp(deltaAim,-maxTwist/2,maxTwist/2)}
   p.fireState=Math.max(0,p.fireState-dt);p.recoil=Math.max(0,p.recoil-dt);p.returnToCover=Math.max(0,p.returnToCover-dt);p.boostState=Math.max(0,p.boostState-dt);p.brakeState=Math.max(0,p.brakeState-dt);
-  const beforeEnergy=p.battery;edgeActions(s,n,prev[n]||empty());if(p.battery<beforeEnergy)p.lastEnergyAt=s.time;p.shield=i.shield&&!coverContext&&!p.coverId&&p.battery>0;if(p.shield)p.battery=Math.max(0,p.battery-3*dt);if(p.timeFieldActive&&p.battery>0)p.battery=Math.max(0,p.battery-(PROJECTILE_TIME.baseDrain+PROJECTILE_TIME.pelletDrain*(p.timePellets||0))*dt);if(p.gripId||p.gripCoverId||p.orbitIds.length)p.battery=Math.max(0,p.battery-c.holdEnergy*dt);const constructs=s.covers.filter(cv=>cv.constructOwner===n&&cv.hp>0).length;if(p.shield||p.timeFieldActive||p.gripId||p.gripCoverId||p.orbitIds.length)p.lastEnergyAt=s.time;else if(!p.charging&&!p.godTime&&s.time-(p.lastEnergyAt??-9)>=c.rechargeDelay&&!p.slide&&!p.dash&&!p.kickStage?.match(/burst|step/))p.battery=Math.min(100,p.battery+c.rechargeRate*dt);
+  const beforeEnergy=p.battery;edgeActions(s,n,prev[n]||empty());if(p.battery<beforeEnergy)p.lastEnergyAt=s.time;p.shield=i.shield&&!coverContext&&!p.coverId&&p.battery>0;if(p.shield)debitEnergy31(s,p,3*dt);if(p.timeFieldActive&&p.battery>0)debitEnergy31(s,p,(PROJECTILE_TIME.baseDrain+PROJECTILE_TIME.pelletDrain*(p.timePellets||0))*dt);if(p.gripId||p.gripCoverId||p.orbitIds.length)debitEnergy31(s,p,c.holdEnergy*dt);const constructs=s.covers.filter(cv=>cv.constructOwner===n&&cv.hp>0).length;if(p.shield||p.timeFieldActive||p.gripId||p.gripCoverId||p.orbitIds.length)p.lastEnergyAt=s.time;else if(!p.charging&&!p.godTime&&s.time-(p.lastEnergyAt??-9)>=c.rechargeDelay&&!p.slide&&!p.dash&&!p.kickStage?.match(/burst|step/))p.battery=Math.min(100,p.battery+c.rechargeRate*dt);
   if(p.coverMode==="braced"&&prev[n]?.coverAim&&!i.coverAim)p.returnToCover=Math.max(p.returnToCover,.16);
   if(p.battery<=0){p.timeFieldActive=false;releaseOrbit(p,s);if(p.gripId){const held=s.matter.find(m=>m.id===p.gripId);if(held){held.heldBy=null;held.vx=held.vy=0;held.throwOwner=undefined;}p.gripId=null}if(p.gripCoverId){const cv=s.covers.find(cv=>cv.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}}p.gripCoverId=null}
   p.brake=Math.max(0,p.brake-dt);p.slideCool=Math.max(0,p.slideCool-dt);
@@ -983,7 +1005,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
    const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy)*d/8));
    for(let k=0;k<parts&&cv.hp>0;k++){const ox=cv.x,oy=cv.y;cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;if(coverStructureBlocked27f(cv,(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)+(cv.hover||0))){cv.x=ox;cv.y=oy;coverImpact(cv,s,'structure');cv.vx=cv.vy=0;}settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
     if(n===cv.throwOwner||s.players[n].hp<=0||(s.players[n].z||0)>(cv.z||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)||s.players[n].z+64<(cv.z||0)||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
-    if(Math.hypot(q.x-clamp(q.x,-cv.w/2,cv.w/2),q.y-clamp(q.y,-cv.h/2,cv.h/2))<=17){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=target.battery;
+    if(Math.hypot(q.x-clamp(q.x,-cv.w/2,cv.w/2),q.y-clamp(q.y,-cv.h/2,cv.h/2))<=17){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=availableEnergy31(s,target,cost);
      // One shield contest per release: impact consumes energy; an overwhelmed block passes residual force.
      if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",incomingAngle:Math.atan2(-(cv.vy||0),-(cv.vx||0)),source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??1-n,target:n,damage:0,x:target.x,y:target.y,z:target.z+28});s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}
      else{const residual=shielding?1-available/Math.max(.001,cost):1;if(shielding){target.battery=0;target.lastEnergyAt=s.time;target.shield=false;s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}duelContact(s,cv.throwOwner??1-n,target,damage*residual,(cv.vx||0)*.25*residual,(cv.vy||0)*.25*residual,"torso",undefined,"cover-throw",cv.attackId);}
@@ -1043,6 +1065,7 @@ function aftermath(s:GameState,elapsed:number){
  }if(s.finisher<=1e-9){s.finisher=0;s.phase="finished";finishFightRound(s);s.timeScale=.92;for(const p of s.players)p.vx=p.vy=0;}
 }
 export function advance(s:GameState,now=Date.now()){
+ if(unlimited31(s))s.players.forEach(p=>p.battery=100);
  let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;
  if(s.mode==="watch"&&s.watchPaused)return;
  if(s.mode==="watch"&&s.phase==="finished"){s.watchNextAt??=now+2000;if(now>=s.watchNextAt)respawn(s);return;}
