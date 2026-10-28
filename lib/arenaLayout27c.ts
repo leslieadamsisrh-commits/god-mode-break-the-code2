@@ -1,3 +1,4 @@
+import {initialFracture32} from './fracture32';
 import {bayObject,BAY_SPAWNS,BAY_BOUNDS} from './bayBridgeMap';
 import {COMBAT_SURFACES} from './verticalCombat27b';
 export type Placement27c={id:string;objectId:string;x:number;y:number;rotation:number;z:0;surfaceId:'ground'};
@@ -41,4 +42,4 @@ export function randomLayout27c(seed:string,count=14):ArenaLayout27c{
  return validateLayout27c({version:2,name:'Random '+seed.slice(0,32),seed,placements});
 }
 export function chaseLayout27c():ArenaLayout27c{return validateLayout27c({version:2,name:"Chase’s Setup",placements:[[700,350],[700,760],[1500,350],[1500,760],[1000,500],[1200,650]].map(([x,y],n)=>({id:'chase-27h-'+n,objectId:n%2?'floor-panel46':'d33-nw-primary',x,y,rotation:n<4?Math.PI/2:0,z:0,surfaceId:'ground'}))});}
-export function instantiateLayout27c(layout:ArenaLayout27c){return layout.placements.map(p=>{const o=bayObject(p.objectId)!;return {id:'arena-'+p.id,artId:o.id,x:p.x,y:p.y,w:o.collisionHull.w,h:o.collisionHull.h,a:p.rotation,hp:o.breakThreshold,maxHp:o.breakThreshold,anchored27j:p.objectId==='d33-nw-primary',generated:false,build:0,variant:o.material==='INFRASTRUCTURE'?1:0,coverClass:o.coverClass as 'waist'|'tall'};});}
+export function instantiateLayout27c(layout:ArenaLayout27c){return layout.placements.map(p=>{const o=bayObject(p.objectId)!;return {id:'arena-'+p.id,artId:o.id,x:p.x,y:p.y,w:o.collisionHull.w,h:o.collisionHull.h,a:p.rotation,hp:o.breakThreshold,maxHp:o.breakThreshold,anchored27j:p.objectId==='d33-nw-primary',...(p.objectId==='d33-nw-primary'?{fracture32:initialFracture32('arena-'+p.id,o.collisionHull.w,o.collisionHull.h,o.dimensions.z),height27j:o.dimensions.z}:{}),generated:false,build:0,variant:o.material==='INFRASTRUCTURE'?1:0,coverClass:o.coverClass as 'waist'|'tall'};});}

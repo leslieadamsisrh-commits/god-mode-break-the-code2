@@ -1,3 +1,4 @@
+import {type Fracture32,circleContact32,overlap32,worldPolys32,rayPoly32,edges32,candidates32,capacity32,volume32,rebase32} from './fracture32';
 import {type MatchRules31,validateRules31,unlimited31,availableEnergy31,canPay31,debitEnergy31,SPARRING31} from "./matchRules31";
 import {SHAPES27J,RIP_TIME27J,splitBarrier27j,type Section27j} from './psychicMatter27j';
 import {resolveSupports27e,coverStructureBlocked27f,coverSupport27h} from './arenaStructures27e';
@@ -10,7 +11,7 @@ import {bayCoverState,bayObject,BAY_BOUNDS,BAY_SPAWNS} from "./bayBridgeMap";
 import {repulseEnabled21,repulseView21,startRepulse21,stepRepulse21,repulseInput21} from './repulse21';
 export type InputState={aimX?:number;aimY?:number;aimZ?:number;jump?:boolean;coverShapeCycle?:boolean;gripX?:number;gripY?:number;x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;powerup:boolean;slow:boolean;fieldCycle?:boolean;powerCycle?:boolean;weaponCycle?:boolean;powerUse?:boolean};
 export type CombatConfig={legacyPowers:number;chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
-function coverMass28(c:{artId?:string;id:string;section27j?:Section27j}){return (bayObject(c.artId||c.id)?.mass||9)*(c.section27j?c.section27j.u1-c.section27j.u0:1);}
+function coverMass28(c:{artId?:string;id:string;section27j?:Section27j;fracture32?:Fracture32;anchored27j?:boolean}){if(c.fracture32&&!c.anchored27j)return (bayObject(c.artId||c.id)?.mass||9)*.44;return (bayObject(c.artId||c.id)?.mass||9)*(c.section27j?c.section27j.u1-c.section27j.u0:1);}
 export const GRIP_STRENGTH=1.2; // Grip36 experiment: +20% manipulation/launch; field reach and costs unchanged.
 // Ground44 is a finite surface layer, never a hole or a collision obstacle.
 export type GroundSource44={id:string;x:number;y:number;remaining:number;initial:number;peeledAt?:number;angle?:number;panel46?:boolean;revision?:number;material?:"concrete";state?:"intact"|"fractured"|"extracted"|"reconstructing"};
@@ -38,9 +39,10 @@ export function floorLine15(s:GameState,x:number,y:number,angle:number,range:num
 export const DEFAULT_CONFIG:CombatConfig={legacyPowers:0,chargeMoveScale:.67145,chargeMoveResponse:8,powerChargeSeconds:2.4,godDuration:12,godDrain:2,powerRecharge:26,godDamage:1.35,gripEnergy:4,holdEnergy:.5,coverThrowEnergy:6,carryResponse:12,carryTurnResponse:9,carryMomentum:.65,slideEnergy:5,dashEnergy:2,rechargeDelay:.5,rechargeRate:18,weaveEnabled:1,moveSpeed:222.7,response:13,stopDrag:.002,slideDrag:.12,dashSpeed:430,dashDuration:.16,doubleTapWindow:.28,slideSpeed:490,slideDuration:.50,slideSustain:160,slideSteer:5,slideSteerAngle:.48,slideSteerResponse:7,slideBrake:9.5,slideCancelSpeed:150,shotCadence:.39,shotSpread:.04,shotDamage:10,shotSpeed:820,throwForce:720,pinballSpeed:830,pinballDuration:.5,maxHealth:420,spriteScale:.82,cameraZoom:1.85};
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
-export type Player=ElevationState & {sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Rip32={path?:{x:number;y:number;z:number}[];sourceId:string;revision:number;cells:number[];seed:number;volume:number;capacity:number;aim:number;destination:{x:number;y:number;z:number};fallback:number};
+export type Player=ElevationState & {ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type FloorSlab46={floorPanel46?:{sourceId:string;originX:number;originY:number;creator:number}};
-export type Cover=FloorSlab46 & {height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
+export type Cover=FloorSlab46 & {acquire32?:{x:number;y:number;z:number};acquireQueue32?:{x:number;y:number;z:number}[];fracture32?:Fracture32;height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={unitId?:string;groundId?:string;groundScatter?:boolean;spin?:number;spinVelocity?:number;height?:number;liftVelocity?:number;scatterAt?:number;attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={vz?:number;attackId?:string;source?:string;radius?:number;realAge?:number;volleyId?:string;fieldOwners?:number[];projectileScale?:number;id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
 export type Fx={material?:"digital"|"cyber";strength?:number;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number};
@@ -50,7 +52,7 @@ export const REGION_DAMAGE={low:.75,torso:1,head:1.25};
 export const FINISHER_SECONDS=1.25;
 export type GameState={rules31?:MatchRules31;arenaLayout?:ArenaLayout27c;groundSources44?:GroundSource44[];botStrategy?:"baseline"|"adaptive";botExperience?:BotExperience[];botRound?:FightRound;fightRecording?:FightRecording;actionSeq?:number;actions?:ActionOutcome[];actionCounts?:Record<string,number>;energySpent?:number[];watchPaused?:boolean;watchNextAt?:number;events?:CombatEvent[];eventSeq?:number;timeScale?:number;fightUntil?:number;build:string;mode:"bot"|"solo"|"duel"|"practice"|"watch";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
 
-export type ActionOutcome={nominalEnergy?:number;attackId?:string;context?:string;objectClass?:string;distanceBand?:string;spawnSide?:string;opponentBehavior?:string;speed?:number;mass?:number;round:number;seq:number;at:number;wallAt:number;owner:number;action:string;status:"attempted"|"activated"|"rejected"|"buffered"|"cancelled"|"contact"|"missed"|"recovered";reason?:string;objectId?:string;amount?:number};
+export type ActionOutcome={fracture32?:Rip32;nominalEnergy?:number;attackId?:string;context?:string;objectClass?:string;distanceBand?:string;spawnSide?:string;opponentBehavior?:string;speed?:number;mass?:number;round:number;seq:number;at:number;wallAt:number;owner:number;action:string;status:"attempted"|"activated"|"rejected"|"buffered"|"cancelled"|"contact"|"missed"|"recovered";reason?:string;objectId?:string;amount?:number};
 function actionOutcome(s:GameState,owner:number,action:string,status:ActionOutcome["status"],reason?:string,objectId?:string,amount?:number,attackId?:string){
  if(status==="activated"&&action==="throw"){attackId??=uid();const obj=s.covers.find(c=>c.id===objectId)||s.matter.find(m=>m.id===objectId);if(obj)obj.attackId=attackId;else if(reason==="orbit")for(const m of s.matter)if(m.throwOwner===owner&&m.attackId===undefined&&Math.hypot(m.vx,m.vy)>140)m.attackId=attackId;}
  const nominalEnergy=status==="activated"&&["rip","peel","build","floor-rebuild","throw","place"].includes(action)?amount:undefined;
@@ -148,7 +150,7 @@ export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo
  // Eight finite recipes in mirrored salvage clusters; no passive material spawning.
  const matter:Matter[]=[];if(mode==="duel"||mode==="watch")for(let side=0;side<2;side++)for(const [station,[x,y]] of [[170,460],[240,400],[370,470],[400,150]].entries())for(let j=0;j<3;j++)matter.push({id:`salvage-${side}-${station}-${j}`,x:side?D33_WORLD25.width-x-j*18:x+j*18,y:y+100,vx:0,vy:0,r:5+j%2,kind:j===2?"metal":"stone",heldBy:null,orbitBy:null,life:999,sourceArt:j===2?"maintenance-cabinet":"damaged-jersey",fragment:j});
  const arenaLayout=chaseLayout27c();const covers:Cover[]=instantiateLayout27c(arenaLayout); // Clear single-player practice arena; preserve multiplayer maps.
- return{arenaLayout,build:"BUILD-31-CONTROLLED-SPARRING",groundSources44:groundSources44(),mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,events:[],eventSeq:0,actions:[],actionCounts:{},energySpent:[],actionSeq:0,timeScale:1,fightUntil:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
+ return{arenaLayout,build:"BUILD-32-IRREGULAR-FRACTURE",groundSources44:groundSources44(),mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,events:[],eventSeq:0,actions:[],actionCounts:{},energySpent:[],actionSeq:0,timeScale:1,fightUntil:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
 }
 export function setMatchRules31(s:GameState,value:unknown,slot:number){
  if(slot!==0)throw Error("HOST_ONLY");
@@ -164,6 +166,7 @@ export function setInput(s:GameState,slot:number,seq:number,input:Partial<InputS
 function localPoint(c:Cover,x:number,y:number){const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),dx=x-c.x,dy=y-c.y;return{x:dx*ca+dy*sa,y:-dx*sa+dy*ca}}
 function worldPoint(c:Cover,x:number,y:number){const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0);return{x:c.x+x*ca-y*sa,y:c.y+x*sa+y*ca}}
 function coverFace(c:Cover,p:Player|{x:number;y:number;r?:number}):CoverAnchor&{gap:number}{
+ if(c.fracture32){const q=localPoint(c,p.x,p.y),edges=edges32(c);let best={gap:Infinity,...anchorForEdge(c,0,0)};edges.forEach((e,i)=>{const dx=e.b.x-e.a.x,dy=e.b.y-e.a.y,l=Math.hypot(dx,dy),t=clamp(((q.x-e.a.x)*dx+(q.y-e.a.y)*dy)/l,0,l),gap=Math.hypot(q.x-e.a.x-dx*t/l,q.y-e.a.y-dy*t/l)-18;if(gap<best.gap)best={...anchorForEdge(c,i,t),gap};});return best;}
  const q=localPoint(c,p.x,p.y),hw=c.w/2,hh=c.h/2,px=clamp(q.x,-hw,hw),py=clamp(q.y,-hh,hh);
  let face:"left"|"right"|"top"|"bottom";
  if(Math.abs(q.x)>hw&&Math.abs(q.y)>hh)face=Math.abs(q.x)-hw>Math.abs(q.y)-hh?(q.x<0?"left":"right"):(q.y<0?"top":"bottom");
@@ -180,6 +183,7 @@ function coverFace(c:Cover,p:Player|{x:number;y:number;r?:number}):CoverAnchor&{
  return{face,edge,t,length,offset,half:length/2,nx,ny,tx,ty,gap:Math.hypot(q.x-px,q.y-py)-(("r" in p&&typeof p.r==="number")?p.r:18)};
 }
 function anchorForEdge(c:Cover,edge:number,t:number):CoverAnchor{
+ if(c.fracture32){const e=edges32(c)[edge]||edges32(c)[0],dx=e.b.x-e.a.x,dy=e.b.y-e.a.y,length=Math.hypot(dx,dy),co=Math.cos(c.a),si=Math.sin(c.a),tx=(dx*co-dy*si)/length,ty=(dx*si+dy*co)/length;return{face:Math.abs(dy)>Math.abs(dx)?dy>0?'right':'left':dx>0?'top':'bottom',edge,t:clamp(t,0,length),length,offset:t-length/2,half:length/2,tx,ty,nx:ty,ny:-tx};}
  const hw=c.w/2,hh=c.h/2,length=edge%2===0?c.w:c.h,tt=clamp(t,0,length),face=(["top","right","bottom","left"] as const)[edge];
  const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),localTangents=[[1,0],[0,1],[-1,0],[0,-1]],localNormals=[[0,-1],[1,0],[0,1],[-1,0]];
  const [ltx,lty]=localTangents[edge],[lnx,lny]=localNormals[edge],tx=ltx*ca-lty*sa,ty=ltx*sa+lty*ca,nx=lnx*ca-lny*sa,ny=lnx*sa+lny*ca;
@@ -188,6 +192,7 @@ function anchorForEdge(c:Cover,edge:number,t:number):CoverAnchor{
 }
 function placeOnCover(p:Player,s:GameState){
  const c=s.covers.find(x=>x.id===p.coverId),a=p.coverAnchor;if(!c||!a)return;
+ if(c.fracture32){const e=edges32(c)[a.edge];if(!e){releaseCover(p,s);return;}const q=worldPoint(c,e.a.x+(e.b.x-e.a.x)*a.t/a.length,e.a.y+(e.b.y-e.a.y)*a.t/a.length);p.x=q.x+a.nx*18.5;p.y=q.y+a.ny*18.5;return;}
  const r=18.5,hw=c.w/2,hh=c.h/2;let lx=0,ly=0;
  if(a.edge===0){lx=-hw+a.t;ly=-hh-r}
  else if(a.edge===1){lx=hw+r;ly=-hh+a.t}
@@ -195,7 +200,7 @@ function placeOnCover(p:Player,s:GameState){
  else{lx=-hw-r;ly=hh-a.t}
  const q=worldPoint(c,lx,ly);p.x=q.x;p.y=q.y;
 }
-function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){if(!p.grounded||Math.abs(p.z-(c.z||0))>3)return false;if(s.time<p.coverLock)return false;const anchor=coverFace(c,p),meta=bayObject(c.artId||c.id),rail=meta?.rig?.coverRails?.find(r=>({FRONT:"bottom",BACK:"top",LEFT:"left",RIGHT:"right"} as const)[r.side]===anchor.face),railT=anchor.length?anchor.t/anchor.length:.5;if(meta&&(!rail||railT<rail.from||railT>rail.to))return false;const incoming=Math.abs(p.vx*anchor.nx+p.vy*anchor.ny),impact=clamp(incoming/Math.max(1,s.config.slideSpeed),0,1);p.coverId=c.id;p.coverMode=mode;p.coverAnchor=anchor;p.slide=0;p.dash=0;p.softImpact=mode==="soft"?impact:0;p.softImpactAt=s.time;p.vx=p.vy=0;p.coverSpeed=0;p.contact=s.time+.22;p.peek=false;placeOnCover(p,s);s.fx.push({id:uid(),type:mode==="soft"?"soft-cover":"cover-slam",x:p.x,y:p.y,life:.25,entrySpeed:incoming} as any);return true}
+function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){if(!p.grounded||Math.abs(p.z-(c.z||0))>3)return false;if(s.time<p.coverLock)return false;const anchor=coverFace(c,p),meta=bayObject(c.artId||c.id),rail=meta?.rig?.coverRails?.find(r=>({FRONT:"bottom",BACK:"top",LEFT:"left",RIGHT:"right"} as const)[r.side]===anchor.face),railT=anchor.length?anchor.t/anchor.length:.5;if(!c.fracture32&&meta&&(!rail||railT<rail.from||railT>rail.to))return false;const incoming=Math.abs(p.vx*anchor.nx+p.vy*anchor.ny),impact=clamp(incoming/Math.max(1,s.config.slideSpeed),0,1);p.coverId=c.id;p.coverMode=mode;p.coverAnchor=anchor;p.slide=0;p.dash=0;p.softImpact=mode==="soft"?impact:0;p.softImpactAt=s.time;p.vx=p.vy=0;p.coverSpeed=0;p.contact=s.time+.22;p.peek=false;placeOnCover(p,s);s.fx.push({id:uid(),type:mode==="soft"?"soft-cover":"cover-slam",x:p.x,y:p.y,life:.25,entrySpeed:incoming} as any);return true}
 function releaseCover(p:Player,s:GameState,lock=.18){p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
  const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,moveSpeed=c.moveSpeed*(p.chargeMotion??1),mag=Math.hypot(i.x,i.y),away=i.x*a.nx+i.y*a.ny;
@@ -212,6 +217,8 @@ function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
   p.peek=true;p.peekEdge=Math.min(a.t,a.length-a.t)<18;
   placeOnCover(p,s);return;
  }
+ const fragmented=s.covers.find(q=>q.id===p.coverId&&q.fracture32);
+ if(fragmented){const along=i.x*a.tx+i.y*a.ty,raw=a.t+along*moveSpeed*dt;a.t=clamp(raw,0,a.length);p.coverSpeed=along*moveSpeed;p.vx=a.tx*p.coverSpeed;p.vy=a.ty*p.coverSpeed;placeOnCover(p,s);p.peek=false;p.peekEdge=Math.min(a.t,a.length-a.t)<18;if(Math.abs(raw-a.t)>.1&&p.coverMode==='soft')releaseCover(p,s,.08);return;}
  if(c.weaveEnabled<.5){
    const cv=s.covers.find(x=>x.id===p.coverId);if(!cv){releaseCover(p,s);return}
    let edge=a.edge,cur=anchorForEdge(cv,edge,a.t),along=i.x*cur.tx+i.y*cur.ty,t=cur.t,g=0;
@@ -267,7 +274,7 @@ function slideCapture(p:Player,s:GameState){
  if(!p.grounded||p.coverId||(p.slide<=0&&p.dash<=0)||s.time<p.coverLock)return;
  for(const c of s.covers){if(c.hp<=0||s.players.some(q=>q.gripCoverId===c.id))continue;const a=coverFace(c,p);if(a.gap<=COVER_41.captureGap&&p.vx*a.nx+p.vy*a.ny<-40&&attachCover(p,c,s,"soft"))return;}
 }
-function circleBox(o:{x:number;y:number},r:number,c:Cover){const q=localPoint(c,o.x,o.y),nx=clamp(q.x,-c.w/2,c.w/2),ny=clamp(q.y,-c.h/2,c.h/2),dx=q.x-nx,dy=q.y-ny,d=Math.hypot(dx,dy),ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),lx=d?dx/d:(q.x<0?-1:1),ly=d?dy/d:0;return{hit:d<r,nx:lx*ca-ly*sa,ny:lx*sa+ly*ca,depth:r-d}}
+function circleBox(o:{x:number;y:number},r:number,c:Cover){if(c.fracture32)return circleContact32(o,r,c);const q=localPoint(c,o.x,o.y),nx=clamp(q.x,-c.w/2,c.w/2),ny=clamp(q.y,-c.h/2,c.h/2),dx=q.x-nx,dy=q.y-ny,d=Math.hypot(dx,dy),ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),lx=d?dx/d:(q.x<0?-1:1),ly=d?dy/d:0;return{hit:d<r,nx:lx*ca-ly*sa,ny:lx*sa+ly*ca,depth:r-d}}
 function collide(p:Player,s:GameState){if(p.coverId||p.exit)return;for(const cv of s.covers){if(s.players.some(q=>q.gripCoverId===cv.id)||(p.z||0)>(cv.z||0)+(cv.hover||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)||p.z+64<(cv.z||0))continue;const q=circleBox(p,18,cv);if(!q.hit)continue;p.x+=q.nx*(q.depth+1);p.y+=q.ny*(q.depth+1)}}
 // Reuse the same rotated footprints for carry/throw contact; no new cover geometry.
 export const COVER_41={projectedHp:280,reinforcedHp:360,buildEnergy:20,captureGap:8,releaseIntent:.6} as const;
@@ -308,6 +315,7 @@ function settleCover(cv:Cover,s:GameState){
    if(penetration<=.01){overlap=false;break}
    if(penetration<depth){depth=penetration;const sign=delta<0?-1:1;nx=ax*sign;ny=ay*sign}
   }
+  if(cv.fracture32||other.fracture32){const q=overlap32(cv,other);overlap=q.hit;depth=q.depth;nx=q.nx;ny=q.ny;}
   if(overlap){coverImpact(cv,s,other.id,other,{x:nx,y:ny});if(other.hp<=0&&cv.hp>0){cv.vx=(cv.vx||0)*.55;cv.vy=(cv.vy||0)*.55;continue;}cv.x+=nx*(depth+.1);cv.y+=ny*(depth+.1);const toward=(cv.vx||0)*nx+(cv.vy||0)*ny;if(toward<0){cv.vx=(cv.vx||0)-toward*nx;cv.vy=(cv.vy||0)-toward*ny}}
  }
  cv.x=clamp(cv.x,A.left+ex,A.right-ex);cv.y=clamp(cv.y,A.top+ey,A.bottom-ey);
@@ -463,6 +471,8 @@ export function projectileSegments(sh:Shot,fields:ProjectileField[],dt:number){
 export const PSYCHIC_FIELDS=[{name:"CLOSE",radius:135},{name:"STANDARD",radius:235},{name:"WIDE",radius:335}] as const;
 export function psychicField(p:Player){const level=Number.isInteger(p.fieldLevel)?clamp(p.fieldLevel!,0,2):1;return{level,...PSYCHIC_FIELDS[level]};}
 export function gripSelection(p:Player,s:GameState){
+ const previous=p.ripPreview32,sticky=previous&&Math.abs(wrap(previous.aim-p.aim))<.12?s.covers.find(c=>c.id===previous.sourceId&&c.fracture32?.revision===previous.revision&&c.hp>0):undefined;
+ if(sticky&&!p.gripCoverId)return{cover:sticky,matter:undefined,panel:undefined};
  const reach=psychicField(p).radius,a=p.aim,end={x:p.x+Math.cos(a)*reach,y:p.y+Math.sin(a)*reach};
  const forward=(q:{x:number;y:number})=>((q.x-p.x)*Math.cos(a)+(q.y-p.y)*Math.sin(a))/Math.max(1,dist(q,p));
  const candidates=s.covers.filter(cv=>!cv.protected45&&cv.hp>0&&(!cv.section27j?.anchored&&(cv.generated||!!bayObject(cv.artId||cv.id)?.gripCompatible))&&!s.players.some(q=>q!==p&&(q.coverId===cv.id||q.gripCoverId===cv.id)));
@@ -474,7 +484,7 @@ export function gripSelection(p:Player,s:GameState){
  return{cover,matter:cover||panel?undefined:matter,panel};
 }
 export function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
- if(s.covers.filter(c=>c.hp>0).length+2>96)return 'OBJECT LIMIT';
+ if(s.covers.filter(c=>c.hp>0).length+(cv.fracture32?1:2)>96)return 'OBJECT LIMIT';
  if(cv.hp<=0||!cv.anchored27j||cv.section27j)return 'SECTION UNAVAILABLE';
  if(cv.ripOwner27j!==undefined&&cv.ripOwner27j!==n)return 'SECTION CLAIMED';
  if(p.hp<=0||p.knock>0||p.charging||p.shield||p.slide>0||p.gripCoverId)return 'RIP INTERRUPTED';
@@ -483,9 +493,39 @@ export function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
  if(Number.isFinite(surfaceShotTime(from,to))||s.covers.some(c=>c.id!==cv.id&&c.hp>0&&coverTime27d({...from,z:from.z-(c.z||0)-(c.hover||0)},{...to,z:to.z-(c.z||0)-(c.hover||0)},c,c.height27j??bayObject(c.artId||c.id)?.dimensions.z??48)!==null))return 'RIP LINE BLOCKED';
  if(!canPay31(s,p,s.config.gripEnergy))return 'LOW BATTERY';return null;
 }
-function beginRip27j(p:Player,s:GameState,n:number,cv:Cover){if(p.ripTarget27j)return;const reason=ripReason27j(p,s,n,cv);if(reason){p.gripHint=reason;p.gripHintUntil=s.time+1.5;return;}cv.ripOwner27j=n;cv.ripAt27j=s.time;p.ripTarget27j=cv.id;p.gripHint='TEARING CENTER SECTION';p.gripHintUntil=s.time+1;}
-function stepRip27j(p:Player,s:GameState,n:number){if(!p.ripTarget27j)return;const cv=s.covers.find(c=>c.id===p.ripTarget27j);const cancel=()=>{if(cv&&cv.ripOwner27j===n){cv.ripOwner27j=undefined;cv.ripAt27j=undefined;}p.ripTarget27j=undefined;};
- const invalid=cv?ripReason27j(p,s,n,cv):'SECTION UNAVAILABLE';if(invalid){cancel();p.gripHint=invalid;p.gripHintUntil=s.time+1;return;}if(s.time-(cv.ripAt27j||0)<RIP_TIME27J)return;
+export function extractionBattery32(s:GameState,p:Player){return s.rules31?.capacity32??(unlimited31(s)?100:p.battery);}
+function extractionPath32(p:Player,s:GameState,cv:Cover,plan:Rip32){
+ const f=cv.fracture32!;const chunk={...rebase32(cv,plan.cells),id:cv.id+'-pending32',anchored27j:false,height27j:f.height,hover:0};const remaining=f.cells.filter(id=>!plan.cells.includes(id));
+ const temp={...s,covers:s.covers.flatMap(c=>c.id!==cv.id?[c]:remaining.length?[rebase32(cv,remaining)]:[])};
+ let from={x:chunk.x,y:chunk.y,z:cv.z||0},total=0;
+ for(const to of plan.path||[plan.destination]){const length=Math.hypot(to.x-from.x,to.y-from.y,to.z-from.z),steps=Math.max(1,Math.ceil(length/2));total+=steps;if(total>256)return 'ACQUISITION CLEARANCE';for(let i=0;i<=steps;i++){const t=i/steps,candidate={...chunk,x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t,z:from.z+(to.z-from.z)*t};const reason=carryBlockReason21(candidate,chunk,temp);if(reason)return reason;}from=to;}
+
+ return null;
+}
+export function fractureProposal32(p:Player,s:GameState,cv:Cover):Rip32|undefined{
+ if(!cv.fracture32||ripReason27j(p,s,s.players.indexOf(p),cv))return;
+ const distance=dist(p,cv),aim=Math.round(p.aim/.12)*.12,end={x:p.x+Math.cos(aim)*psychicField(p).radius,y:p.y+Math.sin(aim)*psychicField(p).radius},hits=worldPolys32(cv).map(poly=>rayPoly32(p,end,poly)?.lo).filter((v):v is number=>v!==undefined),reach=hits.length?Math.min(...hits)*psychicField(p).radius:distance,point={x:p.x+Math.cos(aim)*reach,y:p.y+Math.sin(aim)*reach},capacity=capacity32(cv.fracture32,extractionBattery32(s,p)),variants=candidates32(cv,point,extractionBattery32(s,p));
+ for(let fallback=0;fallback<variants.length;fallback++){const cells=variants[fallback];if(cells.length<2)continue;const chunk=rebase32(cv,cells);if(Math.min(chunk.w,chunk.h)<10||Math.max(chunk.w,chunk.h)/Math.min(chunk.w,chunk.h)>6)continue;const radius=Math.max(78,Math.hypot(chunk.w,chunk.h)/2+34),angle=Math.atan2(chunk.y-p.y,chunk.x-p.x),destination={x:p.x+Math.cos(angle)*radius,y:p.y+Math.sin(angle)*radius,z:p.z};
+ const plan:Rip32={sourceId:cv.id,revision:cv.fracture32.revision,cells,seed:cv.fracture32.seed,volume:volume32(cv.fracture32,cells),capacity,aim:p.aim,destination,fallback};if(!extractionPath32(p,s,cv,plan))return plan;
+ const lift=Math.max((cv.z||0)+cv.fracture32.height+1,destination.z);plan.path=[{x:chunk.x,y:chunk.y,z:lift},{...destination,z:lift},destination];if(!extractionPath32(p,s,cv,plan))return plan;}
+}
+function updatePreview32(p:Player,s:GameState){if(p.ripTarget27j||s.time<(p.previewAt32??-1))return;p.previewAt32=s.time+.1;if(p.gripCoverId||p.gripId||p.hp<=0){p.ripPreview32=undefined;return;}const cv=gripSelection(p,s).cover;p.ripPreview32=cv?fractureProposal32(p,s,cv):undefined;}
+function completeFracture32(p:Player,s:GameState,n:number,cv:Cover,cancel:()=>void){
+ const plan=p.ripCommit32,f=cv.fracture32!;let reason=!plan?'NO ELIGIBLE MATERIAL':plan.revision!==f.revision?'SOURCE REVISION CHANGED':plan.cells.some(id=>!f.cells.includes(id))?'SOURCE REVISION CHANGED':plan.volume>capacity32(f,extractionBattery32(s,p))+1e-6?'CAPACITY LOST':extractionPath32(p,s,cv,plan);
+ if(reason||!plan){cancel();p.gripHint=reason||'RIP CANCELLED';p.gripHintUntil=s.time+1;actionOutcome(s,n,'rip','cancelled',p.gripHint,cv.id);return;}
+ if(s.time-(cv.ripAt27j||0)<RIP_TIME27J)return;
+ const remaining=f.cells.filter(id=>!plan.cells.includes(id)),fraction=plan.volume/volume32(f),chunk:Cover={...rebase32(cv,plan.cells),id:cv.id+'-rip-'+(f.revision+1),hp:cv.hp*fraction,maxHp:cv.maxHp*fraction,anchored27j:false,height27j:f.height,acquire32:{...(plan.path?.[0]||plan.destination)},acquireQueue32:plan.path?.slice(1).map(p=>({...p})),ripOwner27j:undefined,ripAt27j:undefined,build:.001,hover:0,vx:0,vy:0};
+ const parent=remaining.length?{...rebase32(cv,remaining),hp:cv.hp-chunk.hp,maxHp:cv.maxHp-chunk.maxHp,ripOwner27j:undefined,ripAt27j:undefined}:undefined;
+ if(!spendEnergy(p,s,s.config.gripEnergy)){cancel();return;}
+ s.covers=s.covers.flatMap(c=>c.id===cv.id?parent?[parent,chunk]:[chunk]:[c]);
+ for(const q of s.players)if(q.coverId===cv.id)releaseCover(q,s,.25);
+ p.ripTarget27j=undefined;p.ripCommit32=undefined;p.ripPreview32=undefined;releaseCover(p,s,.25);p.gripCoverId=chunk.id;p.coverGripDist=clamp(dist(p,chunk),78,psychicField(p).radius-8);p.coverGripAngle=Math.atan2(chunk.y-p.y,chunk.x-p.x);p.gripGesture=false;p.gripHint='CHUNK HELD · RB PLACE / RT THROW';p.gripHintUntil=s.time+1.5;
+ const event=actionOutcome(s,n,'rip','activated','irregular concrete',chunk.id,s.config.gripEnergy);event.fracture32=plan;
+ combatEvent(s,{kind:'cover',source:'rip',owner:n,damage:0,x:chunk.x,y:chunk.y,z:(chunk.z||0)+24,material:'stone'});s.fx.push({id:uid(),type:'matter-rip',x:chunk.x,y:chunk.y,z:chunk.z||0,life:.28,owner:n});
+}
+function beginRip27j(p:Player,s:GameState,n:number,cv:Cover){if(p.ripTarget27j)return;const reason=ripReason27j(p,s,n,cv);if(reason){p.gripHint=reason;p.gripHintUntil=s.time+1.5;actionOutcome(s,n,'rip','rejected',reason,cv.id);return;}if(cv.fracture32){const plan=p.ripPreview32;if(!plan||plan.sourceId!==cv.id||plan.revision!==cv.fracture32.revision){p.gripHint='NO VALID CHUNK · AIM AT EXPOSED EDGE';p.gripHintUntil=s.time+1;actionOutcome(s,n,'rip','rejected',p.gripHint,cv.id);return;}p.ripCommit32={...plan,cells:[...plan.cells]};}cv.ripOwner27j=n;cv.ripAt27j=s.time;p.ripTarget27j=cv.id;p.gripHint=cv.fracture32?'TEARING CHUNK':'TEARING CENTER SECTION';p.gripHintUntil=s.time+1;}
+function stepRip27j(p:Player,s:GameState,n:number){if(!p.ripTarget27j)return;const cv=s.covers.find(c=>c.id===p.ripTarget27j);const cancel=()=>{if(cv&&cv.ripOwner27j===n){cv.ripOwner27j=undefined;cv.ripAt27j=undefined;}p.ripTarget27j=undefined;p.ripCommit32=undefined;p.ripPreview32=undefined;};
+ const invalid=cv?ripReason27j(p,s,n,cv):'SECTION UNAVAILABLE';if(invalid){cancel();p.gripHint=invalid;p.gripHintUntil=s.time+1;actionOutcome(s,n,'rip','cancelled',invalid,cv?.id);return;}if(cv.fracture32){completeFracture32(p,s,n,cv,cancel);return;}if(s.time-(cv.ripAt27j||0)<RIP_TIME27J)return;
  const pieces=splitBarrier27j(cv),chunk=pieces[1];
  // Reserve the existing source footprint; no teleport through an intervening wall.
  if(coverStructureBlocked27f(chunk,chunk.height27j||48)||s.players.some(q=>circleBox(q,18,chunk).hit)){cancel();p.gripHint='RIP CLEARANCE BLOCKED';p.gripHintUntil=s.time+1.5;return;}
@@ -600,7 +640,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
    }
   }else {p.gripHint="AIM AT DAMAGED FLOOR TO REBUILD";p.gripHintUntil=s.time+1.2;}
  }else if(i.cover&&!prev.cover){
-  if(p.gripCoverId){const cv=s.covers.find(q=>q.id===p.gripCoverId);const reason=cv?carryBlockReason21(cv,cv,s):'NO HELD COVER';if(cv&&!reason&&p.grounded&&!coverSupport27h(cv).rise&&Math.abs((cv.z||0)-surfaceHeight27h(coverSupport27h(cv),cv))<.1){cv.build=0;cv.vx=cv.vy=0;p.gripCoverId=null;p.gripHint="COVER PLACED";actionOutcome(s,n,"place","activated","RB placement",cv.id,0);}else p.gripHint=reason||"PLACE ON A SUPPORTED SURFACE";p.gripHintUntil=s.time+1.5;}
+  if(p.gripCoverId){const cv=s.covers.find(q=>q.id===p.gripCoverId);const reason=cv?carryBlockReason21(cv,cv,s):'NO HELD COVER';if(cv&&!reason&&(!cv.fracture32||worldPolys32(cv).every(poly=>poly.every(point=>Math.abs(surfaceHeight27h(coverSupport27h({...point,z:cv.z}),point)-(cv.z||0))<.1)))&&p.grounded&&!coverSupport27h(cv).rise&&Math.abs((cv.z||0)-surfaceHeight27h(coverSupport27h(cv),cv))<.1){cv.acquire32=undefined;cv.build=0;cv.vx=cv.vy=0;p.gripCoverId=null;p.gripHint="COVER PLACED";actionOutcome(s,n,"place","activated","RB placement",cv.id,0);}else p.gripHint=reason||"PLACE ON A SUPPORTED SURFACE";p.gripHintUntil=s.time+1.5;}
   else if(p.gripId||p.orbitIds.length){p.gripHint="RELEASE HELD MATTER BEFORE BUILDING";p.gripHintUntil=s.time+1.5;}
   else buildFieldCover(p,s,n);
  }
@@ -627,7 +667,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
      const a=p.aim,force=c.throwForce*.62*(p.godTime>0?1.25:1)*(combatFight(s)?Math.sqrt(12/coverMass28(cv)):1),inherit=clamp(c.carryMomentum,0,1);
      // Release where it is: preserve orientation and measured carry velocity.
      cv.vx=(Math.cos(a)*force+p.vx*inherit+(cv.vx||0)*(1-inherit))*GRIP_STRENGTH;cv.vy=(Math.sin(a)*force+p.vy*inherit+(cv.vy||0)*(1-inherit))*GRIP_STRENGTH;
-     cv.throwOwner=n;cv.hitIds=[];cv.build=-Math.hypot(cv.vx,cv.vy);s.fx.push({id:uid(),type:"cover-throw",x:cv.x,y:cv.y,life:.55,owner:n,text:"WHAM"});p.gripCoverId=null;actionOutcome(s,n,"throw","activated","cover",cv.id,c.coverThrowEnergy);
+     cv.acquire32=undefined;cv.acquireQueue32=undefined;cv.throwOwner=n;cv.hitIds=[];cv.build=-Math.hypot(cv.vx,cv.vy);s.fx.push({id:uid(),type:"cover-throw",x:cv.x,y:cv.y,life:.55,owner:n,text:"WHAM"});p.gripCoverId=null;actionOutcome(s,n,"throw","activated","cover",cv.id,c.coverThrowEnergy);
    }}
    else if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m&&spendEnergy(p,s,c.coverThrowEnergy)){m.heldBy=null;m.throwOwner=n;m.hitIds=[];m.vx=Math.cos(p.aim)*c.throwForce*(p.godTime>0?1.25:1)*GRIP_STRENGTH;m.vy=Math.sin(p.aim)*c.throwForce*(p.godTime>0?1.25:1)*GRIP_STRENGTH;m.life=999;p.gripId=null;actionOutcome(s,n,"throw","activated","matter",m.id,c.coverThrowEnergy)}}
  }
@@ -648,18 +688,19 @@ function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:number;y:num
  const sideClear=topology!=="FACE"&&Math.abs(along)>.18;
  const overClear=cv.coverClass!=="tall"&&out>-.35;
  const allowed=sideClear||overClear;
- return{allowed,clearance:allowed?cv.id:undefined,mode:sideClear?"SIDE":overClear?"OVER":"BLOCKED"};
+ return{allowed,clearance:allowed&&!cv.fracture32?cv.id:undefined,mode:sideClear?"SIDE":overClear?"OVER":"BLOCKED"};
 }
 // Swept contact in the existing rotated floor footprint. Exposed top fire clears only its own block.
 // Earliest footprint entry. Null distinguishes a miss from a valid t=0 hit.
-function segmentCoverTime(from:{x:number;y:number},to:{x:number;y:number},cv:Cover):number|null{
+function segmentCoverTime(from:{x:number;y:number},to:{x:number;y:number},cv:Cover,pad=0):number|null{
+ if(cv.fracture32){const hits=worldPolys32(cv).map(poly=>rayPoly32(from,to,poly,pad)?.lo).filter((v):v is number=>v!==undefined);return hits.length?Math.min(...hits):null;}
  const a=localPoint(cv,from.x,from.y),b=localPoint(cv,to.x,to.y);let enter=0,leave=1;
- for(const [start,delta,half]of [[a.x,b.x-a.x,cv.w/2],[a.y,b.y-a.y,cv.h/2]]){
+ for(const [start,delta,half]of [[a.x,b.x-a.x,cv.w/2+pad],[a.y,b.y-a.y,cv.h/2+pad]]){
   if(Math.abs(delta)<1e-8){if(Math.abs(start)>half)return null;continue}
   const u=(-half-start)/delta,v=(half-start)/delta;enter=Math.max(enter,Math.min(u,v));leave=Math.min(leave,Math.max(u,v));if(enter>leave)return null;
  }return leave>=0&&enter<=1?enter:null;
 }
-function segmentCover(from:{x:number;y:number},to:{x:number;y:number},cv:Cover){return segmentCoverTime(from,to,cv)!==null}
+function segmentCover(from:{x:number;y:number},to:{x:number;y:number},cv:Cover,pad=0){return segmentCoverTime(from,to,cv,pad)!==null}
 export function bodyRegions(p:Player,scale=.82){
  // World elevation follows the upright sprite, anchored at its existing feet.
  const h=78*scale*(p.slide>0?.58:p.coverId&&!(p.coverMode==="braced"&&p.input.coverAim)?.72:1);
@@ -721,6 +762,8 @@ function releaseGripGesture(p:Player,s:GameState,n:number,previous:InputState){
 // Recovered from lab-psychic-cover.js at efecc43: orbit around holder and sweep
 // translation + rotated corners. Current mass response and geometry remain authoritative.
 function carryCoverSwept(cv:Cover,p:Player,s:GameState,dt:number){
+ if(cv.acquire32){const target=cv.acquire32,dx=target.x-cv.x,dy=target.y-cv.y,dz=target.z-(cv.z||0),distance=Math.hypot(dx,dy,dz),travel=Math.min(distance,Math.min(550,Math.max(40,distance*12))*dt),steps=Math.max(1,Math.ceil(travel/2)),from={x:cv.x,y:cv.y,z:cv.z||0};for(let k=1;k<=steps;k++){const t=distance?travel*k/steps/distance:1,candidate={...cv,x:from.x+dx*t,y:from.y+dy*t,z:from.z+dz*t,hover:0};if(carryBlocked(candidate,cv,s)){cv.carryBlockedAt=s.time;p.gripHint='ACQUISITION BLOCKED · REPOSITION';p.gripHintUntil=s.time+.3;cv.acquire32=undefined;return;}cv.x=candidate.x;cv.y=candidate.y;cv.z=candidate.z;}cv.hover=0;cv.vx=cv.vy=0;if(distance-travel<.5)cv.acquire32=cv.acquireQueue32?.shift();return;}
+
  const safeRadius=Math.hypot(cv.w,cv.h)/2+19,target=gripTarget(p,s,safeRadius),a=target.angle,ox=cv.x,oy=cv.y,oa=cv.a,radius=Math.hypot(cv.x-p.x,cv.y-p.y),angle=Math.atan2(cv.y-p.y,cv.x-p.x);
  const mass=coverMass28(cv),response=s.config.carryResponse*Math.sqrt(9/mass)*GRIP_STRENGTH,turn=Math.min(3.2,s.config.carryTurnResponse*Math.sqrt(9/mass))*GRIP_STRENGTH;
  // Clear the holder radially before turning a freshly ripped close object.
@@ -745,6 +788,7 @@ export function carryBlockReason21(candidate:Cover,original:Cover,s:GameState){
  if(candidate.x-ex<A.left||candidate.x+ex>A.right||candidate.y-ey<A.top||candidate.y+ey>A.bottom)return 'ARENA EDGE';
  if(s.players.some(p=>p.hp>0&&p.z+64>bottom(candidate)&&p.z<top(candidate)&&circleBox(p,18,candidate).hit))return 'FIGHTER IN FOOTPRINT';
  for(const b of s.covers){if(b.id===original.id||b.hp<=0||bottom(b)>=top(candidate)||bottom(candidate)>=top(b))continue;let overlap=true;
+  if(candidate.fracture32||b.fracture32){if(overlap32(candidate,b).hit)return 'EXISTING COVER';continue;}
   for(const angle of [candidate.a,candidate.a+Math.PI/2,b.a,b.a+Math.PI/2]){const ax=Math.cos(angle),ay=Math.sin(angle),r=(c:Cover)=>Math.abs(ax*Math.cos(c.a)+ay*Math.sin(c.a))*c.w/2+Math.abs(-ax*Math.sin(c.a)+ay*Math.cos(c.a))*c.h/2;if(Math.abs((candidate.x-b.x)*ax+(candidate.y-b.y)*ay)>=r(candidate)+r(b)-.01){overlap=false;break}}
   if(overlap)return 'EXISTING COVER';
  }return null;
@@ -776,7 +820,7 @@ function scatterMatter42(m:Matter,s:GameState,starts:{x:number;y:number}[],dt:nu
 // with 360 impulse and .45 cover rebound. Sweeps/ownership make that port safe.
 function matterContactSwept(m:Matter,from:{x:number;y:number},s:GameState,starts:{x:number;y:number}[]){
  const speed=Math.hypot(m.vx,m.vy);if(speed<=140)return;let nearest=surfaceShotTime({...from,z:Math.max(1,m.height||8)},{x:m.x,y:m.y,z:Math.max(1,m.height||8)}),cv:Cover|undefined,target:Player|undefined,slot=-1;
- for(const c of s.covers){if(c.hp<=0||m.hitIds?.includes(c.id))continue;const t=segmentCoverTime(from,m,{...c,w:c.w+2*m.r,h:c.h+2*m.r});if(t!==null&&t<nearest){nearest=t;cv=c;}}
+ for(const c of s.covers){if(c.hp<=0||m.hitIds?.includes(c.id))continue;const t=segmentCoverTime(from,m,c,m.r);if(t!==null&&t<nearest){nearest=t;cv=c;}}
  if(speed>170)for(let n=0;n<s.players.length;n++){const p=s.players[n];if(n===m.throwOwner||p.hp<=0||(p.z||0)>24||m.hitIds?.includes("player-"+n))continue;const t=sweptCircle(from,m,starts[n],p,m.r+19);if(t!==null&&t<nearest){nearest=t;target=p;slot=n;cv=undefined;}}
  if(!Number.isFinite(nearest))return;m.x=from.x+(m.x-from.x)*nearest;m.y=from.y+(m.y-from.y)*nearest;
  if(!target&&!cv){m.vx*=-.45;m.vy*=-.45;}
@@ -798,7 +842,7 @@ function watchBotInput(s:GameState,n:number,opponent:InputState){
  const set=(intent:string,i:Partial<InputState>)=>{p.botIntent=intent;p.input={...base,...i};};
  // Persist flank direction, detect lack of progress, and choose a clear local step.
  if(s.time>=(p.botProbeAt||0)){if(p.botProbeX!==undefined&&Math.hypot(p.x-p.botProbeX,p.y-(p.botProbeY||0))<10&&Math.hypot(p.input.x,p.input.y)>.3){p.botEscapeUntil=s.time+1.1;p.botRouteSide=-(p.botRouteSide||side);}p.botProbeAt=s.time+.7;p.botProbeX=p.x;p.botProbeY=p.y;}
- const safe=(x:number,y:number)=>{const q={x:p.x+x*55,y:p.y+y*55};return q.x>=A.left+20&&q.x<=A.right-20&&q.y>=A.top+20&&q.y<=A.bottom-20&&!s.covers.some(cv=>cv.hp>0&&segmentCover(p,q,{...cv,w:cv.w+30,h:cv.h+30}));};
+ const safe=(x:number,y:number)=>{const q={x:p.x+x*55,y:p.y+y*55};return q.x>=A.left+20&&q.x<=A.right-20&&q.y>=A.top+20&&q.y<=A.bottom-20&&!s.covers.some(cv=>cv.hp>0&&segmentCover(p,q,cv,15));};
  const route=p.botRouteSide??side,escaping=s.time<(p.botEscapeUntil||0);
  if(blocked||escaping){let best=-Infinity;for(const angle of [a+route*Math.PI/2,a+route*.8,a-route*.8,a-route*Math.PI/2,a+Math.PI,a]){const x=Math.cos(angle)*.8,y=Math.sin(angle)*.8;if(!safe(x,y))continue;const score=escaping?Math.cos(angle-a-route*Math.PI/2):Math.cos(angle-a)*.4+Math.sin(angle-a)*route*.6;if(score>best){best=score;base.x=x;base.y=y;}}if(!Number.isFinite(best)){base.x=base.y=0;}}
  // Establish the opening exchange before optional salvage/ability demonstrations.
@@ -892,7 +936,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
  for(const cv of s.covers)if(cv.reshapePending27j!==undefined&&!s.players.some(p=>p.hp>0&&p.gripCoverId===cv.id)){cv.reshapePending27j=undefined;cv.reshapeFrom27j=undefined;}
  const d=dt;s.timeScale=1; // Projectile time never slows bodies or action timers.
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(p.hp<=0)p.timeFieldActive=false;if(unlimited31(s)&&p.timeFieldActive&&p.timeUntil27g===undefined)p.timeUntil27g=s.time+PROJECTILE_TIME.duration;if(p.timeFieldActive&&s.time>=(p.timeUntil27g??Infinity)){p.timeFieldActive=false;p.timeReady27g=s.time+PROJECTILE_TIME.cooldown;}if(i.shield&&!prev[n]?.shield&&s.time>=(p.shieldReady27g||0)){p.shieldAt27g=s.time;p.shieldReady27g=s.time+.65;}p.aim=i.aim;powerStep(p,s,dt);
-  stepRip27j(p,s,n);
+  updatePreview32(p,s);stepRip27j(p,s,n);
   const reshaping=s.covers.find(cv=>cv.id===p.gripCoverId&&cv.reshapePending27j!==undefined);
   if(reshaping){
    // Prepare/commit transaction: protection stays at the source catalog shape
@@ -1002,10 +1046,10 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
  for(const cv of s.covers){
    if(cv.build>=0||cv.hp<=0)continue;
    cv.vx??=Math.cos(cv.a-Math.PI/2)*-cv.build;cv.vy??=Math.sin(cv.a-Math.PI/2)*-cv.build;
-   const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy)*d/8));
+   const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy)*d/(cv.fracture32?2:8)));
    for(let k=0;k<parts&&cv.hp>0;k++){const ox=cv.x,oy=cv.y;cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;if(coverStructureBlocked27f(cv,(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)+(cv.hover||0))){cv.x=ox;cv.y=oy;coverImpact(cv,s,'structure');cv.vx=cv.vy=0;}settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
     if(n===cv.throwOwner||s.players[n].hp<=0||(s.players[n].z||0)>(cv.z||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)||s.players[n].z+64<(cv.z||0)||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
-    if(Math.hypot(q.x-clamp(q.x,-cv.w/2,cv.w/2),q.y-clamp(q.y,-cv.h/2,cv.h/2))<=17){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=availableEnergy31(s,target,cost);
+    if(circleBox(target,17,cv).hit){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=availableEnergy31(s,target,cost);
      // One shield contest per release: impact consumes energy; an overwhelmed block passes residual force.
      if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",incomingAngle:Math.atan2(-(cv.vy||0),-(cv.vx||0)),source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??1-n,target:n,damage:0,x:target.x,y:target.y,z:target.z+28});s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}
      else{const residual=shielding?1-available/Math.max(.001,cost):1;if(shielding){target.battery=0;target.lastEnergyAt=s.time;target.shield=false;s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}duelContact(s,cv.throwOwner??1-n,target,damage*residual,(cv.vx||0)*.25*residual,(cv.vy||0)*.25*residual,"torso",undefined,"cover-throw",cv.attackId);}
@@ -1016,11 +1060,11 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
    if(-cv.build<35){cv.build=0;cv.vx=cv.vy=0}
  }
  for(const m of s.matter){
-  if(m.heldBy!==null){const p=s.players[m.heldBy];if(Number.isFinite(p.input.gripX)){const target=gripTarget(p,s,42),ox=m.x,oy=m.y,angle=Math.atan2(m.y-p.y,m.x-p.x),r=dist(m,p),next=angle+clamp(wrap(target.angle-angle),-4*GRIP_STRENGTH*d,4*GRIP_STRENGTH*d),nr=r+(target.radius-r)*(1-Math.exp(-c.carryResponse*GRIP_STRENGTH*d));const to={x:clamp(p.x+Math.cos(next)*nr,A.left+m.r,A.right-m.r),y:clamp(p.y+Math.sin(next)*nr,A.top+m.r,A.bottom-m.r)};if(!s.covers.some(cv=>cv.hp>0&&segmentCover({x:ox,y:oy},to,{...cv,w:cv.w+2*m.r,h:cv.h+2*m.r}))){m.x=to.x;m.y=to.y;m.vx=(m.x-ox)/Math.max(.001,d);m.vy=(m.y-oy)/Math.max(.001,d);gripDrive(p,s,m,clamp((nr-42)/Math.max(1,target.maximum-42),0,1));}else{m.vx=m.vy=0;p.gripDrive=0;}}else{m.x=clamp(p.x+Math.cos(p.aim)*70,A.left,A.right);m.y=clamp(p.y+Math.sin(p.aim)*70,A.top,A.bottom);}continue}
+  if(m.heldBy!==null){const p=s.players[m.heldBy];if(Number.isFinite(p.input.gripX)){const target=gripTarget(p,s,42),ox=m.x,oy=m.y,angle=Math.atan2(m.y-p.y,m.x-p.x),r=dist(m,p),next=angle+clamp(wrap(target.angle-angle),-4*GRIP_STRENGTH*d,4*GRIP_STRENGTH*d),nr=r+(target.radius-r)*(1-Math.exp(-c.carryResponse*GRIP_STRENGTH*d));const to={x:clamp(p.x+Math.cos(next)*nr,A.left+m.r,A.right-m.r),y:clamp(p.y+Math.sin(next)*nr,A.top+m.r,A.bottom-m.r)};if(!s.covers.some(cv=>cv.hp>0&&segmentCover({x:ox,y:oy},to,cv,m.r))){m.x=to.x;m.y=to.y;m.vx=(m.x-ox)/Math.max(.001,d);m.vy=(m.y-oy)/Math.max(.001,d);gripDrive(p,s,m,clamp((nr-42)/Math.max(1,target.maximum-42),0,1));}else{m.vx=m.vy=0;p.gripDrive=0;}}else{m.x=clamp(p.x+Math.cos(p.aim)*70,A.left,A.right);m.y=clamp(p.y+Math.sin(p.aim)*70,A.top,A.bottom);}continue}
   if(m.orbitBy!==null){const p=s.players[m.orbitBy],j=p.orbitIds.indexOf(m.id),a=s.time*4+j*2.1;m.x=clamp(p.x+Math.cos(a)*62,A.left,A.right);m.y=clamp(p.y+Math.sin(a)*62,A.top,A.bottom);continue}
   scatterMatter42(m,s,playerStarts,d);
   const from={x:m.x,y:m.y};m.x+=m.vx*d;m.y+=m.vy*d;
-  if(m.groundScatter&&m.throwOwner===undefined){let first=Infinity;for(const cv of s.covers){if(cv.hp<=0)continue;const t=segmentCoverTime(from,m,{...cv,w:cv.w+2*m.r,h:cv.h+2*m.r});if(t!==null)first=Math.min(first,t);}if(Number.isFinite(first)){m.x=from.x+(m.x-from.x)*Math.max(0,first-.01);m.y=from.y+(m.y-from.y)*Math.max(0,first-.01);m.vx*=-.35;m.vy*=-.35;}}
+  if(m.groundScatter&&m.throwOwner===undefined){let first=Infinity;for(const cv of s.covers){if(cv.hp<=0)continue;const t=segmentCoverTime(from,m,cv,m.r);if(t!==null)first=Math.min(first,t);}if(Number.isFinite(first)){m.x=from.x+(m.x-from.x)*Math.max(0,first-.01);m.y=from.y+(m.y-from.y)*Math.max(0,first-.01);m.vx*=-.35;m.vy*=-.35;}}
   else if(combatFight(s))matterContactSwept(m,from,s,playerStarts);
   m.vx*=Math.pow(.35,d);m.vy*=Math.pow(.35,d);if(m.life<999)m.life-=dt;
   if(m.x<A.left||m.x>A.right){m.x=clamp(m.x,A.left,A.right);m.vx*=-.6}if(m.y<A.top||m.y>A.bottom){m.y=clamp(m.y,A.top,A.bottom);m.vy*=-.6}
@@ -1049,7 +1093,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
   for(const m of s.matter){m.heldBy=null;m.orbitBy=null;}
  }
  // Cover support and falling share arena surfaces; hover is also included in projectile collision.
- for(const cv of s.covers){const held=s.players.some(p=>p.gripCoverId===cv.id);if(!held){const floor=surfaceHeight27h(coverSupport27h(cv),cv);if((cv.z||0)>floor+.01){cv.vz=(cv.vz||0)-900*dt;cv.z=Math.max(floor,(cv.z||0)+cv.vz*dt);}else{cv.z=floor;cv.vz=0;}}const constrained=s.time-(cv.carryBlockedAt??-9)<.12;cv.hover=((cv.hover||0)+((held&&!constrained?12:0)-(cv.hover||0))*(1-Math.exp(-14*dt)));if(!held)cv.carryRadialSpeed=cv.carryAngularSpeed=cv.carryRotationSpeed=0;}
+ for(const cv of s.covers){const held=s.players.some(p=>p.gripCoverId===cv.id);if(!held){const floor=surfaceHeight27h(coverSupport27h(cv),cv);if((cv.z||0)>floor+.01){cv.vz=(cv.vz||0)-900*dt;cv.z=Math.max(floor,(cv.z||0)+cv.vz*dt);}else{cv.z=floor;cv.vz=0;}}const constrained=s.time-(cv.carryBlockedAt??-9)<.12;cv.hover=((cv.hover||0)+((held&&!constrained&&!cv.acquire32?12:0)-(cv.hover||0))*(1-Math.exp(-14*dt)));if(!held){cv.acquire32=undefined;cv.acquireQueue32=undefined;cv.carryRadialSpeed=cv.carryAngularSpeed=cv.carryRotationSpeed=0;}}
  s.covers=s.covers.filter(cv=>cv.hp>0);
  measureFightStep(s,before,dt);
  auditTransitions(s,before,requests,firstSeq);

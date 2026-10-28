@@ -15,7 +15,7 @@ export function tickRoom(r:Room,now=Date.now()){
   const p=r.state.players[n];
   for(const c of r.state.covers){if(c.ripOwner27j===n){c.ripOwner27j=undefined;c.ripAt27j=undefined;}if(c.id===p.gripCoverId){c.reshapePending27j=undefined;c.reshapeFrom27j=undefined;c.build=0;c.vx=c.vy=0;}}
   for(const m of r.state.matter)if(m.heldBy===n||m.orbitBy===n){m.heldBy=null;m.orbitBy=null;m.vx=m.vy=0;}
-  p.ripTarget27j=undefined;p.gripCoverId=null;p.gripId=null;p.orbitIds=[];
+  p.ripTarget27j=undefined;p.ripCommit32=undefined;p.ripPreview32=undefined;p.gripCoverId=null;p.gripId=null;p.orbitIds=[];
  }
  advance(r.state,now);r.updatedAt=now;
 }

@@ -1,3 +1,4 @@
+import {drawFracture32} from './fracturePresentation32';
 import {RIP_TIME27J} from './psychicMatter27j';
 import {coverSupport27h} from './arenaStructures27e';
 import {height as supportHeight29} from './elevation27a';
@@ -7,6 +8,7 @@ import {triangle20} from './dimension33MapArt20';
 import {bayObject} from './bayBridgeMap';
 // Section materials retain the parent's UV interval, including after detachment.
 export function drawSection27j(g:CanvasRenderingContext2D,c:any,t:number,images:Map<string,HTMLImageElement>){
+ if(c.fracture32){drawFracture32(g,c,t);return;}
  const w=c.w,h=c.h,z=c.height27j??bayObject(c.artId||c.id)?.dimensions.z??48,co=Math.cos(c.a||0),si=Math.sin(c.a||0),mat=coverMaterial21(images,c);
  const point=(x:number,y:number,height:number)=>{const r=relativeWorld46(c.x,c.y,x*co-y*si,x*si+y*co),v=vertical46(c.x,c.y,height+(c.z||0)+(c.hover||0));return{x:c.x+r.x+v.x,y:c.y+r.y+v.y};};
  const low=[point(-w/2,-h/2,0),point(w/2,-h/2,0),point(w/2,h/2,0),point(-w/2,h/2,0)],top=[point(-w/2,-h/2,z),point(w/2,-h/2,z),point(w/2,h/2,z),point(-w/2,h/2,z)];
