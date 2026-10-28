@@ -253,3 +253,16 @@ body:has(.arenaBuilder27c) nav[aria-label="Studio access"]{display:none}
 
 /* Build29: optional controller prompt never covers the fighter at screen center. */
 .controllerGate{top:76px!important;left:14px!important;right:auto!important;bottom:auto!important;transform:none!important;max-width:210px!important;padding:8px 10px!important;font-size:10px!important;opacity:.9}.controllerGate small{font-size:9px!important}
+
+/* Build30: diagnostics are opt-in; menu, touch controls and round results remain. */
+.play30 .combatAudit,.play30 .minimalHud,.play30 .controllerGate:not([aria-live]),.play30>footer{display:none!important}
+.play30 .fightRoom:not([open]){opacity:.65}
+.studio.play30:not(.studioWatch){grid-template-rows:44px minmax(0,1fr) 0}
+.studio.play30>header{height:44px;padding-top:5px;padding-bottom:5px}
+.studio.play30>header b{font-size:14px}
+.studioDropdown>a{display:block;padding:12px;color:#8feaff}
+
+.touchActions30{position:absolute;left:170px;right:170px;bottom:92px;display:flex;justify-content:center;gap:4px;flex-wrap:wrap;pointer-events:none}
+.touchActions30 button{pointer-events:auto;touch-action:none;min-height:40px;padding:5px 9px;border:1px solid #587986;border-radius:5px;background:#0b1b29d9;color:#d7f5fa;font:700 10px monospace}
+@media(pointer:fine){.touchActions30{display:none}}
+@media(max-width:650px){.touchActions30{left:95px;right:100px;bottom:125px}.touchActions30 button{padding:4px;min-height:36px}}

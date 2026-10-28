@@ -1,3 +1,4 @@
+import {RIP_TIME27J} from './psychicMatter27j';
 import {coverSupport27h} from './arenaStructures27e';
 import {height as supportHeight29} from './elevation27a';
 import {relativeWorld46,vertical46} from './bayBridgePresentation';
@@ -21,7 +22,25 @@ export function drawSection27j(g:CanvasRenderingContext2D,c:any,t:number,images:
   const a=point(x,faceY,z*.08),b=point(x,faceY,z*.94);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle='#182532';g.lineWidth=3;g.stroke();
   const lamp=point(x,faceY,z*.3);g.fillStyle='#efb66d';g.fillRect(lamp.x-1,lamp.y-2,2,4);
  }
- if(c.anchored27j&&!c.section27j){for(const f of [-.22,.22]){const a=point(w*f,faceY,0),b=point(w*f,faceY,z);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle=c.ripOwner27j!==undefined?'#b9eff2':c.selectedRip27j?'#65bac4':'#293c48';g.lineWidth=c.ripOwner27j!==undefined?2:1;g.stroke();}}
+ // The selected boundary is exactly the removable central 44%, never the whole parent.
+ if(c.anchored27j&&!c.section27j){
+  const tearing=c.ripOwner27j!==undefined,active=tearing||c.selectedRip27j;
+  const progress=tearing?Math.max(0,Math.min(1,(t-(c.ripAt27j??t))/RIP_TIME27J)):0;
+  for(const f of [-.22,.22]){
+   g.beginPath();for(let n=0;n<=8;n++){const q=point(w*f+(n%2?1:-1)*progress*1.6,faceY,z*n/8);n?g.lineTo(q.x,q.y):g.moveTo(q.x,q.y);}
+   g.strokeStyle=active?'#b9eff2':'#1b2935';g.lineWidth=active?1.8:1;g.stroke();
+  }
+  if(active){const a=point(-w*.22,faceY,z),b=point(w*.22,faceY,z);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle='#a7edf2';g.lineWidth=1.6;g.stroke();}
+ }
+ // Ownership is shown only while actively held. A placed neutral piece loses this mark.
+ if(c.heldRelation30){
+  const tint=c.blocked30?'#efb66d':c.heldRelation30==='local'?'#65efff':'#ff82c2';
+  const trace=(coords:number[][])=>{g.beginPath();coords.map(([x,zz])=>point(x,faceY,zz)).forEach((q,n)=>n?g.lineTo(q.x,q.y):g.moveTo(q.x,q.y));g.strokeStyle=tint;g.lineWidth=2;g.stroke();};
+  if(c.heldRelation30==='local')for(const sign of [-1,1])trace([[sign*w*.32,z*.28],[sign*w*.4,z*.28],[sign*w*.4,z*.65],[sign*w*.32,z*.65]]);
+  else trace([[0,z*.7],[w*.14,z*.46],[0,z*.22],[-w*.14,z*.46],[0,z*.7]]);
+  if(c.blocked30)trace([[-w*.14,z*.24],[w*.14,z*.7]]);
+ }
+
  if(c.hp<c.maxHp){const a=point(-w*.2,h/2,z*.8),b=point(w*.1,h/2,z*.35);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle='#15212b';g.lineWidth=2;g.stroke();}
  g.restore();
 }

@@ -464,7 +464,7 @@ export function gripSelection(p:Player,s:GameState){
  if(!cover&&!matter&&!panel)cover=candidates.filter(cv=>dist(cv,p)<=reach&&forward(cv)>.45).sort((a,b)=>dist(a,p)-dist(b,p)||forward(b)-forward(a))[0];
  return{cover,matter:cover||panel?undefined:matter,panel};
 }
-function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
+export function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
  if(cv.hp<=0||!cv.anchored27j||cv.section27j)return 'SECTION UNAVAILABLE';
  if(cv.ripOwner27j!==undefined&&cv.ripOwner27j!==n)return 'SECTION CLAIMED';
  if(p.hp<=0||p.knock>0||p.charging||p.shield||p.slide>0||p.gripCoverId)return 'RIP INTERRUPTED';
@@ -475,7 +475,7 @@ function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
 }
 function beginRip27j(p:Player,s:GameState,n:number,cv:Cover){if(p.ripTarget27j)return;const reason=ripReason27j(p,s,n,cv);if(reason){p.gripHint=reason;p.gripHintUntil=s.time+1.5;return;}cv.ripOwner27j=n;cv.ripAt27j=s.time;p.ripTarget27j=cv.id;p.gripHint='TEARING CENTER SECTION';p.gripHintUntil=s.time+1;}
 function stepRip27j(p:Player,s:GameState,n:number){if(!p.ripTarget27j)return;const cv=s.covers.find(c=>c.id===p.ripTarget27j);const cancel=()=>{if(cv&&cv.ripOwner27j===n){cv.ripOwner27j=undefined;cv.ripAt27j=undefined;}p.ripTarget27j=undefined;};
- if(!cv||ripReason27j(p,s,n,cv)){cancel();return;}if(s.time-(cv.ripAt27j||0)<RIP_TIME27J)return;
+ const invalid=cv?ripReason27j(p,s,n,cv):'SECTION UNAVAILABLE';if(invalid){cancel();p.gripHint=invalid;p.gripHintUntil=s.time+1;return;}if(s.time-(cv.ripAt27j||0)<RIP_TIME27J)return;
  const pieces=splitBarrier27j(cv),chunk=pieces[1];
  // Reserve the existing source footprint; no teleport through an intervening wall.
  if(coverStructureBlocked27f(chunk,chunk.height27j||48)||s.players.some(q=>circleBox(q,18,chunk).hit)){cancel();p.gripHint='RIP CLEARANCE BLOCKED';p.gripHintUntil=s.time+1.5;return;}
@@ -727,12 +727,13 @@ function carryCoverSwept(cv:Cover,p:Player,s:GameState,dt:number){
  cv.vx=(cv.x-ox)/Math.max(.001,dt);cv.vy=(cv.y-oy)/Math.max(.001,dt);cv.build=.001;gripDrive(p,s,cv,clamp((nextRadius-safeRadius)/Math.max(1,target.maximum-safeRadius),0,1));
 }
 function carryBlocked(candidate:Cover,original:Cover,s:GameState){return carryBlockReason21(candidate,original,s)!==null;}
-function carryBlockReason21(candidate:Cover,original:Cover,s:GameState){
+export function carryBlockReason21(candidate:Cover,original:Cover,s:GameState){
+ const bottom=(c:Cover)=>(c.z||0)+(c.hover||0),top=(c:Cover)=>bottom(c)+(c.height27j??bayObject(c.artId||c.id)?.dimensions.z??78);
  if(coverStructureBlocked27f(candidate,(candidate.height27j??bayObject(candidate.artId||candidate.id)?.dimensions.z??78)+(candidate.hover||0)))return 'STRUCTURE CLEARANCE';
  const ex=Math.abs(Math.cos(candidate.a))*candidate.w/2+Math.abs(Math.sin(candidate.a))*candidate.h/2,ey=Math.abs(Math.sin(candidate.a))*candidate.w/2+Math.abs(Math.cos(candidate.a))*candidate.h/2;
  if(candidate.x-ex<A.left||candidate.x+ex>A.right||candidate.y-ey<A.top||candidate.y+ey>A.bottom)return 'ARENA EDGE';
- if(s.players.some(p=>p.hp>0&&p.z+64>(candidate.z||0)&&p.z<(candidate.z||0)+78&&circleBox(p,18,candidate).hit))return 'FIGHTER IN FOOTPRINT';
- for(const b of s.covers){if(b.id===original.id||b.hp<=0||Math.abs((b.z||0)-(candidate.z||0))>78)continue;let overlap=true;
+ if(s.players.some(p=>p.hp>0&&p.z+64>bottom(candidate)&&p.z<top(candidate)&&circleBox(p,18,candidate).hit))return 'FIGHTER IN FOOTPRINT';
+ for(const b of s.covers){if(b.id===original.id||b.hp<=0||bottom(b)>=top(candidate)||bottom(candidate)>=top(b))continue;let overlap=true;
   for(const angle of [candidate.a,candidate.a+Math.PI/2,b.a,b.a+Math.PI/2]){const ax=Math.cos(angle),ay=Math.sin(angle),r=(c:Cover)=>Math.abs(ax*Math.cos(c.a)+ay*Math.sin(c.a))*c.w/2+Math.abs(-ax*Math.sin(c.a)+ay*Math.cos(c.a))*c.h/2;if(Math.abs((candidate.x-b.x)*ax+(candidate.y-b.y)*ay)>=r(candidate)+r(b)-.01){overlap=false;break}}
   if(overlap)return 'EXISTING COVER';
  }return null;

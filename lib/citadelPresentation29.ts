@@ -11,7 +11,7 @@ export function drawCitadel29(g:CanvasRenderingContext2D,images:Map<string,HTMLI
   for(let x=130;x<2050;x+=160){panel(x,18,138,64,'#243a4c');panel(x+8,30,122,38,'#0b1829');panel(x+12,21,114,3,'#b1804f');}
   panel(865,70,470,230,'#172333');panel(882,88,436,196,'#394459');panel(896,100,408,172,'#080f1b');
   const im=images.get('baron29'),a=p(902,266),b=p(1298,266),d=p(902,106);
-  if(im?.complete&&im.naturalWidth){g.save();g.transform((b.x-a.x)/im.naturalWidth,(b.y-a.y)/im.naturalWidth,(d.x-a.x)/im.naturalHeight,(d.y-a.y)/im.naturalHeight,a.x,a.y);g.globalAlpha=.72;g.drawImage(im,0,0);g.restore();}
+  if(im?.complete&&im.naturalWidth){const scale=Math.min(396/im.naturalWidth,160/im.naturalHeight),w=im.naturalWidth*scale,h=im.naturalHeight*scale,left=902+(396-w)/2,base=106+(160-h)/2,A=p(left,base+h),B=p(left+w,base+h),D=p(left,base);g.save();g.transform((B.x-A.x)/im.naturalWidth,(B.y-A.y)/im.naturalWidth,(D.x-A.x)/im.naturalHeight,(D.y-A.y)/im.naturalHeight,A.x,A.y);g.globalAlpha=.8;g.drawImage(im,0,0);g.restore();}
   // Structural beacon and sign, outside the match boundary.
   for(const x of [841,1335]){panel(x,0,24,325,'#28394a');panel(x+8,145,8,130,'#c38e56');}
   panel(1000,292,200,42,'#182637');
