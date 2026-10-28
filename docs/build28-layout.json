@@ -1,0 +1,279 @@
+{
+  "arena": {
+    "id": "dimension33-foundation",
+    "version": 1,
+    "width": 2200,
+    "height": 1100,
+    "bodyHeight": 63.96,
+    "platformHeight": 128,
+    "orientation": "east-west"
+  },
+  "theme": {
+    "id": "dimension33-citadel",
+    "floor": "#394b5a",
+    "panel": [
+      "#415461",
+      "#3e505e",
+      "#435562"
+    ],
+    "seam": "#263744",
+    "edge": "#111c29",
+    "top": "#596f80",
+    "wall": "#293f54",
+    "wallLight": "#354e63",
+    "lamp": "#f3b56b",
+    "cyan": "#58cbd9",
+    "magenta": "#d46da7"
+  },
+  "surfaces": [
+    {
+      "id": "ground",
+      "polygon": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": 2200,
+          "y": 0
+        },
+        {
+          "x": 2200,
+          "y": 1100
+        },
+        {
+          "x": 0,
+          "y": 1100
+        }
+      ],
+      "height": 0,
+      "walkable": true
+    },
+    {
+      "id": "west-platform",
+      "polygon": [
+        {
+          "x": 103,
+          "y": 203
+        },
+        {
+          "x": 383,
+          "y": 203
+        },
+        {
+          "x": 383,
+          "y": 923
+        },
+        {
+          "x": 103,
+          "y": 923
+        }
+      ],
+      "height": 128,
+      "walkable": true
+    },
+    {
+      "id": "east-platform",
+      "polygon": [
+        {
+          "x": 1817,
+          "y": 203
+        },
+        {
+          "x": 2097,
+          "y": 203
+        },
+        {
+          "x": 2097,
+          "y": 923
+        },
+        {
+          "x": 1817,
+          "y": 923
+        }
+      ],
+      "height": 128,
+      "walkable": true
+    },
+    {
+      "id": "west-stairs-0",
+      "polygon": [
+        {
+          "x": 383,
+          "y": 243
+        },
+        {
+          "x": 563,
+          "y": 243
+        },
+        {
+          "x": 563,
+          "y": 443
+        },
+        {
+          "x": 383,
+          "y": 443
+        }
+      ],
+      "height": 0,
+      "walkable": true,
+      "rise": {
+        "axis": "x",
+        "from": 563,
+        "to": 383,
+        "low": 0,
+        "high": 128
+      }
+    },
+    {
+      "id": "east-stairs-0",
+      "polygon": [
+        {
+          "x": 1637,
+          "y": 243
+        },
+        {
+          "x": 1817,
+          "y": 243
+        },
+        {
+          "x": 1817,
+          "y": 443
+        },
+        {
+          "x": 1637,
+          "y": 443
+        }
+      ],
+      "height": 0,
+      "walkable": true,
+      "rise": {
+        "axis": "x",
+        "from": 1637,
+        "to": 1817,
+        "low": 0,
+        "high": 128
+      }
+    },
+    {
+      "id": "west-stairs-1",
+      "polygon": [
+        {
+          "x": 383,
+          "y": 683
+        },
+        {
+          "x": 563,
+          "y": 683
+        },
+        {
+          "x": 563,
+          "y": 883
+        },
+        {
+          "x": 383,
+          "y": 883
+        }
+      ],
+      "height": 0,
+      "walkable": true,
+      "rise": {
+        "axis": "x",
+        "from": 563,
+        "to": 383,
+        "low": 0,
+        "high": 128
+      }
+    },
+    {
+      "id": "east-stairs-1",
+      "polygon": [
+        {
+          "x": 1637,
+          "y": 683
+        },
+        {
+          "x": 1817,
+          "y": 683
+        },
+        {
+          "x": 1817,
+          "y": 883
+        },
+        {
+          "x": 1637,
+          "y": 883
+        }
+      ],
+      "height": 0,
+      "walkable": true,
+      "rise": {
+        "axis": "x",
+        "from": 1637,
+        "to": 1817,
+        "low": 0,
+        "high": 128
+      }
+    }
+  ],
+  "startingCover": {
+    "version": 2,
+    "name": "Chase’s Setup",
+    "placements": [
+      {
+        "id": "chase-27h-0",
+        "objectId": "d33-nw-primary",
+        "x": 700,
+        "y": 350,
+        "rotation": 1.5707963267948966,
+        "z": 0,
+        "surfaceId": "ground"
+      },
+      {
+        "id": "chase-27h-1",
+        "objectId": "floor-panel46",
+        "x": 700,
+        "y": 760,
+        "rotation": 1.5707963267948966,
+        "z": 0,
+        "surfaceId": "ground"
+      },
+      {
+        "id": "chase-27h-2",
+        "objectId": "d33-nw-primary",
+        "x": 1500,
+        "y": 350,
+        "rotation": 1.5707963267948966,
+        "z": 0,
+        "surfaceId": "ground"
+      },
+      {
+        "id": "chase-27h-3",
+        "objectId": "floor-panel46",
+        "x": 1500,
+        "y": 760,
+        "rotation": 1.5707963267948966,
+        "z": 0,
+        "surfaceId": "ground"
+      },
+      {
+        "id": "chase-27h-4",
+        "objectId": "d33-nw-primary",
+        "x": 1000,
+        "y": 500,
+        "rotation": 0,
+        "z": 0,
+        "surfaceId": "ground"
+      },
+      {
+        "id": "chase-27h-5",
+        "objectId": "floor-panel46",
+        "x": 1200,
+        "y": 650,
+        "rotation": 0,
+        "z": 0,
+        "surfaceId": "ground"
+      }
+    ]
+  }
+}

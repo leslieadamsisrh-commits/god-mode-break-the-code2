@@ -1,3 +1,4 @@
+import {drawFoundationFloor28} from './arenaFoundation28';
 import {D33_WORLD25,D33_BOUNDS25} from './dimension33World25';
 import frames from './dimension33Frames20.json';
 import {arenaPoint46,arenaJacobian46,relativeWorld46,vertical46,withWorld46,withUpright} from './bayBridgePresentation';
@@ -122,26 +123,13 @@ export function getFloorImage20(images:Images){
  if(floorCache20?.revision===revision)return floorCache20.canvas;
  const world=document.createElement('canvas');world.width=D33_WORLD25.width;world.height=D33_WORLD25.height;
  const wg=world.getContext('2d')!;wg.fillStyle='#171f2c';wg.fillRect(0,0,world.width,world.height);
- // Large authored zones: no repeated atlas motif across the combat floor.
- const center=D33_WORLD25.centerX;
- const base=wg.createLinearGradient(0,0,0,world.height);base.addColorStop(0,'#36424e');base.addColorStop(.5,'#45515b');base.addColorStop(1,'#303c48');wg.fillStyle=base;wg.fillRect(0,0,world.width,world.height);
- const zones=[{x:80,y:100,w:world.width-160,h:world.height-200,c:'#49545c'},{x:80,y:100,w:230,h:world.height-200,c:'#293f4b'},{x:world.width-310,y:100,w:230,h:world.height-200,c:'#403444'}];
- for(const q of zones){wg.fillStyle=q.c;wg.fillRect(q.x,q.y,q.w,q.h);wg.strokeStyle='#182936';wg.lineWidth=3;wg.strokeRect(q.x,q.y,q.w,q.h);}
- wg.strokeStyle='#293641';wg.lineWidth=1.5;
- for(const x of [310,center-220,center+220,world.width-310]){wg.beginPath();wg.moveTo(x,110);wg.lineTo(x,world.height-110);wg.stroke();}
- for(const y of [210,world.height*.48,world.height-210]){wg.beginPath();wg.moveTo(310,y);wg.lineTo(world.width-310,y);wg.stroke();}
- wg.save();wg.translate(center,D33_WORLD25.centerY);wg.strokeStyle='#8b9ca344';wg.lineWidth=4;wg.beginPath();wg.arc(0,0,150,0,Math.PI*2);wg.stroke();wg.fillStyle='#94a5ab33';wg.font='bold 120px sans-serif';wg.textAlign='center';wg.textBaseline='middle';wg.fillText('33',0,0);wg.restore();
- for(const [x,color] of [[305,'#62ced0'],[world.width-305,'#d77aaf']] as const){wg.fillStyle=color;wg.fillRect(x,230,3,world.height-460);}
- // Restrained spill from existing flank lighting. Baked into the shared floor
- // image so lifted floor panels retain the same material and texture scale.
- for(const [x,color] of [[80,'#41dce81c'],[D33_WORLD25.width-80,'#ee4caa1c']] as const){
-  const light=wg.createLinearGradient(x-110,0,x+110,0);light.addColorStop(0,'#0000');light.addColorStop(.5,color);light.addColorStop(1,'#0000');wg.fillStyle=light;wg.fillRect(x-110,0,220,world.height);
- }
+ drawFoundationFloor28(wg);
  const canvas=document.createElement('canvas');canvas.width=4096;canvas.height=2048;const cg=canvas.getContext('2d')!;
- for(let y=0;y<world.height;y+=60)for(let x=0;x<world.width;x+=100){
-  const src=[{x,y},{x:x+100,y},{x:x+100,y:y+60},{x,y:y+60}],dst=src.map(p=>arenaPoint46(p.x,p.y));
-  for(const indices of [[0,1,2],[0,2,3]])triangle20(cg,world,indices.map(i=>src[i]),indices.map(i=>dst[i]),1.25);
- }
+ // The arena projection is affine. Project once rather than re-drawing the
+ // entire floor through hundreds of triangle clips (and overlapping seams).
+ const origin=arenaPoint46(0,0),ux=arenaPoint46(1,0),uy=arenaPoint46(0,1);
+ cg.setTransform(ux.x-origin.x,ux.y-origin.y,uy.x-origin.x,uy.y-origin.y,origin.x,origin.y);
+ cg.drawImage(world,0,0);cg.resetTransform();
  floorCache20={revision,canvas};return canvas;
 }
 export function skylineOffset24(camera:{x:number;y:number}){

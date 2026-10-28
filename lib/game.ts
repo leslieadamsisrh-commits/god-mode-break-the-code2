@@ -9,6 +9,7 @@ import {bayCoverState,bayObject,BAY_BOUNDS,BAY_SPAWNS} from "./bayBridgeMap";
 import {repulseEnabled21,repulseView21,startRepulse21,stepRepulse21,repulseInput21} from './repulse21';
 export type InputState={aimX?:number;aimY?:number;aimZ?:number;jump?:boolean;coverShapeCycle?:boolean;gripX?:number;gripY?:number;x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;powerup:boolean;slow:boolean;fieldCycle?:boolean;powerCycle?:boolean;weaponCycle?:boolean;powerUse?:boolean};
 export type CombatConfig={legacyPowers:number;chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
+function coverMass28(c:{artId?:string;id:string;section27j?:Section27j}){return (bayObject(c.artId||c.id)?.mass||9)*(c.section27j?c.section27j.u1-c.section27j.u0:1);}
 export const GRIP_STRENGTH=1.2; // Grip36 experiment: +20% manipulation/launch; field reach and costs unchanged.
 // Ground44 is a finite surface layer, never a hole or a collision obstacle.
 export type GroundSource44={id:string;x:number;y:number;remaining:number;initial:number;peeledAt?:number;angle?:number;panel46?:boolean;revision?:number;material?:"concrete";state?:"intact"|"fractured"|"extracted"|"reconstructing"};
@@ -273,7 +274,7 @@ function damageCover(cv:Cover,s:GameState,damage:number){
 }
 function coverImpact(cv:Cover,s:GameState,key:string,other?:Cover,normal?:{x:number;y:number}){
  if(!combatFight(s)||cv.hp<=0||cv.build>=0||Math.hypot(cv.vx||0,cv.vy||0)<160||cv.hitIds?.includes(key))return;
- (cv.hitIds??=[]).push(key);const damage=Math.min(100,Math.hypot(cv.vx||0,cv.vy||0)*(bayObject(cv.artId||cv.id)?.mass||9)/90);
+ (cv.hitIds??=[]).push(key);const damage=Math.min(100,Math.hypot(cv.vx||0,cv.vy||0)*coverMass28(cv)/90);
  // Feedback uses the contacted face, not the moving object's center. Damage,
  // stopping, ownership and collision response remain exactly as before.
  const target=other||cv,meta=bayObject(target.artId||target.id),material=meta?.material==='CONCRETE'||target.floorPanel46||target.generated?'stone':'metal';
@@ -469,7 +470,7 @@ function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
  if(p.hp<=0||p.knock>0||p.charging||p.shield||p.slide>0||p.gripCoverId)return 'RIP INTERRUPTED';
  if(dist(p,cv)>psychicField(p).radius||Math.abs(p.z-(cv.z||0))>64)return 'OUT OF REACH';
  const from={x:p.x,y:p.y,z:p.z+40},to={x:cv.x,y:cv.y,z:(cv.z||0)+24};
- if(Number.isFinite(surfaceShotTime(from,to))||s.covers.some(c=>c.id!==cv.id&&c.hp>0&&segmentCoverTime(p,cv,c)!==null))return 'RIP LINE BLOCKED';
+ if(Number.isFinite(surfaceShotTime(from,to))||s.covers.some(c=>c.id!==cv.id&&c.hp>0&&coverTime27d(from,to,c,c.height27j??bayObject(c.artId||c.id)?.dimensions.z??48)!==null))return 'RIP LINE BLOCKED';
  if(p.battery<s.config.gripEnergy)return 'LOW BATTERY';return null;
 }
 function beginRip27j(p:Player,s:GameState,n:number,cv:Cover){if(p.ripTarget27j)return;const reason=ripReason27j(p,s,n,cv);if(reason){p.gripHint=reason;p.gripHintUntil=s.time+1.5;return;}cv.ripOwner27j=n;cv.ripAt27j=s.time;p.ripTarget27j=cv.id;p.gripHint='TEARING CENTER SECTION';p.gripHintUntil=s.time+1;}
@@ -612,7 +613,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  if(held&&i.fire)p.fireBlocked=true;
  if((i.throwMatter&&!prev.throwMatter)||(held&&i.fire&&!prev.fire)){
    if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv&&spendEnergy(p,s,c.coverThrowEnergy)){
-     const a=p.aim,force=c.throwForce*.62*(p.godTime>0?1.25:1)*(combatFight(s)?Math.sqrt(12/(bayObject(cv.artId||cv.id)?.mass||12)):1),inherit=clamp(c.carryMomentum,0,1);
+     const a=p.aim,force=c.throwForce*.62*(p.godTime>0?1.25:1)*(combatFight(s)?Math.sqrt(12/coverMass28(cv)):1),inherit=clamp(c.carryMomentum,0,1);
      // Release where it is: preserve orientation and measured carry velocity.
      cv.vx=(Math.cos(a)*force+p.vx*inherit+(cv.vx||0)*(1-inherit))*GRIP_STRENGTH;cv.vy=(Math.sin(a)*force+p.vy*inherit+(cv.vy||0)*(1-inherit))*GRIP_STRENGTH;
      cv.throwOwner=n;cv.hitIds=[];cv.build=-Math.hypot(cv.vx,cv.vy);s.fx.push({id:uid(),type:"cover-throw",x:cv.x,y:cv.y,life:.55,owner:n,text:"WHAM"});p.gripCoverId=null;actionOutcome(s,n,"throw","activated","cover",cv.id,c.coverThrowEnergy);
@@ -690,7 +691,7 @@ function releaseGripGesture(p:Player,s:GameState,n:number,previous:InputState){
  const kind=propelled?"launch":"drop";
  let vx=0,vy=0;
  if(propelled){
-  const a=Math.atan2(gy,gx),mass=cv?(bayObject(cv.artId||cv.id)?.mass||9):3;
+  const a=Math.atan2(gy,gx),mass=cv?coverMass28(cv):3;
   const impulse=s.config.throwForce*.62*Math.sqrt(12/mass)*(p.godTime>0?1.25:1)*GRIP_STRENGTH;
   const inherit=clamp(s.config.carryMomentum,0,1);
   vx=Math.cos(a)*impulse+p.vx*inherit+(object.vx||0)*.15;
@@ -703,14 +704,14 @@ function releaseGripGesture(p:Player,s:GameState,n:number,previous:InputState){
  if(cv)cv.build=propelled?-Math.hypot(vx,vy):0;if(m)m.heldBy=null;
  p.gripCoverId=null;p.gripId=null;p.gripGesture=false;p.gripCancelRelease=false;p.gripDrive=0;p.gripReleaseKind=kind;p.gripReleaseUntil=s.time+.6;
  const release=actionOutcome(s,n,propelled?"throw":"place","activated","gesture "+kind,object.id,propelled?s.config.coverThrowEnergy:0);
- release.speed=Math.hypot(vx,vy);release.mass=cv?(bayObject(cv.artId||cv.id)?.mass||9):3;
+ release.speed=Math.hypot(vx,vy);release.mass=cv?coverMass28(cv):3;
  s.fx.push({id:uid(),type:propelled?"cover-throw":"matter-drop",x:object.x,y:object.y,life:propelled?.4:.22,owner:n,text:propelled?"WHAM":""});
 }
 // Recovered from lab-psychic-cover.js at efecc43: orbit around holder and sweep
 // translation + rotated corners. Current mass response and geometry remain authoritative.
 function carryCoverSwept(cv:Cover,p:Player,s:GameState,dt:number){
  const safeRadius=Math.hypot(cv.w,cv.h)/2+19,target=gripTarget(p,s,safeRadius),a=target.angle,ox=cv.x,oy=cv.y,oa=cv.a,radius=Math.hypot(cv.x-p.x,cv.y-p.y),angle=Math.atan2(cv.y-p.y,cv.x-p.x);
- const mass=bayObject(cv.artId||cv.id)?.mass||9,response=s.config.carryResponse*Math.sqrt(9/mass)*GRIP_STRENGTH,turn=Math.min(3.2,s.config.carryTurnResponse*Math.sqrt(9/mass))*GRIP_STRENGTH;
+ const mass=coverMass28(cv),response=s.config.carryResponse*Math.sqrt(9/mass)*GRIP_STRENGTH,turn=Math.min(3.2,s.config.carryTurnResponse*Math.sqrt(9/mass))*GRIP_STRENGTH;
  // Clear the holder radially before turning a freshly ripped close object.
  const approach=(v:number,wanted:number,accel:number)=>v+clamp(wanted-v,-accel*dt,accel*dt),massScale=Math.sqrt(9/mass);
  // Intent is immediate; physical radial/angular velocity ramps independently. Neutral holds the target.
@@ -971,7 +972,7 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
    const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy)*d/8));
    for(let k=0;k<parts&&cv.hp>0;k++){const ox=cv.x,oy=cv.y;cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;if(coverStructureBlocked27f(cv,(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)+(cv.hover||0))){cv.x=ox;cv.y=oy;coverImpact(cv,s,'structure');cv.vx=cv.vy=0;}settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
     if(n===cv.throwOwner||s.players[n].hp<=0||(s.players[n].z||0)>(cv.z||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)||s.players[n].z+64<(cv.z||0)||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
-    if(Math.hypot(q.x-clamp(q.x,-cv.w/2,cv.w/2),q.y-clamp(q.y,-cv.h/2,cv.h/2))<=17){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*(bayObject(cv.artId||cv.id)?.mass||9)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=target.battery;
+    if(Math.hypot(q.x-clamp(q.x,-cv.w/2,cv.w/2),q.y-clamp(q.y,-cv.h/2,cv.h/2))<=17){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=target.battery;
      // One shield contest per release: impact consumes energy; an overwhelmed block passes residual force.
      if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",incomingAngle:Math.atan2(-(cv.vy||0),-(cv.vx||0)),source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??1-n,target:n,damage:0,x:target.x,y:target.y,z:target.z+28});s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}
      else{const residual=shielding?1-available/Math.max(.001,cost):1;if(shielding){target.battery=0;target.lastEnergyAt=s.time;target.shield=false;s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}duelContact(s,cv.throwOwner??1-n,target,damage*residual,(cv.vx||0)*.25*residual,(cv.vy||0)*.25*residual,"torso",undefined,"cover-throw",cv.attackId);}

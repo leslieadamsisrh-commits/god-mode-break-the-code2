@@ -12,7 +12,14 @@ export function drawSection27j(g:CanvasRenderingContext2D,c:any,t:number,images:
  g.save();g.beginPath();[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]].map(([x,y])=>point(x,y,-(c.hover||0))).forEach((v,n)=>n?g.lineTo(v.x+3,v.y+3):g.moveTo(v.x+3,v.y+3));g.closePath();g.fillStyle='#050c1460';g.fill();const ordered=[...faces.slice(0,4).sort((a,b)=>a.p.reduce((n,v)=>n+v.y,0)-b.p.reduce((n,v)=>n+v.y,0)),faces[4]];for(const face of ordered){g.beginPath();face.p.forEach((v,n)=>n?g.lineTo(v.x,v.y):g.moveTo(v.x,v.y));g.closePath();g.fillStyle=face.top?'#697785':face.end?'#344451':'#53616d';g.fill();
  if(mat&&!face.end){const row=face.top?0:1,uv=[[u0,0],[u1,0],[u1,1],[u0,1]].map(([u,v])=>mat.point(0,row,u,v));for(const idx of [[0,1,2],[0,2,3]])triangle20(g,mat.imageFor(0,row),idx.map(i=>uv[i]),idx.map(i=>face.p[i]));}
  g.strokeStyle=c.reshapePending27j!==undefined?'#9be8ed':'#101923';g.lineWidth=c.reshapePending27j!==undefined?2.2:1.5;g.stroke();}
- if(c.anchored27j&&!c.section27j){for(const f of [-.22,.22]){const a=point(w*f,h/2,0),b=point(w*f,h/2,z);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle=c.ripOwner27j!==undefined?'#b9eff2':c.selectedRip27j?'#65bac4':'#293c48';g.lineWidth=c.ripOwner27j!==undefined?2:1;g.stroke();}}
+
+ // Joint bands are registered in source UV space; fragments retain their own bands.
+ const faceY=(Math.cos(c.a||0)>=0?1:-1)*h/2;
+ for(const u of [.025,.28,.72,.975]){if(u<u0||u>u1)continue;const x=((u-u0)/(u1-u0)-.5)*w;
+  const a=point(x,faceY,z*.08),b=point(x,faceY,z*.94);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle='#182532';g.lineWidth=3;g.stroke();
+  const lamp=point(x,faceY,z*.3);g.fillStyle='#efb66d';g.fillRect(lamp.x-1,lamp.y-2,2,4);
+ }
+ if(c.anchored27j&&!c.section27j){for(const f of [-.22,.22]){const a=point(w*f,faceY,0),b=point(w*f,faceY,z);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle=c.ripOwner27j!==undefined?'#b9eff2':c.selectedRip27j?'#65bac4':'#293c48';g.lineWidth=c.ripOwner27j!==undefined?2:1;g.stroke();}}
  if(c.hp<c.maxHp){const a=point(-w*.2,h/2,z*.8),b=point(w*.1,h/2,z*.35);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle='#15212b';g.lineWidth=2;g.stroke();}
  g.restore();
 }

@@ -14,7 +14,7 @@ for(const [x,y,dx,dy] of [[1400,430,1,0],[100,430,-1,0],[500,120,0,-1],[500,740,
  const p=s.players[0];assert(p.x>=A.left&&p.x<=A.right&&p.y>=A.top&&p.y<=A.bottom);
  if(dx>0)assert(p.x>1000,'old right wall remains');if(dy>0)assert(p.y>620,'old bottom wall remains');
 }
-s.covers=[];Object.assign(s.players[0],{x:1800,y:563,z:0,grounded:true,coverId:null,aim:0,battery:100});assert(constructionPreview21(s.players[0],s,0).valid,'expanded placement is rejected');
+s.covers=[];Object.assign(s.players[0],{x:1400,y:563,z:0,grounded:true,coverId:null,aim:0,battery:100});assert(constructionPreview21(s.players[0],s,0).valid,'expanded placement is rejected');
 setInput(s,0,s.players[0].lastSeq+1,{cover:true,aim:0});advance(s,s.lastAt+1000/60);assert(s.covers.some(c=>c.x>1000),'cover creation still uses old bounds');
 startOrRematch(s,0);assert.equal(s.players[0].x,BAY_SPAWNS[0].x);assert.equal(s.players[0].y,BAY_SPAWNS[0].y);
 for(let x=90;x<1430;x+=110)for(let y=110;y<770;y+=80){const cam=encounterCamera22({x,y,aim:0},null,true),p=projectWorld(x,y,cam,cam.zoom),q=unprojectWorld(p.x,p.y,cam,cam.zoom);assert(Math.hypot(q.x-x,q.y-y)<1e-7);assert(p.x>=0&&p.x<=1000&&p.y>=0&&p.y<=620);}

@@ -1094,50 +1094,10 @@ function drawKineticCyclone18(g:CanvasRenderingContext2D,s:any){
 // Dimension 33 playable environment slice: architectural surfaces registered to world.
 // Visual geometry is separated from authoritative collision until verified.
 function drawDimension33Architecture(g:CanvasRenderingContext2D){
- if(drawMapArchitecture20(g,environmentAssets))return;
- const platform=(x:number,y:number,w:number,h:number)=>{
-  withWorld46(g,x,y,()=>{g.save();
-   const rise=15;
-   g.fillStyle="#1a2833";g.strokeStyle="#101b25";g.lineWidth=2;
-   g.beginPath();g.moveTo(-w/2,-h/2);g.lineTo(-w/2+14,-h/2-rise);g.lineTo(w/2+14,-h/2-rise);g.lineTo(w/2,-h/2);g.closePath();g.fill();g.stroke();
-   g.fillStyle="#87918e";g.fillRect(-w/2,-h/2,w,h);
-   g.fillStyle="#40515c";g.fillRect(-w/2,h/2-9,w,14);
-   g.strokeStyle="#b99462";g.lineWidth=3;g.strokeRect(-w/2+4,-h/2+4,w-8,h-8);
-   g.strokeStyle="#263744";g.lineWidth=1;
-   for(let i=-w/2+16;i<w/2-8;i+=20){g.beginPath();g.moveTo(i,-h/2+7);g.lineTo(i+8,h/2-11);g.stroke();}
-   g.restore();});
- };
- const steps=(x:number,y:number,flip:number)=>{
-  withWorld46(g,x,y,()=>{g.save();for(let i=0;i<6;i++){
-    const yy=flip*(-26+i*9);g.fillStyle=i%2?"#64747c":"#9aa19e";
-    g.fillRect(-30,yy,60,8);g.strokeStyle="#233542";g.strokeRect(-30,yy,60,8);
-   }g.restore();});
- };
- // Central circular objective, low enough not to hide combat silhouettes.
- withWorld46(g,500,330,()=>{g.save();
-  g.fillStyle="#293b48";g.strokeStyle="#b99867";g.lineWidth=8;
-  g.beginPath();g.ellipse(0,0,71,48,0,0,Math.PI*2);g.fill();g.stroke();
-  g.strokeStyle="#6ad9dd";g.lineWidth=3;g.beginPath();g.ellipse(0,0,52,33,0,0,Math.PI*2);g.stroke();
-  for(let i=0;i<12;i++){const a=i*Math.PI/6;g.save();g.translate(Math.cos(a)*63,Math.sin(a)*41);g.rotate(a);g.fillStyle="#b2a18a";g.fillRect(-5,-4,10,8);g.restore();}
-  g.restore();});
- platform(500,116,158,49);platform(500,544,158,49);
- steps(500,177,1);steps(500,483,-1);
- // Mirror environmental equipment across x=500; no invented collision hulls.
- for(const x of [150,850])for(const y of [163,497]){
-  platform(x,y,88,56);
-  withWorld46(g,x,y,()=>{g.save();
-   g.fillStyle="#253845";g.strokeStyle="#92a4a8";g.lineWidth=3;
-   g.fillRect(-18,-30,36,22);g.strokeRect(-18,-30,36,22);
-   g.fillStyle=x<500?"#64d9e3":"#e779ad";g.fillRect(-12,-24,24,5);
-   g.restore();});
- }
- // Recessed maintenance strips at each flank, readable in the close camera.
- for(const x of [315,685])for(const y of [245,415])withWorld46(g,x,y,()=>{g.save();
-  g.fillStyle="#263842";g.fillRect(-32,-6,64,12);
-  g.strokeStyle="#b29a74";g.lineWidth=2;g.strokeRect(-32,-6,64,12);
-  g.strokeStyle="#7acbd3";g.beginPath();g.moveTo(-24,0);g.lineTo(24,0);g.stroke();
-  g.restore();});
+ // Only registered out-of-bounds backdrop assets; obsolete decorative platforms removed.
+ drawMapArchitecture20(g,environmentAssets);
 }
+
 function drawGround44(g:CanvasRenderingContext2D,s:any){
  for(const source of s.groundSources44||[])withWorld46(g,source.x,source.y,()=>{
   if(source.id?.startsWith("floor15-")&&source.remaining!==source.initial){

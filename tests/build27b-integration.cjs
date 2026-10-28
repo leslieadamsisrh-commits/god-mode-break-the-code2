@@ -7,8 +7,8 @@ let s=newGame('host','host',0,'solo'),seq=0;const frame=input=>{setInput(s,0,++s
 frame({jump:true});assert(s.players[0].z>0&&s.players[0].vz>0);const first=s.players[0].vz;frame({jump:true});assert(s.players[0].vz<first,'held jump retriggers');for(let i=0;i<100;i++)frame({});assert.equal(s.players[0].z,0);assert(s.players[0].grounded);
 frame({jump:true,fire:true,aim:0});assert(s.shots.length>0);assert(s.shots.every(sh=>sh.z>=s.players[0].z));frame({shield:true});assert(s.players[0].shield);assert(s.players[0].z>0);
 const ground={x:600,y:180,z:0,vz:0,grounded:true,supportSurfaceId:'ground'};assert.equal(integrateVertical(ground,ground,false,1/60).z,0,'overhead snap');
-let p={x:880,y:460,z:0,vz:0,grounded:true,supportSurfaceId:'ground'};for(let i=0;i<185;i++){const previous={...p};p.y-=1;Object.assign(p,integrateVertical(p,previous,false,1/60));}assert(p.z>70&&p.grounded,'stairs failed');
-assert(Number.isFinite(surfaceShotTime({x:1100,y:150,z:150},{x:1100,y:150,z:100})),'platform projectile');
+let p={x:563,y:343,z:0,vz:0,grounded:true,supportSurfaceId:'ground'};for(let i=0;i<185;i++){const previous={...p};p.x-=1;Object.assign(p,integrateVertical(p,previous,false,1/60));}assert(p.z>70&&p.grounded,'stairs failed');
+assert(Number.isFinite(surfaceShotTime({x:240,y:563,z:150},{x:240,y:563,z:100})),'platform projectile');
 const target={...s.players[0],x:100,y:100,z:72,shield:false};assert.equal(shotPlayerTime({x:50,y:100},{x:150,y:100},36,target,target),null);assert(shotPlayerTime({x:50,y:100},{x:150,y:100},108,target,target));
 let maxW=0,maxH=0;for(let y=90;y<=770;y+=20){const c={x:750,y},z=minimumZoom27b(c),v=viewport27b(c,z);assert(v.width<=750.001&&v.height<=420.001);maxW=Math.max(maxW,v.width);maxH=Math.max(maxH,v.height);}
 const memory={},a={x:750,y:420,z:0,hp:420,aim:0};let last;for(let i=0;i<300;i++){const c=stableEncounter27b(a,[a,{x:1000+Math.sin(i)*2,y:420,hp:420}],0,memory,1/60);if(last)assert(Math.abs(c.zoom-last.zoom)<.1);last=c;}

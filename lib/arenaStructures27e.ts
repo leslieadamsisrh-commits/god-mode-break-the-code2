@@ -1,16 +1,7 @@
+import {D33_BOUNDS25} from './dimension33World25';
 import {type Surface,height,inside} from './elevation27a';
-const rect=(id:string,x:number,y:number,w:number,h:number,z:number):Surface=>({id,polygon:[{x,y},{x:x+w,y},{x:x+w,y:y+h},{x,y:y+h}],height:z,walkable:true});
-// Two solid end terraces: 128 height units = two 63.96-unit combat bodies.
-// The middle stays flat; four broad ramps connect directly to flush landings.
-export const COMBAT_SURFACES:Surface[]=[
- rect('ground',0,0,2200,1100,0),
- rect('north-platform',740,0,720,280,128),
- rect('south-platform',740,820,720,280,128),
- ...[780,1220].flatMap((x,i)=>[
-  {...rect('north-stairs-'+i,x,280,200,180,0),rise:{axis:'y' as const,from:460,to:280,low:0,high:128}},
-  {...rect('south-stairs-'+i,x,640,200,180,0),rise:{axis:'y' as const,from:640,to:820,low:0,high:128}},
- ]),
-];
+import {foundationSurfaces28} from './arenaFoundation28';
+export const COMBAT_SURFACES:Surface[]=foundationSurfaces28();
 export const openDeck27h=(_s:Surface)=>false;
 export const structureBottom27h=(s:Surface)=>openDeck27h(s)?s.height-DECK_THICKNESS27E:0;
 export function structureSolids27h():Solid27e[]{return STATIC_SOLIDS27H;}
@@ -57,7 +48,8 @@ export function resolveSupports27e(p:{x:number;y:number;z:number;supportSurfaceI
   if(p.z>=c.top-.01||p.z+bodyHeight<=c.bottom)continue;
   const dx=p.x-c.x,dy=p.y-c.y,ex=c.w/2+radius,ey=c.h/2+radius;
   if(Math.abs(dx)>=ex||Math.abs(dy)>=ey)continue;
-  if(ex-Math.abs(dx)<ey-Math.abs(dy))p.x=c.x+(dx<0?-ex:ex);else p.y=c.y+(dy<0?-ey:ey);
+  const candidates=[{x:c.x-ex,y:p.y},{x:c.x+ex,y:p.y},{x:p.x,y:c.y-ey},{x:p.x,y:c.y+ey}].filter(q=>q.x>=D33_BOUNDS25.left&&q.x<=D33_BOUNDS25.right&&q.y>=D33_BOUNDS25.top&&q.y<=D33_BOUNDS25.bottom).sort((a,b)=>Math.hypot(a.x-p.x,a.y-p.y)-Math.hypot(b.x-p.x,b.y-p.y));
+  if(candidates[0]){p.x=candidates[0].x;p.y=candidates[0].y;}
  }
 
 }
