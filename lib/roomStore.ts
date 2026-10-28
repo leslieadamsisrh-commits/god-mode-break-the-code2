@@ -9,6 +9,14 @@ export function pruneRooms(){const c=Date.now()-28800000;for(const[id,r]of rooms
 export function tickRoom(r:Room,now=Date.now()){
  // A vanished client must not leave a fighter firing or walking indefinitely.
  for(let n=0;n<r.state.players.length;n++)if(!r.state.players[n].bot&&now-(r.inputAt[n]??now)>400){const p=r.state.players[n];p.gripCancelRelease=true;p.timeFieldActive=false;p.pendingMelee=undefined;p.pendingFireUntil=undefined;p.input={...p.input,x:0,y:0,jump:false,fire:false,shield:false,coverAim:false,slide:false,grip:false,powerup:false,slow:false,melee:false,heavy:false,cover:false,orbit:false,launchOrbit:false,pinball:false,throwMatter:false,fieldCycle:false,powerCycle:false,weaponCycle:false,powerUse:false,coverShapeCycle:false};}
+ // Two seconds without input relinquishes owned objects; short transport jitter
+ // only neutralizes inputs above. Never leave a disconnected protective owner.
+ for(let n=0;n<r.state.players.length;n++)if(!r.state.players[n].bot&&now-(r.inputAt[n]??now)>2000){
+  const p=r.state.players[n];
+  for(const c of r.state.covers){if(c.ripOwner27j===n){c.ripOwner27j=undefined;c.ripAt27j=undefined;}if(c.id===p.gripCoverId){c.reshapePending27j=undefined;c.reshapeFrom27j=undefined;c.build=0;c.vx=c.vy=0;}}
+  for(const m of r.state.matter)if(m.heldBy===n||m.orbitBy===n){m.heldBy=null;m.orbitBy=null;m.vx=m.vy=0;}
+  p.ripTarget27j=undefined;p.gripCoverId=null;p.gripId=null;p.orbitIds=[];
+ }
  advance(r.state,now);r.updatedAt=now;
 }
 export function createRoom(name:string,mode:Parameters<typeof newGame>[3],now=Date.now()){

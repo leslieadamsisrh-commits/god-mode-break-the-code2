@@ -1,0 +1,74 @@
+{
+  "assets": [
+    {
+      "path": "public/assets/dimension33/map20/concrete.webp",
+      "width": 1338,
+      "height": 618,
+      "alpha": true,
+      "decodedRGBABytes": 3307536
+    },
+    {
+      "path": "public/assets/dimension33/map20/concrete-corrections.webp",
+      "width": 1353,
+      "height": 1599,
+      "alpha": true,
+      "decodedRGBABytes": 8653788
+    },
+    {
+      "path": "public/assets/dimension33/map20/floor.webp",
+      "width": 1200,
+      "height": 1432,
+      "alpha": true,
+      "decodedRGBABytes": 6873600
+    },
+    {
+      "path": "public/assets/dimension33/map20/props.webp",
+      "width": 1527,
+      "height": 1620,
+      "alpha": true,
+      "decodedRGBABytes": 9894960
+    },
+    {
+      "path": "public/assets/dimension33/map20/skyline.webp",
+      "width": 2352,
+      "height": 592,
+      "alpha": true,
+      "decodedRGBABytes": 5569536
+    },
+    {
+      "path": "public/assets/dimension33/map20/industrial.webp",
+      "width": 1308,
+      "height": 1572,
+      "alpha": true,
+      "decodedRGBABytes": 8224704
+    },
+    {
+      "path": "public/assets/dimension33/map20/architecture.webp",
+      "width": 1503,
+      "height": 1816,
+      "alpha": true,
+      "decodedRGBABytes": 10917792
+    },
+    {
+      "path": "public/assets/dimension33/map20/destruction.webp",
+      "width": 1140,
+      "height": 1908,
+      "alpha": true,
+      "decodedRGBABytes": 8700480
+    },
+    {
+      "path": "public/assets/dimension33/build29/baron-broadcast.webp",
+      "width": 768,
+      "height": 512,
+      "alpha": false,
+      "type": "new static broadcast portrait",
+      "registration": "citadel monitor: world x902..1298,y80,z106..266"
+    }
+  ],
+  "referenceFiles": [
+    "../upload/0BE94043-9A65-4BAD-B2BB-DC2AFB72F4A9(3).jpeg",
+    "../upload/1254F838-8830-415F-893A-8691A3BE55BA(4).jpeg"
+  ],
+  "registrationSource": "lib/dimension33Frames20.json,lib/dimension33Registration21.ts",
+  "missing": "No verified articulated directional jump animation; no Baron reaction animation."
+}

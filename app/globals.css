@@ -250,3 +250,6 @@ footer{display:flex;align-items:center;gap:16px;padding:0 16px;border-top:1px so
 body:has(.arenaBuilder27c) nav[aria-label="Studio access"]{display:none}
 
 .touchTime27g,.touchJump27g{position:absolute;right:24px;pointer-events:auto;touch-action:none;min-width:112px;min-height:44px;border:2px solid #7beaf1;background:#101b32e8;color:#edfcff;border-radius:12px;font:700 12px monospace}.touchTime27g{bottom:208px;border-color:#c6a5ff}.touchJump27g{bottom:154px}
+
+/* Build29: optional controller prompt never covers the fighter at screen center. */
+.controllerGate{top:76px!important;left:14px!important;right:auto!important;bottom:auto!important;transform:none!important;max-width:210px!important;padding:8px 10px!important;font-size:10px!important;opacity:.9}.controllerGate small{font-size:9px!important}

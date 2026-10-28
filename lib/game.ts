@@ -470,7 +470,7 @@ function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
  if(p.hp<=0||p.knock>0||p.charging||p.shield||p.slide>0||p.gripCoverId)return 'RIP INTERRUPTED';
  if(dist(p,cv)>psychicField(p).radius||Math.abs(p.z-(cv.z||0))>64)return 'OUT OF REACH';
  const from={x:p.x,y:p.y,z:p.z+40},to={x:cv.x,y:cv.y,z:(cv.z||0)+24};
- if(Number.isFinite(surfaceShotTime(from,to))||s.covers.some(c=>c.id!==cv.id&&c.hp>0&&coverTime27d(from,to,c,c.height27j??bayObject(c.artId||c.id)?.dimensions.z??48)!==null))return 'RIP LINE BLOCKED';
+ if(Number.isFinite(surfaceShotTime(from,to))||s.covers.some(c=>c.id!==cv.id&&c.hp>0&&coverTime27d({...from,z:from.z-(c.z||0)-(c.hover||0)},{...to,z:to.z-(c.z||0)-(c.hover||0)},c,c.height27j??bayObject(c.artId||c.id)?.dimensions.z??48)!==null))return 'RIP LINE BLOCKED';
  if(p.battery<s.config.gripEnergy)return 'LOW BATTERY';return null;
 }
 function beginRip27j(p:Player,s:GameState,n:number,cv:Cover){if(p.ripTarget27j)return;const reason=ripReason27j(p,s,n,cv);if(reason){p.gripHint=reason;p.gripHintUntil=s.time+1.5;return;}cv.ripOwner27j=n;cv.ripAt27j=s.time;p.ripTarget27j=cv.id;p.gripHint='TEARING CENTER SECTION';p.gripHintUntil=s.time+1;}
@@ -551,7 +551,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  if(i.weaponCycle&&!prev.weaponCycle){p.selectedWeapon=0;p.gripHint="SHOTGUN · ONLY VERIFIED WEAPON";p.gripHintUntil=s.time+1.2;}
  if((i.slow&&!prev.slow)||(!c.legacyPowers&&i.powerUse&&!prev.powerUse))toggleTime27g(p,s);
  if(c.legacyPowers&&i.powerUse&&!prev.powerUse){const power=PSYCHIC_POWERS[p.selectedPower||0];if(power==="BUILD COVER")i.cover=true;else if(power==="ORBIT")i.orbit=true;else if(power==="PINBALL")i.pinball=true;else if(power==="HEAVY GAUNTLET")i.heavy=true;else if(power==="BULLET TIME"){if(p.timeFieldActive)p.timeFieldActive=false;else if(p.hp>0&&p.battery>0&&!p.charging)p.timeFieldActive=true;}}
- if(i.coverShapeCycle&&!prev.coverShapeCycle){const next=((p.coverShape||0)+1)%3,held=s.covers.find(cv=>cv.id===p.gripCoverId);if(!held)p.coverShape=next;else if(!held.generated){p.gripHint="NATURAL CHUNK · PLACE OR THROW";p.gripHintUntil=s.time+1.5;}else if(s.time>=(held.reshapeAt27j??-1)+.4){const candidate={...held,...SHAPES27J[next]};const reason=carryBlockReason21(candidate,held,s);if(!reason){held.reshapeFrom27j={w:held.w,h:held.h,height27j:held.height27j||48};held.reshapePending27j=next;held.reshapeAt27j=s.time;p.gripHint="RESHAPING · HOLD STEADY";}else p.gripHint=reason;p.gripHintUntil=s.time+1.5;}}
+ if(i.coverShapeCycle&&!prev.coverShapeCycle){const next=((p.coverShape||0)+1)%3,held=s.covers.find(cv=>cv.id===p.gripCoverId);if(!held)p.coverShape=next;else if(!held.generated){p.gripHint="NATURAL CHUNK · PLACE OR THROW";p.gripHintUntil=s.time+1.5;}else if(held.reshapePending27j===undefined&&s.time>=(held.reshapeAt27j??-1)+.4){const candidate={...held,...SHAPES27J[next]};const reason=carryBlockReason21(candidate,held,s);if(!reason){held.reshapeFrom27j={w:held.w,h:held.h,height27j:held.height27j||48};held.reshapePending27j=next;held.reshapeAt27j=s.time;p.gripHint="RESHAPING · HOLD STEADY";}else p.gripHint=reason;p.gripHintUntil=s.time+1.5;}}
  if(i.fieldCycle&&!prev.fieldCycle)p.fieldLevel=(psychicField(p).level+1)%3;
  // Successful immediate brace keeps its original priority over other edges.
  slideAction(s,n,prev);
@@ -680,7 +680,7 @@ function releaseGripGesture(p:Player,s:GameState,n:number,previous:InputState){
  const cv=s.covers.find(cv=>cv.id===p.gripCoverId),m=s.matter.find(m=>m.id===p.gripId),object=cv||m;
  if(!object){p.gripCancelRelease=false;return;}
  // Constructed shields and ripped sections persist; explicit RB/RT or a fresh Grip releases them.
- if(cv&&(cv.generated||cv.section27j)){p.gripGesture=false;p.gripCancelRelease=false;return;}
+ if(cv){p.gripGesture=false;p.gripCancelRelease=false;return;}
  // KINETIC COVER 02: one intentional gesture, one clear result.
  // Stick neutral means place. Directed release means a full throw toward the stick.
  // Preserve cancellation, energy costs, momentum inheritance and authoritative impacts.
@@ -866,14 +866,24 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
  s.players.forEach((p,n)=>p.input=repulseInput21(s,n,chargeIntent(p,s,rawInputs[n],dt)));
  if(combatFight(s))s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0);
  stepRepulse21(s,repulseHooks21(s));
+ for(const cv of s.covers)if(cv.reshapePending27j!==undefined&&!s.players.some(p=>p.hp>0&&p.gripCoverId===cv.id)){cv.reshapePending27j=undefined;cv.reshapeFrom27j=undefined;}
  const d=dt;s.timeScale=1; // Projectile time never slows bodies or action timers.
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(p.hp<=0)p.timeFieldActive=false;if(p.timeFieldActive&&s.time>=(p.timeUntil27g??Infinity)){p.timeFieldActive=false;p.timeReady27g=s.time+PROJECTILE_TIME.cooldown;}if(i.shield&&!prev[n]?.shield&&s.time>=(p.shieldReady27g||0)){p.shieldAt27g=s.time;p.shieldReady27g=s.time+.65;}p.aim=i.aim;powerStep(p,s,dt);
   stepRip27j(p,s,n);
   const reshaping=s.covers.find(cv=>cv.id===p.gripCoverId&&cv.reshapePending27j!==undefined);
-  if(reshaping){const next=reshaping.reshapePending27j!,target=SHAPES27J[next],from=reshaping.reshapeFrom27j!,t=clamp((s.time-(reshaping.reshapeAt27j||0))/.24,0,1),k=t*t*(3-2*t),candidate={...reshaping,w:from.w+(target.w-from.w)*k,h:from.h+(target.h-from.h)*k,height27j:from.height27j+(target.height27j-from.height27j)*k},reason=carryBlockReason21(candidate,reshaping,s);
-   if(reason){reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPE STOPPED · '+reason;p.gripHintUntil=s.time+1.2;}
-   else{Object.assign(reshaping,{w:candidate.w,h:candidate.h,height27j:candidate.height27j});reshaping.coverClass=candidate.height27j>60?'tall':'waist';if(t>=1){p.coverShape=next;reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPED · SAME HEALTH';p.gripHintUntil=s.time+1.2;}}
-   i.fire=false;i.throwMatter=false;i.cover=false;
+  if(reshaping){
+   // Prepare/commit transaction: protection stays at the source catalog shape
+   // during preparation. Never persist an interpolated hull on interruption.
+   const next=reshaping.reshapePending27j!,target=SHAPES27J[next],candidate={...reshaping,...target};
+   const interrupted=p.hp<=0||p.knock>0||p.battery<=0||p.charging;
+   const reason=interrupted?'INTERRUPTED':carryBlockReason21(candidate,reshaping,s);
+   if(reason){reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPE CANCELLED · '+reason;p.gripHintUntil=s.time+1.2;}
+   else if(s.time-(reshaping.reshapeAt27j??s.time)>=.24){
+    Object.assign(reshaping,{w:target.w,h:target.h,height27j:target.height27j,coverClass:target.height27j>60?'tall':'waist'});
+    p.coverShape=next;reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPED · SAME HEALTH';p.gripHintUntil=s.time+1.2;
+   }
+   // Explicit release actions wait for the bounded .24s preparation to resolve.
+   i.fire=false;i.throwMatter=false;i.cover=false;i.grip=false;
   }
   const jump=!!i.jump&&!prev[n]?.jump&&p.hp>0&&p.knock<=0;
   if(jump&&p.grounded){p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.exit=null;p.coverLock=s.time+.18;}

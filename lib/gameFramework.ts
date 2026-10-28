@@ -11,8 +11,8 @@ export const CHARACTERS:CharacterDefinition[]=[
 ];
 export const COMPANIONS=[{id:"ruby",name:"RUBY",status:"DEVELOPMENT"}] as const;
 export const ARENAS:ArenaDefinition[]=[
- {id:"bay-bridge",name:"BAY BRIDGE",status:"PLAYABLE",camera:"COMIC_DEPTH_B_31",materialSet:["CONCRETE","STEEL","ROADWAY","VEHICLE"]},
- {id:"dimension-33",name:"DIMENSION 33",status:"DEVELOPMENT",camera:"COMIC_DEPTH",materialSet:["STEEL","INTERDIMENSIONAL"]},
+ {id:"bay-bridge",name:"BAY BRIDGE",status:"DEVELOPMENT",camera:"COMIC_DEPTH_B_31",materialSet:["CONCRETE","STEEL","ROADWAY","VEHICLE"]},
+ {id:"dimension-33",name:"DIMENSION 33",status:"PLAYABLE",camera:"COMIC_DEPTH",materialSet:["STEEL","INTERDIMENSIONAL"]},
  {id:"oakland",name:"OAKLAND",status:"DEVELOPMENT",camera:"COMIC_DEPTH",materialSet:["CONCRETE","ROADWAY"]},
  {id:"ukiah",name:"UKIAH",status:"DEVELOPMENT",camera:"COMIC_DEPTH",materialSet:["STONE","WOOD"]},
  {id:"santa-cruz-lab",name:"SANTA CRUZ LAB",status:"DEVELOPMENT",camera:"COMIC_DEPTH",materialSet:["STEEL","LAB"]}
@@ -20,12 +20,12 @@ export const ARENAS:ArenaDefinition[]=[
 export const POWERS=["SLOW_TIME","SHIELD","GRIP","GENERATE_COVER","UNMAKE","ORBIT","PINBALL","GOD_EVOLUTION"] as const;
 export const WEAPONS=["SHOTGUN","HANDGUN","ASSAULT_RIFLE","SNIPER_RAIL"] as const;
 export const MODES:Record<ModeId,MatchDefinition>={
- story:{id:"story-01",mode:"story",arena:"bay-bridge",players:1,teams:1,bots:0,rounds:1,victory:"story",respawn:false,networked:false,powerRules:"story",status:"DEVELOPMENT"},
- war_1v1:{id:"war-1v1",mode:"war_1v1",arena:"bay-bridge",players:2,teams:2,bots:1,rounds:3,victory:"rounds",respawn:false,networked:true,powerRules:"standard",status:"DEVELOPMENT"},
- war_2v2:{id:"war-2v2",mode:"war_2v2",arena:"bay-bridge",players:4,teams:2,bots:2,rounds:3,victory:"rounds",respawn:false,networked:true,powerRules:"standard",status:"DEVELOPMENT"},
- war_ffa4:{id:"war-ffa4",mode:"war_ffa4",arena:"bay-bridge",players:4,teams:4,bots:3,rounds:3,victory:"score",respawn:true,networked:true,powerRules:"standard",status:"DEVELOPMENT"},
- arcade:{id:"arcade-01",mode:"arcade",arena:"bay-bridge",players:1,teams:2,bots:1,rounds:1,victory:"score",respawn:false,networked:false,powerRules:"standard",status:"DEVELOPMENT"},
- training:{id:"training",mode:"training",arena:"bay-bridge",players:1,teams:1,bots:1,rounds:1,victory:"training",respawn:true,networked:false,powerRules:"training",status:"PLAYABLE"}
+ story:{id:"story-01",mode:"story",arena:"dimension-33",players:1,teams:1,bots:0,rounds:1,victory:"story",respawn:false,networked:false,powerRules:"story",status:"DEVELOPMENT"},
+ war_1v1:{id:"war-1v1",mode:"war_1v1",arena:"dimension-33",players:2,teams:2,bots:1,rounds:3,victory:"rounds",respawn:false,networked:true,powerRules:"standard",status:"DEVELOPMENT"},
+ war_2v2:{id:"war-2v2",mode:"war_2v2",arena:"dimension-33",players:4,teams:2,bots:2,rounds:3,victory:"rounds",respawn:false,networked:true,powerRules:"standard",status:"DEVELOPMENT"},
+ war_ffa4:{id:"war-ffa4",mode:"war_ffa4",arena:"dimension-33",players:4,teams:4,bots:3,rounds:3,victory:"score",respawn:true,networked:true,powerRules:"standard",status:"DEVELOPMENT"},
+ arcade:{id:"arcade-01",mode:"arcade",arena:"dimension-33",players:1,teams:2,bots:1,rounds:1,victory:"score",respawn:false,networked:false,powerRules:"standard",status:"DEVELOPMENT"},
+ training:{id:"training",mode:"training",arena:"dimension-33",players:1,teams:1,bots:1,rounds:1,victory:"training",respawn:true,networked:false,powerRules:"training",status:"PLAYABLE"}
 };
 export const MATCH_LIFECYCLE=["BOOT","TITLE","MAIN_MENU","MODE_SELECT","CHARACTER_SELECT","ARENA_SELECT","LOADING","MATCH_INTRO","FIGHT","ROUND_END","RESULTS","REMATCH_MENU"] as const;
 export const GOD_TIERS:GodTier[]=[
@@ -36,3 +36,4 @@ export const GOD_TIERS:GodTier[]=[
  {id:"god",label:"GOD FRAME",accel:1.32,brake:1.4,redirect:1.32,slide:1.16,psychic:1.5,fx:1}
 ];
 // Data only. Tier modifiers are not applied to frozen Base Jade until a dedicated playtest pass.
+

@@ -1,0 +1,30 @@
+{
+  "lib/elevation27a.ts": {
+    "unchanged": true,
+    "sha256": "1fb190fac7d1c97242d8db64bfa7d3d836bc67aab0c4a90dd1f14f214195faec"
+  },
+  "lib/verticalCombat27b.ts": {
+    "unchanged": true,
+    "sha256": "22e988a2842dc13254f9e3b059ae93d800f18a9a05fcea1992cd3e3f5b856b93"
+  },
+  "lib/combatCamera27c.ts": {
+    "unchanged": true,
+    "sha256": "fce354bc5e3d53ea457f7f83057dda7437508f2e38fb64cfbdc1797b8fe21486"
+  },
+  "lib/arenaFoundation28.ts": {
+    "unchanged": true,
+    "sha256": "0c733d1317ad39cdd782a042f1f6442c8751cd65e2ee8c3ab2811906d406e676"
+  },
+  "lib/arenaStructures27e.ts": {
+    "unchanged": true,
+    "sha256": "4aa697ffe3995ccf0df70657ba18f794974d33fcda470877085b2abb07466b45"
+  },
+  "lib/arenaLayout27c.ts": {
+    "unchanged": true,
+    "sha256": "ff132a6704f57f2a634ee9bb3394251f51a952be99d9227c0cf8416cc5ead4e8"
+  },
+  "lib/dimension33World25.ts": {
+    "unchanged": true,
+    "sha256": "d6866328e1a2ae965fc396e6c48d1ce6c0a8073303032c7cd37237329baa9f43"
+  }
+}
