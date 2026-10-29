@@ -70,7 +70,7 @@ export function coverStructureBlocked27f(c:{x:number;y:number;w:number;h:number;
  const solids=[...structureSolids27h()];
  const z=c.z||0;
  for(const s of COMBAT_SURFACES.filter(s=>s.rise)){const xs=s.polygon.map(p=>p.x),ys=s.polygon.map(p=>p.y);const top=height(s,c);if(z<top-.1)solids.push({id:s.id,x:(Math.min(...xs)+Math.max(...xs))/2,y:(Math.min(...ys)+Math.max(...ys))/2,w:Math.max(...xs)-Math.min(...xs),h:Math.max(...ys)-Math.min(...ys),bottom:0,top});}
- return solids.some(b=>{if(z>=b.top-.1||z+bodyHeight<=b.bottom)return false;if(c.fracture32)return overlap32(c,b).hit;return [0,Math.PI/2,c.a,c.a+Math.PI/2].every(a=>{const x=Math.cos(a),y=Math.sin(a),r=Math.abs(Math.cos(a-c.a))*c.w/2+Math.abs(Math.sin(a-c.a))*c.h/2,br=Math.abs(x)*b.w/2+Math.abs(y)*b.h/2;return Math.abs((c.x-b.x)*x+(c.y-b.y)*y)<r+br;});});
+ return solids.some(b=>{if(z>=b.top-.1||z+bodyHeight<=b.bottom)return false;if(c.fracture32)return overlap32({...c,height27j:bodyHeight},{...b,z:b.bottom,height27j:b.top-b.bottom}).hit;return [0,Math.PI/2,c.a,c.a+Math.PI/2].every(a=>{const x=Math.cos(a),y=Math.sin(a),r=Math.abs(Math.cos(a-c.a))*c.w/2+Math.abs(Math.sin(a-c.a))*c.h/2,br=Math.abs(x)*b.w/2+Math.abs(y)*b.h/2;return Math.abs((c.x-b.x)*x+(c.y-b.y)*y)<r+br;});});
 }
 export function coverSupport27h(c:{x:number;y:number;z?:number}){
  return COMBAT_SURFACES.filter(s=>inside(c,s)&&height(s,c)<=(c.z||0)+12).sort((a,b)=>height(b,c)-height(a,c))[0]||COMBAT_SURFACES[0];

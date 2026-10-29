@@ -1,0 +1,19 @@
+const fs=require('fs'),ts=require('typescript'),assert=require('node:assert/strict');global.crypto??=require('crypto').webcrypto;require.extensions['.ts']=(m,p)=>m._compile(ts.transpileModule(fs.readFileSync(p,'utf8'),{compilerOptions:{module:1,target:9}}).outputText,p);
+const F=require('../lib/fracture32.ts'),G=require('../lib/game.ts'),A=require('../lib/arenaLayout27c.ts'),B=require('../lib/ballistics27d.ts');
+const near=(a,b)=>assert(Math.abs(a-b)<1e-6,`${a} != ${b}`);
+const source={x:850,y:550,z:0,w:98,h:30,a:0,height27j:48,fracture32:F.initialFracture32('33',98,30,48,true)};
+for(let i=0;i<100;i++){const f=F.initialFracture32('seed'+i,98,30,48,true);near(F.volume32(f),98*30*48);assert(F.supported33(f,f.cells));assert.deepEqual(F.prisms33({...source,fracture32:f}),F.prisms33({...source,fracture32:structuredClone(f)}));for(const ids of F.candidates32({...source,fracture32:f},{x:810,y:530},100)){assert(ids.length<=16);assert(F.supported33(f,f.cells.filter(id=>!ids.includes(id))));assert(F.volume32(f,ids)<=F.capacity32(f,100));const reached=new Set([ids[0]]);for(let n=0;n<24;n++)for(const id of ids)if([...reached].some(a=>F.adjacent33(f,a,id)))reached.add(id);assert.equal(reached.size,ids.length);}}
+// Remove middle+upper column pair. Upper rays pass, lower base still blocks.
+const ids=[9,13,17,21],rest=F.rebase32(source,source.fracture32.cells.filter(id=>!ids.includes(id))),chunk=F.rebase32(source,ids),polys=F.worldPolys32(chunk),x=polys.flat().reduce((n,p)=>n+p.x,0)/polys.flat().length;
+near(F.volume32(rest.fracture32)+F.volume32(chunk.fracture32),F.volume32(source.fracture32));assert(chunk.z>0&&chunk.height27j<48);
+assert.equal(B.coverTime27d({x,y:500,z:42},{x,y:600,z:42},rest,48),null);assert.notEqual(B.coverTime27d({x,y:500,z:5},{x,y:600,z:5},rest,48),null);
+assert(F.circleContact32({x,y:550,z:0},1,rest).hit);assert(!F.circleContact32({x,y:550,z:30},1,rest).hit);
+assert(!F.overlap32(chunk,rest).hit,'touching partition volumes do not interpenetrate');
+// Moving a fragment preserves source-space surface registration and height.
+const world=F.prisms33(chunk);near(Math.min(...world.map(v=>v.low))+chunk.z,Math.min(...ids.map(id=>F.band33(source.fracture32,id).low)));assert(F.faces33(rest).some(f=>f.kind==='top'&&!f.exterior));
+function game(cap=100){const s=G.newGame('j','j',0,'solo');s.rules31={version:1,battery:'current',opponent:'target',capacity32:cap};s.phase='playing';s.covers=A.instantiateLayout27c(A.chaseLayout27c()).filter(c=>c.anchored27j).slice(0,1);Object.assign(s.covers[0],{x:850,y:550,a:0});Object.assign(s.players[0],{x:850,y:430,aim:Math.PI/2});return s;}
+function tick(s,i={},n=1){G.setInput(s,0,s.players[0].lastSeq+1,{aim:Math.PI/2,...i});for(let k=0;k<n;k++)G.advance(s,s.lastAt+1000/60);}
+let volumes=[];
+for(const cap of [0,50,100]){const s=game(cap),p=s.players[0],vol=F.volume32(s.covers[0].fracture32),hp=s.covers[0].hp;tick(s,{},7);assert(p.ripPreview32,`preview ${cap}`);const preview=structuredClone(p.ripPreview32);tick(s,{grip:true});tick(s,{},120);assert(p.gripCoverId,`hold ${cap}`);const held=s.covers.find(c=>c.id===p.gripCoverId);assert(!held.acquire32,`acquisition completed ${cap}`);assert.equal(s.covers.length,2);near(s.covers.reduce((n,c)=>n+F.volume32(c.fracture32),0),vol);near(s.covers.reduce((n,c)=>n+c.hp,0),hp);assert.equal(new Set(s.covers.flatMap(c=>c.fracture32.cells)).size,24);const e=s.actions.find(e=>e.action==='rip'&&e.status==='activated');assert(e);assert.equal(e.amount,4);assert.deepEqual(e.fracture32.cells,preview.cells);volumes.push(e.fracture32.volume);assert(F.supported33(s.covers[0].fracture32,s.covers[0].fracture32.cells));}
+assert(volumes[0]<volumes[1]&&volumes[1]<volumes[2],`sizing ${volumes}`);
+console.log('PASS33 100 seeded layered partitions; connected supported cuts; partial-height rays/body/overlap; health/material and fixed-cost conservation; acquisition at three capacities',volumes);

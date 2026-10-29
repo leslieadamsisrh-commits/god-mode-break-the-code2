@@ -1,4 +1,4 @@
-import {worldPolys32,rayPoly32,type Fracture32} from './fracture32';
+import {prisms33,rayPoly32,type Fracture32} from './fracture32';
 import {arenaPoint46,arenaInverse46,arenaJacobian46} from './bayBridgePresentation';
 // Upright sprite registration: 125px cell, feet .88, barrel .88/.37.
 // Convert the socket into the floor projection rather than adding sprite pixels to world XY.
@@ -17,7 +17,7 @@ export function cylinderTime27d(from:{x:number;y:number;z:number},to:{x:number;y
  return enter<=exit&&enter>=0&&enter<=1?enter:null;
 }
 export function coverTime27d(from:{x:number;y:number;z:number},to:{x:number;y:number;z:number},cover:{x:number;y:number;w:number;h:number;a:number;fracture32?:Fracture32},height:number,pad=0){
- if(cover.fracture32){let first=Infinity;for(const poly of worldPolys32(cover)){const interval=rayPoly32(from,to,poly,pad);if(!interval)continue;let {lo,hi}=interval;const dz=to.z-from.z;if(Math.abs(dz)<1e-12){if(from.z < -pad||from.z>height+pad)continue;}else{const a=(-pad-from.z)/dz,b=(height+pad-from.z)/dz;lo=Math.max(lo,Math.min(a,b));hi=Math.min(hi,Math.max(a,b));}if(lo<=hi)first=Math.min(first,lo);}return Number.isFinite(first)?first:null;}
+ if(cover.fracture32){let first=Infinity;for(const {poly,low,high} of prisms33(cover)){const interval=rayPoly32(from,to,poly,pad);if(!interval)continue;let {lo,hi}=interval;const dz=to.z-from.z;if(Math.abs(dz)<1e-12){if(from.z < low-pad||from.z>high+pad)continue;}else{const a=(low-pad-from.z)/dz,b=(high+pad-from.z)/dz;lo=Math.max(lo,Math.min(a,b));hi=Math.min(hi,Math.max(a,b));}if(lo<=hi)first=Math.min(first,lo);}return Number.isFinite(first)?first:null;}
  const co=Math.cos(cover.a),si=Math.sin(cover.a),local=(p:typeof from)=>{const x=p.x-cover.x,y=p.y-cover.y;return [x*co+y*si,-x*si+y*co,p.z];},a=local(from),b=local(to),lo=[-cover.w/2-pad,-cover.h/2-pad,-pad],hi=[cover.w/2+pad,cover.h/2+pad,height+pad];let enter=0,exit=1;
  for(let i=0;i<3;i++){const d=b[i]-a[i];if(Math.abs(d)<1e-12){if(a[i]<lo[i]||a[i]>hi[i])return null;}else{const t0=(lo[i]-a[i])/d,t1=(hi[i]-a[i])/d;enter=Math.max(enter,Math.min(t0,t1));exit=Math.min(exit,Math.max(t0,t1));}}
  return enter<=exit&&enter>=0&&enter<=1?enter:null;
