@@ -8,7 +8,7 @@ export function slotFor(s:GameState,t:string){const n=s.players.findIndex(p=>p.t
 export function pruneRooms(){const c=Date.now()-28800000;for(const[id,r]of rooms)if(r.updatedAt<c)rooms.delete(id);}
 export function tickRoom(r:Room,now=Date.now()){
  // A vanished client must not leave a fighter firing or walking indefinitely.
- for(let n=0;n<r.state.players.length;n++)if(!r.state.players[n].bot&&now-(r.inputAt[n]??now)>400){const p=r.state.players[n];p.gripCancelRelease=true;p.timeFieldActive=false;p.pendingMelee=undefined;p.pendingFireUntil=undefined;p.input={...p.input,x:0,y:0,jump:false,fire:false,shield:false,coverAim:false,slide:false,grip:false,powerup:false,slow:false,melee:false,heavy:false,cover:false,orbit:false,launchOrbit:false,pinball:false,throwMatter:false,fieldCycle:false,powerCycle:false,weaponCycle:false,powerUse:false,coverShapeCycle:false};}
+ for(let n=0;n<r.state.players.length;n++)if(!r.state.players[n].bot&&now-(r.inputAt[n]??now)>400){const p=r.state.players[n];p.gripCancelRelease=true;p.gripEdges34=[];p.gripDesired34=false;p.gather34=undefined;p.throwBuffer34=undefined;p.timeFieldActive=false;p.pendingMelee=undefined;p.pendingFireUntil=undefined;p.input={...p.input,x:0,y:0,jump:false,fire:false,shield:false,coverAim:false,slide:false,grip:false,powerup:false,slow:false,melee:false,heavy:false,cover:false,orbit:false,launchOrbit:false,pinball:false,throwMatter:false,fieldCycle:false,powerCycle:false,weaponCycle:false,powerUse:false,coverShapeCycle:false};}
  // Two seconds without input relinquishes owned objects; short transport jitter
  // only neutralizes inputs above. Never leave a disconnected protective owner.
  for(let n=0;n<r.state.players.length;n++)if(!r.state.players[n].bot&&now-(r.inputAt[n]??now)>2000){

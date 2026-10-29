@@ -1,3 +1,4 @@
+import {CARRY34,planCarry34,advanceCarry34,swept34} from './psychicCarry34';
 import {type Fracture32,prisms33,circleContact32,overlap32,worldPolys32,rayPoly32,edges32,candidates32,capacity32,volume32,rebase32} from './fracture32';
 import {type MatchRules31,validateRules31,unlimited31,availableEnergy31,canPay31,debitEnergy31,SPARRING31} from "./matchRules31";
 import {SHAPES27J,RIP_TIME27J,splitBarrier27j,type Section27j} from './psychicMatter27j';
@@ -9,7 +10,7 @@ import {height as surfaceHeight27h} from './elevation27a';
 import {D33_WORLD25} from './dimension33World25';
 import {bayCoverState,bayObject,BAY_BOUNDS,BAY_SPAWNS} from "./bayBridgeMap";
 import {repulseEnabled21,repulseView21,startRepulse21,stepRepulse21,repulseInput21} from './repulse21';
-export type InputState={aimX?:number;aimY?:number;aimZ?:number;jump?:boolean;coverShapeCycle?:boolean;gripX?:number;gripY?:number;x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;powerup:boolean;slow:boolean;fieldCycle?:boolean;powerCycle?:boolean;weaponCycle?:boolean;powerUse?:boolean};
+export type InputState={dropMatter34?:boolean;cancelGrip34?:boolean;aimX?:number;aimY?:number;aimZ?:number;jump?:boolean;coverShapeCycle?:boolean;gripX?:number;gripY?:number;x:number;y:number;aim:number;fire:boolean;shield:boolean;coverAim:boolean;slide:boolean;melee:boolean;heavy:boolean;grip:boolean;throwMatter:boolean;cover:boolean;orbit:boolean;launchOrbit:boolean;pinball:boolean;powerup:boolean;slow:boolean;fieldCycle?:boolean;powerCycle?:boolean;weaponCycle?:boolean;powerUse?:boolean};
 export type CombatConfig={legacyPowers:number;chargeMoveScale:number;chargeMoveResponse:number;powerChargeSeconds:number;godDuration:number;godDrain:number;powerRecharge:number;godDamage:number;gripEnergy:number;holdEnergy:number;coverThrowEnergy:number;carryResponse:number;carryTurnResponse:number;carryMomentum:number;slideEnergy:number;dashEnergy:number;rechargeDelay:number;rechargeRate:number;weaveEnabled:number;moveSpeed:number;response:number;stopDrag:number;slideDrag:number;dashSpeed:number;dashDuration:number;doubleTapWindow:number;slideSpeed:number;slideDuration:number;slideSustain:number;slideSteer:number;slideSteerAngle:number;slideSteerResponse:number;slideBrake:number;slideCancelSpeed:number;shotCadence:number;shotSpread:number;shotDamage:number;shotSpeed:number;throwForce:number;pinballSpeed:number;pinballDuration:number;maxHealth:number;spriteScale:number;cameraZoom:number;};
 function coverMass28(c:{artId?:string;id:string;section27j?:Section27j;fracture32?:Fracture32;anchored27j?:boolean}){if(c.fracture32&&!c.anchored27j)return (bayObject(c.artId||c.id)?.mass||9)*.44;return (bayObject(c.artId||c.id)?.mass||9)*(c.section27j?c.section27j.u1-c.section27j.u0:1);}
 export const GRIP_STRENGTH=1.2; // Grip36 experiment: +20% manipulation/launch; field reach and costs unchanged.
@@ -40,9 +41,9 @@ export const DEFAULT_CONFIG:CombatConfig={legacyPowers:0,chargeMoveScale:.67145,
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
 export type Rip32={path?:{x:number;y:number;z:number}[];sourceId:string;revision:number;cells:number[];seed:number;volume:number;capacity:number;aim:number;destination:{x:number;y:number;z:number};fallback:number};
-export type Player=ElevationState & {hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player=ElevationState & {gripEdges34?:boolean[];gripDesired34?:boolean;gather34?:{source:string;at:number;revision:number;plan?:Rip32};throwBuffer34?:number;avoidSide34?:number;avoidMode34?:string;throwTarget34?:number;hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type FloorSlab46={floorPanel46?:{sourceId:string;originX:number;originY:number;creator:number}};
-export type Cover=FloorSlab46 & {acquire32?:{x:number;y:number;z:number};acquireQueue32?:{x:number;y:number;z:number}[];fracture32?:Fracture32;height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
+export type Cover=FloorSlab46 & {placed34?:boolean;acquire32?:{x:number;y:number;z:number};acquireQueue32?:{x:number;y:number;z:number}[];fracture32?:Fracture32;height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={unitId?:string;groundId?:string;groundScatter?:boolean;spin?:number;spinVelocity?:number;height?:number;liftVelocity?:number;scatterAt?:number;attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={vz?:number;attackId?:string;source?:string;radius?:number;realAge?:number;volleyId?:string;fieldOwners?:number[];projectileScale?:number;id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
 export type Fx={material?:"digital"|"cyber";strength?:number;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number};
@@ -60,7 +61,7 @@ function actionOutcome(s:GameState,owner:number,action:string,status:ActionOutco
  const e:ActionOutcome={...nominalEnergy!==undefined?{nominalEnergy}:{},round:s.round,seq:(s.actionSeq||0)+1,at:s.time,wallAt:s.lastAt,owner,action,status,...attackId?{attackId}:{},...reason?{reason}:{},...objectId?{objectId}:{},...amount!==undefined?{amount}:{}};s.actionSeq=e.seq;recordFightAction(s,e);(s.actions??=[]).push(e);if(s.actions.length>128)s.actions.splice(0,s.actions.length-128);const key=owner+":"+action+":"+status;(s.actionCounts??={})[key]=(s.actionCounts[key]||0)+1;return e;
 }
 export function combatDiagnostics(s:GameState){return{round:s.round,phase:s.phase,actionSeq:s.actionSeq||0,actions:s.actions||[],holds33:s.players.map(p=>p.hold33||null),counts:s.actionCounts||{},energySpent:s.energySpent||[],units:{time:"simulation seconds",wallAt:"server milliseconds",energy:"observed battery loss"}};}
-function actionRequests(p:Player,i:InputState,prev:InputState,time:number,legacy=false){const out:string[]=[];for(const [key,action] of [["fire",i.grip?"throw":(p.blastUntil||0)>time&&(p.blastCharge||0)>0?"glove-blast":"shotgun"],["throwMatter","throw"],["grip","grip"],["slide","movement"],["shield","shield"],["powerup","charge"],["cover","build"],["orbit","orbit"],["slow","time"],["melee","melee"],["heavy","heavy"],["pinball","pinball"]] as const)if(i[key]&&!prev[key])out.push(action);if(i.powerUse&&!prev.powerUse)out.push(legacy?["build","orbit","pinball","heavy","time","repulse"][p.selectedPower||0]:"time");return [...new Set(out)];}
+function actionRequests(p:Player,i:InputState,prev:InputState,time:number,legacy=false){const out:string[]=[];for(const [key,action] of [["fire",(p.blastUntil||0)>time&&(p.blastCharge||0)>0?"glove-blast":"shotgun"],["throwMatter","throw"],["grip","grip"],["slide","movement"],["shield","shield"],["powerup","charge"],["cover","build"],["orbit","orbit"],["slow","time"],["melee","melee"],["heavy","heavy"],["pinball","pinball"]] as const)if(i[key]&&!prev[key])out.push(action);if(i.powerUse&&!prev.powerUse)out.push(legacy?["build","orbit","pinball","heavy","time","repulse"][p.selectedPower||0]:"time");return [...new Set(out)];}
 function auditTransitions(s:GameState,before:Player[],requests:string[][],firstSeq:number){
  for(let n=0;n<s.players.length;n++){const p=s.players[n],old=before[n];
   const delta=Math.max(0,old.battery-p.battery);(s.energySpent??=[])[n]=(s.energySpent[n]||0)+delta;
@@ -150,7 +151,7 @@ export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo
  // Eight finite recipes in mirrored salvage clusters; no passive material spawning.
  const matter:Matter[]=[];if(mode==="duel"||mode==="watch")for(let side=0;side<2;side++)for(const [station,[x,y]] of [[170,460],[240,400],[370,470],[400,150]].entries())for(let j=0;j<3;j++)matter.push({id:`salvage-${side}-${station}-${j}`,x:side?D33_WORLD25.width-x-j*18:x+j*18,y:y+100,vx:0,vy:0,r:5+j%2,kind:j===2?"metal":"stone",heldBy:null,orbitBy:null,life:999,sourceArt:j===2?"maintenance-cabinet":"damaged-jersey",fragment:j});
  const arenaLayout=chaseLayout27c();const covers:Cover[]=instantiateLayout27c(arenaLayout); // Clear single-player practice arena; preserve multiplayer maps.
- return{arenaLayout,build:"BUILD-33-TORN-MATTER",groundSources44:groundSources44(),mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,events:[],eventSeq:0,actions:[],actionCounts:{},energySpent:[],actionSeq:0,timeScale:1,fightUntil:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
+ return{arenaLayout,build:"BUILD-34-GUNHAND-GODHAND",groundSources44:groundSources44(),mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,events:[],eventSeq:0,actions:[],actionCounts:{},energySpent:[],actionSeq:0,timeScale:1,fightUntil:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
 }
 export function setMatchRules31(s:GameState,value:unknown,slot:number){
  if(slot!==0)throw Error("HOST_ONLY");
@@ -161,7 +162,7 @@ export function setMatchRules31(s:GameState,value:unknown,slot:number){
 export function updateConfig(s:GameState,patch:Partial<CombatConfig>){s.config={...s.config,...patch};for(const p of s.players)p.hp=Math.min(p.hp,s.config.maxHealth)}
 export function joinGame(s:GameState,name:string,token:string){if(s.mode==="watch")throw Error("Spectator session is not joinable");if(s.mode==="practice")throw Error("Practice is not joinable");if(s.mode==="solo")throw Error("Solo session is not joinable");const b=s.players.findIndex(p=>p.bot);if(b>=0){s.players[b]={...s.players[b],name,token,bot:false,lastSeq:-1,input:empty(),processedInput:empty()};return}if(s.players.length>1)throw Error("Room is full");s.players.push(player(BAY_SPAWNS[1].x,BAY_SPAWNS[1].y,Math.PI,name,token,false,s.config.maxHealth))}
 function respawn(s:GameState){if(s.fightRecording?.active&&s.phase!=="finished")s.fightRecording.abandoned++;const cfg={...s.config},ids=s.players.map(p=>({name:p.name,token:p.token,bot:p.bot,score:p.score})),fresh=newGame(ids[0].name,ids[0].token,s.lastAt,s.mode);fresh.arenaLayout=validateLayout27c(s.arenaLayout||chaseLayout27c());fresh.covers=instantiateLayout27c(fresh.arenaLayout);fresh.config=cfg;fresh.rules31=s.rules31?{...s.rules31}:undefined;fresh.players[0].hp=cfg.maxHealth;if(ids[1])fresh.players[1]=player(BAY_SPAWNS[1].x,BAY_SPAWNS[1].y,Math.PI,ids[1].name,ids[1].token,ids[1].bot,cfg.maxHealth);fresh.players.forEach((p,i)=>p.score=ids[i]?.score||0);fresh.round=s.round+1;fresh.createdAt=s.createdAt;fresh.botRound=undefined;fresh.watchNextAt=undefined;fresh.botStrategy=s.botStrategy;fresh.botExperience=s.botExperience;fresh.fightRecording=s.fightRecording;if(fresh.fightRecording?.active&&fresh.fightRecording.rounds.length%2===1){[fresh.players[0].x,fresh.players[1].x]=[fresh.players[1].x,fresh.players[0].x];fresh.players.forEach((p,i)=>p.aim=p.gunFacing=i?0:Math.PI);}fresh.phase=s.mode==="solo"?"playing":"countdown";Object.assign(s,fresh)}
-export function setInput(s:GameState,slot:number,seq:number,input:Partial<InputState>){const p=s.players[slot];if(!p||s.mode==="watch"||seq<=p.lastSeq)return;p.lastSeq=seq;p.gripCancelRelease=false;let x=clamp(Number(input.x)||0,-1,1),y=clamp(Number(input.y)||0,-1,1),m=Math.hypot(x,y);if(m>1){x/=m;y/=m}let gripAxes:Partial<InputState>={};if(Number.isFinite(input.gripX)&&Number.isFinite(input.gripY)){let gx=clamp(input.gripX!,-1,1),gy=clamp(input.gripY!,-1,1),gm=Math.hypot(gx,gy);if(gm>1){gx/=gm;gy/=gm;}gripAxes={gripX:gx,gripY:gy};}const aimPoint=Number.isFinite(input.aimX)&&Number.isFinite(input.aimY)&&Number.isFinite(input.aimZ)?{aimX:clamp(input.aimX!,-500,2000),aimY:clamp(input.aimY!,-500,1500),aimZ:clamp(input.aimZ!,0,500)}:{aimX:undefined,aimY:undefined,aimZ:undefined};p.input={...empty(),...input,...aimPoint,gripX:undefined,gripY:undefined,...gripAxes,x,y,aim:Number.isFinite(input.aim)?wrap(input.aim as number):p.aim}}
+export function setInput(s:GameState,slot:number,seq:number,input:Partial<InputState>){const p=s.players[slot];if(!p||s.mode==="watch"||!Number.isSafeInteger(seq)||seq<=p.lastSeq)return;p.lastSeq=seq;if(input.cancelGrip34){p.gripEdges34=[];p.gather34=undefined;p.throwBuffer34=undefined;}else if(!!input.grip!==(p.gripDesired34??!!p.input.grip)){const queue=p.gripEdges34??=[];if(queue.length<4)queue.push(!!input.grip);}p.gripDesired34=!!input.grip;p.gripCancelRelease=false;let x=clamp(Number(input.x)||0,-1,1),y=clamp(Number(input.y)||0,-1,1),m=Math.hypot(x,y);if(m>1){x/=m;y/=m}let gripAxes:Partial<InputState>={};if(Number.isFinite(input.gripX)&&Number.isFinite(input.gripY)){let gx=clamp(input.gripX!,-1,1),gy=clamp(input.gripY!,-1,1),gm=Math.hypot(gx,gy);if(gm>1){gx/=gm;gy/=gm;}gripAxes={gripX:gx,gripY:gy};}const aimPoint=Number.isFinite(input.aimX)&&Number.isFinite(input.aimY)&&Number.isFinite(input.aimZ)?{aimX:clamp(input.aimX!,-500,2000),aimY:clamp(input.aimY!,-500,1500),aimZ:clamp(input.aimZ!,0,500)}:{aimX:undefined,aimY:undefined,aimZ:undefined};p.input={...empty(),...input,...aimPoint,gripX:undefined,gripY:undefined,...gripAxes,x,y,aim:Number.isFinite(input.aim)?wrap(input.aim as number):p.aim}}
 
 function localPoint(c:Cover,x:number,y:number){const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),dx=x-c.x,dy=y-c.y;return{x:dx*ca+dy*sa,y:-dx*sa+dy*ca}}
 function worldPoint(c:Cover,x:number,y:number){const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0);return{x:c.x+x*ca-y*sa,y:c.y+x*sa+y*ca}}
@@ -300,13 +301,19 @@ function coverImpact(cv:Cover,s:GameState,key:string,other?:Cover,normal?:{x:num
  const speed=Math.hypot(cv.vx||0,cv.vy||0),strength=normal?clamp(-((cv.vx||0)*normal.x+(cv.vy||0)*normal.y)/Math.max(1,speed),.12,1):1;
  if(other){damageCover(other,s,damage);if(other.build<0)(other.hitIds??=[]).push(cv.id);}damageCover(cv,s,damage);combatEvent(s,{kind:"cover",source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??-1,damage,...point,z:12,material});s.fx.push({id:uid(),type:"cover-impact",...point,z:12,life:.3,text:material,strength,angle:Math.atan2(cv.vy||0,cv.vx||0)});
 }
+export function placementHeight34(cv:Cover,s:GameState){
+ const points=worldPolys32(cv).flat(),base=surfaceHeight27h(coverSupport27h(cv),cv),heights=[base];
+ for(const b of s.covers){if(b.id===cv.id||b.hp<=0||b.build<0||s.players.some(p=>p.gripCoverId===b.id))continue;
+  for(const prism of prisms33(b)){const z=(b.z||0)+(b.hover||0)+prism.high;if(z>(cv.z||0)+(cv.hover||0)+.1||z>192)continue;if(points.length>0&&points.every(point=>rayPoly32(point,point,prism.poly)!==null))heights.push(z);}
+ }return Math.max(...heights);
+}
 function settleCover(cv:Cover,s:GameState){
  if(cv.anchored27j){cv.vx=cv.vy=0;return;}
  const ex=Math.abs(Math.cos(cv.a))*cv.w/2+Math.abs(Math.sin(cv.a))*cv.h/2,ey=Math.abs(Math.sin(cv.a))*cv.w/2+Math.abs(Math.cos(cv.a))*cv.h/2;
  const x=clamp(cv.x,A.left+ex,A.right-ex),y=clamp(cv.y,A.top+ey,A.bottom-ey);
  if(x!==cv.x||y!==cv.y)coverImpact(cv,s,"boundary",undefined,{x:x!==cv.x?Math.sign(x-cv.x):0,y:y!==cv.y?Math.sign(y-cv.y):0});if(x!==cv.x)cv.vx=0;if(y!==cv.y)cv.vy=0;cv.x=x;cv.y=y;
  for(const other of s.covers){
-  if(other.id===cv.id||other.hp<=0||Math.abs((other.z||0)-(cv.z||0))>78)continue;
+  if(other.id===cv.id||other.hp<=0||(other.z||0)+(other.hover||0)+(other.height27j??78)<=(cv.z||0)+(cv.hover||0)||(cv.z||0)+(cv.hover||0)+(cv.height27j??78)<=(other.z||0)+(other.hover||0))continue;
   const axes=[[Math.cos(cv.a),Math.sin(cv.a)],[-Math.sin(cv.a),Math.cos(cv.a)],[Math.cos(other.a),Math.sin(other.a)],[-Math.sin(other.a),Math.cos(other.a)]];
   let depth=Infinity,nx=0,ny=0,overlap=true;
   for(const [ax,ay]of axes){
@@ -472,15 +479,15 @@ export const PSYCHIC_FIELDS=[{name:"CLOSE",radius:135},{name:"STANDARD",radius:2
 export function psychicField(p:Player){const level=Number.isInteger(p.fieldLevel)?clamp(p.fieldLevel!,0,2):1;return{level,...PSYCHIC_FIELDS[level]};}
 export function gripSelection(p:Player,s:GameState){
  const previous=p.ripPreview32,sticky=previous&&Math.abs(wrap(previous.aim-p.aim))<.12?s.covers.find(c=>c.id===previous.sourceId&&c.fracture32?.revision===previous.revision&&c.hp>0):undefined;
- if(sticky&&!p.gripCoverId)return{cover:sticky,matter:undefined,panel:undefined};
+ if(sticky&&!p.gripCoverId&&sticky.id!==p.coverId)return{cover:sticky,matter:undefined,panel:undefined};
  const reach=psychicField(p).radius,a=p.aim,end={x:p.x+Math.cos(a)*reach,y:p.y+Math.sin(a)*reach};
  const forward=(q:{x:number;y:number})=>((q.x-p.x)*Math.cos(a)+(q.y-p.y)*Math.sin(a))/Math.max(1,dist(q,p));
  const candidates=s.covers.filter(cv=>!cv.protected45&&cv.hp>0&&(!cv.section27j?.anchored&&(cv.generated||!!bayObject(cv.artId||cv.id)?.gripCompatible))&&!s.players.some(q=>q!==p&&(q.coverId===cv.id||q.gripCoverId===cv.id)));
  // Aim directly through the rotated whole-object footprint to choose it over incidental rubble.
- let cover=candidates.find(cv=>cv.id===p.coverId)||candidates.filter(cv=>dist(cv,p)<=reach&&segmentCoverTime(p,end,cv)!==null).sort((a,b)=>dist(a,p)-dist(b,p))[0];
+ let cover=candidates.filter(cv=>dist(cv,p)<=reach&&segmentCoverTime(p,end,cv)!==null).sort((a,b)=>dist(a,p)-dist(b,p))[0];
  const matter=s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null&&dist(m,p)<=reach&&forward(m)>.45).sort((a,b)=>dist(a,p)-dist(b,p)||forward(b)-forward(a))[0];
  const panel=!cover?(s.groundSources44||[]).filter(q=>q.panel46&&q.remaining===q.initial&&dist(q,p)<=reach&&segmentCoverTime(p,end,{x:q.x,y:q.y,w:80,h:54,a:0,hp:1} as Cover)!==null&&!s.covers.some(cv=>cv.hp>0&&circleBox(q,8,cv).hit)).sort((a,b)=>dist(a,p)-dist(b,p))[0]:undefined;
- if(!cover&&!matter&&!panel)cover=candidates.filter(cv=>dist(cv,p)<=reach&&forward(cv)>.45).sort((a,b)=>dist(a,p)-dist(b,p)||forward(b)-forward(a))[0];
+ if(!cover&&!matter&&!panel)cover=candidates.filter(cv=>cv.id!==p.coverId&&dist(cv,p)<=reach).sort((a,b)=>dist(a,p)-dist(b,p)||forward(b)-forward(a))[0];
  return{cover,matter:cover||panel?undefined:matter,panel};
 }
 export function ripReason27j(p:Player,s:GameState,n:number,cv:Cover){
@@ -502,14 +509,15 @@ function extractionPath32(p:Player,s:GameState,cv:Cover,plan:Rip32){
 
  return null;
 }
-export function fractureProposal32(p:Player,s:GameState,cv:Cover):Rip32|undefined{
+export function fractureProposal32(p:Player,s:GameState,cv:Cover,growth=1,prior?:Rip32):Rip32|undefined{
  if(!cv.fracture32||ripReason27j(p,s,s.players.indexOf(p),cv))return;
- const distance=dist(p,cv),aim=Math.round(p.aim/.12)*.12,end={x:p.x+Math.cos(aim)*psychicField(p).radius,y:p.y+Math.sin(aim)*psychicField(p).radius},hits=worldPolys32(cv).map(poly=>rayPoly32(p,end,poly)?.lo).filter((v):v is number=>v!==undefined),reach=hits.length?Math.min(...hits)*psychicField(p).radius:distance,point={x:p.x+Math.cos(aim)*reach,y:p.y+Math.sin(aim)*reach},capacity=capacity32(cv.fracture32,extractionBattery32(s,p)),variants=candidates32(cv,point,extractionBattery32(s,p));
- for(let fallback=0;fallback<variants.length;fallback++){const cells=variants[fallback];if(cells.length<2)continue;const chunk=rebase32(cv,cells);if(Math.min(chunk.w,chunk.h)<10||Math.max(chunk.w,chunk.h)/Math.min(chunk.w,chunk.h)>6)continue;const radius=Math.max(78,Math.hypot(chunk.w,chunk.h)/2+34),angle=Math.atan2(chunk.y-p.y,chunk.x-p.x),destination={x:p.x+Math.cos(angle)*radius,y:p.y+Math.sin(angle)*radius,z:p.z};
+ const distance=dist(p,cv),aim=Math.round(p.aim/.12)*.12,end={x:p.x+Math.cos(aim)*psychicField(p).radius,y:p.y+Math.sin(aim)*psychicField(p).radius},hits=worldPolys32(cv).map(poly=>rayPoly32(p,end,poly)?.lo).filter((v):v is number=>v!==undefined),reach=hits.length?Math.min(...hits)*psychicField(p).radius:distance,point={x:p.x+Math.cos(aim)*reach,y:p.y+Math.sin(aim)*reach},capacity=capacity32(cv.fracture32,extractionBattery32(s,p)),variants=candidates32(cv,point,extractionBattery32(s,p)).filter(ids=>!prior||prior.cells.every(id=>ids.includes(id)));
+ const minimum=variants.filter(ids=>ids.length>=2).reduce((v,ids)=>Math.min(v,volume32(cv.fracture32!,ids)),Infinity),limit=minimum+(capacity-minimum)*clamp(growth,0,1);variants.sort((a,b)=>volume32(cv.fracture32!,b)-volume32(cv.fracture32!,a));
+ for(let fallback=0;fallback<variants.length;fallback++){const cells=variants[fallback];if(cells.length<2||volume32(cv.fracture32,cells)>limit+1e-6)continue;const chunk=rebase32(cv,cells);if(Math.min(chunk.w,chunk.h)<10||Math.max(chunk.w,chunk.h)/Math.min(chunk.w,chunk.h)>6)continue;const radius=Math.max(78,Math.hypot(chunk.w,chunk.h)/2+34),angle=Math.atan2(chunk.y-p.y,chunk.x-p.x),destination={x:p.x+Math.cos(angle)*radius,y:p.y+Math.sin(angle)*radius,z:p.z};
  const plan:Rip32={sourceId:cv.id,revision:cv.fracture32.revision,cells,seed:cv.fracture32.seed,volume:volume32(cv.fracture32,cells),capacity,aim:p.aim,destination,fallback};if(!extractionPath32(p,s,cv,plan))return plan;
  const lift=Math.max((cv.z||0)+(cv.height27j??cv.fracture32.height)+1,destination.z);plan.path=[{x:chunk.x,y:chunk.y,z:lift},{...destination,z:lift},destination];if(!extractionPath32(p,s,cv,plan))return plan;}
 }
-function updatePreview32(p:Player,s:GameState){if(p.ripTarget27j||s.time<(p.previewAt32??-1))return;p.previewAt32=s.time+.1;if(p.gripCoverId||p.gripId||p.hp<=0){p.ripPreview32=undefined;return;}const cv=gripSelection(p,s).cover;p.ripPreview32=cv?fractureProposal32(p,s,cv):undefined;}
+function updatePreview32(p:Player,s:GameState){if(p.gather34||p.ripTarget27j||s.time<(p.previewAt32??-1))return;p.previewAt32=s.time+.1;if(p.gripCoverId||p.gripId||p.hp<=0){p.ripPreview32=undefined;return;}const cv=gripSelection(p,s).cover;p.ripPreview32=cv?fractureProposal32(p,s,cv,0):undefined;}
 function completeFracture32(p:Player,s:GameState,n:number,cv:Cover,cancel:()=>void){
  const plan=p.ripCommit32,f=cv.fracture32!;let reason=!plan?'NO ELIGIBLE MATERIAL':plan.revision!==f.revision?'SOURCE REVISION CHANGED':plan.cells.some(id=>!f.cells.includes(id))?'SOURCE REVISION CHANGED':plan.volume>capacity32(f,extractionBattery32(s,p))+1e-6?'CAPACITY LOST':extractionPath32(p,s,cv,plan);
  if(reason||!plan){cancel();p.gripHint=reason||'RIP CANCELLED';p.gripHintUntil=s.time+1;actionOutcome(s,n,'rip','cancelled',p.gripHint,cv.id);return;}
@@ -519,7 +527,7 @@ function completeFracture32(p:Player,s:GameState,n:number,cv:Cover,cancel:()=>vo
  if(!spendEnergy(p,s,s.config.gripEnergy)){cancel();return;}
  s.covers=s.covers.flatMap(c=>c.id===cv.id?parent?[parent,chunk]:[chunk]:[c]);
  for(const q of s.players)if(q.coverId===cv.id)releaseCover(q,s,.25);
- p.ripTarget27j=undefined;p.ripCommit32=undefined;p.ripPreview32=undefined;releaseCover(p,s,.25);p.gripCoverId=chunk.id;p.coverGripDist=clamp(dist(p,chunk),78,psychicField(p).radius-8);p.coverGripAngle=Math.atan2(chunk.y-p.y,chunk.x-p.x);p.gripGesture=false;p.gripHint='CHUNK HELD · RB PLACE / RT THROW';p.gripHintUntil=s.time+1.5;
+ p.ripTarget27j=undefined;p.ripCommit32=undefined;p.ripPreview32=undefined;releaseCover(p,s,.25);p.gripCoverId=chunk.id;p.coverGripDist=clamp(dist(p,chunk),78,psychicField(p).radius-8);p.coverGripAngle=Math.atan2(chunk.y-p.y,chunk.x-p.x);p.gripGesture=false;p.gripHint='CHUNK HELD · RB PLACE / LB THROW';p.gripHintUntil=s.time+1.5;
  const event=actionOutcome(s,n,'rip','activated','irregular concrete',chunk.id,s.config.gripEnergy);event.fracture32=plan;
  combatEvent(s,{kind:'cover',source:'rip',owner:n,damage:0,x:chunk.x,y:chunk.y,z:(chunk.z||0)+24,material:'stone'});s.fx.push({id:uid(),type:'matter-rip',x:chunk.x,y:chunk.y,z:chunk.z||0,life:.28,owner:n});
 }
@@ -533,7 +541,7 @@ function stepRip27j(p:Player,s:GameState,n:number){if(!p.ripTarget27j)return;con
  s.covers=s.covers.filter(c=>c.id!==cv.id);s.covers.push(...pieces);
  for(const q of s.players)if(q.coverId===cv.id)releaseCover(q,s,.25);
  p.ripTarget27j=undefined;releaseCover(p,s,.25);p.gripCoverId=chunk.id;p.coverGripDist=clamp(dist(p,chunk),78,psychicField(p).radius-8);p.coverGripAngle=Math.atan2(chunk.y-p.y,chunk.x-p.x);p.gripGesture=false;chunk.build=.001;
- p.gripHint='RIPPED CHUNK · RB PLACE / RT THROW';p.gripHintUntil=s.time+1.5;
+ p.gripHint='RIPPED CHUNK · RB PLACE / LB THROW';p.gripHintUntil=s.time+1.5;
  actionOutcome(s,n,'rip','activated','center section',chunk.id,s.config.gripEnergy);combatEvent(s,{kind:'cover',source:'rip',owner:n,damage:0,x:cv.x,y:cv.y,z:(cv.z||0)+24,material:'stone'});s.fx.push({id:uid(),type:'matter-rip',x:cv.x,y:cv.y,z:cv.z||0,life:.28,owner:n});
 }
 function extractPanel46(p:Player,s:GameState,n:number,q:GroundSource44){
@@ -542,7 +550,7 @@ function extractPanel46(p:Player,s:GameState,n:number,q:GroundSource44){
  if(q.remaining!==3||carryBlocked(cv,cv,s)){p.gripHint="FLOOR PANEL BLOCKED · STEP CLEAR";p.gripHintUntil=s.time+1.5;return;}
  if(!spendEnergy(p,s,s.config.gripEnergy))return;
  q.remaining=0;q.peeledAt=s.time;q.angle=0;s.covers.push(cv);releaseCover(p,s,.25);p.gripCoverId=cv.id;p.coverGripAngle=Math.atan2(cv.y-p.y,cv.x-p.x);p.coverGripDist=clamp(dist(cv,p),78,psychicField(p).radius-8);p.gripGesture=false;p.gripDrive=0;p.gripDriveAt=-9;cv.build=.001;
- p.gripHint="FLOOR SLAB · RT THROW / RB FORM";p.gripHintUntil=s.time+1.5;s.fx.push({id:uid(),type:"matter-rip",x:q.x,y:q.y,life:.24,owner:n});
+ p.gripHint="FLOOR SLAB · LB THROW / RB PLACE";p.gripHintUntil=s.time+1.5;s.fx.push({id:uid(),type:"matter-rip",x:q.x,y:q.y,life:.24,owner:n});
  actionOutcome(s,n,"peel","activated","physical floor slab",cv.id,s.config.gripEnergy);
 }
 // Loose matter stays physical; each construct records exactly the three units it consumes.
@@ -585,7 +593,7 @@ function buildFieldCover(p:Player,s:GameState,n:number){
  while(components.length<GROUND_44.unitsPerCover){const k=components.length,a=p.aim+k*2.399;components.push({kind:k===2?"metal":"stone",sourceArt:k===2?"industrial-metal":"damaged-jersey",fragment:k,originX:p.x+Math.cos(a)*35,originY:p.y+Math.sin(a)*35});}
  if(slab){cv.hp=cv.maxHp*Math.max(0,Math.min(1,slab.hp/slab.maxHp));s.covers=s.covers.filter(q=>q.id!==slab.id);p.gripCoverId=null;p.gripGesture=false;}
  const ids=new Set(used.map(m=>m.id));if(reinforced)cv.hp=cv.maxHp=COVER_41.reinforcedHp;cv.matterSources=components.map(({originX,originY,...component})=>component);cv.assembly44=components;cv.stamp44=n;cv.construction44="peel";
- s.matter=s.matter.filter(m=>!ids.has(m.id));s.players.forEach(q=>{if(q.gripId&&ids.has(q.gripId))q.gripId=null;q.orbitIds=q.orbitIds.filter(id=>!ids.has(id));});spendEnergy(p,s,COVER_41.buildEnergy);s.covers.push(cv);releaseCover(p,s,.25);p.gripCoverId=cv.id;p.coverGripAngle=Math.atan2(cv.y-p.y,cv.x-p.x);p.coverGripDist=dist(cv,p);p.gripGesture=false;cv.build=.001;p.gripHint="FLOATING COVER · RB PLACE / RT THROW";p.gripHintUntil=s.time+1.5;actionOutcome(s,n,"build","activated",reinforced?"reinforced":components.length?cv.construction44:"projected",cv.id,COVER_41.buildEnergy);s.fx.push({id:uid(),type:"materialize",x:cv.x,y:cv.y,life:.28,owner:n,angle:cv.a});
+ s.matter=s.matter.filter(m=>!ids.has(m.id));s.players.forEach(q=>{if(q.gripId&&ids.has(q.gripId))q.gripId=null;q.orbitIds=q.orbitIds.filter(id=>!ids.has(id));});spendEnergy(p,s,COVER_41.buildEnergy);s.covers.push(cv);releaseCover(p,s,.25);p.gripCoverId=cv.id;p.coverGripAngle=Math.atan2(cv.y-p.y,cv.x-p.x);p.coverGripDist=dist(cv,p);p.gripGesture=false;cv.build=.001;p.gripHint="FLOATING COVER · RB PLACE / LB THROW";p.gripHintUntil=s.time+1.5;actionOutcome(s,n,"build","activated",reinforced?"reinforced":components.length?cv.construction44:"projected",cv.id,COVER_41.buildEnergy);s.fx.push({id:uid(),type:"materialize",x:cv.x,y:cv.y,life:.28,owner:n,angle:cv.a});
 }
 function dissolveFieldCover(cv:Cover,s:GameState){damageCover(cv,s,cv.hp);const f=s.fx.findLast(f=>f.type==="cover-break"&&f.x===cv.x&&f.y===cv.y);if(f)f.type="cover-dissolve";}
 function toggleTime27g(p:Player,s:GameState){
@@ -620,6 +628,12 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  }
  // Contextual floor restoration: LB + RB while aiming at a depleted nearby cell.
  // No new button. Never override a held object or ordinary RB construction.
+ if(p.gather34){
+  const g=p.gather34,source=s.covers.find(c=>c.id===g.source);
+  if(i.cancelGrip34||p.gripCancelRelease||i.cover&&!prev.cover||p.hp<=0||p.knock>0||!source||(source.fracture32?.revision??-1)!==g.revision){p.gather34=undefined;p.ripPreview32=undefined;p.throwBuffer34=undefined;if(i.cover)i.cover=false;p.gripHint='GATHER CANCELLED';p.gripHintUntil=s.time+.7;}
+  else if(i.grip){const plan=fractureProposal32(p,s,source,clamp(s.time-g.at,0,1),g.plan);if(plan){g.plan=plan;p.ripPreview32=plan;}p.gripHint='GATHER '+Math.round(clamp(s.time-g.at,0,1)*100)+'% · RELEASE TO RIP';p.gripHintUntil=s.time+.2;}
+  else if(prev.grip){p.ripPreview32=g.plan;p.gather34=undefined;beginRip27j(p,s,n,source);}
+ }
  if(i.cover&&!prev.cover&&i.grip&&!p.gripId&&!p.gripCoverId&&!p.orbitIds.length){
   const aimX=p.x+Math.cos(p.aim)*95,aimY=p.y+Math.sin(p.aim)*95;
   const candidate=(s.groundSources44||[]).filter(c=>c.remaining<c.initial&&dist(c,p)<=psychicField(p).radius)
@@ -640,42 +654,56 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
    }
   }else {p.gripHint="AIM AT DAMAGED FLOOR TO REBUILD";p.gripHintUntil=s.time+1.2;}
  }else if(i.cover&&!prev.cover){
-  if(p.gripCoverId){const cv=s.covers.find(q=>q.id===p.gripCoverId);const reason=cv?carryBlockReason21(cv,cv,s):'NO HELD COVER';if(cv&&!reason&&(!cv.fracture32||worldPolys32(cv).every(poly=>poly.every(point=>Math.abs(surfaceHeight27h(coverSupport27h({...point,z:cv.z}),point)-(cv.z||0))<.1)))&&p.grounded&&!coverSupport27h(cv).rise&&Math.abs((cv.z||0)-surfaceHeight27h(coverSupport27h(cv),cv))<.1){cv.acquire32=undefined;cv.build=0;cv.vx=cv.vy=0;p.gripCoverId=null;p.gripHint="COVER PLACED";actionOutcome(s,n,"place","activated","RB placement",cv.id,0);}else p.gripHint=reason||"PLACE ON A SUPPORTED SURFACE";p.gripHintUntil=s.time+1.5;}
+  if(p.gripCoverId){const cv=s.covers.find(q=>q.id===p.gripCoverId);if(cv){const z=placementHeight34(cv,s),from={x:cv.x,y:cv.y,z:(cv.z||0)+(cv.hover||0),a:cv.a},to={...from,z};if(!cv.acquire32&&z<=from.z+.1&&swept34(from,to,Math.hypot(cv.w,cv.h)/2,q=>!!carryBlockReason21({...cv,...q,hover:0},cv,s))){cv.z=from.z;cv.hover=0;cv.placed34=true;cv.build=0;cv.vx=cv.vy=cv.vz=0;p.gripCoverId=null;p.throwBuffer34=undefined;p.gripHint='PLACED · SETTLING';actionOutcome(s,n,'place','activated','supported placement',cv.id,0);}else p.gripHint='PLACE BLOCKED · REPOSITION';p.gripHintUntil=s.time+1;}}
+
   else if(p.gripId||p.orbitIds.length){p.gripHint="RELEASE HELD MATTER BEFORE BUILDING";p.gripHintUntil=s.time+1.5;}
   else buildFieldCover(p,s,n);
  }
  if(!i.fire)p.fireBlocked=false;
- if(!i.grip&&prev.grip){releaseGripGesture(p,s,n,prev);}
+ if(i.dropMatter34&&!prev.dropMatter34){
+  p.gather34=undefined;p.throwBuffer34=undefined;
+  const cv=s.covers.find(q=>q.id===p.gripCoverId);if(cv){cv.z=(cv.z||0)+(cv.hover||0);cv.hover=0;cv.build=0;cv.vx=cv.vy=cv.vz=0;cv.acquire32=undefined;cv.acquireQueue32=undefined;cv.throwOwner=undefined;p.gripCoverId=null;}
+  const m=s.matter.find(q=>q.id===p.gripId);if(m){m.heldBy=null;m.throwOwner=undefined;m.vx=m.vy=0;p.gripId=null;}
+  p.gripHint='RELEASED';p.gripHintUntil=s.time+.5;i.grip=false;
+ }
+ if(i.cancelGrip34){p.gather34=undefined;p.throwBuffer34=undefined;}
 
- if(i.grip&&!prev.grip&&!i.cover&&!p.orbitIds.length){
-   if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}s.fx.push({id:uid(),type:"matter-drop",x:cv?.x??p.x,y:cv?.y??p.y,life:.24,owner:n});p.gripCoverId=null}
-   else if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m){m.heldBy=null;m.vx=m.vy=0;m.throwOwner=undefined;}p.gripId=null}
-   else{
-     const {cover:cv,matter:loose,panel}=gripSelection(p,s);
-     if(cv?.anchored27j){beginRip27j(p,s,n,cv);}
+ let gripThrow34=false;
+ if(i.grip&&!prev.grip&&!i.cover&&!i.cancelGrip34&&!p.orbitIds.length){
+  if(p.ripTarget27j||s.covers.find(c=>c.id===p.gripCoverId)?.acquire32){p.throwBuffer34=s.time+1.25;actionOutcome(s,n,'throw','buffered','acquisition',p.gripCoverId||undefined);}
+  else if(p.gripCoverId||p.gripId)gripThrow34=true;
+  else {
+   const {cover:cv,matter:loose,panel}=gripSelection(p,s);
+   if(cv?.anchored27j){const reason=ripReason27j(p,s,n,cv),plan=fractureProposal32(p,s,cv,0);if(!reason&&(plan||!cv.fracture32)){p.gather34={source:cv.id,revision:cv.fracture32?.revision??-1,at:s.time,plan};p.ripPreview32=plan;}else{p.gripHint=reason||'NO VALID CHUNK';p.gripHintUntil=s.time+1;}}
      else if(cv){if(spendEnergy(p,s,c.gripEnergy)){releaseCover(p,s,.25);p.gripCoverId=cv.id;p.coverGripAngle=Math.atan2(cv.y-p.y,cv.x-p.x);p.coverGripDist=clamp(dist(cv,p),78,psychicField(p).radius-8);p.gripGesture=false;p.gripDrive=0;p.gripDriveAt=-9;cv.throwOwner=undefined;cv.hitIds=[];cv.vx=cv.vy=0;cv.build=.001;s.fx.push({id:uid(),type:"matter-rip",x:cv.x,y:cv.y,life:.42,owner:n})}}
      else if(panel)extractPanel46(p,s,n,panel);
      else{const m=combatFight(s)?loose:s.matter.filter(m=>m.heldBy===null&&m.orbitBy===null).sort((a,b)=>dist(a,p)-dist(b,p))[0];if(m&&dist(m,p)<=psychicField(p).radius&&spendEnergy(p,s,c.gripEnergy)){p.gripId=m.id;p.coverGripDist=clamp(dist(m,p),42,psychicField(p).radius-8);p.coverGripAngle=p.aim;p.gripGesture=false;p.gripDrive=0;p.gripDriveAt=-9;m.throwOwner=undefined;m.hitIds=[];m.vx=m.vy=0;m.heldBy=n}else if(!m){p.gripHint="NO TARGET · AIM CLOSER";p.gripHintUntil=s.time+1.5}}
-   }
+  }
  }
+ if(p.throwBuffer34!==undefined){if(s.time>p.throwBuffer34||p.hp<=0||(!p.ripTarget27j&&!p.gripCoverId&&!p.gripId))p.throwBuffer34=undefined;else if(p.gripCoverId&&!s.covers.find(c=>c.id===p.gripCoverId)?.acquire32){gripThrow34=true;p.throwBuffer34=undefined;}}
  const held=!!(p.gripCoverId||p.gripId);
- // LB+RT remains a psychic command even if the target vanished or acquisition failed.
- if((i.grip||i.throwMatter||i.launchOrbit)&&i.fire){p.fireBlocked=true;p.pendingFireUntil=undefined;if(!held&&!p.orbitIds.length&&!prev.fire){p.gripHint="NO HELD MATTER · RELEASE RT BEFORE SHOOTING";p.gripHintUntil=s.time+1.2;}}
- if(held&&i.fire)p.fireBlocked=true;
- if((i.throwMatter&&!prev.throwMatter)||(held&&i.fire&&!prev.fire)){
+ if(((i.throwMatter&&!prev.throwMatter)||gripThrow34)&&!s.covers.find(q=>q.id===p.gripCoverId)?.acquire32){
    if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv&&spendEnergy(p,s,c.coverThrowEnergy)){
-     const a=p.aim,force=c.throwForce*.62*(p.godTime>0?1.25:1)*(combatFight(s)?Math.sqrt(12/coverMass28(cv)):1),inherit=clamp(c.carryMomentum,0,1);
+     const assisted=throwAim34(p,s,n,cv),a=assisted.angle,force=c.throwForce*.62*(p.godTime>0?1.25:1)*(combatFight(s)?Math.sqrt(12/coverMass28(cv)):1),inherit=clamp(c.carryMomentum,0,1);
      // Release where it is: preserve orientation and measured carry velocity.
      cv.vx=(Math.cos(a)*force+p.vx*inherit+(cv.vx||0)*(1-inherit))*GRIP_STRENGTH;cv.vy=(Math.sin(a)*force+p.vy*inherit+(cv.vy||0)*(1-inherit))*GRIP_STRENGTH;
-     cv.acquire32=undefined;cv.acquireQueue32=undefined;cv.throwOwner=n;cv.hitIds=[];cv.build=-Math.hypot(cv.vx,cv.vy);s.fx.push({id:uid(),type:"cover-throw",x:cv.x,y:cv.y,life:.55,owner:n,text:"WHAM"});p.gripCoverId=null;actionOutcome(s,n,"throw","activated","cover",cv.id,c.coverThrowEnergy);
+     cv.z=(cv.z||0)+(cv.hover||0);cv.hover=0;cv.vz=assisted.vz;cv.placed34=false;cv.acquire32=undefined;cv.acquireQueue32=undefined;cv.throwOwner=n;cv.hitIds=[];cv.build=-Math.hypot(cv.vx,cv.vy);s.fx.push({id:uid(),type:"cover-throw",x:cv.x,y:cv.y,life:.55,owner:n,text:"WHAM"});p.gripCoverId=null;actionOutcome(s,n,"throw","activated","cover",cv.id,c.coverThrowEnergy);
    }}
    else if(p.gripId){const m=s.matter.find(m=>m.id===p.gripId);if(m&&spendEnergy(p,s,c.coverThrowEnergy)){m.heldBy=null;m.throwOwner=n;m.hitIds=[];m.vx=Math.cos(p.aim)*c.throwForce*(p.godTime>0?1.25:1)*GRIP_STRENGTH;m.vy=Math.sin(p.aim)*c.throwForce*(p.godTime>0?1.25:1)*GRIP_STRENGTH;m.life=999;p.gripId=null;actionOutcome(s,n,"throw","activated","matter",m.id,c.coverThrowEnergy)}}
  }
- if(i.orbit&&!prev.orbit){if(p.orbitIds.length)releaseOrbit(p,s);else if(p.gripCoverId){p.gripHint="RELEASE LB · DROP COVER BEFORE ORBIT";p.gripHintUntil=s.time+1.5;}else{const ms=fieldMatter(p,s).slice(0,3);if(ms.length&&spendEnergy(p,s,c.gripEnergy*ms.length)){p.gripId=null;p.orbitIds=ms.map(m=>m.id);ms.forEach(m=>{m.heldBy=null;m.orbitBy=n;m.vx=m.vy=0})}else if(!ms.length){p.gripHint="NO MATTER INSIDE FIELD";p.gripHintUntil=s.time+1.5;}}}
- const orbitThrow=p.orbitIds.length&&i.grip&&i.fire&&!prev.fire;
- if(p.orbitIds.length&&i.grip&&i.fire)p.fireBlocked=true;
+ if(i.orbit&&!prev.orbit){if(p.orbitIds.length)releaseOrbit(p,s);else if(p.gripCoverId){p.gripHint="PLACE OR DROP COVER BEFORE ORBIT";p.gripHintUntil=s.time+1.5;}else{const ms=fieldMatter(p,s).slice(0,3);if(ms.length&&spendEnergy(p,s,c.gripEnergy*ms.length)){p.gripId=null;p.orbitIds=ms.map(m=>m.id);ms.forEach(m=>{m.heldBy=null;m.orbitBy=n;m.vx=m.vy=0})}else if(!ms.length){p.gripHint="NO MATTER INSIDE FIELD";p.gripHintUntil=s.time+1.5;}}}
+ const orbitThrow=false; // RT remains weapon fire; explicit legacy launchOrbit stays available.
+ 
  if(((i.launchOrbit&&!prev.launchOrbit)||orbitThrow)&&p.orbitIds.length&&spendEnergy(p,s,c.coverThrowEnergy)){p.orbitIds.forEach((id,j)=>{const m=s.matter.find(m=>m.id===id);if(m){m.orbitBy=null;m.throwOwner=n;m.attackId=undefined;m.hitIds=[];m.vx=Math.cos(p.aim+(j-1)*.12)*c.throwForce*1.05;m.vy=Math.sin(p.aim+(j-1)*.12)*c.throwForce*1.05;m.life=999}});p.orbitIds=[];actionOutcome(s,n,"throw","activated","orbit",undefined,c.coverThrowEnergy);}
 
+}
+export function throwAim34(p:Player,s:GameState,n:number,cv:Cover){
+ const from={x:cv.x,y:cv.y,z:(cv.z||0)+(cv.hover||0)+(cv.height27j??48)/2};
+ const t=s.players[1-n],angle=t?Math.atan2(t.y-from.y,t.x-from.x):p.aim;
+ const valid=!!t&&t.hp>0&&dist(p,t)<=450&&Math.abs(wrap(angle-p.aim))<=.18&&!Number.isFinite(surfaceShotTime(from,{x:t.x,y:t.y,z:t.z+32}))&&!s.covers.some(b=>b.id!==cv.id&&b.hp>0&&coverTime27d({...from,z:from.z-(b.z||0)-(b.hover||0)},{x:t.x,y:t.y,z:t.z+32-(b.z||0)-(b.hover||0)},b,b.height27j??78)!==null);
+ p.throwTarget34=valid?1-n:undefined;
+ const distance=valid?dist(cv,t):Number.isFinite(p.input.aimX)?Math.hypot(p.input.aimX!-cv.x,p.input.aimY!-cv.y):300,targetZ=valid?t.z+32:p.input.aimZ??p.z+32,speed=s.config.throwForce*.62*Math.sqrt(12/coverMass28(cv))*GRIP_STRENGTH;
+ return{angle:valid?angle:p.aim,vz:clamp((targetZ-from.z)/Math.max(.12,distance/speed),-350,200)};
 }
 function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:number;y:number},aim:number){
  if(!cv||!p.coverAnchor)return{allowed:true,clearance:undefined as string|undefined,mode:"FREE"};
@@ -719,11 +747,8 @@ export function shotPlayerTime(from:{x:number;y:number;z?:number},to:{x:number;y
 }
 // Grip 35: stick direction + magnitude selects a radial target; neutral holds it.
 // Legacy clients without these axes keep their aim-driven carry and explicit RT throw.
-function gripTarget(p:Player,s:GameState,minimum:number){
- const i=p.input,analog=!!i.grip&&Number.isFinite(i.gripX)&&Number.isFinite(i.gripY),max=Math.max(minimum,psychicField(p).radius-8);
- if(analog){p.gripGesture=true;const magnitude=Math.hypot(i.gripX!,i.gripY!);if(magnitude>.05){p.coverGripAngle=Math.atan2(i.gripY!,i.gripX!);p.coverGripDist=minimum+(max-minimum)*clamp(magnitude,0,1);}}
- return {angle:analog?p.coverGripAngle:p.gunFacing,radius:analog?clamp(p.coverGripDist,minimum,max):Math.max(minimum,100),maximum:max};
-}
+function gripTarget(p:Player,s:GameState,minimum:number){return{angle:p.aim,radius:Math.max(minimum,100),maximum:Math.max(minimum,psychicField(p).radius-8)};}
+
 function gripDrive(p:Player,s:GameState,object:{x:number;y:number;vx?:number;vy?:number},radial:number){
  const dx=object.x-p.x,dy=object.y-p.y,r=Math.hypot(dx,dy)||1,out=((object.vx||0)-p.vx)*dx/r+((object.vy||0)-p.vy)*dy/r;
  if(out>25&&radial>.1){p.gripDrive=out;p.gripDriveAt=s.time;}
@@ -763,11 +788,20 @@ function releaseGripGesture(p:Player,s:GameState,n:number,previous:InputState){
 // translation + rotated corners. Current mass response and geometry remain authoritative.
 function carryCoverSwept(cv:Cover,p:Player,s:GameState,dt:number){
  const desired=gripTarget(p,s,Math.hypot(cv.w,cv.h)/2+19),intent={x:p.x+Math.cos(desired.angle)*desired.radius,y:p.y+Math.sin(desired.angle)*desired.radius,a:desired.angle+Math.PI/2};
- carryCoverPhysical33(cv,p,s,dt);
+ if(cv.acquire32)carryCoverPhysical33(cv,p,s,dt);else{
+ const from={x:cv.x,y:cv.y,z:(cv.z||0)+(cv.hover||0),a:cv.a},radius=Math.hypot(cv.w,cv.h)/2;
+ const desiredPose={...intent,z:p.z+12},blocked=(q:{x:number;y:number;z:number;a:number})=>!!carryBlockReason21({...cv,...q,hover:0},cv,s);
+ const ahead={...desiredPose,x:desiredPose.x+clamp(p.vx*CARRY34.lookAhead,-24,24),y:desiredPose.y+clamp(p.vy*CARRY34.lookAhead,-24,24)};
+ const lows=s.covers.filter(b=>b.id!==cv.id&&b.hp>0&&Math.hypot(b.x-ahead.x,b.y-ahead.y)<radius+Math.hypot(b.w,b.h)/2+24).map(b=>(b.z||0)+(b.hover||0)+(b.height27j??78)+CARRY34.gap);
+ const plan=planCarry34(from,ahead,radius,blocked,lows,p.avoidSide34||1),next=advanceCarry34(from,plan.target,radius,dt,blocked);p.avoidSide34=plan.side;p.avoidMode34=plan.mode;
+ cv.x=next.x;cv.y=next.y;cv.z=next.z;cv.hover=0;cv.a=next.a;cv.vz=0;cv.vx=(next.x-from.x)/Math.max(.001,dt);cv.vy=(next.y-from.y)/Math.max(.001,dt);cv.build=.001;cv.placed34=false;
+ if(plan.mode==='blocked'){cv.carryBlockedAt=s.time;p.gripHint='HOLD CLEARANCE · TURN OR PLACE';p.gripHintUntil=s.time+.2;}
+ }
+
  p.hold33={aim:p.aim,intent,actual:{x:cv.x,y:cv.y,z:(cv.z||0)+(cv.hover||0),a:cv.a},distanceError:Math.hypot(cv.x-intent.x,cv.y-intent.y),angleError:wrap(cv.a-intent.a),acquiring:!!cv.acquire32,blocked:s.time-(cv.carryBlockedAt??-9)<.12?p.gripHint||'CLEARANCE':null};
 }
 function carryCoverPhysical33(cv:Cover,p:Player,s:GameState,dt:number){
- if(cv.acquire32){const target=cv.acquire32,dx=target.x-cv.x,dy=target.y-cv.y,dz=target.z-(cv.z||0),distance=Math.hypot(dx,dy,dz),travel=Math.min(distance,Math.min(550,Math.max(40,distance*12))*dt),steps=Math.max(1,Math.ceil(travel/2)),from={x:cv.x,y:cv.y,z:cv.z||0};for(let k=1;k<=steps;k++){const t=distance?travel*k/steps/distance:1,candidate={...cv,x:from.x+dx*t,y:from.y+dy*t,z:from.z+dz*t,hover:0};if(carryBlocked(candidate,cv,s)){cv.carryBlockedAt=s.time;p.gripHint='ACQUISITION BLOCKED · REPOSITION';p.gripHintUntil=s.time+.3;cv.acquire32=undefined;return;}cv.x=candidate.x;cv.y=candidate.y;cv.z=candidate.z;}cv.hover=0;cv.vx=cv.vy=0;if(distance-travel<.5)cv.acquire32=cv.acquireQueue32?.shift();return;}
+ if(cv.acquire32){const target=cv.acquire32,dx=target.x-cv.x,dy=target.y-cv.y,dz=target.z-(cv.z||0),distance=Math.hypot(dx,dy,dz),travel=Math.min(distance,Math.min(550,Math.max(40,distance*12))*dt),steps=Math.max(1,Math.ceil(travel/2)),from={x:cv.x,y:cv.y,z:cv.z||0};for(let k=1;k<=steps;k++){const t=distance?travel*k/steps/distance:1,candidate={...cv,x:from.x+dx*t,y:from.y+dy*t,z:from.z+dz*t,hover:0};if(carryBlocked(candidate,cv,s)){cv.carryBlockedAt=s.time;p.throwBuffer34=undefined;p.gripHint='ACQUISITION BLOCKED · REPOSITION';p.gripHintUntil=s.time+.3;cv.acquire32=undefined;return;}cv.x=candidate.x;cv.y=candidate.y;cv.z=candidate.z;}cv.hover=0;cv.vx=cv.vy=0;if(distance-travel<.5)cv.acquire32=cv.acquireQueue32?.shift();return;}
 
  const safeRadius=Math.hypot(cv.w,cv.h)/2+19,target=gripTarget(p,s,safeRadius),a=target.angle,ox=cv.x,oy=cv.y,oa=cv.a,radius=Math.hypot(cv.x-p.x,cv.y-p.y),angle=Math.atan2(cv.y-p.y,cv.x-p.x);
  const mass=coverMass28(cv),response=s.config.carryResponse*Math.sqrt(9/mass)*GRIP_STRENGTH,turn=Math.min(3.2,s.config.carryTurnResponse*Math.sqrt(9/mass))*GRIP_STRENGTH;
@@ -881,7 +915,8 @@ function watchBotInput(s:GameState,n:number,opponent:InputState){
   // A blocked gesture gets an ordinary RT throw after a bounded wait.
   const constrained=!!(heldObject&&"carryBlockedAt" in heldObject&&s.time-(heldObject.carryBlockedAt??-9)<.1);
   const explicit=!ready&&(constrained&&age>.18||age>.85),strafeX=-Math.sin(a)*side*.35,strafeY=Math.cos(a)*side*.35,arcStep=settle&&safe(strafeX,strafeY);
-  set(settle?"GRIP → ARC → SETTLE":ready?style===0?"PLACE → RELEASE LB":style===1?"SLIDE → RELEASE LB":"FLING → RELEASE LB":explicit?"BLOCKED GRIP → RT THROW":"GRIP → PUSH OUTWARD",{grip:!ready,fire:explicit,gripX:Math.cos(angle)*magnitude,gripY:Math.sin(angle)*magnitude,x:blocked?base.x:arcStep?strafeX:0,y:blocked?base.y:arcStep?strafeY:0});return;}
+  set(settle?"GRIP → ARC → SETTLE":ready?style===0?"PLACE → RELEASE LB":style===1?"SLIDE → RELEASE LB":"FLING → RELEASE LB":explicit?"BLOCKED GRIP → RT THROW":"GRIP → PUSH OUTWARD",{grip:false,throwMatter:explicit||ready&&style!==0,cover:ready&&style===0,fire:false,gripX:Math.cos(angle)*magnitude,gripY:Math.sin(angle)*magnitude,x:blocked?base.x:arcStep?strafeX:0,y:blocked?base.y:arcStep?strafeY:0});return;}
+ if(p.gather34){set('GATHER → RELEASE',{grip:s.time-p.gather34.at<.65,fire:false});return;}
  p.botGripSince=undefined;p.botBuildId=undefined;p.botBuildAt=undefined;
  if(s.time<(p.botReleaseUntil||0)){set("THROW → RELEASE TRIGGER",{fire:false});return;}
  if(s.time<(p.botFollowUntil||0)){set("THROW → ADVANCE → ATTACK",{x:blocked?base.x:Math.cos(a),y:blocked?base.y:Math.sin(a),slide:range>200&&!p.processedInput.slide&&p.dash<=0&&p.slide<=0,fire:!blocked&&range>=74,melee:range<74&&!p.processedInput.melee});return;}
@@ -945,14 +980,14 @@ function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
  return i;
 }
 function repulseHooks21(s:GameState){return{blocked:(a:{x:number;y:number},b:{x:number;y:number})=>s.covers.some(c=>c.hp>0&&segmentCover(a,b,c)),emit:(owner:number,status:ActionOutcome['status'],reason:string)=>{actionOutcome(s,owner,'repulse',status,reason);},spend:(owner:number,amount:number)=>spendEnergy(s.players[owner],s,amount)};}
-function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.map(p=>({...p,orbitIds:[...p.orbitIds]})),requests=s.players.map((p,n)=>actionRequests(p,p.input,prev[n]||empty(),s.time,!!s.config.legacyPowers)),firstSeq=s.actionSeq||0;requests.forEach((xs,n)=>xs.forEach(action=>actionOutcome(s,n,action,"attempted")));const c=s.config,rawInputs=s.players.map(p=>p.input),playerStarts=s.players.map(p=>({x:p.x,y:p.y,z:p.z}));
+function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)if(!p.bot&&p.gripDesired34!==undefined)p.input.grip=p.gripEdges34?.length?p.gripEdges34.shift()!:p.gripDesired34;const before=s.players.map(p=>({...p,orbitIds:[...p.orbitIds]})),requests=s.players.map((p,n)=>actionRequests(p,p.input,prev[n]||empty(),s.time,!!s.config.legacyPowers)),firstSeq=s.actionSeq||0;requests.forEach((xs,n)=>xs.forEach(action=>actionOutcome(s,n,action,"attempted")));const c=s.config,rawInputs=s.players.map(p=>p.input),playerStarts=s.players.map(p=>({x:p.x,y:p.y,z:p.z}));
  s.players.forEach((p,n)=>p.input=repulseInput21(s,n,chargeIntent(p,s,rawInputs[n],dt)));
  if(combatFight(s))s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0);
  stepRepulse21(s,repulseHooks21(s));
  for(const cv of s.covers)if(cv.reshapePending27j!==undefined&&!s.players.some(p=>p.hp>0&&p.gripCoverId===cv.id)){cv.reshapePending27j=undefined;cv.reshapeFrom27j=undefined;}
  const d=dt;s.timeScale=1; // Projectile time never slows bodies or action timers.
  for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(p.hp<=0)p.timeFieldActive=false;if(unlimited31(s)&&p.timeFieldActive&&p.timeUntil27g===undefined)p.timeUntil27g=s.time+PROJECTILE_TIME.duration;if(p.timeFieldActive&&s.time>=(p.timeUntil27g??Infinity)){p.timeFieldActive=false;p.timeReady27g=s.time+PROJECTILE_TIME.cooldown;}if(i.shield&&!prev[n]?.shield&&s.time>=(p.shieldReady27g||0)){p.shieldAt27g=s.time;p.shieldReady27g=s.time+.65;}p.aim=i.aim;powerStep(p,s,dt);
-  if(!p.gripCoverId)p.hold33=undefined;updatePreview32(p,s);stepRip27j(p,s,n);
+  if(p.hp<=0||p.gripCancelRelease){p.gather34=undefined;p.throwBuffer34=undefined;}if(p.gripCoverId){const held=s.covers.find(c=>c.id===p.gripCoverId);if(held)throwAim34(p,s,n,held);}else p.throwTarget34=undefined;if(!p.gripCoverId)p.hold33=undefined;updatePreview32(p,s);stepRip27j(p,s,n);
   const reshaping=s.covers.find(cv=>cv.id===p.gripCoverId&&cv.reshapePending27j!==undefined);
   if(reshaping){
    // Prepare/commit transaction: protection stays at the source catalog shape
@@ -1031,9 +1066,9 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
   resolveSupports27e(p);
   Object.assign(p,integrateVertical(p,playerStarts[n],jump,dt));
   meleeStep(s,n);
-  if(p.pendingFireUntil!==undefined&&(s.time>p.pendingFireUntil||p.hp<=0||p.charging||i.grip||p.gripId||p.gripCoverId||p.orbitIds.length||p.fireBlocked))p.pendingFireUntil=undefined;
-  if(i.fire&&!prev[n]?.fire&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&!i.grip&&!p.gripId&&!p.gripCoverId&&!p.orbitIds.length&&!p.fireBlocked)p.pendingFireUntil=s.time+.12;
-  if((i.fire||p.pendingFireUntil!==undefined)&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&!p.gripId&&!p.gripCoverId&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
+  if(p.pendingFireUntil!==undefined&&(s.time>p.pendingFireUntil||p.hp<=0||p.charging||p.orbitIds.length||p.fireBlocked))p.pendingFireUntil=undefined;
+  if(i.fire&&!prev[n]?.fire&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&!p.orbitIds.length&&!p.fireBlocked)p.pendingFireUntil=s.time+.12;
+  if((i.fire||p.pendingFireUntil!==undefined)&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
    const attachedCover=p.coverId?s.covers.find(cv=>cv.id===p.coverId):undefined;
    const muzzle=barrelSocket27d(p,c.spriteScale),physical=coverMuzzleClearance(p,attachedCover,muzzle,p.gunFacing);
    // PASS06 TRIGGER AUTHORITY: cover never vetoes a ready trigger. If exposure
@@ -1062,8 +1097,8 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
  for(const cv of s.covers){
    if(cv.build>=0||cv.hp<=0)continue;
    cv.vx??=Math.cos(cv.a-Math.PI/2)*-cv.build;cv.vy??=Math.sin(cv.a-Math.PI/2)*-cv.build;
-   const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy)*d/(cv.fracture32?2:8)));
-   for(let k=0;k<parts&&cv.hp>0;k++){const ox=cv.x,oy=cv.y;cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;if(coverStructureBlocked27f(cv,(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)+(cv.hover||0))){cv.x=ox;cv.y=oy;coverImpact(cv,s,'structure');cv.vx=cv.vy=0;}settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
+   const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy,cv.vz||0)*d/2));
+   for(let k=0;k<parts&&cv.hp>0;k++){const ox=cv.x,oy=cv.y,oz=cv.z||0;cv.z=Math.max(0,oz+(cv.vz||0)*d/parts);cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;if(coverStructureBlocked27f(cv,(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)+(cv.hover||0))){cv.x=ox;cv.y=oy;cv.z=oz;cv.vz=0;coverImpact(cv,s,'structure');cv.vx=cv.vy=0;}settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
     if(n===cv.throwOwner||s.players[n].hp<=0||(s.players[n].z||0)>(cv.z||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)||s.players[n].z+64<(cv.z||0)||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
     if(circleBox(target,17,cv).hit){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=availableEnergy31(s,target,cost);
      // One shield contest per release: impact consumes energy; an overwhelmed block passes residual force.
@@ -1105,11 +1140,11 @@ function step(s:GameState,dt:number,prev:InputState[]){const before=s.players.ma
   if(s.winner!==null)s.players[s.winner].score++;s.phase="finisher";s.finisher=FINISHER_SECONDS;s.timeScale=1;s.shots=[];
   const dead=s.players.find(p=>p.hp<=0)!;combatEvent(s,{kind:"finish",owner:s.winner??-1,damage:0,x:dead.x,y:dead.y,z:30});
   for(const cv of s.covers)if(cv.constructOwner!==undefined&&s.players[cv.constructOwner]?.hp<=0&&cv.hp>0)dissolveFieldCover(cv,s);
-  for(const p of s.players){p.timeFieldActive=false;p.timePellets=p.timeVolleys=0;p.meleeCombo=undefined;p.meleeNextStage=undefined;p.blastUntil=0;p.pendingMelee=undefined;p.pendingFireUntil=undefined;p.input=empty();p.processedInput=empty();p.shield=false;if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}}p.gripCoverId=null;p.gripId=null;p.orbitIds=[];}
+  for(const p of s.players){p.timeFieldActive=false;p.timePellets=p.timeVolleys=0;p.meleeCombo=undefined;p.meleeNextStage=undefined;p.blastUntil=0;p.pendingMelee=undefined;p.pendingFireUntil=undefined;p.gripEdges34=[];p.gripDesired34=false;p.gather34=undefined;p.throwBuffer34=undefined;p.input=empty();p.processedInput=empty();p.shield=false;if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}}p.gripCoverId=null;p.gripId=null;p.orbitIds=[];}
   for(const m of s.matter){m.heldBy=null;m.orbitBy=null;}
  }
  // Cover support and falling share arena surfaces; hover is also included in projectile collision.
- for(const cv of s.covers){const held=s.players.some(p=>p.gripCoverId===cv.id);if(!held){const floor=surfaceHeight27h(coverSupport27h(cv),cv);if((cv.z||0)>floor+.01){cv.vz=(cv.vz||0)-900*dt;cv.z=Math.max(floor,(cv.z||0)+cv.vz*dt);}else{cv.z=floor;cv.vz=0;}}const constrained=s.time-(cv.carryBlockedAt??-9)<.12;const nextHover=(cv.hover||0)+((held&&!constrained&&!cv.acquire32?12:0)-(cv.hover||0))*(1-Math.exp(-14*dt));if(!held||!carryBlocked({...cv,hover:nextHover},cv,s))cv.hover=nextHover;else cv.carryBlockedAt=s.time;if(!held){cv.acquire32=undefined;cv.acquireQueue32=undefined;cv.carryRadialSpeed=cv.carryAngularSpeed=cv.carryRotationSpeed=0;}}
+ for(const cv of s.covers){const held=s.players.some(p=>p.gripCoverId===cv.id);if(!held){const floor=placementHeight34(cv,s);if((cv.z||0)>floor+.01){cv.vz=(cv.vz||0)-900*dt;cv.z=Math.max(floor,(cv.z||0)+(cv.build<0?0:cv.vz*dt));}else{cv.z=floor;cv.vz=0;}}const constrained=s.time-(cv.carryBlockedAt??-9)<.12;const nextHover=held?0:(cv.hover||0)*Math.exp(-14*dt);if(!held||!carryBlocked({...cv,hover:nextHover},cv,s))cv.hover=nextHover;else cv.carryBlockedAt=s.time;if(!held){cv.acquire32=undefined;cv.acquireQueue32=undefined;cv.carryRadialSpeed=cv.carryAngularSpeed=cv.carryRotationSpeed=0;}}
  s.covers=s.covers.filter(cv=>cv.hp>0);
  measureFightStep(s,before,dt);
  auditTransitions(s,before,requests,firstSeq);
