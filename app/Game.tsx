@@ -1,4 +1,5 @@
 "use client";
+import {interpolateCover35} from "../lib/presentation35";
 import {type MatchRules31,PRACTICE_RULES31,validateRules31} from "../lib/matchRules31";
 import {drawCitadel29} from '../lib/citadelPresentation29';
 import {drawSection27j} from '../lib/psychicPresentation27j';
@@ -15,7 +16,7 @@ import AnimationQaHarness from "./AnimationQaHarness";
 import BayBridgeArena from "./BayBridgeArena";
 import GodModeShell from "./GodModeShell";
 import {COVER_HEIGHT,withCoverOcclusion} from "../lib/cover-occlusion";
-import {DEFAULT_CONFIG,ripReason27j,FIGHT_SCHEMA,BOT_STRATEGY_ID,gripSelection,psychicField,fieldMatter,coverDamageStage,constructionSupply44,constructionPreview21,PSYCHIC_POWERS} from "../lib/game";
+import {DEFAULT_CONFIG,carryBlockReason21,ripReason27j,FIGHT_SCHEMA,BOT_STRATEGY_ID,gripSelection,psychicField,fieldMatter,coverDamageStage,constructionSupply44,constructionPreview21,PSYCHIC_POWERS} from "../lib/game";
 import {LocalCombat,isLocalMode} from "../lib/localCombat";
 import {GOD_TIERS} from "../lib/gameFramework";
 import {bayObject} from "../lib/bayBridgeMap";
@@ -113,7 +114,8 @@ function presentation(s:any,now:number){
  const angle=(x:number,y:number)=>x+Math.atan2(Math.sin(y-x),Math.cos(y-x))*blend;
  const mix=(xs:any[],ys:any[])=>xs.map(x=>{const y=ys.find(y=>x.id===y.id);return y?{...x,x:x.x+(y.x-x.x)*blend,y:x.y+(y.y-x.y)*blend,...typeof x.a==="number"&&typeof y.a==="number"?{a:angle(x.a,y.a)}:{}}:x});
  const players=base.players.map((p:any,n:number)=>{const q=a.state.players[n],r=b.state.players[n];if(!q||!r||q.coverId!==r.coverId||q.hp<=0||r.hp<=0)return p;return {...p,x:q.x+(r.x-q.x)*blend,y:q.y+(r.y-q.y)*blend,z:(q.z||0)+((r.z||0)-(q.z||0))*blend,vz:(q.vz||0)+((r.vz||0)-(q.vz||0))*blend,vx:q.vx+(r.vx-q.vx)*blend,vy:q.vy+(r.vy-q.vy)*blend,gunFacing:angle(q.gunFacing,r.gunFacing),aim:angle(q.aim,r.aim),...q.charging&&r.charging?{chargeAge:q.chargeAge+(r.chargeAge-q.chargeAge)*blend,godCharge:q.godCharge+(r.godCharge-q.godCharge)*blend}:{}};});
- return {...base,time:a.state.time+(b.state.time-a.state.time)*blend,players,covers:mix(base.covers||[],b.state.covers||[]),matter:mix(base.matter||[],b.state.matter||[]),shots:mix(base.shots||[],b.state.shots||[])};
+ const covers=(base.covers||[]).map((c:any)=>{const next=(b.state.covers||[]).find((q:any)=>q.id===c.id);if(!next||blend>=1)return c;return interpolateCover35(c,next,blend,q=>!!carryBlockReason21(q,c,{...base,players}));});
+ return {...base,time:a.state.time+(b.state.time-a.state.time)*blend,players,covers,matter:mix(base.matter||[],b.state.matter||[]),shots:mix(base.shots||[],b.state.shots||[])};
 }
 const powerAssets=new Map<string,HTMLImageElement>();
 const raptorRunPainted=new Map<string,HTMLImageElement>(); // Optional approved atlas, never block game boot.
@@ -174,12 +176,12 @@ const feedbackPrefs43={sound:true,haptics:false};
 let hapticAt43=-1000;
 function pickFeedback43(events:any[],slot:number,s?:any):FeedbackCue43|null{
  const hits=events.filter(e=>e.kind==="hit"&&e.target===slot),blocks=events.filter(e=>e.kind==="shield"&&e.target===slot);
- if(hits.length){const last=hits.at(-1);return{kind:"damage",angle:last.incomingAngle,damage:hits.reduce((n,e)=>n+e.damage,0)};}
+ if(hits.length){const last=hits.at(-1);return{kind:last.source==="cover-throw"?"slam-fighter":"damage",angle:last.incomingAngle,damage:hits.reduce((n,e)=>n+e.damage,0)};}
  if(blocks.length)return{kind:blocks.some(e=>e.parry)?"parry":"block",angle:blocks.at(-1).incomingAngle,damage:0};
  const cover=s?defendedCover43(s,slot):null;
  if(cover&&events.some(e=>{if(e.kind!=="cover")return false;const dx=e.x-cover.x,dy=e.y-cover.y,a=cover.a||0;return Math.abs(dx*Math.cos(a)+dy*Math.sin(a))<=cover.w/2+6&&Math.abs(-dx*Math.sin(a)+dy*Math.cos(a))<=cover.h/2+6;}))return{kind:"cover-defense",damage:0};
  const outgoing=events.filter(e=>e.owner===slot),event=outgoing.find(e=>e.kind==="finish")||outgoing.at(-1);
- return event?{kind:event.kind==='cover'&&event.source==='cover-throw'?'slam-'+(event.material==='metal'?'metal':'stone'):event.kind,damage:event.damage||0}:null;
+ return event?{kind:event.source==='rip'?'tear':event.kind==='hit'&&event.source==='cover-throw'?'slam-fighter':event.kind==='cover'&&event.source==='cover-throw'?'slam-'+(event.material==='metal'?'metal':'stone'):event.kind,damage:event.damage||0}:null;
 }
 function hapticFeedback43(cue:FeedbackCue43){
  if(!feedbackPrefs43.haptics||typeof navigator==="undefined")return;
@@ -224,18 +226,20 @@ function drawDefense43(g:CanvasRenderingContext2D,s:any,slot:number){
 }
 
 let combatAudio:AudioContext|null=null;
+let audioVoices35=0; // At most twelve active oscillator voices, including layered slams.
 function unlockCombatAudio(){try{const C=window.AudioContext||(window as any).webkitAudioContext;if(!combatAudio&&C)combatAudio=new C();void combatAudio?.resume().catch(()=>{});}catch{}}
 function combatTone(kind:string,angle?:number){
- if(!feedbackPrefs43.sound||!combatAudio||combatAudio.state!=="running")return;const a=combatAudio,osc=a.createOscillator(),gain=a.createGain(),now=a.currentTime;
+ if(!feedbackPrefs43.sound||!combatAudio||combatAudio.state!=="running"||audioVoices35+(kind.startsWith("slam-")?3:1)>12)return;const a=combatAudio,now=a.currentTime;
  if(kind.startsWith('slam-')){
   // Reuse the existing synthesized audio path: transient, body, then settling.
-  const metal=kind==='slam-metal';
-  for(const [delay,hz,duration,volume] of [[0,metal?690:180,.045,.035],[.015,metal?105:65,.2,.055],[.075,metal?360:125,.12,.018]]){
-   const o=a.createOscillator(),v=a.createGain();o.type=metal?'triangle':'sine';o.frequency.setValueAtTime(hz,now+delay);o.frequency.exponentialRampToValueAtTime(Math.max(35,hz*.4),now+delay+duration);v.gain.setValueAtTime(volume,now+delay);v.gain.exponentialRampToValueAtTime(.001,now+delay+duration);o.connect(v);v.connect(a.destination);o.start(now+delay);o.stop(now+delay+duration);o.onended=()=>{o.disconnect();v.disconnect();};
-  }osc.disconnect();gain.disconnect();return;
+  const metal=kind==='slam-metal',body=kind==='slam-fighter';
+  for(const [delay,hz,duration,volume] of [[0,metal?690:body?280:180,.045,.035],[.015,metal?105:body?85:65,.2,.055],[.075,metal?360:125,.12,.018]]){
+   audioVoices35++;const o=a.createOscillator(),v=a.createGain();o.type=metal?'triangle':'sine';o.frequency.setValueAtTime(hz,now+delay);o.frequency.exponentialRampToValueAtTime(Math.max(35,hz*.4),now+delay+duration);v.gain.setValueAtTime(volume,now+delay);v.gain.exponentialRampToValueAtTime(.001,now+delay+duration);o.connect(v);v.connect(a.destination);o.start(now+delay);o.stop(now+delay+duration);o.onended=()=>{audioVoices35--;o.disconnect();v.disconnect();};
+  }return;
  }
+ audioVoices35++;const osc=a.createOscillator(),gain=a.createGain();
  const frequency=kind==="tear"?210:kind==="parry"?1500:kind==="cover-defense"?155:kind==="damage"?95:kind==="block"?950:kind==="hit"?330:kind==="shield"?780:kind==="cover"?130:kind==="finish"?90:kind==="fight"?660:440;
- osc.type=kind==="tear"?"sawtooth":kind==="cover"?"triangle":"sine";osc.frequency.setValueAtTime(frequency,now);osc.frequency.exponentialRampToValueAtTime(Math.max(40,frequency*.65),now+.09);gain.gain.setValueAtTime(.045,now);gain.gain.exponentialRampToValueAtTime(.001,now+.13);osc.connect(gain);const pan=a.createStereoPanner?.();if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!):0;gain.connect(pan);pan.connect(a.destination);}else gain.connect(a.destination);osc.start(now);osc.stop(now+.14);osc.onended=()=>{osc.disconnect();gain.disconnect();pan?.disconnect()};
+ osc.type=kind==="tear"?"sawtooth":kind==="cover"?"triangle":"sine";osc.frequency.setValueAtTime(frequency,now);osc.frequency.exponentialRampToValueAtTime(Math.max(40,frequency*.65),now+.09);gain.gain.setValueAtTime(.045,now);gain.gain.exponentialRampToValueAtTime(.001,now+.13);osc.connect(gain);const pan=a.createStereoPanner?.();if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!):0;gain.connect(pan);pan.connect(a.destination);}else gain.connect(a.destination);osc.start(now);osc.stop(now+.14);osc.onended=()=>{audioVoices35--;osc.disconnect();gain.disconnect();pan?.disconnect()};
 }
 export default function Game({character="jade",cameraPreset="default"}:{character?:"jade"|"raptor";cameraPreset?:"default"|"close"|"kinetic"}={}){
  useEffect(()=>{
@@ -272,7 +276,7 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
  const reviewCombat=async()=>{const ss=session.current;if(!ss)return;setAuditStatus("Loading confirmed outcomes…");if(ss.local&&localCombat.current){setCombatAudit({...localCombat.current.diagnostics(),frameTimes:frameSummary43(),requestRtt:0,inputRtt:0,inputSamples:0,snapshotGap:0});setAuditStatus("");return;}try{const at=performance.now(),u=new URL("/api/game",location.origin);u.searchParams.set("room",ss.room);u.searchParams.set("token",ss.token);u.searchParams.set("audit","1");const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(!r.ok)throw Error(v.error||"Audit unavailable");setCombatAudit({...v.diagnostics,frameTimes:frameSummary43(),requestRtt:performance.now()-at,inputRtt:inputTiming.current.rtt,inputSamples:inputTiming.current.samples,snapshotGap});setAuditStatus("");}catch(e:any){setAuditStatus(e.message);}};
  const accept=useCallback((v:any)=>{if(v.state){if(state.current&&v.state.round===state.current.round&&v.state.lastAt<=state.current.lastAt)return;const at=performance.now();if(state.current&&v.state.round!==state.current.round){snapshots.length=0;kineticEcho.length=0;hoverWake.length=0;cameraState.ready=false}const incoming=v.state,room=session.current?.room||"",seen=feedbackSeen.current;
  if(seen.room!==room||seen.round!==incoming.round){seen.room=room;seen.round=incoming.round;seen.seq=incoming.eventSeq||0;seen.cue="";}
- else{const fresh=(incoming.events||[]).filter((e:any)=>e.seq>seen.seq&&incoming.time-e.at<.3);seen.seq=Math.max(seen.seq,incoming.eventSeq||0);const cue=pickFeedback43(fresh,session.current?.slot||0,incoming);if(cue){combatTone(fresh.some((e:any)=>e.source==="rip")?"tear":cue.kind,cue.angle);hapticFeedback43(cue);}}
+ else{const fresh=(incoming.events||[]).filter((e:any)=>e.seq>seen.seq&&incoming.time-e.at<.3);seen.seq=Math.max(seen.seq,incoming.eventSeq||0);const cue=pickFeedback43(fresh,session.current?.slot||0,incoming);if(cue){combatTone(cue.kind,cue.angle);hapticFeedback43(cue);}}
  const cue=incoming.phase==="countdown"?String(Math.ceil(incoming.countdown)):incoming.phase==="playing"&&incoming.time<(incoming.fightUntil||0)?"fight":"";if(cue&&cue!==seen.cue)combatTone(cue);seen.cue=cue;
  if(!incoming.local)recordSnapshot(incoming,at);state.current=v.state;seq.current=Math.max(seq.current,incoming.players[session.current?.slot||0]?.lastSeq||0);lastAccept.current=at;if(incoming.phase==="countdown"&&hudPhase.current!=="countdown")document.querySelector("details.fightRoom")?.removeAttribute("open");if(at-hudAt.current>100||incoming.phase!==hudPhase.current){setHud(v.state);hudAt.current=at;hudPhase.current=incoming.phase;}if(JSON.stringify(v.state.config)!==JSON.stringify(configRef.current)){configRef.current=v.state.config;setConfig(v.state.config||DEFAULT);}setStatus(incoming.build==="COMBAT-MASTER-STUDIO-47"?"COMBAT 47 · STADIUM SCALE":incoming.build==="COMBAT-MASTER-STUDIO-46"?"COMBAT 46 · ARENA / FLOOR":incoming.build==="COMBAT-MASTER-STUDIO-45"?"COMBAT 45 · WAR GAMES":incoming.build==="COMBAT-MASTER-STUDIO-44"?"COMBAT 44 · GROUND PEEL":incoming.build==="COMBAT-MASTER-STUDIO-43"?"COMBAT 43 · DEFENSE / FEEDBACK":incoming.build==="COMBAT-MASTER-STUDIO-42"?"COMBAT 42 LIVE · LIVING MATTER":"COMBAT MASTER LIVE")}},[]);
  const create=useCallback(async()=>{if(started.current)return;started.current=true;try{let saved:any=null;try{saved=JSON.parse(sessionStorage.getItem("god_mode_studio_session")||"null")}catch{}const invite=new URLSearchParams(location.hash.slice(1)),invitedRoom=invite.get("room"),inviteToken=invite.get("invite");const requestedWatch=new URLSearchParams(location.search).get("watch")==="1";if(saved&&(saved.local||isLocalMode(saved.mode))){saved=null;sessionStorage.removeItem("god_mode_studio_session");}if(saved&&(!requestedWatch||saved.mode==="watch")&&(!invitedRoom||saved.room===invitedRoom)){try{session.current=saved;const u=new URL("/api/game",location.origin);u.searchParams.set("room",saved.room);u.searchParams.set("token",saved.token);const r=await fetch(u,{cache:"no-store"});if(r.ok){const restored=await r.json();accept(restored);if(restored.state?.mode==="duel"||restored.state?.mode==="practice"||restored.state?.mode==="watch"){setGameShell(false);if(restored.state?.mode==="watch")setPadGate(false);}return}}catch{}if(saved.mode==="watch")setMemoryNotice("Previous watch room expired or restarted; live round reset. Completed reports remain saved.");session.current=null;sessionStorage.removeItem("god_mode_studio_session")}const v=invitedRoom&&inviteToken?await post({action:"join",room:invitedRoom,invite:inviteToken,name:"Player 2"}):await post({action:"create",name:"Les",mode:requestedWatch?"watch":"solo",...requestedWatch?{memoryProfile:readFightMemory()?.profiles,memoryMode:readFightMemory()?.mode}:{}}),s={room:v.room,code:v.code,invite:v.invite,token:v.token,slot:v.slot,mode:v.state?.mode,local:!!v.local};if(invitedRoom||requestedWatch){setGameShell(false);setPadGate(false);}session.current=s;sessionStorage.setItem("god_mode_studio_session",JSON.stringify(s));accept(v)}catch(e:any){started.current=false;setStatus(e.message)}},[accept,post]);
@@ -910,10 +914,10 @@ function coverCaptureBridge(p:any,t:number){
 const turnVisual=new Map<string,{angle:number;at:number;bank:number}>();
 const actorVisualMemory=new Map<string,{family:string;dir:number;changed:number}>();
 function actorContinuity(p:any,family:string,dir:number,t:number){
- const key=p.id||"local",old=actorVisualMemory.get(key);let settle=1;
+ const key=p.id||p.name||"local",old=actorVisualMemory.get(key);let settle=1;
  if(!old||old.family!==family||old.dir!==dir){actorVisualMemory.set(key,{family,dir,changed:t});settle=0}else settle=Math.min(1,(t-old.changed)/.09);
  // Tiny presentation-only settle dampens donor-family silhouette bounce without changing gameplay root.
- return{settle,y:(1-settle)*1.1};
+ return{settle,y:0}; // Registered root stays fixed across donor/direction changes.
 }
 // Direction-aware Power Glove wind-up presentation. Temporary vector overlay,
 // not an approved directional sprite; combat collision and damage stay authoritative.
@@ -1025,14 +1029,14 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
   return;
  }
  const visual=coverVisualOffset(p);g.save();g.translate(visual.x,visual.y);
- if((p.hitUntil||0)>t){const strength=Math.min(1,(p.hitUntil-t)/.18);g.translate(Math.cos(p.hitAngle||0)*strength*2.5,Math.sin(p.hitAngle||0)*strength*1.5);g.filter="brightness(1.35) saturate(.85)";}
+ if((p.hitUntil||0)>t){g.filter="brightness(1.35) saturate(.85)";} // Reaction must not displace the registered body through a wall.
 
  if(p.coverId&&p.coverMode==="soft"){
   const sc=softCoverState(p,t),impact=Math.max(0,Math.min(1,p.softImpact||0));
   // One-knee language from approved current-production cover cells: lower silhouette,
   // stronger direct-impact compression, subtle mobile lean. Gameplay root is untouched.
   const low=sc==="SOFT_CAPTURE"?4.5+impact*4:sc==="SOFT_READY"?5.5:3.2;
-  g.translate(0,low);
+  // Registered cover frames already contain the crouch; do not sink the root.
   if(p.coverAnchor&&(sc==="SOFT_FLOW_L"||sc==="SOFT_FLOW_R"))g.translate(p.coverAnchor.tx*Math.sign(p.coverSpeed||1)*1.5,p.coverAnchor.ty*Math.sign(p.coverSpeed||1)*1.5);
  }
  const impact=coverCaptureBridge(p,t);if(impact&&p.coverAnchor){
@@ -1358,7 +1362,7 @@ function matter(g:CanvasRenderingContext2D,m:any){
  else{g.rotate(spin);g.fillStyle=m.kind==="metal"?"#536f82":"#86766e";g.beginPath();g.moveTo(-m.r,-m.r*.5);g.lineTo(m.r*.7,-m.r);g.lineTo(m.r,m.r*.5);g.lineTo(-m.r*.5,m.r);g.closePath();g.fill();}
  if(held){g.strokeStyle=m.heldBy!=null?"#62f0f0":"#ff4aaa";g.lineWidth=.8;g.beginPath();g.ellipse(0,0,m.r*1.2,m.r*.7,0,0,Math.PI*2);g.stroke();}g.restore();
 }
-function impactSpray(g:CanvasRenderingContext2D,f:any){const age=1-classicClamp(f.life/.32,0,1),a=f.angle||0,z=f.z??27,cyber=f.material==="cyber";g.save();g.globalAlpha=(1-age)*.95;for(let n=0;n<14;n++){const angle=a+(n%7-3)*.18,speed=18+n%5*9,r=(1-Math.exp(-age*4))*speed,x=f.x+Math.cos(angle)*r,y=f.y+Math.sin(angle)*r-(z+Math.sin(age*Math.PI)*7-age*age*17)/DECK_PITCH;g.fillStyle=cyber?(n%4===0?"#d8e8ef":n%3===0?"#dc74a7":n%2?"#79344f":"#111924"):(n%3?"#72e9ef":"#ed9dc9");g.strokeStyle="#0a1019";g.lineWidth=.65;g.beginPath();if(cyber){g.ellipse(x,y,1.3+n%3,1+n%2,angle,0,Math.PI*2)}else g.rect(x,y,2+n%3,2/DECK_PITCH);g.fill();g.stroke();if(cyber&&n%5===0){g.strokeStyle="#82374f";g.lineWidth=1.5;g.beginPath();g.moveTo(x-Math.cos(angle)*7,y-Math.sin(angle)*7);g.lineTo(x,y);g.stroke();}if(cyber&&n%4===0){g.fillStyle="#e4f6fa";g.fillRect(x,y,1,1/DECK_PITCH);}}g.restore();}
+function impactSpray(g:CanvasRenderingContext2D,f:any){const age=1-classicClamp(f.life/.32,0,1),a=f.angle||0,z=f.z??27,cyber=f.material==="cyber";g.save();g.globalAlpha=(1-age)*.95;for(let n=0;n<8;n++){const angle=a+(n%7-3)*.18,speed=18+n%5*9,r=(1-Math.exp(-age*4))*speed,x=f.x+Math.cos(angle)*r,y=f.y+Math.sin(angle)*r-(z+Math.sin(age*Math.PI)*7-age*age*17)/DECK_PITCH;g.fillStyle=cyber?(n%4===0?"#d8e8ef":n%3===0?"#dc74a7":n%2?"#79344f":"#111924"):(n%3?"#72e9ef":"#ed9dc9");g.strokeStyle="#0a1019";g.lineWidth=.65;g.beginPath();if(cyber){g.ellipse(x,y,1.3+n%3,1+n%2,angle,0,Math.PI*2)}else g.rect(x,y,2+n%3,2/DECK_PITCH);g.fill();g.stroke();if(cyber&&n%5===0){g.strokeStyle="#82374f";g.lineWidth=1.5;g.beginPath();g.moveTo(x-Math.cos(angle)*7,y-Math.sin(angle)*7);g.lineTo(x,y);g.stroke();}if(cyber&&n%4===0){g.fillStyle="#e4f6fa";g.fillRect(x,y,1,1/DECK_PITCH);}}g.restore();}
 function fx(g:CanvasRenderingContext2D,f:any){
  const height=f.z??(f.type==="hit"||f.type==="cover-hit"?27:0),v=vertical46(f.x,f.y,height);g.save();g.translate(v.x,v.y);fxBody47(g,{...f,z:0});g.restore();
 }
@@ -1371,7 +1375,11 @@ function fxBody47(g:CanvasRenderingContext2D,f:any){
  if(f.type==="cyber-stain"){const age=4-f.life;g.save();g.translate(f.x,f.y);g.rotate(f.angle||0);g.globalAlpha=Math.min(1,age/.16)*Math.min(.62,f.life/.8);g.fillStyle="#0b121bd9";g.beginPath();g.ellipse(7,0,16,6,0,0,Math.PI*2);g.fill();for(let n=0;n<7;n++){g.fillStyle=n%2?"#76324e":"#444754";g.beginPath();g.ellipse(3+n*3,(n%3-1)*5,2+n%3,1.3,0,0,Math.PI*2);g.fill()}g.strokeStyle="#be94b4";g.lineWidth=.65;g.beginPath();g.ellipse(7,0,12,3,0,-.4,2.5);g.stroke();g.restore();return;}
  if(f.type==="materialize"||f.type==="cover-dissolve"){const duration=f.type==="materialize"?.72:.8,age=1-classicClamp(f.life/duration,0,1);g.save();g.strokeStyle=f.type==="materialize"?"#95efff":"#c39eea";g.globalAlpha=(1-age)*.6;g.lineWidth=1.2;g.beginPath();g.ellipse(f.x,f.y,12+age*55,7+age*14,0,0,Math.PI*2);g.stroke();g.restore();return;}
  if(f.type==="parry27g"){g.save();g.translate(f.x,f.y);g.strokeStyle="#fff3a0";g.lineWidth=3;g.globalAlpha=Math.min(1,f.life/.12);g.beginPath();for(let n=0;n<16;n++){const a=n*Math.PI/8,r=n%2?7:24;n?g.lineTo(Math.cos(a)*r,Math.sin(a)*r):g.moveTo(Math.cos(a)*r,Math.sin(a)*r);}g.closePath();g.stroke();g.restore();return;}
- if(f.type==="hit"&&f.material){impactSpray(g,f);return;}
+ if(f.type==="hit"&&f.material){
+  // One brief contact flash before the directional spray; no camera or control change.
+  if(f.life>.24){g.save();g.globalAlpha=(f.life-.24)/.08;g.strokeStyle="#f4f7ee";g.lineWidth=2;g.beginPath();g.moveTo(f.x-6,f.y-5);g.lineTo(f.x+6,f.y+5);g.moveTo(f.x+5,f.y-7);g.lineTo(f.x-5,f.y+7);g.stroke();g.restore();}
+  impactSpray(g,f);return;
+ }
 
  if(f.type==="cover-scrape"){const fade=Math.min(.65,f.life/1.8);g.save();g.translate(f.x,f.y);g.rotate(f.angle||0);g.globalAlpha=fade;g.strokeStyle="#141a23";g.lineWidth=2;for(const side of [-1,1]){g.beginPath();g.moveTo(-18,side*8);g.lineTo(3,side*8);g.stroke();}g.strokeStyle=f.text==="stone"?"#9f9380":"#939baf";g.lineWidth=.8;g.beginPath();g.moveTo(-17,-7);g.lineTo(2,-7);g.stroke();g.restore();return;}
 
@@ -1389,7 +1397,7 @@ function fxBody47(g:CanvasRenderingContext2D,f:any){
   for(let n=0;n<count;n++){const a=n*2.399+(f.angle||0),r=10+age*(25+n%7*11),z=Math.sin(age*Math.PI)*(8+n%4*5);g.fillStyle=f.text==="stone"?(n%2?"#8d8277":"#3d4149"):(n%3?"#647583":"#d29c78");g.beginPath();g.moveTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r-z/DECK_PITCH);g.lineTo(f.x+Math.cos(a)*r+3+n%3,f.y+Math.sin(a)*r-z/DECK_PITCH+2/DECK_PITCH);g.lineTo(f.x+Math.cos(a)*r-2,f.y+Math.sin(a)*r-z/DECK_PITCH+5/DECK_PITCH);g.closePath();g.fill();}g.restore();return;
  }
  if(f.type==="shield-block"){
-  withUpright(g,f.x,f.y,()=>{g.save();g.globalAlpha=classicClamp(f.life/.22,0,1);g.strokeStyle="#baffff";g.lineWidth=2;g.beginPath();g.ellipse(f.x,f.y-31,29+(1-f.life/.22)*12,45,0,0,Math.PI*2);g.stroke();g.restore()});return;
+  withUpright(g,f.x,f.y,()=>{g.save();g.globalAlpha=classicClamp(f.life/.22,0,1);g.strokeStyle="#baffff";g.lineWidth=2;g.beginPath();g.ellipse(f.x,f.y,9+(1-f.life/.22)*12,13,0,0,Math.PI*2);g.stroke();g.restore()});return;
  }
  if(f.type==="cover-hit"||f.type==="hit"){
   const age=1-classicClamp(f.life/(f.type==="hit"?.32:.25),0,1),stone=f.text==="stone";g.save();g.translate(f.x,f.y-(f.z??27)/DECK_PITCH);g.globalAlpha=(1-age)*.9;

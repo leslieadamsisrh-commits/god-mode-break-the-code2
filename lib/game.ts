@@ -1,3 +1,4 @@
+import {contactPoint35} from './contact35';
 import {CARRY34,planCarry34,advanceCarry34,swept34} from './psychicCarry34';
 import {type Fracture32,prisms33,circleContact32,overlap32,worldPolys32,rayPoly32,edges32,candidates32,capacity32,volume32,rebase32} from './fracture32';
 import {type MatchRules31,validateRules31,unlimited31,availableEnergy31,canPay31,debitEnergy31,SPARRING31} from "./matchRules31";
@@ -295,11 +296,11 @@ function coverImpact(cv:Cover,s:GameState,key:string,other?:Cover,normal?:{x:num
  // Feedback uses the contacted face, not the moving object's center. Damage,
  // stopping, ownership and collision response remain exactly as before.
  const target=other||cv,meta=bayObject(target.artId||target.id),material=meta?.material==='CONCRETE'||target.floorPanel46||target.generated?'stone':'metal';
- let point={x:cv.x,y:cv.y};
- if(other){const q=localPoint(other,cv.x,cv.y),x=clamp(q.x,-other.w/2,other.w/2),y=clamp(q.y,-other.h/2,other.h/2),co=Math.cos(other.a),si=Math.sin(other.a);point={x:other.x+x*co-y*si,y:other.y+x*si+y*co};}
- else if(normal){point={x:normal.x>0?A.left:normal.x<0?A.right:cv.x,y:normal.y>0?A.top:normal.y<0?A.bottom:cv.y};}
+ let point={x:cv.x,y:cv.y,z:(cv.z||0)+(cv.hover||0)+(cv.height27j??78)/2};
+ if(other){const q=localPoint(other,cv.x,cv.y),x=clamp(q.x,-other.w/2,other.w/2),y=clamp(q.y,-other.h/2,other.h/2),co=Math.cos(other.a),si=Math.sin(other.a);point=contactPoint35(other,{x:cv.x,y:cv.y,z:point.z});}
+ else if(normal){point={...point,x:normal.x>0?A.left:normal.x<0?A.right:cv.x,y:normal.y>0?A.top:normal.y<0?A.bottom:cv.y};}
  const speed=Math.hypot(cv.vx||0,cv.vy||0),strength=normal?clamp(-((cv.vx||0)*normal.x+(cv.vy||0)*normal.y)/Math.max(1,speed),.12,1):1;
- if(other){damageCover(other,s,damage);if(other.build<0)(other.hitIds??=[]).push(cv.id);}damageCover(cv,s,damage);combatEvent(s,{kind:"cover",source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??-1,damage,...point,z:12,material});s.fx.push({id:uid(),type:"cover-impact",...point,z:12,life:.3,text:material,strength,angle:Math.atan2(cv.vy||0,cv.vx||0)});
+ if(other){damageCover(other,s,damage);if(other.build<0)(other.hitIds??=[]).push(cv.id);}damageCover(cv,s,damage);combatEvent(s,{kind:"cover",source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??-1,damage,...point,material});s.fx.push({id:uid(),type:"cover-impact",...point,life:.3,text:material,strength,angle:Math.atan2(cv.vy||0,cv.vx||0)});
 }
 export function placementHeight34(cv:Cover,s:GameState){
  const points=worldPolys32(cv).flat(),base=surfaceHeight27h(coverSupport27h(cv),cv),heights=[base];
@@ -1100,10 +1101,10 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
    const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy,cv.vz||0)*d/2));
    for(let k=0;k<parts&&cv.hp>0;k++){const ox=cv.x,oy=cv.y,oz=cv.z||0;cv.z=Math.max(0,oz+(cv.vz||0)*d/parts);cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;if(coverStructureBlocked27f(cv,(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)+(cv.hover||0))){cv.x=ox;cv.y=oy;cv.z=oz;cv.vz=0;coverImpact(cv,s,'structure');cv.vx=cv.vy=0;}settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
     if(n===cv.throwOwner||s.players[n].hp<=0||(s.players[n].z||0)>(cv.z||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)||s.players[n].z+64<(cv.z||0)||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
-    if(circleBox(target,17,cv).hit){(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=availableEnergy31(s,target,cost);
+    if(circleBox(target,17,cv).hit){const hitPoint35=contactPoint35(cv,{x:target.x,y:target.y,z:target.z+32});(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=availableEnergy31(s,target,cost);
      // One shield contest per release: impact consumes energy; an overwhelmed block passes residual force.
-     if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",incomingAngle:Math.atan2(-(cv.vy||0),-(cv.vx||0)),source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??1-n,target:n,damage:0,x:target.x,y:target.y,z:target.z+28});s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}
-     else{const residual=shielding?1-available/Math.max(.001,cost):1;if(shielding){target.battery=0;target.lastEnergyAt=s.time;target.shield=false;s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}duelContact(s,cv.throwOwner??1-n,target,damage*residual,(cv.vx||0)*.25*residual,(cv.vy||0)*.25*residual,"torso",undefined,"cover-throw",cv.attackId);}
+     if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",incomingAngle:Math.atan2(-(cv.vy||0),-(cv.vx||0)),source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??1-n,target:n,damage:0,...hitPoint35});s.fx.push({id:uid(),type:"shield-block",...hitPoint35,life:.22,owner:cv.throwOwner});}
+     else{const residual=shielding?1-available/Math.max(.001,cost):1;if(shielding){target.battery=0;target.lastEnergyAt=s.time;target.shield=false;s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}duelContact(s,cv.throwOwner??1-n,target,damage*residual,(cv.vx||0)*.25*residual,(cv.vy||0)*.25*residual,"torso",hitPoint35,"cover-throw",cv.attackId);}
      damageCover(cv,s,damage);cv.vx*=shielding?.2:.35;cv.vy*=shielding?.2:.35;}
    }}
    if(combatFight(s)&&Math.hypot(cv.vx,cv.vy)>80&&s.time-(cv.scarAt??-9)>.09){cv.scarAt=s.time;const scars=s.fx.filter(f=>f.type==="cover-scrape");if(scars.length<24)s.fx.push({id:uid(),type:"cover-scrape",x:cv.x,y:cv.y,life:1.8,angle:Math.atan2(cv.vy,cv.vx),text:bayObject(cv.artId||cv.id)?.material==="CONCRETE"?"stone":"metal"});}

@@ -49,15 +49,12 @@ export function withCoverOcclusion(g:CanvasRenderingContext2D,covers:Cover[],gro
 
  g.save();const base=g.getTransform();
  for(const c of covers){
-  // When an actor is attached, its owning cover defines full-body concealment.
-  // Nearby stacked covers still render as scenery but do not compound actor clipping.
-  if(ownerId&&c.id!==ownerId)continue;
+  // Build35: all solid faces occlude, including neighbors of attached cover.
   if(c.generated&&typeof c.born==="number"&&!(c as any).assembly44?.length&&time-c.born<.72)continue;
   setWorld46(g,c.x,c.y);
   for(const polygon of coverOccluders(c,groundY,elevationScale)){
-   // Attached exposed poses need the upper silhouette to remain readable above the wall.
-   // Restrict owning-cover clipping to the lower body band; tucked poses keep full concealment.
-   const poly=ownerId&&exposed?polygon.map(p=>({x:p.x,y:Math.max(p.y,groundY-COVER_HEIGHT*elevationScale*.72)})):polygon;
+   // Exposure is determined by actual geometry, never by firing/aiming state.
+   const poly=polygon;
    const m=g.getTransform(),det=m.a*m.d-m.b*m.c,screen=(p:Point)=>({x:m.a*p.x+m.c*p.y+m.e,y:m.b*p.x+m.d*p.y+m.f}),projected=poly.map(screen);
    if(Math.max(...projected.map(p=>p.x))<0||Math.min(...projected.map(p=>p.x))>g.canvas.width||Math.max(...projected.map(p=>p.y))<0||Math.min(...projected.map(p=>p.y))>g.canvas.height)continue;
    const inverse=(x:number,y:number)=>({x:(m.d*(x-m.e)-m.c*(y-m.f))/det,y:(-m.b*(x-m.e)+m.a*(y-m.f))/det});
