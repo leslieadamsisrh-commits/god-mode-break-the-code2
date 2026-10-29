@@ -3,7 +3,7 @@ import {relativeWorld46,vertical46} from './bayBridgePresentation';
 import {coverSupport27h} from './arenaStructures27e';
 import {height} from './elevation27a';
 // Source-registered concrete. Every visible fracture plane comes from occupied volumes.
-export function drawFracture32(g:CanvasRenderingContext2D,c:Shape32&{hp:number;maxHp:number;selectedCells32?:number[];heldRelation30?:string;blocked30?:boolean;anchored27j?:boolean},time:number){
+export function drawFracture32(g:CanvasRenderingContext2D,c:Shape32&{hp:number;maxHp:number;selectedCells32?:number[];gatherProgress36?:number;protective36?:boolean;heldRelation30?:string;blocked30?:boolean;anchored27j?:boolean},time:number){
  const f=c.fracture32!,co=Math.cos(c.a||0),si=Math.sin(c.a||0),base=(c.z||0)+(c.hover||0);
  const project=(p:{x:number;y:number;z:number})=>{const q=relativeWorld46(c.x,c.y,p.x*co-p.y*si,p.x*si+p.y*co),v=vertical46(c.x,c.y,base+p.z);return{x:c.x+q.x+v.x,y:c.y+q.y+v.y};};
  const polygon=(p:{x:number;y:number}[],fill:string,stroke?:string,width=1)=>{g.beginPath();p.forEach((q,i)=>i?g.lineTo(q.x,q.y):g.moveTo(q.x,q.y));g.closePath();g.fillStyle=fill;g.fill();if(stroke){g.strokeStyle=stroke;g.lineWidth=width;g.stroke();}};
@@ -26,7 +26,13 @@ export function drawFracture32(g:CanvasRenderingContext2D,c:Shape32&{hp:number;m
  const topEdges=faces.filter(f=>f.kind==='top').flatMap(f=>f.points.map((a,i)=>({a,b:f.points[(i+1)%f.points.length]})));
  const equal=(a:{x:number;y:number;z:number},b:typeof a)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z)<1e-6;
  for(const e of topEdges.filter(e=>!topEdges.some(q=>q!==e&&equal(e.a,q.b)&&equal(e.b,q.a)))){const a=project(e.a),b=project(e.b);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle='#202e35';g.lineWidth=1.3;g.stroke();}
- if(c.selectedCells32?.length){const edges=faces33({...c,fracture32:{...f,cells:c.selectedCells32}}).filter(f=>f.kind==='top').flatMap(f=>f.points.map((a,i)=>({a,b:f.points[(i+1)%f.points.length]})));for(const e of edges.filter(e=>!edges.some(q=>q!==e&&equal(e.a,q.b)&&equal(e.b,q.a)))){const a=project(e.a),b=project(e.b);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle='#a9eeed';g.lineWidth=1.5;g.stroke();}}
+ if(c.selectedCells32?.length){
+ // Tint only visible occupied source faces belonging to the committed region.
+ // No independent decorative hull, no per-cell strokes, and no hidden-face reveal.
+ g.save();g.globalAlpha=c.protective36?.16+.10*(c.gatherProgress36||0):.09;
+ for(const face of faces.filter(face=>c.selectedCells32!.includes(face.id)))polygon(face.points.map(project),'#83eef0');
+ g.restore();
+ const edges=faces33({...c,fracture32:{...f,cells:c.selectedCells32}}).filter(f=>f.kind==='top').flatMap(f=>f.points.map((a,i)=>({a,b:f.points[(i+1)%f.points.length]})));for(const e of edges.filter(e=>!edges.some(q=>q!==e&&equal(e.a,q.b)&&equal(e.b,q.a)))){const a=project(e.a),b=project(e.b);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle='#a9eeed';g.lineWidth=1.5;g.stroke();}}
 
  if(c.heldRelation30){const tops=faces.filter(f=>f.kind==='top'),face=tops.sort((a,b)=>b.points.reduce((n,p)=>n+p.z,0)-a.points.reduce((n,p)=>n+p.z,0))[0];if(face){const [a,b]=face.points,x=project(a),y=project(b);g.strokeStyle=c.blocked30?'#efb66d':c.heldRelation30==='local'?'#65efff':'#ff82c2';g.lineWidth=2;g.beginPath();g.moveTo(x.x+(y.x-x.x)*.2,x.y+(y.y-x.y)*.2);g.lineTo(x.x+(y.x-x.x)*.8,x.y+(y.y-x.y)*.8);g.stroke();if(c.blocked30){const q=project(face.points[2]);g.fillStyle='#efb66d';g.font='bold 8px monospace';g.fillText('BLOCKED',q.x-15,q.y-4);}}}
  g.restore();
