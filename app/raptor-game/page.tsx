@@ -1,0 +1,2 @@
+import Game from "../Game";
+export default function RaptorGame(){return <><Game character="raptor" cameraPreset="kinetic"/><nav style={{position:"fixed",right:12,top:12,zIndex:2147483647}}><a href="/raptor-lab" style={{display:"block",padding:"12px 15px",background:"#07131f",border:"2px solid #ff5373",borderRadius:10,color:"#fff",font:"bold 13px Arial",textDecoration:"none"}}>GEOMETRIC LAB</a></nav></>}
