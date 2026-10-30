@@ -41,14 +41,14 @@ function leg(bones:Record<RaptorBone,RigTransform>,side:"left"|"right",p:number,
 }
 export function evaluateRaptorRig(input:MotionInput):RigPose{
  const bones=empty(),motion=clamp(input.speed/Math.max(1,input.runSpeed),0,1);
- const phase=input.state==="idle"?0:((input.time*2.0)%1+1)%1;
+ const sliding=input.state==="slide";\n const phase=input.state==="idle"||sliding?0:((input.time*(2.0+motion*1.6))%1+1)%1;
  const a=phase*TAU;
- const contactL=leg(bones,"left",phase,input.state==="idle"?0:9+15*motion,motion);
- const contactR=leg(bones,"right",phase,input.state==="idle"?0:9+15*motion,motion);
+ const contactL=leg(bones,"left",phase,input.state==="idle"||sliding?0:9+15*motion,motion);
+ const contactR=leg(bones,"right",phase,input.state==="idle"||sliding?0:9+15*motion,motion);
  bones.root={x:0,y:0,angle:0};
- bones.torso={x:0,y:-13,angle:.012*Math.sin(a*2)*motion};
+ bones.torso={x:sliding?13:0,y:sliding?8:-13,angle:sliding?.48:motion>.7?.23:.012*Math.sin(a*2)*motion};
  bones.neck={x:16,y:-20,angle:.04*Math.sin(a+.6)};
- bones.head={x:27,y:-26+Math.sin(a+.45)*1.2*motion,angle:.02*Math.sin(a+.65)*motion};
+ bones.head={x:sliding?42:27,y:sliding?-4:-26+Math.sin(a+.45)*1.2*motion,angle:sliding?.25:.02*Math.sin(a+.65)*motion};
  bones.jaw={x:35,y:-22,angle:.03*Math.sin(a)};
  const aimDelta=Math.atan2(Math.sin(input.aim-input.facing),Math.cos(input.aim-input.facing));
  const aimOffset=clamp(aimDelta,-.5,.5);
@@ -56,7 +56,7 @@ export function evaluateRaptorRig(input:MotionInput):RigPose{
  bones.rightUpperArm={x:13,y:-15,angle:-.09*Math.sin(a-.55)*motion};
  bones.leftForearm={x:21,y:-8,angle:aimOffset*.4};
  bones.rightForearm={x:23,y:-8,angle:aimOffset*.4};
- bones.weapon={x:28,y:-8+Math.sin(a-.55)*.6*motion,angle:aimOffset};
+ bones.weapon={x:sliding?45:28,y:sliding?18:-8+Math.sin(a-.55)*.6*motion,angle:aimOffset};\n if(sliding){bones.leftThigh={x:-7,y:12,angle:2.5};bones.leftShin={x:-29,y:24,angle:2.95};bones.leftFoot={x:-54,y:30,angle:0};bones.rightThigh={x:7,y:12,angle:.6};bones.rightShin={x:24,y:24,angle:.15};bones.rightFoot={x:52,y:30,angle:0};}
  let tx=-15,ty=-12;
  for(let i=0;i<6;i++){
   // Each link follows the previous one with a delayed counterbalance wave.
