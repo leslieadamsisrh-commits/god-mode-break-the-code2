@@ -24,6 +24,20 @@ export function paintRaptorFrame(g:CanvasRenderingContext2D,action:RaptorAction,
  if(!img){img=new Image();img.onload=()=>{};img.onerror=()=>failed.add(key);img.src=`/assets/raptor-v37/${key}`;cache.set(key,img);return false}
  if(!img.complete||!img.naturalWidth)return false;
  if(img.naturalWidth!==512||img.naturalHeight!==512){failed.add(key);return false}
- g.drawImage(img,-256*scale,-450*scale,512*scale,512*scale);
+ if(!verifiedSpriteImage(img,key)){failed.add(key);return false}\n g.drawImage(img,-256*scale,-450*scale,512*scale,512*scale);
  return true;
+}
+
+/** Asset QA: verify alpha content at load time, so empty RGBA frames never hide the fighter. */
+const validAlpha=new Map<string,boolean>();
+export function verifiedSpriteImage(img:HTMLImageElement,key:string):boolean{
+ if(validAlpha.has(key))return validAlpha.get(key)!;
+ try{
+  const c=document.createElement("canvas");c.width=64;c.height=64;
+  const x=c.getContext("2d",{willReadFrequently:true});if(!x)return false;
+  x.drawImage(img,0,0,64,64);
+  const data=x.getImageData(0,0,64,64).data;
+  let visible=0;for(let i=3;i<data.length;i+=4)if(data[i]>32)visible++;
+  const ok=visible>=32;validAlpha.set(key,ok);return ok;
+ }catch{return false}
 }
