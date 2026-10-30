@@ -1,13 +1,13 @@
 const fs=require('fs'),ts=require('typescript'),assert=require('node:assert/strict');global.crypto??=require('node:crypto').webcrypto;require.extensions['.ts']=(m,p)=>m._compile(ts.transpileModule(fs.readFileSync(p,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,p);
 const G=require('../lib/game.ts'),S=require('../lib/arenaStructures27e.ts'),A=require('../lib/arenaLayout27c.ts');
 function game(x=1100,y=240){const s=G.newGame('h','h',0,'solo');s.covers=[];Object.assign(s.players[0],{x,y,aim:Math.PI/2,gunFacing:Math.PI/2});return s;}
-function step(s,input={},frames=1){G.setInput(s,0,s.players[0].lastSeq+1,{x:0,y:0,aim:Math.PI/2,...input});for(let i=0;i<frames;i++)G.advance(s,s.lastAt+1000/60);}
+function step(s,input={},frames=1){G.setInput(s,0,s.players[0].lastSeq+1,{x:0,y:0,aim:Math.PI/2,...input});for(let i=0;i<frames;i++)G.advance(s,s.lastAt+1000/60);/* Build37: await the explicit assembly before historical hold assertions. */if(input.cover)for(let wait37=0;wait37<20&&s.players[0].arsenal37?.kind==='assemble';wait37++)G.advance(s,s.lastAt+1000/60);}
 // 27I layout-specific stair coverage lives in build27i; keep psychic-height rules here.
 let s=game(660,343);step(s,{cover:true,aim:Math.PI});assert(s.players[0].gripCoverId);step(s,{x:-1,aim:Math.PI},105);assert.equal(s.players[0].z,128);assert(Math.abs(s.covers[0].z-140)<1);assert(s.players[0].gripCoverId);step(s,{aim:0},45);step(s,{cover:true,aim:0});assert(!s.players[0].gripCoverId,'place on platform');
 const layout=A.chaseLayout27c();assert.equal(layout.placements.length,6);assert(A.routesConnected27c(layout.placements));for(let i=0;i<12;i++){const l=A.randomLayout27c('27H-'+i,24);A.validateLayout27c(l);assert.deepEqual(l,A.randomLayout27c('27H-'+i,24));}
 assert(A.placementError27c({id:'bad',objectId:'floor-panel46',x:250,y:563,rotation:0,z:0,surfaceId:'ground'},[]));
 console.log('PASS27H carry ascent/place, sparse preset and seeded layouts on 27I geometry');
-for(const n of [0,1]){const q=G.newGame('h','h',0,'duel');G.joinGame(q,'g','g');q.phase='playing';q.covers=[];const p=q.players[n],from={x:p.x,y:p.y};S.resolveSupports27e(p,125);assert.deepEqual({x:p.x,y:p.y},from,'spawn needs structural clearance');G.setInput(q,n,1,{cover:true,aim:n?Math.PI:0});G.advance(q,q.lastAt+1000/60);assert(p.gripCoverId,'spawn can construct toward fight');}
+for(const n of [0,1]){const q=G.newGame('h','h',0,'duel');G.joinGame(q,'g','g');q.phase='playing';q.covers=[];const p=q.players[n],from={x:p.x,y:p.y};S.resolveSupports27e(p,125);assert.deepEqual({x:p.x,y:p.y},from,'spawn needs structural clearance');G.setInput(q,n,1,{cover:true,aim:n?Math.PI:0});G.advance(q,q.lastAt+1000/60);for(let k=0;k<20&&p.arsenal37;k++)G.advance(q,q.lastAt+1000/60);assert(p.gripCoverId,'spawn can construct toward fight');}
 // Construction must not materialize cover through the terrace wall.
 s=game(420,563);assert(!G.constructionPreview21({...s.players[0],gunFacing:Math.PI},s,0).valid);
 console.log('PASS27H clear spawns, construction from both spawns, no through-wall construction');

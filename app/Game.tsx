@@ -1,4 +1,5 @@
 "use client";
+import {drawSpiral37} from '../lib/spiralPresentation37';
 import {interpolateCover35} from "../lib/presentation35";
 import {type MatchRules31,PRACTICE_RULES31,validateRules31} from "../lib/matchRules31";
 import {drawCitadel29} from '../lib/citadelPresentation29';
@@ -580,6 +581,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
 
 
  for(const sh of s.shots||[])withStructureOcclusion27e(g,sh,()=>withCoverOcclusion(g,covers,sh.y,s.time,()=>withWorld46(g,sh.x,sh.y,()=>drawShot(g,sh)),null,false,1/DECK_PITCH));
+ for(const [n,p] of s.players.entries())if(p.arsenal37){const t=p.arsenal37;withStructureOcclusion27e(g,t.pose,()=>withCoverOcclusion(g,covers,t.pose.y,s.time,()=>withWorld46(g,t.pose.x,t.pose.y,()=>drawSpiral37(g,t,s.time,n)),null,false,1/DECK_PITCH));}
  for(const f of s.fx||[])if(f.type!=="slide"&&f.type!=="cover-scrape"&&f.type!=="cyber-stain")withCoverOcclusion(g,covers,f.y,s.time,()=>withWorld46(g,f.x,f.y,()=>fx(g,f)),null,false,1/DECK_PITCH);
  g=finishWarScene46(canvas);drawCombatHelmet(g,s,localSlot);
  // Broadcast spectacle is reserved for round boundaries, never live exchanges.
@@ -615,6 +617,7 @@ function drawCombatHelmet(g:CanvasRenderingContext2D,s:any,slot:number){
  g.beginPath();g.moveTo(175,12);g.lineTo(189,4);g.lineTo(811,4);g.lineTo(825,12);g.lineTo(817,77);g.lineTo(183,77);g.closePath();g.fill();g.stroke();
  for(const x of [166,825]){g.fillStyle="#252337";g.fillRect(x,19,9,37);g.strokeStyle="#ce5299";g.strokeRect(x,19,9,37);g.fillStyle="#6bebf3";g.fillRect(x+2,27,5,3);g.fillRect(x+2,44,5,3);}
  s.players.forEach((f:any,n:number)=>{const x=n===slot?194:516,w=290,color=n===slot?"#68ecf1":"#ec72b8",hp=Math.max(0,f.hp/s.config.maxHealth);g.textAlign="left";g.font="bold 11px monospace";g.fillStyle=color;g.fillText(`${s.mode==="watch"?f.name:n===slot?"YOU":f.name.slice(0,16)}  ${Math.ceil(f.hp)}/${s.config.maxHealth}  W${f.score}`,x,24);g.fillStyle="#080b13";g.fillRect(x,31,w,8);g.fillStyle=hp<.25?"#ff9169":color;g.fillRect(x,31,w*hp,8);g.fillStyle="#515d76";g.fillRect(x,47,w,3);g.fillStyle="#b697e1";g.fillRect(x,47,w*f.battery/100,3);g.fillStyle="#a6b8c5";g.font="9px monospace";g.fillText(`BAT ${s.rules31?.battery==="unlimited"?"∞":Math.ceil(f.battery)}  ${f.shield?(f.timeFieldActive?"SHIELD + TIME":"SHIELD"):f.timeFieldActive?"BULLET FIELD":f.charging?"CHARGING":f.godTime>0?"TIER I":"SHOTGUN ∞"}`,x,64);});
+ const pieces37=s.covers.filter((c:any)=>c.constructOwner===slot&&c.hp>0),pending37=p.arsenal37;g.save();g.font='bold 9px monospace';g.textAlign='center';for(let k=1;k<=4;k++){const piece=pieces37.find((c:any)=>c.arsenalSlot37===k),active=pending37?.slot===k;g.fillStyle=active?'#f7d184':piece?'#65efff':'#506176';g.fillText(`${k}${active?'↻':piece?.id===p.gripCoverId?'◆':piece?(p.recallNext37===k?'↻':'■'):'□'}`,440+k*26,145);}g.fillStyle='#b9d9e1';g.fillText('ARSENAL · RB BUILD / RECALL',505,157);g.restore();
  const previous=batteryVisual.get(slot),dt=previous?Math.max(0,Math.min(.05,s.time-previous.at)):0,value=Math.max(0,Math.min(100,p.battery)),changed=!previous||Math.abs(value-previous.value)>.01?s.time:previous.changed,direction=value>=99.99?"FULL":p.charging?"RECHARGING":previous&&value<previous.value-.01?"DRAINING":previous&&value>previous.value+.01?"RECHARGING":previous&&s.time-changed<.25?previous.direction:"READY",trail=!previous||previous.round!==s.round?value:previous.trail+(value-previous.trail)*(1-Math.exp(-5*dt));batteryVisual.set(slot,{value,trail,at:s.time,round:s.round,direction,changed});
  const bx=28,by=220,bh=170;g.fillStyle="#111521db";g.strokeStyle="#82648a";g.lineWidth=2;g.fillRect(bx-9,by-35,42,bh+75);g.strokeRect(bx-9,by-35,42,bh+75);g.fillStyle="#060c16";g.fillRect(bx,by,15,bh);g.fillStyle="#ef7bb6";g.fillRect(bx,by+bh*(1-trail/100),15,bh*trail/100);g.fillStyle=direction==="RECHARGING"?"#a7ffe1":"#64eaf1";g.fillRect(bx,by+bh*(1-value/100),15,bh*value/100);g.textAlign="center";g.font="bold 9px monospace";g.fillStyle="#d9f6ff";g.fillText("BAT",bx+8,by-18);g.fillText(String(Math.ceil(value)),bx+8,by+bh+18);g.save();g.translate(bx+25,by+bh/2);g.rotate(-Math.PI/2);g.font="8px monospace";g.fillText(direction,0,0);g.restore();
  if(s.debug21){

@@ -9,7 +9,7 @@ async function post(body,status=200){const r=await fetch(base+'/api/game',{metho
  assert.match((await post({action:'rules31',...guest,rules31:{...rules,battery:'current'}},400)).error,/HOST_ONLY/);
  assert.match((await post({action:'rules31',...host,rules31:{...rules,battery:'current'}},400)).error,/RULES_LOCKED/);
  for(let i=0;i<34;i++){await new Promise(r=>setTimeout(r,100));await fetch(base+'/api/game?'+new URLSearchParams(host));}
- await post({action:'input',...host,seq:1,input:{cover:true,aim:0}});await new Promise(r=>setTimeout(r,100));
+ await post({action:'input',...host,seq:1,input:{cover:true,aim:0}});await new Promise(r=>setTimeout(r,300)); // Build37 assembly is intentionally not instant.
  const a=await (await fetch(base+'/api/game?'+new URLSearchParams(host))).json(),b=await (await fetch(base+'/api/game?'+new URLSearchParams(guest))).json();
  assert.equal(a.state.players[0].battery,100);assert.equal(b.state.players[0].battery,100);assert(a.state.players[0].gripCoverId);assert.equal(a.state.players[0].gripCoverId,b.state.players[0].gripCoverId);
  const reset=await post({action:'reset',...host});assert.deepEqual(reset.state.rules31,rules);assert(!reset.state.players.some(p=>p.gripCoverId));
