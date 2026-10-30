@@ -41,7 +41,8 @@ function leg(bones:Record<RaptorBone,RigTransform>,side:"left"|"right",p:number,
 }
 export function evaluateRaptorRig(input:MotionInput):RigPose{
  const bones=empty(),motion=clamp(input.speed/Math.max(1,input.runSpeed),0,1);
- const sliding=input.state==="slide";\n const phase=input.state==="idle"||sliding?0:((input.time*(2.0+motion*1.6))%1+1)%1;
+ const sliding=input.state==="slide";
+ const phase=input.state==="idle"||sliding?0:((input.time*(2.0+motion*1.6))%1+1)%1;
  const a=phase*TAU;
  const contactL=leg(bones,"left",phase,input.state==="idle"||sliding?0:9+15*motion,motion);
  const contactR=leg(bones,"right",phase,input.state==="idle"||sliding?0:9+15*motion,motion);
@@ -56,7 +57,8 @@ export function evaluateRaptorRig(input:MotionInput):RigPose{
  bones.rightUpperArm={x:13,y:-15,angle:-.09*Math.sin(a-.55)*motion};
  bones.leftForearm={x:21,y:-8,angle:aimOffset*.4};
  bones.rightForearm={x:23,y:-8,angle:aimOffset*.4};
- bones.weapon={x:sliding?45:28,y:sliding?18:-8+Math.sin(a-.55)*.6*motion,angle:aimOffset};\n if(sliding){bones.leftThigh={x:-7,y:12,angle:2.5};bones.leftShin={x:-29,y:24,angle:2.95};bones.leftFoot={x:-54,y:30,angle:0};bones.rightThigh={x:7,y:12,angle:.6};bones.rightShin={x:24,y:24,angle:.15};bones.rightFoot={x:52,y:30,angle:0};}
+ bones.weapon={x:sliding?45:28,y:sliding?18:-8+Math.sin(a-.55)*.6*motion,angle:aimOffset};
+ if(sliding){bones.leftThigh={x:-7,y:12,angle:2.5};bones.leftShin={x:-29,y:24,angle:2.95};bones.leftFoot={x:-54,y:30,angle:0};bones.rightThigh={x:7,y:12,angle:.6};bones.rightShin={x:24,y:24,angle:.15};bones.rightFoot={x:52,y:30,angle:0};}
  let tx=-15,ty=-12;
  for(let i=0;i<6;i++){
   // Each link follows the previous one with a delayed counterbalance wave.
