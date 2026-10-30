@@ -3,6 +3,7 @@ import {useCallback,useEffect,useRef,useState} from "react";
 import PlaytestGuide from "./PlaytestGuide";
 import {evaluateRaptorRig} from "../lib/raptorHybridRig";
 import {paintRaptorRig} from "../lib/raptorRigPaint";
+import {paintRaptorFrame,raptorFacing,raptorAction} from "../lib/raptorDirectionalSprites";
 import AnimationQaHarness from "./AnimationQaHarness";
 import BayBridgeArena from "./BayBridgeArena";
 import GodModeShell from "./GodModeShell";
@@ -985,7 +986,7 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
   g.scale(cfg.spriteScale*.80,cfg.spriteScale*.80);
   if(hit)g.translate(-3,3);
   g.rotate(p.facing||0);
-  // Prefer the original painted twelve-frame run only when the approved asset exists.
+  // Transparent directional frames take priority when verified files are present.\n  const action=raptorAction(speed,sliding,!!(p.z>0||p.jumpHeight>0),hit);\n  const facingDirection=raptorFacing(p.facing||0);\n  if(paintRaptorFrame(g,action,facingDirection,t,cfg.spriteScale*.8)){g.restore();drawGloveWindup(g,p,t,cfg,"raptor");return;}\n  // Prefer the original painted twelve-frame run only when the approved asset exists.
   // The fallback retains the verified hybrid rig for missing directions or failed loads.
   const painted=raptorRunPainted.get("right");
   const facing=(p.facing||0),delta=Math.atan2(Math.sin(facing),Math.cos(facing));
