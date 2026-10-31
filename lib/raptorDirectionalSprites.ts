@@ -24,7 +24,8 @@ export function paintRaptorFrame(g:CanvasRenderingContext2D,action:RaptorAction,
  if(!img){img=new Image();img.onload=()=>{};img.onerror=()=>failed.add(key);img.src=`/assets/raptor-v37/${key}`;cache.set(key,img);return false}
  if(!img.complete||!img.naturalWidth)return false;
  if(img.naturalWidth!==512||img.naturalHeight!==512){failed.add(key);return false}
- if(!verifiedSpriteImage(img,key)){failed.add(key);return false}\n g.drawImage(img,-256*scale,-450*scale,512*scale,512*scale);
+ if(!verifiedSpriteImage(img,key)){failed.add(key);return false}
+ g.drawImage(img,-256*scale,-450*scale,512*scale,512*scale);
  return true;
 }
 
