@@ -28,9 +28,15 @@ const CY27I=550,D27I=1-Q27I*CY27I/620;
 const SX27I=.596/D27I;
 const SY27I=ARENA_DEPTH20*(K27I+285*Q27I)/(620*D27I*D27I);
 const SHEAR27I=SX27I*ARENA_SHEAR20;
-export function arenaPoint46(x:number,y:number){return{x:1536+(x-1100)*SX27I+(y-CY27I)*SHEAR27I,y:700+(y-CY27I)*SY27I};}
-export function arenaInverse46(x:number,y:number){const dy=(y-700)/SY27I;return{x:1100+(x-1536-dy*SHEAR27I)/SX27I,y:CY27I+dy};}
-export function arenaJacobian46(_x:number,_y:number){return{x:SX27I,xy:SHEAR27I,y:SY27I};}
+// Build 38B: reversible affine camera projection. World physics are unchanged.
+// The inverse and Jacobian read the SAME parameters as the forward projection.
+let projectionBlend38=0;
+export function setDiagonalProjection38(value:number){projectionBlend38=Math.max(0,Math.min(1,value));}
+export function diagonalProjection38(){return projectionBlend38;}
+function coefficients38(){return {sx:SX27I,sy:SY27I*(1+.28*projectionBlend38),shear:SHEAR27I+SX27I*.32*projectionBlend38};}
+export function arenaPoint46(x:number,y:number){const j=coefficients38();return{x:1536+(x-1100)*j.sx+(y-CY27I)*j.shear,y:700+(y-CY27I)*j.sy};}
+export function arenaInverse46(x:number,y:number){const j=coefficients38(),dy=(y-700)/j.sy;return{x:1100+(x-1536-dy*j.shear)/j.sx,y:CY27I+dy};}
+export function arenaJacobian46(_x:number,_y:number){const j=coefficients38();return{x:j.sx,xy:j.shear,y:j.sy};}
 const sceneContexts46=new WeakMap<object,{sx:number;sy:number;tx:number;ty:number;anchorX:number;anchorY:number}>();
 export function setArenaContext46(g:CanvasRenderingContext2D,camera:{x:number;y:number},zoom:number,sx:number,sy:number){const c=arenaPoint46(camera.x,camera.y),scale=1000/1536*zoom;sceneContexts46.set(g,{sx:sx*scale,sy:sy*scale,tx:(500-c.x*scale)*sx,ty:(DECK_SCREEN_Y-c.y*scale)*sy,anchorX:camera.x,anchorY:camera.y});setWorld46(g,camera.x,camera.y);}
 export function setWorld46(g:CanvasRenderingContext2D,x:number,y:number){const c=sceneContexts46.get(g);if(!c)return;const p=arenaPoint46(x,y),j=arenaJacobian46(x,y);g.setTransform(c.sx*j.x,0,c.sx*j.xy,c.sy*j.y,c.tx+c.sx*(p.x-j.x*x-j.xy*y),c.ty+c.sy*(p.y-j.y*y));}
