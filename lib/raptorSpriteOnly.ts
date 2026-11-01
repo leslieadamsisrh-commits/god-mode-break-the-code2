@@ -24,7 +24,10 @@ export function selectRaptorAction(state:{speed:number;sliding:boolean;airborne:
 export function paintRaptorSprite(g:CanvasRenderingContext2D,state:{x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number}):boolean{
  const action=selectRaptorAction(state),direction=selectRaptorDirection(state.angle);
  const frame=Math.floor(state.time*(action==="run"?16:action==="slide"?18:10))%RAPTOR_COUNTS[action];
- const key=`${action}/${direction}/${String(frame).padStart(3,"0")}.png`;
+ // Reuse an existing visual family for unfinished actions; simulation is unchanged.
+ const artAction=action==="run"?"run":action==="slide"?"slide":action==="walk"?"walk":"idle";
+ const artFrame=frame%RAPTOR_COUNTS[artAction];
+ const key=`${artAction}/${direction}/${String(artFrame).padStart(3,"0")}.png`;
  let img=cache.get(key);
  if(!img&&!missing.has(key)){
    img=new Image();
