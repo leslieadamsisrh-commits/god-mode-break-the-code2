@@ -364,6 +364,15 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
  ]) as [string,boolean][];
  useEffect(()=>{if(!p)return;setTestPass(prev=>{let changed=false,next={...prev};for(const [name,active] of tests)if(active&&!next[name]){next[name]=true;changed=true}return changed?next:prev})},[p?.dash,p?.slide,p?.slideSteerCurrent,p?.brake,p?.coverId,p?.coverMode,p?.coverSpeed,p?.input?.coverAim,p?.fireState,p?.kickStage,p?.exit,p?.gripCoverId,hud?.fx,config.weaveEnabled]);
  return <main className={(hud?.mode==="watch"?"studio studioWatch":"studio")+(diagnostics30?" diagnostics30":" play30")} style={hud?.mode==="watch"&&visibleHeight?{height:visibleHeight}:undefined}>
+  <div style={{position:"fixed",left:12,top:12,zIndex:2147483000,display:"flex",gap:6,alignItems:"center",background:"#071521ee",border:"1px solid #54798c",borderRadius:9,padding:7}}>
+   <label htmlFor="camera38" style={{color:"#d9f8ff",font:"bold 11px Arial"}}>CAMERA</label>
+   <select id="camera38" aria-label="Camera mode" value={cameraMode38} onChange={e=>setCameraMode38(e.target.value as CameraMode38)} style={{background:"#193144",color:"#fff",border:"1px solid #66879a",padding:6,borderRadius:5}}>
+    <option value="auto">AUTO</option><option value="wide">WIDE</option><option value="cinematic">CINEMATIC</option><option value="tactical">TACTICAL</option>
+   </select>
+   <button type="button" aria-label="Zoom out" onClick={()=>setCameraZoom38(v=>Math.max(-.6,v-.15))} style={{padding:"6px 10px"}}>−</button>
+   <button type="button" aria-label="Zoom in" onClick={()=>setCameraZoom38(v=>Math.min(.6,v+.15))} style={{padding:"6px 10px"}}>+</button>
+   <button type="button" onClick={()=>{setCameraMode38("auto");setCameraZoom38(0)}} style={{padding:"6px 8px"}}>RESET</button>
+  </div>
   {builderOpen&&<ArenaBuilder27c initial={state.current?.arenaLayout} onClose={()=>{setBuilderOpen(false);localCombat.current?.pause();}} onPlay={playLayout}/>}
   {gameShell&&<GodModeShell onPlay={()=>setGameShell(false)} onTraining={()=>{setGameShell(false);setQaMode(true)}} onSettings={()=>{setGameShell(false);setStudioMenu(true)}} onArenaBuilder={openBuilder} onDirector={()=>{setGameShell(false);setDirector(true)}}/>}
   <header><div><small>GOD MODE: BREAK THE CODE</small><b>DIMENSION 33 · THE BARON’S WAR GAMES</b></div><span>{status}</span></header>
