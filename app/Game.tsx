@@ -11,6 +11,7 @@ import ArenaBuilder27c from "./ArenaBuilder27c";
 import {type ArenaLayout27c} from "../lib/arenaLayout27c";
 import {updateCamera27c} from "../lib/combatCamera27c";
 import {cameraTarget38,cameraZoomStep38,type CameraMode38} from "../lib/cameraDirector38";
+import {setDiagonalProjection38} from "../lib/bayBridgePresentation";
 import PlaytestGuide from "./PlaytestGuide";
 import {paintRaptorSprite} from "../lib/raptorSpriteOnly";
 import AnimationQaHarness from "./AnimationQaHarness";
@@ -532,7 +533,7 @@ function cachedSkyline(im:HTMLImageElement){
 }
 const cameraMemory27b:CameraMemory27b={};
 function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"|"kinetic"="default",debug21=false,cameraMode38:CameraMode38="auto",cameraZoomAdjust38=0){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
- const renderNow=performance.now();s={...presentation(s,renderNow),debug21};const cfg=s.config||DEFAULT,p=s.players[localSlot]||s.players[0],local={...p,id:"fighter-"+localSlot};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
+ const renderNow=performance.now();setDiagonalProjection38(cameraMode38==="tactical"?1:0);s={...presentation(s,renderNow),debug21};const cfg=s.config||DEFAULT,p=s.players[localSlot]||s.players[0],local={...p,id:"fighter-"+localSlot};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
  // Independent close camera with stable encounter framing and bounded look-ahead.
  const frameDt=cameraState.last?Math.max(0,Math.min(.05,(renderNow-cameraState.last)/1000)):1/60;
  if(!cameraState.ready){for(const k of Object.keys(cameraMemory27b))delete (cameraMemory27b as any)[k];}
