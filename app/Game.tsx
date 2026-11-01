@@ -10,6 +10,7 @@ import {useCallback,useEffect,useRef,useState} from "react";
 import ArenaBuilder27c from "./ArenaBuilder27c";
 import {type ArenaLayout27c} from "../lib/arenaLayout27c";
 import {updateCamera27c} from "../lib/combatCamera27c";
+import {cameraTarget38,cameraZoomStep38,type CameraMode38} from "../lib/cameraDirector38";
 import PlaytestGuide from "./PlaytestGuide";
 import {paintRaptorSprite} from "../lib/raptorSpriteOnly";
 import AnimationQaHarness from "./AnimationQaHarness";
@@ -246,6 +247,10 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
   const observer=new ResizeObserver(fit);observer.observe(parent);fit();return()=>observer.disconnect();
  },[]);
  const characterRef=useRef(character);characterRef.current=character;const cameraPresetRef=useRef(cameraPreset);cameraPresetRef.current=cameraPreset;
+ const [cameraMode38,setCameraMode38]=useState<CameraMode38>("auto");
+ const [cameraZoom38,setCameraZoom38]=useState(0);
+ const cameraModeRef38=useRef(cameraMode38);cameraModeRef38.current=cameraMode38;
+ const cameraZoomRef38=useRef(cameraZoom38);cameraZoomRef38.current=cameraZoom38;
  const [sound43,setSound43]=useState(true),[rumble43,setRumble43]=useState(false);
  useEffect(()=>{const visibility43=()=>{frames43.last=0;frames43.active=false;};document.addEventListener("visibilitychange",visibility43);return()=>document.removeEventListener("visibilitychange",visibility43);},[]);
  useEffect(()=>{try{const saved=JSON.parse(localStorage.getItem("god-mode-feedback43")||"null");if(saved){feedbackPrefs43.sound=saved.sound!==false;feedbackPrefs43.haptics=saved.haptics===true;setSound43(feedbackPrefs43.sound);setRumble43(feedbackPrefs43.haptics);}}catch{}},[]);
@@ -309,7 +314,7 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
  const timer=setInterval(async()=>{const ss=session.current;if(dead||pending||!ss||ss.local||!bootReady||state.current?.mode==="watch")return;pending=true;const input=queue.shift()||latest;try{const reply=await post({action:"input",...ss,seq:++seq.current,input});if(!dead&&session.current===ss&&!streamOpen.current)accept(reply);}catch{queue.length=0;}finally{pending=false;}},33);
  const pauseLocal=()=>{if(document.hidden){queue.length=0;latest={...EMPTY};previous={...EMPTY};localCombat.current?.pause();selectorGate22.current.sample(null);keys.current={};edges.current={CancelGrip34:true};mouse.current.down=false;touchMove.current={x:0,y:0};touchA.current=false;touchAEdge.current=false;}};const blur36=()=>{keys.current={};edges.current={CancelGrip34:true};mouse.current.down=false;};addEventListener("blur",blur36);document.addEventListener("visibilitychange",pauseLocal);
  return()=>{dead=true;cancelAnimationFrame(raf);clearInterval(timer);removeEventListener("blur",blur36);document.removeEventListener("visibilitychange",pauseLocal);localCombat.current?.pause();};},[accept,post,bootReady,studioMenu,builderOpen]);
- useEffect(()=>{let id=0;const loop=(stamp:number)=>{const start=performance.now();draw(canvas.current,state.current,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current,session.current?.slot||0,characterRef.current,cameraPresetRef.current,debugRef21.current);const s=state.current;recordFrame43(stamp,performance.now()-start,(session.current?.room||"")+"/"+s?.round,!document.hidden&&!!s&&["playing","finisher"].includes(s.phase));id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[]);
+ useEffect(()=>{let id=0;const loop=(stamp:number)=>{const start=performance.now();draw(canvas.current,state.current,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current,session.current?.slot||0,characterRef.current,cameraPresetRef.current,debugRef21.current,cameraModeRef38.current,cameraZoomRef38.current);const s=state.current;recordFrame43(stamp,performance.now()-start,(session.current?.room||"")+"/"+s?.round,!document.hidden&&!!s&&["playing","finisher"].includes(s.phase));id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[]);
  const point=(e:React.PointerEvent)=>{const c=canvas.current;if(!c)return;const r=c.getBoundingClientRect();mouse.current.x=(e.clientX-r.left)/r.width*1000;mouse.current.y=(e.clientY-r.top)/r.height*620};
  const patch=async(key:keyof Config,value:number)=>{const next={...config,[key]:value};setConfig(next);const s=session.current;if(s)try{accept(await post({action:"config",...s,patch:{[key]:value}}))}catch{}};
  const applyMovementPreset=async(name:string)=>{const preset=MOVEMENT_PRESETS[name];if(!preset)return;const movementKeys=new Set(Object.values(MOVEMENT_PRESETS).flatMap(p=>Object.keys(p)));const values:Partial<Config>={};for(const k of movementKeys)values[k as keyof Config]=DEFAULT[k as keyof Config];Object.assign(values,preset);const saved=session.current;if(!saved)return;try{accept(await post({action:"config",...saved,patch:values}));setTestPass({});setNote(name+" APPLIED")}catch(e:any){setNote(e.message||"PRESET FAILED")}};
@@ -517,12 +522,15 @@ function cachedSkyline(im:HTMLImageElement){
  g.drawImage(im,0,im.naturalHeight-75,im.naturalWidth,75,0,349,1200,441);skylineCache.set(im,c);return c;
 }
 const cameraMemory27b:CameraMemory27b={};
-function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"|"kinetic"="default",debug21=false){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
+function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"|"kinetic"="default",debug21=false,cameraMode38:CameraMode38="auto",cameraZoomAdjust38=0){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
  const renderNow=performance.now();s={...presentation(s,renderNow),debug21};const cfg=s.config||DEFAULT,p=s.players[localSlot]||s.players[0],local={...p,id:"fighter-"+localSlot};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
  // Independent close camera with stable encounter framing and bounded look-ahead.
  const frameDt=cameraState.last?Math.max(0,Math.min(.05,(renderNow-cameraState.last)/1000)):1/60;
  if(!cameraState.ready){for(const k of Object.keys(cameraMemory27b))delete (cameraMemory27b as any)[k];}
  updateCamera27c(cameraState,local,s.players,localSlot,frameDt);
+ // Build 38: apply presentation zoom after authoritative camera tracking.
+ const target38=cameraTarget38(cameraMode38,cameraState.zoom,cameraZoomAdjust38);
+ cameraState.zoom=cameraMode38==="auto"&&cameraZoomAdjust38===0?cameraState.zoom:cameraZoomStep38(cameraState.zoom,target38,frameDt);
  cameraState.last=renderNow;
  const zoom=cameraState.zoom,camX=cameraState.x,camY=cameraState.y;
  const arena45=environmentAssets.get("war-foundation45");cameraState.zoom=zoom;g=beginWarScene46(canvas,arena45,{x:camX,y:camY},zoom,environmentAssets);
