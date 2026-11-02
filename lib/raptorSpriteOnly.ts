@@ -5,7 +5,7 @@
 export type RaptorAction="idle"|"walk"|"run"|"slide"|"jump"|"land"|"shoot"|"hit";
 export const RAPTOR_DIRECTIONS=["right","front-right","front","front-left","left","back-left","back","back-right"] as const;
 export type RaptorDirection=typeof RAPTOR_DIRECTIONS[number];
-export const RAPTOR_COUNTS:Record<RaptorAction,number>={idle:8,walk:8,run:12,slide:10,jump:8,land:6,shoot:8,hit:6};
+export const RAPTOR_COUNTS:Record<RaptorAction,number>={idle:4,walk:6,run:4,slide:6,jump:4,land:3,shoot:4,hit:4};
 const cache=new Map<string,HTMLImageElement>();
 const missing=new Set<string>();
 export function selectRaptorDirection(angle:number):RaptorDirection {
@@ -23,9 +23,9 @@ export function selectRaptorAction(state:{speed:number;sliding:boolean;airborne:
 }
 export function paintRaptorSprite(g:CanvasRenderingContext2D,state:{x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number}):boolean{
  const action=selectRaptorAction(state),direction=selectRaptorDirection(state.angle);
- const frame=Math.floor(state.time*(action==="run"?16:action==="slide"?18:10))%RAPTOR_COUNTS[action];
+ const frame=Math.floor(state.time*(action==="run"?12:action==="slide"?12:8))%RAPTOR_COUNTS[action];
  // Reuse an existing visual family for unfinished actions; simulation is unchanged.
- const artAction=action==="run"?"run":action==="slide"?"slide":action==="walk"?"walk":"idle";
+ const artAction=action==="run"?"run":action==="walk"?"walk":action==="slide"?"slide":action==="jump"?"jump":action==="land"?"land":action==="shoot"?"shoot":action==="hit"?"hit":"idle";
  const artFrame=frame%RAPTOR_COUNTS[artAction];
  const key=`${artAction}/${direction}/${String(artFrame).padStart(3,"0")}.png`;
  let img=cache.get(key);
