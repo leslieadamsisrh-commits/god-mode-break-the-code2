@@ -7,7 +7,7 @@ import argparse, io, json, pathlib, zipfile
 from PIL import Image
 
 DIRECTIONS=("right","front-right","front","front-left","left","back-left","back","back-right")
-COUNTS={"run":4,"idle":4}
+COUNTS={"run":2,"idle":1}
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("archive", type=pathlib.Path)
@@ -50,3 +50,4 @@ def main():
     print(json.dumps(report,indent=2))
     if missing or defects: raise SystemExit(2)
 if __name__=="__main__":main()
+

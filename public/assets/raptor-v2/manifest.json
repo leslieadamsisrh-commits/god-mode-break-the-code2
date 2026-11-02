@@ -1,0 +1,205 @@
+{
+  "build": "39P",
+  "status": "provisional",
+  "counts": {
+    "idle": 1,
+    "run": 2
+  },
+  "directions": [
+    "right",
+    "front-right",
+    "front",
+    "front-left",
+    "left",
+    "back-left",
+    "back",
+    "back-right"
+  ],
+  "size": [
+    512,
+    512
+  ],
+  "anchor": [
+    256,
+    450
+  ],
+  "fallbacks": {
+    "walk": "run",
+    "slide": "idle",
+    "jump": "idle",
+    "land": "idle",
+    "shoot": "idle",
+    "hit": "idle"
+  },
+  "source": "Recovered approved front-right Idle; individual identity-preserving replacement sprites. Rejected 39G crops not installed.",
+  "frames": {
+    "idle/back/000.png": {
+      "anchor": [
+        250,
+        452
+      ],
+      "sha256": "c7878c84ed30f108967201f5a476ef171721a8c7da5d7f6aea5be7d1fac53018"
+    },
+    "idle/back-left/000.png": {
+      "anchor": [
+        240,
+        446
+      ],
+      "sha256": "b2e4e16b0826cdc28c84ab4b572022c02b56782823258c8cba063eb14262330c"
+    },
+    "idle/back-right/000.png": {
+      "anchor": [
+        255,
+        453
+      ],
+      "sha256": "cb405232638d82c538c32b4e3835e1aaf64f7a21584d92b9aedbe05733e0a301"
+    },
+    "idle/front/000.png": {
+      "anchor": [
+        252,
+        458
+      ],
+      "sha256": "fde942427688c19f1eeae05cdabaf7e69e2cc2c3d1b1d68504eb60439f72a611"
+    },
+    "idle/front-left/000.png": {
+      "anchor": [
+        229,
+        455
+      ],
+      "sha256": "1c7468afe72be927ab8f9aab5a0e9626f035abb035e5a70f8f37ca5e403e9201"
+    },
+    "idle/front-right/000.png": {
+      "anchor": [
+        289,
+        441
+      ],
+      "sha256": "80ce333114738b71724fff149d370f118809be0c37967c2d163ed61d9cb823c8"
+    },
+    "idle/left/000.png": {
+      "anchor": [
+        232,
+        450
+      ],
+      "sha256": "68ed3036fd2e7b7978474dbd740c76c55fcea5f34def0ffcc8579969e3118e2f"
+    },
+    "idle/right/000.png": {
+      "anchor": [
+        290,
+        452
+      ],
+      "sha256": "d59e59097e7bc7fa004fa4a2956ad0069fb875ee17eaeee974079a94b89c9dbb"
+    },
+    "run/back/000.png": {
+      "anchor": [
+        199,
+        468
+      ],
+      "sha256": "7eac921c321a831913b9186b3cca8659bd7bcd06ac21b116c770e319e3a7c62c"
+    },
+    "run/back/001.png": {
+      "anchor": [
+        274,
+        465
+      ],
+      "sha256": "bc1bb0c9528620078ababe3db323c9b14539f99674a4a7aeb31a3ce1fb779bf4"
+    },
+    "run/back-left/000.png": {
+      "anchor": [
+        255,
+        428
+      ],
+      "sha256": "ac0b469f93ca99b988cfba23a3fdc9e946ba32b990c1122e98f6e7e689d09075"
+    },
+    "run/back-left/001.png": {
+      "anchor": [
+        258,
+        436
+      ],
+      "sha256": "114babbc8e48e274fb425f7651c8c42f7fef2c05f585d484fa5bb9c3bd3ac3ec"
+    },
+    "run/back-right/000.png": {
+      "anchor": [
+        251,
+        440
+      ],
+      "sha256": "8a039690f5b48c1e91736da3131041f974425f7c0cad05a0b065eb90212d03d8"
+    },
+    "run/back-right/001.png": {
+      "anchor": [
+        247,
+        436
+      ],
+      "sha256": "ff59a572041e98ada033b06fa889e8143ee693fed7ca6267cfc5dfb8ac93e600"
+    },
+    "run/front/000.png": {
+      "anchor": [
+        268,
+        473
+      ],
+      "sha256": "f327b6990b02d08b2ad3bb57ddedc277123dabc41ef37f3cfa5c5de0ca1db34b"
+    },
+    "run/front/001.png": {
+      "anchor": [
+        208,
+        476
+      ],
+      "sha256": "cb3134f85dabf68bbb87eae4860511ceed59dc46234e4785fe1782a431e1e653"
+    },
+    "run/front-left/000.png": {
+      "anchor": [
+        274,
+        453
+      ],
+      "sha256": "5528b81b72347c930836a44c8a0ab60cc4570b1bdaab5ad91e9050df36cb1f39"
+    },
+    "run/front-left/001.png": {
+      "anchor": [
+        152,
+        465
+      ],
+      "sha256": "fdf4d00914621dbd0dc3a810569b4f013140d89afe19bc7cceaffb29c142ff46"
+    },
+    "run/front-right/000.png": {
+      "anchor": [
+        287,
+        453
+      ],
+      "sha256": "0ca0cd7b525b71b3e1ad4c32541f16131394a21660631beb3e74e58faae47936"
+    },
+    "run/front-right/001.png": {
+      "anchor": [
+        294,
+        459
+      ],
+      "sha256": "19f1a7f2d822002edb2cc9b9375caf2d46b6a10e7be06c92b655d432e19020c9"
+    },
+    "run/left/000.png": {
+      "anchor": [
+        233,
+        435
+      ],
+      "sha256": "5dfabb5e682b5f9301e258a04878871e8f38f5588130a6ed20a14d5ba0d909d4"
+    },
+    "run/left/001.png": {
+      "anchor": [
+        251,
+        442
+      ],
+      "sha256": "78ac63848a4d35ca84c2390aa98ee22f05c6fd12f9dc5b40fb372408c2792302"
+    },
+    "run/right/000.png": {
+      "anchor": [
+        251,
+        435
+      ],
+      "sha256": "a118f5b20211d1755c16eb2d3ab4b0bffcff24c74f17aa1c5aeada7da9de14ec"
+    },
+    "run/right/001.png": {
+      "anchor": [
+        255,
+        441
+      ],
+      "sha256": "14ef1ff2c2b91630b114c32746d8f5d9c29a11c64c1c78d0e38374929f65bab7"
+    }
+  }
+}

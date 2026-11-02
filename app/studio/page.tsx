@@ -1,6 +1,4 @@
-import {raptorArtReadiness} from "../../lib/raptorJadeAnimationMap";
 export default function StudioHome(){
- const art=raptorArtReadiness();
  const linkStyle={display:"block",padding:"22px 20px",borderRadius:14,textDecoration:"none",color:"#f4fdff",fontWeight:900,fontSize:20,touchAction:"manipulation" as const};
  return <main style={{position:"fixed",inset:0,overflowY:"auto",WebkitOverflowScrolling:"touch",touchAction:"pan-y",background:"#070d17",color:"#e5f7f8",padding:"max(20px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom))",fontFamily:"Arial,sans-serif"}}>
  <div style={{maxWidth:740,margin:"0 auto"}}>
@@ -15,8 +13,9 @@ export default function StudioHome(){
  </div>
  <section style={{border:"1px solid #345267",padding:18,borderRadius:12,marginTop:24,background:"#101c29"}}>
  <strong>RAPTOR ART STATUS</strong>
- <p style={{color:"#aac1cc",fontSize:14}}>Illustrated references: {art.totalConceptPoses}. Validated game-ready mapped sprites: {art.validated} of {art.referenced} required reference poses.</p>
- <p style={{color:"#ffb7d4",fontSize:13}}>The approved Raptor cannot be selected in the real game until the sprite assets pass registration. No hidden playable Raptor button exists yet.</p>
+ <p style={{color:"#aac1cc",fontSize:14}}>Build 39P: eight-direction Idle and provisional two-pose Run.</p>
+ <p style={{color:"#ffb7d4",fontSize:13}}>Select JADE or RAPTOR V2 in Combat Lab. Unfinished action animations use provisional visual fallbacks; gameplay is shared.</p>
  </section>
  </div></main>;
 }
+

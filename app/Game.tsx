@@ -240,7 +240,7 @@ function combatTone(kind:string,angle?:number){
  const frequency=kind==="tear"?210:kind==="parry"?1500:kind==="cover-defense"?155:kind==="damage"?95:kind==="block"?950:kind==="hit"?330:kind==="shield"?780:kind==="cover"?130:kind==="finish"?90:kind==="fight"?660:440;
  osc.type=kind==="tear"?"sawtooth":kind==="cover"?"triangle":"sine";osc.frequency.setValueAtTime(frequency,now);osc.frequency.exponentialRampToValueAtTime(Math.max(40,frequency*.65),now+.09);gain.gain.setValueAtTime(.045,now);gain.gain.exponentialRampToValueAtTime(.001,now+.13);osc.connect(gain);const pan=a.createStereoPanner?.();if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!):0;gain.connect(pan);pan.connect(a.destination);}else gain.connect(a.destination);osc.start(now);osc.stop(now+.14);osc.onended=()=>{audioVoices35--;osc.disconnect();gain.disconnect();pan?.disconnect()};
 }
-export default function Game({character="jade",cameraPreset="default"}:{character?:"jade"|"raptor";cameraPreset?:"default"|"close"|"kinetic"}={}){
+export default function Game({character="jade",cameraPreset="default",combatLab=false}:{character?:"jade"|"raptor";cameraPreset?:"default"|"close"|"kinetic";combatLab?:boolean}={}){
  useEffect(()=>{
   const el=canvas.current,parent=el?.parentElement;if(!el||!parent)return;
   const fit=()=>{const size=fitCombatViewport23(parent.clientWidth,parent.clientHeight);Object.assign(el.style,{position:'absolute',left:'50%',top:'50%',transform:'translate(-50%, -50%)',width:size.width+'px',height:size.height+'px'});};
@@ -270,7 +270,7 @@ export default function Game({character="jade",cameraPreset="default"}:{characte
  useEffect(()=>{try{const raw=localStorage.getItem("god_mode_practice_rules31");if(raw)setRules31(validateRules31(JSON.parse(raw)));}catch{}},[]);
  const chooseRules31=(next:MatchRules31)=>{setRules31(next);try{localStorage.setItem("god_mode_practice_rules31",JSON.stringify(next));}catch{}};
  const [diagnostics30,setDiagnostics30]=useState(false);
- const [hud,setHud]=useState<any>(null),[qaMode,setQaMode]=useState(false),[studioMenu,setStudioMenu]=useState(false),[gameShell,setGameShell]=useState(true),[status,setStatus]=useState("BOOTING"),[boot,setBoot]=useState<BootState>({done:0,total:112,failed:0,label:"INITIALIZING HELMET"}),[bootReady,setBootReady]=useState(false),[director,setDirector]=useState(false),[spritePanel,setSpritePanel]=useState(false),[config,setConfig]=useState<Config>(DEFAULT),[note,setNote]=useState(""),[padStatus,setPadStatus]=useState("CONTROLLER: WAITING"),[padGate,setPadGate]=useState(true),[testPass,setTestPass]=useState<Record<string,boolean>>({});
+ const [hud,setHud]=useState<any>(null),[qaMode,setQaMode]=useState(false),[studioMenu,setStudioMenu]=useState(false),[gameShell,setGameShell]=useState(!combatLab),[status,setStatus]=useState("BOOTING"),[boot,setBoot]=useState<BootState>({done:0,total:112,failed:0,label:"INITIALIZING HELMET"}),[bootReady,setBootReady]=useState(false),[director,setDirector]=useState(false),[spritePanel,setSpritePanel]=useState(false),[config,setConfig]=useState<Config>(DEFAULT),[note,setNote]=useState(""),[padStatus,setPadStatus]=useState("CONTROLLER: WAITING"),[padGate,setPadGate]=useState(!combatLab),[testPass,setTestPass]=useState<Record<string,boolean>>({});
  const [builderOpen,setBuilderOpen]=useState(false);const builderRef=useRef(false);builderRef.current=builderOpen;
  const debugRef21=useRef(false);const [debug21,setDebug21]=useState(false);
  const selectorGate22=useRef(new SelectorGate22());
@@ -1010,7 +1010,8 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
  if(character==="raptor"){
   const speed=Math.hypot(p.vx||0,p.vy||0);
   const visual=coverVisualOffset(p);
-  paintRaptorSprite(g,{x:visual.x+p.x,y:visual.y+p.y,angle:p.facing||p.aim||0,
+  const family=p.slide>0||p.pinball>0?"slide":speed>20?"run":"ready";
+  paintRaptorSprite(g,{x:visual.x+p.x,y:visual.y+p.y,angle:spriteFacing(p,family,speed),
     speed,sliding:p.slide>0||p.pinball>0,airborne:(p.z||0)>0||(p.jumpHeight||0)>0,
     hit:p.knock>0||(p.hitUntil||0)>t,firing:!!p.input?.fire,time:t,scale:cfg.spriteScale*.26});
   drawGloveWindup(g,p,t,cfg,"raptor");
@@ -1408,6 +1409,7 @@ function fxBody47(g:CanvasRenderingContext2D,f:any){
  if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){if(f.type==="brake"&&Number.isFinite(f.oldAngle)){const a=f.oldAngle+Math.PI,near=8+i*4,far=30+i*6;g.beginPath();g.moveTo(f.x+Math.cos(a)*near,f.y+Math.sin(a)*near);g.lineTo(f.x+Math.cos(a)*far,f.y+Math.sin(a)*far);g.stroke()}else{const dir=-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else if(f.type==="muzzle"){const a=Number.isFinite(f.angle)?f.angle:0,k=Math.max(0,Math.min(1,f.life/.18));g.save();g.translate(f.x,f.y);g.rotate(a);g.globalCompositeOperation="lighter";g.strokeStyle="#fff3b0";g.shadowColor="#ffcf62";g.shadowBlur=16;g.lineWidth=4;g.globalAlpha=.35+.65*k;g.beginPath();g.moveTo(-5,0);g.lineTo(34+20*k,0);g.stroke();g.fillStyle="#fff7cf";g.beginPath();g.moveTo(2,-10);g.lineTo(44+18*k,0);g.lineTo(2,10);g.lineTo(13,0);g.closePath();g.fill();g.strokeStyle="#ff5ebd";g.lineWidth=2;for(let j=-2;j<=2;j++){const aa=j*.12,len=30+Math.abs(j)*6+18*k;g.beginPath();g.moveTo(5,0);g.lineTo(Math.cos(aa)*len,Math.sin(aa)*len);g.stroke()}g.restore()}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
 
 function arrow(g:CanvasRenderingContext2D,x1:number,y1:number,x2:number,y2:number){const a=Math.atan2(y2-y1,x2-x1);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.beginPath();g.moveTo(x2,y2);g.lineTo(x2-Math.cos(a-.55)*11,y2-Math.sin(a-.55)*11);g.lineTo(x2-Math.cos(a+.55)*11,y2-Math.sin(a+.55)*11);g.closePath();g.fill()}
+
 
 
 
