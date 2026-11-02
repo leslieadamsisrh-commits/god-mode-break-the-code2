@@ -13,7 +13,7 @@ export default function StudioHome(){
  </div>
  <section style={{border:"1px solid #345267",padding:18,borderRadius:12,marginTop:24,background:"#101c29"}}>
  <strong>RAPTOR ART STATUS</strong>
- <p style={{color:"#aac1cc",fontSize:14}}>Build 39P: eight-direction Idle and provisional two-pose Run.</p>
+ <p style={{color:"#aac1cc",fontSize:14}}>Build 39Q: eight-direction Idle, provisional Run, and baseball Slide entry, hold and recovery.</p>
  <p style={{color:"#ffb7d4",fontSize:13}}>Select JADE or RAPTOR V2 in Combat Lab. Unfinished action animations use provisional visual fallbacks; gameplay is shared.</p>
  </section>
  </div></main>;

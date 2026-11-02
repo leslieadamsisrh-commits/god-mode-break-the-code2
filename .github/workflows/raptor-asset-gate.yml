@@ -4,6 +4,7 @@ on:
     branches:
       - studio/build39g-sprite-integration-gate
       - studio/build39p-playable-raptor-v2
+      - studio/build39q-raptor-action-animation
   workflow_dispatch:
 jobs:
   validate-raptor:
@@ -20,4 +21,5 @@ jobs:
           node-version: '22'
       - run: npm ci
       - run: node tests/raptor39p.cjs
+      - run: node tests/raptor39q.cjs
       - run: npm run build

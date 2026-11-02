@@ -13,6 +13,8 @@ def main():
     hashes=set()
     for key in sorted(expected):
         raw=(ROOT/key).read_bytes(); digest=hashlib.sha256(raw).hexdigest()
+        assert manifest['frames'][key]['sha256']==digest, f'Hash mismatch: {key}'
+        assert all(0<=v<=512 for v in manifest['frames'][key]['anchor']), f'Invalid anchor: {key}'
         assert digest not in hashes, f'Duplicate image: {key}'
         hashes.add(digest)
         with Image.open(ROOT/key) as im:
@@ -24,5 +26,5 @@ def main():
             bbox=alpha.point(lambda a:255 if a>32 else 0).getbbox()
             assert bbox and bbox[0]>0 and bbox[1]>0 and bbox[2]<512 and bbox[3]<512, f'Clipped: {key}'
             assert sum(v>32 for v in alpha.getdata())>12000, f'Empty silhouette: {key}'
-    print(f'PASS39P {len(expected)} unique 512x512 RGBA files; full inventory, alpha and boundary checks')
+    print(f'PASS39Q {len(expected)} unique 512x512 RGBA files; full inventory, alpha and boundary checks')
 if __name__=='__main__':main()
