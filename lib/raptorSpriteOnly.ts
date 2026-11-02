@@ -25,7 +25,7 @@ export function paintRaptorSprite(g:CanvasRenderingContext2D,state:{x:number;y:n
  const action=selectRaptorAction(state),direction=selectRaptorDirection(state.angle);
  const frame=Math.floor(state.time*(action==="run"?12:action==="slide"?12:8))%RAPTOR_COUNTS[action];
  // Reuse an existing visual family for unfinished actions; simulation is unchanged.
- const artAction=action==="run"?"run":action==="walk"?"walk":action==="slide"?"slide":action==="jump"?"jump":action==="land"?"land":action==="shoot"?"shoot":action==="hit"?"hit":"idle";
+ // Minimal playtest uses only physically installed Run and Idle artwork.\n // Unfinished actions borrow an existing visual family; never modify simulation.\n const artAction=action==="run"||action==="walk"||action==="slide"?"run":"idle";
  const artFrame=frame%RAPTOR_COUNTS[artAction];
  const key=`${artAction}/${direction}/${String(artFrame).padStart(3,"0")}.png`;
  let img=cache.get(key);
