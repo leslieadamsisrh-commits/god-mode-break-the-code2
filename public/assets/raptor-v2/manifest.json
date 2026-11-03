@@ -1,9 +1,9 @@
 {
-  "build": "39Q",
-  "status": "provisional",
+  "build": "39R1",
+  "status": "playtest",
   "counts": {
     "idle": 1,
-    "run": 2,
+    "run": 4,
     "slide": 3
   },
   "directions": [
@@ -29,9 +29,11 @@
     "jump": "idle",
     "land": "idle",
     "shoot": "idle",
-    "hit": "idle"
+    "hit": "idle",
+    "movingShoot": "run",
+    "stationaryShoot": "idle"
   },
-  "source": "39P artwork retained; 39Q individual slide replacements based on installed identity. Rejected 39K review crops remain uninstalled.",
+  "source": "39R1 approved gait candidates installed; southwest two-hand correction included. 39Q Idle/Slide retained.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
@@ -91,115 +93,115 @@
     },
     "run/back/000.png": {
       "anchor": [
-        199,
-        468
+        236,
+        466
       ],
-      "sha256": "7eac921c321a831913b9186b3cca8659bd7bcd06ac21b116c770e319e3a7c62c"
+      "sha256": "a08d66836232ce2e8155b720f8e3facad3fd77cac65c9c59686ac6e69248aef0"
     },
     "run/back/001.png": {
       "anchor": [
-        274,
-        465
+        236,
+        466
       ],
-      "sha256": "bc1bb0c9528620078ababe3db323c9b14539f99674a4a7aeb31a3ce1fb779bf4"
+      "sha256": "b149d7a66d6a1fbf3e528a07621e906315dfb5d62064ba35633fa4035698dc34"
     },
     "run/back-left/000.png": {
       "anchor": [
-        255,
-        428
+        256,
+        432
       ],
-      "sha256": "ac0b469f93ca99b988cfba23a3fdc9e946ba32b990c1122e98f6e7e689d09075"
+      "sha256": "4d2a953a0a2e8d3161d1544fae80b0e0aff3d225a698414b1ff0f1a462e6bc21"
     },
     "run/back-left/001.png": {
       "anchor": [
-        258,
-        436
+        256,
+        432
       ],
-      "sha256": "114babbc8e48e274fb425f7651c8c42f7fef2c05f585d484fa5bb9c3bd3ac3ec"
+      "sha256": "ff76ab228ac56ec31ca6ab81a6cfffeebadf547d21024dac8cdf60aaf5cb3c1e"
     },
     "run/back-right/000.png": {
       "anchor": [
-        251,
-        440
+        249,
+        438
       ],
-      "sha256": "8a039690f5b48c1e91736da3131041f974425f7c0cad05a0b065eb90212d03d8"
+      "sha256": "f9f9355377ffffd5cad6238e8b6d4790b159db7b8741f1eef9419e278c994e2b"
     },
     "run/back-right/001.png": {
       "anchor": [
-        247,
-        436
+        249,
+        438
       ],
-      "sha256": "ff59a572041e98ada033b06fa889e8143ee693fed7ca6267cfc5dfb8ac93e600"
+      "sha256": "acc9f12a8cfd19c175e04623ae4006fdc04d85a419f186421c76f804ccfa664d"
     },
     "run/front/000.png": {
       "anchor": [
-        268,
-        473
+        238,
+        474
       ],
       "sha256": "f327b6990b02d08b2ad3bb57ddedc277123dabc41ef37f3cfa5c5de0ca1db34b"
     },
     "run/front/001.png": {
       "anchor": [
-        208,
-        476
+        238,
+        474
       ],
-      "sha256": "cb3134f85dabf68bbb87eae4860511ceed59dc46234e4785fe1782a431e1e653"
+      "sha256": "02d6b5adf2862322655a81d4680653c42fb252470ad731f7da3398e460f08ff8"
     },
     "run/front-left/000.png": {
       "anchor": [
-        274,
-        453
-      ],
-      "sha256": "5528b81b72347c930836a44c8a0ab60cc4570b1bdaab5ad91e9050df36cb1f39"
-    },
-    "run/front-left/001.png": {
-      "anchor": [
-        152,
-        465
+        213,
+        459
       ],
       "sha256": "fdf4d00914621dbd0dc3a810569b4f013140d89afe19bc7cceaffb29c142ff46"
     },
+    "run/front-left/001.png": {
+      "anchor": [
+        213,
+        459
+      ],
+      "sha256": "f767c9c4244b4da074860c4386becad79be3dacacd9fd26dcffffc15c2486dae"
+    },
     "run/front-right/000.png": {
       "anchor": [
-        287,
-        453
+        290,
+        456
       ],
       "sha256": "0ca0cd7b525b71b3e1ad4c32541f16131394a21660631beb3e74e58faae47936"
     },
     "run/front-right/001.png": {
       "anchor": [
-        294,
-        459
+        290,
+        456
       ],
-      "sha256": "19f1a7f2d822002edb2cc9b9375caf2d46b6a10e7be06c92b655d432e19020c9"
+      "sha256": "d330d4e8f6fd76c000f7dfbd5daea60a0414c8adb201a96f46b5c4442dc388ac"
     },
     "run/left/000.png": {
       "anchor": [
-        233,
-        435
+        242,
+        438
       ],
       "sha256": "5dfabb5e682b5f9301e258a04878871e8f38f5588130a6ed20a14d5ba0d909d4"
     },
     "run/left/001.png": {
       "anchor": [
-        251,
-        442
+        242,
+        438
       ],
-      "sha256": "78ac63848a4d35ca84c2390aa98ee22f05c6fd12f9dc5b40fb372408c2792302"
+      "sha256": "d5a086a10da8972511e3d221383642e8dbe4d0f9033f4f6b07e1d768ddd05812"
     },
     "run/right/000.png": {
       "anchor": [
-        251,
-        435
+        253,
+        438
       ],
       "sha256": "a118f5b20211d1755c16eb2d3ab4b0bffcff24c74f17aa1c5aeada7da9de14ec"
     },
     "run/right/001.png": {
       "anchor": [
-        255,
-        441
+        253,
+        438
       ],
-      "sha256": "14ef1ff2c2b91630b114c32746d8f5d9c29a11c64c1c78d0e38374929f65bab7"
+      "sha256": "974669f03e39cbae3c0a3b6efe5def3401a99fa2c5bd9422e94c6bf201926c76"
     },
     "slide/front-right/001.png": {
       "anchor": [
@@ -368,11 +370,129 @@
         425
       ],
       "sha256": "c66b4cc4e6dd5c81af7010d43cfba8738e2570e63c6dedbd163cc498cff6e051"
+    },
+    "run/right/002.png": {
+      "anchor": [
+        253,
+        438
+      ],
+      "sha256": "fa16b71c3014da1931c7b1cc7d4c3a08c6f4b24c5e06655605c981cf8b8fe430"
+    },
+    "run/right/003.png": {
+      "anchor": [
+        253,
+        438
+      ],
+      "sha256": "303b0a2a60ac64f92b544d5e46337caa0ef710645ba94f0a3536ed4e4d5f5bf1"
+    },
+    "run/front-right/002.png": {
+      "anchor": [
+        290,
+        456
+      ],
+      "sha256": "d43c99c466477046376d7b595a0fe1e2f4cb15bfbd0109ffd50ce5d966cdc516"
+    },
+    "run/front-right/003.png": {
+      "anchor": [
+        290,
+        456
+      ],
+      "sha256": "d9f1e883d275d9d11b3c99876b0b8e4cd81dc2cc72bd17da67c3b86012794211"
+    },
+    "run/front/002.png": {
+      "anchor": [
+        238,
+        474
+      ],
+      "sha256": "cb3134f85dabf68bbb87eae4860511ceed59dc46234e4785fe1782a431e1e653"
+    },
+    "run/front/003.png": {
+      "anchor": [
+        238,
+        474
+      ],
+      "sha256": "6a73a86fe30f596fa90c39bc977bf54cb47f56c04e11f94fa40299b9e0624608"
+    },
+    "run/front-left/002.png": {
+      "anchor": [
+        213,
+        459
+      ],
+      "sha256": "5528b81b72347c930836a44c8a0ab60cc4570b1bdaab5ad91e9050df36cb1f39"
+    },
+    "run/front-left/003.png": {
+      "anchor": [
+        213,
+        459
+      ],
+      "sha256": "1d31549ea2b96b493d614dec12222004d5ded5e86c56cf56b91daa14e44d5d32"
+    },
+    "run/left/002.png": {
+      "anchor": [
+        242,
+        438
+      ],
+      "sha256": "11b7f7eed680de5f58b307d3711a4ed2901882f0d9cc376756728d7139a0cef0"
+    },
+    "run/left/003.png": {
+      "anchor": [
+        242,
+        438
+      ],
+      "sha256": "0987334cb2697a973f8359c5d389187755f8b9be4b3e26a580c0fc87e0cdda44"
+    },
+    "run/back-left/002.png": {
+      "anchor": [
+        256,
+        432
+      ],
+      "sha256": "10c47ac76ca93689f5f3cd02d217da8ec1d6f15e24b856af808c6c91a61e2b2f"
+    },
+    "run/back-left/003.png": {
+      "anchor": [
+        256,
+        432
+      ],
+      "sha256": "dac47b9de74bc98edca13fa701f6c483ae923ed0b20f599046a4eb0a3cf73866"
+    },
+    "run/back/002.png": {
+      "anchor": [
+        236,
+        466
+      ],
+      "sha256": "39ea434fd6a04770de2a0f7f3309df682dc71a8a687db21e9c934a32150453e1"
+    },
+    "run/back/003.png": {
+      "anchor": [
+        236,
+        466
+      ],
+      "sha256": "9600a860ae31fb438ab57eee4d014b21125a67e17e273b99596da271bdb634a0"
+    },
+    "run/back-right/002.png": {
+      "anchor": [
+        249,
+        438
+      ],
+      "sha256": "91f375ae3ebda07cb329e2bb974b9399c7584bbac6cd4e33cf6d470fa8604c43"
+    },
+    "run/back-right/003.png": {
+      "anchor": [
+        249,
+        438
+      ],
+      "sha256": "225448f7bf77b8cace1817d855de399e7a33290e552937a75c477a60d3a137c2"
     }
   },
   "slidePhases": [
     "entry",
     "hold",
     "recovery"
+  ],
+  "gaitPhases": [
+    "left-contact",
+    "left-support-passing",
+    "right-contact",
+    "right-support-passing"
   ]
 }

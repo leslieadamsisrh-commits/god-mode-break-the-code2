@@ -7,7 +7,7 @@ export type RaptorAction="idle"|"walk"|"run"|"slide"|"jump"|"land"|"shoot"|"hit"
 export const RAPTOR_DIRECTIONS=["right","front-right","front","front-left","left","back-left","back","back-right"] as const;
 export type RaptorDirection=typeof RAPTOR_DIRECTIONS[number];
 // Physical inventory only. Other actions deliberately borrow these provisional families.
-export const RAPTOR_COUNTS={idle:1,run:2,slide:3} as const;
+export const RAPTOR_COUNTS={idle:1,run:4,slide:3} as const;
 export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string;worldX?:number;worldY?:number;travelAngle?:number};
 // World-space samples exclude camera motion, elevation and cover presentation offsets.
 const gaitMemory=new Map<string,{time:number;x?:number;y?:number;phase:number}>();
