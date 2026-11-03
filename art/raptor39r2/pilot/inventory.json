@@ -1,0 +1,82 @@
+[
+  {
+    "path": "art/raptor39r2/pilot/000.png",
+    "sha256": "5626254769311c8e4046d1a85f1bf9c8a10d671ee8ed0643623d0268aa19570c",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBounds": [
+      12,
+      153,
+      500,
+      399
+    ],
+    "status": "candidate-not-approved-for-runtime"
+  },
+  {
+    "path": "art/raptor39r2/pilot/001.png",
+    "sha256": "85f7f25039ceb5765277ee83be0d1a4ecff3c1767bba1cb06778fd3a9b234514",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBounds": [
+      12,
+      154,
+      500,
+      397
+    ],
+    "status": "candidate-not-approved-for-runtime"
+  },
+  {
+    "path": "art/raptor39r2/pilot/002.png",
+    "sha256": "9e028d6d0d6538a955dd08bd107476d7334800d66dd7b10ea1e4ed9fd2d34440",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBounds": [
+      12,
+      153,
+      500,
+      392
+    ],
+    "status": "candidate-not-approved-for-runtime"
+  },
+  {
+    "path": "art/raptor39r2/pilot/003.png",
+    "sha256": "ba4b92e8e6fb47691de9077162518fb4e1dfed25930a941bdccf08bea233e967",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBounds": [
+      12,
+      154,
+      500,
+      389
+    ],
+    "status": "candidate-not-approved-for-runtime"
+  }
+]
