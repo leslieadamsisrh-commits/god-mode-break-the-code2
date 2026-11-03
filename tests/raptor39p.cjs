@@ -12,8 +12,9 @@ const base={x:300,y:300,speed:0,sliding:false,airborne:false,hit:false,firing:fa
 for(let i=0;i<8;i++){
  assert.equal(a.selectRaptorDirection(i*Math.PI/4),manifest.directions[i]);
  assert.equal(a.selectRaptorDirection(i*Math.PI/4-2*Math.PI),manifest.directions[i]);
- for(const state of [{},{speed:100},{speed:200},{sliding:true},{airborne:true},{hit:true},{firing:true}])for(const time of [0,.125])assert(a.paintRaptorSprite(g,{...base,...state,angle:i*Math.PI/4,time}));
- const paths=draws.slice(-14).map(d=>d[0].url);assert(paths.some(p=>p.includes('/run/')));assert(paths.some(p=>p.endsWith('001.png')));
+ for(const state of [{},{speed:100},{speed:200},{sliding:true},{airborne:true},{hit:true},{firing:true}])for(const time of [0,.125,.25,.375])assert(a.paintRaptorSprite(g,{...base,...state,angle:i*Math.PI/4,time}));
+ const paths=draws.slice(-28).map(d=>d[0].url);assert(paths.some(p=>p.includes('/run/')));assert(paths.some(p=>p.endsWith('001.png')));
 }
 assert.equal(requests.length,Object.values(manifest.counts).reduce((a,b)=>a+b,0)*8,'Rendering must not request nonexistent unfinished families');
 console.log('PASS39Q eight directions, negative angles, all action fallbacks, real paths, changing Run frames, preload inventory');})();
+

@@ -8,10 +8,30 @@ export const RAPTOR_DIRECTIONS=["right","front-right","front","front-left","left
 export type RaptorDirection=typeof RAPTOR_DIRECTIONS[number];
 // Physical inventory only. Other actions deliberately borrow these provisional families.
 export const RAPTOR_COUNTS={idle:1,run:2,slide:3} as const;
-export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string};
+export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string;worldX?:number;worldY?:number;travelAngle?:number};
+// World-space samples exclude camera motion, elevation and cover presentation offsets.
+const gaitMemory=new Map<string,{time:number;x?:number;y?:number;phase:number}>();
+export const RAPTOR_STRIDE_DISTANCE=100;
+export function raptorGaitPhase(state:RaptorVisualState):number{
+ const id=state.actorId||"local",old=gaitMemory.get(id);
+ const memory=old&&state.time>=old.time?old:{time:state.time,x:state.worldX,y:state.worldY,phase:0};
+ const dt=state.time-memory.time;
+ if(dt>0&&dt<=.25&&!state.sliding&&!state.airborne&&!state.hit&&state.speed>2){
+  const distance=state.worldX!==undefined&&state.worldY!==undefined&&memory.x!==undefined&&memory.y!==undefined
+   ?Math.hypot(state.worldX-memory.x,state.worldY-memory.y):state.speed*dt;
+  // Reject teleports/snapshot corrections; they are not strides.
+  if(distance<=Math.max(12,state.speed*dt*2)){
+   const backwards=state.travelAngle!==undefined&&Math.cos(state.travelAngle-state.angle)<-.5;
+   memory.phase=((memory.phase+(backwards?-1:1)*distance/RAPTOR_STRIDE_DISTANCE)%1+1)%1;
+  }
+ }
+ if(dt!==0||!old){memory.time=state.time;memory.x=state.worldX;memory.y=state.worldY;}
+ gaitMemory.set(id,memory);return memory.phase;
+}
 const slideMemory=new Map<string,{time:number;active:boolean;startedAt:number;recoveryUntil:number;angle:number}>();
 /** Presentation-only phase selection. It never delays or writes authoritative actions. */
 export function selectRaptorFrame(state:RaptorVisualState):{family:"idle"|"run"|"slide";frame:number;angle:number}{
+ const phase=raptorGaitPhase(state);
  const id=state.actorId||"local",previous=slideMemory.get(id);
  const memory=previous&&state.time>=previous.time?previous:{time:state.time,active:false,startedAt:state.time,recoveryUntil:0,angle:state.angle};
  const interrupted=state.airborne||state.hit||state.attached;
@@ -26,7 +46,7 @@ export function selectRaptorFrame(state:RaptorVisualState):{family:"idle"|"run"|
  }
  if(!interrupted&&state.time<memory.recoveryUntil)return {family:"slide",frame:2,angle:state.firing?state.angle:memory.angle};
  const action=selectRaptorAction(state),family=action==="run"||action==="walk"?"run":"idle";
- return {family,frame:Math.floor(state.time*(action==="walk"?6:8))%RAPTOR_COUNTS[family],angle:state.angle};
+ return {family,frame:family==="run"?Math.floor(phase*RAPTOR_COUNTS.run):0,angle:state.angle};
 }
 const cache=new Map<string,HTMLImageElement>();
 const missing=new Set<string>();
@@ -50,9 +70,9 @@ export function selectRaptorAction(state:{speed:number;sliding:boolean;airborne:
  if(state.hit)return "hit";
  if(state.sliding)return "slide";
  if(state.airborne)return "jump";
- if(state.firing)return "shoot";
  if(state.speed>160)return "run";
- if(state.speed>20)return "walk";
+ if(state.speed>2)return "walk";
+ if(state.firing)return "shoot";
  return "idle";
 }
 export function paintRaptorSprite(g:CanvasRenderingContext2D,state:RaptorVisualState):boolean{
@@ -79,4 +99,5 @@ export function paintRaptorSprite(g:CanvasRenderingContext2D,state:RaptorVisualS
  g.fillText("RAPTOR V2",0,-72);g.fillText("ART PENDING",0,-83);
  g.restore();return false;
 }
+
 
