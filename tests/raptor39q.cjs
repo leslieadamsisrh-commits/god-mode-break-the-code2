@@ -11,7 +11,7 @@ for(let dir=0;dir<8;dir++){
   const result=select(input);assert.equal(result.family,'slide');assert.equal(result.frame,frame);assert.equal(result.angle,s.angle);
  }
  assert.equal(select({...s,time:1.51}).frame,2,'recovery follows exit');
- assert.equal(select({...s,time:1.7}).family,'run','recovery does not loop');
+ assert.equal(select({...s,time:1.7}).family,'sprint','forward sprint resumes after finite recovery');
  select({...s,time:2,sliding:true,slideRemaining:.3});
  assert.equal(select({...s,time:2.1,attached:true,speed:0}).family,'idle','cover interrupts recovery');
  select({...s,time:3,sliding:true,slideRemaining:.3});
@@ -50,3 +50,4 @@ for(const key of ['ShiftLeft','ShiftRight','KeyJ']){
 }
 const touch={i:{slide:true,jump:true},edges:{current:{}}};vm.createContext(touch);vm.runInContext('const keyAction='+mapping+';'+aggregation,touch);assert(touch.i.slide&&touch.i.jump,'touch edges survive keyboard mapping');
 console.log('PASS39Q both Shift aliases, keyboard jump and touch slide/jump aggregation');
+

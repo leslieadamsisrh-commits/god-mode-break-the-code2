@@ -1,0 +1,322 @@
+[
+  {
+    "path": "sprint/right/000.png",
+    "source": "art/raptor39r2/muscular/right/000.png",
+    "classification": "recovered reviewed",
+    "sha256": "a12e16ff33ac4721035cba03ed5abad2d12cbc38cb834fafa882514c99c96302",
+    "anchor": [
+      242,
+      410
+    ]
+  },
+  {
+    "path": "sprint/right/001.png",
+    "source": "art/raptor39r2/muscular/right/001.png",
+    "classification": "recovered reviewed",
+    "sha256": "fadb079fa472af823a2f70f01d2a3864bfd50db77aded2f0174730a8f41002f5",
+    "anchor": [
+      242,
+      410
+    ]
+  },
+  {
+    "path": "sprint/right/002.png",
+    "source": "art/raptor39r2/muscular/right/002.png",
+    "classification": "recovered reviewed",
+    "sha256": "eaba4b1c6094c2c5a7601a28ffb30aa0e9273d445632b4c42c846bc603bf3d03",
+    "anchor": [
+      242,
+      410
+    ]
+  },
+  {
+    "path": "sprint/right/003.png",
+    "source": "art/raptor39r2/muscular/right/003.png",
+    "classification": "recovered reviewed",
+    "sha256": "4f21930af442441babdba3838aecd4ce51d3980c3b3d49f8f0147d86c6de1708",
+    "anchor": [
+      242,
+      410
+    ]
+  },
+  {
+    "path": "sprint/front-right/000.png",
+    "source": "art/raptor39r2/muscular/front-right/000.png",
+    "classification": "recovered reviewed",
+    "sha256": "d964778cbc14064e15694c796121451d0a3be7be64b3b0ef551f9f26f27988a2",
+    "anchor": [
+      245,
+      450
+    ]
+  },
+  {
+    "path": "sprint/front-right/001.png",
+    "source": "art/raptor39r2/muscular/front-right/001.png",
+    "classification": "recovered reviewed",
+    "sha256": "d38176ca42c0803fd381f1e7c84b20bc0ff09fe7639bd7e7fba200677a53ebf0",
+    "anchor": [
+      245,
+      450
+    ]
+  },
+  {
+    "path": "sprint/front-right/002.png",
+    "source": "art/raptor39r2/muscular/front-right/002.png",
+    "classification": "recovered reviewed",
+    "sha256": "12b51de8de5ea2b086050f23879ecf48784ec362397e7e3fe3dd50a6e7a5c732",
+    "anchor": [
+      245,
+      450
+    ]
+  },
+  {
+    "path": "sprint/front-right/003.png",
+    "source": "art/raptor39r2/muscular/front-right/003.png",
+    "classification": "recovered reviewed",
+    "sha256": "bb48a7488e2caf403e1854c5ef681e69be07f00fcff7c764935cdd9580221bd2",
+    "anchor": [
+      245,
+      450
+    ]
+  },
+  {
+    "path": "sprint/front/000.png",
+    "source": "art/raptor39r2/muscular/front/000.png",
+    "classification": "new directional pose",
+    "sha256": "3b4111e9662ea9c89964bb2e25a4577db3b9abf870e3f2eb93d41aa5d45669ae",
+    "anchor": [
+      252,
+      465
+    ]
+  },
+  {
+    "path": "sprint/front/001.png",
+    "source": "art/raptor39r2/muscular/front/001.png",
+    "classification": "new directional pose",
+    "sha256": "1067b0faa5b7e801d0b6be56f7d7dd8facea909e754281da7d0c9b00df321d93",
+    "anchor": [
+      252,
+      465
+    ]
+  },
+  {
+    "path": "sprint/front/002.png",
+    "source": "art/raptor39r2/muscular/front/002.png",
+    "classification": "new directional pose",
+    "sha256": "41ac102e6f1a855376cfc4401bef8a696ad71a77a820925c62aab2538a0459e9",
+    "anchor": [
+      252,
+      465
+    ]
+  },
+  {
+    "path": "sprint/front/003.png",
+    "source": "art/raptor39r2/muscular/front/003.png",
+    "classification": "new directional pose",
+    "sha256": "7e6b47db38158d4f7b62a3eaa854e94e4a14bdad152e8d4ee1de4ebb1cedc9e2",
+    "anchor": [
+      252,
+      465
+    ]
+  },
+  {
+    "path": "sprint/front-left/000.png",
+    "source": "art/raptor39r2/muscular/front-left/000.png",
+    "classification": "new directional pose",
+    "sha256": "e485976016bde1359df32a3259c0c067086317c4cbcccb3fa13dd61d7dc51933",
+    "anchor": [
+      254,
+      463
+    ]
+  },
+  {
+    "path": "sprint/front-left/001.png",
+    "source": "art/raptor39r2/muscular/front-left/001.png",
+    "classification": "new directional pose",
+    "sha256": "13bf8326732fa62d97ff436c608fd6d214316eff9e442c45277db04ffe75f0df",
+    "anchor": [
+      254,
+      463
+    ]
+  },
+  {
+    "path": "sprint/front-left/002.png",
+    "source": "art/raptor39r2/muscular/front-left/002.png",
+    "classification": "new directional pose",
+    "sha256": "763d7abd6f9e56e5d3663bd26d76d0bee4fa6d4c42acbf75b432638e2d47f9cc",
+    "anchor": [
+      254,
+      463
+    ]
+  },
+  {
+    "path": "sprint/front-left/003.png",
+    "source": "art/raptor39r2/muscular/front-left/003.png",
+    "classification": "new directional pose",
+    "sha256": "4075a6d1c8475fc626b1173342f06c07104d0c6093eb2bcfdeb141d267372379",
+    "anchor": [
+      254,
+      463
+    ]
+  },
+  {
+    "path": "sprint/left/000.png",
+    "source": "art/raptor39r2/muscular/left/000.png",
+    "classification": "new directional pose",
+    "sha256": "34517db530756b2daa6e41356ccaad3403eebdf6c31e79a61509e60f1b139f4a",
+    "anchor": [
+      239,
+      442
+    ]
+  },
+  {
+    "path": "sprint/left/001.png",
+    "source": "art/raptor39r2/muscular/left/001.png",
+    "classification": "new directional pose",
+    "sha256": "2824e1bfdaf1cf3d7098a607e1d70ce7109b20c3ddf46e519154a9abb28d51fd",
+    "anchor": [
+      239,
+      442
+    ]
+  },
+  {
+    "path": "sprint/left/002.png",
+    "source": "art/raptor39r2/muscular/left/002.png",
+    "classification": "new directional pose",
+    "sha256": "b11bf596e1d3442e809a51aa49093160681c52cf9024f774ac8a60ec25539b6c",
+    "anchor": [
+      239,
+      442
+    ]
+  },
+  {
+    "path": "sprint/left/003.png",
+    "source": "art/raptor39r2/muscular/left/003.png",
+    "classification": "new directional pose",
+    "sha256": "fc0aed5fdd9c6a3daf7b6efe12a59ee782ecedede210644f93f244522fad2ac9",
+    "anchor": [
+      239,
+      442
+    ]
+  },
+  {
+    "path": "sprint/back-left/000.png",
+    "source": "art/raptor39r2/muscular/back-left/000.png",
+    "classification": "new directional pose",
+    "sha256": "ae91f816f7fedb13e3c860546c4477fa204df16789a5022ca7c17777669b697f",
+    "anchor": [
+      239,
+      397
+    ]
+  },
+  {
+    "path": "sprint/back-left/001.png",
+    "source": "art/raptor39r2/muscular/back-left/001.png",
+    "classification": "new directional pose",
+    "sha256": "7368315beacbe724dfcd1fbaf24e6df89fc0b7c59d4d1dac4803c98cb082edd8",
+    "anchor": [
+      239,
+      397
+    ]
+  },
+  {
+    "path": "sprint/back-left/002.png",
+    "source": "art/raptor39r2/muscular/back-left/002.png",
+    "classification": "new directional pose",
+    "sha256": "8fe4206304c1062a4584d0e98cf1e124db4b883296671952a457e72ee8889e29",
+    "anchor": [
+      239,
+      397
+    ]
+  },
+  {
+    "path": "sprint/back-left/003.png",
+    "source": "art/raptor39r2/muscular/back-left/003.png",
+    "classification": "new directional pose",
+    "sha256": "5d5c610612276050f5381c7ed9780cccb042c5cbebd5b0fa785ba4c8007729ac",
+    "anchor": [
+      239,
+      397
+    ]
+  },
+  {
+    "path": "sprint/back/000.png",
+    "source": "art/raptor39r2/muscular/back/000.png",
+    "classification": "new directional pose",
+    "sha256": "fcce900f2e51825b497bc27889f8bc87ca1f0dae5ffcd1f469a05e9bf4ae7fd4",
+    "anchor": [
+      248,
+      427
+    ]
+  },
+  {
+    "path": "sprint/back/001.png",
+    "source": "art/raptor39r2/muscular/back/001.png",
+    "classification": "new directional pose",
+    "sha256": "fbdf50cf0a11d2a116058a9cbe8668e89a352636ae73ceabc3fb827681df1460",
+    "anchor": [
+      248,
+      427
+    ]
+  },
+  {
+    "path": "sprint/back/002.png",
+    "source": "art/raptor39r2/muscular/back/002.png",
+    "classification": "new directional pose",
+    "sha256": "68f48b23816c31d5f6ddddf786800e44c4f11c13217bf3540fa7f098a3b1c8f0",
+    "anchor": [
+      248,
+      427
+    ]
+  },
+  {
+    "path": "sprint/back/003.png",
+    "source": "art/raptor39r2/muscular/back/003.png",
+    "classification": "new directional pose",
+    "sha256": "1baa60e09509d038cad278053ec4e2942c389316b4bb56e0e2b3fc99a24cb704",
+    "anchor": [
+      248,
+      427
+    ]
+  },
+  {
+    "path": "sprint/back-right/000.png",
+    "source": "art/raptor39r2/muscular/back-right/000.png",
+    "classification": "new directional pose",
+    "sha256": "9d2a8a8cdebb9e2f4e529b7027f4554d4901de854e60b255ea029d8b73b1bf07",
+    "anchor": [
+      250,
+      410
+    ]
+  },
+  {
+    "path": "sprint/back-right/001.png",
+    "source": "art/raptor39r2/muscular/back-right/001.png",
+    "classification": "new directional pose",
+    "sha256": "c5a108544028d18578e8473181af487968d8a57ff05f347c97bbcd4447d5cbfe",
+    "anchor": [
+      250,
+      410
+    ]
+  },
+  {
+    "path": "sprint/back-right/002.png",
+    "source": "art/raptor39r2/muscular/back-right/002.png",
+    "classification": "new directional pose",
+    "sha256": "3f3b1dd5a82bfb39e1bda36260995a7585435004b43264f78ffdb863fb9d305a",
+    "anchor": [
+      250,
+      410
+    ]
+  },
+  {
+    "path": "sprint/back-right/003.png",
+    "source": "art/raptor39r2/muscular/back-right/003.png",
+    "classification": "new directional pose",
+    "sha256": "ed15f3c989e26ef381faf5ffd5b8a6b4c992f0976e8024bb3de99a9e134fbd1b",
+    "anchor": [
+      250,
+      410
+    ]
+  }
+]

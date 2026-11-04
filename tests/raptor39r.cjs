@@ -24,3 +24,19 @@ assert.equal(b.selectRaptorAction({...base,speed:8,firing:true}),'walk','slow mo
 assert.equal(b.selectRaptorAction({...base,speed:0,firing:true}),'shoot');
 for(const state of [{hit:true},{airborne:true},{sliding:true}])assert.notEqual(b.selectRaptorAction({...base,...state,firing:true}),'walk','authoritative action priority');
 console.log('PASS39R eight-direction moving fire, frame-rate-independent distance gait, aim, slow movement, turns, backpedal, stops, duplicate renders, teleports, suspension, rematch and action priority');
+
+const forward=load();
+function family(t,speed,travelAngle,extra={}){
+ return forward.selectRaptorFrame({...base,time:t,speed,travelAngle,firing:true,...extra}).family;
+}
+assert.equal(family(0,165,0),'run');
+assert.equal(family(.1,180,0),'sprint');
+assert.equal(family(.2,155,0),'sprint');
+assert.equal(family(.3,140,0),'run');
+assert.equal(family(.4,210,Math.PI/2),'run');
+assert.equal(family(.5,210,Math.PI),'run');
+assert.equal(family(.6,210,0,{airborne:true}),'idle');
+assert.equal(family(.7,210,0),'idle');
+assert.equal(family(.8,210,0),'sprint');
+assert.equal(family(.9,210,0,{attached:true}),'idle');
+console.log('PASS39R2 forward firing sprint, speed hysteresis, upright strafe/backpedal, cover and landing interruption');
