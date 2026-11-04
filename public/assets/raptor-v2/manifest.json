@@ -492,28 +492,28 @@
         242,
         410
       ],
-      "sha256": "a12e16ff33ac4721035cba03ed5abad2d12cbc38cb834fafa882514c99c96302"
+      "sha256": "392eb88818118efca39478f623632e2aabd55804f93133f7dddeb5e63622d8be"
     },
     "sprint/right/001.png": {
       "anchor": [
         242,
         410
       ],
-      "sha256": "fadb079fa472af823a2f70f01d2a3864bfd50db77aded2f0174730a8f41002f5"
+      "sha256": "040653118df7db50dfa260f9b2614c5bb147260d4ebabed3eb9a7e072cc05398"
     },
     "sprint/right/002.png": {
       "anchor": [
         242,
         410
       ],
-      "sha256": "eaba4b1c6094c2c5a7601a28ffb30aa0e9273d445632b4c42c846bc603bf3d03"
+      "sha256": "492c6a937f01ce003ca78de4f8bce469b7e47bc314b7ca087e3ef3f0fe5e9bfd"
     },
     "sprint/right/003.png": {
       "anchor": [
         242,
         410
       ],
-      "sha256": "4f21930af442441babdba3838aecd4ce51d3980c3b3d49f8f0147d86c6de1708"
+      "sha256": "b431844984557d755460fff11a213e83d58474ff85662f99a2b6b9a8d87aefcd"
     },
     "sprint/front-right/000.png": {
       "anchor": [
@@ -548,28 +548,28 @@
         256,
         384
       ],
-      "sha256": "e15d7cd59f9bcff6d6d73da0007a694a6184b3f772f36ba5eaf52fae9899b119"
+      "sha256": "3349dca21f79048f7cf12a3016df769ef98f2117e80820ff769203098e15ebe4"
     },
     "sprint/front/001.png": {
       "anchor": [
         256,
         384
       ],
-      "sha256": "966e00946e9ca41a4656aa5a0d25c8cfeae2fcaf3645c2ff3d7c889b307f8deb"
+      "sha256": "b8a4f5d3b95875b1e0f5e68e5f2481da8cfa44a6183a99aab1a5899e08921411"
     },
     "sprint/front/002.png": {
       "anchor": [
         256,
         384
       ],
-      "sha256": "d7a286fd16eb79d379eed55f324303b14c1451da4bb5555181569c503c943295"
+      "sha256": "96c1ec22153cb1bd12cd6c08640bcfc0808ff140dc850323eeadea532e82d20a"
     },
     "sprint/front/003.png": {
       "anchor": [
         256,
         384
       ],
-      "sha256": "5621389f39b60e11b710dd3d3c2864061bcf2ed6328a7ea00212bcc73858e34a"
+      "sha256": "da7a3314af0ce5b1e2bf85e6ac66476fbe6d80ae389457b669caa718db23f9aa"
     },
     "sprint/front-left/000.png": {
       "anchor": [
