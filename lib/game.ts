@@ -203,9 +203,14 @@ function placeOnCover(p:Player,s:GameState){
  else{lx=-hw-r;ly=hh-a.t}
  const q=worldPoint(c,lx,ly);p.x=q.x;p.y=q.y;
 }
-function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){if(!p.grounded||Math.abs(p.z-(c.z||0))>3)return false;if(s.time<p.coverLock)return false;const anchor=coverFace(c,p),meta=bayObject(c.artId||c.id),rail=meta?.rig?.coverRails?.find(r=>({FRONT:"bottom",BACK:"top",LEFT:"left",RIGHT:"right"} as const)[r.side]===anchor.face),railT=anchor.length?anchor.t/anchor.length:.5;if(!c.fracture32&&meta&&(!rail||railT<rail.from||railT>rail.to))return false;const incoming=Math.abs(p.vx*anchor.nx+p.vy*anchor.ny),impact=clamp(incoming/Math.max(1,s.config.slideSpeed),0,1);p.coverId=c.id;p.coverMode=mode;p.coverAnchor=anchor;p.slide=0;p.dash=0;p.softImpact=mode==="soft"?impact:0;p.softImpactAt=s.time;p.vx=p.vy=0;p.coverSpeed=0;p.contact=s.time+.22;p.peek=false;placeOnCover(p,s);s.fx.push({id:uid(),type:mode==="soft"?"soft-cover":"cover-slam",x:p.x,y:p.y,life:.25,entrySpeed:incoming} as any);return true}
+function stableCoverFace(c:Cover,s:GameState){
+ return c.hp>0 && c.build>=0 && !c.acquire32 && !(c.hover||0) && !s.players.some(q=>q.gripCoverId===c.id);
+}
+function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){if(!stableCoverFace(c,s)||!p.grounded||Math.abs(p.z-(c.z||0))>3)return false;if(s.time<p.coverLock)return false;const anchor=coverFace(c,p),meta=bayObject(c.artId||c.id),rail=meta?.rig?.coverRails?.find(r=>({FRONT:"bottom",BACK:"top",LEFT:"left",RIGHT:"right"} as const)[r.side]===anchor.face),railT=anchor.length?anchor.t/anchor.length:.5;if(!c.fracture32&&meta&&(!rail||railT<rail.from||railT>rail.to))return false;const incoming=Math.abs(p.vx*anchor.nx+p.vy*anchor.ny),impact=clamp(incoming/Math.max(1,s.config.slideSpeed),0,1);p.coverId=c.id;p.coverMode=mode;p.coverAnchor=anchor;p.slide=0;p.dash=0;p.softImpact=mode==="soft"?impact:0;p.softImpactAt=s.time;p.vx=p.vy=0;p.coverSpeed=0;p.contact=s.time+.22;p.peek=false;placeOnCover(p,s);s.fx.push({id:uid(),type:mode==="soft"?"soft-cover":"cover-slam",x:p.x,y:p.y,life:.25,entrySpeed:incoming} as any);return true}
 function releaseCover(p:Player,s:GameState,lock=.18){p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
+ const support=s.covers.find(cv=>cv.id===p.coverId);
+ if(!support||!stableCoverFace(support,s)){releaseCover(p,s);return;}
  const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,moveSpeed=c.moveSpeed*(p.chargeMotion??1),mag=Math.hypot(i.x,i.y),away=i.x*a.nx+i.y*a.ny;
  // Intent is measured against the cover normal, never gun aim. Deliberate
  // outward movement works in both modes, including while LT is planted.
@@ -640,7 +645,7 @@ function stepArsenal37(p:Player,s:GameState,n:number,dt:number){const t=p.arsena
   if(s.time-t.at<ARSENAL37.assembly)return;
   const reserved=reserved37(s);
   if(!goal||s.covers.filter(c=>c.hp>0).length+reserved>96||owned37(s,n).length>=4||!spendEnergy(p,s,COVER_41.buildEnergy)){hint('ASSEMBLY BLOCKED');p.arsenal37=undefined;return;}
-  t.object.build=.001;s.covers.push(t.object);releaseCover(p,s,.25);p.gripCoverId=t.object.id;p.coverGripAngle=Math.atan2(t.object.y-p.y,t.object.x-p.x);p.coverGripDist=dist(p,t.object);p.gripGesture=false;actionOutcome(s,n,'build','activated','spiral assembly',t.object.id,COVER_41.buildEnergy);p.arsenal37=undefined;s.fx.push({id:uid(),type:'materialize',x:t.object.x,y:t.object.y,z:t.object.z,life:.12,owner:n});return;
+  t.object.build=.001;s.covers.push(t.object);p.gripCoverId=t.object.id;p.coverGripAngle=Math.atan2(t.object.y-p.y,t.object.x-p.x);p.coverGripDist=dist(p,t.object);p.gripGesture=false;actionOutcome(s,n,'build','activated','spiral assembly',t.object.id,COVER_41.buildEnergy);p.arsenal37=undefined;s.fx.push({id:uid(),type:'materialize',x:t.object.x,y:t.object.y,z:t.object.z,life:.12,owner:n});return;
  }
  if(t.phase==='cue'){
   if(cancel||eligible37(t.object,s)||!s.covers.includes(t.object)){hint('RECALL CANCELLED');p.arsenal37=undefined;return;}
@@ -659,7 +664,7 @@ function stepArsenal37(p:Player,s:GameState,n:number,dt:number){const t=p.arsena
  }
  const cv={...t.object,...t.pose,hover:0,build:.001,vx:0,vy:0,vz:0};
  if(dist(cv,p)>psychicField(p).radius||carryBlockReason21(cv,cv,s)||p.gripCoverId||p.gripId){if(t.phase!=='wait'){t.phase='wait';t.at=s.time;}return;}
- s.covers.push(cv);releaseCover(p,s,.25);p.gripCoverId=cv.id;p.coverGripAngle=Math.atan2(cv.y-p.y,cv.x-p.x);p.coverGripDist=dist(cv,p);p.gripGesture=false;p.recallCursor37=t.slot%4+1;p.arsenal37=undefined;hint('RECALLED '+t.slot);actionOutcome(s,n,'recall','activated','held',cv.id,0);
+ s.covers.push(cv);p.gripCoverId=cv.id;p.coverGripAngle=Math.atan2(cv.y-p.y,cv.x-p.x);p.coverGripDist=dist(cv,p);p.gripGesture=false;p.recallCursor37=t.slot%4+1;p.arsenal37=undefined;hint('RECALLED '+t.slot);actionOutcome(s,n,'recall','activated','held',cv.id,0);
 }
 
 function buildFieldCover(p:Player,s:GameState,n:number){if(!s.config.legacyPowers){startArsenal37(p,s,n);return;}
@@ -791,6 +796,12 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
   else if(chunk&&!chunk.acquire32||p.gripId){gripThrow34=true;p.throwBuffer34=undefined;}
  }
  const held=!!(p.gripCoverId||p.gripId);
+ // The shared trigger belongs to the held object until it is released.
+ if(held && i.fire){
+  p.fireBlocked=true;
+  p.pendingFireUntil=undefined;
+  if(!prev.fire)gripThrow34=true;
+ }
  if(((i.throwMatter&&!prev.throwMatter)||gripThrow34)&&!s.covers.find(q=>q.id===p.gripCoverId)?.acquire32){
    if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv&&(p.quick36||spendEnergy(p,s,c.coverThrowEnergy))){
      const assisted=throwAim34(p,s,n,cv),a=assisted.angle,force=c.throwForce*.62*(p.godTime>0?1.25:1)*(combatFight(s)?Math.sqrt(12/coverMass28(cv)):1),inherit=clamp(c.carryMomentum,0,1);
