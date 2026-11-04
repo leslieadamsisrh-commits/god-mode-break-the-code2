@@ -162,41 +162,41 @@
   {
     "path": "sprint/left/000.png",
     "source": "art/raptor39r2/muscular/left/000.png",
-    "classification": "new directional pose",
-    "sha256": "34517db530756b2daa6e41356ccaad3403eebdf6c31e79a61509e60f1b139f4a",
+    "classification": "39R3 left lean correction",
+    "sha256": "d99899cc3f60dc3e58a8ece3cb0b04d6cf19f96e104a7d7635caafd633318cfb",
     "anchor": [
-      239,
-      442
+      280,
+      393
     ]
   },
   {
     "path": "sprint/left/001.png",
     "source": "art/raptor39r2/muscular/left/001.png",
-    "classification": "new directional pose",
-    "sha256": "2824e1bfdaf1cf3d7098a607e1d70ce7109b20c3ddf46e519154a9abb28d51fd",
+    "classification": "39R3 left lean correction",
+    "sha256": "1ba2b9ef86d506cb69d628cde2005f47e1e9777d31a2ac5717f4c58f78836dba",
     "anchor": [
-      239,
-      442
+      280,
+      395
     ]
   },
   {
     "path": "sprint/left/002.png",
     "source": "art/raptor39r2/muscular/left/002.png",
-    "classification": "new directional pose",
-    "sha256": "b11bf596e1d3442e809a51aa49093160681c52cf9024f774ac8a60ec25539b6c",
+    "classification": "39R3 left lean correction",
+    "sha256": "1976de2dd78acb6572f07baa9df2949b4b0fba48d9886c74056e25a9f6a7b0cd",
     "anchor": [
-      239,
-      442
+      280,
+      382
     ]
   },
   {
     "path": "sprint/left/003.png",
     "source": "art/raptor39r2/muscular/left/003.png",
-    "classification": "new directional pose",
-    "sha256": "fc0aed5fdd9c6a3daf7b6efe12a59ee782ecedede210644f93f244522fad2ac9",
+    "classification": "39R3 left lean correction",
+    "sha256": "0c79f08a60d67a03d3c8b0152616caf1633336b59b887cf90ad135100ee02b74",
     "anchor": [
-      239,
-      442
+      280,
+      408
     ]
   },
   {
