@@ -82,41 +82,41 @@
   {
     "path": "sprint/front/000.png",
     "source": "art/raptor39r2/muscular/front/000.png",
-    "classification": "new directional pose",
-    "sha256": "3b4111e9662ea9c89964bb2e25a4577db3b9abf870e3f2eb93d41aa5d45669ae",
+    "classification": "39R4 front sprint four-key redraw",
+    "sha256": "e15d7cd59f9bcff6d6d73da0007a694a6184b3f772f36ba5eaf52fae9899b119",
     "anchor": [
-      252,
-      497
+      256,
+      384
     ]
   },
   {
     "path": "sprint/front/001.png",
     "source": "art/raptor39r2/muscular/front/001.png",
-    "classification": "new directional pose",
-    "sha256": "1067b0faa5b7e801d0b6be56f7d7dd8facea909e754281da7d0c9b00df321d93",
+    "classification": "39R4 front sprint four-key redraw",
+    "sha256": "966e00946e9ca41a4656aa5a0d25c8cfeae2fcaf3645c2ff3d7c889b307f8deb",
     "anchor": [
-      252,
-      497
+      256,
+      384
     ]
   },
   {
     "path": "sprint/front/002.png",
     "source": "art/raptor39r2/muscular/front/002.png",
-    "classification": "new directional pose",
-    "sha256": "41ac102e6f1a855376cfc4401bef8a696ad71a77a820925c62aab2538a0459e9",
+    "classification": "39R4 front sprint four-key redraw",
+    "sha256": "d7a286fd16eb79d379eed55f324303b14c1451da4bb5555181569c503c943295",
     "anchor": [
-      252,
-      497
+      256,
+      384
     ]
   },
   {
     "path": "sprint/front/003.png",
     "source": "art/raptor39r2/muscular/front/003.png",
-    "classification": "new directional pose",
-    "sha256": "7e6b47db38158d4f7b62a3eaa854e94e4a14bdad152e8d4ee1de4ebb1cedc9e2",
+    "classification": "39R4 front sprint four-key redraw",
+    "sha256": "5621389f39b60e11b710dd3d3c2864061bcf2ed6328a7ea00212bcc73858e34a",
     "anchor": [
-      252,
-      497
+      256,
+      384
     ]
   },
   {
