@@ -3,7 +3,7 @@
     "path": "sprint/right/000.png",
     "source": "art/raptor39r2/muscular/right/000.png",
     "classification": "recovered reviewed",
-    "sha256": "392eb88818118efca39478f623632e2aabd55804f93133f7dddeb5e63622d8be",
+    "sha256": "a12e16ff33ac4721035cba03ed5abad2d12cbc38cb834fafa882514c99c96302",
     "anchor": [
       242,
       410
@@ -13,7 +13,7 @@
     "path": "sprint/right/001.png",
     "source": "art/raptor39r2/muscular/right/001.png",
     "classification": "recovered reviewed",
-    "sha256": "040653118df7db50dfa260f9b2614c5bb147260d4ebabed3eb9a7e072cc05398",
+    "sha256": "fadb079fa472af823a2f70f01d2a3864bfd50db77aded2f0174730a8f41002f5",
     "anchor": [
       242,
       410
@@ -23,7 +23,7 @@
     "path": "sprint/right/002.png",
     "source": "art/raptor39r2/muscular/right/002.png",
     "classification": "recovered reviewed",
-    "sha256": "492c6a937f01ce003ca78de4f8bce469b7e47bc314b7ca087e3ef3f0fe5e9bfd",
+    "sha256": "eaba4b1c6094c2c5a7601a28ffb30aa0e9273d445632b4c42c846bc603bf3d03",
     "anchor": [
       242,
       410
@@ -33,7 +33,7 @@
     "path": "sprint/right/003.png",
     "source": "art/raptor39r2/muscular/right/003.png",
     "classification": "recovered reviewed",
-    "sha256": "b431844984557d755460fff11a213e83d58474ff85662f99a2b6b9a8d87aefcd",
+    "sha256": "4f21930af442441babdba3838aecd4ce51d3980c3b3d49f8f0147d86c6de1708",
     "anchor": [
       242,
       410
@@ -83,7 +83,7 @@
     "path": "sprint/front/000.png",
     "source": "art/raptor39r2/muscular/front/000.png",
     "classification": "39R4 front sprint four-key redraw",
-    "sha256": "3349dca21f79048f7cf12a3016df769ef98f2117e80820ff769203098e15ebe4",
+    "sha256": "49bb7cb6b2bf06bbb8f300178e91c31e0c621ab6d52452b097d381ec327c9442",
     "anchor": [
       256,
       384
@@ -93,7 +93,7 @@
     "path": "sprint/front/001.png",
     "source": "art/raptor39r2/muscular/front/001.png",
     "classification": "39R4 front sprint four-key redraw",
-    "sha256": "b8a4f5d3b95875b1e0f5e68e5f2481da8cfa44a6183a99aab1a5899e08921411",
+    "sha256": "3f7c42b4017ee725b113bb5ef64e688ea7d32284d4525e6ef2c62ec98e60b08e",
     "anchor": [
       256,
       384
@@ -103,7 +103,7 @@
     "path": "sprint/front/002.png",
     "source": "art/raptor39r2/muscular/front/002.png",
     "classification": "39R4 front sprint four-key redraw",
-    "sha256": "96c1ec22153cb1bd12cd6c08640bcfc0808ff140dc850323eeadea532e82d20a",
+    "sha256": "1359e15c2f521dc6e75d752d2ca8df696276d18fbf15f8f30e86e3738e56cb6d",
     "anchor": [
       256,
       384
@@ -113,7 +113,7 @@
     "path": "sprint/front/003.png",
     "source": "art/raptor39r2/muscular/front/003.png",
     "classification": "39R4 front sprint four-key redraw",
-    "sha256": "da7a3314af0ce5b1e2bf85e6ac66476fbe6d80ae389457b669caa718db23f9aa",
+    "sha256": "129daf704056f5ed47e25ee3221c821d35514967ce13d6976277f3a55f270abd",
     "anchor": [
       256,
       384
@@ -163,7 +163,7 @@
     "path": "sprint/left/000.png",
     "source": "art/raptor39r2/muscular/left/000.png",
     "classification": "39R3 left lean correction",
-    "sha256": "d99899cc3f60dc3e58a8ece3cb0b04d6cf19f96e104a7d7635caafd633318cfb",
+    "sha256": "056400a5f11dc7ef31704ad803dc1512197462ce52ac7326f4598aed168ccd7f",
     "anchor": [
       280,
       393
@@ -173,7 +173,7 @@
     "path": "sprint/left/001.png",
     "source": "art/raptor39r2/muscular/left/001.png",
     "classification": "39R3 left lean correction",
-    "sha256": "1ba2b9ef86d506cb69d628cde2005f47e1e9777d31a2ac5717f4c58f78836dba",
+    "sha256": "f24c37a47467375f79e80e74b051dcecc41c161ea9a179881036fc408f220b1c",
     "anchor": [
       280,
       395
@@ -183,7 +183,7 @@
     "path": "sprint/left/002.png",
     "source": "art/raptor39r2/muscular/left/002.png",
     "classification": "39R3 left lean correction",
-    "sha256": "1976de2dd78acb6572f07baa9df2949b4b0fba48d9886c74056e25a9f6a7b0cd",
+    "sha256": "c75830e30e108a82291a7b845dc3c5851724b62b78970a02121ef1e9d6f991dc",
     "anchor": [
       280,
       382
@@ -193,7 +193,7 @@
     "path": "sprint/left/003.png",
     "source": "art/raptor39r2/muscular/left/003.png",
     "classification": "39R3 left lean correction",
-    "sha256": "0c79f08a60d67a03d3c8b0152616caf1633336b59b887cf90ad135100ee02b74",
+    "sha256": "ba4d58b6db7414c2b5fa767c2938aba9a5355245c6ab5c306002c91dea67a0ca",
     "anchor": [
       280,
       408
