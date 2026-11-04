@@ -518,84 +518,84 @@
     "sprint/front-right/000.png": {
       "anchor": [
         245,
-        450
+        457
       ],
       "sha256": "d964778cbc14064e15694c796121451d0a3be7be64b3b0ef551f9f26f27988a2"
     },
     "sprint/front-right/001.png": {
       "anchor": [
         245,
-        450
+        457
       ],
       "sha256": "d38176ca42c0803fd381f1e7c84b20bc0ff09fe7639bd7e7fba200677a53ebf0"
     },
     "sprint/front-right/002.png": {
       "anchor": [
         245,
-        450
+        457
       ],
       "sha256": "12b51de8de5ea2b086050f23879ecf48784ec362397e7e3fe3dd50a6e7a5c732"
     },
     "sprint/front-right/003.png": {
       "anchor": [
         245,
-        450
+        457
       ],
       "sha256": "bb48a7488e2caf403e1854c5ef681e69be07f00fcff7c764935cdd9580221bd2"
     },
     "sprint/front/000.png": {
       "anchor": [
         252,
-        465
+        497
       ],
       "sha256": "3b4111e9662ea9c89964bb2e25a4577db3b9abf870e3f2eb93d41aa5d45669ae"
     },
     "sprint/front/001.png": {
       "anchor": [
         252,
-        465
+        497
       ],
       "sha256": "1067b0faa5b7e801d0b6be56f7d7dd8facea909e754281da7d0c9b00df321d93"
     },
     "sprint/front/002.png": {
       "anchor": [
         252,
-        465
+        497
       ],
       "sha256": "41ac102e6f1a855376cfc4401bef8a696ad71a77a820925c62aab2538a0459e9"
     },
     "sprint/front/003.png": {
       "anchor": [
         252,
-        465
+        497
       ],
       "sha256": "7e6b47db38158d4f7b62a3eaa854e94e4a14bdad152e8d4ee1de4ebb1cedc9e2"
     },
     "sprint/front-left/000.png": {
       "anchor": [
         254,
-        463
+        484
       ],
       "sha256": "e485976016bde1359df32a3259c0c067086317c4cbcccb3fa13dd61d7dc51933"
     },
     "sprint/front-left/001.png": {
       "anchor": [
         254,
-        463
+        484
       ],
       "sha256": "13bf8326732fa62d97ff436c608fd6d214316eff9e442c45277db04ffe75f0df"
     },
     "sprint/front-left/002.png": {
       "anchor": [
         254,
-        463
+        484
       ],
       "sha256": "763d7abd6f9e56e5d3663bd26d76d0bee4fa6d4c42acbf75b432638e2d47f9cc"
     },
     "sprint/front-left/003.png": {
       "anchor": [
         254,
-        463
+        484
       ],
       "sha256": "4075a6d1c8475fc626b1173342f06c07104d0c6093eb2bcfdeb141d267372379"
     },
@@ -630,84 +630,84 @@
     "sprint/back-left/000.png": {
       "anchor": [
         239,
-        397
+        434
       ],
       "sha256": "ae91f816f7fedb13e3c860546c4477fa204df16789a5022ca7c17777669b697f"
     },
     "sprint/back-left/001.png": {
       "anchor": [
         239,
-        397
+        434
       ],
       "sha256": "7368315beacbe724dfcd1fbaf24e6df89fc0b7c59d4d1dac4803c98cb082edd8"
     },
     "sprint/back-left/002.png": {
       "anchor": [
         239,
-        397
+        434
       ],
       "sha256": "8fe4206304c1062a4584d0e98cf1e124db4b883296671952a457e72ee8889e29"
     },
     "sprint/back-left/003.png": {
       "anchor": [
         239,
-        397
+        434
       ],
       "sha256": "5d5c610612276050f5381c7ed9780cccb042c5cbebd5b0fa785ba4c8007729ac"
     },
     "sprint/back/000.png": {
       "anchor": [
         248,
-        427
+        483
       ],
       "sha256": "fcce900f2e51825b497bc27889f8bc87ca1f0dae5ffcd1f469a05e9bf4ae7fd4"
     },
     "sprint/back/001.png": {
       "anchor": [
         248,
-        427
+        483
       ],
       "sha256": "fbdf50cf0a11d2a116058a9cbe8668e89a352636ae73ceabc3fb827681df1460"
     },
     "sprint/back/002.png": {
       "anchor": [
         248,
-        427
+        483
       ],
       "sha256": "68f48b23816c31d5f6ddddf786800e44c4f11c13217bf3540fa7f098a3b1c8f0"
     },
     "sprint/back/003.png": {
       "anchor": [
         248,
-        427
+        483
       ],
       "sha256": "1baa60e09509d038cad278053ec4e2942c389316b4bb56e0e2b3fc99a24cb704"
     },
     "sprint/back-right/000.png": {
       "anchor": [
         250,
-        410
+        456
       ],
       "sha256": "9d2a8a8cdebb9e2f4e529b7027f4554d4901de854e60b255ea029d8b73b1bf07"
     },
     "sprint/back-right/001.png": {
       "anchor": [
         250,
-        410
+        456
       ],
       "sha256": "c5a108544028d18578e8473181af487968d8a57ff05f347c97bbcd4447d5cbfe"
     },
     "sprint/back-right/002.png": {
       "anchor": [
         250,
-        410
+        456
       ],
       "sha256": "3f3b1dd5a82bfb39e1bda36260995a7585435004b43264f78ffdb863fb9d305a"
     },
     "sprint/back-right/003.png": {
       "anchor": [
         250,
-        410
+        456
       ],
       "sha256": "ed15f3c989e26ef381faf5ffd5b8a6b4c992f0976e8024bb3de99a9e134fbd1b"
     }
