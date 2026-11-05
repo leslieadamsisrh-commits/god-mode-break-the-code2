@@ -1,5 +1,5 @@
 {
-  "build": "39T7.1",
+  "build": "39T7.2",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -39,7 +39,7 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "39T7: dedicated standing artwork in eight directions; right-facing stalk/jog pilot. Other directions still borrow sprint art for slow movement.",
+  "source": "Eight standing views; right and left dedicated stalk/jog cycles. Six other slow directions remain provisional.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
@@ -784,6 +784,70 @@
       ],
       "sha256": "b7a7292cc41d48c730e3017e0b4a70f384718b458cb637e582adf4b1df849f69",
       "source": "exec-6ff7a0f8-3df9-4cba-97e0-dd4d217a589e.png"
+    },
+    "stalk/left/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "678c266fc51a578c58b5a6a9067f945f6746334406cc08bf3bca763712056b13",
+      "source": "exec-5d57c301-ee84-4e11-9dae-c45a135afdd6.png"
+    },
+    "stalk/left/001.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "79c659353f02e05d00ac97cd4557ea0c86c6d87d335a0f253af4e61f131d85a9",
+      "source": "exec-34af0ff6-e413-4ba1-8d83-85d453c12748.png"
+    },
+    "stalk/left/002.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "f46968db1a1db1f1d7b880a85507488e9cbb16fc36aac6980adfcb63417686c7",
+      "source": "exec-9ba44f0b-7842-4ac6-b4f0-9a7e54b06573.png"
+    },
+    "stalk/left/003.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "9b5085c8cf2035c3394f5069ba4f0712068ea4699cf5e59662916305649a24d2",
+      "source": "exec-e0d5dc95-7286-4692-a76d-1b84e8a39caf.png"
+    },
+    "jog/left/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "de0374c03b9b735fb760d3b11bcbb43235711c595249727614325525a60f591b",
+      "source": "exec-6f4e60ed-4a83-4b6e-959b-77c46d5c4229.png"
+    },
+    "jog/left/001.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "2b87a65e87136da2cba3445b8a2927610ec2d13ed91add97cdb7cd07bc4bb4a1",
+      "source": "exec-6f4e60ed-4a83-4b6e-959b-77c46d5c4229.png"
+    },
+    "jog/left/002.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "e9d6e1e4881ec3c5a4826c9324fd6b13731981ce30c46a5c54c1bf0eeb59b680",
+      "source": "exec-6f4e60ed-4a83-4b6e-959b-77c46d5c4229.png"
+    },
+    "jog/left/003.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "bcaf005dd4c95d640a07b127726f6024337777eca5ea9526d66bb18778cc8809",
+      "source": "exec-6f4e60ed-4a83-4b6e-959b-77c46d5c4229.png"
     }
   },
   "slidePhases": [
@@ -798,7 +862,8 @@
     "right-support-passing"
   ],
   "postureDirections": [
-    "right"
+    "right",
+    "left"
   ],
   "standingDirections": [
     "right",

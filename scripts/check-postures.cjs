@@ -20,7 +20,7 @@ assert.equal(frame(140).family,'jog');
 assert.equal(frame(70).family,'stalk');
 assert.equal(frame(0).family,'idle');
 for(const speed of [40,120,220]){let phases=new Set();for(let i=0;i<400;i++)phases.add(frame(speed,{firing:true}).frame);assert.equal(phases.size,4)}
-assert.equal(frame(40,{angle:Math.PI,travelAngle:Math.PI}).family,'run','unbuilt directions retain existing assets');
+assert.equal(frame(40,{angle:Math.PI/2,travelAngle:Math.PI/2}).family,'run','unbuilt directions retain existing assets');
 assert.equal(frame(40,{sliding:true,slideRemaining:.5}).family,'slide');
 for(let i=0;i<20;i++)frame(0);
 assert.equal(frame(0).family,'idle','slide recovers into standing');
