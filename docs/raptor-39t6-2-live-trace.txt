@@ -1,0 +1,35 @@
+right / idle: 0
+back-left / idle: 0
+right / slide: 0,1,2
+back-right / run: 0,1,2,3
+left / idle: 0
+back-right / idle: 0
+front / run: 0,1,2
+front / slide: 0,1,2
+left / run: 0,1
+left / slide: 0,1,2
+right / run: 0,1,2
+back / run: 0,2
+back / slide: 0,1,2
+front-right / idle: 0
+front-right / slide: 0,1,2
+front-left / idle: 0
+front-left / slide: 0,1,2
+back-left / sprint: 0,1,2,3
+back-left / run: 0,1,2
+back-left / slide: 0,1,2
+back-right / slide: 0,1,2
+front-left / run: 0
+front-right / run: 0,1
+front-right / sprint: 0,1,2,3
+front / sprint: 0,1,2,3
+front-left / sprint: 0,1,2,3
+left / sprint: 0,1,2,3
+back / idle: 0
+back / sprint: 0,1,2,3
+back-right / sprint: 0,1,2,3
+right / sprint: 0,1,2,3
+right / idle + fire: 0
+right / run + fire: 0
+right / sprint + fire: 0,1,2,3
+right / slide + fire: 0
