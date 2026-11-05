@@ -32,3 +32,9 @@ All eight directions retain 4 sprint and 3 baseball-slide images: 32 + 24 unique
 - No physical controller available in this execution environment. Do not report a controller pass.
 - Do not count installed or statically inspected frames as fully gameplay-accepted cycles.
 Cover work has not begun.
+
+## 39T6.2 input continuation
+
+Preserves each keyboard/touch slide press and release between rendered frames, including movement direction at the event. Previously two quick taps could coalesce into a single boolean and trigger only boost. The new regression test reproduces that failure and verifies all eight directions start a slide when edges are preserved. Repeated keydown and overlapping Shift/touch sources do not fabricate taps; blur resets pending edges. Existing game double-tap window, physics, timings, controller polling and sprite artwork remain unchanged.
+
+Added scripts/check-raptor-slide-input.cjs (Node 24); all eight original movement tests plus input regression checks pass locally. Build and live verification follow deployment; no physical-controller pass is claimed. Asset pack remains 39T6.1.
