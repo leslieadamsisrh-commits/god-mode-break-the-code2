@@ -1,3 +1,5 @@
+> Current checkpoint: **39T7.1**. See [raptor-39t7-status.md](raptor-39t7-status.md) for installed inventory, live commit and unresolved work. Historical entries follow.
+
 # Raptor 39T6.2 integration checkpoint
 
 Status: deployed candidate; NOT acceptance-complete.
