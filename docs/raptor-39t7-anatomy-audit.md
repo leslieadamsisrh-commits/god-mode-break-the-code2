@@ -54,3 +54,7 @@ Candidate export uses uniform scale per source family (not per-pose bounding-box
 - No physical-controller hardware test was performed.
 
 Counts for this correction pass: 0 production-accepted, 0 runtime-installed, 0 gameplay-verified replacements. Nine right review exports are candidates, not completion.
+
+## 39T7.3 right-direction pilot update
+Single-frame leg edits resolved the paired-sheet neck/chest drift for the right jog. Selected jog sources: right-jog-contact-master.png (top crop of exec-a437392e-7b7c-4a08-9881-1599185640d1.png), exec-30f9581b-fb85-4aa3-92d2-39fec01b83ea.png, exec-06cea895-3830-4e22-8c9c-8b60122d2d6b.png, exec-2c41006b-49f1-4275-a381-a25c08b0852f.png.
+Nine right assets (idle1/stalk4/jog4) passed static visual review for the isolated pilot and local file validation. All512x512, SHA256 matches, alpha borders clear. Gait/hysteresis/moving-fire/slide-recovery selection tests passed. No movement/input code changed. Manifest build39T7.3. This supersedes the earlier zero-accepted status for those9 only. Live gameplay acceptance remains pending; all other unresolved inventory above remains open. Do not call the overall anatomy correction complete.

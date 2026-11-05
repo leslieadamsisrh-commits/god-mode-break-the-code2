@@ -1,5 +1,5 @@
 {
-  "build": "39T7.2",
+  "build": "39T7.3",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -39,7 +39,7 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "Eight standing views; right and left dedicated stalk/jog cycles. Six other slow directions remain provisional.",
+  "source": "Right standing/stalk/jog anatomy correction pilot. Other directions remain under anatomy review; six slow directions remain provisional.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
@@ -102,8 +102,8 @@
         256,
         450
       ],
-      "sha256": "5b938710f70dbdce8171e5190b88d4050266d38ecd228712fdad77e9e0dc285c",
-      "source": "exec-0217a61b-3a2b-448e-b898-5513ea00d2cb.png"
+      "sha256": "346bb2f3dcd535e3cd29c5cbf2fbe21d8f5e04adaca01d62e3cd14e8f25f95bb",
+      "source": "exec-42cea266-a480-4079-be65-4f87bbf8ca11.png"
     },
     "run/back/000.png": {
       "anchor": [
@@ -726,64 +726,64 @@
         256,
         450
       ],
-      "sha256": "df024840ec77c024dd4ca445e91146d91693e1921086717cd62ac4986524b4aa",
-      "source": "exec-38b7575c-f13d-4cc0-ae61-a6c93fc5cc93.png"
+      "sha256": "1bfea4f7d4e70539cc9fee2cb637e4d382cd49377ab7e2ad1a923a3f957a3f0c",
+      "source": "exec-b0f38d8c-2d83-4c62-957f-1db4b5fea32c.png"
     },
     "stalk/right/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "df4b6eb59346c889c77785ab62ad9f9b8f96129d332282ed46e6e1a93e47e42d",
-      "source": "exec-38b7575c-f13d-4cc0-ae61-a6c93fc5cc93.png"
+      "sha256": "5ff9bfe3628caf50d99677429adf92392fff917a96abb718bcce5b586089d424",
+      "source": "exec-6fc389e6-ef8f-48af-b15f-167b0e8ae38a.png"
     },
     "stalk/right/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "dad019a6e6892881433d5d2281894cc0af52db15e6573d5f3551cc21c3e971cc",
-      "source": "exec-38b7575c-f13d-4cc0-ae61-a6c93fc5cc93.png"
+      "sha256": "4863535d4849337021eeb3b0e8d5db9ae2bf7475291a9d275de8a573a172b1e1",
+      "source": "exec-b0f38d8c-2d83-4c62-957f-1db4b5fea32c.png"
     },
     "stalk/right/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "a5c6a3f469201c17a77bdc57e8cc8f5aa0b8b29ebccb9b43ae5c72fa08ba285c",
-      "source": "exec-38b7575c-f13d-4cc0-ae61-a6c93fc5cc93.png"
+      "sha256": "5b3612dc8d44dcba597dec5de96a6f517c90e8fc33c8f207d5bfb65ca4d98b4c",
+      "source": "exec-6fc389e6-ef8f-48af-b15f-167b0e8ae38a.png"
     },
     "jog/right/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "d12129c6f9567b21c38846fb13c67a7da46a2d77f53ce50f647efccfdba16fe0",
-      "source": "exec-6ff7a0f8-3df9-4cba-97e0-dd4d217a589e.png"
+      "sha256": "43484fb212f85953c88639025da8fc0638de7473998867fb5b87b08f189d5b65",
+      "source": "right-jog-contact-master.png"
     },
     "jog/right/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "8aca2cceb86063dd504c48127c614915c165e8ba11cf51aa20caf15f0fef156b",
-      "source": "exec-6ff7a0f8-3df9-4cba-97e0-dd4d217a589e.png"
+      "sha256": "89bc2d1f0e8d4ba5f8ddecd3f86f279842932a021eb6c751598c8bc4c37ee28e",
+      "source": "exec-30f9581b-fb85-4aa3-92d2-39fec01b83ea.png"
     },
     "jog/right/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "2b5b211ca089c9de878e2d563fdeac1629c2e815bdf51a952810d2a022ee1b79",
-      "source": "exec-6ff7a0f8-3df9-4cba-97e0-dd4d217a589e.png"
+      "sha256": "68c5c69f4af3d1bbacf7004c9e278c4eff1093747209b0d1c0fb53ea064dda62",
+      "source": "exec-06cea895-3830-4e22-8c9c-8b60122d2d6b.png"
     },
     "jog/right/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "b7a7292cc41d48c730e3017e0b4a70f384718b458cb637e582adf4b1df849f69",
-      "source": "exec-6ff7a0f8-3df9-4cba-97e0-dd4d217a589e.png"
+      "sha256": "0215ac406e5f3c108ff3f2ace89ce863b4394055928302f724204bd1d540472e",
+      "source": "exec-2c41006b-49f1-4275-a381-a25c08b0852f.png"
     },
     "stalk/left/000.png": {
       "anchor": [
