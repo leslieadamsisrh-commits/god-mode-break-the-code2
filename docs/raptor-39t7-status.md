@@ -1,3 +1,27 @@
+# Raptor 39T7.8 — current anatomy checkpoint
+
+This remains an incomplete eight-direction correction pass. Current detailed record: [raptor-39t7-anatomy-audit.md](raptor-39t7-anatomy-audit.md).
+
+Working branch: studio/39t7-anatomy-corrections.
+Live commit: 5d158eec5f0e9664ecee0272da52668d8a693fc7. Railway deployment11d94795-e13f-4249-92db-686a50047cc8 SUCCESS.
+
+|Direction|Standing|Stalk|Jog|Sprint|Slide|
+|---|---:|---:|---:|---:|---:|
+|Right|1|4|4|4|3|
+|Front-right|1|4|4|4|3|
+|Front|1|4|4|4|3|
+|Front-left|1|4|4|4|3|
+|Left|1|4|4|4|3|
+|Back-left|1|0|0|4|3|
+|Back|1|4|4|4|3|
+|Back-right|1|0|0|4|3|
+
+Installed counts are not full visual acceptance.112uniqueimages+32runaliases=144paths.57anatomypilot replacements across recent releases.16rear-diagonal slowgaitimages missing. Oldsprintcontinuity/proportions, other slides/recovery, muzzle/projectileorigin and fullturn/fire/cancel/playback verification remainopen. Controllerhardware unavailable; no physicalcontrollerpass claimed.
+
+Front and rear normal gameplay each painted stalk4/jog4/jog+fire4/slide3; stopped two-foot standing screenshots captured. Trace confirms painted phases only. Preserve approvedfullbody/head, rightoptic/leftamber asymmetry,39T6.2inputedgequeues andotherreleases.
+
+## Historical39T7.1 record (superseded)
+
 # Raptor 39T7.1 — standing and gait pilot
 Date: 2026-11-05. This is a partial checkpoint, not completion of the eight-direction movement pass.
 

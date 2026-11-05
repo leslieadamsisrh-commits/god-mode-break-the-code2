@@ -1,6 +1,9 @@
 # 39T7 anatomy correction audit — 2026-11-05
 
-## Current status — 39T7.7 live
+## Current status — 39T7.8 live (details below)
+- Latest live commit:5d158eec5f0e9664ecee0272da52668d8a693fc7; sixslowdirections,112uniqueimages+32aliases=144paths.57anatomypilotimages installed. See39T7.8liveverification below.
+
+### Previous39T7.7 checkpoint
 - Working branch: studio/39t7-anatomy-corrections.
 - Deployed commit f92e5ae0623010eda210a40e8d3c70be1b72da60; Railway0f7c1a1a-4f40-4738-bea0-1fa53f49ca19 SUCCESS.
 - Fresh lab39T7.7/review136 paths verified.104unique images plus32run aliases. Five directions have dedicated stalk4/jog4: right,left,front-right,front-left,front.
@@ -112,3 +115,7 @@ Nine front assets: standing1/stalk4/jog4. Jog3342c5c2 rejected for upright postu
 
 ## 39T7.8 staged rear pilot
 Rear idle1/stalk4/jog4 now statically reviewed and exported with uniform.2source scale and pelvis/tail-root registration. Rejected first shoe-shaped sole attempts; corrected raised feet have three separate biological toe pads/claws. Sources/phase order and placement recorded in scripts/export-back-pilot.cjs.9transparent512PNGs pass hashes/clear borders; six-direction gait selection tests pass.112uniqueimages+32aliases=144paths;57 anatomy pilot images across releases. Rear-diagonal16slowframes remain absent.39T7.8 not yet deployed or gameplay-verified. Front39T7.7 remains live. UI inventory wording updated to six directions for next build.
+
+## 39T7.8 live verification
+Commit5d158eec5f0e9664ecee0272da52668d8a693fc7 deployed SUCCESS as11d94795-e13f-4249-92db-686a50047cc8. Fresh lab39T7.8/review144paths. Normal up-touch atlightpace: back stalk0,1,2,3; mediumpace: back jog0,1,2,3. Up-touch+T fire initiallypartial; repeatafterrepositioning captures back jog+fire0,1,2,3. Supported doubletapA+W captures backslide0,1,2. Screenshot raptor-39t7-8-rear-standing-proof.jpg confirms stopped two-foot rear stance+trace. raptor-39t7-8-back-live-proof.jpg instead shows back-right stance and must not be labeled rear-standing. One browserInput.dispatchMouseEvent timeout recovered after statecheck/retry. No physicalcontroller or sustainedvideo verification. Allprevioussprint/slide/muzzle defects remain open.
+Rear-diagonal candidates: initial back-left126cf782 lookedbackatcamera/gunwrongway; correctedc44317b1. Initial back-right74b49496 and contact324b214d/546c5f1e rejected for side-lookinghead/overlongstalkstride; correctedstanding9b7261f9. Correctedback-left stalkcontactf7b7200e and jogcontactdc5704b0 now being extended in individualframes; uninstalled. Do not substitute these for completedall8work.
