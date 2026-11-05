@@ -1,0 +1,27 @@
+const fs=require('fs'),Module=require('module'),assert=require('assert');
+require.extensions['.ts']=(mod,file)=>{
+ let s=Module.stripTypeScriptTypes(fs.readFileSync(file,'utf8'));const names=[...s.matchAll(/export\s+(?:async\s+)?(?:function|const|let|class)\s+(\w+)/g)].map(m=>m[1]);
+ s=s.replace(/import\s*\{([^}]+)\}\s*from\s*['"]([^'"]+)['"];?/g,(_,n,p)=>'const {'+n.replace(/\bas\b/g,':')+'}=require('+JSON.stringify(p)+');');
+ s=s.replace(/import\s+(\w+)\s*from\s*['"]([^'"]+)['"];?/g,(_,n,p)=>'const '+n+'=require('+JSON.stringify(p)+');');
+ s=s.replace(/export\s*\{([^}]+)\}\s*from\s*['"]([^'"]+)['"];?/g,(_,n,p)=>'Object.assign(exports,require('+JSON.stringify(p)+'));');
+ s=s.replace(/\bexport\s+/g,'');s+='\nObject.assign(exports,{'+names.join(',')+'});';mod._compile(s,file);
+};
+const {selectRaptorFrame}=require('../lib/raptorSpriteOnly.ts');
+let time=0; const state={x:0,y:0,angle:0,travelAngle:0,speed:0,sliding:false,airborne:false,hit:false,firing:false,time:0,scale:1,actorId:'posture-test'};
+const frame=(speed,extra={})=>selectRaptorFrame({...state,speed,time:time+=1/60,...extra});
+assert.equal(frame(0).family,'idle');
+assert.equal(frame(40).family,'stalk');
+assert.equal(frame(96).family,'jog');
+assert.equal(frame(85).family,'jog');
+assert.equal(frame(74).family,'stalk');
+assert.equal(frame(180).family,'sprint');
+assert.equal(frame(150).family,'sprint');
+assert.equal(frame(140).family,'jog');
+assert.equal(frame(70).family,'stalk');
+assert.equal(frame(0).family,'idle');
+for(const speed of [40,120,220]){let phases=new Set();for(let i=0;i<400;i++)phases.add(frame(speed,{firing:true}).frame);assert.equal(phases.size,4)}
+assert.equal(frame(40,{angle:Math.PI,travelAngle:Math.PI}).family,'run','unbuilt directions retain existing assets');
+assert.equal(frame(40,{sliding:true,slideRemaining:.5}).family,'slide');
+for(let i=0;i<20;i++)frame(0);
+assert.equal(frame(0).family,'idle','slide recovers into standing');
+console.log('PASS: idle/stalk/jog/sprint progression, threshold hysteresis, all4 phases while firing, unbuilt-direction fallback, slide recovery');

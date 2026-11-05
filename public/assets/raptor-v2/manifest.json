@@ -1,11 +1,13 @@
 {
-  "build": "39T6.1",
+  "build": "39T7.0",
   "status": "playtest",
   "counts": {
     "idle": 1,
     "run": 4,
     "sprint": 4,
-    "slide": 3
+    "slide": 3,
+    "stalk": 4,
+    "jog": 4
   },
   "directions": [
     "right",
@@ -37,7 +39,7 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "Approved cartoon Raptor 8-direction movement pass: four run/sprint frames and three baseball-slide phases per direction. Idle uses recovery crouch.",
+  "source": "Approved cartoon Raptor 8-direction movement pass: four run/sprint frames and three baseball-slide phases per direction. Idle uses recovery crouch. 39T7 right-facing standing/stalk/jog pilot; other directions retain provisional aliases.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
@@ -93,7 +95,8 @@
         256,
         450
       ],
-      "sha256": "a8acde0d9d26862968f121ee8b532947c61770b2b810f061d62550ce477dbea8"
+      "sha256": "5b938710f70dbdce8171e5190b88d4050266d38ecd228712fdad77e9e0dc285c",
+      "source": "exec-0217a61b-3a2b-448e-b898-5513ea00d2cb.png"
     },
     "run/back/000.png": {
       "anchor": [
@@ -710,6 +713,70 @@
         462
       ],
       "sha256": "ae46befcb850598c60aac0fdc4c6c4525a67e48afb393c15b3064471698966e6"
+    },
+    "stalk/right/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "df024840ec77c024dd4ca445e91146d91693e1921086717cd62ac4986524b4aa",
+      "source": "exec-38b7575c-f13d-4cc0-ae61-a6c93fc5cc93.png"
+    },
+    "stalk/right/001.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "df4b6eb59346c889c77785ab62ad9f9b8f96129d332282ed46e6e1a93e47e42d",
+      "source": "exec-38b7575c-f13d-4cc0-ae61-a6c93fc5cc93.png"
+    },
+    "stalk/right/002.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "dad019a6e6892881433d5d2281894cc0af52db15e6573d5f3551cc21c3e971cc",
+      "source": "exec-38b7575c-f13d-4cc0-ae61-a6c93fc5cc93.png"
+    },
+    "stalk/right/003.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "a5c6a3f469201c17a77bdc57e8cc8f5aa0b8b29ebccb9b43ae5c72fa08ba285c",
+      "source": "exec-38b7575c-f13d-4cc0-ae61-a6c93fc5cc93.png"
+    },
+    "jog/right/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "d12129c6f9567b21c38846fb13c67a7da46a2d77f53ce50f647efccfdba16fe0",
+      "source": "exec-6ff7a0f8-3df9-4cba-97e0-dd4d217a589e.png"
+    },
+    "jog/right/001.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "8aca2cceb86063dd504c48127c614915c165e8ba11cf51aa20caf15f0fef156b",
+      "source": "exec-6ff7a0f8-3df9-4cba-97e0-dd4d217a589e.png"
+    },
+    "jog/right/002.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "2b5b211ca089c9de878e2d563fdeac1629c2e815bdf51a952810d2a022ee1b79",
+      "source": "exec-6ff7a0f8-3df9-4cba-97e0-dd4d217a589e.png"
+    },
+    "jog/right/003.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "b7a7292cc41d48c730e3017e0b4a70f384718b458cb637e582adf4b1df849f69",
+      "source": "exec-6ff7a0f8-3df9-4cba-97e0-dd4d217a589e.png"
     }
   },
   "slidePhases": [
@@ -722,5 +789,8 @@
     "left-support-passing",
     "right-contact",
     "right-support-passing"
+  ],
+  "postureDirections": [
+    "right"
   ]
 }
