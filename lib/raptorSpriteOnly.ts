@@ -65,6 +65,12 @@ export function selectRaptorFrame(state:RaptorVisualState):{family:"idle"|"run"|
  const action=selectRaptorAction(state),family=action==="run"||action==="walk"?"run":"idle";
  return {family,frame:family==="run"?Math.floor(phase*RAPTOR_COUNTS.run):0,angle:state.angle};
 }
+const animationTrace=new Map<string,Set<number>>();
+/** Read-only lab diagnostics: records frames actually painted through normal gameplay. */
+export function getRaptorAnimationTrace():string{
+ return [...animationTrace].map(([key,frames])=>key+": "+[...frames].sort().join(",")).join("\n")||"Move or slide to record painted frames.";
+}
+export function clearRaptorAnimationTrace():void{animationTrace.clear();}
 const cache=new Map<string,HTMLImageElement>();
 const missing=new Set<string>();
 export function preloadRaptorSprites():Promise<boolean>{
@@ -104,6 +110,8 @@ export function paintRaptorSprite(g:CanvasRenderingContext2D,state:RaptorVisualS
    cache.set(key,img);
  }
  if(img?.complete&&img.naturalWidth===512&&img.naturalHeight===512){
+   const traceKey=direction+" / "+artAction+(state.firing?" + fire":"");
+   const seen=animationTrace.get(traceKey)||new Set<number>();seen.add(artFrame);animationTrace.set(traceKey,seen);
    const anchor=inventory.frames[key].anchor;
    g.drawImage(img,state.x-anchor[0]*state.scale,state.y-anchor[1]*state.scale,512*state.scale,512*state.scale);
    return true;

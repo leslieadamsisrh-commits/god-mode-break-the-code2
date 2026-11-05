@@ -1,15 +1,18 @@
 "use client";
 import {useState,useEffect} from "react";
 import Game from "../../Game";
-import {preloadRaptorSprites} from "../../../lib/raptorSpriteOnly";
+import {preloadRaptorSprites,getRaptorAnimationTrace,clearRaptorAnimationTrace} from "../../../lib/raptorSpriteOnly";
 type Fighter="jade"|"raptor";
 export default function CombatLab(){
  const [artReady,setArtReady]=useState<boolean|null>(null);
  useEffect(()=>{void preloadRaptorSprites().then(setArtReady)},[]);
  const [fighter,setFighter]=useState<Fighter|null>(null),[reset,setReset]=useState(0);
+ const [trace,setTrace]=useState("");
+ useEffect(()=>{if(fighter!=="raptor")return;const timer=setInterval(()=>setTrace(getRaptorAnimationTrace()),250);return ()=>clearInterval(timer)},[fighter]);
  const button={padding:"18px 20px",background:"#14283a",border:"2px solid #5a8394",borderRadius:12,color:"#f5fbff",font:"bold 19px Arial",cursor:"pointer",touchAction:"manipulation" as const};
  if(fighter)return <main style={{position:"fixed",inset:0,background:"#080f1a"}}>
   <Game combatLab key={fighter+reset} character={fighter} cameraPreset="kinetic"/>
+  {fighter==="raptor"&&<details style={{position:"fixed",right:12,top:145,zIndex:2147483647,maxHeight:"55vh",overflow:"auto",background:"#08101be8",color:"#b7e5ef",padding:8,font:"12px monospace"}}><summary>Animation trace</summary><button onClick={()=>clearRaptorAnimationTrace()}>Clear trace</button><pre>{trace}</pre></details>}
   <div style={{position:"fixed",right:12,top:12,zIndex:2147483647,display:"flex",gap:8}}>
    <button style={{...button,fontSize:12,padding:12}} onClick={()=>setReset(n=>n+1)}>RESET</button>
    <button style={{...button,fontSize:12,padding:12}} onClick={()=>setFighter(null)}>CHANGE FIGHTER</button>
@@ -18,7 +21,7 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T3 PLAYTEST</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T4 PLAYTEST</p>
    <h1>COMBAT LAB</h1>
    <a href="/raptor-animation-review.html" style={{color:"#89e9f2"}}>Review all run and slide frames</a>
    <p>Both fighters use the newer XYZ combat engine. This is a test build, not a production character unlock.</p>
