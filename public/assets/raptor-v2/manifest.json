@@ -1,5 +1,5 @@
 {
-  "build": "39R3",
+  "build": "39T1",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -37,7 +37,7 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "39R3 left sprint matches rightward predatory lean; other families retained.",
+  "source": "Approved cartoon Raptor right-facing sprint pilot; remaining directions pending artwork conversion.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
@@ -492,28 +492,28 @@
         242,
         410
       ],
-      "sha256": "a12e16ff33ac4721035cba03ed5abad2d12cbc38cb834fafa882514c99c96302"
+      "sha256": "a0587c183dc71252d9bec5e2ce4448e9d30812f2bd0d02e93d1430a23bc929f7"
     },
     "sprint/right/001.png": {
       "anchor": [
         242,
         410
       ],
-      "sha256": "fadb079fa472af823a2f70f01d2a3864bfd50db77aded2f0174730a8f41002f5"
+      "sha256": "891bdbc289373cc0cec5792d5514a3d6504324a865d117dacd3bcabe53d092db"
     },
     "sprint/right/002.png": {
       "anchor": [
         242,
         410
       ],
-      "sha256": "eaba4b1c6094c2c5a7601a28ffb30aa0e9273d445632b4c42c846bc603bf3d03"
+      "sha256": "3ee768a6a4404f5572a6798fda12dc2905adac5f665805489296be3150a3d9a7"
     },
     "sprint/right/003.png": {
       "anchor": [
         242,
         410
       ],
-      "sha256": "4f21930af442441babdba3838aecd4ce51d3980c3b3d49f8f0147d86c6de1708"
+      "sha256": "2d4605a800eac72ba6d32247f281675665dfe092784335ef0ab0504114c2dfde"
     },
     "sprint/front-right/000.png": {
       "anchor": [
