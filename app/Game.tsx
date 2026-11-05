@@ -241,12 +241,13 @@ function combatTone(kind:string,angle?:number){
  const frequency=kind==="tear"?210:kind==="parry"?1500:kind==="cover-defense"?155:kind==="damage"?95:kind==="block"?950:kind==="hit"?330:kind==="shield"?780:kind==="cover"?130:kind==="finish"?90:kind==="fight"?660:440;
  osc.type=kind==="tear"?"sawtooth":kind==="cover"?"triangle":"sine";osc.frequency.setValueAtTime(frequency,now);osc.frequency.exponentialRampToValueAtTime(Math.max(40,frequency*.65),now+.09);gain.gain.setValueAtTime(.045,now);gain.gain.exponentialRampToValueAtTime(.001,now+.13);osc.connect(gain);const pan=a.createStereoPanner?.();if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!):0;gain.connect(pan);pan.connect(a.destination);}else gain.connect(a.destination);osc.start(now);osc.stop(now+.14);osc.onended=()=>{audioVoices35--;osc.disconnect();gain.disconnect();pan?.disconnect()};
 }
-export default function Game({character="jade",cameraPreset="default",combatLab=false}:{character?:"jade"|"raptor";cameraPreset?:"default"|"close"|"kinetic";combatLab?:boolean}={}){
+export default function Game({character="jade",cameraPreset="default",combatLab=false,labPace=1}:{character?:"jade"|"raptor";cameraPreset?:"default"|"close"|"kinetic";combatLab?:boolean;labPace?:number}={}){
  useEffect(()=>{
   const el=canvas.current,parent=el?.parentElement;if(!el||!parent)return;
   const fit=()=>{const size=fitCombatViewport23(parent.clientWidth,parent.clientHeight);Object.assign(el.style,{position:'absolute',left:'50%',top:'50%',transform:'translate(-50%, -50%)',width:size.width+'px',height:size.height+'px'});};
   const observer=new ResizeObserver(fit);observer.observe(parent);fit();return()=>observer.disconnect();
  },[]);
+ const labPaceRef=useRef(1);labPaceRef.current=combatLab?Math.max(.1,Math.min(1,labPace)):1;
  const characterRef=useRef(character);characterRef.current=character;const cameraPresetRef=useRef(cameraPreset);cameraPresetRef.current=cameraPreset;
  const [cameraMode38,setCameraMode38]=useState<CameraMode38>("auto");
  const [cameraZoom38,setCameraZoom38]=useState(0);
@@ -266,7 +267,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  const feedbackSeen=useRef({room:"",round:0,seq:0,cue:""});
  const coverPreview=useRef(-1);const [previewCover,setPreviewCover]=useState(-1);const psychicPreview=useRef(-1);const [previewPsychic,setPreviewPsychic]=useState(-1);const chargePreview=useRef(false);const [previewCharging,setPreviewCharging]=useState(false);
  const [joinRoom,setJoinRoom]=useState(""),[joinCode,setJoinCode]=useState(""),[roomMessage,setRoomMessage]=useState("");
- const startHeld=useRef(false);const canvas=useRef<HTMLCanvasElement>(null),session=useRef<Session|null>(null),state=useRef<any>(null),seq=useRef(0),keys=useRef<Record<string,boolean>>({}),edges=useRef<Record<string,boolean>>({}),mouse=useRef({x:500,y:310,down:false}),lastAccept=useRef(performance.now()),started=useRef(false);const slideEdges=useRef(new SlideInputEdges());const slideMovement=()=>({x:touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0)),y:touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0))});const touchMove=useRef({x:0,y:0}),touchDirs=useRef(new Map<number,{x:number;y:number}>()),touchA=useRef(false),touchAEdge=useRef(false),touchTime=useRef(false),touchJump=useRef(false);
+ const startHeld=useRef(false);const canvas=useRef<HTMLCanvasElement>(null),session=useRef<Session|null>(null),state=useRef<any>(null),seq=useRef(0),keys=useRef<Record<string,boolean>>({}),edges=useRef<Record<string,boolean>>({}),mouse=useRef({x:500,y:310,down:false}),lastAccept=useRef(performance.now()),started=useRef(false);const slideEdges=useRef(new SlideInputEdges());const slideMovement=()=>({x:labPaceRef.current*(touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0))),y:labPaceRef.current*(touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0)))});const touchMove=useRef({x:0,y:0}),touchDirs=useRef(new Map<number,{x:number;y:number}>()),touchA=useRef(false),touchAEdge=useRef(false),touchTime=useRef(false),touchJump=useRef(false);
  const [rules31,setRules31]=useState<MatchRules31>({...PRACTICE_RULES31});
  useEffect(()=>{try{const raw=localStorage.getItem("god_mode_practice_rules31");if(raw)setRules31(validateRules31(JSON.parse(raw)));}catch{}},[]);
  const chooseRules31=(next:MatchRules31)=>{setRules31(next);try{localStorage.setItem("god_mode_practice_rules31",JSON.stringify(next));}catch{}};
@@ -304,7 +305,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  useEffect(()=>{let raf=0;const uiLoop=()=>{try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;if(pad){const start=!!(pad.buttons[9]?.pressed||pad.buttons[9]?.value>.25);if(start&&!startHeld.current)setStudioMenu(v=>!v);startHeld.current=start}else startHeld.current=false}catch{}raf=requestAnimationFrame(uiLoop)};raf=requestAnimationFrame(uiLoop);return()=>cancelAnimationFrame(raf)},[]);
  useEffect(()=>{let pending=false,dead=false,raf=0,latest:any={...EMPTY},previous:any={...EMPTY},owner:Session|null=null;const queue:any[]=[];
  const sample=()=>{const s=session.current,g=state.current;if(s&&g&&bootReady&&!document.hidden){if(owner!==s){owner=s;queue.length=0;previous={...EMPTY};}
- const p=g.players[s.slot]||g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));i.jump=touchJump.current;touchJump.current=false;i.slide=slideEdges.current.pressed;touchAEdge.current=false;const muzzle=barrelSocket27d(p,g.config?.spriteScale||.82),zoom=cameraState.ready?cameraState.zoom:g.config?.cameraZoom||1.85;let aimZ=muzzle.z;
+ const p=g.players[s.slot]||g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));i.x*=labPaceRef.current;i.y*=labPaceRef.current;i.jump=touchJump.current;touchJump.current=false;i.slide=slideEdges.current.pressed;touchAEdge.current=false;const muzzle=barrelSocket27d(p,g.config?.spriteScale||.82),zoom=cameraState.ready?cameraState.zoom:g.config?.cameraZoom||1.85;let aimZ=muzzle.z;
  for(const [slot,target] of g.players.entries()){if(slot===s.slot||target.hp<=0)continue;const feet=projectWorld(target.x,target.y,cameraState,zoom,target.z||0),height=78*(g.config?.spriteScale||.82)*(target.slide>0?.58:1),width=22*zoom*.64;if(Math.abs(mouse.current.x-feet.x)<=width&&mouse.current.y<=feet.y&&mouse.current.y>=feet.y-height*zoom*.64){aimZ=(target.z||0)+(feet.y-mouse.current.y)/(zoom*.64);break;}}
  const pointer=unprojectWorld(mouse.current.x,mouse.current.y+aimZ*zoom*.64,cameraState,zoom);i.aimX=pointer.x;i.aimY=pointer.y;i.aimZ=aimZ;i.aim=Math.atan2(pointer.y-muzzle.y,pointer.x-muzzle.x);i.cancelGrip34=!!edges.current.CancelGrip34;i.fire=mouse.current.down||!!keys.current.KeyT;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!i[a]||!!edges.current[k];edges.current={};i.melee=!!keys.current.KeyF;i.grip=i.grip||!!keys.current.KeyQ;i.gripX=Math.cos(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.gripY=Math.sin(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.slow=!!keys.current.KeyX||touchTime.current;i.powerup=!!keys.current.KeyY||chargePreview.current;
   try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;const selectors=selectorGate22.current.sample(studioMenu?null:pad||null);if(pad&&!studioMenu){delete i.aimX;delete i.aimY;delete i.aimZ;i.aim=p.aim;readController(pad,i,selectors);if(Math.hypot(i.gripX||0,i.gripY||0)>.15){const v=screenVector46(p.x,p.y,i.gripX,i.gripY);i.aim=Math.atan2(v.y,v.x);i.gripX=v.x;i.gripY=v.y;}}}catch{}
@@ -424,12 +425,12 @@ function Director({cfg,patch,applyPreset,save,load,note}:{cfg:Config;applyPreset
  <p className="presetHint">Start with INSTRUCTOR 142 CLASSIC. This is the recovered movement/cover authority. GOD MODE WEAVE remains an experiment for later A/B testing.</p>
  {rows.map(([k,l,min,max,step])=><label key={k}><span>{l}<output>{Number(cfg[k]).toFixed(step<.1?2:0)}</output></span><input type="range" min={min} max={max} step={step} value={cfg[k]} onChange={e=>patch(k,Number(e.target.value))}/></label>)}<div className="actions"><button onClick={save}>SAVE PRESET</button><button onClick={load}>LOAD PRESET</button></div>{note&&<em>{note}</em>}<p>These values update the authoritative solo simulation live. No rebuild required.</p></aside>}
 // Shared by the visible fighter and both inspectors: gun aim never selects an idle cover pose.
-function spriteFacing(p:any,family:string,speed:number){
+function spriteFacing(p:any,family:string,speed:number,movementThreshold=55){
  if(family==="slide")return p.slideFacing??p.aim??0;
  if(p.charging&&!p.coverId&&(typeof p.input?.x==="number"||typeof p.input?.y==="number"))return Math.hypot(p.input?.x||0,p.input?.y||0)>.18?Math.atan2(p.input.y,p.input.x):(p.gunFacing??p.aim??0);
  if(p.coverId&&p.coverAnchor){if(p.coverMode==="soft"){const moving=Math.abs(p.coverSpeed||0)>20;return moving?Math.atan2(p.coverAnchor.ty*Math.sign(p.coverSpeed||1),p.coverAnchor.tx*Math.sign(p.coverSpeed||1)):(p.gunFacing??p.aim??Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx))}const exposed=p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0;return exposed?(p.gunFacing??p.aim??0):Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx)}
  if(p.input?.fire||p.fireState>0)return p.gunFacing??p.aim??0;
- return family==="run"&&speed>55?Math.atan2(p.vy,p.vx):(p.gunFacing??p.aim??0);
+ return family==="run"&&speed>movementThreshold?Math.atan2(p.vy,p.vx):(p.gunFacing??p.aim??0);
 }
 const JADE_REG_LOCK08={root:{x:.5,y:1},ground:{x:.5,y:.88},crownY:.04,pelvis:{x:.5,y:.60},shoulders:{left:.31,right:.69,y:.31},helmet:{x:.5,y:.15,w:.29,h:.23},backpack:{x:.37,y:.40,w:.25,h:.35},cape:{x:.39,y:.38},weaponHand:{x:.65,y:.39},supportHand:{x:.72,y:.43},muzzle:{x:.88,y:.37},bodyEnvelope:{left:.18,right:.82,top:.04,bottom:.96}} as const;
 const FAMILY_REG08={ready:{ground:.88,y:0},run:{ground:.88,y:0},slide:{ground:.89,y:0},cover:{ground:.885,y:0},aim:{ground:.89,y:0},lower:{ground:.89,y:0},connectors:{ground:.89,y:0}} as const;
@@ -1013,8 +1014,8 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
  if(character==="raptor"){
   const speed=Math.hypot(p.vx||0,p.vy||0);
   const visual=coverVisualOffset(p);
-  const family=p.slide>0||p.pinball>0?"slide":speed>20?"run":"ready";
-  paintRaptorSprite(g,{x:visual.x+p.x,y:visual.y+p.y,angle:spriteFacing(p,family,speed),
+  const family=p.slide>0||p.pinball>0?"slide":speed>2?"run":"ready";
+  paintRaptorSprite(g,{x:visual.x+p.x,y:visual.y+p.y,angle:spriteFacing(p,family,speed,2),
     worldX:p.x,worldY:p.y,travelAngle:speed>2?Math.atan2(p.vy,p.vx):undefined,
     speed,sliding:p.slide>0||p.pinball>0,slideRemaining:p.slide>0?p.slide:undefined,slideDuration:cfg.slideDuration,
     attached:!!p.coverId,actorId:p.id||"local",airborne:p.grounded===false||Math.abs(p.vz||0)>.1||(p.jumpHeight||0)>0,

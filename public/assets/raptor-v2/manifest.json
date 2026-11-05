@@ -1,5 +1,5 @@
 {
-  "build": "39T7.0",
+  "build": "39T7.1",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -39,56 +39,63 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "Approved cartoon Raptor 8-direction movement pass: four run/sprint frames and three baseball-slide phases per direction. Idle uses recovery crouch. 39T7 right-facing standing/stalk/jog pilot; other directions retain provisional aliases.",
+  "source": "39T7: dedicated standing artwork in eight directions; right-facing stalk/jog pilot. Other directions still borrow sprint art for slow movement.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
         256,
-        356
+        450
       ],
-      "sha256": "486aeb7dc2391805bd53f99d4256f55d99c026b80223b71f07b82d0cda41526a"
+      "sha256": "f4094331f4484e42660fa974d2b0cc0849fc653b3434d1c6c607a6d01487ffeb",
+      "source": "exec-5bf23e86-580e-4633-9240-73528cf3089c.png"
     },
     "idle/back-left/000.png": {
       "anchor": [
         256,
-        369
+        450
       ],
-      "sha256": "35de101b1ffd4e85a1a4ad0c84b7059b7db3531a38be3ffd40d7a6e80af91f94"
+      "sha256": "51b7b32edeade09b4bc785b4be3d2ec6986c4feeb3ac263077808b5535d7bda9",
+      "source": "exec-5bf23e86-580e-4633-9240-73528cf3089c.png"
     },
     "idle/back-right/000.png": {
       "anchor": [
         256,
-        369
+        450
       ],
-      "sha256": "8f2b0b764ea3a8ebc02fd7a42a49e221d4fee1034eed1242c7f40d3fbd0a3904"
+      "sha256": "22764c7171b879fb79fd7e0a7f1fe3aaa64bf9815c1fe5a0012299a4c499dce8",
+      "source": "exec-5bf23e86-580e-4633-9240-73528cf3089c.png"
     },
     "idle/front/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "dffab79f0676c031d648791fed94aae27e0c98cce7c8167245bbf172e8721ba1"
+      "sha256": "b961b005ecfba63abb90e14fb09ae01a7ed9b9edf065a9396e5044d9fd4d6db7",
+      "source": "exec-291b07b7-ba4d-4817-bb89-7d417467a360.png"
     },
     "idle/front-left/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "f3ad47ae13e758564e6b01469d141215f84b40f6c1a3c751a159dfb03ca1bc7a"
+      "sha256": "5db26c7b1b208bf342ad559a89018899be72f687beaf92196fd4a64f0b72a67f",
+      "source": "exec-00c03da2-ca2f-4721-86b4-19bf1a94672f.png"
     },
     "idle/front-right/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "1632a559a5656785bdf9441e808163cfcf9c45493521cd2ef47113da7a4c2e32"
+      "sha256": "ad7c8d4cacdc10b9fc3334221d6de6f70befd7d41d365f6a4c742e3226d9476f",
+      "source": "exec-00c03da2-ca2f-4721-86b4-19bf1a94672f.png"
     },
     "idle/left/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "72e1faf23bc4348952278167a73f8d65bf3094319146dfd3792965bfabf4cd48"
+      "sha256": "a985dc291339755ca1d74bf939499f725d36c207a7a1e317fcbcc30cdbdf2224",
+      "source": "exec-291b07b7-ba4d-4817-bb89-7d417467a360.png"
     },
     "idle/right/000.png": {
       "anchor": [
@@ -792,5 +799,15 @@
   ],
   "postureDirections": [
     "right"
+  ],
+  "standingDirections": [
+    "right",
+    "front-right",
+    "front",
+    "front-left",
+    "left",
+    "back-left",
+    "back",
+    "back-right"
   ]
 }
