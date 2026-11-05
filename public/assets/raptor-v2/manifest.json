@@ -1,5 +1,5 @@
 {
-  "build": "39T2",
+  "build": "39T3",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -114,28 +114,28 @@
         256,
         369
       ],
-      "sha256": "5c2e7a92d91176c3d5f7d269416f84695c98d911148333d6f1e08efbd9a1d0ba"
+      "sha256": "f7a93303b135a2bf9955b89611d49427e7727a0854711418d5e531631e3523e8"
     },
     "run/back-left/001.png": {
       "anchor": [
         256,
-        370
+        374
       ],
-      "sha256": "e99f72fb22c00758cf49cbaae50b16d8e8f22f521c552dcbbf32eb1a3fc12850"
+      "sha256": "755d2dfdb9fe16960cf5d14584e8d33f71bb96813d746d21f291e4d075b26a9d"
     },
     "run/back-right/000.png": {
       "anchor": [
         256,
         369
       ],
-      "sha256": "5d2a91a6ef16c575018efc6bfbe52d1248d8df71c429f4b3c174da8f719e7776"
+      "sha256": "338740429e8a115d4d6048213cad1ad84074e0a1c5dd572a7e8fff6b31c8a008"
     },
     "run/back-right/001.png": {
       "anchor": [
         256,
-        373
+        375
       ],
-      "sha256": "0f5733148f1f730769a096b3af065837e99d902afd4d20a0adb650ef08c70e82"
+      "sha256": "45c8394967c605972ab8c673e92801ace6f8c7e424a8a41d57cbd4ff14751b5b"
     },
     "run/front/000.png": {
       "anchor": [
@@ -448,16 +448,16 @@
     "run/back-left/002.png": {
       "anchor": [
         256,
-        375
+        369
       ],
-      "sha256": "53944bdc2677de9387fc71262760d0fb073f26c99c999c17cc56375132f5897a"
+      "sha256": "4cf9b1f4873257d301a0d1b2793f450cd0551c90297c74ed615f88d0d191d393"
     },
     "run/back-left/003.png": {
       "anchor": [
         256,
-        375
+        392
       ],
-      "sha256": "ee4d3e79af0c608bc8639d8dfb3cedd184f8fd9fae6a5c73e42aa35f96af63ae"
+      "sha256": "371476f42eb7773d7f92b80fee0aabacd97a6feb8cc9f05026fec933b7294f78"
     },
     "run/back/002.png": {
       "anchor": [
@@ -476,16 +476,16 @@
     "run/back-right/002.png": {
       "anchor": [
         256,
-        370
+        369
       ],
-      "sha256": "51249be55f39872d6239c35e96db4bb86f9aaa2a4853bd3fa71faca754d491ae"
+      "sha256": "57d9279e55454561bec616062ac75ac7bc83a0750d70d9ac4851e3de504e9020"
     },
     "run/back-right/003.png": {
       "anchor": [
         256,
-        373
+        394
       ],
-      "sha256": "86d8d7d27d954735fd47f2596103f5d94ffd4e5f448c5ff9061764786a39ddb3"
+      "sha256": "ae46befcb850598c60aac0fdc4c6c4525a67e48afb393c15b3064471698966e6"
     },
     "sprint/right/000.png": {
       "anchor": [
@@ -632,28 +632,28 @@
         256,
         369
       ],
-      "sha256": "5c2e7a92d91176c3d5f7d269416f84695c98d911148333d6f1e08efbd9a1d0ba"
+      "sha256": "f7a93303b135a2bf9955b89611d49427e7727a0854711418d5e531631e3523e8"
     },
     "sprint/back-left/001.png": {
       "anchor": [
         256,
-        370
+        374
       ],
-      "sha256": "e99f72fb22c00758cf49cbaae50b16d8e8f22f521c552dcbbf32eb1a3fc12850"
+      "sha256": "755d2dfdb9fe16960cf5d14584e8d33f71bb96813d746d21f291e4d075b26a9d"
     },
     "sprint/back-left/002.png": {
       "anchor": [
         256,
-        375
+        369
       ],
-      "sha256": "53944bdc2677de9387fc71262760d0fb073f26c99c999c17cc56375132f5897a"
+      "sha256": "4cf9b1f4873257d301a0d1b2793f450cd0551c90297c74ed615f88d0d191d393"
     },
     "sprint/back-left/003.png": {
       "anchor": [
         256,
-        375
+        392
       ],
-      "sha256": "ee4d3e79af0c608bc8639d8dfb3cedd184f8fd9fae6a5c73e42aa35f96af63ae"
+      "sha256": "371476f42eb7773d7f92b80fee0aabacd97a6feb8cc9f05026fec933b7294f78"
     },
     "sprint/back/000.png": {
       "anchor": [
@@ -688,28 +688,28 @@
         256,
         369
       ],
-      "sha256": "5d2a91a6ef16c575018efc6bfbe52d1248d8df71c429f4b3c174da8f719e7776"
+      "sha256": "338740429e8a115d4d6048213cad1ad84074e0a1c5dd572a7e8fff6b31c8a008"
     },
     "sprint/back-right/001.png": {
       "anchor": [
         256,
-        373
+        375
       ],
-      "sha256": "0f5733148f1f730769a096b3af065837e99d902afd4d20a0adb650ef08c70e82"
+      "sha256": "45c8394967c605972ab8c673e92801ace6f8c7e424a8a41d57cbd4ff14751b5b"
     },
     "sprint/back-right/002.png": {
       "anchor": [
         256,
-        370
+        369
       ],
-      "sha256": "51249be55f39872d6239c35e96db4bb86f9aaa2a4853bd3fa71faca754d491ae"
+      "sha256": "57d9279e55454561bec616062ac75ac7bc83a0750d70d9ac4851e3de504e9020"
     },
     "sprint/back-right/003.png": {
       "anchor": [
         256,
-        373
+        394
       ],
-      "sha256": "86d8d7d27d954735fd47f2596103f5d94ffd4e5f448c5ff9061764786a39ddb3"
+      "sha256": "ae46befcb850598c60aac0fdc4c6c4525a67e48afb393c15b3064471698966e6"
     }
   },
   "slidePhases": [
