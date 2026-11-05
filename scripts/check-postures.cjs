@@ -37,3 +37,14 @@ for(const drawScale of [1,1.3,.8]){
 }
 for(const drawScale of [0,-1,NaN,Infinity])assert.deepEqual(raptorSpritePlacement(world,{anchor:[256,450],drawScale}),{x:272,y:75,size:256});
 console.log('PASS: authored scale retains world anchors and legacy placement');
+for(const [angle,label] of [[0,'right'],[Math.PI/4,'front-right'],[Math.PI,'left']]){
+ for(const [speed,family] of [[40,'stalk'],[120,'jog']]){
+  const phases=new Set();
+  for(let i=0;i<400;i++){
+   const selected=frame(speed,{actorId:label+'-'+family,angle,travelAngle:angle,firing:true});
+   assert.equal(selected.family,family,label+' uses its dedicated gait');phases.add(selected.frame);
+  }
+  assert.equal(phases.size,4,label+' '+family+' retains every phase during fire');
+ }
+}
+console.log('PASS: three installed directional posture sets retain all phases');

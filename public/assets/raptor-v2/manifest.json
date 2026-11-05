@@ -1,5 +1,5 @@
 {
-  "build": "39T7.4",
+  "build": "39T7.5",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -39,7 +39,7 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "Left/right standing, stalk and jog anatomy corrections; right slide correction; authored-scale registration. Other directions and sprint transitions remain under review.",
+  "source": "Front-right standing/stalk/jog pilot with alternating thighs. Side gait and right slide corrections retained. Five slow directions and firing-origin alignment remain unresolved.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
@@ -86,8 +86,8 @@
         256,
         450
       ],
-      "sha256": "ad7c8d4cacdc10b9fc3334221d6de6f70befd7d41d365f6a4c742e3226d9476f",
-      "source": "exec-00c03da2-ca2f-4721-86b4-19bf1a94672f.png"
+      "sha256": "7e6dde6fdb357c0af3b404dd9f7af140c8be505e34b4dafdf18f0f74b3fb97b5",
+      "source": "exec-9bf8eb2e-f5a8-4fcf-b0b9-6c3971219aa6.png"
     },
     "idle/left/000.png": {
       "anchor": [
@@ -863,6 +863,70 @@
       "drawScale": 1.00205,
       "sha256": "38f29508ce0860d380fa36cab0096b2fa01e14f45b464008e841a426a5ddc57f",
       "source": "exec-7ef906e1-d7bc-4e78-ad23-46169d38c8af.png"
+    },
+    "stalk/front-right/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "e774ea0e6048ab088128670b127b0020620a6973cd0d1051c0d726627b9acc90",
+      "source": "exec-a095e3d7-600f-4224-ad20-2ca6e646478e.png"
+    },
+    "stalk/front-right/001.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "50b219b1d8668254acec2b909b318794b3ff26db82f8ad3b63b6fa6d28ababe6",
+      "source": "exec-bc559d70-3153-4e5f-af16-cd75d707f343.png"
+    },
+    "stalk/front-right/002.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "b1e1dda16b325ce8cd90979e2dfd0e5c43e15d3462a9297281ee5467ec23a24c",
+      "source": "exec-8fff6396-2cc4-4927-a077-bbe080b2159f.png"
+    },
+    "stalk/front-right/003.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "f5a92c49f2bc40c64e030ec8affe9cbd4c2e4702063fcabf018cef8ed9a7614e",
+      "source": "exec-e1a5bee9-0a39-4e26-a16c-2f8f58ac579a.png"
+    },
+    "jog/front-right/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "ac2353366b779438f4eb74cb33009f15c6224ed3f28520c5b2504885848c69ef",
+      "source": "exec-0563d972-9148-4632-970f-1ced9967e138.png"
+    },
+    "jog/front-right/001.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "4a3ea81c750ab87867a0f245d8a1084c4457efb375eeb0cca94517a3966ab907",
+      "source": "exec-18ebe865-d269-4420-8386-2fb8af7e2a7a.png"
+    },
+    "jog/front-right/002.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "1d4a66121e9232364e876a9d106e47a9a5fe913899b4d37b60b0aa80ae3589f9",
+      "source": "exec-39ad8530-f5f7-4da3-9f16-d3a9a51dec3f.png"
+    },
+    "jog/front-right/003.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "1fa5a8b7cafbd327e589aaa2ebf468db7d086d3f9477faadda4aea6b1ce4895c",
+      "source": "exec-26948c75-5c29-4c17-9688-f6407a697784.png"
     }
   },
   "slidePhases": [
@@ -878,7 +942,8 @@
   ],
   "postureDirections": [
     "right",
-    "left"
+    "left",
+    "front-right"
   ],
   "standingDirections": [
     "right",

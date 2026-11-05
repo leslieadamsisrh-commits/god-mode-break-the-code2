@@ -23,15 +23,15 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T7.4 PLAYTEST</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T7.5 PLAYTEST</p>
    <h1>COMBAT LAB</h1>
    <a href="/raptor-animation-review.html" style={{color:"#89e9f2"}}>Review all run and slide frames</a>
    <p>Both fighters use the newer XYZ combat engine. This is a test build, not a production character unlock.</p>
    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(230px,1fr))",gap:14,marginTop:25}}>
     <button style={button} onClick={()=>setFighter("jade")}>JADE <small style={{display:"block",fontWeight:400,marginTop:10}}>Existing gameplay baseline</small></button>
-    <button disabled={artReady!==true} style={{...button,borderColor:"#ff925e",opacity:artReady?1:.5}} onClick={()=>setFighter("raptor")}>RAPTOR V2 <small style={{display:"block",fontWeight:400,marginTop:10}}>{artReady===null?"Loading Raptor artwork…":artReady?"Side gait and right slide corrections · Other views under review":"Artwork failed to load — reload to retry"}</small></button>
+    <button disabled={artReady!==true} style={{...button,borderColor:"#ff925e",opacity:artReady?1:.5}} onClick={()=>setFighter("raptor")}>RAPTOR V2 <small style={{display:"block",fontWeight:400,marginTop:10}}>{artReady===null?"Loading Raptor artwork…":artReady?"Front-right gait pilot · Other views under review":"Artwork failed to load — reload to retry"}</small></button>
    </div>
-   <p style={{color:"#f5bf8e",fontSize:13,marginTop:24}}>Standing now has dedicated artwork in all eight directions. Left- and right-facing movement have distinct stalking, jogging, and sprint poses; the other six slow gaits remain provisional. Use the pace selector with keyboard or touch to review the transitions. Controller stick pressure remains analog. Moving fire follows aim.</p>
+   <p style={{color:"#f5bf8e",fontSize:13,marginTop:24}}>Standing now has dedicated artwork in all eight directions. Left, right, and front-right movement have dedicated stalk and jog cycles; the other five slow directions remain provisional. Sprint continuity and firing-effect alignment are still under review. Use the pace selector with keyboard or touch to review the transitions. Controller stick pressure remains analog. Moving fire follows aim.</p>
   </div>
  </main>;
 }
