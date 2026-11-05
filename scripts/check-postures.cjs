@@ -20,7 +20,7 @@ assert.equal(frame(140).family,'jog');
 assert.equal(frame(70).family,'stalk');
 assert.equal(frame(0).family,'idle');
 for(const speed of [40,120,220]){let phases=new Set();for(let i=0;i<400;i++)phases.add(frame(speed,{firing:true}).frame);assert.equal(phases.size,4)}
-assert.equal(frame(40,{angle:Math.PI/2,travelAngle:Math.PI/2}).family,'run','unbuilt directions retain existing assets');
+assert.equal(frame(40,{angle:-Math.PI/2,travelAngle:-Math.PI/2}).family,'run','unbuilt directions retain existing assets');
 assert.equal(frame(40,{sliding:true,slideRemaining:.5}).family,'slide');
 for(let i=0;i<20;i++)frame(0);
 assert.equal(frame(0).family,'idle','slide recovers into standing');
@@ -37,7 +37,7 @@ for(const drawScale of [1,1.3,.8]){
 }
 for(const drawScale of [0,-1,NaN,Infinity])assert.deepEqual(raptorSpritePlacement(world,{anchor:[256,450],drawScale}),{x:272,y:75,size:256});
 console.log('PASS: authored scale retains world anchors and legacy placement');
-for(const [angle,label] of [[0,'right'],[Math.PI/4,'front-right'],[Math.PI,'left'],[3*Math.PI/4,'front-left']]){
+for(const [angle,label] of [[0,'right'],[Math.PI/2,'front'],[Math.PI/4,'front-right'],[Math.PI,'left'],[3*Math.PI/4,'front-left']]){
  for(const [speed,family] of [[40,'stalk'],[120,'jog']]){
   const phases=new Set();
   for(let i=0;i<400;i++){
@@ -47,7 +47,7 @@ for(const [angle,label] of [[0,'right'],[Math.PI/4,'front-right'],[Math.PI,'left
   assert.equal(phases.size,4,label+' '+family+' retains every phase during fire');
  }
 }
-console.log('PASS: four installed directional posture sets retain all phases');
+console.log('PASS: five installed directional posture sets retain all phases');
 const {raptorLabMovement}=require('../lib/raptorSpriteOnly.ts');
 for(const pace of [.25,.55,1])for(const[x,y]of [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]]){
  const v=raptorLabMovement(x,y,pace);

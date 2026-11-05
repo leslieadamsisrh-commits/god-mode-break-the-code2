@@ -23,7 +23,7 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T7.6 PLAYTEST</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T7.7 PLAYTEST</p>
    <h1>COMBAT LAB</h1>
    <a href="/raptor-animation-review.html" style={{color:"#89e9f2"}}>Review all run and slide frames</a>
    <p>Both fighters use the newer XYZ combat engine. This is a test build, not a production character unlock.</p>
