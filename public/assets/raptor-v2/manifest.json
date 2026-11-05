@@ -1,5 +1,5 @@
 {
-  "build": "39T6",
+  "build": "39T6.1",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -455,7 +455,7 @@
     "run/back-left/003.png": {
       "anchor": [
         256,
-        392
+        457
       ],
       "sha256": "371476f42eb7773d7f92b80fee0aabacd97a6feb8cc9f05026fec933b7294f78"
     },
@@ -483,7 +483,7 @@
     "run/back-right/003.png": {
       "anchor": [
         256,
-        394
+        462
       ],
       "sha256": "ae46befcb850598c60aac0fdc4c6c4525a67e48afb393c15b3064471698966e6"
     },
@@ -651,7 +651,7 @@
     "sprint/back-left/003.png": {
       "anchor": [
         256,
-        392
+        457
       ],
       "sha256": "371476f42eb7773d7f92b80fee0aabacd97a6feb8cc9f05026fec933b7294f78"
     },
@@ -707,7 +707,7 @@
     "sprint/back-right/003.png": {
       "anchor": [
         256,
-        394
+        462
       ],
       "sha256": "ae46befcb850598c60aac0fdc4c6c4525a67e48afb393c15b3064471698966e6"
     }

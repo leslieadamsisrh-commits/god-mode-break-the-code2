@@ -1,42 +1,34 @@
-# Raptor 39T5 integration checkpoint
+# Raptor 39T6.1 integration checkpoint
 
-Status: playable preview; NOT acceptance-complete.
-
-Base: b513dac8dea33219132c81ae464c8c166188c491 (studio/39r4-39s-cover).
-Recoverable checkpoint: checkpoint/39t-before-cartoon-run-slide.
-Working branch: studio/39t-cartoon-run-slide. Target: existing Raptor character lab only.
+Status: deployed candidate; NOT acceptance-complete.
+Base: 834ce91a0bfe820896e9af7cf6a415a37a444257 (39T5).
+Checkpoint: checkpoint/39t5-before-t6.
+Working branch: studio/39t6-stride-slide-finish.
+Only the existing Raptor Railway playtest service is targeted.
 
 ## Installed inventory
+All eight directions retain 4 sprint and 3 baseball-slide images: 32 + 24 unique images, 96 runtime paths. Slow run shares sprint; idle shares slide recovery.
 
-| Direction | Sprint | Baseball slide |
-|---|---:|---:|
-| Right | 4 | 3 |
-| Front-right | 4 | 3 |
-| Front | 4 | 3 |
-| Front-left | 4 | 3 |
-| Left | 4 | 3 |
-| Back-left | 4 | 3 |
-| Back | 4 | 3 |
-| Back-right | 4 | 3 |
+## Corrections
+- Replaced sprint/front-left/002.png and 003.png, and front-right/002.png and 003.png, plus corresponding run aliases.
+- Individual edits preserve approved upper body while exchanging the leading thigh and providing the opposite passing phase. Four replacement images accepted for installation after reference comparison; full gameplay acceptance remains pending.
+- Front-right 003 registered by crown, optic, shoulder and weapon; uniform scale 0.890625, offset +28,+44 relative to its generated canvas.
+- Rear-diagonal 003 vertical anchors corrected from 392 to 457 (back-left) and 394 to 462 (back-right), including run aliases. Crown and backpack registration removes the large downward body jump; no pixel resizing.
+- SHA256 metadata and build cache version updated. No physics, input mapping, collision, slide timing or effects changed.
 
-32 sprint + 24 slide unique images. Run shares sprint images; idle shares slide recovery. 96 runtime paths. Every image is a 512x512 transparent PNG with per-frame anchor and SHA256. Installed counts are NOT accepted animation counts.
+## Verification
+- Railway successfully built/deployed initial correction commit e63bfd0c548f255c3f9a0275ae1133276f4f34b3.
+- Fresh live 39T6 review loaded all 96 runtime asset paths and displayed corrected front-diagonal phase 4.
+- Node engine integration test (scripts/check-raptor-39t6.cjs): real LocalCombat and frame selector, fixed 60Hz, neutral open-floor fixture at (1100,560) with covers removed ONLY in test. All eight directions reach four sprint phases, all three slide phases, fire during sprint/slide, and settle to idle. Invoke with Node 24.
+- Test uses normal engine input fields and the existing double-tap slide sequence. It does not exercise browser input delivery or establish physical-controller support.
+- Live keyboard sustained right run painted all four phases on 39T5 during deployment. Short keyboard/touch double-tap attempts did not yield a reliable complete slide trace.
+- All 24 slide images inspected as an entry/hold/recovery contact sheet; none replaced in this pass.
 
-39T3 corrected rear-diagonal back equipment and opposing-leg pairs. 39T4 added optional Animation trace showing frames actually painted through normal gameplay. 39T5 corrects left low sprint and alternating legs using right cycle as pose reference while retaining organic left eye. No game physics or input mappings changed.
-
-## Validation
-
-PASS local frame selection: eight directions, four sprint phases, slide entry/hold/recovery, recovery-to-run, moving fire, stop, strafe.
-PASS file checks: 96 runtime paths, SHA256, 512x512, alpha, anchors (39T3; left replacement uses same extraction pipeline).
-PASS deployed 39T4 normal menu boot and asset preload; keyboard and touch movement respond. Painted-frame trace recorded sprint family in every direction.
-PASS deployed 39T2 review loaded 96 paths with no missing Raptor image; later releases require fresh live recheck.
-
-## Remaining acceptance work
-
-- Front-left/front-right stride still favors the same leading thigh. Multiple correction sheets repeated the error; a single-pose attempt changed head/torso proportions and was rejected. Original provisional frames remain installed.
-- Inter-direction scale, rear pair registration and all transitions still need sustained playback acceptance.
-- Rear slide feet/contact orientation needs full gameplay assessment.
-- Slow movement/strafe and idle borrow poses, not dedicated approved animation.
-- Browser keyboard/touch attempts did not capture a successful full slide sequence in the painted-frame trace. This is unresolved, not a pass or proof the slide mechanics are broken.
-- All eight slide/fire/cancellation scenarios and physical-controller testing remain unverified.
-
-Do not describe this checkpoint as the completed requested release. Cover work has not begun.
+## Remaining acceptance
+- Live eight-direction start/run/stop, adjacent turning, moving fire and complete slide playback matrix on final build.
+- Slide cancellation, slide/fire interaction, contact/effect alignment, rear feet and recovery assessment in gameplay.
+- Rear-diagonal lateral pose/angle drift and inter-direction scale remain under review despite corrected vertical registration.
+- Slow movement and idle remain borrowed poses; full transition acceptance outstanding.
+- No physical controller available in this execution environment. Do not report a controller pass.
+- Do not count installed or statically inspected frames as fully gameplay-accepted cycles.
+Cover work has not begun.
