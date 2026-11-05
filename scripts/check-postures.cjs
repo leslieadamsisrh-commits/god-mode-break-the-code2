@@ -37,7 +37,7 @@ for(const drawScale of [1,1.3,.8]){
 }
 for(const drawScale of [0,-1,NaN,Infinity])assert.deepEqual(raptorSpritePlacement(world,{anchor:[256,450],drawScale}),{x:272,y:75,size:256});
 console.log('PASS: authored scale retains world anchors and legacy placement');
-for(const [angle,label] of [[0,'right'],[Math.PI/4,'front-right'],[Math.PI,'left']]){
+for(const [angle,label] of [[0,'right'],[Math.PI/4,'front-right'],[Math.PI,'left'],[3*Math.PI/4,'front-left']]){
  for(const [speed,family] of [[40,'stalk'],[120,'jog']]){
   const phases=new Set();
   for(let i=0;i<400;i++){
@@ -47,4 +47,13 @@ for(const [angle,label] of [[0,'right'],[Math.PI/4,'front-right'],[Math.PI,'left
   assert.equal(phases.size,4,label+' '+family+' retains every phase during fire');
  }
 }
-console.log('PASS: three installed directional posture sets retain all phases');
+console.log('PASS: four installed directional posture sets retain all phases');
+const {raptorLabMovement}=require('../lib/raptorSpriteOnly.ts');
+for(const pace of [.25,.55,1])for(const[x,y]of [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]]){
+ const v=raptorLabMovement(x,y,pace);
+ assert.ok(Math.abs(Math.hypot(v.x,v.y)-pace)<1e-12,'same pressure in every direction');
+ assert.ok(Math.abs(Math.atan2(v.y,v.x)-Math.atan2(y,x))<1e-12,'direction preserved');
+}
+assert.deepEqual(raptorLabMovement(0,0,.55),{x:0,y:0});
+assert.deepEqual(raptorLabMovement(.2,0,.55),{x:.11000000000000001,y:0});
+console.log('PASS: digital diagonal pace normalized without amplifying subunit input');

@@ -14,6 +14,13 @@ const postureDirections:readonly string[]=inventory.postureDirections;
 const hasPostures=(angle:number)=>postureDirections.includes(selectRaptorDirection(angle));
 export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string;worldX?:number;worldY?:number;travelAngle?:number};
 export type RaptorRegistration={anchor:number[];drawScale?:number};
+/** Clamp digital diagonals before applying the lab's simulated stick pressure.
+ * Controller values bypass this helper and retain their native analog magnitude.
+ */
+export function raptorLabMovement(x:number,y:number,pace:number){
+ const magnitude=Math.max(1,Math.hypot(x,y)),factor=pace/magnitude;
+ return {x:x*factor,y:y*factor};
+}
 /** Uniform authored-scale compensation; anchors remain pinned to the same world point.
  * Wide slide poses can use more texture space without shrinking their torso in game.
  * Legacy frames without metadata retain their exact previous placement.
