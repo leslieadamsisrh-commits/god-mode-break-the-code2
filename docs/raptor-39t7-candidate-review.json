@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-05",
+  "branch": "studio/39t7-anatomy-corrections",
+  "liveCommit": "5d158eec5f0e9664ecee0272da52668d8a693fc7",
+  "status": "candidate review; no new runtime installation",
+  "rearRight": {
+    "stalk1": "1050d415-fc2c-4182-bdca-ddf264b6dfe0",
+    "stalk2": "21a928d6-211d-448e-a4e1-e6c0902fc691",
+    "stalk3": "38b313a0-f6d1-4718-a511-d6ca797c74b9",
+    "jog1": "f7d59eba-0fac-4ab8-ba13-3e6570ec5503",
+    "jog2": "ad500824-0118-4a39-b4da-707a618a9986",
+    "jog3": "4d80fbaa-34ea-4463-86ff-9747a2b2ccfa",
+    "assessment": "Reject as complete cycles: requested opposite contacts/passing phases retain forward near thigh; phase1/3 too similar. Equipment/camera preservation alone insufficient.",
+    "targetedRetry": "37f83793-f274-46d3-8765-84506534b50d",
+    "retryAssessment": "Not accepted: hip-to-thigh continuity and actual opposite contact remain unclear; lifted far foot does not establish opposite planted contact."
+  },
+  "rearLeft": {
+    "recoveredCandidates": [
+      "d124d097-3618-4c46-9c11-eefbc3877d69",
+      "72cfba56-e2ae-45cc-ae5f-e5e7d5aee965",
+      "51ebf91a-b389-4277-a6d3-b8f280df9496",
+      "47fbf850-abdb-4eed-9c09-4d1ac56aaf7a",
+      "3253833c-74b6-4af9-99b3-1dfbd3521d2d",
+      "9d31f308-8c35-4ac6-85cc-40a1dd03cfd6"
+    ],
+    "assessment": "Not accepted as cycles: contact sheet repeats near-thigh lead and similar passing arrangements. Phase labels require recovery before installation."
+  },
+  "sprint": {
+    "rejected": "d74c7f05-29c2-4107-adc1-63792ca4a1ee",
+    "reason": "Excessive elongated neck and reduced ribcage; does not match approved master.",
+    "correctedContact": "944ddcc1-c65f-4f95-92fe-dcecff49df18",
+    "correctedStatus": "Improved compact neck/long snout; candidate only, pending cycle and registration review",
+    "oppositeContactRejected": "60e92e1a-a825-4d92-85e8-767c7240c91a",
+    "oppositeContactReason": "Near/right thigh still leads; required opposite contact was not produced.",
+    "passingCandidate": "1b65a48d-8348-40dd-8425-18009956bb68",
+    "passingStatus": "Uninstalled; single passing candidate cannot complete a cycle without opposite contact."
+  },
+  "remaining": {
+    "rearDiagonalSlowGaits": 16,
+    "rearDiagonalIdleCandidates": 2,
+    "sprintAudit": 32,
+    "oldSlideFramesAwaitingCorrectionOrAcceptance": 21,
+    "otherOpen": [
+      "Muzzle/projectile origin mismatch",
+      "Full transition and cancellation playback matrix",
+      "Physical controller unavailable"
+    ],
+    "newAcceptedCycles": 0,
+    "newInstalledFrames": 0
+  }
+}
