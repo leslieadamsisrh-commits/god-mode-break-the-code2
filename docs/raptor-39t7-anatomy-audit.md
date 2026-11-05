@@ -1,18 +1,14 @@
 # 39T7 anatomy correction audit — 2026-11-05
 
-## Current status — 39T7.6 live
+## Current status — 39T7.7 live
 - Working branch: studio/39t7-anatomy-corrections.
-- Deployed code: 12f0f72244ebaeb4aeaa2211fbee240af9923988.
-- Railway deployment 1a4dd219-5a14-4799-965f-7debf2f49c60: SUCCESS; fresh lab39T7.6 and review128 paths confirmed.
-- Installed96 unique images plus32 run aliases. All8 directions have idle1/sprint4/slide3; right,left,front-right,front-left additionally have stalk4/jog4. Four other directions lack32 slow-gait images.
--39 anatomy pilot replacements installed: right12 including slides, left9, front-right9, front-left9. Static pilot acceptance is not full gameplay acceptance.
-- Live39T7.6 normalized digital diagonal test: front-right and front-left each painted jog0,1,2,3 at medium pace without entering sprint. Both painted stalk0,1,2,3 at light pace.
-- Evidence screenshot: raptor-39t7-6-diagonal-proof.jpg. Trace establishes painted phases, not anatomical quality or sustained-video verification. No physical controller available.
-- Open: old sprint continuity/proportions, remaining slides/idle, all-direction transition matrix, and muzzle/projectile origin above new gun barrel. See historical findings.
-- New direct-front standing7d3807eb and stalk candidates are UNINSTALLED. Visual phase mapping requires reordering: contactRIGHT8cc037bc; passingRIGHT-support8a02d09c; contactLEFT2db7b5b9; passingLEFT-support150b4b87. Original generation order was not safe playback order.
-- Direct-front jog3342c5c2 rejected as finished jog: insufficient posture distinction from stalk. Targeted chest/neck/hip correction underway.
-- Rear standing404acbf1 rejected for camera-facing claws. Correctedeb7267a1 provisional, uninstalled.
-- Completion NOT reached. Preserve all accepted existing work; do not claim every generated frame is accepted.
+- Deployed commit f92e5ae0623010eda210a40e8d3c70be1b72da60; Railway0f7c1a1a-4f40-4738-bea0-1fa53f49ca19 SUCCESS.
+- Fresh lab39T7.7/review136 paths verified.104unique images plus32run aliases. Five directions have dedicated stalk4/jog4: right,left,front-right,front-left,front.
+-48 anatomy pilot images installed across releases. Front9 passes static review and file/hash/border checks. No claim of full all-direction acceptance.
+- Normal touch front stalk0,1,2,3; mediumpace front jog0,1,2,3; touchmovement+T fire front jog+fire0,1,2,3; supported doubletapA+S frontslide0,1,2. After input release/aim adjustment, screenshot shows two-foot front standing.
+- Evidence: raptor-39t7-7-front-standing-proof.jpg (front pose+trace); raptor-39t7-7-front-live-proof.jpg shows left-facing standing after slide, NOT a front pose. Trace establishes painted phases, not sustained animation quality. No physical-controller hardware/video coverage.
+- Three rear directions lack24 dedicated slow-gait images. Rear set now staged below; both rear-diagonal masters generating. Existing sprint continuity/anatomy, other slides/recovery, muzzle/shot-origin registration, and full turn/fire/cancel/playback matrix remain open.
+- No completion claim. Prior status entries below are historical.
 
 ## Prior checkpoint record (historical; superseded by current status)
 
@@ -113,3 +109,6 @@ Front-left idle1/stalk4/jog4 pilot exported at fixed.2source scale with pelvisx5
 
 ## 39T7.7 staged front pilot
 Nine front assets: standing1/stalk4/jog4. Jog3342c5c2 rejected for upright posture; revised contactad3ce3b2, passingRIGHTecc64c6e, contactLEFT632042ef, passingLEFTab929d6a preserve moderate forward pitch and alternate thighs/support. Stalk passing poses reordered by anatomy. Contact2db7b5b9 rejected for clipped center-claw tip; repaired sourced5565271 preserves pose. Source-canvas scale .2 and shared pelvis/ground registration, faint alpha specks removed.9 transparent512PNGs validated hashes and empty borders; five-direction selection tests pass including fire phases, hysteresis, slide recovery, legacy anchors, normalized diagonal pace.104unique images+32aliases=136paths;48 anatomy pilot images across releases. Deployment and new front gameplay pending. Three rear directions still lack24slow-gait images. Rear contact5fe62685 and94afe0c5 rejected pending raised-foot repair (human/shoe-shaped sole instead of distinct reptilian digits); do not install. Other sprint/slide/firing-origin/fullplayback defects remain open.
+
+## 39T7.8 staged rear pilot
+Rear idle1/stalk4/jog4 now statically reviewed and exported with uniform.2source scale and pelvis/tail-root registration. Rejected first shoe-shaped sole attempts; corrected raised feet have three separate biological toe pads/claws. Sources/phase order and placement recorded in scripts/export-back-pilot.cjs.9transparent512PNGs pass hashes/clear borders; six-direction gait selection tests pass.112uniqueimages+32aliases=144paths;57 anatomy pilot images across releases. Rear-diagonal16slowframes remain absent.39T7.8 not yet deployed or gameplay-verified. Front39T7.7 remains live. UI inventory wording updated to six directions for next build.

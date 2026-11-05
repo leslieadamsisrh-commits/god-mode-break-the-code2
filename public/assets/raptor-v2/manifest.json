@@ -1,5 +1,5 @@
 {
-  "build": "39T7.7",
+  "build": "39T7.8",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -39,15 +39,15 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "Direct-front standing/stalk/jog pilot with consistent anatomy and alternating support legs. Three rear slow-gait directions, sprint continuity, slides and firing-origin alignment remain open.",
+  "source": "Front and rear standing/stalk/jog pilots, including corrected three-toed rear soles. Rear diagonals, sprint continuity, remaining slides and firing-origin alignment unresolved.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "f4094331f4484e42660fa974d2b0cc0849fc653b3434d1c6c607a6d01487ffeb",
-      "source": "exec-5bf23e86-580e-4633-9240-73528cf3089c.png"
+      "sha256": "052d99549defa406d7ff6b46c18433bd5fb3d12ca3f5360a78d4011d98fd43c6",
+      "source": "exec-eb7267a1-e7d6-44f9-91c4-12926fb7dadc.png"
     },
     "idle/back-left/000.png": {
       "anchor": [
@@ -1055,6 +1055,70 @@
       ],
       "sha256": "3d56c839dd12571c4f3a52753345629a47e0fe6b3dbdc0ccd919d703fc61e8ee",
       "source": "exec-ab929d6a-c5eb-4656-8506-12c357931540.png"
+    },
+    "stalk/back/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "8e52710df64d8415a333bdb2dba3fe5515d741d2d7ad9a9acea73b73b85c5445",
+      "source": "exec-fd76e9de-b024-4ca3-9a8a-3c9280a3a0c6.png"
+    },
+    "stalk/back/001.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "965e10899052174cd50dc6e02f68a8dae489e81496c81647f12da44d38eff97c",
+      "source": "exec-dd323c32-8a93-4275-a7f8-f57162214e18.png"
+    },
+    "stalk/back/002.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "0748ee65fbced43c98ca5748678874d7c928c23849d159149ed2eec45a865931",
+      "source": "exec-58030576-6283-4e75-8edb-e432a6673506.png"
+    },
+    "stalk/back/003.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "2b12c97b65e4738fe2aaea8a608d51a8a1534d57fb1e509c61f0f7a4e3206d3a",
+      "source": "exec-13f651ea-05a9-4775-9b58-0a457c509996.png"
+    },
+    "jog/back/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "f6cad93421dcf2d1cbdc3c38082de6ddf7fcd456e80908881a4c8a7e29e2ed74",
+      "source": "exec-f37544a6-87e0-404f-821b-d333eb19b37c.png"
+    },
+    "jog/back/001.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "bb10b7f9131ab89e3cfa126756f1d7e8a9b8543c3b0fa4ab054b500984e7669a",
+      "source": "exec-6a2374ee-d2c5-4b44-97d2-0a27308ff1b3.png"
+    },
+    "jog/back/002.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "84349bad15c1b264347958edbb78d84ca535d6cad49f2efa2538f26c7ea06cd3",
+      "source": "exec-0a086db4-2266-4e5b-9613-f54fc5903356.png"
+    },
+    "jog/back/003.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "0e595e3bf095646c5636bebfeffd667f883941130b166b13586d7c84905f76d5",
+      "source": "exec-7e9894a7-e19c-4bce-be78-ce707af56d91.png"
     }
   },
   "slidePhases": [
@@ -1073,7 +1137,8 @@
     "left",
     "front-right",
     "front-left",
-    "front"
+    "front",
+    "back"
   ],
   "standingDirections": [
     "right",
