@@ -18,13 +18,13 @@ async function start(){
   image.onload=()=>{if(image.naturalWidth!==512||image.naturalHeight!==512)return reject(Error(key+' has wrong dimensions'));images.set(key,image);loaded++;resolve()};
   image.onerror=()=>reject(Error('Failed to load '+key));image.src='/assets/raptor-v2/'+key+'?v='+inventory.build;
  })));
- for(const direction of inventory.directions){const figure=document.createElement('figure'),canvas=document.createElement('canvas'),caption=document.createElement('figcaption');canvas.width=320;canvas.height=300;caption.textContent=direction;figure.append(canvas,caption);grid.append(figure);views.push({direction,canvas,caption})}
+ for(const direction of inventory.directions){const figure=document.createElement('figure'),canvas=document.createElement('canvas'),caption=document.createElement('figcaption');canvas.width=384;canvas.height=320;caption.textContent=direction;figure.append(canvas,caption);grid.append(figure);views.push({direction,canvas,caption})}
  status.textContent=inventory.build+' · '+loaded+' frames loaded · Slide frames show entry, hold, recovery';requestAnimationFrame(draw);
 }
 function draw(time){
  if(!paused&&time-last>1000/Number(rate.value)){frame++;last=time}
  const family=action.value,index=frame%inventory.counts[family];
- for(const view of views){const key=`${family}/${view.direction}/${String(index).padStart(3,'0')}.png`,record=inventory.frames[key],g=view.canvas.getContext('2d');g.clearRect(0,0,320,300);g.strokeStyle='#547180';g.beginPath();g.moveTo(0,245);g.lineTo(320,245);g.stroke();if(!record){view.caption.textContent=view.direction+' · '+family+' artwork pending';continue}const anchor=record.anchor;g.drawImage(images.get(key),160-anchor[0]*.6,245-anchor[1]*.6,307.2,307.2);view.caption.textContent=view.direction+' · '+(index+1)+'/'+inventory.counts[family]}
+ for(const view of views){const key=`${family}/${view.direction}/${String(index).padStart(3,'0')}.png`,record=inventory.frames[key],g=view.canvas.getContext('2d');g.clearRect(0,0,384,320);g.strokeStyle='#547180';g.beginPath();g.moveTo(0,270);g.lineTo(384,270);g.stroke();if(!record){view.caption.textContent=view.direction+' · '+family+' artwork pending';continue}const anchor=record.anchor,authored=record.drawScale,scale=.5*(Number.isFinite(authored)&&authored>0?authored:1);g.drawImage(images.get(key),192-anchor[0]*scale,270-anchor[1]*scale,512*scale,512*scale);view.caption.textContent=view.direction+' · '+(index+1)+'/'+inventory.counts[family]}
  requestAnimationFrame(draw);
 }
 start().catch(error=>{status.textContent=error.message;status.style.color='#ff8b8b'});

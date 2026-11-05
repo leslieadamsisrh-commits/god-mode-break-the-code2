@@ -13,6 +13,16 @@ export type RaptorFamily=keyof typeof RAPTOR_COUNTS;
 const postureDirections:readonly string[]=inventory.postureDirections;
 const hasPostures=(angle:number)=>postureDirections.includes(selectRaptorDirection(angle));
 export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string;worldX?:number;worldY?:number;travelAngle?:number};
+export type RaptorRegistration={anchor:number[];drawScale?:number};
+/** Uniform authored-scale compensation; anchors remain pinned to the same world point.
+ * Wide slide poses can use more texture space without shrinking their torso in game.
+ * Legacy frames without metadata retain their exact previous placement.
+ */
+export function raptorSpritePlacement(state:Pick<RaptorVisualState,"x"|"y"|"scale">,record:RaptorRegistration){
+ const authored=record.drawScale;
+ const scale=state.scale*(typeof authored==="number"&&Number.isFinite(authored)&&authored>0?authored:1);
+ return {x:state.x-record.anchor[0]*scale,y:state.y-record.anchor[1]*scale,size:512*scale};
+}
 // World-space samples exclude camera motion, elevation and cover presentation offsets.
 const gaitMemory=new Map<string,{time:number;x?:number;y?:number;phase:number;sprinting:boolean;jogging:boolean;airborne:boolean;landedAt:number}>();
 export const RAPTOR_STRIDE_DISTANCE=100;
@@ -121,8 +131,8 @@ export function paintRaptorSprite(g:CanvasRenderingContext2D,state:RaptorVisualS
  if(img?.complete&&img.naturalWidth===512&&img.naturalHeight===512){
    const traceKey=direction+" / "+artAction+(state.firing?" + fire":"");
    const seen=animationTrace.get(traceKey)||new Set<number>();seen.add(artFrame);animationTrace.set(traceKey,seen);
-   const anchor=inventory.frames[key].anchor;
-   g.drawImage(img,state.x-anchor[0]*state.scale,state.y-anchor[1]*state.scale,512*state.scale,512*state.scale);
+   const placement=raptorSpritePlacement(state,inventory.frames[key] as RaptorRegistration);
+   g.drawImage(img,placement.x,placement.y,placement.size,placement.size);
    return true;
  }
  // Explicit missing-art marker; NEVER impersonate the approved Raptor with a skeletal rig.

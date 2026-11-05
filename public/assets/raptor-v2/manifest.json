@@ -1,5 +1,5 @@
 {
-  "build": "39T7.3",
+  "build": "39T7.4",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -39,7 +39,7 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "Right standing/stalk/jog anatomy correction pilot. Other directions remain under anatomy review; six slow directions remain provisional.",
+  "source": "Left/right standing, stalk and jog anatomy corrections; right slide correction; authored-scale registration. Other directions and sprint transitions remain under review.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
@@ -91,15 +91,16 @@
     },
     "idle/left/000.png": {
       "anchor": [
-        256,
+        233,
         450
       ],
-      "sha256": "a985dc291339755ca1d74bf939499f725d36c207a7a1e317fcbcc30cdbdf2224",
-      "source": "exec-291b07b7-ba4d-4817-bb89-7d417467a360.png"
+      "drawScale": 1.076276,
+      "sha256": "aeb2943b008ade0d48d8006a24f251b010f0625c131d0a123d5ce769b5dfd5ae",
+      "source": "exec-437c5589-6762-4591-851a-699d6d2f437f.png"
     },
     "idle/right/000.png": {
       "anchor": [
-        256,
+        300,
         450
       ],
       "sha256": "346bb2f3dcd535e3cd29c5cbf2fbe21d8f5e04adaca01d62e3cd14e8f25f95bb",
@@ -226,10 +227,12 @@
     },
     "slide/right/001.png": {
       "anchor": [
-        256,
+        266,
         450
       ],
-      "sha256": "e9052f1f3788dcd9bc334a2dcabb29ed8e2e421fb1f1124c5b2b65df18c28c14"
+      "drawScale": 1.317741,
+      "sha256": "953606c223e780abfffd38502ccf951b07c230107fb4986847b8b151813d74bc",
+      "source": "exec-4f336645-0516-4e94-8d97-f965dd55e038.png"
     },
     "slide/front/001.png": {
       "anchor": [
@@ -296,17 +299,21 @@
     },
     "slide/right/002.png": {
       "anchor": [
-        256,
+        286,
         450
       ],
-      "sha256": "a8acde0d9d26862968f121ee8b532947c61770b2b810f061d62550ce477dbea8"
+      "drawScale": 1.076276,
+      "sha256": "b0f6f9b7e50175a0701902482d0dec053c6ba4bf06a3e8ee7d2a9929d9c352a9",
+      "source": "exec-fbb19a17-2e1c-49a6-b8c1-8d3d6906447a.png"
     },
     "slide/right/000.png": {
       "anchor": [
-        256,
+        266,
         450
       ],
-      "sha256": "6aeebdc12ab388143b4926bb54d349939c7e2e9f6282d7fe6397c3dd87829824"
+      "drawScale": 1.317741,
+      "sha256": "260a1d17efd2c2c57d3b8096ea544f089201a2b66d69d7c4d0706f44bfd0e623",
+      "source": "exec-84f8e288-449d-4ca4-aced-1a72e68a46b8.png"
     },
     "slide/front/002.png": {
       "anchor": [
@@ -723,7 +730,7 @@
     },
     "stalk/right/000.png": {
       "anchor": [
-        256,
+        270,
         450
       ],
       "sha256": "1bfea4f7d4e70539cc9fee2cb637e4d382cd49377ab7e2ad1a923a3f957a3f0c",
@@ -731,7 +738,7 @@
     },
     "stalk/right/001.png": {
       "anchor": [
-        256,
+        270,
         450
       ],
       "sha256": "5ff9bfe3628caf50d99677429adf92392fff917a96abb718bcce5b586089d424",
@@ -739,7 +746,7 @@
     },
     "stalk/right/002.png": {
       "anchor": [
-        256,
+        270,
         450
       ],
       "sha256": "4863535d4849337021eeb3b0e8d5db9ae2bf7475291a9d275de8a573a172b1e1",
@@ -747,7 +754,7 @@
     },
     "stalk/right/003.png": {
       "anchor": [
-        256,
+        270,
         450
       ],
       "sha256": "5b3612dc8d44dcba597dec5de96a6f517c90e8fc33c8f207d5bfb65ca4d98b4c",
@@ -755,7 +762,7 @@
     },
     "jog/right/000.png": {
       "anchor": [
-        256,
+        263,
         450
       ],
       "sha256": "43484fb212f85953c88639025da8fc0638de7473998867fb5b87b08f189d5b65",
@@ -763,7 +770,7 @@
     },
     "jog/right/001.png": {
       "anchor": [
-        256,
+        263,
         450
       ],
       "sha256": "89bc2d1f0e8d4ba5f8ddecd3f86f279842932a021eb6c751598c8bc4c37ee28e",
@@ -771,7 +778,7 @@
     },
     "jog/right/002.png": {
       "anchor": [
-        256,
+        263,
         450
       ],
       "sha256": "68c5c69f4af3d1bbacf7004c9e278c4eff1093747209b0d1c0fb53ea064dda62",
@@ -779,7 +786,7 @@
     },
     "jog/right/003.png": {
       "anchor": [
-        256,
+        263,
         450
       ],
       "sha256": "0215ac406e5f3c108ff3f2ace89ce863b4394055928302f724204bd1d540472e",
@@ -787,67 +794,75 @@
     },
     "stalk/left/000.png": {
       "anchor": [
-        256,
+        233,
         450
       ],
-      "sha256": "678c266fc51a578c58b5a6a9067f945f6746334406cc08bf3bca763712056b13",
-      "source": "exec-5d57c301-ee84-4e11-9dae-c45a135afdd6.png"
+      "drawScale": 1.076276,
+      "source": "exec-7b70966f-7fc6-4d91-a7a3-d80ed84defbf.png",
+      "sha256": "635cfe2aff6abff0e2c5eb063b515662461f7dacc737b955f5a673172514fae2"
     },
     "stalk/left/001.png": {
       "anchor": [
-        256,
+        233,
         450
       ],
-      "sha256": "79c659353f02e05d00ac97cd4557ea0c86c6d87d335a0f253af4e61f131d85a9",
-      "source": "exec-34af0ff6-e413-4ba1-8d83-85d453c12748.png"
+      "drawScale": 1.076276,
+      "source": "exec-ab550d17-c5bc-49e8-9379-079534743077.png",
+      "sha256": "a166f584665e0d7c871fd108449c0b56bb54d0a3595016a3e5d9393ae68ba360"
     },
     "stalk/left/002.png": {
       "anchor": [
-        256,
+        233,
         450
       ],
-      "sha256": "f46968db1a1db1f1d7b880a85507488e9cbb16fc36aac6980adfcb63417686c7",
-      "source": "exec-9ba44f0b-7842-4ac6-b4f0-9a7e54b06573.png"
+      "drawScale": 1.076276,
+      "source": "exec-7f873bc4-854c-4876-84ff-1e0796eb0134.png",
+      "sha256": "05cc0c8d7aa128d1e5b26dcb303a3c2aaf5cd0314e307422846f8f555c831ab9"
     },
     "stalk/left/003.png": {
       "anchor": [
-        256,
+        233,
         450
       ],
-      "sha256": "9b5085c8cf2035c3394f5069ba4f0712068ea4699cf5e59662916305649a24d2",
-      "source": "exec-e0d5dc95-7286-4692-a76d-1b84e8a39caf.png"
+      "drawScale": 1.076276,
+      "source": "exec-720616f7-6996-4d7a-9e7f-b121c03a34c1.png",
+      "sha256": "e636f41fce5c843fbeccac9f13a46442039b769ac66c32816da86a1f5f68fee8"
     },
     "jog/left/000.png": {
       "anchor": [
-        256,
+        233,
         450
       ],
-      "sha256": "de0374c03b9b735fb760d3b11bcbb43235711c595249727614325525a60f591b",
-      "source": "exec-6f4e60ed-4a83-4b6e-959b-77c46d5c4229.png"
+      "drawScale": 1.00205,
+      "sha256": "d465090313823145b4bbeb8d92a1c2c1ab76e1775fa8993b48099baff89107bb",
+      "source": "exec-77b7066c-80dc-40ef-a593-6c769624bcab.png"
     },
     "jog/left/001.png": {
       "anchor": [
-        256,
+        233,
         450
       ],
-      "sha256": "2b87a65e87136da2cba3445b8a2927610ec2d13ed91add97cdb7cd07bc4bb4a1",
-      "source": "exec-6f4e60ed-4a83-4b6e-959b-77c46d5c4229.png"
+      "drawScale": 1.00205,
+      "sha256": "70de38499b89bf4ec0dc85607e6f48a0952906bc393cc150d71b1516049c3bc5",
+      "source": "exec-98640525-c515-4ceb-9f55-0b1de6b05252.png"
     },
     "jog/left/002.png": {
       "anchor": [
-        256,
+        233,
         450
       ],
-      "sha256": "e9d6e1e4881ec3c5a4826c9324fd6b13731981ce30c46a5c54c1bf0eeb59b680",
-      "source": "exec-6f4e60ed-4a83-4b6e-959b-77c46d5c4229.png"
+      "drawScale": 1.00205,
+      "sha256": "d93edc3019bafa7c1c20f45831bab8ed24816d94c932ad6ca387994f2a06acb9",
+      "source": "exec-f765587b-11ad-4387-917b-d81df6b47dd6.png"
     },
     "jog/left/003.png": {
       "anchor": [
-        256,
+        233,
         450
       ],
-      "sha256": "bcaf005dd4c95d640a07b127726f6024337777eca5ea9526d66bb18778cc8809",
-      "source": "exec-6f4e60ed-4a83-4b6e-959b-77c46d5c4229.png"
+      "drawScale": 1.00205,
+      "sha256": "38f29508ce0860d380fa36cab0096b2fa01e14f45b464008e841a426a5ddc57f",
+      "source": "exec-7ef906e1-d7bc-4e78-ad23-46169d38c8af.png"
     }
   },
   "slidePhases": [

@@ -25,3 +25,15 @@ assert.equal(frame(40,{sliding:true,slideRemaining:.5}).family,'slide');
 for(let i=0;i<20;i++)frame(0);
 assert.equal(frame(0).family,'idle','slide recovers into standing');
 console.log('PASS: idle/stalk/jog/sprint progression, threshold hysteresis, all4 phases while firing, unbuilt-direction fallback, slide recovery');
+const {raptorSpritePlacement}=require('../lib/raptorSpriteOnly.ts');
+const world={x:400,y:300,scale:.5};
+assert.deepEqual(raptorSpritePlacement(world,{anchor:[256,450]}),{x:272,y:75,size:256},'legacy registration unchanged');
+for(const drawScale of [1,1.3,.8]){
+ const anchor=[270,450],p=raptorSpritePlacement(world,{anchor,drawScale});
+ const scale=p.size/512;
+ assert.equal(p.x+anchor[0]*scale,world.x,'horizontal anchor pinned');
+ assert.equal(p.y+anchor[1]*scale,world.y,'ground anchor pinned');
+ assert.equal(scale,.5*drawScale,'uniform scale preserves body proportions');
+}
+for(const drawScale of [0,-1,NaN,Infinity])assert.deepEqual(raptorSpritePlacement(world,{anchor:[256,450],drawScale}),{x:272,y:75,size:256});
+console.log('PASS: authored scale retains world anchors and legacy placement');
