@@ -1,5 +1,23 @@
 # 39T7 anatomy correction audit — 2026-11-05
 
+## Current status — 39T7.4 live (supersedes historical sections below)
+
+- Working branch: studio/39t7-anatomy-corrections
+- Deployed code: d30ee9d3c6d1b088e0359efff3c072e5683b7bed
+- Railway deployment da4a53a7-b251-4bb7-b2e5-0dca09520ac8: SUCCESS.
+- Fresh lab shows39T7.4; review loads all112 asset paths.
+-21 replacement images installed across39T7.3/4: right idle1/stalk4/jog4/slide3; left idle1/stalk4/jog4.
+- Normal touch controls painted all4 stalk and jog phases in both side directions. Normal moving-fire input painted all4 jog phases in both directions. Supported doubletap+right movement painted all3 right slide phases, followed by two-foot standing.
+- This establishes asset loading and phase/input coverage, NOT full anatomy/playback acceptance.
+- Live evidence: raptor-39t7-4-live-proof.jpg. Firing screenshot exposes muzzle flash/projectile presentation above the new barrel. Existing barrelSocket27d uses Jade registration (125px cell,.88ground,.37muzzle), while Raptor uses512px anchored art. Do not call firing visually verified. Needs per-frame barrel registration and coherent shot/effect origin; merely moving the flash would hide the projectile mismatch.
+- No physical-controller hardware available. Sustained animation video not captured; static screenshots and painted-frame traces are limited evidence.
+- Front-diagonal candidates remain UNINSTALLED. Initial camera-correction candidates rejected for oversized head/shortened snout/squat ribcage and red organic eye. New front-right standing candidate exec-9bf8eb2e-f5a8-4fcf-b0b9-6c3971219aa6.png corrects those issues provisionally; must compare against side masters before acceptance.
+- New front-right stalk candidates in phase order: exec-a095e3d7-600f-4224-ad20-2ca6e646478e.png, exec-bc559d70-3153-4e5f-af16-cd75d707f343.png, exec-8fff6396-2cc4-4927-a077-bbe080b2159f.png, exec-e1a5bee9-0a39-4e26-a16c-2f8f58ac579a.png. Actual thighs alternate in static review; scale/landmark/playback review still pending.
+- Front-right jog contact candidate exec-0563d972-9148-4632-970f-1ced9967e138.png; remaining phases being generated. No new diagonal runtime images installed.
+- Remaining inventory: six directions lack dedicated stalk4+jog4 (48 images). Confirmed frontdiagonal sprint8 need correction; rear sprint scale/camera review and other idle/slide transition audits remain open. Side sprint continuity with corrected gaits also unresolved. All-eight-direction completion is NOT reached.
+
+## Historical work log
+
 Status: INCOMPLETE. User rejected disproportionate artwork. No correction from this pass is production accepted or deployed.
 
 ## Preserved state
