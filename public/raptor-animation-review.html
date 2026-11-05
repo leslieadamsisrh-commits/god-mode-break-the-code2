@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raptor animation review</title>
+<style>body{margin:20px;background:#101b25;color:#e9f3fa;font:16px system-ui}a{color:#8adceb}header{display:flex;gap:16px;align-items:center;flex-wrap:wrap}button,select{font:inherit;padding:8px;background:#243b4d;color:white;border:1px solid #6b8a9c;border-radius:6px}#grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:20px}figure{margin:0;background:#20313e;border:1px solid #425868;border-radius:8px}canvas{width:100%;display:block}figcaption{padding:8px;text-align:center}#status{color:#a9c4d1}</style>
+<header><a href="/studio/character-lab">Back to combat lab</a><label>Action <select id="action"><option>sprint</option><option>run</option><option>slide</option><option>idle</option></select></label><button id="pause">Pause</button><button id="step">Next frame</button><label>Playback <select id="rate"><option value="4">4 fps</option><option value="8" selected>8 fps</option><option value="12">12 fps</option></select></label></header>
+<p id="status">Loading artwork…</p><div id="grid"></div>
+<script>
+const grid=document.querySelector('#grid'),status=document.querySelector('#status'),action=document.querySelector('#action'),rate=document.querySelector('#rate');
+let paused=false,frame=0,last=0,inventory,images=new Map(),views=[];
+document.querySelector('#pause').onclick=()=>{paused=!paused;document.querySelector('#pause').textContent=paused?'Play':'Pause'};
+document.querySelector('#step').onclick=()=>{paused=true;document.querySelector('#pause').textContent='Play';frame++};
+action.onchange=()=>{frame=0;last=0};
+async function start(){
+ inventory=await (await fetch('/assets/raptor-v2/manifest.json',{cache:'no-store'})).json();
+ let loaded=0;
+ await Promise.all(inventory.directions.flatMap(direction=>Object.entries(inventory.counts).flatMap(([family,count])=>Array.from({length:count},(_,i)=>new Promise((resolve,reject)=>{
+  const key=`${family}/${direction}/${String(i).padStart(3,'0')}.png`,image=new Image();
+  image.onload=()=>{if(image.naturalWidth!==512||image.naturalHeight!==512)return reject(Error(key+' has wrong dimensions'));images.set(key,image);loaded++;resolve()};
+  image.onerror=()=>reject(Error('Failed to load '+key));image.src='/assets/raptor-v2/'+key+'?v='+inventory.build;
+ })))));
+ for(const direction of inventory.directions){const figure=document.createElement('figure'),canvas=document.createElement('canvas'),caption=document.createElement('figcaption');canvas.width=320;canvas.height=300;caption.textContent=direction;figure.append(canvas,caption);grid.append(figure);views.push({direction,canvas,caption})}
+ status.textContent=inventory.build+' · '+loaded+' frames loaded · Slide frames show entry, hold, recovery';requestAnimationFrame(draw);
+}
+function draw(time){
+ if(!paused&&time-last>1000/Number(rate.value)){frame++;last=time}
+ const family=action.value,index=frame%inventory.counts[family];
+ for(const view of views){const key=`${family}/${view.direction}/${String(index).padStart(3,'0')}.png`,anchor=inventory.frames[key].anchor,g=view.canvas.getContext('2d');g.clearRect(0,0,320,300);g.strokeStyle='#547180';g.beginPath();g.moveTo(0,245);g.lineTo(320,245);g.stroke();g.drawImage(images.get(key),160-anchor[0]*.6,245-anchor[1]*.6,307.2,307.2);view.caption.textContent=view.direction+' · '+(index+1)+'/'+inventory.counts[family]}
+ requestAnimationFrame(draw);
+}
+start().catch(error=>{status.textContent=error.message;status.style.color='#ff8b8b'});
+</script></html>

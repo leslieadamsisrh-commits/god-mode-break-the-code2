@@ -75,7 +75,7 @@ export function preloadRaptorSprites():Promise<boolean>{
     const img=new Image();cache.set(key,img);
     img.onload=()=>resolve(img.naturalWidth===512&&img.naturalHeight===512);
     img.onerror=()=>{missing.add(key);resolve(false)};
-    img.src=`/assets/raptor-v2/${key}`;
+    img.src=`/assets/raptor-v2/${key}?v=${inventory.build}`;
    });
   })))).then(results=>results.every(Boolean));
 }
@@ -100,7 +100,7 @@ export function paintRaptorSprite(g:CanvasRenderingContext2D,state:RaptorVisualS
  if(!img&&!missing.has(key)){
    img=new Image();
    img.onerror=()=>missing.add(key);
-   img.src=`/assets/raptor-v2/${key}`;
+   img.src=`/assets/raptor-v2/${key}?v=${inventory.build}`;
    cache.set(key,img);
  }
  if(img?.complete&&img.naturalWidth===512&&img.naturalHeight===512){
@@ -116,5 +116,6 @@ export function paintRaptorSprite(g:CanvasRenderingContext2D,state:RaptorVisualS
  g.fillText("RAPTOR V2",0,-72);g.fillText("ART PENDING",0,-83);
  g.restore();return false;
 }
+
 
 
