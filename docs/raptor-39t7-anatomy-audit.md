@@ -1,5 +1,21 @@
 # 39T7 anatomy correction audit — 2026-11-05
 
+## Current status — 39T7.6 live
+- Working branch: studio/39t7-anatomy-corrections.
+- Deployed code: 12f0f72244ebaeb4aeaa2211fbee240af9923988.
+- Railway deployment 1a4dd219-5a14-4799-965f-7debf2f49c60: SUCCESS; fresh lab39T7.6 and review128 paths confirmed.
+- Installed96 unique images plus32 run aliases. All8 directions have idle1/sprint4/slide3; right,left,front-right,front-left additionally have stalk4/jog4. Four other directions lack32 slow-gait images.
+-39 anatomy pilot replacements installed: right12 including slides, left9, front-right9, front-left9. Static pilot acceptance is not full gameplay acceptance.
+- Live39T7.6 normalized digital diagonal test: front-right and front-left each painted jog0,1,2,3 at medium pace without entering sprint. Both painted stalk0,1,2,3 at light pace.
+- Evidence screenshot: raptor-39t7-6-diagonal-proof.jpg. Trace establishes painted phases, not anatomical quality or sustained-video verification. No physical controller available.
+- Open: old sprint continuity/proportions, remaining slides/idle, all-direction transition matrix, and muzzle/projectile origin above new gun barrel. See historical findings.
+- New direct-front standing7d3807eb and stalk candidates are UNINSTALLED. Visual phase mapping requires reordering: contactRIGHT8cc037bc; passingRIGHT-support8a02d09c; contactLEFT2db7b5b9; passingLEFT-support150b4b87. Original generation order was not safe playback order.
+- Direct-front jog3342c5c2 rejected as finished jog: insufficient posture distinction from stalk. Targeted chest/neck/hip correction underway.
+- Rear standing404acbf1 rejected for camera-facing claws. Correctedeb7267a1 provisional, uninstalled.
+- Completion NOT reached. Preserve all accepted existing work; do not claim every generated frame is accepted.
+
+## Prior checkpoint record (historical; superseded by current status)
+
 ## Current status — 39T7.4 live (supersedes historical sections below)
 
 - Working branch: studio/39t7-anatomy-corrections
