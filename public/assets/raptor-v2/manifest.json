@@ -1,5 +1,5 @@
 {
-  "build": "39T3",
+  "build": "39T5",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -184,14 +184,14 @@
         256,
         450
       ],
-      "sha256": "ed663f9b99a09668536cd3296c057086f866f842e46802637a4ccac498726d44"
+      "sha256": "22ff41e16391c1daee963f8b6ec2e0b6f4f8910f5c36aa35ceff63caf6eeee4b"
     },
     "run/left/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "ed14be45c25e23716b2655a033321c69b48173719667576425ea23180d8560d3"
+      "sha256": "c5ba8a82b88d30d3b72dc7ae650a042725a403f9757ca3722aaf1c8e6b307bf9"
     },
     "run/right/000.png": {
       "anchor": [
@@ -436,14 +436,14 @@
         256,
         450
       ],
-      "sha256": "1530a1b5c1b494ee4c0a5932a2a834b93dd81df0613cbdcaaef7685aac122116"
+      "sha256": "0924ce75494e43d72d02bcbcc998176b8a46d029b77ce2043ae1f518e1d71910"
     },
     "run/left/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "0c3276b23618247a267f3c29b3abcd63cd4ecee40b17a172c21d0adb03a922ad"
+      "sha256": "07ff004a346125975ae5500c2c6b4611a2108da76497d333176c1b8dedc0e6c4"
     },
     "run/back-left/002.png": {
       "anchor": [
@@ -604,28 +604,28 @@
         256,
         450
       ],
-      "sha256": "ed663f9b99a09668536cd3296c057086f866f842e46802637a4ccac498726d44"
+      "sha256": "22ff41e16391c1daee963f8b6ec2e0b6f4f8910f5c36aa35ceff63caf6eeee4b"
     },
     "sprint/left/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "ed14be45c25e23716b2655a033321c69b48173719667576425ea23180d8560d3"
+      "sha256": "c5ba8a82b88d30d3b72dc7ae650a042725a403f9757ca3722aaf1c8e6b307bf9"
     },
     "sprint/left/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "1530a1b5c1b494ee4c0a5932a2a834b93dd81df0613cbdcaaef7685aac122116"
+      "sha256": "0924ce75494e43d72d02bcbcc998176b8a46d029b77ce2043ae1f518e1d71910"
     },
     "sprint/left/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "0c3276b23618247a267f3c29b3abcd63cd4ecee40b17a172c21d0adb03a922ad"
+      "sha256": "07ff004a346125975ae5500c2c6b4611a2108da76497d333176c1b8dedc0e6c4"
     },
     "sprint/back-left/000.png": {
       "anchor": [
