@@ -1,5 +1,5 @@
 import {PRACTICE_RULES31,validateRules31} from "./matchRules31";
-import {applyArenaLayout27c,advance,newGame,safeState,setInput,startOrRematch,updateConfig,combatDiagnostics,type GameState,type InputState} from "./game";
+import {applyArenaLayout27c,advance,newGame,safeState,setInput,startOrRematch,updateConfig,combatDiagnostics,refreshRaptorPose,type GameState,type InputState} from "./game";
 import {registerRepulseLab21,configureRepulse21} from './repulse21';
 
 // Same combat authority, hosted on this device for single-player modes.
@@ -7,8 +7,10 @@ import {registerRepulseLab21,configureRepulse21} from './repulse21';
 export function isLocalMode(mode:unknown){return mode==="solo"||mode==="practice"||mode==="bot";}
 export class LocalCombat {
  state:GameState;room:string;token:string;private clock:number|null=null;private remainder=0;private seq=0;
- constructor(name:string,mode:"solo"|"practice"|"bot",now:number,rules?:unknown){
+ constructor(name:string,mode:"solo"|"practice"|"bot",now:number,rules?:unknown,character?:unknown){
   this.token=crypto.randomUUID();this.room="local-"+crypto.randomUUID();this.state=newGame(name,this.token,now,mode);
+  this.state.players[0].character=character==='raptor'?'raptor':'jade';
+  refreshRaptorPose(this.state.players[0],this.state.time,this.state.config.slideDuration);
   if(rules!==undefined)this.state.rules31=validateRules31(rules);else if(mode==="practice")this.state.rules31={...PRACTICE_RULES31};
   registerRepulseLab21(this.state);
  }

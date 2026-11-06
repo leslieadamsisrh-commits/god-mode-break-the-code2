@@ -1,0 +1,72 @@
+[
+  {
+    "path": "jog/back-left/003-v2.png",
+    "source": "exec-147c2f08-41a2-4117-8743-14a2b20c39f4.png",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "scale": 0.4082934609250399,
+    "status": "candidate-primary-acceptance-required",
+    "anchorProposal": [
+      256,
+      450
+    ]
+  },
+  {
+    "path": "stalk/back-left/003-v2.png",
+    "source": "exec-91e356f3-58e1-4867-a091-2eb24a358b71.png",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "scale": 0.4082934609250399,
+    "status": "candidate-primary-acceptance-required",
+    "anchorProposal": [
+      256,
+      450
+    ]
+  },
+  {
+    "path": "stalk/back-right/003-v2.png",
+    "source": "exec-b7cd9752-5fdc-4558-b266-5809a3811da7.png",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "scale": 0.4082934609250399,
+    "status": "candidate-primary-acceptance-required",
+    "anchorProposal": [
+      256,
+      450
+    ]
+  },
+  {
+    "path": "jog/back-right/003-v2.png",
+    "source": "exec-cce1722c-e3e7-43e5-bf90-98e8a74d4b7b.png",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "scale": 0.4082934609250399,
+    "status": "candidate-primary-acceptance-required",
+    "anchorProposal": [
+      256,
+      450
+    ]
+  },
+  {
+    "path": "stalk/back-right/002-v2.png",
+    "source": "exec-6c2b4173-35df-4520-8461-1dd600ac7dcb.png",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "scale": 0.4082934609250399,
+    "status": "candidate-primary-acceptance-required",
+    "anchorProposal": [
+      256,
+      450
+    ]
+  }
+]

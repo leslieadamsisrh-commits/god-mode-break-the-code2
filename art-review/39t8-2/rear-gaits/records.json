@@ -1,0 +1,391 @@
+{
+  "master": "exec-e30e1c6b-1fa9-4285-b261-28d785ba3c01.png",
+  "generation": "built-in imagegen",
+  "registration": "Fixed equal-quadrant crop and same uniform scale; no bounding-box normalization. Anchor proposal only, not contact verified.",
+  "frames": [
+    {
+      "path": "stalk/back-left/000.png",
+      "source": "exec-34eadc81-3cd3-42dd-a741-1a43b91e0b21.png",
+      "crop": [
+        0,
+        0,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "stalk/back-left/001.png",
+      "source": "exec-34eadc81-3cd3-42dd-a741-1a43b91e0b21.png",
+      "crop": [
+        631,
+        0,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "stalk/back-left/002.png",
+      "source": "exec-34eadc81-3cd3-42dd-a741-1a43b91e0b21.png",
+      "crop": [
+        0,
+        623,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "stalk/back-left/003.png",
+      "source": "exec-34eadc81-3cd3-42dd-a741-1a43b91e0b21.png",
+      "crop": [
+        631,
+        623,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "jog/back-left/000.png",
+      "source": "exec-bbc25d15-e203-4b65-87fb-26a6ad52275c.png",
+      "crop": [
+        0,
+        0,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "jog/back-left/001.png",
+      "source": "exec-bbc25d15-e203-4b65-87fb-26a6ad52275c.png",
+      "crop": [
+        631,
+        0,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "jog/back-left/002.png",
+      "source": "exec-bbc25d15-e203-4b65-87fb-26a6ad52275c.png",
+      "crop": [
+        0,
+        623,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "jog/back-left/003.png",
+      "source": "exec-bbc25d15-e203-4b65-87fb-26a6ad52275c.png",
+      "crop": [
+        631,
+        623,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "stalk/back-right/000.png",
+      "source": "exec-f05bc4e8-36fd-4011-b7fe-429ecdbd3483.png",
+      "crop": [
+        0,
+        0,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "stalk/back-right/001.png",
+      "source": "exec-f05bc4e8-36fd-4011-b7fe-429ecdbd3483.png",
+      "crop": [
+        631,
+        0,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "stalk/back-right/002.png",
+      "source": "exec-f05bc4e8-36fd-4011-b7fe-429ecdbd3483.png",
+      "crop": [
+        0,
+        623,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "stalk/back-right/003.png",
+      "source": "exec-f05bc4e8-36fd-4011-b7fe-429ecdbd3483.png",
+      "crop": [
+        631,
+        623,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "jog/back-right/000.png",
+      "source": "exec-10ac421c-feee-4f68-8994-4e1356066b7b.png",
+      "crop": [
+        0,
+        0,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "jog/back-right/001.png",
+      "source": "exec-10ac421c-feee-4f68-8994-4e1356066b7b.png",
+      "crop": [
+        631,
+        0,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "jog/back-right/002.png",
+      "source": "exec-10ac421c-feee-4f68-8994-4e1356066b7b.png",
+      "crop": [
+        0,
+        623,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    },
+    {
+      "path": "jog/back-right/003.png",
+      "source": "exec-10ac421c-feee-4f68-8994-4e1356066b7b.png",
+      "crop": [
+        631,
+        623,
+        631,
+        623
+      ],
+      "uniformScale": 0.8114104595879557,
+      "anchorProposal": [
+        256,
+        450
+      ],
+      "status": "candidate-not-accepted",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "padding": [
+        0,
+        8
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "direction": "front-right",
+  "sourceSheet": "source-sheet.png",
+  "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+  "extraction": "512-square cells from1536x1024 sheet; common scalar per direction; alpha below0.5 discarded to remove generated low-opacity backdrop; higher alpha retained",
+  "frames": {
+    "000.png": {
+      "phase": "push-off",
+      "anchor": [
+        260,
+        450
+      ],
+      "muzzleSuggested": [
+        366,
+        331
+      ],
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "scale": 0.65,
+      "offset": [
+        90,
+        156
+      ],
+      "sha256": "21dd116cdeef0a8500c62beb43715e7bff5a85f0b47e4d0506c63f1bfc0ce060",
+      "status": "review-only: primary motion/scale acceptance pending"
+    },
+    "001.png": {
+      "phase": "ascent",
+      "anchor": [
+        260,
+        441
+      ],
+      "muzzleSuggested": [
+        355,
+        299
+      ],
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "scale": 0.65,
+      "offset": [
+        90,
+        156
+      ],
+      "sha256": "c54ee3b4584796b72e6d70c76e7c9ca14f1a973854cb66bbcd6ea73723c4718e",
+      "status": "review-only: primary motion/scale acceptance pending"
+    },
+    "002.png": {
+      "phase": "apex",
+      "anchor": [
+        260,
+        425
+      ],
+      "muzzleSuggested": [
+        357,
+        289
+      ],
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "scale": 0.65,
+      "offset": [
+        90,
+        156
+      ],
+      "sha256": "60a120f51ed7dba493f00251754c2d9e220f5389fce492893e102bddfbd1133d",
+      "status": "review-only: primary motion/scale acceptance pending"
+    },
+    "003.png": {
+      "phase": "descent",
+      "anchor": [
+        260,
+        435
+      ],
+      "muzzleSuggested": [
+        366,
+        298
+      ],
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "scale": 0.65,
+      "offset": [
+        90,
+        156
+      ],
+      "sha256": "d3e4a31aae4d1f9a273c4d2311fdbe869f9cf817be0a9631e26c83549aee40b9",
+      "status": "review-only: primary motion/scale acceptance pending"
+    },
+    "004.png": {
+      "phase": "landing",
+      "anchor": [
+        260,
+        450
+      ],
+      "muzzleSuggested": [
+        362,
+        346
+      ],
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "scale": 0.65,
+      "offset": [
+        90,
+        156
+      ],
+      "sha256": "38bf1f653991c2c5582b6cdd3699113875eb9ebefafccd18108fec284ab91d00",
+      "status": "review-only: primary motion/scale acceptance pending"
+    },
+    "005.png": {
+      "phase": "recovery",
+      "anchor": [
+        260,
+        450
+      ],
+      "muzzleSuggested": [
+        357,
+        314
+      ],
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "scale": 0.65,
+      "offset": [
+        90,
+        156
+      ],
+      "sha256": "7528d51533fa1750f931a07befd3035337ada2b31bf4db67fb67eff1e9503051",
+      "status": "review-only: primary motion/scale acceptance pending"
+    }
+  },
+  "alphaAudit": "Largest alpha>127 connected component plus1px edge verified; zero RGB under transparent pixels. White and gray composites clean."
+}

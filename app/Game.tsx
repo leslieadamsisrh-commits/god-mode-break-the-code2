@@ -277,7 +277,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  const debugRef21=useRef(false);const [debug21,setDebug21]=useState(false);
  const selectorGate22=useRef(new SelectorGate22());
  const localCombat=useRef<LocalCombat|null>(null);
- const post=useCallback(async(body:any)=>{if(body.action==="create"&&isLocalMode(body.mode)){const engine=new LocalCombat(body.name||"Les",body.mode,performance.now(),body.rules31);if(body.layout)engine.command({action:"arenaLayout",room:engine.room,token:engine.token,layout:body.layout});localCombat.current=engine;return engine.reply();}if(localCombat.current&&body.room===localCombat.current.room)return localCombat.current.command(body);const sentAt=performance.now();const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),2500);try{const r=await fetch("/api/game",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:controller.signal}),v=await r.json();if(!r.ok)throw Error(v.error||"Request failed");if(body.action==="create"||body.action==="join")localCombat.current=null;if(body.action==="input"){inputTiming.current.rtt=performance.now()-sentAt;inputTiming.current.samples++;}return v;}finally{clearTimeout(timeout);}},[]);
+ const post=useCallback(async(body:any)=>{if(body.action==="create"&&isLocalMode(body.mode)){const engine=new LocalCombat(body.name||"Les",body.mode,performance.now(),body.rules31,characterRef.current);if(body.layout)engine.command({action:"arenaLayout",room:engine.room,token:engine.token,layout:body.layout});localCombat.current=engine;return engine.reply();}if(localCombat.current&&body.room===localCombat.current.room)return localCombat.current.command(body);const sentAt=performance.now();const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),2500);try{const r=await fetch("/api/game",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:controller.signal}),v=await r.json();if(!r.ok)throw Error(v.error||"Request failed");if(body.action==="create"||body.action==="join")localCombat.current=null;if(body.action==="input"){inputTiming.current.rtt=performance.now()-sentAt;inputTiming.current.samples++;}return v;}finally{clearTimeout(timeout);}},[]);
  const reviewCombat=async()=>{const ss=session.current;if(!ss)return;setAuditStatus("Loading confirmed outcomes…");if(ss.local&&localCombat.current){setCombatAudit({...localCombat.current.diagnostics(),frameTimes:frameSummary43(),requestRtt:0,inputRtt:0,inputSamples:0,snapshotGap:0});setAuditStatus("");return;}try{const at=performance.now(),u=new URL("/api/game",location.origin);u.searchParams.set("room",ss.room);u.searchParams.set("token",ss.token);u.searchParams.set("audit","1");const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(!r.ok)throw Error(v.error||"Audit unavailable");setCombatAudit({...v.diagnostics,frameTimes:frameSummary43(),requestRtt:performance.now()-at,inputRtt:inputTiming.current.rtt,inputSamples:inputTiming.current.samples,snapshotGap});setAuditStatus("");}catch(e:any){setAuditStatus(e.message);}};
  const accept=useCallback((v:any)=>{if(v.state){if(state.current&&v.state.round===state.current.round&&v.state.lastAt<=state.current.lastAt)return;const at=performance.now();if(state.current&&v.state.round!==state.current.round){snapshots.length=0;kineticEcho.length=0;hoverWake.length=0;cameraState.ready=false}const incoming=v.state,room=session.current?.room||"",seen=feedbackSeen.current;
  if(seen.room!==room||seen.round!==incoming.round){seen.room=room;seen.round=incoming.round;seen.seq=incoming.eventSeq||0;seen.cue="";}
@@ -1011,15 +1011,15 @@ function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,ch
  g.restore();
 }
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade"){
- if(character==="raptor"){
+ if(p.character==="raptor"||character==="raptor"){
   const speed=Math.hypot(p.vx||0,p.vy||0);
-  const visual=coverVisualOffset(p);
+  const visual={x:0,y:0};
   const family=p.slide>0||p.pinball>0?"slide":speed>2?"run":"ready";
   paintRaptorSprite(g,{x:visual.x+p.x,y:visual.y+p.y,angle:spriteFacing(p,family,speed,2),
     worldX:p.x,worldY:p.y,travelAngle:speed>2?Math.atan2(p.vy,p.vx):undefined,
     speed,sliding:p.slide>0||p.pinball>0,slideRemaining:p.slide>0?p.slide:undefined,slideDuration:cfg.slideDuration,
     attached:!!p.coverId,actorId:p.id||p.token||p.name||"local",airborne:p.grounded===false||Math.abs(p.vz||0)>.1||(p.jumpHeight||0)>0,
-    verticalVelocity:p.vz||0,hit:p.knock>0||(p.hitUntil||0)>t,firing:!!p.input?.fire,time:t,scale:cfg.spriteScale*.26});
+    authoritativeFrame:p.raptorFrame,verticalVelocity:p.vz||0,hit:p.knock>0||(p.hitUntil||0)>t,firing:!!p.input?.fire,time:t,scale:cfg.spriteScale*.26});
   drawGloveWindup(g,p,t,cfg,"raptor");
   return;
  }

@@ -1,0 +1,66 @@
+[
+  {
+    "frame": 0,
+    "oldOpaqueBounds": [
+      56,
+      226,
+      468,
+      452
+    ],
+    "candidateOpaqueBounds": [
+      64,
+      224,
+      393,
+      454
+    ],
+    "suggestedGroundTranslationY": -2
+  },
+  {
+    "frame": 1,
+    "oldOpaqueBounds": [
+      56,
+      226,
+      468,
+      454
+    ],
+    "candidateOpaqueBounds": [
+      64,
+      224,
+      400,
+      459
+    ],
+    "suggestedGroundTranslationY": -5
+  },
+  {
+    "frame": 2,
+    "oldOpaqueBounds": [
+      54,
+      225,
+      469,
+      449
+    ],
+    "candidateOpaqueBounds": [
+      64,
+      224,
+      404,
+      451
+    ],
+    "suggestedGroundTranslationY": -2
+  },
+  {
+    "frame": 3,
+    "oldOpaqueBounds": [
+      56,
+      226,
+      468,
+      447
+    ],
+    "candidateOpaqueBounds": [
+      64,
+      224,
+      404,
+      451
+    ],
+    "suggestedGroundTranslationY": -4
+  }
+]

@@ -1,5 +1,5 @@
 {
-  "build": "39T7.8",
+  "build": "39T8.2-candidate",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -7,7 +7,8 @@
     "sprint": 4,
     "slide": 3,
     "stalk": 4,
-    "jog": 4
+    "jog": 4,
+    "jump": 6
   },
   "directions": [
     "right",
@@ -55,7 +56,15 @@
         450
       ],
       "sha256": "51b7b32edeade09b4bc785b4be3d2ec6986c4feeb3ac263077808b5535d7bda9",
-      "source": "exec-5bf23e86-580e-4633-9240-73528cf3089c.png"
+      "source": "exec-5bf23e86-580e-4633-9240-73528cf3089c.png",
+      "muzzle": [
+        120,
+        251
+      ],
+      "muzzleGround": [
+        120,
+        450
+      ]
     },
     "idle/back-right/000.png": {
       "anchor": [
@@ -63,7 +72,15 @@
         450
       ],
       "sha256": "22764c7171b879fb79fd7e0a7f1fe3aaa64bf9815c1fe5a0012299a4c499dce8",
-      "source": "exec-5bf23e86-580e-4633-9240-73528cf3089c.png"
+      "source": "exec-5bf23e86-580e-4633-9240-73528cf3089c.png",
+      "muzzle": [
+        368,
+        250
+      ],
+      "muzzleGround": [
+        368,
+        450
+      ]
     },
     "idle/front/000.png": {
       "anchor": [
@@ -71,7 +88,15 @@
         450
       ],
       "sha256": "ec94c74a022925ced4db71e2faf79c5128c6b6dcda1b70311839bc22663c74e0",
-      "source": "exec-7d3807eb-6361-443c-b852-10041c1b92e9.png"
+      "source": "exec-7d3807eb-6361-443c-b852-10041c1b92e9.png",
+      "muzzle": [
+        257,
+        315
+      ],
+      "muzzleGround": [
+        257,
+        450
+      ]
     },
     "idle/front-left/000.png": {
       "anchor": [
@@ -79,7 +104,15 @@
         450
       ],
       "sha256": "0d2b43a62a9aa010c2b8024a0cf4380563c2d889f287a964b99b5519ab7745be",
-      "source": "exec-54854b55-7105-4d44-98a8-96348d1e5a73.png"
+      "source": "exec-54854b55-7105-4d44-98a8-96348d1e5a73.png",
+      "muzzle": [
+        188,
+        300
+      ],
+      "muzzleGround": [
+        188,
+        450
+      ]
     },
     "idle/front-right/000.png": {
       "anchor": [
@@ -87,7 +120,15 @@
         450
       ],
       "sha256": "7e6dde6fdb357c0af3b404dd9f7af140c8be505e34b4dafdf18f0f74b3fb97b5",
-      "source": "exec-9bf8eb2e-f5a8-4fcf-b0b9-6c3971219aa6.png"
+      "source": "exec-9bf8eb2e-f5a8-4fcf-b0b9-6c3971219aa6.png",
+      "muzzle": [
+        341,
+        290
+      ],
+      "muzzleGround": [
+        341,
+        450
+      ]
     },
     "idle/left/000.png": {
       "anchor": [
@@ -96,15 +137,31 @@
       ],
       "drawScale": 1.076276,
       "sha256": "aeb2943b008ade0d48d8006a24f251b010f0625c131d0a123d5ce769b5dfd5ae",
-      "source": "exec-437c5589-6762-4591-851a-699d6d2f437f.png"
+      "source": "exec-437c5589-6762-4591-851a-699d6d2f437f.png",
+      "muzzle": [
+        70,
+        318
+      ],
+      "muzzleGround": [
+        70,
+        450
+      ]
     },
     "idle/right/000.png": {
       "anchor": [
         300,
-        450
+        442
       ],
-      "sha256": "346bb2f3dcd535e3cd29c5cbf2fbe21d8f5e04adaca01d62e3cd14e8f25f95bb",
-      "source": "exec-42cea266-a480-4079-be65-4f87bbf8ca11.png"
+      "sha256": "4a2e74ae01e5acb6b750a621e783c6536f7f29605e6589deea6bbf45c16031ce",
+      "source": "exec-f9ea6c20-4b4e-4b3d-8fb2-80820e7fcdb2.png",
+      "muzzle": [
+        481,
+        293
+      ],
+      "muzzleGround": [
+        481,
+        442
+      ]
     },
     "run/back/000.png": {
       "anchor": [
@@ -125,105 +182,206 @@
         256,
         369
       ],
-      "sha256": "f7a93303b135a2bf9955b89611d49427e7727a0854711418d5e531631e3523e8"
+      "sha256": "f7a93303b135a2bf9955b89611d49427e7727a0854711418d5e531631e3523e8",
+      "muzzle": [
+        165,
+        206
+      ],
+      "muzzleGround": [
+        165,
+        369
+      ]
     },
     "run/back-left/001.png": {
       "anchor": [
         256,
         374
       ],
-      "sha256": "755d2dfdb9fe16960cf5d14584e8d33f71bb96813d746d21f291e4d075b26a9d"
+      "sha256": "755d2dfdb9fe16960cf5d14584e8d33f71bb96813d746d21f291e4d075b26a9d",
+      "muzzle": [
+        171,
+        227
+      ],
+      "muzzleGround": [
+        171,
+        374
+      ]
     },
     "run/back-right/000.png": {
       "anchor": [
         256,
         369
       ],
-      "sha256": "338740429e8a115d4d6048213cad1ad84074e0a1c5dd572a7e8fff6b31c8a008"
+      "sha256": "338740429e8a115d4d6048213cad1ad84074e0a1c5dd572a7e8fff6b31c8a008",
+      "muzzle": [
+        349,
+        206
+      ],
+      "muzzleGround": [
+        349,
+        369
+      ]
     },
     "run/back-right/001.png": {
       "anchor": [
         256,
         375
       ],
-      "sha256": "45c8394967c605972ab8c673e92801ace6f8c7e424a8a41d57cbd4ff14751b5b"
+      "sha256": "45c8394967c605972ab8c673e92801ace6f8c7e424a8a41d57cbd4ff14751b5b",
+      "muzzle": [
+        345,
+        227
+      ],
+      "muzzleGround": [
+        345,
+        375
+      ]
     },
     "run/front/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "94c4fe260b0b99dae24e9984f9b0999122a16dc1c7440938ce8b03db3847d810"
+      "sha256": "db04a99a76a5fc1d9b43fa820d23b8f0d624d9fdc77662a1369839822613d70e",
+      "source": "39t8-2-three-claw-correction"
     },
     "run/front/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "6c585269f1dd044cb03296ed02e5d967977acd0b5e11f0223534716010706b85"
+      "sha256": "6c585269f1dd044cb03296ed02e5d967977acd0b5e11f0223534716010706b85",
+      "muzzle": [
+        237,
+        312
+      ],
+      "muzzleGround": [
+        237,
+        450
+      ]
     },
     "run/front-left/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "8cc300e7734dedf7d374bb3bf05137a49f9ee51a4829ed3afdfd1e97fa769906"
+      "sha256": "8cc300e7734dedf7d374bb3bf05137a49f9ee51a4829ed3afdfd1e97fa769906",
+      "muzzle": [
+        110,
+        316
+      ],
+      "muzzleGround": [
+        110,
+        450
+      ]
     },
     "run/front-left/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "4b81606051c20e3e7de164e0bf1fb885f83a5774bd3dd7ba8e7450b65f633f15"
+      "sha256": "4b81606051c20e3e7de164e0bf1fb885f83a5774bd3dd7ba8e7450b65f633f15",
+      "muzzle": [
+        108,
+        354
+      ],
+      "muzzleGround": [
+        108,
+        450
+      ]
     },
     "run/front-right/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "c53b3fc7dd871f2e89f8800d908f8c0f6337d45e5de7fe3df14d3589b0baa0c0"
+      "sha256": "c53b3fc7dd871f2e89f8800d908f8c0f6337d45e5de7fe3df14d3589b0baa0c0",
+      "muzzle": [
+        404,
+        316
+      ],
+      "muzzleGround": [
+        404,
+        450
+      ]
     },
     "run/front-right/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "1538c1afb4a593a325dda8e428333deca73b84341a54de51eb1cb27758dc8f84"
+      "sha256": "1538c1afb4a593a325dda8e428333deca73b84341a54de51eb1cb27758dc8f84",
+      "muzzle": [
+        405,
+        355
+      ],
+      "muzzleGround": [
+        405,
+        450
+      ]
     },
     "run/left/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "22ff41e16391c1daee963f8b6ec2e0b6f4f8910f5c36aa35ceff63caf6eeee4b"
+      "sha256": "c4e6be0622b833f1ac1e2406f7fa80efa21ee400961201276fcaa2b7319e757a",
+      "source": "exec-56c1961e-7f1a-4dff-8ed8-bd8450252595.png"
     },
     "run/left/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "c5ba8a82b88d30d3b72dc7ae650a042725a403f9757ca3722aaf1c8e6b307bf9"
+      "sha256": "889d77937a06f320ab80fcf45dfc9947db99f20cd5036850d410838e480e9e5a",
+      "source": "exec-56c1961e-7f1a-4dff-8ed8-bd8450252595.png"
     },
     "run/right/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "a0e2896f3e15108a568339412b54e6625efb17bf7ec6fa6bce5740d5924f891a"
+      "sha256": "3e235889aa075e7c4b69a7c28ca0270bc12771ed7a2e63387ec34551a4ac7370",
+      "source": "exec-18ca2db0-c65a-4e6b-8a04-b166f095d404.png",
+      "muzzle": [
+        489,
+        337
+      ],
+      "muzzleGround": [
+        489,
+        450
+      ]
     },
     "run/right/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "16776217647718e672e7a8f0807aa012187a2ec1c9c85b356f9db1fa193d6b52"
+      "sha256": "f0a637f3867273e9a429f9435490992a189cd43c2b71347acdad1faf7138a163",
+      "source": "exec-18ca2db0-c65a-4e6b-8a04-b166f095d404.png",
+      "muzzle": [
+        487,
+        334
+      ],
+      "muzzleGround": [
+        487,
+        450
+      ]
     },
     "slide/front-right/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "9fcbe968bf1469434570a85bb863fa823f78468bb95942113f398f062c6b0c7b"
+      "sha256": "9fcbe968bf1469434570a85bb863fa823f78468bb95942113f398f062c6b0c7b",
+      "muzzle": [
+        393,
+        327
+      ],
+      "muzzleGround": [
+        393,
+        450
+      ]
     },
     "slide/right/001.png": {
       "anchor": [
@@ -232,70 +390,143 @@
       ],
       "drawScale": 1.317741,
       "sha256": "953606c223e780abfffd38502ccf951b07c230107fb4986847b8b151813d74bc",
-      "source": "exec-4f336645-0516-4e94-8d97-f965dd55e038.png"
+      "source": "exec-4f336645-0516-4e94-8d97-f965dd55e038.png",
+      "muzzle": [
+        415,
+        372
+      ],
+      "muzzleGround": [
+        415,
+        450
+      ]
     },
     "slide/front/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "c0cf578c5c29ff317e30c125f904b9154fff370d513ca16989cf50f3c57f4f74"
+      "sha256": "c0cf578c5c29ff317e30c125f904b9154fff370d513ca16989cf50f3c57f4f74",
+      "muzzle": [
+        210,
+        317
+      ],
+      "muzzleGround": [
+        210,
+        450
+      ]
     },
     "slide/front-left/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "ae13837ea416c1a1a385e13f775ac366a03de417c69b4a6069d7f0c05a2d8f86"
+      "sha256": "ae13837ea416c1a1a385e13f775ac366a03de417c69b4a6069d7f0c05a2d8f86",
+      "muzzle": [
+        107,
+        332
+      ],
+      "muzzleGround": [
+        107,
+        450
+      ]
     },
     "slide/left/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "c339486e19d94748926791627c3c113f84544a22d2e5440507cc8691f72f5e9a"
+      "sha256": "c339486e19d94748926791627c3c113f84544a22d2e5440507cc8691f72f5e9a",
+      "muzzle": [
+        92,
+        341
+      ],
+      "muzzleGround": [
+        92,
+        450
+      ]
     },
     "slide/back-left/001.png": {
       "anchor": [
         256,
         375
       ],
-      "sha256": "ac8263a4ad361e6406779afac89396550ac2c25eced7c4327e8118e48036c81c"
+      "sha256": "ac8263a4ad361e6406779afac89396550ac2c25eced7c4327e8118e48036c81c",
+      "muzzle": [
+        154,
+        248
+      ],
+      "muzzleGround": [
+        154,
+        375
+      ]
     },
     "slide/back/001.png": {
       "anchor": [
         256,
-        365
+        343
       ],
-      "sha256": "94211371f3c168a5c2c794dbd894c282aaf026a8ac1299b53c0485723b7faa95"
+      "sha256": "6a9ce1795fbf4b98a5815d7ec090989962e3ff31a08c1f7450b9fea9d827cb52",
+      "source": "exec-3ffae6cf-7d2b-4190-9931-f4df27dec7dc.png"
     },
     "slide/back-right/001.png": {
       "anchor": [
         256,
         376
       ],
-      "sha256": "e060cfc473e9f65e0e4fa641f7da17fc8e58dae265d3680c9a03e10597e92235"
+      "sha256": "e060cfc473e9f65e0e4fa641f7da17fc8e58dae265d3680c9a03e10597e92235",
+      "muzzle": [
+        360,
+        247
+      ],
+      "muzzleGround": [
+        360,
+        376
+      ]
     },
     "slide/front-right/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "9923882d827a0bce619c2cc02901f9b6bdb2a16018f0f13095a0c839190c9136"
+      "sha256": "9923882d827a0bce619c2cc02901f9b6bdb2a16018f0f13095a0c839190c9136",
+      "muzzle": [
+        425,
+        295
+      ],
+      "muzzleGround": [
+        425,
+        450
+      ]
     },
     "slide/front-right/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "1632a559a5656785bdf9441e808163cfcf9c45493521cd2ef47113da7a4c2e32"
+      "sha256": "1632a559a5656785bdf9441e808163cfcf9c45493521cd2ef47113da7a4c2e32",
+      "muzzle": [
+        434,
+        298
+      ],
+      "muzzleGround": [
+        434,
+        450
+      ]
     },
     "slide/front/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "c0ad6fffd0f639c85960a766b76726db76a2e7790c767b9fe3a195039095f38e"
+      "sha256": "c0ad6fffd0f639c85960a766b76726db76a2e7790c767b9fe3a195039095f38e",
+      "muzzle": [
+        221,
+        279
+      ],
+      "muzzleGround": [
+        221,
+        450
+      ]
     },
     "slide/right/002.png": {
       "anchor": [
@@ -304,7 +535,15 @@
       ],
       "drawScale": 1.076276,
       "sha256": "b0f6f9b7e50175a0701902482d0dec053c6ba4bf06a3e8ee7d2a9929d9c352a9",
-      "source": "exec-fbb19a17-2e1c-49a6-b8c1-8d3d6906447a.png"
+      "source": "exec-fbb19a17-2e1c-49a6-b8c1-8d3d6906447a.png",
+      "muzzle": [
+        478,
+        318
+      ],
+      "muzzleGround": [
+        478,
+        450
+      ]
     },
     "slide/right/000.png": {
       "anchor": [
@@ -313,168 +552,327 @@
       ],
       "drawScale": 1.317741,
       "sha256": "260a1d17efd2c2c57d3b8096ea544f089201a2b66d69d7c4d0706f44bfd0e623",
-      "source": "exec-84f8e288-449d-4ca4-aced-1a72e68a46b8.png"
+      "source": "exec-84f8e288-449d-4ca4-aced-1a72e68a46b8.png",
+      "muzzle": [
+        422,
+        373
+      ],
+      "muzzleGround": [
+        422,
+        450
+      ]
     },
     "slide/front/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "dffab79f0676c031d648791fed94aae27e0c98cce7c8167245bbf172e8721ba1"
+      "sha256": "dffab79f0676c031d648791fed94aae27e0c98cce7c8167245bbf172e8721ba1",
+      "muzzle": [
+        212,
+        278
+      ],
+      "muzzleGround": [
+        212,
+        450
+      ]
     },
     "slide/front-left/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "71db71f23c3e4f6d398ef38744319137b65fb98f39966f4c583973f13c337369"
+      "sha256": "71db71f23c3e4f6d398ef38744319137b65fb98f39966f4c583973f13c337369",
+      "muzzle": [
+        106,
+        318
+      ],
+      "muzzleGround": [
+        106,
+        450
+      ]
     },
     "slide/front-left/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "f3ad47ae13e758564e6b01469d141215f84b40f6c1a3c751a159dfb03ca1bc7a"
+      "sha256": "f3ad47ae13e758564e6b01469d141215f84b40f6c1a3c751a159dfb03ca1bc7a",
+      "muzzle": [
+        62,
+        305
+      ],
+      "muzzleGround": [
+        62,
+        450
+      ]
     },
     "slide/left/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "f2fb607762d2ee16d2b3daa07216cbc7314d207c5f2a300eba74e62ab8855bd2"
+      "sha256": "f2fb607762d2ee16d2b3daa07216cbc7314d207c5f2a300eba74e62ab8855bd2",
+      "muzzle": [
+        114,
+        309
+      ],
+      "muzzleGround": [
+        114,
+        450
+      ]
     },
     "slide/left/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "72e1faf23bc4348952278167a73f8d65bf3094319146dfd3792965bfabf4cd48"
+      "sha256": "72e1faf23bc4348952278167a73f8d65bf3094319146dfd3792965bfabf4cd48",
+      "muzzle": [
+        63,
+        316
+      ],
+      "muzzleGround": [
+        63,
+        450
+      ]
     },
     "slide/back-left/000.png": {
       "anchor": [
         256,
         371
       ],
-      "sha256": "0b5ab893da48ea24a39c911dc9b8d7e7960b11212a8dad8571a3d7f1e81d3f4b"
+      "sha256": "0b5ab893da48ea24a39c911dc9b8d7e7960b11212a8dad8571a3d7f1e81d3f4b",
+      "muzzle": [
+        149,
+        232
+      ],
+      "muzzleGround": [
+        149,
+        371
+      ]
     },
     "slide/back/002.png": {
       "anchor": [
         256,
-        356
+        352
       ],
-      "sha256": "486aeb7dc2391805bd53f99d4256f55d99c026b80223b71f07b82d0cda41526a"
+      "sha256": "bda4a1ee7bf2e765a8e7838d5d44ccac267d0f166310817433f387c9ed0dc495",
+      "source": "exec-3ffae6cf-7d2b-4190-9931-f4df27dec7dc.png"
     },
     "slide/back/000.png": {
       "anchor": [
         256,
-        356
+        331
       ],
-      "sha256": "f04249325ff2163c42cb33885e0973ddd9ab65888cfcc938f9f2a62e8bfbdc42"
+      "sha256": "85dcbfbfe8c8c700df2214c941d5e15f0fa802c8df187e1982323c27f5941261",
+      "source": "exec-3ffae6cf-7d2b-4190-9931-f4df27dec7dc.png"
     },
     "slide/back-left/002.png": {
       "anchor": [
         256,
         369
       ],
-      "sha256": "35de101b1ffd4e85a1a4ad0c84b7059b7db3531a38be3ffd40d7a6e80af91f94"
+      "sha256": "35de101b1ffd4e85a1a4ad0c84b7059b7db3531a38be3ffd40d7a6e80af91f94",
+      "muzzle": [
+        142,
+        223
+      ],
+      "muzzleGround": [
+        142,
+        369
+      ]
     },
     "slide/back-right/002.png": {
       "anchor": [
         256,
         369
       ],
-      "sha256": "8f2b0b764ea3a8ebc02fd7a42a49e221d4fee1034eed1242c7f40d3fbd0a3904"
+      "sha256": "8f2b0b764ea3a8ebc02fd7a42a49e221d4fee1034eed1242c7f40d3fbd0a3904",
+      "muzzle": [
+        373,
+        219
+      ],
+      "muzzleGround": [
+        373,
+        369
+      ]
     },
     "slide/back-right/000.png": {
       "anchor": [
         256,
         369
       ],
-      "sha256": "20f700f2d8d956258ac9025971bdcf6fab948484d805b5cd36d8220fca8d5129"
+      "sha256": "20f700f2d8d956258ac9025971bdcf6fab948484d805b5cd36d8220fca8d5129",
+      "muzzle": [
+        369,
+        218
+      ],
+      "muzzleGround": [
+        369,
+        369
+      ]
     },
     "run/right/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "6fe1f5ef8fbce27cada0487980fc0504be74f4fabdf2050fb96a878bf4bad077"
+      "sha256": "400cba978f1e2c346da8e982771b41cdcbabcf16e6bf6937ecb9c0c96ef658d4",
+      "source": "exec-18ca2db0-c65a-4e6b-8a04-b166f095d404.png",
+      "muzzle": [
+        489,
+        341
+      ],
+      "muzzleGround": [
+        489,
+        450
+      ]
     },
     "run/right/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "d02b158c8c6f464eb1e5bf297a24a5f9ab32cdab6c04557ddfc68b6311b05e5c"
+      "sha256": "98f666175bbc3347f939025cc63804448ce2a493fcd9605fc9a411268199c4cc",
+      "source": "exec-18ca2db0-c65a-4e6b-8a04-b166f095d404.png",
+      "muzzle": [
+        488,
+        339
+      ],
+      "muzzleGround": [
+        488,
+        450
+      ]
     },
     "run/front-right/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "763131dbf02179638353c9b1d3215e7b5bc14a5776e97cea04f846807bc815b2"
+      "sha256": "763131dbf02179638353c9b1d3215e7b5bc14a5776e97cea04f846807bc815b2",
+      "muzzle": [
+        405,
+        316
+      ],
+      "muzzleGround": [
+        405,
+        450
+      ]
     },
     "run/front-right/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "716fc0dcd82b148954f6e4e55b9f60039bcb1cfe2e8ffb106800dbf13ad6ea14"
+      "sha256": "716fc0dcd82b148954f6e4e55b9f60039bcb1cfe2e8ffb106800dbf13ad6ea14",
+      "muzzle": [
+        403,
+        312
+      ],
+      "muzzleGround": [
+        403,
+        450
+      ]
     },
     "run/front/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "157a7bfd8479983327dec54924d751da0639d773e4b3b336f3fd22e7a2fd3458"
+      "sha256": "851e4a5dc519c92eb06af369f91788f541942456acf58b60e42a7c6e4b6046fa",
+      "source": "39t8-2-three-claw-correction"
     },
     "run/front/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "7c5cc5675cdcb39075ae4707094b1320beed8838ed777382efb9fc94a49d1e89"
+      "sha256": "7c5cc5675cdcb39075ae4707094b1320beed8838ed777382efb9fc94a49d1e89",
+      "muzzle": [
+        235,
+        322
+      ],
+      "muzzleGround": [
+        235,
+        450
+      ]
     },
     "run/front-left/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "22c0f2aba300c332253d8fa7550ec826a4540ee2eff2f9474536c76daf3959d8"
+      "sha256": "22c0f2aba300c332253d8fa7550ec826a4540ee2eff2f9474536c76daf3959d8",
+      "muzzle": [
+        110,
+        317
+      ],
+      "muzzleGround": [
+        110,
+        450
+      ]
     },
     "run/front-left/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "81049deb2cbd5acb7550e9069b1f55b63a29dcc9695f85bda4efd48a5b41f13b"
+      "sha256": "81049deb2cbd5acb7550e9069b1f55b63a29dcc9695f85bda4efd48a5b41f13b",
+      "muzzle": [
+        109,
+        316
+      ],
+      "muzzleGround": [
+        109,
+        450
+      ]
     },
     "run/left/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "0924ce75494e43d72d02bcbcc998176b8a46d029b77ce2043ae1f518e1d71910"
+      "sha256": "6630eeca89d446b944453c494e9567886766c1bf3623ad26e589948f3d43b284",
+      "source": "exec-56c1961e-7f1a-4dff-8ed8-bd8450252595.png"
     },
     "run/left/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "07ff004a346125975ae5500c2c6b4611a2108da76497d333176c1b8dedc0e6c4"
+      "sha256": "ab0f3a2569b451c6971ccb34c9b03dbbb8df519c71b08fa12b06d47e842432b6",
+      "source": "exec-56c1961e-7f1a-4dff-8ed8-bd8450252595.png"
     },
     "run/back-left/002.png": {
       "anchor": [
         256,
         369
       ],
-      "sha256": "4cf9b1f4873257d301a0d1b2793f450cd0551c90297c74ed615f88d0d191d393"
+      "sha256": "4cf9b1f4873257d301a0d1b2793f450cd0551c90297c74ed615f88d0d191d393",
+      "muzzle": [
+        124,
+        208
+      ],
+      "muzzleGround": [
+        124,
+        369
+      ]
     },
     "run/back-left/003.png": {
       "anchor": [
         256,
         457
       ],
-      "sha256": "371476f42eb7773d7f92b80fee0aabacd97a6feb8cc9f05026fec933b7294f78"
+      "sha256": "371476f42eb7773d7f92b80fee0aabacd97a6feb8cc9f05026fec933b7294f78",
+      "muzzle": [
+        124,
+        294
+      ],
+      "muzzleGround": [
+        124,
+        457
+      ]
     },
     "run/back/002.png": {
       "anchor": [
@@ -495,182 +893,352 @@
         256,
         369
       ],
-      "sha256": "57d9279e55454561bec616062ac75ac7bc83a0750d70d9ac4851e3de504e9020"
+      "sha256": "57d9279e55454561bec616062ac75ac7bc83a0750d70d9ac4851e3de504e9020",
+      "muzzle": [
+        385,
+        207
+      ],
+      "muzzleGround": [
+        385,
+        369
+      ]
     },
     "run/back-right/003.png": {
       "anchor": [
         256,
         462
       ],
-      "sha256": "ae46befcb850598c60aac0fdc4c6c4525a67e48afb393c15b3064471698966e6"
+      "sha256": "ae46befcb850598c60aac0fdc4c6c4525a67e48afb393c15b3064471698966e6",
+      "muzzle": [
+        385,
+        299
+      ],
+      "muzzleGround": [
+        385,
+        462
+      ]
     },
     "sprint/right/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "a0e2896f3e15108a568339412b54e6625efb17bf7ec6fa6bce5740d5924f891a"
+      "sha256": "3e235889aa075e7c4b69a7c28ca0270bc12771ed7a2e63387ec34551a4ac7370",
+      "source": "exec-18ca2db0-c65a-4e6b-8a04-b166f095d404.png",
+      "muzzle": [
+        489,
+        337
+      ],
+      "muzzleGround": [
+        489,
+        450
+      ]
     },
     "sprint/right/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "16776217647718e672e7a8f0807aa012187a2ec1c9c85b356f9db1fa193d6b52"
+      "sha256": "f0a637f3867273e9a429f9435490992a189cd43c2b71347acdad1faf7138a163",
+      "source": "exec-18ca2db0-c65a-4e6b-8a04-b166f095d404.png",
+      "muzzle": [
+        487,
+        334
+      ],
+      "muzzleGround": [
+        487,
+        450
+      ]
     },
     "sprint/right/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "6fe1f5ef8fbce27cada0487980fc0504be74f4fabdf2050fb96a878bf4bad077"
+      "sha256": "400cba978f1e2c346da8e982771b41cdcbabcf16e6bf6937ecb9c0c96ef658d4",
+      "source": "exec-18ca2db0-c65a-4e6b-8a04-b166f095d404.png",
+      "muzzle": [
+        489,
+        341
+      ],
+      "muzzleGround": [
+        489,
+        450
+      ]
     },
     "sprint/right/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "d02b158c8c6f464eb1e5bf297a24a5f9ab32cdab6c04557ddfc68b6311b05e5c"
+      "sha256": "98f666175bbc3347f939025cc63804448ce2a493fcd9605fc9a411268199c4cc",
+      "source": "exec-18ca2db0-c65a-4e6b-8a04-b166f095d404.png",
+      "muzzle": [
+        488,
+        339
+      ],
+      "muzzleGround": [
+        488,
+        450
+      ]
     },
     "sprint/front-right/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "c53b3fc7dd871f2e89f8800d908f8c0f6337d45e5de7fe3df14d3589b0baa0c0"
+      "sha256": "c53b3fc7dd871f2e89f8800d908f8c0f6337d45e5de7fe3df14d3589b0baa0c0",
+      "muzzle": [
+        404,
+        316
+      ],
+      "muzzleGround": [
+        404,
+        450
+      ]
     },
     "sprint/front-right/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "1538c1afb4a593a325dda8e428333deca73b84341a54de51eb1cb27758dc8f84"
+      "sha256": "1538c1afb4a593a325dda8e428333deca73b84341a54de51eb1cb27758dc8f84",
+      "muzzle": [
+        405,
+        355
+      ],
+      "muzzleGround": [
+        405,
+        450
+      ]
     },
     "sprint/front-right/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "763131dbf02179638353c9b1d3215e7b5bc14a5776e97cea04f846807bc815b2"
+      "sha256": "763131dbf02179638353c9b1d3215e7b5bc14a5776e97cea04f846807bc815b2",
+      "muzzle": [
+        405,
+        316
+      ],
+      "muzzleGround": [
+        405,
+        450
+      ]
     },
     "sprint/front-right/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "716fc0dcd82b148954f6e4e55b9f60039bcb1cfe2e8ffb106800dbf13ad6ea14"
+      "sha256": "716fc0dcd82b148954f6e4e55b9f60039bcb1cfe2e8ffb106800dbf13ad6ea14",
+      "muzzle": [
+        403,
+        312
+      ],
+      "muzzleGround": [
+        403,
+        450
+      ]
     },
     "sprint/front/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "94c4fe260b0b99dae24e9984f9b0999122a16dc1c7440938ce8b03db3847d810"
+      "sha256": "db04a99a76a5fc1d9b43fa820d23b8f0d624d9fdc77662a1369839822613d70e",
+      "source": "39t8-2-three-claw-correction"
     },
     "sprint/front/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "6c585269f1dd044cb03296ed02e5d967977acd0b5e11f0223534716010706b85"
+      "sha256": "6c585269f1dd044cb03296ed02e5d967977acd0b5e11f0223534716010706b85",
+      "muzzle": [
+        237,
+        312
+      ],
+      "muzzleGround": [
+        237,
+        450
+      ]
     },
     "sprint/front/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "157a7bfd8479983327dec54924d751da0639d773e4b3b336f3fd22e7a2fd3458"
+      "sha256": "851e4a5dc519c92eb06af369f91788f541942456acf58b60e42a7c6e4b6046fa",
+      "source": "39t8-2-three-claw-correction"
     },
     "sprint/front/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "7c5cc5675cdcb39075ae4707094b1320beed8838ed777382efb9fc94a49d1e89"
+      "sha256": "7c5cc5675cdcb39075ae4707094b1320beed8838ed777382efb9fc94a49d1e89",
+      "muzzle": [
+        235,
+        322
+      ],
+      "muzzleGround": [
+        235,
+        450
+      ]
     },
     "sprint/front-left/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "8cc300e7734dedf7d374bb3bf05137a49f9ee51a4829ed3afdfd1e97fa769906"
+      "sha256": "8cc300e7734dedf7d374bb3bf05137a49f9ee51a4829ed3afdfd1e97fa769906",
+      "muzzle": [
+        110,
+        316
+      ],
+      "muzzleGround": [
+        110,
+        450
+      ]
     },
     "sprint/front-left/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "4b81606051c20e3e7de164e0bf1fb885f83a5774bd3dd7ba8e7450b65f633f15"
+      "sha256": "4b81606051c20e3e7de164e0bf1fb885f83a5774bd3dd7ba8e7450b65f633f15",
+      "muzzle": [
+        108,
+        354
+      ],
+      "muzzleGround": [
+        108,
+        450
+      ]
     },
     "sprint/front-left/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "22c0f2aba300c332253d8fa7550ec826a4540ee2eff2f9474536c76daf3959d8"
+      "sha256": "22c0f2aba300c332253d8fa7550ec826a4540ee2eff2f9474536c76daf3959d8",
+      "muzzle": [
+        110,
+        317
+      ],
+      "muzzleGround": [
+        110,
+        450
+      ]
     },
     "sprint/front-left/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "81049deb2cbd5acb7550e9069b1f55b63a29dcc9695f85bda4efd48a5b41f13b"
+      "sha256": "81049deb2cbd5acb7550e9069b1f55b63a29dcc9695f85bda4efd48a5b41f13b",
+      "muzzle": [
+        109,
+        316
+      ],
+      "muzzleGround": [
+        109,
+        450
+      ]
     },
     "sprint/left/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "22ff41e16391c1daee963f8b6ec2e0b6f4f8910f5c36aa35ceff63caf6eeee4b"
+      "sha256": "c4e6be0622b833f1ac1e2406f7fa80efa21ee400961201276fcaa2b7319e757a",
+      "source": "exec-56c1961e-7f1a-4dff-8ed8-bd8450252595.png"
     },
     "sprint/left/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "c5ba8a82b88d30d3b72dc7ae650a042725a403f9757ca3722aaf1c8e6b307bf9"
+      "sha256": "889d77937a06f320ab80fcf45dfc9947db99f20cd5036850d410838e480e9e5a",
+      "source": "exec-56c1961e-7f1a-4dff-8ed8-bd8450252595.png"
     },
     "sprint/left/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "0924ce75494e43d72d02bcbcc998176b8a46d029b77ce2043ae1f518e1d71910"
+      "sha256": "6630eeca89d446b944453c494e9567886766c1bf3623ad26e589948f3d43b284",
+      "source": "exec-56c1961e-7f1a-4dff-8ed8-bd8450252595.png"
     },
     "sprint/left/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "07ff004a346125975ae5500c2c6b4611a2108da76497d333176c1b8dedc0e6c4"
+      "sha256": "ab0f3a2569b451c6971ccb34c9b03dbbb8df519c71b08fa12b06d47e842432b6",
+      "source": "exec-56c1961e-7f1a-4dff-8ed8-bd8450252595.png"
     },
     "sprint/back-left/000.png": {
       "anchor": [
         256,
         369
       ],
-      "sha256": "f7a93303b135a2bf9955b89611d49427e7727a0854711418d5e531631e3523e8"
+      "sha256": "f7a93303b135a2bf9955b89611d49427e7727a0854711418d5e531631e3523e8",
+      "muzzle": [
+        165,
+        206
+      ],
+      "muzzleGround": [
+        165,
+        369
+      ]
     },
     "sprint/back-left/001.png": {
       "anchor": [
         256,
         374
       ],
-      "sha256": "755d2dfdb9fe16960cf5d14584e8d33f71bb96813d746d21f291e4d075b26a9d"
+      "sha256": "755d2dfdb9fe16960cf5d14584e8d33f71bb96813d746d21f291e4d075b26a9d",
+      "muzzle": [
+        171,
+        227
+      ],
+      "muzzleGround": [
+        171,
+        374
+      ]
     },
     "sprint/back-left/002.png": {
       "anchor": [
         256,
         369
       ],
-      "sha256": "4cf9b1f4873257d301a0d1b2793f450cd0551c90297c74ed615f88d0d191d393"
+      "sha256": "4cf9b1f4873257d301a0d1b2793f450cd0551c90297c74ed615f88d0d191d393",
+      "muzzle": [
+        124,
+        208
+      ],
+      "muzzleGround": [
+        124,
+        369
+      ]
     },
     "sprint/back-left/003.png": {
       "anchor": [
         256,
         457
       ],
-      "sha256": "371476f42eb7773d7f92b80fee0aabacd97a6feb8cc9f05026fec933b7294f78"
+      "sha256": "371476f42eb7773d7f92b80fee0aabacd97a6feb8cc9f05026fec933b7294f78",
+      "muzzle": [
+        124,
+        294
+      ],
+      "muzzleGround": [
+        124,
+        457
+      ]
     },
     "sprint/back/000.png": {
       "anchor": [
@@ -705,28 +1273,60 @@
         256,
         369
       ],
-      "sha256": "338740429e8a115d4d6048213cad1ad84074e0a1c5dd572a7e8fff6b31c8a008"
+      "sha256": "338740429e8a115d4d6048213cad1ad84074e0a1c5dd572a7e8fff6b31c8a008",
+      "muzzle": [
+        349,
+        206
+      ],
+      "muzzleGround": [
+        349,
+        369
+      ]
     },
     "sprint/back-right/001.png": {
       "anchor": [
         256,
         375
       ],
-      "sha256": "45c8394967c605972ab8c673e92801ace6f8c7e424a8a41d57cbd4ff14751b5b"
+      "sha256": "45c8394967c605972ab8c673e92801ace6f8c7e424a8a41d57cbd4ff14751b5b",
+      "muzzle": [
+        345,
+        227
+      ],
+      "muzzleGround": [
+        345,
+        375
+      ]
     },
     "sprint/back-right/002.png": {
       "anchor": [
         256,
         369
       ],
-      "sha256": "57d9279e55454561bec616062ac75ac7bc83a0750d70d9ac4851e3de504e9020"
+      "sha256": "57d9279e55454561bec616062ac75ac7bc83a0750d70d9ac4851e3de504e9020",
+      "muzzle": [
+        385,
+        207
+      ],
+      "muzzleGround": [
+        385,
+        369
+      ]
     },
     "sprint/back-right/003.png": {
       "anchor": [
         256,
         462
       ],
-      "sha256": "ae46befcb850598c60aac0fdc4c6c4525a67e48afb393c15b3064471698966e6"
+      "sha256": "ae46befcb850598c60aac0fdc4c6c4525a67e48afb393c15b3064471698966e6",
+      "muzzle": [
+        385,
+        299
+      ],
+      "muzzleGround": [
+        385,
+        462
+      ]
     },
     "stalk/right/000.png": {
       "anchor": [
@@ -734,7 +1334,15 @@
         450
       ],
       "sha256": "1bfea4f7d4e70539cc9fee2cb637e4d382cd49377ab7e2ad1a923a3f957a3f0c",
-      "source": "exec-b0f38d8c-2d83-4c62-957f-1db4b5fea32c.png"
+      "source": "exec-b0f38d8c-2d83-4c62-957f-1db4b5fea32c.png",
+      "muzzle": [
+        478,
+        299
+      ],
+      "muzzleGround": [
+        478,
+        450
+      ]
     },
     "stalk/right/001.png": {
       "anchor": [
@@ -742,7 +1350,15 @@
         450
       ],
       "sha256": "5ff9bfe3628caf50d99677429adf92392fff917a96abb718bcce5b586089d424",
-      "source": "exec-6fc389e6-ef8f-48af-b15f-167b0e8ae38a.png"
+      "source": "exec-6fc389e6-ef8f-48af-b15f-167b0e8ae38a.png",
+      "muzzle": [
+        479,
+        299
+      ],
+      "muzzleGround": [
+        479,
+        450
+      ]
     },
     "stalk/right/002.png": {
       "anchor": [
@@ -750,7 +1366,15 @@
         450
       ],
       "sha256": "4863535d4849337021eeb3b0e8d5db9ae2bf7475291a9d275de8a573a172b1e1",
-      "source": "exec-b0f38d8c-2d83-4c62-957f-1db4b5fea32c.png"
+      "source": "exec-b0f38d8c-2d83-4c62-957f-1db4b5fea32c.png",
+      "muzzle": [
+        477,
+        302
+      ],
+      "muzzleGround": [
+        477,
+        450
+      ]
     },
     "stalk/right/003.png": {
       "anchor": [
@@ -758,7 +1382,15 @@
         450
       ],
       "sha256": "5b3612dc8d44dcba597dec5de96a6f517c90e8fc33c8f207d5bfb65ca4d98b4c",
-      "source": "exec-6fc389e6-ef8f-48af-b15f-167b0e8ae38a.png"
+      "source": "exec-6fc389e6-ef8f-48af-b15f-167b0e8ae38a.png",
+      "muzzle": [
+        480,
+        301
+      ],
+      "muzzleGround": [
+        480,
+        450
+      ]
     },
     "jog/right/000.png": {
       "anchor": [
@@ -766,7 +1398,15 @@
         450
       ],
       "sha256": "43484fb212f85953c88639025da8fc0638de7473998867fb5b87b08f189d5b65",
-      "source": "right-jog-contact-master.png"
+      "source": "right-jog-contact-master.png",
+      "muzzle": [
+        468,
+        315
+      ],
+      "muzzleGround": [
+        468,
+        450
+      ]
     },
     "jog/right/001.png": {
       "anchor": [
@@ -774,7 +1414,15 @@
         450
       ],
       "sha256": "89bc2d1f0e8d4ba5f8ddecd3f86f279842932a021eb6c751598c8bc4c37ee28e",
-      "source": "exec-30f9581b-fb85-4aa3-92d2-39fec01b83ea.png"
+      "source": "exec-30f9581b-fb85-4aa3-92d2-39fec01b83ea.png",
+      "muzzle": [
+        467,
+        316
+      ],
+      "muzzleGround": [
+        467,
+        450
+      ]
     },
     "jog/right/002.png": {
       "anchor": [
@@ -782,7 +1430,15 @@
         450
       ],
       "sha256": "68c5c69f4af3d1bbacf7004c9e278c4eff1093747209b0d1c0fb53ea064dda62",
-      "source": "exec-06cea895-3830-4e22-8c9c-8b60122d2d6b.png"
+      "source": "exec-06cea895-3830-4e22-8c9c-8b60122d2d6b.png",
+      "muzzle": [
+        475,
+        317
+      ],
+      "muzzleGround": [
+        475,
+        450
+      ]
     },
     "jog/right/003.png": {
       "anchor": [
@@ -790,7 +1446,15 @@
         450
       ],
       "sha256": "0215ac406e5f3c108ff3f2ace89ce863b4394055928302f724204bd1d540472e",
-      "source": "exec-2c41006b-49f1-4275-a381-a25c08b0852f.png"
+      "source": "exec-2c41006b-49f1-4275-a381-a25c08b0852f.png",
+      "muzzle": [
+        476,
+        315
+      ],
+      "muzzleGround": [
+        476,
+        450
+      ]
     },
     "stalk/left/000.png": {
       "anchor": [
@@ -799,7 +1463,15 @@
       ],
       "drawScale": 1.076276,
       "source": "exec-7b70966f-7fc6-4d91-a7a3-d80ed84defbf.png",
-      "sha256": "635cfe2aff6abff0e2c5eb063b515662461f7dacc737b955f5a673172514fae2"
+      "sha256": "635cfe2aff6abff0e2c5eb063b515662461f7dacc737b955f5a673172514fae2",
+      "muzzle": [
+        72,
+        320
+      ],
+      "muzzleGround": [
+        72,
+        450
+      ]
     },
     "stalk/left/001.png": {
       "anchor": [
@@ -808,7 +1480,15 @@
       ],
       "drawScale": 1.076276,
       "source": "exec-ab550d17-c5bc-49e8-9379-079534743077.png",
-      "sha256": "a166f584665e0d7c871fd108449c0b56bb54d0a3595016a3e5d9393ae68ba360"
+      "sha256": "a166f584665e0d7c871fd108449c0b56bb54d0a3595016a3e5d9393ae68ba360",
+      "muzzle": [
+        73,
+        320
+      ],
+      "muzzleGround": [
+        73,
+        450
+      ]
     },
     "stalk/left/002.png": {
       "anchor": [
@@ -817,7 +1497,15 @@
       ],
       "drawScale": 1.076276,
       "source": "exec-7f873bc4-854c-4876-84ff-1e0796eb0134.png",
-      "sha256": "05cc0c8d7aa128d1e5b26dcb303a3c2aaf5cd0314e307422846f8f555c831ab9"
+      "sha256": "05cc0c8d7aa128d1e5b26dcb303a3c2aaf5cd0314e307422846f8f555c831ab9",
+      "muzzle": [
+        71,
+        320
+      ],
+      "muzzleGround": [
+        71,
+        450
+      ]
     },
     "stalk/left/003.png": {
       "anchor": [
@@ -826,7 +1514,15 @@
       ],
       "drawScale": 1.076276,
       "source": "exec-720616f7-6996-4d7a-9e7f-b121c03a34c1.png",
-      "sha256": "e636f41fce5c843fbeccac9f13a46442039b769ac66c32816da86a1f5f68fee8"
+      "sha256": "e636f41fce5c843fbeccac9f13a46442039b769ac66c32816da86a1f5f68fee8",
+      "muzzle": [
+        73,
+        320
+      ],
+      "muzzleGround": [
+        73,
+        450
+      ]
     },
     "jog/left/000.png": {
       "anchor": [
@@ -835,7 +1531,15 @@
       ],
       "drawScale": 1.00205,
       "sha256": "d465090313823145b4bbeb8d92a1c2c1ab76e1775fa8993b48099baff89107bb",
-      "source": "exec-77b7066c-80dc-40ef-a593-6c769624bcab.png"
+      "source": "exec-77b7066c-80dc-40ef-a593-6c769624bcab.png",
+      "muzzle": [
+        54,
+        324
+      ],
+      "muzzleGround": [
+        54,
+        450
+      ]
     },
     "jog/left/001.png": {
       "anchor": [
@@ -844,7 +1548,15 @@
       ],
       "drawScale": 1.00205,
       "sha256": "70de38499b89bf4ec0dc85607e6f48a0952906bc393cc150d71b1516049c3bc5",
-      "source": "exec-98640525-c515-4ceb-9f55-0b1de6b05252.png"
+      "source": "exec-98640525-c515-4ceb-9f55-0b1de6b05252.png",
+      "muzzle": [
+        53,
+        324
+      ],
+      "muzzleGround": [
+        53,
+        450
+      ]
     },
     "jog/left/002.png": {
       "anchor": [
@@ -853,7 +1565,15 @@
       ],
       "drawScale": 1.00205,
       "sha256": "d93edc3019bafa7c1c20f45831bab8ed24816d94c932ad6ca387994f2a06acb9",
-      "source": "exec-f765587b-11ad-4387-917b-d81df6b47dd6.png"
+      "source": "exec-f765587b-11ad-4387-917b-d81df6b47dd6.png",
+      "muzzle": [
+        53,
+        324
+      ],
+      "muzzleGround": [
+        53,
+        450
+      ]
     },
     "jog/left/003.png": {
       "anchor": [
@@ -862,7 +1582,15 @@
       ],
       "drawScale": 1.00205,
       "sha256": "38f29508ce0860d380fa36cab0096b2fa01e14f45b464008e841a426a5ddc57f",
-      "source": "exec-7ef906e1-d7bc-4e78-ad23-46169d38c8af.png"
+      "source": "exec-7ef906e1-d7bc-4e78-ad23-46169d38c8af.png",
+      "muzzle": [
+        53,
+        324
+      ],
+      "muzzleGround": [
+        53,
+        450
+      ]
     },
     "stalk/front-right/000.png": {
       "anchor": [
@@ -870,7 +1598,15 @@
         450
       ],
       "sha256": "e774ea0e6048ab088128670b127b0020620a6973cd0d1051c0d726627b9acc90",
-      "source": "exec-a095e3d7-600f-4224-ad20-2ca6e646478e.png"
+      "source": "exec-a095e3d7-600f-4224-ad20-2ca6e646478e.png",
+      "muzzle": [
+        344,
+        292
+      ],
+      "muzzleGround": [
+        344,
+        450
+      ]
     },
     "stalk/front-right/001.png": {
       "anchor": [
@@ -878,7 +1614,15 @@
         450
       ],
       "sha256": "50b219b1d8668254acec2b909b318794b3ff26db82f8ad3b63b6fa6d28ababe6",
-      "source": "exec-bc559d70-3153-4e5f-af16-cd75d707f343.png"
+      "source": "exec-bc559d70-3153-4e5f-af16-cd75d707f343.png",
+      "muzzle": [
+        344,
+        292
+      ],
+      "muzzleGround": [
+        344,
+        450
+      ]
     },
     "stalk/front-right/002.png": {
       "anchor": [
@@ -886,7 +1630,15 @@
         450
       ],
       "sha256": "b1e1dda16b325ce8cd90979e2dfd0e5c43e15d3462a9297281ee5467ec23a24c",
-      "source": "exec-8fff6396-2cc4-4927-a077-bbe080b2159f.png"
+      "source": "exec-8fff6396-2cc4-4927-a077-bbe080b2159f.png",
+      "muzzle": [
+        346,
+        297
+      ],
+      "muzzleGround": [
+        346,
+        450
+      ]
     },
     "stalk/front-right/003.png": {
       "anchor": [
@@ -894,7 +1646,15 @@
         450
       ],
       "sha256": "f5a92c49f2bc40c64e030ec8affe9cbd4c2e4702063fcabf018cef8ed9a7614e",
-      "source": "exec-e1a5bee9-0a39-4e26-a16c-2f8f58ac579a.png"
+      "source": "exec-e1a5bee9-0a39-4e26-a16c-2f8f58ac579a.png",
+      "muzzle": [
+        348,
+        297
+      ],
+      "muzzleGround": [
+        348,
+        450
+      ]
     },
     "jog/front-right/000.png": {
       "anchor": [
@@ -902,7 +1662,15 @@
         450
       ],
       "sha256": "ac2353366b779438f4eb74cb33009f15c6224ed3f28520c5b2504885848c69ef",
-      "source": "exec-0563d972-9148-4632-970f-1ced9967e138.png"
+      "source": "exec-0563d972-9148-4632-970f-1ced9967e138.png",
+      "muzzle": [
+        343,
+        303
+      ],
+      "muzzleGround": [
+        343,
+        450
+      ]
     },
     "jog/front-right/001.png": {
       "anchor": [
@@ -910,7 +1678,15 @@
         450
       ],
       "sha256": "4a3ea81c750ab87867a0f245d8a1084c4457efb375eeb0cca94517a3966ab907",
-      "source": "exec-18ebe865-d269-4420-8386-2fb8af7e2a7a.png"
+      "source": "exec-18ebe865-d269-4420-8386-2fb8af7e2a7a.png",
+      "muzzle": [
+        343,
+        304
+      ],
+      "muzzleGround": [
+        343,
+        450
+      ]
     },
     "jog/front-right/002.png": {
       "anchor": [
@@ -918,7 +1694,15 @@
         450
       ],
       "sha256": "1d4a66121e9232364e876a9d106e47a9a5fe913899b4d37b60b0aa80ae3589f9",
-      "source": "exec-39ad8530-f5f7-4da3-9f16-d3a9a51dec3f.png"
+      "source": "exec-39ad8530-f5f7-4da3-9f16-d3a9a51dec3f.png",
+      "muzzle": [
+        343,
+        304
+      ],
+      "muzzleGround": [
+        343,
+        450
+      ]
     },
     "jog/front-right/003.png": {
       "anchor": [
@@ -926,7 +1710,15 @@
         450
       ],
       "sha256": "1fa5a8b7cafbd327e589aaa2ebf468db7d086d3f9477faadda4aea6b1ce4895c",
-      "source": "exec-26948c75-5c29-4c17-9688-f6407a697784.png"
+      "source": "exec-26948c75-5c29-4c17-9688-f6407a697784.png",
+      "muzzle": [
+        343,
+        304
+      ],
+      "muzzleGround": [
+        343,
+        450
+      ]
     },
     "stalk/front-left/000.png": {
       "anchor": [
@@ -934,7 +1726,15 @@
         450
       ],
       "sha256": "6d9381233f9d464fae7c0a4393ea1dad2af7259dde4928a44387c97d83bdf648",
-      "source": "exec-c6d97913-0daf-4762-abd8-165a99ce6610.png"
+      "source": "exec-c6d97913-0daf-4762-abd8-165a99ce6610.png",
+      "muzzle": [
+        183,
+        304
+      ],
+      "muzzleGround": [
+        183,
+        450
+      ]
     },
     "stalk/front-left/001.png": {
       "anchor": [
@@ -942,7 +1742,15 @@
         450
       ],
       "sha256": "c7c9f515f792ff1a9650f770d2fb71cd71f1915bae8bbda2250706b62864048d",
-      "source": "exec-74e30f71-6a35-4261-b7a2-1f4b9ee536df.png"
+      "source": "exec-74e30f71-6a35-4261-b7a2-1f4b9ee536df.png",
+      "muzzle": [
+        187,
+        302
+      ],
+      "muzzleGround": [
+        187,
+        450
+      ]
     },
     "stalk/front-left/002.png": {
       "anchor": [
@@ -950,7 +1758,15 @@
         450
       ],
       "sha256": "74febf9f90b09f7e0105bf537ec23a70ae03030b7df9de8a19cd2743bf49167d",
-      "source": "exec-cfc5448c-aa61-4ebd-8f65-9fc284378201.png"
+      "source": "exec-cfc5448c-aa61-4ebd-8f65-9fc284378201.png",
+      "muzzle": [
+        182,
+        304
+      ],
+      "muzzleGround": [
+        182,
+        450
+      ]
     },
     "stalk/front-left/003.png": {
       "anchor": [
@@ -958,7 +1774,15 @@
         450
       ],
       "sha256": "0ac7ce4e364320213a37df53118df08d67c3c7bbe885a416556c3e45186e3089",
-      "source": "exec-db7c329c-71d8-4106-812f-e5e09f727358.png"
+      "source": "exec-db7c329c-71d8-4106-812f-e5e09f727358.png",
+      "muzzle": [
+        183,
+        300
+      ],
+      "muzzleGround": [
+        183,
+        450
+      ]
     },
     "jog/front-left/000.png": {
       "anchor": [
@@ -966,7 +1790,15 @@
         450
       ],
       "sha256": "236304f1b82406ad42da4423ee5b5379486463591638082b0dc4045c8ff40892",
-      "source": "exec-14b9a3f2-b19a-4753-9c57-86e265563ec2.png"
+      "source": "exec-14b9a3f2-b19a-4753-9c57-86e265563ec2.png",
+      "muzzle": [
+        178,
+        308
+      ],
+      "muzzleGround": [
+        178,
+        450
+      ]
     },
     "jog/front-left/001.png": {
       "anchor": [
@@ -974,7 +1806,15 @@
         450
       ],
       "sha256": "cbbd3bb7f922308b294abc7ed56f77511a7aa6abbaafe4958509b2b4a3668036",
-      "source": "exec-7e67a4a0-0a24-4c3e-a14a-8af0415dcc7e.png"
+      "source": "exec-7e67a4a0-0a24-4c3e-a14a-8af0415dcc7e.png",
+      "muzzle": [
+        177,
+        308
+      ],
+      "muzzleGround": [
+        177,
+        450
+      ]
     },
     "jog/front-left/002.png": {
       "anchor": [
@@ -982,7 +1822,15 @@
         450
       ],
       "sha256": "c2141263afaf222c78721293dc16e2778ee41a03f6e3b4e4054cc7e3a130a7f5",
-      "source": "exec-383752fb-02c7-4846-b3c8-ded7cc6efc5a.png"
+      "source": "exec-383752fb-02c7-4846-b3c8-ded7cc6efc5a.png",
+      "muzzle": [
+        178,
+        308
+      ],
+      "muzzleGround": [
+        178,
+        450
+      ]
     },
     "jog/front-left/003.png": {
       "anchor": [
@@ -990,7 +1838,15 @@
         450
       ],
       "sha256": "b19357e0ea6081d64c09971b9459825e666b9599f53b56b3283a67b9443a65df",
-      "source": "exec-bab67c2b-0b35-4cd0-8af3-d898ef2d83d0.png"
+      "source": "exec-bab67c2b-0b35-4cd0-8af3-d898ef2d83d0.png",
+      "muzzle": [
+        179,
+        308
+      ],
+      "muzzleGround": [
+        179,
+        450
+      ]
     },
     "stalk/front/000.png": {
       "anchor": [
@@ -998,7 +1854,15 @@
         450
       ],
       "sha256": "58553db310bcbff0bed83f2466d41ae97a2a9ed7ef9f8862441590156639534a",
-      "source": "exec-8cc037bc-cf23-4d64-bf5f-4a5eb250136f.png"
+      "source": "exec-8cc037bc-cf23-4d64-bf5f-4a5eb250136f.png",
+      "muzzle": [
+        257,
+        314
+      ],
+      "muzzleGround": [
+        257,
+        450
+      ]
     },
     "stalk/front/001.png": {
       "anchor": [
@@ -1006,7 +1870,15 @@
         450
       ],
       "sha256": "0be5d28e70bc9f4f9dfbf469d2ec36dc9d2ec4cc3eaf65962b3bcfc9ffca9bf4",
-      "source": "exec-8a02d09c-5faa-4d5f-bbfa-d7168f2f3f31.png"
+      "source": "exec-8a02d09c-5faa-4d5f-bbfa-d7168f2f3f31.png",
+      "muzzle": [
+        256,
+        314
+      ],
+      "muzzleGround": [
+        256,
+        450
+      ]
     },
     "stalk/front/002.png": {
       "anchor": [
@@ -1014,7 +1886,15 @@
         450
       ],
       "sha256": "950a2f7b290253b6f41deb9c49114078c13bc1a056fb7a17513b8bce6c9b35d9",
-      "source": "exec-d5565271-6f7a-4746-85e7-f88e35d3285d.png"
+      "source": "exec-d5565271-6f7a-4746-85e7-f88e35d3285d.png",
+      "muzzle": [
+        257,
+        314
+      ],
+      "muzzleGround": [
+        257,
+        450
+      ]
     },
     "stalk/front/003.png": {
       "anchor": [
@@ -1022,7 +1902,15 @@
         450
       ],
       "sha256": "8cd88a7a8312abbe41815e06ee58069fe3b77a57c216278bf11768e16790aab5",
-      "source": "exec-150b4b87-6f99-47c7-b561-6ba60e062362.png"
+      "source": "exec-150b4b87-6f99-47c7-b561-6ba60e062362.png",
+      "muzzle": [
+        254,
+        315
+      ],
+      "muzzleGround": [
+        254,
+        450
+      ]
     },
     "jog/front/000.png": {
       "anchor": [
@@ -1030,7 +1918,15 @@
         450
       ],
       "sha256": "35da2c6eefd086b40149c1f93e70f70a0ca3dd5f889589869c295dab49dcb2f5",
-      "source": "exec-ad3ce3b2-8c59-4f44-b0b5-99bea5154b44.png"
+      "source": "exec-ad3ce3b2-8c59-4f44-b0b5-99bea5154b44.png",
+      "muzzle": [
+        253,
+        321
+      ],
+      "muzzleGround": [
+        253,
+        450
+      ]
     },
     "jog/front/001.png": {
       "anchor": [
@@ -1038,7 +1934,15 @@
         450
       ],
       "sha256": "b9053846510ba873b333774e6bcbf0805bf2bba6df3e9b46f8c0aeb4728003dd",
-      "source": "exec-ecc64c6e-cf9e-43c1-9a1a-2c6ff71a4bb5.png"
+      "source": "exec-ecc64c6e-cf9e-43c1-9a1a-2c6ff71a4bb5.png",
+      "muzzle": [
+        253,
+        321
+      ],
+      "muzzleGround": [
+        253,
+        450
+      ]
     },
     "jog/front/002.png": {
       "anchor": [
@@ -1046,7 +1950,15 @@
         450
       ],
       "sha256": "ddf8c13a17ed1b68b9eb12fb269e1c22103b0197823b03e819aa820f65ad870a",
-      "source": "exec-632042ef-a098-411c-9677-67904ddd5e48.png"
+      "source": "exec-632042ef-a098-411c-9677-67904ddd5e48.png",
+      "muzzle": [
+        253,
+        321
+      ],
+      "muzzleGround": [
+        253,
+        450
+      ]
     },
     "jog/front/003.png": {
       "anchor": [
@@ -1054,7 +1966,15 @@
         450
       ],
       "sha256": "3d56c839dd12571c4f3a52753345629a47e0fe6b3dbdc0ccd919d703fc61e8ee",
-      "source": "exec-ab929d6a-c5eb-4656-8506-12c357931540.png"
+      "source": "exec-ab929d6a-c5eb-4656-8506-12c357931540.png",
+      "muzzle": [
+        254,
+        321
+      ],
+      "muzzleGround": [
+        254,
+        450
+      ]
     },
     "stalk/back/000.png": {
       "anchor": [
@@ -1119,6 +2039,732 @@
       ],
       "sha256": "0e595e3bf095646c5636bebfeffd667f883941130b166b13586d7c84905f76d5",
       "source": "exec-7e9894a7-e19c-4bce-be78-ce707af56d91.png"
+    },
+    "jump/right/000.png": {
+      "anchor": [
+        256,
+        416
+      ],
+      "sha256": "189d7882fda3daf36e5d0dfdd04cbafcfed4c59e8adeb15a28adea67ac75440f",
+      "source": "exec-76a8777a-ad46-43a2-8db0-f9e5533bf535.png",
+      "muzzle": [
+        441,
+        300
+      ],
+      "muzzleGround": [
+        441,
+        416
+      ]
+    },
+    "jump/right/001.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "ef71d2f48eb6c7b6ffa2ac8c44c6a22ea96f462d8618894194faa9f3f793c2e5",
+      "source": "exec-e62cbb73-2bcf-4aae-9377-71887cdbd78d.png",
+      "muzzle": [
+        438,
+        315
+      ],
+      "muzzleGround": [
+        438,
+        450
+      ]
+    },
+    "jump/right/002.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "80eda7b426d1ea07d62662246ffb4b3d62771aa6c7d139aca7366fb0babd7e1f",
+      "source": "exec-042082f1-6dc0-4b8b-9123-e8bdf286f951.png",
+      "muzzle": [
+        438,
+        315
+      ],
+      "muzzleGround": [
+        438,
+        450
+      ]
+    },
+    "jump/right/003.png": {
+      "anchor": [
+        256,
+        462
+      ],
+      "sha256": "56adc1bc9c731737ce025f83c1bfe15db1541f39ee481482840d525ec194fbbd",
+      "source": "exec-10c5cf0a-dd85-45fc-8d25-8d288c2c2064.png",
+      "muzzle": [
+        439,
+        315
+      ],
+      "muzzleGround": [
+        439,
+        462
+      ]
+    },
+    "jump/right/004.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "5d1e3b7b6a6caf89efda3ad85f38ff4f985a9ae0b66b7b2dc65f48fdd00d9375",
+      "source": "exec-7d6667a4-ef5b-4aca-a744-5b863ce55d54.png",
+      "muzzle": [
+        437,
+        325
+      ],
+      "muzzleGround": [
+        437,
+        450
+      ]
+    },
+    "jump/right/005.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "61e6ceaeab435005f94f1de7b754320578f445164a5cdf5bc7bd27294bf41bd0",
+      "source": "exec-885ce298-19fe-4d30-b216-25db6520230f.png",
+      "muzzle": [
+        436,
+        314
+      ],
+      "muzzleGround": [
+        436,
+        450
+      ]
+    },
+    "jump/left/000.png": {
+      "anchor": [
+        240,
+        442
+      ],
+      "drawScale": 0.78,
+      "sha256": "e46364398e984571033e0d857886028022863ed77f7d55842efbc3cae810a330",
+      "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
+      "muzzle": [
+        26,
+        275
+      ],
+      "muzzleGround": [
+        26,
+        442
+      ]
+    },
+    "jump/left/001.png": {
+      "anchor": [
+        240,
+        435
+      ],
+      "drawScale": 0.78,
+      "sha256": "c19652327d4150ddb4714878c820141f92d1e71097d092f957d6fdcd37874c50",
+      "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
+      "muzzle": [
+        30,
+        236
+      ],
+      "muzzleGround": [
+        30,
+        435
+      ]
+    },
+    "jump/left/002.png": {
+      "anchor": [
+        240,
+        425
+      ],
+      "drawScale": 0.78,
+      "sha256": "379d2a0abaa99efc9d0ed37d86475aa60fc8f3d5c9af5c9638587048045aa354",
+      "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
+      "muzzle": [
+        25,
+        213
+      ],
+      "muzzleGround": [
+        25,
+        425
+      ]
+    },
+    "jump/left/003.png": {
+      "anchor": [
+        240,
+        406
+      ],
+      "drawScale": 0.78,
+      "sha256": "d5ef6cd86154cbab6112aef2da108fa7cf2e2ac0a93f857165d91600bb84d92d",
+      "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
+      "muzzle": [
+        39,
+        211
+      ],
+      "muzzleGround": [
+        39,
+        406
+      ]
+    },
+    "jump/left/004.png": {
+      "anchor": [
+        240,
+        405
+      ],
+      "drawScale": 0.78,
+      "sha256": "767bcbb8a7a17e02cec7eb7d614e5e1717067e7643531eeb619b7ffe7a2e9bf3",
+      "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
+      "muzzle": [
+        30,
+        264
+      ],
+      "muzzleGround": [
+        30,
+        405
+      ]
+    },
+    "jump/left/005.png": {
+      "anchor": [
+        240,
+        405
+      ],
+      "drawScale": 0.78,
+      "sha256": "d2aade8aad01897446a4a08048e428817227ab3f294d2ce9b3845b202e460036",
+      "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
+      "muzzle": [
+        25,
+        242
+      ],
+      "muzzleGround": [
+        25,
+        405
+      ]
+    },
+    "jump/back/000.png": {
+      "anchor": [
+        266,
+        367
+      ],
+      "sha256": "f9163eb2cb9cde15d888c88d74aa8698c9a9de0b940a17c0cfa3789b9067625a",
+      "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png"
+    },
+    "jump/back/001.png": {
+      "anchor": [
+        256,
+        363
+      ],
+      "sha256": "188b735bc07306cfee26897bc6b59462f997cfcca919538874bb20cac8b285c5",
+      "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png"
+    },
+    "jump/back/002.png": {
+      "anchor": [
+        250,
+        361
+      ],
+      "sha256": "162f8f2f672fcc76fbca4dc4029dcac6c7b2313fe62f307d24d208dc476b5ce3",
+      "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png"
+    },
+    "jump/back/003.png": {
+      "anchor": [
+        266,
+        359
+      ],
+      "sha256": "e821986a2919d021d922f187e0a304a8f46073d95cb6796bf51c9e39a7bd4968",
+      "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png"
+    },
+    "jump/back/004.png": {
+      "anchor": [
+        256,
+        364
+      ],
+      "sha256": "538b25769d0a63ec4bf2bebe79cb0fda0edbbb6499974411f0c86f7c457e3f46",
+      "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png"
+    },
+    "jump/back/005.png": {
+      "anchor": [
+        250,
+        358
+      ],
+      "sha256": "e63447be9223141ad26f4397a51321e7d53e418a40a136815a1ebe656fcca5ab",
+      "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png"
+    },
+    "jump/back-left/000.png": {
+      "anchor": [
+        269,
+        374
+      ],
+      "sha256": "bdb28c1cbccfbde8103145d14fb4ffbed2319c543dbb63ded14859ac91ae1e69",
+      "source": "exec-63bd432a-0a5b-443b-9598-e427cc7b95d7.png",
+      "muzzle": [
+        161,
+        199
+      ],
+      "muzzleGround": [
+        161,
+        374
+      ]
+    },
+    "jump/back-left/001.png": {
+      "anchor": [
+        261,
+        368
+      ],
+      "sha256": "78f6a1caea02f1f6f397e44cf87fe53a513cdabbb2df30f5b21aa2efd8aa2bc9",
+      "source": "exec-63bd432a-0a5b-443b-9598-e427cc7b95d7.png",
+      "muzzle": [
+        159,
+        189
+      ],
+      "muzzleGround": [
+        159,
+        368
+      ]
+    },
+    "jump/back-left/002.png": {
+      "anchor": [
+        262,
+        356
+      ],
+      "sha256": "e062fa8ae8cf5b7a995a48817dce3cb749059d5205a915c4a4154caae69133ad",
+      "source": "exec-63bd432a-0a5b-443b-9598-e427cc7b95d7.png",
+      "muzzle": [
+        161,
+        178
+      ],
+      "muzzleGround": [
+        161,
+        356
+      ]
+    },
+    "jump/back-left/003.png": {
+      "anchor": [
+        268,
+        368
+      ],
+      "sha256": "6a0c758619a91dfa3f84c7e01791e12280bc25a7ecbe702e1d7dca3f17300c74",
+      "source": "exec-63bd432a-0a5b-443b-9598-e427cc7b95d7.png",
+      "muzzle": [
+        158,
+        184
+      ],
+      "muzzleGround": [
+        158,
+        368
+      ]
+    },
+    "jump/back-left/004.png": {
+      "anchor": [
+        258,
+        354
+      ],
+      "sha256": "6d2ebabe52e9bafa8b95df3ec97adc8957f311f9e64c843c9978e37b0a86f2ff",
+      "source": "exec-63bd432a-0a5b-443b-9598-e427cc7b95d7.png",
+      "muzzle": [
+        156,
+        206
+      ],
+      "muzzleGround": [
+        156,
+        354
+      ]
+    },
+    "jump/back-left/005.png": {
+      "anchor": [
+        264,
+        354
+      ],
+      "sha256": "41cb01a3822cc6769f655ac2c308ba136a78692550b4d2fb3bc481afe04e5bef",
+      "source": "exec-63bd432a-0a5b-443b-9598-e427cc7b95d7.png",
+      "muzzle": [
+        160,
+        190
+      ],
+      "muzzleGround": [
+        160,
+        354
+      ]
+    },
+    "jump/back-right/000.png": {
+      "anchor": [
+        252,
+        388
+      ],
+      "sha256": "469e403ec4aa1c9270d444e3a6c158d01f470393fa0d55e50f450fdb7b3c29e0",
+      "source": "exec-d00214c8-e625-46c3-b169-e559f66792e2.png",
+      "muzzle": [
+        372,
+        215
+      ],
+      "muzzleGround": [
+        372,
+        388
+      ]
+    },
+    "jump/back-right/001.png": {
+      "anchor": [
+        252,
+        364
+      ],
+      "sha256": "e6a407411a5bb1d45cb29a8a26c5cd7b863ce20a19d7b78665c3794eab9b829c",
+      "source": "exec-d00214c8-e625-46c3-b169-e559f66792e2.png",
+      "muzzle": [
+        367,
+        189
+      ],
+      "muzzleGround": [
+        367,
+        364
+      ]
+    },
+    "jump/back-right/002.png": {
+      "anchor": [
+        252,
+        333
+      ],
+      "sha256": "9efead69f0ed6e26560b92605904dbfd304dba8e57fe54debb6b047b1eb4a3df",
+      "source": "exec-d00214c8-e625-46c3-b169-e559f66792e2.png",
+      "muzzle": [
+        372,
+        162
+      ],
+      "muzzleGround": [
+        372,
+        333
+      ]
+    },
+    "jump/back-right/003.png": {
+      "anchor": [
+        252,
+        346
+      ],
+      "sha256": "3914161ec4f7f3b77fa0665631652be78559c56976ee275d7136999ddaaba933",
+      "source": "exec-d00214c8-e625-46c3-b169-e559f66792e2.png",
+      "muzzle": [
+        383,
+        178
+      ],
+      "muzzleGround": [
+        383,
+        346
+      ]
+    },
+    "jump/back-right/004.png": {
+      "anchor": [
+        252,
+        368
+      ],
+      "sha256": "956ea9a64b3b6cc841ab51394e6fdc697549168aa85545265bfbdc2dc4e198a9",
+      "source": "exec-d00214c8-e625-46c3-b169-e559f66792e2.png",
+      "muzzle": [
+        368,
+        218
+      ],
+      "muzzleGround": [
+        368,
+        368
+      ]
+    },
+    "jump/back-right/005.png": {
+      "anchor": [
+        252,
+        365
+      ],
+      "sha256": "a25b8d332a35dcde69f9ed8a73e461e675e5f20f54934f7cf10ab7294e797af7",
+      "source": "exec-d00214c8-e625-46c3-b169-e559f66792e2.png",
+      "muzzle": [
+        372,
+        200
+      ],
+      "muzzleGround": [
+        372,
+        365
+      ]
+    },
+    "jump/front/000.png": {
+      "anchor": [
+        264,
+        450
+      ],
+      "sha256": "c8a6ea18bd48d1b3aacf8553f3e3949b40ac13e2d3db04b952449da0695daf33",
+      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "muzzle": [
+        264,
+        341
+      ],
+      "muzzleGround": [
+        264,
+        450
+      ]
+    },
+    "jump/front/001.png": {
+      "anchor": [
+        257,
+        450
+      ],
+      "sha256": "d5afd7fb5cf13eccf2159a01cafc8648b13920a8bf2f39f42d49920522f0f589",
+      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "muzzle": [
+        257,
+        326
+      ],
+      "muzzleGround": [
+        257,
+        450
+      ]
+    },
+    "jump/front/002.png": {
+      "anchor": [
+        244,
+        450
+      ],
+      "sha256": "d44b70e518293faf2d9a5d126df238e7ae89de09f5ffeea9e112d17f00cb508b",
+      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "muzzle": [
+        244,
+        319
+      ],
+      "muzzleGround": [
+        244,
+        450
+      ]
+    },
+    "jump/front/003.png": {
+      "anchor": [
+        264,
+        450
+      ],
+      "sha256": "92ee74e1d5bddb948a02fd6850e1e64bc1c05aef7b4f793d81c6063054496825",
+      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "muzzle": [
+        264,
+        331
+      ],
+      "muzzleGround": [
+        264,
+        450
+      ]
+    },
+    "jump/front/004.png": {
+      "anchor": [
+        257,
+        450
+      ],
+      "sha256": "4089145cc7fcb7eeb0fc32e1a443a3f29d7ffb65151950fdd2c7ade4eaa50152",
+      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "muzzle": [
+        257,
+        356
+      ],
+      "muzzleGround": [
+        257,
+        450
+      ]
+    },
+    "jump/front/005.png": {
+      "anchor": [
+        244,
+        450
+      ],
+      "sha256": "16e9b13b45ae85dec383e1caeaeefbc73ede2e27662a55ec1aba363b054f62bc",
+      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "muzzle": [
+        244,
+        331
+      ],
+      "muzzleGround": [
+        244,
+        450
+      ]
+    },
+    "jump/front-left/000.png": {
+      "anchor": [
+        250,
+        442
+      ],
+      "sha256": "e74a251095827e2c4b06e8e7491e11546fc4cf5b291571cbcac963f136bf03af",
+      "source": "exec-fdc81d67-5d09-434e-a331-4c2022d37181.png",
+      "muzzle": [
+        145,
+        325
+      ],
+      "muzzleGround": [
+        145,
+        442
+      ]
+    },
+    "jump/front-left/001.png": {
+      "anchor": [
+        250,
+        435
+      ],
+      "sha256": "59cbd56606af2761335ad3dd503b1e34af763116075408c6ce1fadc2eaf1ebde",
+      "source": "exec-fdc81d67-5d09-434e-a331-4c2022d37181.png",
+      "muzzle": [
+        147,
+        299
+      ],
+      "muzzleGround": [
+        147,
+        435
+      ]
+    },
+    "jump/front-left/002.png": {
+      "anchor": [
+        250,
+        428
+      ],
+      "sha256": "0a00a24bbba382a087aa899528f704aa3c0926eafaf9a74862b175e1c9298cc8",
+      "source": "exec-fdc81d67-5d09-434e-a331-4c2022d37181.png",
+      "muzzle": [
+        139,
+        286
+      ],
+      "muzzleGround": [
+        139,
+        428
+      ]
+    },
+    "jump/front-left/003.png": {
+      "anchor": [
+        250,
+        428
+      ],
+      "sha256": "1d0c983ffbbff9c95dcff57198e5596546d9cc70e5442abe165e3ca5175cc11c",
+      "source": "exec-fdc81d67-5d09-434e-a331-4c2022d37181.png",
+      "muzzle": [
+        152,
+        291
+      ],
+      "muzzleGround": [
+        152,
+        428
+      ]
+    },
+    "jump/front-left/004.png": {
+      "anchor": [
+        250,
+        435
+      ],
+      "sha256": "3818c4f6463b1ac9e02a1207fe3ef3d31e1a0aea4196593fabcedc1ad311655e",
+      "source": "exec-fdc81d67-5d09-434e-a331-4c2022d37181.png",
+      "muzzle": [
+        147,
+        337
+      ],
+      "muzzleGround": [
+        147,
+        435
+      ]
+    },
+    "jump/front-left/005.png": {
+      "anchor": [
+        250,
+        441
+      ],
+      "sha256": "499987fbe01a0a85aba69dd7306f95df0be54ba5532ea586683ce0f4d4af6b31",
+      "source": "exec-fdc81d67-5d09-434e-a331-4c2022d37181.png",
+      "muzzle": [
+        146,
+        311
+      ],
+      "muzzleGround": [
+        146,
+        441
+      ]
+    },
+    "jump/front-right/000.png": {
+      "anchor": [
+        260,
+        450
+      ],
+      "sha256": "239182899db0e1ce6c1c5a02a41a8c915ac6ee4193b882f86cfcafdc2699cbc6",
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "muzzle": [
+        366,
+        331
+      ],
+      "muzzleGround": [
+        366,
+        450
+      ]
+    },
+    "jump/front-right/001.png": {
+      "anchor": [
+        260,
+        441
+      ],
+      "sha256": "3fab87dba00a8be1801b5c8a1f5e32add603c05dcbdb1aaa4b46c45795ba3c08",
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "muzzle": [
+        355,
+        299
+      ],
+      "muzzleGround": [
+        355,
+        441
+      ]
+    },
+    "jump/front-right/002.png": {
+      "anchor": [
+        260,
+        425
+      ],
+      "sha256": "b1886aef4817bff8e65966ae28bd0412b06ae7e59b1779c6c6f3195efcec45b2",
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "muzzle": [
+        357,
+        289
+      ],
+      "muzzleGround": [
+        357,
+        425
+      ]
+    },
+    "jump/front-right/003.png": {
+      "anchor": [
+        260,
+        435
+      ],
+      "sha256": "b439c0a62f13f2b3d7a4126709534e7ad85b04ef3facd52ea98b7af07108f2fe",
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "muzzle": [
+        366,
+        298
+      ],
+      "muzzleGround": [
+        366,
+        435
+      ]
+    },
+    "jump/front-right/004.png": {
+      "anchor": [
+        260,
+        442
+      ],
+      "sha256": "19e4581ade15047a099eb1bbf1cf81a5b4be8a3d5b9e3361a4d39a49393e57b0",
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "muzzle": [
+        362,
+        346
+      ],
+      "muzzleGround": [
+        362,
+        442
+      ]
+    },
+    "jump/front-right/005.png": {
+      "anchor": [
+        260,
+        450
+      ],
+      "sha256": "e1e0d11c1b855815d9ed2fc4beb96683e5a02ba3b95faa6afdbfa4549e47d244",
+      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
+      "muzzle": [
+        357,
+        314
+      ],
+      "muzzleGround": [
+        357,
+        450
+      ]
     }
   },
   "slidePhases": [
@@ -1149,5 +2795,15 @@
     "back-left",
     "back",
     "back-right"
+  ],
+  "jumpDirections": [
+    "right",
+    "left",
+    "back",
+    "back-left",
+    "back-right",
+    "front",
+    "front-left",
+    "front-right"
   ]
 }

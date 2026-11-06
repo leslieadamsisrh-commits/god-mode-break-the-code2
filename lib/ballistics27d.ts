@@ -1,8 +1,18 @@
 import {prisms33,rayPoly32,type Fracture32} from './fracture32';
 import {arenaPoint46,arenaInverse46,arenaJacobian46} from './bayBridgePresentation';
+import {raptorBarrelSocket,type RaptorSocketRegistration} from './raptorSocket';
+import raptorInventory from '../public/assets/raptor-v2/manifest.json';
+export type BarrelActor27d={x:number;y:number;z?:number;gunFacing?:number;aim?:number;slide?:number;character?:'jade'|'raptor';raptorFrame?:{key:string}};
+export type BarrelSocket27d={x:number;y:number;z:number;dir:number;raptorAligned?:boolean};
 // Upright sprite registration: 125px cell, feet .88, barrel .88/.37.
 // Convert the socket into the floor projection rather than adding sprite pixels to world XY.
-export function barrelSocket27d(p:{x:number;y:number;z?:number;gunFacing?:number;aim?:number;slide?:number},scale=.82){
+export function barrelSocket27d(p:BarrelActor27d,scale=.82):BarrelSocket27d{
+ if(p.character==='raptor'&&p.raptorFrame){
+  const record=(raptorInventory.frames as unknown as Record<string,RaptorSocketRegistration|undefined>)[p.raptorFrame.key];
+  const socket=raptorBarrelSocket(p,record,scale);
+  if(socket)return{x:socket.x,y:socket.y,z:socket.z,dir:socket.dir,raptorAligned:true};
+ }
+ // Missing Raptor authoring retains the legacy path, without claiming alignment.
  const a=p.gunFacing??p.aim??0,j=arenaJacobian46(p.x,p.y),dx=j.x*Math.cos(a)+j.xy*Math.sin(a),dy=j.y*Math.sin(a),angle=Math.atan2(dy,dx),floor=arenaPoint46(p.x,p.y),unit=1.536*.64;
  const offsetX=Math.cos(angle)*125*.38*scale,offsetY=Math.sin(angle)*14*scale;
  const root=arenaInverse46(floor.x+offsetX*unit,floor.y+offsetY*unit);

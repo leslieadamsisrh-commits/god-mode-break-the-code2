@@ -1,0 +1,66 @@
+[
+  {
+    "frame": 0,
+    "oldOpaqueBounds": [
+      24,
+      217,
+      482,
+      444
+    ],
+    "candidateOpaqueBounds": [
+      121,
+      215,
+      475,
+      449
+    ],
+    "suggestedGroundTranslationY": -5
+  },
+  {
+    "frame": 1,
+    "oldOpaqueBounds": [
+      23,
+      217,
+      481,
+      448
+    ],
+    "candidateOpaqueBounds": [
+      122,
+      215,
+      475,
+      454
+    ],
+    "suggestedGroundTranslationY": -6
+  },
+  {
+    "frame": 2,
+    "oldOpaqueBounds": [
+      26,
+      216,
+      489,
+      438
+    ],
+    "candidateOpaqueBounds": [
+      110,
+      215,
+      475,
+      442
+    ],
+    "suggestedGroundTranslationY": -4
+  },
+  {
+    "frame": 3,
+    "oldOpaqueBounds": [
+      24,
+      217,
+      489,
+      447
+    ],
+    "candidateOpaqueBounds": [
+      122,
+      215,
+      475,
+      453
+    ],
+    "suggestedGroundTranslationY": -6
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "phase": "entry",
+    "file": "000.png",
+    "anchor": [
+      256,
+      331
+    ],
+    "source": "exec-3ffae6cf-7d2b-4190-9931-f4df27dec7dc.png",
+    "sourceCell": [
+      0,
+      0,
+      724,
+      724
+    ],
+    "uniformScale": 0.35359116022099446,
+    "sha256": "85dcbfbfe8c8c700df2214c941d5e15f0fa802c8df187e1982323c27f5941261",
+    "status": "review-only"
+  },
+  {
+    "phase": "hold",
+    "file": "001.png",
+    "anchor": [
+      256,
+      343
+    ],
+    "source": "exec-3ffae6cf-7d2b-4190-9931-f4df27dec7dc.png",
+    "sourceCell": [
+      724,
+      0,
+      724,
+      724
+    ],
+    "uniformScale": 0.35359116022099446,
+    "sha256": "6a9ce1795fbf4b98a5815d7ec090989962e3ff31a08c1f7450b9fea9d827cb52",
+    "status": "review-only"
+  },
+  {
+    "phase": "recovery",
+    "file": "002.png",
+    "anchor": [
+      256,
+      352
+    ],
+    "source": "exec-3ffae6cf-7d2b-4190-9931-f4df27dec7dc.png",
+    "sourceCell": [
+      1448,
+      0,
+      724,
+      724
+    ],
+    "uniformScale": 0.35359116022099446,
+    "sha256": "bda4a1ee7bf2e765a8e7838d5d44ccac267d0f166310817433f387c9ed0dc495",
+    "status": "review-only"
+  }
+]

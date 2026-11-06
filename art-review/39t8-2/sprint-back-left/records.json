@@ -1,0 +1,114 @@
+[
+  {
+    "frame": 0,
+    "file": "000.png",
+    "status": "review-only-primary-acceptance-required",
+    "source": "exec-eb06a5a4-62d4-44e5-9183-1ac1f74e4730.png",
+    "sha256": "53ec5580b20c759d22bf0ec8fb470ec50a0e11baa954b6f75f5b927652b18b44",
+    "anchor": [
+      256,
+      369
+    ],
+    "sourceAnchor": [
+      256,
+      369
+    ],
+    "sourceMuzzle": [
+      165,
+      206
+    ],
+    "registrationStatus": "Original anchor retained as baseline; small generated translation requires motion verification and fresh muzzle socket inspection.",
+    "uniformExportScale": 0.8165869218500797,
+    "sourceCellSize": 627,
+    "alphaBBox": [
+      20,
+      18,
+      512,
+      512
+    ]
+  },
+  {
+    "frame": 1,
+    "file": "001.png",
+    "status": "review-only-primary-acceptance-required",
+    "source": "exec-eb06a5a4-62d4-44e5-9183-1ac1f74e4730.png",
+    "sha256": "5b72a8d9c396ae31e7281c0be353ced34820464a4c432dac5f7b5f32314973bc",
+    "anchor": [
+      256,
+      374
+    ],
+    "sourceAnchor": [
+      256,
+      374
+    ],
+    "sourceMuzzle": [
+      171,
+      227
+    ],
+    "registrationStatus": "Original anchor retained as baseline; small generated translation requires motion verification and fresh muzzle socket inspection.",
+    "uniformExportScale": 0.8165869218500797,
+    "sourceCellSize": 627,
+    "alphaBBox": [
+      0,
+      29,
+      497,
+      506
+    ]
+  },
+  {
+    "frame": 2,
+    "file": "002.png",
+    "status": "review-only-primary-acceptance-required",
+    "source": "exec-eb06a5a4-62d4-44e5-9183-1ac1f74e4730.png",
+    "sha256": "d8a34d494b73adeef5427db5326e4cb81d9b6f1c35eb0c8f7a497c0d1bd9a992",
+    "anchor": [
+      256,
+      369
+    ],
+    "sourceAnchor": [
+      256,
+      369
+    ],
+    "sourceMuzzle": [
+      124,
+      208
+    ],
+    "registrationStatus": "Original anchor retained as baseline; small generated translation requires motion verification and fresh muzzle socket inspection.",
+    "uniformExportScale": 0.8165869218500797,
+    "sourceCellSize": 627,
+    "alphaBBox": [
+      70,
+      0,
+      512,
+      480
+    ]
+  },
+  {
+    "frame": 3,
+    "file": "003.png",
+    "status": "review-only-primary-acceptance-required",
+    "source": "exec-eb06a5a4-62d4-44e5-9183-1ac1f74e4730.png",
+    "sha256": "2613eb4251b6681e1df2bcaa4bb3812c1b4d05045ca429da2ca3659b21c35f42",
+    "anchor": [
+      256,
+      457
+    ],
+    "sourceAnchor": [
+      256,
+      457
+    ],
+    "sourceMuzzle": [
+      124,
+      294
+    ],
+    "registrationStatus": "Original anchor retained as baseline; small generated translation requires motion verification and fresh muzzle socket inspection.",
+    "uniformExportScale": 0.8165869218500797,
+    "sourceCellSize": 627,
+    "alphaBBox": [
+      0,
+      2,
+      495,
+      493
+    ]
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "phase": "push-off",
+    "file": "000.png",
+    "anchor": [
+      266,
+      367
+    ],
+    "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
+    "sourceCell": [
+      0,
+      0,
+      512,
+      512
+    ],
+    "uniformScale": 0.5,
+    "sha256": "f9163eb2cb9cde15d888c88d74aa8698c9a9de0b940a17c0cfa3789b9067625a",
+    "status": "review-only"
+  },
+  {
+    "phase": "ascent",
+    "file": "001.png",
+    "anchor": [
+      256,
+      363
+    ],
+    "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
+    "sourceCell": [
+      512,
+      0,
+      512,
+      512
+    ],
+    "uniformScale": 0.5,
+    "sha256": "188b735bc07306cfee26897bc6b59462f997cfcca919538874bb20cac8b285c5",
+    "status": "review-only"
+  },
+  {
+    "phase": "apex",
+    "file": "002.png",
+    "anchor": [
+      250,
+      361
+    ],
+    "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
+    "sourceCell": [
+      1024,
+      0,
+      512,
+      512
+    ],
+    "uniformScale": 0.5,
+    "sha256": "162f8f2f672fcc76fbca4dc4029dcac6c7b2313fe62f307d24d208dc476b5ce3",
+    "status": "review-only"
+  },
+  {
+    "phase": "descent",
+    "file": "003.png",
+    "anchor": [
+      266,
+      359
+    ],
+    "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
+    "sourceCell": [
+      0,
+      512,
+      512,
+      512
+    ],
+    "uniformScale": 0.5,
+    "sha256": "e821986a2919d021d922f187e0a304a8f46073d95cb6796bf51c9e39a7bd4968",
+    "status": "review-only"
+  },
+  {
+    "phase": "landing",
+    "file": "004.png",
+    "anchor": [
+      256,
+      359
+    ],
+    "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
+    "sourceCell": [
+      512,
+      512,
+      512,
+      512
+    ],
+    "uniformScale": 0.5,
+    "sha256": "538b25769d0a63ec4bf2bebe79cb0fda0edbbb6499974411f0c86f7c457e3f46",
+    "status": "review-only"
+  },
+  {
+    "phase": "recovery",
+    "file": "005.png",
+    "anchor": [
+      250,
+      358
+    ],
+    "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
+    "sourceCell": [
+      1024,
+      512,
+      512,
+      512
+    ],
+    "uniformScale": 0.5,
+    "sha256": "e63447be9223141ad26f4397a51321e7d53e418a40a136815a1ebe656fcca5ab",
+    "status": "review-only"
+  }
+]

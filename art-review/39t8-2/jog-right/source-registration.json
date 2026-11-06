@@ -1,0 +1,80 @@
+{
+  "sources": [
+    {
+      "path": "public/assets/raptor-v2/jog/right/000.png",
+      "registration": {
+        "anchor": [
+          263,
+          450
+        ],
+        "sha256": "43484fb212f85953c88639025da8fc0638de7473998867fb5b87b08f189d5b65",
+        "source": "right-jog-contact-master.png",
+        "muzzle": [
+          468,
+          315
+        ],
+        "muzzleGround": [
+          468,
+          450
+        ]
+      }
+    },
+    {
+      "path": "public/assets/raptor-v2/jog/right/001.png",
+      "registration": {
+        "anchor": [
+          263,
+          450
+        ],
+        "sha256": "89bc2d1f0e8d4ba5f8ddecd3f86f279842932a021eb6c751598c8bc4c37ee28e",
+        "source": "exec-30f9581b-fb85-4aa3-92d2-39fec01b83ea.png",
+        "muzzle": [
+          467,
+          316
+        ],
+        "muzzleGround": [
+          467,
+          450
+        ]
+      }
+    },
+    {
+      "path": "public/assets/raptor-v2/jog/right/002.png",
+      "registration": {
+        "anchor": [
+          263,
+          450
+        ],
+        "sha256": "68c5c69f4af3d1bbacf7004c9e278c4eff1093747209b0d1c0fb53ea064dda62",
+        "source": "exec-06cea895-3830-4e22-8c9c-8b60122d2d6b.png",
+        "muzzle": [
+          475,
+          317
+        ],
+        "muzzleGround": [
+          475,
+          450
+        ]
+      }
+    },
+    {
+      "path": "public/assets/raptor-v2/jog/right/003.png",
+      "registration": {
+        "anchor": [
+          263,
+          450
+        ],
+        "sha256": "0215ac406e5f3c108ff3f2ace89ce863b4394055928302f724204bd1d540472e",
+        "source": "exec-2c41006b-49f1-4275-a381-a25c08b0852f.png",
+        "muzzle": [
+          476,
+          315
+        ],
+        "muzzleGround": [
+          476,
+          450
+        ]
+      }
+    }
+  ]
+}

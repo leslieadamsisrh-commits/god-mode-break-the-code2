@@ -1,0 +1,84 @@
+{
+  "sources": [
+    {
+      "path": "public/assets/raptor-v2/stalk/left/000.png",
+      "registration": {
+        "anchor": [
+          233,
+          450
+        ],
+        "drawScale": 1.076276,
+        "source": "exec-7b70966f-7fc6-4d91-a7a3-d80ed84defbf.png",
+        "sha256": "635cfe2aff6abff0e2c5eb063b515662461f7dacc737b955f5a673172514fae2",
+        "muzzle": [
+          72,
+          320
+        ],
+        "muzzleGround": [
+          72,
+          450
+        ]
+      }
+    },
+    {
+      "path": "public/assets/raptor-v2/stalk/left/001.png",
+      "registration": {
+        "anchor": [
+          233,
+          450
+        ],
+        "drawScale": 1.076276,
+        "source": "exec-ab550d17-c5bc-49e8-9379-079534743077.png",
+        "sha256": "a166f584665e0d7c871fd108449c0b56bb54d0a3595016a3e5d9393ae68ba360",
+        "muzzle": [
+          73,
+          320
+        ],
+        "muzzleGround": [
+          73,
+          450
+        ]
+      }
+    },
+    {
+      "path": "public/assets/raptor-v2/stalk/left/002.png",
+      "registration": {
+        "anchor": [
+          233,
+          450
+        ],
+        "drawScale": 1.076276,
+        "source": "exec-7f873bc4-854c-4876-84ff-1e0796eb0134.png",
+        "sha256": "05cc0c8d7aa128d1e5b26dcb303a3c2aaf5cd0314e307422846f8f555c831ab9",
+        "muzzle": [
+          71,
+          320
+        ],
+        "muzzleGround": [
+          71,
+          450
+        ]
+      }
+    },
+    {
+      "path": "public/assets/raptor-v2/stalk/left/003.png",
+      "registration": {
+        "anchor": [
+          233,
+          450
+        ],
+        "drawScale": 1.076276,
+        "source": "exec-720616f7-6996-4d7a-9e7f-b121c03a34c1.png",
+        "sha256": "e636f41fce5c843fbeccac9f13a46442039b769ac66c32816da86a1f5f68fee8",
+        "muzzle": [
+          73,
+          320
+        ],
+        "muzzleGround": [
+          73,
+          450
+        ]
+      }
+    }
+  ]
+}

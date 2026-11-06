@@ -1,0 +1,54 @@
+{
+  "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
+  "status": "candidate",
+  "frames": {
+    "000.png": {
+      "anchor": [
+        240,
+        442
+      ],
+      "drawScale": 0.78,
+      "sha256": "e46364398e984571033e0d857886028022863ed77f7d55842efbc3cae810a330"
+    },
+    "001.png": {
+      "anchor": [
+        240,
+        435
+      ],
+      "drawScale": 0.78,
+      "sha256": "c19652327d4150ddb4714878c820141f92d1e71097d092f957d6fdcd37874c50"
+    },
+    "002.png": {
+      "anchor": [
+        240,
+        425
+      ],
+      "drawScale": 0.78,
+      "sha256": "379d2a0abaa99efc9d0ed37d86475aa60fc8f3d5c9af5c9638587048045aa354"
+    },
+    "003.png": {
+      "anchor": [
+        240,
+        406
+      ],
+      "drawScale": 0.78,
+      "sha256": "d5ef6cd86154cbab6112aef2da108fa7cf2e2ac0a93f857165d91600bb84d92d"
+    },
+    "004.png": {
+      "anchor": [
+        240,
+        405
+      ],
+      "drawScale": 0.78,
+      "sha256": "767bcbb8a7a17e02cec7eb7d614e5e1717067e7643531eeb619b7ffe7a2e9bf3"
+    },
+    "005.png": {
+      "anchor": [
+        240,
+        405
+      ],
+      "drawScale": 0.78,
+      "sha256": "d2aade8aad01897446a4a08048e428817227ab3f294d2ce9b3845b202e460036"
+    }
+  }
+}

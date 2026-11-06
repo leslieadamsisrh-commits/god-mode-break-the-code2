@@ -1,0 +1,119 @@
+{
+  "direction": "front-right",
+  "action": "sprint",
+  "source": "exec-1aabfd20-c910-4d33-a9e7-c3a661bae19f.png",
+  "corrections": [
+    "compact head and neck",
+    "fuller calf muscle",
+    "three primary toes"
+  ],
+  "preserved": [
+    "four distinct original strides",
+    "forward lean",
+    "eye asymmetry",
+    "direction"
+  ],
+  "normalization": "Whole sheet resized uniformly1280 to1024 then512 cell crops; largest connected alpha component plus1px antialias margin; transparent RGB zero outside mask.",
+  "frames": [
+    {
+      "frame": "000.png",
+      "sha256": "01c7154bc1d7ba7d24352fac7b1e45503ce82f5b80ab5a91eb39234e1d2e8589",
+      "sourceRegistration": {
+        "anchor": [
+          256,
+          450
+        ],
+        "sha256": "c53b3fc7dd871f2e89f8800d908f8c0f6337d45e5de7fe3df14d3589b0baa0c0",
+        "muzzle": [
+          404,
+          316
+        ],
+        "muzzleGround": [
+          404,
+          450
+        ]
+      },
+      "suggestedAnchor": [
+        256,
+        450
+      ],
+      "status": "review-only",
+      "registrationNote": "Uniform whole sheet1280 to1024, no per-frame scaling; compare anchor visually before runtime acceptance."
+    },
+    {
+      "frame": "001.png",
+      "sha256": "15191d9fde59ccdc9d6f54b9ed3ffa76f6ef2671d039a5b327fe82018b345a38",
+      "sourceRegistration": {
+        "anchor": [
+          256,
+          450
+        ],
+        "sha256": "1538c1afb4a593a325dda8e428333deca73b84341a54de51eb1cb27758dc8f84",
+        "muzzle": [
+          405,
+          355
+        ],
+        "muzzleGround": [
+          405,
+          450
+        ]
+      },
+      "suggestedAnchor": [
+        256,
+        450
+      ],
+      "status": "review-only",
+      "registrationNote": "Uniform whole sheet1280 to1024, no per-frame scaling; compare anchor visually before runtime acceptance."
+    },
+    {
+      "frame": "002.png",
+      "sha256": "47a8f533fe5caeb33c558636d47eb398fc069d54757e97ca857208daf6328b3c",
+      "sourceRegistration": {
+        "anchor": [
+          256,
+          450
+        ],
+        "sha256": "763131dbf02179638353c9b1d3215e7b5bc14a5776e97cea04f846807bc815b2",
+        "muzzle": [
+          405,
+          316
+        ],
+        "muzzleGround": [
+          405,
+          450
+        ]
+      },
+      "suggestedAnchor": [
+        256,
+        450
+      ],
+      "status": "review-only",
+      "registrationNote": "Uniform whole sheet1280 to1024, no per-frame scaling; compare anchor visually before runtime acceptance."
+    },
+    {
+      "frame": "003.png",
+      "sha256": "0303aa84dee13f59055f7ef3cb935e4bf7d0ccb050085c43e857c61dc61b9e9a",
+      "sourceRegistration": {
+        "anchor": [
+          256,
+          450
+        ],
+        "sha256": "716fc0dcd82b148954f6e4e55b9f60039bcb1cfe2e8ffb106800dbf13ad6ea14",
+        "muzzle": [
+          403,
+          312
+        ],
+        "muzzleGround": [
+          403,
+          450
+        ]
+      },
+      "suggestedAnchor": [
+        256,
+        450
+      ],
+      "status": "review-only",
+      "registrationNote": "Uniform whole sheet1280 to1024, no per-frame scaling; compare anchor visually before runtime acceptance."
+    }
+  ]
+}

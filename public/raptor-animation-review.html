@@ -1,32 +1,56 @@
 <!doctype html>
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Raptor animation review</title>
-<style>body{margin:20px;background:#101b25;color:#e9f3fa;font:16px system-ui}a{color:#8adceb}header{display:flex;gap:16px;align-items:center;flex-wrap:wrap}button,select{font:inherit;padding:8px;background:#243b4d;color:white;border:1px solid #6b8a9c;border-radius:6px}#grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:20px}figure{margin:0;background:#20313e;border:1px solid #425868;border-radius:8px}canvas{width:100%;display:block}figcaption{padding:8px;text-align:center}#status{color:#a9c4d1}</style>
-<header><a href="/studio/character-lab">Back to combat lab</a><label>Action <select id="action"><option>sprint</option><option>run</option><option>stalk</option><option>jog</option><option>slide</option><option>idle</option></select></label><button id="pause">Pause</button><button id="step">Next frame</button><label>Playback <select id="rate"><option value="4">4 fps</option><option value="8" selected>8 fps</option><option value="12">12 fps</option></select></label></header>
-<p id="status">Loading artwork…</p><div id="grid"></div>
+<style>
+:root{color-scheme:dark}body{margin:20px;background:#101b25;color:#e9f3fa;font:16px system-ui}a{color:#8adceb}header,.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}h1{font-size:24px;margin:16px 0 8px}.controls{margin:12px 0}label{display:flex;gap:7px;align-items:center}button,select{font:inherit;padding:8px;background:#243b4d;color:white;border:1px solid #6b8a9c;border-radius:6px}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #f6c46c;outline-offset:2px}button:disabled,select:disabled{opacity:.5}#grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:20px}figure{margin:0;background:#20313e;border:1px solid #425868;border-radius:8px;overflow:hidden}canvas{width:100%;display:block}figcaption{padding:9px;text-align:center;min-height:44px;font-size:14px}#status,#timing{color:#b7ced9;font-size:14px;max-width:1000px}#error{color:#ff9f9f}#arc-note{font-size:13px;color:#ddc493;max-width:1000px}input{width:18px;height:18px}
+</style>
+<header><a href="/studio/character-lab">Back to combat lab</a><span id="build">Loading build…</span></header>
+<h1>Raptor animation review</h1>
+<div class="controls">
+<label>Action <select id="action" aria-label="Action" disabled></select></label>
+<button id="pause" disabled>Pause</button><button id="step" disabled>Next frame</button>
+<label>Phase <select id="phase" aria-label="Phase" disabled></select></label>
+<label>Speed <select id="speed" aria-label="Speed"><option value="1">Normal</option><option value="0.25">Quarter speed</option></select></label>
+<label>Frame rate <select id="rate" aria-label="Frame rate"><option value="4">4 fps</option><option value="8" selected>8 fps</option><option value="12">12 fps</option></select></label>
+<label>Background <select id="background" aria-label="Background"><option value="#c4c8cb">Gray</option><option value="#ffffff">White</option><option value="#20313e">Dark</option></select></label>
+<label><input type="checkbox" id="arc" disabled>Illustrative jump arc</label>
+</div>
+<p id="status" role="status">Loading artwork…</p><p id="timing"></p>
+<p id="arc-note" hidden>The arc illustrates a 400-unit/s takeoff with gravity 1000. It is not gameplay verification. Crosshairs mark the fixed support point; artwork uses each manifest anchor and uniform draw scale.</p>
+<p id="error" role="alert"></p><div id="grid"></div>
 <script>
-const grid=document.querySelector('#grid'),status=document.querySelector('#status'),action=document.querySelector('#action'),rate=document.querySelector('#rate');
-let paused=false,frame=0,last=0,inventory,images=new Map(),views=[];
-document.querySelector('#pause').onclick=()=>{paused=!paused;document.querySelector('#pause').textContent=paused?'Play':'Pause'};
-document.querySelector('#step').onclick=()=>{paused=true;document.querySelector('#pause').textContent='Play';frame++};
-action.onchange=()=>{frame=0;last=0};
+const $=id=>document.getElementById(id),grid=$('grid'),status=$('status'),action=$('action'),rate=$('rate'),phase=$('phase'),speed=$('speed'),background=$('background'),arc=$('arc');
+const phaseNames={jump:['Push-off','Ascent','Apex','Descent','Landing','Recovery'],slide:['Entry','Hold','Recovery']};
+const flightDurations=[65,300,70,365,75,65],flightStarts=flightDurations.map((_,i)=>flightDurations.slice(0,i).reduce((a,b)=>a+b,0));
+let paused=false,frame=0,last=null,elapsed=0,inventory,images=new Map(),views=[],counts={};
+function familyCount(){return counts[action.value]||1}
+function updatePhaseOptions(){phase.replaceChildren();for(let i=0;i<familyCount();i++){const option=document.createElement('option');option.value=String(i);option.textContent=(i+1)+' · '+(phaseNames[action.value]?.[i]||'Frame '+(i+1));phase.append(option)}phase.value=String(frame);const jump=action.value==='jump';arc.disabled=!jump;rate.disabled=jump;$('arc-note').hidden=!jump;$('timing').textContent=jump?'Jump phase holds follow the illustrative flight: 65 / 300 / 70 / 365 / 75 / 65 ms at normal speed.':'Frame-rate controls apply to this action. Pause or select a phase to inspect all eight directions.';}
+function setPaused(value){paused=value;$('pause').textContent=paused?'Play':'Pause'}
+$('pause').onclick=()=>setPaused(!paused);
+$('step').onclick=()=>{setPaused(true);frame=(frame+1)%familyCount();elapsed=0;phase.value=String(frame);render()};
+phase.onchange=()=>{setPaused(true);frame=Number(phase.value);elapsed=0;render()};
+action.onchange=()=>{frame=0;elapsed=0;last=null;updatePhaseOptions();render()};
+background.onchange=render;arc.onchange=render;
+function currentHold(){return action.value==='jump'?(flightDurations[frame]||125):1000/Number(rate.value)}
 async function start(){
- inventory=await (await fetch('/assets/raptor-v2/manifest.json',{cache:'no-store'})).json();
- let loaded=0;
- await Promise.all(Object.keys(inventory.frames).map(key=>new Promise((resolve,reject)=>{
-  const image=new Image();
-  image.onload=()=>{if(image.naturalWidth!==512||image.naturalHeight!==512)return reject(Error(key+' has wrong dimensions'));images.set(key,image);loaded++;resolve()};
-  image.onerror=()=>reject(Error('Failed to load '+key));image.src='/assets/raptor-v2/'+key+'?v='+inventory.build;
- })));
- for(const direction of inventory.directions){const figure=document.createElement('figure'),canvas=document.createElement('canvas'),caption=document.createElement('figcaption');canvas.width=384;canvas.height=320;caption.textContent=direction;figure.append(canvas,caption);grid.append(figure);views.push({direction,canvas,caption})}
- status.textContent=inventory.build+' · '+loaded+' frames loaded · Slide frames show entry, hold, recovery';requestAnimationFrame(draw);
+ const response=await fetch('/assets/raptor-v2/manifest.json',{cache:'no-store'});if(!response.ok)throw Error('Manifest failed: HTTP '+response.status);inventory=await response.json();
+ counts={...inventory.counts};for(const key of Object.keys(inventory.frames)){const [family,,filename]=key.split('/'),index=Number(filename.replace('.png',''));if(Number.isInteger(index))counts[family]=Math.max(counts[family]||0,index+1)}
+ const preferred=['idle','stalk','jog','sprint','run','slide','jump'];for(const family of [...preferred,...Object.keys(counts).filter(f=>!preferred.includes(f))]){if(!counts[family])continue;const option=document.createElement('option');option.value=family;option.textContent=family;action.append(option)}action.value=counts.jump?'jump':'sprint';
+ let loaded=0;await Promise.all(Object.keys(inventory.frames).map(key=>new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{if(image.naturalWidth!==512||image.naturalHeight!==512)return reject(Error(key+' has wrong dimensions'));images.set(key,image);loaded++;resolve()};image.onerror=()=>reject(Error('Failed to load '+key));image.src='/assets/raptor-v2/'+key+'?v='+encodeURIComponent(inventory.frames[key].sha256||inventory.build)})));
+ for(const direction of inventory.directions){const figure=document.createElement('figure'),canvas=document.createElement('canvas'),caption=document.createElement('figcaption');canvas.width=480;canvas.height=400;canvas.setAttribute('aria-label',direction+' animation');figure.dataset.direction=direction;figure.append(canvas,caption);grid.append(figure);views.push({direction,canvas,caption,figure})}
+ $('build').textContent=inventory.build;status.textContent=loaded+' manifest assets loaded · '+inventory.directions.length+' directions · Missing artwork is marked explicitly.';action.disabled=phase.disabled=$('pause').disabled=$('step').disabled=false;updatePhaseOptions();document.body.dataset.ready='true';render();requestAnimationFrame(tick);
 }
-function draw(time){
- if(!paused&&time-last>1000/Number(rate.value)){frame++;last=time}
- const family=action.value,index=frame%inventory.counts[family];
- for(const view of views){const key=`${family}/${view.direction}/${String(index).padStart(3,'0')}.png`,record=inventory.frames[key],g=view.canvas.getContext('2d');g.clearRect(0,0,384,320);g.strokeStyle='#547180';g.beginPath();g.moveTo(0,270);g.lineTo(384,270);g.stroke();if(!record){view.caption.textContent=view.direction+' · '+family+' artwork pending';continue}const anchor=record.anchor,authored=record.drawScale,scale=.5*(Number.isFinite(authored)&&authored>0?authored:1);g.drawImage(images.get(key),192-anchor[0]*scale,270-anchor[1]*scale,512*scale,512*scale);view.caption.textContent=view.direction+' · '+(index+1)+'/'+inventory.counts[family]}
- requestAnimationFrame(draw);
+function render(){
+ if(!inventory)return;const family=action.value,index=frame%familyCount(),jump=family==='jump';
+ let height=0;if(jump&&arc.checked){const t=((flightStarts[index]||0)+elapsed)/1000;height=t<.8?Math.max(0,400*t-500*t*t):0}
+ for(const view of views){const key=`${family}/${view.direction}/${String(index).padStart(3,'0')}.png`,record=inventory.frames[key],g=view.canvas.getContext('2d');g.fillStyle=background.value;g.fillRect(0,0,480,400);g.strokeStyle=background.value==='#20313e'?'#6b8798':'#79858b';g.lineWidth=1;g.beginPath();g.moveTo(20,330.5);g.lineTo(460,330.5);g.moveTo(240.5,20);g.lineTo(240.5,380);g.stroke();view.figure.dataset.frame=String(index);view.figure.dataset.family=family;view.figure.dataset.available=String(!!record);
+  if(!record){view.caption.textContent=view.direction+' · '+family+' artwork pending';continue}
+  const anchor=record.anchor||inventory.anchor,authored=record.drawScale,scale=.6*(Number.isFinite(authored)&&authored>0?authored:1);g.drawImage(images.get(key),240-anchor[0]*scale,330-anchor[1]*scale-height*.6,512*scale,512*scale);
+  const enabled=!jump||(inventory.jumpDirections||[]).includes(view.direction);view.caption.textContent=view.direction+' · '+(phaseNames[family]?.[index]||family)+' · '+(index+1)+'/'+familyCount()+(enabled?'':' · review only');
+ }
+ document.body.dataset.frame=String(index);document.body.dataset.family=family;phase.value=String(index);
 }
-start().catch(error=>{status.textContent=error.message;status.style.color='#ff8b8b'});
+function tick(time){if(last!==null&&!paused){elapsed+=Math.min(time-last,250)*Number(speed.value);while(elapsed>=currentHold()){elapsed-=currentHold();frame=(frame+1)%familyCount()}}last=time;render();requestAnimationFrame(tick)}
+start().catch(error=>{$('error').textContent=error.message;status.textContent='Review could not load completely.';document.body.dataset.error='true'});
 </script></html>
-

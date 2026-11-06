@@ -57,3 +57,4 @@ for(const pace of [.25,.55,1])for(const[x,y]of [[1,0],[1,1],[0,1],[-1,1],[-1,0],
 assert.deepEqual(raptorLabMovement(0,0,.55),{x:0,y:0});
 assert.deepEqual(raptorLabMovement(.2,0,.55),{x:.11000000000000001,y:0});
 console.log('PASS: digital diagonal pace normalized without amplifying subunit input');
+
