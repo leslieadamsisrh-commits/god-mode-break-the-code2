@@ -2,17 +2,18 @@
  * Receives authoritative Jade combat state; NEVER modifies movement, collision or input.
  * Missing images are reported visibly instead of falling back to the retired skeletal rig.
  */
+import {advanceRaptorJump,type JumpMemory,type JumpPhase} from "./raptorJump";
 import inventory from "../public/assets/raptor-v2/manifest.json";
 export type RaptorAction="idle"|"walk"|"run"|"slide"|"jump"|"land"|"shoot"|"hit";
 export const RAPTOR_DIRECTIONS=["right","front-right","front","front-left","left","back-left","back","back-right"] as const;
 export type RaptorDirection=typeof RAPTOR_DIRECTIONS[number];
 // Physical inventory only. Other actions deliberately borrow these provisional families.
-export const RAPTOR_COUNTS={idle:1,run:4,stalk:4,jog:4,sprint:4,slide:3} as const;
+export const RAPTOR_COUNTS={idle:1,run:4,stalk:4,jog:4,sprint:4,slide:3,jump:6} as const;
 export type RaptorFamily=keyof typeof RAPTOR_COUNTS;
 // New posture artwork is enabled only for complete, explicitly accepted directional sets.
 const postureDirections:readonly string[]=inventory.postureDirections;
 const hasPostures=(angle:number)=>postureDirections.includes(selectRaptorDirection(angle));
-export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string;worldX?:number;worldY?:number;travelAngle?:number};
+export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string;worldX?:number;worldY?:number;travelAngle?:number;verticalVelocity?:number};
 export type RaptorRegistration={anchor:number[];drawScale?:number};
 /** Clamp digital diagonals before applying the lab's simulated stick pressure.
  * Controller values bypass this helper and retain their native analog magnitude.
@@ -61,10 +62,16 @@ export function raptorGaitPhase(state:RaptorVisualState):number{
  if(dt!==0||!old){memory.time=state.time;memory.x=state.worldX;memory.y=state.worldY;}
  gaitMemory.set(id,memory);return memory.phase;
 }
+const jumpMemory=new Map<string,JumpMemory>();
+const jumpPhases:readonly JumpPhase[]=["push-off","ascent","apex","descent","landing","recovery"];
+const jumpDirections:readonly string[]=(inventory as typeof inventory & {jumpDirections?:string[]}).jumpDirections??[];
 const slideMemory=new Map<string,{time:number;active:boolean;startedAt:number;recoveryUntil:number;angle:number}>();
 /** Presentation-only phase selection. It never delays or writes authoritative actions. */
 export function selectRaptorFrame(state:RaptorVisualState):{family:RaptorFamily;frame:number;angle:number}{
  const phase=raptorGaitPhase(state);
+ const jumpId=state.actorId||"local";
+ const jump=advanceRaptorJump(jumpMemory.get(jumpId),{time:state.time,airborne:state.airborne,verticalVelocity:state.verticalVelocity??0,interrupted:state.hit||state.attached||state.sliding});
+ jumpMemory.set(jumpId,jump.memory);
  const id=state.actorId||"local",previous=slideMemory.get(id);
  const memory=previous&&state.time>=previous.time?previous:{time:state.time,active:false,startedAt:state.time,recoveryUntil:0,angle:state.angle};
  const interrupted=state.airborne||state.hit||state.attached;
@@ -79,6 +86,7 @@ export function selectRaptorFrame(state:RaptorVisualState):{family:RaptorFamily;
  }
  if(!interrupted&&state.time<memory.recoveryUntil)return {family:"slide",frame:2,angle:state.firing?state.angle:memory.angle};
  const gait=gaitMemory.get(id)!;
+ if(jump.phase&&jumpDirections.includes(selectRaptorDirection(state.angle)))return {family:"jump",frame:jumpPhases.indexOf(jump.phase),angle:state.angle};
  if(interrupted || state.time-gait.landedAt<.075) return {family:"idle",frame:0,angle:state.angle};
  if(gait.sprinting){
   // Contact occupies 28% of the cycle; the foot passes under the hip in the remaining 22%.

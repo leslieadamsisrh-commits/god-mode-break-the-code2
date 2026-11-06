@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import {advanceRaptorJump} from '../lib/raptorJump.ts';
+let memory;
+function sample(time,airborne,verticalVelocity,interrupted=false){const r=advanceRaptorJump(memory,{time,airborne,verticalVelocity,interrupted});memory=r.memory;return r.phase;}
+assert.equal(sample(0,false,0),null);
+assert.equal(sample(.016,true,400),'push-off');
+assert.equal(sample(.05,true,350),'push-off');
+assert.equal(sample(.1,true,250),'ascent');
+assert.equal(sample(.2,true,20),'apex');
+assert.equal(sample(.22,true,-20),'apex');
+assert.equal(sample(.3,true,-120),'descent');
+assert.equal(sample(.4,false,0),'landing');
+assert.equal(sample(.48,false,0),'recovery');
+assert.equal(sample(.56,false,0),null);
+assert.equal(sample(.6,true,-10),'descent','ledge fall must not push off or invent apex');
+assert.equal(sample(.7,false,0),'landing');
+assert.equal(sample(.72,true,400),'push-off','immediate repeat jump interrupts recovery');
+assert.equal(sample(.74,true,350,true),null,'hit/cover interruption wins');
+assert.equal(sample(.8,true,-100),'descent');
+assert.equal(sample(.9,false,0,true),null,'interrupted contact does not trigger landing');
+assert.equal(sample(.95,false,0),null);
+assert.equal(sample(0,false,0),null,'time reset clears prior flight');
+assert.equal(sample(1,true,-100),'descent','resuming midflight does not invent takeoff');
+assert.equal(sample(2,false,0),null,'long sample gap does not invent a witnessed contact');
+console.log('PASS: flight phases, ledge fall, contact/recovery, repeat jump, interruption, reset and gaps');

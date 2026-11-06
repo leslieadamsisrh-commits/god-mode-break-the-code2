@@ -1,0 +1,92 @@
+{
+  "0": {
+    "phase": "push-off",
+    "source": "exec-6ec920d0-dd57-4c0e-9eac-d9f40f76f7a8.png",
+    "anchor": [
+      256,
+      450
+    ],
+    "scale": 0.25,
+    "offset": [
+      76,
+      205
+    ],
+    "sha256": "b6ab01b000791c851e0be59f6edee2f6f0d8f9e924b84a3df9a7bd803176702a",
+    "status": "review-only"
+  },
+  "1": {
+    "phase": "ascent",
+    "source": "exec-10da6ef0-eae8-4557-9ca1-b3ba0fbe8d07.png",
+    "anchor": [
+      256,
+      450
+    ],
+    "scale": 0.25,
+    "offset": [
+      76,
+      210
+    ],
+    "sha256": "a37a02830ec76c287e3134dc0fd0c6891f73c346f0253246cbb2f400a3befd2e",
+    "status": "review-only"
+  },
+  "2": {
+    "phase": "apex",
+    "source": "exec-042082f1-6dc0-4b8b-9123-e8bdf286f951.png",
+    "anchor": [
+      256,
+      450
+    ],
+    "scale": 0.25,
+    "offset": [
+      76,
+      210
+    ],
+    "sha256": "80eda7b426d1ea07d62662246ffb4b3d62771aa6c7d139aca7366fb0babd7e1f",
+    "status": "review-only"
+  },
+  "3": {
+    "phase": "descent",
+    "source": "exec-48573454-b157-4080-98df-1b2663d3ef39.png",
+    "anchor": [
+      256,
+      450
+    ],
+    "scale": 0.25,
+    "offset": [
+      76,
+      210
+    ],
+    "sha256": "defc9a1dfa9221949f32c3e506aeb9cd5a4ed2b5749ff404964289534e2aa4ab",
+    "status": "review-only"
+  },
+  "4": {
+    "phase": "landing",
+    "source": "exec-7d6667a4-ef5b-4aca-a744-5b863ce55d54.png",
+    "anchor": [
+      256,
+      450
+    ],
+    "scale": 0.25,
+    "offset": [
+      76,
+      218
+    ],
+    "sha256": "5d1e3b7b6a6caf89efda3ad85f38ff4f985a9ae0b66b7b2dc65f48fdd00d9375",
+    "status": "review-only"
+  },
+  "5": {
+    "phase": "recovery",
+    "source": "exec-885ce298-19fe-4d30-b216-25db6520230f.png",
+    "anchor": [
+      256,
+      450
+    ],
+    "scale": 0.25,
+    "offset": [
+      76,
+      210
+    ],
+    "sha256": "61e6ceaeab435005f94f1de7b754320578f445164a5cdf5bc7bd27294bf41bd0",
+    "status": "review-only"
+  }
+}

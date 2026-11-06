@@ -1018,8 +1018,8 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
   paintRaptorSprite(g,{x:visual.x+p.x,y:visual.y+p.y,angle:spriteFacing(p,family,speed,2),
     worldX:p.x,worldY:p.y,travelAngle:speed>2?Math.atan2(p.vy,p.vx):undefined,
     speed,sliding:p.slide>0||p.pinball>0,slideRemaining:p.slide>0?p.slide:undefined,slideDuration:cfg.slideDuration,
-    attached:!!p.coverId,actorId:p.id||"local",airborne:p.grounded===false||Math.abs(p.vz||0)>.1||(p.jumpHeight||0)>0,
-    hit:p.knock>0||(p.hitUntil||0)>t,firing:!!p.input?.fire,time:t,scale:cfg.spriteScale*.26});
+    attached:!!p.coverId,actorId:p.id||p.token||p.name||"local",airborne:p.grounded===false||Math.abs(p.vz||0)>.1||(p.jumpHeight||0)>0,
+    verticalVelocity:p.vz||0,hit:p.knock>0||(p.hitUntil||0)>t,firing:!!p.input?.fire,time:t,scale:cfg.spriteScale*.26});
   drawGloveWindup(g,p,t,cfg,"raptor");
   return;
  }
