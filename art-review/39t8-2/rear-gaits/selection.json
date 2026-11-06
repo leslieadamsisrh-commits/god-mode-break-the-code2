@@ -1,278 +1,567 @@
 {
-  "status": "candidate-motion-gate-required",
-  "note": "Back-left passing order swapped to keep support sequence left/left/right/right. Anchors authored by visual contact, not alpha bounding boxes. All uniform scale1; integration must compare common character scale.",
+  "status": "primary-static-accepted-motion-pending",
+  "note": "Feet v4 corrects primary rejection: grounded heels face viewer, compact toes away. Preserves selected phase order. Equal quadrant crops padded square and uniform resize, never bbox normalized. Manual heel contact anchors, integration motion calibration required.",
   "frames": [
     {
       "family": "stalk/back-left",
       "frame": 0,
-      "path": "stalk/back-left/000.png",
+      "path": "stalk/back-left/000-feet-v4.png",
       "phase": "contact-A",
       "anchor": [
         260,
-        440
+        431
       ],
       "supportPoint": [
-        174,
-        440
+        190,
+        431
       ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+      "drawScale": 0.58,
+      "source": "exec-592292c5-cd3e-4a10-815d-bb183a0d0958.png",
+      "sourceCrop": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "1fcff5fe6ce75ef793d76096391c0274e96c8391d145478f2fab4190de80183a",
+      "muzzle": [
+        132,
+        139
+      ],
+      "muzzleGround": [
+        132,
+        431
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
     },
     {
       "family": "stalk/back-left",
       "frame": 1,
-      "path": "stalk/back-left/003-v2.png",
+      "path": "stalk/back-left/001-feet-v4.png",
       "phase": "pass-A",
       "anchor": [
         260,
-        448
+        451
       ],
       "supportPoint": [
-        174,
-        448
+        175,
+        451
       ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+      "drawScale": 0.58,
+      "source": "exec-592292c5-cd3e-4a10-815d-bb183a0d0958.png",
+      "sourceCrop": [
+        627,
+        0,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "264be8419724294f7ed52308f2e2c42e78dec1bdb6d36af3860ba6bafb5be04b",
+      "muzzle": [
+        112,
+        138
+      ],
+      "muzzleGround": [
+        112,
+        451
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
     },
     {
       "family": "stalk/back-left",
       "frame": 2,
-      "path": "stalk/back-left/002.png",
+      "path": "stalk/back-left/002-feet-v4.png",
       "phase": "contact-B",
       "anchor": [
         260,
-        454
-      ],
-      "supportPoint": [
-        350,
-        454
-      ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
-    },
-    {
-      "family": "stalk/back-left",
-      "frame": 3,
-      "path": "stalk/back-left/001.png",
-      "phase": "pass-B",
-      "anchor": [
-        260,
-        430
-      ],
-      "supportPoint": [
-        260,
-        430
-      ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
-    },
-    {
-      "family": "jog/back-left",
-      "frame": 0,
-      "path": "jog/back-left/000.png",
-      "phase": "contact-A",
-      "anchor": [
-        260,
-        450
-      ],
-      "supportPoint": [
-        174,
-        450
-      ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
-    },
-    {
-      "family": "jog/back-left",
-      "frame": 1,
-      "path": "jog/back-left/003-v2.png",
-      "phase": "pass-A",
-      "anchor": [
-        260,
-        450
-      ],
-      "supportPoint": [
-        170,
-        450
-      ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
-    },
-    {
-      "family": "jog/back-left",
-      "frame": 2,
-      "path": "jog/back-left/002.png",
-      "phase": "contact-B",
-      "anchor": [
-        260,
-        460
-      ],
-      "supportPoint": [
-        345,
-        460
-      ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
-    },
-    {
-      "family": "jog/back-left",
-      "frame": 3,
-      "path": "jog/back-left/001.png",
-      "phase": "pass-B",
-      "anchor": [
-        260,
-        442
-      ],
-      "supportPoint": [
-        250,
-        442
-      ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
-    },
-    {
-      "family": "stalk/back-right",
-      "frame": 0,
-      "path": "stalk/back-right/000.png",
-      "phase": "contact-A",
-      "anchor": [
-        280,
-        478
-      ],
-      "supportPoint": [
-        325,
-        478
-      ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
-    },
-    {
-      "family": "stalk/back-right",
-      "frame": 1,
-      "path": "stalk/back-right/001.png",
-      "phase": "pass-A",
-      "anchor": [
-        280,
-        450
-      ],
-      "supportPoint": [
-        255,
-        450
-      ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
-    },
-    {
-      "family": "stalk/back-right",
-      "frame": 2,
-      "path": "stalk/back-right/002-v2.png",
-      "phase": "contact-B",
-      "anchor": [
-        280,
-        445
+        446
       ],
       "supportPoint": [
         340,
-        445
+        446
       ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+      "drawScale": 0.58,
+      "source": "exec-592292c5-cd3e-4a10-815d-bb183a0d0958.png",
+      "sourceCrop": [
+        0,
+        627,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "7937ead4eff428bcb5b5396ffd7a463cb37421208e48c8d8ab6c9bf9e394967b",
+      "muzzle": [
+        132,
+        142
+      ],
+      "muzzleGround": [
+        132,
+        446
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
     },
     {
-      "family": "stalk/back-right",
+      "family": "stalk/back-left",
       "frame": 3,
-      "path": "stalk/back-right/003-v2.png",
+      "path": "stalk/back-left/003-feet-v4.png",
       "phase": "pass-B",
       "anchor": [
-        280,
-        445
-      ],
-      "supportPoint": [
-        345,
-        445
-      ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
-    },
-    {
-      "family": "jog/back-right",
-      "frame": 0,
-      "path": "jog/back-right/000-v3.png",
-      "phase": "contact-A",
-      "anchor": [
-        280,
-        468
+        260,
+        446
       ],
       "supportPoint": [
         295,
-        468
+        446
       ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+      "drawScale": 0.58,
+      "source": "exec-592292c5-cd3e-4a10-815d-bb183a0d0958.png",
+      "sourceCrop": [
+        627,
+        627,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "66d72d3d8eaa2fc3872cdaacfe6086c9b9d17dcc28213cf34eb754fb367c5909",
+      "muzzle": [
+        112,
+        139
+      ],
+      "muzzleGround": [
+        112,
+        446
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
+    },
+    {
+      "family": "jog/back-left",
+      "frame": 0,
+      "path": "jog/back-left/000-feet-v4.png",
+      "phase": "contact-A",
+      "anchor": [
+        260,
+        445
+      ],
+      "supportPoint": [
+        180,
+        445
+      ],
+      "drawScale": 0.58,
+      "source": "exec-0907d59d-74ae-4411-b3b0-daaa5b5319f2.png",
+      "sourceCrop": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "305085944e51912532e8836df793827f52ec5a177870040a81c8352eb653403c",
+      "muzzle": [
+        130,
+        144
+      ],
+      "muzzleGround": [
+        130,
+        445
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
+    },
+    {
+      "family": "jog/back-left",
+      "frame": 1,
+      "path": "jog/back-left/001-feet-v4.png",
+      "phase": "pass-A",
+      "anchor": [
+        260,
+        455
+      ],
+      "supportPoint": [
+        175,
+        455
+      ],
+      "drawScale": 0.58,
+      "source": "exec-0907d59d-74ae-4411-b3b0-daaa5b5319f2.png",
+      "sourceCrop": [
+        627,
+        0,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "816b5374e2a66375a14bca63cf91fa6cdf6dd8f276d81fad16aaea5c1cf2a01b",
+      "muzzle": [
+        103,
+        139
+      ],
+      "muzzleGround": [
+        103,
+        455
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
+    },
+    {
+      "family": "jog/back-left",
+      "frame": 2,
+      "path": "jog/back-left/002-feet-v4.png",
+      "phase": "contact-B",
+      "anchor": [
+        260,
+        454
+      ],
+      "supportPoint": [
+        335,
+        454
+      ],
+      "drawScale": 0.58,
+      "source": "exec-0907d59d-74ae-4411-b3b0-daaa5b5319f2.png",
+      "sourceCrop": [
+        0,
+        627,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "8464138770bca829e77f868e2ac5f91bd01f3c9f82f7fcc51cabd59d88360d16",
+      "muzzle": [
+        129,
+        145
+      ],
+      "muzzleGround": [
+        129,
+        454
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
+    },
+    {
+      "family": "jog/back-left",
+      "frame": 3,
+      "path": "jog/back-left/003-feet-v4.png",
+      "phase": "pass-B",
+      "anchor": [
+        260,
+        452
+      ],
+      "supportPoint": [
+        280,
+        452
+      ],
+      "drawScale": 0.58,
+      "source": "exec-0907d59d-74ae-4411-b3b0-daaa5b5319f2.png",
+      "sourceCrop": [
+        627,
+        627,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "177f4301e9f05b86400b5e3b24f707936eb190cf5fa7dbc50ff0a6b6c5d06876",
+      "muzzle": [
+        103,
+        135
+      ],
+      "muzzleGround": [
+        103,
+        452
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
+    },
+    {
+      "family": "stalk/back-right",
+      "frame": 0,
+      "path": "stalk/back-right/000-feet-v4.png",
+      "phase": "contact-A",
+      "anchor": [
+        280,
+        465
+      ],
+      "supportPoint": [
+        275,
+        465
+      ],
+      "drawScale": 0.58,
+      "source": "exec-27a77dc3-1952-4852-b73d-cfdbfa9f9bbd.png",
+      "sourceCrop": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "29f5f11ba2f85992359824a92811b1ecb9b84d7f698ba0f4a2c271e5e421b1d8",
+      "muzzle": [
+        423,
+        121
+      ],
+      "muzzleGround": [
+        423,
+        465
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
+    },
+    {
+      "family": "stalk/back-right",
+      "frame": 1,
+      "path": "stalk/back-right/001-feet-v4.png",
+      "phase": "pass-A",
+      "anchor": [
+        280,
+        466
+      ],
+      "supportPoint": [
+        245,
+        466
+      ],
+      "drawScale": 0.58,
+      "source": "exec-27a77dc3-1952-4852-b73d-cfdbfa9f9bbd.png",
+      "sourceCrop": [
+        627,
+        0,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "4de1978899137dbb2cfd1e7973383644d8f72dbf48b18857934473ddd9fe8352",
+      "muzzle": [
+        417,
+        121
+      ],
+      "muzzleGround": [
+        417,
+        466
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
+    },
+    {
+      "family": "stalk/back-right",
+      "frame": 2,
+      "path": "stalk/back-right/002-feet-v4.png",
+      "phase": "contact-B",
+      "anchor": [
+        280,
+        469
+      ],
+      "supportPoint": [
+        340,
+        469
+      ],
+      "drawScale": 0.58,
+      "source": "exec-27a77dc3-1952-4852-b73d-cfdbfa9f9bbd.png",
+      "sourceCrop": [
+        0,
+        627,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "ef9cda1a9a5d1b170a756b7c0e49678a28c00f8cd1809f4a220dfb8455d203b1",
+      "muzzle": [
+        423,
+        122
+      ],
+      "muzzleGround": [
+        423,
+        469
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
+    },
+    {
+      "family": "stalk/back-right",
+      "frame": 3,
+      "path": "stalk/back-right/003-feet-v4.png",
+      "phase": "pass-B",
+      "anchor": [
+        280,
+        464
+      ],
+      "supportPoint": [
+        340,
+        464
+      ],
+      "drawScale": 0.58,
+      "source": "exec-27a77dc3-1952-4852-b73d-cfdbfa9f9bbd.png",
+      "sourceCrop": [
+        627,
+        627,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "87bb0061c9b3edf4ed6240a696c1a72c98a02e4048aa4728f976dea1c2b441da",
+      "muzzle": [
+        417,
+        112
+      ],
+      "muzzleGround": [
+        417,
+        464
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
+    },
+    {
+      "family": "jog/back-right",
+      "frame": 0,
+      "path": "jog/back-right/000-feet-v4.png",
+      "phase": "contact-A",
+      "anchor": [
+        280,
+        451
+      ],
+      "supportPoint": [
+        260,
+        451
+      ],
+      "drawScale": 0.58,
+      "source": "exec-ada06aca-2f43-4a34-afc5-2109554b20b8.png",
+      "sourceCrop": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "e794a70c8fce363e63089b776b1f475d524ace52a93c4ca0fe983ed439ea8275",
+      "muzzle": [
+        417,
+        107
+      ],
+      "muzzleGround": [
+        417,
+        451
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
     },
     {
       "family": "jog/back-right",
       "frame": 1,
-      "path": "jog/back-right/001-v3.png",
+      "path": "jog/back-right/001-feet-v4.png",
       "phase": "pass-A",
       "anchor": [
         280,
-        450
+        455
       ],
       "supportPoint": [
-        220,
-        450
+        210,
+        455
       ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+      "drawScale": 0.58,
+      "source": "exec-ada06aca-2f43-4a34-afc5-2109554b20b8.png",
+      "sourceCrop": [
+        627,
+        0,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "87c77a2cddf9be2c1965f406ab31d518333768244dbaa8db6c1a0637731abf9d",
+      "muzzle": [
+        415,
+        108
+      ],
+      "muzzleGround": [
+        415,
+        455
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
     },
     {
       "family": "jog/back-right",
       "frame": 2,
-      "path": "jog/back-right/002-v3.png",
+      "path": "jog/back-right/002-feet-v4.png",
       "phase": "contact-B",
       "anchor": [
         280,
-        490
+        476
       ],
       "supportPoint": [
         340,
-        490
+        476
       ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+      "drawScale": 0.58,
+      "source": "exec-ada06aca-2f43-4a34-afc5-2109554b20b8.png",
+      "sourceCrop": [
+        0,
+        627,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "87b13d6e85067cb0df3edef8e8f5150432c05fe5c5f935238838b99ad2dd0730",
+      "muzzle": [
+        416,
+        107
+      ],
+      "muzzleGround": [
+        416,
+        476
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
     },
     {
       "family": "jog/back-right",
       "frame": 3,
-      "path": "jog/back-right/003-v3.png",
+      "path": "jog/back-right/003-feet-v4.png",
       "phase": "pass-B",
       "anchor": [
         280,
-        450
+        454
       ],
       "supportPoint": [
-        340,
-        450
+        330,
+        454
       ],
-      "drawScale": 1,
-      "status": "primary-acceptance-required",
-      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+      "drawScale": 0.58,
+      "source": "exec-ada06aca-2f43-4a34-afc5-2109554b20b8.png",
+      "sourceCrop": [
+        627,
+        627,
+        627,
+        627
+      ],
+      "uniformExportScale": 0.8165869218500797,
+      "status": "primary-static-accepted-motion-pending",
+      "sha256": "6d6aee05caeab5a37f41a3fd2925128524f190f51436ed0ee11c3d220695a661",
+      "muzzle": [
+        416,
+        107
+      ],
+      "muzzleGround": [
+        416,
+        454
+      ],
+      "muzzleAnnotation": "Manually inspected midpoint of twin barrel mouths in 512px frame; visual precision approximately 3px, requires gameplay shot overlay.",
+      "drawScaleBasis": "One uniform family/direction factor relative to rear jump005 at drawScale1, estimated from head and backpack dimensions, not alpha bounding box."
     }
-  ]
+  ],
+  "scaleReference": "art-review/39t8-2/jump-rear/{direction}/005.png at drawScale1. If jump runtime scale differs multiply gait0.58 by jump runtime scale."
 }

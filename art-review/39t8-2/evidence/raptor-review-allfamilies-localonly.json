@@ -1,0 +1,76 @@
+{
+  "timestamp": "2026-11-06T07:20:43.553Z",
+  "familyCoverage": [
+    {
+      "family": "idle",
+      "frames": [
+        "0"
+      ],
+      "pending": 0
+    },
+    {
+      "family": "stalk",
+      "frames": [
+        "2",
+        "3",
+        "0",
+        "1"
+      ],
+      "pending": 0
+    },
+    {
+      "family": "jog",
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "pending": 0
+    },
+    {
+      "family": "sprint",
+      "frames": [
+        "0",
+        "3",
+        "1",
+        "2"
+      ],
+      "pending": 0
+    },
+    {
+      "family": "run",
+      "frames": [
+        "2",
+        "3",
+        "0",
+        "1"
+      ],
+      "pending": 0
+    },
+    {
+      "family": "slide",
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "pending": 0
+    },
+    {
+      "family": "jump",
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "pending": 0
+    }
+  ],
+  "errors": [],
+  "failed": [],
+  "blocked": []
+}

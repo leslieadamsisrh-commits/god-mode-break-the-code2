@@ -1,0 +1,322 @@
+RAPTOR 39T8.2 — FINAL FOCUSED TEST EVIDENCE
+Started: 2026-11-05T23:15:20.311018-08:00
+Scope: automated asset integrity, selection, actual simulation, sockets and TypeScript. This log does not certify anatomical/motion acceptance, physical controllers or deployment.
+Snapshot SHA256:
+d55b821c6d3cb86187478ab659d85abf53fe1d8fb7781d0f9b15f83e31f1c74c  public/assets/raptor-v2/manifest.json
+48007585d3c01a49946ce00f8a3212e5c7e81054109fd40c5d40851e74c42e74  lib/raptorJump.ts
+2e1cbe60e81f3b3c0c51401a51b5a94ae5240603a5a50669fd7010f782164def  lib/raptorPose.ts
+5b23c96fc6cab62df3e645e9f4b227f41ced01a4318e1f33a6d15682d45fa160  lib/raptorSocket.ts
+18a1eb9e34561ab8c2e22aa4c1282bdde5da2ee6f60506e486cf78a645c49dfa  lib/raptorSpriteOnly.ts
+c483ec6afaa899c4f39214163575d88594e3995f81e7c43a1f94964ad604c9c2  lib/ballistics27d.ts
+23208f58493aa273f5df8ea3cdc4b27b846d2157a941ffd5fe7d5e8a8663e2f3  lib/game.ts
+f73ce233c592b5ef5a1d43476b903dbe910d3ea655a917355495a4a0a004e6b9  lib/localCombat.ts
+d4adbc65b72d2363c287e7036b121db584121a169d7a35a92e9a82cee8bd72a5  app/Game.tsx
+
+$ node tests/check-raptor-assets.cjs
+PASS Raptor asset gate: 208 transparent512×512 frames, SHA/PNG integrity, complete enabled families, uniform registration,32 run aliases, recovery/idle continuity; 26 explicitly documented occluded-muzzle legacy fallbacks
+Occluded muzzle fallback frames: idle/back/000.png, run/back/000.png, run/back/001.png, slide/back/001.png, slide/back/002.png, slide/back/000.png, run/back/002.png, run/back/003.png, sprint/back/000.png, sprint/back/001.png, sprint/back/002.png, sprint/back/003.png, stalk/back/000.png, stalk/back/001.png, stalk/back/002.png, stalk/back/003.png, jog/back/000.png, jog/back/001.png, jog/back/002.png, jog/back/003.png, jump/back/000.png, jump/back/001.png, jump/back/002.png, jump/back/003.png, jump/back/004.png, jump/back/005.png
+
+Exit: 0 | elapsed seconds: 2.086
+
+$ node tests/check-raptor-socket.cjs
+PASS: 288 Raptor projection round-trips, eight directions, elevation, cover offset, authored floor depth, uniform scaling, invalid inputs and unchanged Jade socket geometry
+
+Exit: 0 | elapsed seconds: 0.561
+
+$ node tests/check-raptor-pose.cjs
+PASS authoritative pure pose: eight directions at 30/60/120Hz, complete jump, alternating gaits while firing, immutable per-actor memory, repeat jump, fall, interruption, reset/gap and missing-art gating
+
+Exit: 0 | elapsed seconds: 0.555
+
+$ node tests/check-raptor-authority.cjs
+PASS local identity validation/reset, per-room pose isolation, safeState privacy, input isolation, explicit missing-socket fallback, eight-direction shared shot/FX origin, shared vertical aim, seven-pellet ballistics and near-wall obstruction
+
+Exit: 0 | elapsed seconds: 1.346
+
+$ node tests/check-raptor-jump-runtime.cjs
+PASS: 24 actual LocalCombat directional jumps at 60/30/15Hz expose takeoff through recovery, correct direction and actual ground contact
+
+Exit: 0 | elapsed seconds: 1.232
+
+$ node scripts/check-jump.mjs
+(node:46) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/scratch/2182b999d331/raptor/lib/raptorJump.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /workspace/scratch/2182b999d331/raptor/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS: flight phases, ledge fall, contact/recovery, repeat jump, interruption, reset and gaps
+PASS: mid-ascent resume, short takeoff, hit recovery and ascent evidence reset
+PASS: complete ballistic sequence at 30, 60 and 120 Hz
+
+Exit: 0 | elapsed seconds: 0.167
+
+$ node scripts/check-jump-integration.cjs
+PASS: idle/stalk/jog/sprint progression, threshold hysteresis, all4 phases while firing, rear-diagonal slow gait, slide recovery
+PASS: authored scale retains world anchors and legacy placement
+PASS: all eight installed directional posture sets retain all phases
+PASS: digital diagonal pace normalized without amplifying subunit input
+PASS: six jump frames while firing, return to jog, uninstalled-direction fallback, hit priority
+PASS: independent actors, ledge fall, repeat jump, landing into slide and cover interruption
+(node:54) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 0 | elapsed seconds: 0.181
+
+$ node scripts/check-raptor-39t6.cjs
+[
+  {
+    "direction": "right",
+    "started": true,
+    "run": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "slide": [
+      0,
+      1,
+      2
+    ],
+    "movingFire": [
+      "sprint",
+      "slide"
+    ],
+    "final": {
+      "time": 2.583333333333326,
+      "slide": 0,
+      "family": "idle",
+      "frame": 0,
+      "speed": 0.0006101134754641276
+    },
+    "maxSlide": 0.4833333333333334
+  },
+  {
+    "direction": "front-right",
+    "started": true,
+    "run": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "slide": [
+      0,
+      1,
+      2
+    ],
+    "movingFire": [
+      "sprint",
+      "slide"
+    ],
+    "final": {
+      "time": 2.583333333333326,
+      "slide": 0,
+      "family": "idle",
+      "frame": 0,
+      "speed": 0.0006101134754641272
+    },
+    "maxSlide": 0.4833333333333334
+  },
+  {
+    "direction": "front",
+    "started": true,
+    "run": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "slide": [
+      0,
+      1,
+      2
+    ],
+    "movingFire": [
+      "sprint",
+      "slide"
+    ],
+    "final": {
+      "time": 2.583333333333326,
+      "slide": 0,
+      "family": "idle",
+      "frame": 0,
+      "speed": 0.0006101134754641276
+    },
+    "maxSlide": 0.4833333333333334
+  },
+  {
+    "direction": "front-left",
+    "started": true,
+    "run": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "slide": [
+      0,
+      1,
+      2
+    ],
+    "movingFire": [
+      "sprint",
+      "slide"
+    ],
+    "final": {
+      "time": 2.583333333333326,
+      "slide": 0,
+      "family": "idle",
+      "frame": 0,
+      "speed": 0.0006101134754641272
+    },
+    "maxSlide": 0.4833333333333334
+  },
+  {
+    "direction": "left",
+    "started": true,
+    "run": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "slide": [
+      0,
+      1,
+      2
+    ],
+    "movingFire": [
+      "sprint",
+      "slide"
+    ],
+    "final": {
+      "time": 2.583333333333326,
+      "slide": 0,
+      "family": "idle",
+      "frame": 0,
+      "speed": 0.0006101134754641276
+    },
+    "maxSlide": 0.4833333333333334
+  },
+  {
+    "direction": "back-left",
+    "started": true,
+    "run": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "slide": [
+      0,
+      1,
+      2
+    ],
+    "movingFire": [
+      "sprint",
+      "slide"
+    ],
+    "final": {
+      "time": 2.583333333333326,
+      "slide": 0,
+      "family": "idle",
+      "frame": 0,
+      "speed": 0.0006101134754641272
+    },
+    "maxSlide": 0.4833333333333334
+  },
+  {
+    "direction": "back",
+    "started": true,
+    "run": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "slide": [
+      0,
+      1,
+      2
+    ],
+    "movingFire": [
+      "sprint",
+      "slide"
+    ],
+    "final": {
+      "time": 2.583333333333326,
+      "slide": 0,
+      "family": "idle",
+      "frame": 0,
+      "speed": 0.0006101134754641276
+    },
+    "maxSlide": 0.4833333333333334
+  },
+  {
+    "direction": "back-right",
+    "started": true,
+    "run": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "slide": [
+      0,
+      1,
+      2
+    ],
+    "movingFire": [
+      "sprint",
+      "slide"
+    ],
+    "final": {
+      "time": 2.583333333333326,
+      "slide": 0,
+      "family": "idle",
+      "frame": 0,
+      "speed": 0.0006101134754641272
+    },
+    "maxSlide": 0.4833333333333334
+  }
+]
+(node:62) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 0 | elapsed seconds: 0.425
+
+$ node tests/build27d.cjs
+PASS27D low/torso/head, above-body misses, vertical crossing, airborne separation, 24 projected barrel sockets, 8-direction live shotgun damage
+PASS sloped bullet cover occlusion and over-cover clearance
+
+Exit: 0 | elapsed seconds: 1.808
+
+$ node tests/build27b-integration.cjs
+PASS27B combat jump/fire/shield, held-edge, landing, stairs, underpass, platform shots, hit volumes, serialized vertical state, rematch; viewport max 611.090810757369 419.9999801641027
+
+Exit: 0 | elapsed seconds: 2.1
+
+$ node node_modules/typescript/bin/tsc --noEmit --incremental false
+
+Exit: 0 | elapsed seconds: 6.377
+
+RESULT: PASS — all11 commands exited0
+Finished: 2026-11-05T23:15:37.151212-08:00
+
+FINAL REGISTRATION-ONLY FOLLOW-UP
+Time: 2026-11-05T23:18:08.170713-08:00
+Changes: left stalk/jog drawScale0.8; front-left stalk/jog drawScale0.96; front-right jump005/idle anchorY440 and muzzleGroundY440.
+Final manifest SHA256: cbe0c9ed5754205e3996b98d10d04aba6c0509f740a49ee234732303bde504c1
+
+$ node tests/check-raptor-assets.cjs
+PASS Raptor asset gate: 208 transparent512×512 frames, SHA/PNG integrity, complete enabled families, uniform registration,32 run aliases, recovery/idle continuity; 26 explicitly documented occluded-muzzle legacy fallbacks
+Occluded muzzle fallback frames: idle/back/000.png, run/back/000.png, run/back/001.png, slide/back/001.png, slide/back/002.png, slide/back/000.png, run/back/002.png, run/back/003.png, sprint/back/000.png, sprint/back/001.png, sprint/back/002.png, sprint/back/003.png, stalk/back/000.png, stalk/back/001.png, stalk/back/002.png, stalk/back/003.png, jog/back/000.png, jog/back/001.png, jog/back/002.png, jog/back/003.png, jump/back/000.png, jump/back/001.png, jump/back/002.png, jump/back/003.png, jump/back/004.png, jump/back/005.png
+
+Exit: 0 | elapsed seconds: 2.417
+
+$ node tests/check-raptor-socket.cjs
+PASS: 288 Raptor projection round-trips, eight directions, elevation, cover offset, authored floor depth, uniform scaling, invalid inputs and unchanged Jade socket geometry
+
+Exit: 0 | elapsed seconds: 0.708
+
+FINAL REGISTRATION RESULT: PASS — both commands exited0

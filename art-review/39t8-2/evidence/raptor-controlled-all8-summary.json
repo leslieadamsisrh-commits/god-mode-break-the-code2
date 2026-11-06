@@ -1,0 +1,173 @@
+{
+  "mode": "Controlled-clock normal keyboard input; 16 ms callbacks; not real-time performance or physical controller test",
+  "directions": [
+    {
+      "direction": "right",
+      "snapshot": {
+        "timestamp": "2026-11-06T07:13:48.052Z",
+        "manifestSha256": "d55b821c6d3cb86187478ab659d85abf53fe1d8fb7781d0f9b15f83e31f1c74c"
+      },
+      "jumpPhases": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assetResponses": 208,
+      "assetStatuses": [
+        200
+      ],
+      "pageErrors": [],
+      "blockedRemoteRequests": 99
+    },
+    {
+      "direction": "front-right",
+      "snapshot": {
+        "timestamp": "2026-11-06T07:14:06.342Z",
+        "manifestSha256": "d55b821c6d3cb86187478ab659d85abf53fe1d8fb7781d0f9b15f83e31f1c74c"
+      },
+      "jumpPhases": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assetResponses": 208,
+      "assetStatuses": [
+        200
+      ],
+      "pageErrors": [],
+      "blockedRemoteRequests": 99
+    },
+    {
+      "direction": "front",
+      "snapshot": {
+        "timestamp": "2026-11-06T07:14:25.213Z",
+        "manifestSha256": "d55b821c6d3cb86187478ab659d85abf53fe1d8fb7781d0f9b15f83e31f1c74c"
+      },
+      "jumpPhases": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assetResponses": 208,
+      "assetStatuses": [
+        200
+      ],
+      "pageErrors": [],
+      "blockedRemoteRequests": 99
+    },
+    {
+      "direction": "front-left",
+      "snapshot": {
+        "timestamp": "2026-11-06T07:14:46.607Z",
+        "manifestSha256": "d55b821c6d3cb86187478ab659d85abf53fe1d8fb7781d0f9b15f83e31f1c74c"
+      },
+      "jumpPhases": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assetResponses": 208,
+      "assetStatuses": [
+        200
+      ],
+      "pageErrors": [],
+      "blockedRemoteRequests": 99
+    },
+    {
+      "direction": "left",
+      "snapshot": {
+        "timestamp": "2026-11-06T07:15:08.897Z",
+        "manifestSha256": "d55b821c6d3cb86187478ab659d85abf53fe1d8fb7781d0f9b15f83e31f1c74c"
+      },
+      "jumpPhases": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assetResponses": 208,
+      "assetStatuses": [
+        200
+      ],
+      "pageErrors": [],
+      "blockedRemoteRequests": 99
+    },
+    {
+      "direction": "back-left",
+      "snapshot": {
+        "timestamp": "2026-11-06T07:15:34.045Z",
+        "manifestSha256": "d55b821c6d3cb86187478ab659d85abf53fe1d8fb7781d0f9b15f83e31f1c74c"
+      },
+      "jumpPhases": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assetResponses": 208,
+      "assetStatuses": [
+        200
+      ],
+      "pageErrors": [],
+      "blockedRemoteRequests": 99
+    },
+    {
+      "direction": "back",
+      "snapshot": {
+        "timestamp": "2026-11-06T07:15:56.065Z",
+        "manifestSha256": "d55b821c6d3cb86187478ab659d85abf53fe1d8fb7781d0f9b15f83e31f1c74c"
+      },
+      "jumpPhases": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assetResponses": 208,
+      "assetStatuses": [
+        200
+      ],
+      "pageErrors": [],
+      "blockedRemoteRequests": 99
+    },
+    {
+      "direction": "back-right",
+      "snapshot": {
+        "timestamp": "2026-11-06T07:16:20.010Z",
+        "manifestSha256": "d55b821c6d3cb86187478ab659d85abf53fe1d8fb7781d0f9b15f83e31f1c74c"
+      },
+      "jumpPhases": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assetResponses": 208,
+      "assetStatuses": [
+        200
+      ],
+      "pageErrors": [],
+      "blockedRemoteRequests": 99
+    }
+  ]
+}

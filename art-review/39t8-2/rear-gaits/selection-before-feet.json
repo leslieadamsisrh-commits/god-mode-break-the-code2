@@ -1,0 +1,278 @@
+{
+  "status": "candidate-motion-gate-required",
+  "note": "Back-left passing order swapped to keep support sequence left/left/right/right. Anchors authored by visual contact, not alpha bounding boxes. All uniform scale1; integration must compare common character scale.",
+  "frames": [
+    {
+      "family": "stalk/back-left",
+      "frame": 0,
+      "path": "stalk/back-left/000.png",
+      "phase": "contact-A",
+      "anchor": [
+        260,
+        440
+      ],
+      "supportPoint": [
+        174,
+        440
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "stalk/back-left",
+      "frame": 1,
+      "path": "stalk/back-left/003-v2.png",
+      "phase": "pass-A",
+      "anchor": [
+        260,
+        448
+      ],
+      "supportPoint": [
+        174,
+        448
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "stalk/back-left",
+      "frame": 2,
+      "path": "stalk/back-left/002.png",
+      "phase": "contact-B",
+      "anchor": [
+        260,
+        454
+      ],
+      "supportPoint": [
+        350,
+        454
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "stalk/back-left",
+      "frame": 3,
+      "path": "stalk/back-left/001.png",
+      "phase": "pass-B",
+      "anchor": [
+        260,
+        430
+      ],
+      "supportPoint": [
+        260,
+        430
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "jog/back-left",
+      "frame": 0,
+      "path": "jog/back-left/000.png",
+      "phase": "contact-A",
+      "anchor": [
+        260,
+        450
+      ],
+      "supportPoint": [
+        174,
+        450
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "jog/back-left",
+      "frame": 1,
+      "path": "jog/back-left/003-v2.png",
+      "phase": "pass-A",
+      "anchor": [
+        260,
+        450
+      ],
+      "supportPoint": [
+        170,
+        450
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "jog/back-left",
+      "frame": 2,
+      "path": "jog/back-left/002.png",
+      "phase": "contact-B",
+      "anchor": [
+        260,
+        460
+      ],
+      "supportPoint": [
+        345,
+        460
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "jog/back-left",
+      "frame": 3,
+      "path": "jog/back-left/001.png",
+      "phase": "pass-B",
+      "anchor": [
+        260,
+        442
+      ],
+      "supportPoint": [
+        250,
+        442
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "stalk/back-right",
+      "frame": 0,
+      "path": "stalk/back-right/000.png",
+      "phase": "contact-A",
+      "anchor": [
+        280,
+        478
+      ],
+      "supportPoint": [
+        325,
+        478
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "stalk/back-right",
+      "frame": 1,
+      "path": "stalk/back-right/001.png",
+      "phase": "pass-A",
+      "anchor": [
+        280,
+        450
+      ],
+      "supportPoint": [
+        255,
+        450
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "stalk/back-right",
+      "frame": 2,
+      "path": "stalk/back-right/002-v2.png",
+      "phase": "contact-B",
+      "anchor": [
+        280,
+        445
+      ],
+      "supportPoint": [
+        340,
+        445
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "stalk/back-right",
+      "frame": 3,
+      "path": "stalk/back-right/003-v2.png",
+      "phase": "pass-B",
+      "anchor": [
+        280,
+        445
+      ],
+      "supportPoint": [
+        345,
+        445
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "jog/back-right",
+      "frame": 0,
+      "path": "jog/back-right/000-v3.png",
+      "phase": "contact-A",
+      "anchor": [
+        280,
+        468
+      ],
+      "supportPoint": [
+        295,
+        468
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "jog/back-right",
+      "frame": 1,
+      "path": "jog/back-right/001-v3.png",
+      "phase": "pass-A",
+      "anchor": [
+        280,
+        450
+      ],
+      "supportPoint": [
+        220,
+        450
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "jog/back-right",
+      "frame": 2,
+      "path": "jog/back-right/002-v3.png",
+      "phase": "contact-B",
+      "anchor": [
+        280,
+        490
+      ],
+      "supportPoint": [
+        340,
+        490
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    },
+    {
+      "family": "jog/back-right",
+      "frame": 3,
+      "path": "jog/back-right/003-v3.png",
+      "phase": "pass-B",
+      "anchor": [
+        280,
+        450
+      ],
+      "supportPoint": [
+        340,
+        450
+      ],
+      "drawScale": 1,
+      "status": "primary-acceptance-required",
+      "registrationBasis": "Pelvis-projected horizontal origin and manually inspected planted contact height; equal authored scale, no bbox normalization."
+    }
+  ]
+}

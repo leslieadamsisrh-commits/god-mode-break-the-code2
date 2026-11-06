@@ -1,0 +1,201 @@
+{
+  "direction": "front-left",
+  "action": "stalk",
+  "source": "exec-89396f95-b666-4c02-8489-b271ab6bcda4.png",
+  "corrections": [
+    "compact head and neck",
+    "fuller calf muscle",
+    "three primary toes"
+  ],
+  "preserved": [
+    "opposite leading legs per halfcycle",
+    "action pose",
+    "eye asymmetry",
+    "direction"
+  ],
+  "normalization": "Whole source sheet uniformly resampled to1024square then fixed512cell crops. No per-frame scaling. Largest connected alpha plus1px edge.",
+  "frames": [
+    {
+      "frame": "000.png",
+      "sha256": "030594319cb2632f23d9c7154fa376dfddf3f205ec4e3fa58ccf745684ca0eb8",
+      "sourceRegistration": {
+        "anchor": [
+          256,
+          450
+        ],
+        "sha256": "6d9381233f9d464fae7c0a4393ea1dad2af7259dde4928a44387c97d83bdf648",
+        "source": "exec-c6d97913-0daf-4762-abd8-165a99ce6610.png",
+        "muzzle": [
+          183,
+          304
+        ],
+        "muzzleGround": [
+          183,
+          450
+        ]
+      },
+      "suggestedAnchor": [
+        256,
+        455
+      ],
+      "status": "review-only",
+      "registrationNote": "Y from opaque supporting claw bottom; stable256 pelvis axis. Contact coordinate recorded separately. Muzzle manually picked visible barrel midpoint. Primary motion check pending.",
+      "anchor": [
+        256,
+        455
+      ],
+      "groundContact": [
+        237,
+        455
+      ],
+      "muzzle": [
+        174,
+        297
+      ],
+      "muzzleGround": [
+        174,
+        455
+      ],
+      "drawScale": 0.82,
+      "lead": "near"
+    },
+    {
+      "frame": "001.png",
+      "sha256": "4f38db76a3fa2a301a5905105dbdcea2b078cad0176da12def7af4a64a7c10d3",
+      "sourceRegistration": {
+        "anchor": [
+          256,
+          450
+        ],
+        "sha256": "c7c9f515f792ff1a9650f770d2fb71cd71f1915bae8bbda2250706b62864048d",
+        "source": "exec-74e30f71-6a35-4261-b7a2-1f4b9ee536df.png",
+        "muzzle": [
+          187,
+          302
+        ],
+        "muzzleGround": [
+          187,
+          450
+        ]
+      },
+      "suggestedAnchor": [
+        256,
+        450
+      ],
+      "status": "review-only",
+      "registrationNote": "Y from opaque supporting claw bottom; stable256 pelvis axis. Contact coordinate recorded separately. Muzzle manually picked visible barrel midpoint. Primary motion check pending.",
+      "anchor": [
+        256,
+        450
+      ],
+      "groundContact": [
+        296,
+        450
+      ],
+      "muzzle": [
+        174,
+        297
+      ],
+      "muzzleGround": [
+        174,
+        450
+      ],
+      "drawScale": 0.82,
+      "lead": "near"
+    },
+    {
+      "frame": "002.png",
+      "sha256": "b95de2a4c9994b6f6459f950e809c83755445912d457b217f30bd5c22f3858e6",
+      "sourceRegistration": {
+        "anchor": [
+          256,
+          450
+        ],
+        "sha256": "74febf9f90b09f7e0105bf537ec23a70ae03030b7df9de8a19cd2743bf49167d",
+        "source": "exec-cfc5448c-aa61-4ebd-8f65-9fc284378201.png",
+        "muzzle": [
+          182,
+          304
+        ],
+        "muzzleGround": [
+          182,
+          450
+        ]
+      },
+      "suggestedAnchor": [
+        256,
+        447
+      ],
+      "status": "review-only",
+      "registrationNote": "Y from opaque supporting claw bottom; stable256 pelvis axis. Contact coordinate recorded separately. Muzzle manually picked visible barrel midpoint. Primary motion check pending.",
+      "anchor": [
+        256,
+        447
+      ],
+      "groundContact": [
+        210,
+        447
+      ],
+      "muzzle": [
+        174,
+        297
+      ],
+      "muzzleGround": [
+        174,
+        447
+      ],
+      "drawScale": 0.82,
+      "lead": "far"
+    },
+    {
+      "frame": "003.png",
+      "sha256": "61bff8074e5ee0d67c3948cbf0d48b09e0727326677e5ccd30a672cbbe5630b4",
+      "sourceRegistration": {
+        "anchor": [
+          256,
+          450
+        ],
+        "sha256": "0ac7ce4e364320213a37df53118df08d67c3c7bbe885a416556c3e45186e3089",
+        "source": "exec-db7c329c-71d8-4106-812f-e5e09f727358.png",
+        "muzzle": [
+          183,
+          300
+        ],
+        "muzzleGround": [
+          183,
+          450
+        ]
+      },
+      "suggestedAnchor": [
+        256,
+        447
+      ],
+      "status": "review-only",
+      "registrationNote": "Y from opaque supporting claw bottom; stable256 pelvis axis. Contact coordinate recorded separately. Muzzle manually picked visible barrel midpoint. Primary motion check pending.",
+      "anchor": [
+        256,
+        447
+      ],
+      "groundContact": [
+        224,
+        447
+      ],
+      "muzzle": [
+        174,
+        297
+      ],
+      "muzzleGround": [
+        174,
+        447
+      ],
+      "drawScale": 0.82,
+      "lead": "far"
+    }
+  ],
+  "sourceDimensions": [
+    1254,
+    1254
+  ],
+  "drawScale": 0.82,
+  "scaleMethod": "Headwidth and shoulderarmor compared to jump005; visual landmark estimate5percent uncertainty, not boundingbox."
+}

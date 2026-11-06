@@ -50,11 +50,13 @@ for(let direction=0;direction<8;direction++){
  G.refreshRaptorPose(actor,s.time,s.config.slideDuration);
  const registration=inventory.frames[actor.raptorFrame.key],saved=JSON.parse(JSON.stringify(registration));
  registration.muzzle=[registration.anchor[0]+Math.cos(angle)*80,registration.anchor[1]-120+Math.sin(angle)*10];
+ registration.muzzleGround=[registration.muzzle[0],registration.anchor[1]];
+ delete registration.muzzleVisibility;delete registration.muzzleFallback;delete registration.muzzleNote;
  G.setInput(s,0,1,{aim:angle,fire:true});G.advance(s,1000/60);
  const source=barrelSocket27d(actor,s.config.spriteScale),flash=s.fx.find(f=>f.type==='muzzle');assert(source.raptorAligned&&flash);
  for(const axis of ['x','y','z'])close(flash[axis],source[axis],'direction '+direction+' source '+axis);
  assert.equal(s.shots.length,7);assert.equal(actor.raptorFrame.key.split('/')[1],['right','front-right','front','front-left','left','back-left','back','back-right'][direction]);
- delete registration.muzzle;Object.assign(registration,saved);
+ delete registration.muzzle;delete registration.muzzleGround;Object.assign(registration,saved);
 }
 
 // A nearby physical barrier still consumes registered-origin projectiles.
@@ -63,10 +65,11 @@ wallActor.x=750;wallActor.y=420;wallActor.gunFacing=wallActor.aim=0;wallState.ma
 G.refreshRaptorPose(wallActor,0,wallState.config.slideDuration);
 const wallRecord=inventory.frames[wallActor.raptorFrame.key],wallSaved=JSON.parse(JSON.stringify(wallRecord));
 wallRecord.muzzle=[wallRecord.anchor[0]+100,wallRecord.anchor[1]-120];
+wallRecord.muzzleGround=[wallRecord.muzzle[0],wallRecord.anchor[1]];
 const start=barrelSocket27d(wallActor,wallState.config.spriteScale),wall={...wallState.covers[0],id:'socket-test-wall',fracture32:undefined,artId:undefined,x:start.x+8,y:start.y,w:4,h:80,a:0,hp:1000,maxHp:1000,height27j:200,z:0,hover:0,coverClass:'tall'};
 wallState.covers=[wall];G.setInput(wallState,0,1,{aim:0,fire:true});G.advance(wallState,1000/60);
 assert.equal(wallState.shots.length,0,'near-wall volley is consumed by existing swept collision');assert(wall.hp<1000);
-delete wallRecord.muzzle;Object.assign(wallRecord,wallSaved);
+delete wallRecord.muzzle;delete wallRecord.muzzleGround;Object.assign(wallRecord,wallSaved);
 
 // Identically named independent local simulations must not share animation memory.
 const a=new LocalCombat('same','solo',0,undefined,'raptor'),b=new LocalCombat('same','solo',0,undefined,'raptor');

@@ -1,0 +1,113 @@
+{
+  "build": "39T8.2-candidate",
+  "approvedMaster": {
+    "file": "reference/approved-master-e30e1c6b.png",
+    "original": "exec-e30e1c6b-1fa9-4285-b261-28d785ba3c01.png",
+    "sha256": "b50c72dd1a74d733fb82082c79a706c96bfa6def40b9b9535b0e2a5e9ccf61d2"
+  },
+  "status": "208 integrated runtime entries; local automated checks passed; live deployment verification pending",
+  "directions": {
+    "right": {
+      "idle": 1,
+      "run": 4,
+      "sprint": 4,
+      "slide": 3,
+      "stalk": 4,
+      "jog": 4,
+      "jump": 6
+    },
+    "front-right": {
+      "idle": 1,
+      "run": 4,
+      "sprint": 4,
+      "slide": 3,
+      "stalk": 4,
+      "jog": 4,
+      "jump": 6
+    },
+    "front": {
+      "idle": 1,
+      "run": 4,
+      "sprint": 4,
+      "slide": 3,
+      "stalk": 4,
+      "jog": 4,
+      "jump": 6
+    },
+    "front-left": {
+      "idle": 1,
+      "run": 4,
+      "sprint": 4,
+      "slide": 3,
+      "stalk": 4,
+      "jog": 4,
+      "jump": 6
+    },
+    "left": {
+      "idle": 1,
+      "run": 4,
+      "sprint": 4,
+      "slide": 3,
+      "stalk": 4,
+      "jog": 4,
+      "jump": 6
+    },
+    "back-left": {
+      "idle": 1,
+      "run": 4,
+      "sprint": 4,
+      "slide": 3,
+      "stalk": 4,
+      "jog": 4,
+      "jump": 6
+    },
+    "back": {
+      "idle": 1,
+      "run": 4,
+      "sprint": 4,
+      "slide": 3,
+      "stalk": 4,
+      "jog": 4,
+      "jump": 6
+    },
+    "back-right": {
+      "idle": 1,
+      "run": 4,
+      "sprint": 4,
+      "slide": 3,
+      "stalk": 4,
+      "jog": 4,
+      "jump": 6
+    }
+  },
+  "occludedMuzzleFallbacks": [
+    "idle/back/000.png",
+    "run/back/000.png",
+    "run/back/001.png",
+    "slide/back/001.png",
+    "slide/back/002.png",
+    "slide/back/000.png",
+    "run/back/002.png",
+    "run/back/003.png",
+    "sprint/back/000.png",
+    "sprint/back/001.png",
+    "sprint/back/002.png",
+    "sprint/back/003.png",
+    "stalk/back/000.png",
+    "stalk/back/001.png",
+    "stalk/back/002.png",
+    "stalk/back/003.png",
+    "jog/back/000.png",
+    "jog/back/001.png",
+    "jog/back/002.png",
+    "jog/back/003.png",
+    "jump/back/000.png",
+    "jump/back/001.png",
+    "jump/back/002.png",
+    "jump/back/003.png",
+    "jump/back/004.png",
+    "jump/back/005.png"
+  ],
+  "manifestSha256": "cbe0c9ed5754205e3996b98d10d04aba6c0509f740a49ee234732303bde504c1",
+  "uniqueImageHashes": 168
+}
