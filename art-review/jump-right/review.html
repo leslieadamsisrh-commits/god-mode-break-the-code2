@@ -1,0 +1,31 @@
+<!doctype html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raptor right jump — anatomy review</title>
+<style>body{margin:20px;background:#17212b;color:#edf4fa;font:16px system-ui}button,select,input{font:inherit;margin:5px;padding:8px}canvas{max-width:100%;background:#273541;border:1px solid #789}p{max-width:850px}#strip{display:flex;flex-wrap:wrap}figure{margin:5px}figure img{width:190px;background:#273541}figcaption{font-size:13px}label{display:inline-block}</style>
+<h1>Right-facing jump · review only</h1>
+<p>Compare the corrected push-off with the preserved original. Fixed registration exposes body drift; the optional arc is illustrative, not a gameplay test.</p>
+<label>Push-off <select id="variant"><option value="push-off-v2.png">Corrected candidate</option><option value="000.png">Rejected original</option></select></label>
+<label>Speed <select id="speed"><option value="1">1×</option><option value="0.25">¼×</option></select></label>
+<label><input type="checkbox" id="arc">Illustrative jump arc</label>
+<button id="play">Pause</button><button id="step">Next phase</button>
+<p id="phase"></p><canvas width="640" height="600"></canvas><div id="strip"></div>
+<script>
+const names=['Push-off','Ascent','Apex','Descent','Landing','Recovery'];
+const files=['push-off-v2.png','001.png','002.png','003.png','004.png','005.png'];
+const durations=[65,150,100,150,75,65];
+const canvas=document.querySelector('canvas'),g=canvas.getContext('2d');
+const phaseLabel=document.querySelector('#phase'),variant=document.querySelector('#variant'),speed=document.querySelector('#speed'),arc=document.querySelector('#arc');
+let imgs=[],original,frame=0,elapsed=0,last=0,playing=true;
+const load=src=>new Promise((resolve,reject)=>{const i=new Image;i.onload=()=>resolve(i);i.onerror=reject;i.src=src});
+Promise.all([...files,'000.png'].map(load)).then(a=>{original=a.pop();imgs=a;document.body.dataset.ready='true';requestAnimationFrame(tick)});
+files.forEach((src,i)=>{const f=document.createElement('figure');const im=document.createElement('img');im.src=src;const cap=document.createElement('figcaption');cap.textContent=names[i];f.append(im,cap);document.querySelector('#strip').append(f)});
+function draw(){if(!imgs.length)return;g.clearRect(0,0,640,600);g.strokeStyle='#647887';g.beginPath();g.moveTo(320,20);g.lineTo(320,580);g.moveTo(20,510);g.lineTo(620,510);g.stroke();
+const lift=arc.checked?[0,65,95,50,0,0][frame]:0;
+g.drawImage(frame===0&&variant.value==='000.png'?original:imgs[frame],64,60-lift,512,512);
+phaseLabel.textContent=`${frame+1}/6 · ${names[frame]} · ${durations[frame]} ms nominal hold`;
+document.body.dataset.frame=String(frame);}
+function tick(t){if(last&&playing){elapsed+=(t-last)*Number(speed.value);while(elapsed>=durations[frame]){elapsed-=durations[frame];frame=(frame+1)%6}}last=t;draw();requestAnimationFrame(tick)}
+document.querySelector('#play').onclick=()=>{playing=!playing;document.querySelector('#play').textContent=playing?'Pause':'Play'};
+document.querySelector('#step').onclick=()=>{playing=false;document.querySelector('#play').textContent='Play';frame=(frame+1)%6;elapsed=0;draw()};
+window.review={setFrame(i){playing=false;frame=i;elapsed=0;draw()},getFrame(){return frame}};
+</script>
