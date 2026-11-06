@@ -1,5 +1,5 @@
 {
-  "build": "39T8.2-candidate",
+  "build": "39T9-slide-proportions",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -40,7 +40,7 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "39T8.2 integrated candidate: complete eight-direction jump/stalk/jog; anatomical correction and motion acceptance in progress.",
+  "source": "39T9: slide-reference anatomical registration; standing stature calibrated beside Jade. Gameplay dimensions unchanged.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
@@ -51,7 +51,8 @@
       "source": "39t8-2 matched jump recovery",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "idle/back-left/000.png": {
       "anchor": [
@@ -67,7 +68,8 @@
       "muzzleGround": [
         160,
         354
-      ]
+      ],
+      "drawScale": 1.72
     },
     "idle/back-right/000.png": {
       "anchor": [
@@ -83,23 +85,25 @@
       "muzzleGround": [
         372,
         365
-      ]
+      ],
+      "drawScale": 1.72
     },
     "idle/front/000.png": {
       "anchor": [
         244,
         450
       ],
-      "sha256": "e840d93ffafe7fcdf1d36d1e4876286ea69a13fee15fc7043b27cb62f13f167c",
-      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "sha256": "f2e597e03ac5b00e6b8bd1e94e6efeaf47d30cd0cd42675a181c550472db6620",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
       "muzzle": [
         244,
-        331
+        329
       ],
       "muzzleGround": [
         244,
         450
-      ]
+      ],
+      "drawScale": 1.6
     },
     "idle/front-left/000.png": {
       "anchor": [
@@ -115,7 +119,8 @@
       "muzzleGround": [
         146,
         441
-      ]
+      ],
+      "drawScale": 1.7
     },
     "idle/front-right/000.png": {
       "anchor": [
@@ -131,14 +136,15 @@
       "muzzleGround": [
         357,
         440
-      ]
+      ],
+      "drawScale": 1.8
     },
     "idle/left/000.png": {
       "anchor": [
         240,
         405
       ],
-      "drawScale": 0.72,
+      "drawScale": 1.332,
       "sha256": "d2aade8aad01897446a4a08048e428817227ab3f294d2ce9b3845b202e460036",
       "source": "39t8-2 matched jump recovery",
       "muzzle": [
@@ -164,7 +170,8 @@
       "muzzleGround": [
         436,
         450
-      ]
+      ],
+      "drawScale": 1.64
     },
     "run/back/000.png": {
       "anchor": [
@@ -172,7 +179,7 @@
         357
       ],
       "sha256": "2656a28bbabdd1d1830038c63cbffda4f22c7b55eed2abfa31ef29584990fd8b",
-      "drawScale": 0.68,
+      "drawScale": 1.19,
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
       "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
@@ -183,7 +190,7 @@
         362
       ],
       "sha256": "ff0bfb89ef6b3e56b83e4056bdae9860940ee42d1f232af01022b865a1ccb590",
-      "drawScale": 0.68,
+      "drawScale": 1.19,
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
       "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
@@ -201,7 +208,7 @@
         164,
         369
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "53ec5580b20c759d22bf0ec8fb470ec50a0e11baa954b6f75f5b927652b18b44",
       "source": "art-review/39t8-2/sprint-back-left/000.png"
     },
@@ -218,7 +225,7 @@
         166,
         380
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "5b72a8d9c396ae31e7281c0be353ced34820464a4c432dac5f7b5f32314973bc",
       "source": "art-review/39t8-2/sprint-back-left/001.png"
     },
@@ -235,7 +242,7 @@
         350,
         369
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "b023caf68a5f5286d7e6576005f3bf83b88eb9f6bc4d30a47241516a30f533f0",
       "source": "art-review/39t8-2/sprint-back-right/000.png"
     },
@@ -252,7 +259,7 @@
         346,
         380
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "cee5b3840d7c06a47b0a5a54c9b719c3ffcc8c3ee3be2525bd448409f0b1275a",
       "source": "art-review/39t8-2/sprint-back-right/001.png"
     },
@@ -271,7 +278,7 @@
         239,
         450
       ],
-      "drawScale": 0.62
+      "drawScale": 0.992
     },
     "run/front/001.png": {
       "anchor": [
@@ -287,7 +294,7 @@
         237,
         450
       ],
-      "drawScale": 0.62
+      "drawScale": 0.992
     },
     "run/front-left/000.png": {
       "anchor": [
@@ -302,7 +309,7 @@
         111,
         450
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.209,
       "sha256": "e78650d0fb5a1b3ca38ebe864967d7699060ef106ec355479e61ff9e9264915e",
       "source": "art-review/39t8-2/sprint-front-left/000.png"
     },
@@ -319,7 +326,7 @@
         111,
         450
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.209,
       "sha256": "99325dab18070f3d51fec030fa93f4df77f364f34f910b5d6585b93bf699126c",
       "source": "art-review/39t8-2/sprint-front-left/001.png"
     },
@@ -336,7 +343,7 @@
         403,
         452
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.248,
       "sha256": "4ee6d4263383002b30cc2fee61918d9aaa90af0094e828fe5451f72a06c07f26",
       "source": "exec-1ca1182f-8cb5-4c1b-b832-1933f71651d1.png"
     },
@@ -353,7 +360,7 @@
         403,
         449
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.248,
       "sha256": "fd1d5b5868d1f8e2f7c17a74eb7ab6bd78aa9a0c922d89aee2dd62230ebf4349",
       "source": "exec-1ca1182f-8cb5-4c1b-b832-1933f71651d1.png"
     },
@@ -372,7 +379,7 @@
         21,
         450
       ],
-      "drawScale": 0.8
+      "drawScale": 1.36
     },
     "run/left/001.png": {
       "anchor": [
@@ -389,7 +396,7 @@
         21,
         450
       ],
-      "drawScale": 0.8
+      "drawScale": 1.36
     },
     "run/right/000.png": {
       "anchor": [
@@ -406,7 +413,7 @@
         489,
         450
       ],
-      "drawScale": 0.83
+      "drawScale": 1.3612
     },
     "run/right/001.png": {
       "anchor": [
@@ -423,7 +430,7 @@
         487,
         450
       ],
-      "drawScale": 0.83
+      "drawScale": 1.3612
     },
     "slide/front-right/001.png": {
       "anchor": [
@@ -438,7 +445,8 @@
       "muzzleGround": [
         393,
         450
-      ]
+      ],
+      "drawScale": 1.23
     },
     "slide/right/001.png": {
       "anchor": [
@@ -453,7 +461,7 @@
         418,
         429
       ],
-      "drawScale": 1.1,
+      "drawScale": 1.804,
       "source": "art-review/39t8-2/slide-right/001.png",
       "sha256": "d9583dc49ccf12340e240482d1ee737308f83c5c2733a96bd54f449cd4342ed1"
     },
@@ -470,7 +478,8 @@
       "muzzleGround": [
         210,
         450
-      ]
+      ],
+      "drawScale": 1.23
     },
     "slide/front-left/001.png": {
       "anchor": [
@@ -485,7 +494,8 @@
       "muzzleGround": [
         107,
         450
-      ]
+      ],
+      "drawScale": 1.2
     },
     "slide/left/001.png": {
       "anchor": [
@@ -500,7 +510,7 @@
         89,
         445
       ],
-      "drawScale": 0.76,
+      "drawScale": 1.406,
       "source": "art-review/39t8-2/slide-left/001.png",
       "sha256": "9d9168f4f9bda9df6578970a3936774249b05d9dc8f91ca0da32238f846ac3f8"
     },
@@ -517,7 +527,8 @@
       "muzzleGround": [
         154,
         375
-      ]
+      ],
+      "drawScale": 1.5
     },
     "slide/back/001.png": {
       "anchor": [
@@ -528,7 +539,8 @@
       "source": "exec-3ffae6cf-7d2b-4190-9931-f4df27dec7dc.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "slide/back-right/001.png": {
       "anchor": [
@@ -543,7 +555,8 @@
       "muzzleGround": [
         360,
         376
-      ]
+      ],
+      "drawScale": 1.5
     },
     "slide/front-right/000.png": {
       "anchor": [
@@ -558,7 +571,8 @@
       "muzzleGround": [
         425,
         450
-      ]
+      ],
+      "drawScale": 1.23
     },
     "slide/front-right/002.png": {
       "anchor": [
@@ -573,7 +587,8 @@
       "muzzleGround": [
         434,
         450
-      ]
+      ],
+      "drawScale": 1.23
     },
     "slide/front/000.png": {
       "anchor": [
@@ -588,7 +603,8 @@
       "muzzleGround": [
         221,
         450
-      ]
+      ],
+      "drawScale": 1.23
     },
     "slide/right/002.png": {
       "anchor": [
@@ -603,7 +619,7 @@
         454,
         430
       ],
-      "drawScale": 0.95,
+      "drawScale": 1.558,
       "source": "art-review/39t8-2/slide-right/002.png",
       "sha256": "5951dd2f93434a9a89a41de1827482babb145de38605b58fc54bf99d41f10e95"
     },
@@ -620,7 +636,7 @@
         419,
         423
       ],
-      "drawScale": 1.1,
+      "drawScale": 1.804,
       "source": "art-review/39t8-2/slide-right/000.png",
       "sha256": "6276114eeb2c4bbfbbd27389a25bdbce878046670c470853c461e98d487fcd11"
     },
@@ -637,7 +653,8 @@
       "muzzleGround": [
         212,
         450
-      ]
+      ],
+      "drawScale": 1.23
     },
     "slide/front-left/000.png": {
       "anchor": [
@@ -652,7 +669,8 @@
       "muzzleGround": [
         106,
         450
-      ]
+      ],
+      "drawScale": 1.2
     },
     "slide/front-left/002.png": {
       "anchor": [
@@ -667,7 +685,8 @@
       "muzzleGround": [
         62,
         450
-      ]
+      ],
+      "drawScale": 1.2
     },
     "slide/left/000.png": {
       "anchor": [
@@ -682,7 +701,7 @@
         111,
         444
       ],
-      "drawScale": 0.76,
+      "drawScale": 1.406,
       "source": "art-review/39t8-2/slide-left/000.png",
       "sha256": "6796dac2519a1f99467d591a9dcc59b689435dad76fec52f62509a39e12af0c9"
     },
@@ -699,7 +718,7 @@
         60,
         445
       ],
-      "drawScale": 0.76,
+      "drawScale": 1.406,
       "source": "art-review/39t8-2/slide-left/002.png",
       "sha256": "5b7c797173e364c264c1b8bf9156e35624b632608e36939da2d5cae9f1ac4c3d"
     },
@@ -716,7 +735,8 @@
       "muzzleGround": [
         149,
         371
-      ]
+      ],
+      "drawScale": 1.5
     },
     "slide/back/002.png": {
       "anchor": [
@@ -727,7 +747,8 @@
       "source": "exec-3ffae6cf-7d2b-4190-9931-f4df27dec7dc.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "slide/back/000.png": {
       "anchor": [
@@ -738,7 +759,8 @@
       "source": "exec-3ffae6cf-7d2b-4190-9931-f4df27dec7dc.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "slide/back-left/002.png": {
       "anchor": [
@@ -753,7 +775,8 @@
       "muzzleGround": [
         142,
         369
-      ]
+      ],
+      "drawScale": 1.5
     },
     "slide/back-right/002.png": {
       "anchor": [
@@ -768,7 +791,8 @@
       "muzzleGround": [
         373,
         369
-      ]
+      ],
+      "drawScale": 1.5
     },
     "slide/back-right/000.png": {
       "anchor": [
@@ -783,7 +807,8 @@
       "muzzleGround": [
         369,
         369
-      ]
+      ],
+      "drawScale": 1.5
     },
     "run/right/002.png": {
       "anchor": [
@@ -800,7 +825,7 @@
         489,
         450
       ],
-      "drawScale": 0.83
+      "drawScale": 1.3612
     },
     "run/right/003.png": {
       "anchor": [
@@ -817,7 +842,7 @@
         488,
         450
       ],
-      "drawScale": 0.83
+      "drawScale": 1.3612
     },
     "run/front-right/002.png": {
       "anchor": [
@@ -832,7 +857,7 @@
         403,
         438
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.248,
       "sha256": "6483cf5fc45a56efef62ea73e166796b956ca53d2fe487686cfb8da2e5aeca68",
       "source": "exec-1ca1182f-8cb5-4c1b-b832-1933f71651d1.png"
     },
@@ -849,7 +874,7 @@
         403,
         426
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.248,
       "sha256": "d1970899138344b3574619429037cd2a5fa064a2c702bc49dc58914a5b3bef29",
       "source": "exec-1ca1182f-8cb5-4c1b-b832-1933f71651d1.png"
     },
@@ -868,7 +893,7 @@
         235,
         450
       ],
-      "drawScale": 0.62
+      "drawScale": 0.992
     },
     "run/front/003.png": {
       "anchor": [
@@ -884,7 +909,7 @@
         235,
         450
       ],
-      "drawScale": 0.62
+      "drawScale": 0.992
     },
     "run/front-left/002.png": {
       "anchor": [
@@ -899,7 +924,7 @@
         111,
         450
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.209,
       "sha256": "356837589579a9c0f737945ae1e325b7e15d1b22dd1c642f6a1a187608b4441b",
       "source": "art-review/39t8-2/sprint-front-left/002.png"
     },
@@ -916,7 +941,7 @@
         111,
         450
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.209,
       "sha256": "6cd1c86c4e66cf08d3f07000f9f085f15f34baf9fd3f7c956be0bc1037944f30",
       "source": "art-review/39t8-2/sprint-front-left/003.png"
     },
@@ -935,7 +960,7 @@
         21,
         450
       ],
-      "drawScale": 0.8
+      "drawScale": 1.36
     },
     "run/left/003.png": {
       "anchor": [
@@ -952,7 +977,7 @@
         21,
         450
       ],
-      "drawScale": 0.8
+      "drawScale": 1.36
     },
     "run/back-left/002.png": {
       "anchor": [
@@ -967,7 +992,7 @@
         125,
         369
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "d8a34d494b73adeef5427db5326e4cb81d9b6f1c35eb0c8f7a497c0d1bd9a992",
       "source": "art-review/39t8-2/sprint-back-left/002.png"
     },
@@ -984,7 +1009,7 @@
         123,
         457
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "2613eb4251b6681e1df2bcaa4bb3812c1b4d05045ca429da2ca3659b21c35f42",
       "source": "art-review/39t8-2/sprint-back-left/003.png"
     },
@@ -994,7 +1019,7 @@
         356
       ],
       "sha256": "e71eff5a3e1083188531b97cca0c98d9cd4f6ea7b658eb84d797e4b0b6f77229",
-      "drawScale": 0.68,
+      "drawScale": 1.19,
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
       "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
@@ -1005,7 +1030,7 @@
         359
       ],
       "sha256": "4415ce19c9944ec3efd06625f8022ef49a1a9c950c1429059f439031fd85af29",
-      "drawScale": 0.68,
+      "drawScale": 1.19,
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
       "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
@@ -1023,7 +1048,7 @@
         386,
         369
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "9e6189f719b5361c207fe0d1e90d530f420660782fbbd17cc50cca36399ddecf",
       "source": "art-review/39t8-2/sprint-back-right/002.png"
     },
@@ -1040,7 +1065,7 @@
         387,
         457
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "3ca98be31a868ede5bb14cd2f2f2bbca51373ee91b471c63b1c8da6b2af96337",
       "source": "art-review/39t8-2/sprint-back-right/003.png"
     },
@@ -1059,7 +1084,7 @@
         489,
         450
       ],
-      "drawScale": 0.83
+      "drawScale": 1.3612
     },
     "sprint/right/001.png": {
       "anchor": [
@@ -1076,7 +1101,7 @@
         487,
         450
       ],
-      "drawScale": 0.83
+      "drawScale": 1.3612
     },
     "sprint/right/002.png": {
       "anchor": [
@@ -1093,7 +1118,7 @@
         489,
         450
       ],
-      "drawScale": 0.83
+      "drawScale": 1.3612
     },
     "sprint/right/003.png": {
       "anchor": [
@@ -1110,7 +1135,7 @@
         488,
         450
       ],
-      "drawScale": 0.83
+      "drawScale": 1.3612
     },
     "sprint/front-right/000.png": {
       "anchor": [
@@ -1125,7 +1150,7 @@
         403,
         452
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.248,
       "sha256": "4ee6d4263383002b30cc2fee61918d9aaa90af0094e828fe5451f72a06c07f26",
       "source": "exec-1ca1182f-8cb5-4c1b-b832-1933f71651d1.png"
     },
@@ -1142,7 +1167,7 @@
         403,
         449
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.248,
       "sha256": "fd1d5b5868d1f8e2f7c17a74eb7ab6bd78aa9a0c922d89aee2dd62230ebf4349",
       "source": "exec-1ca1182f-8cb5-4c1b-b832-1933f71651d1.png"
     },
@@ -1159,7 +1184,7 @@
         403,
         438
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.248,
       "sha256": "6483cf5fc45a56efef62ea73e166796b956ca53d2fe487686cfb8da2e5aeca68",
       "source": "exec-1ca1182f-8cb5-4c1b-b832-1933f71651d1.png"
     },
@@ -1176,7 +1201,7 @@
         403,
         426
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.248,
       "sha256": "d1970899138344b3574619429037cd2a5fa064a2c702bc49dc58914a5b3bef29",
       "source": "exec-1ca1182f-8cb5-4c1b-b832-1933f71651d1.png"
     },
@@ -1195,7 +1220,7 @@
         239,
         450
       ],
-      "drawScale": 0.62
+      "drawScale": 0.992
     },
     "sprint/front/001.png": {
       "anchor": [
@@ -1211,7 +1236,7 @@
         237,
         450
       ],
-      "drawScale": 0.62
+      "drawScale": 0.992
     },
     "sprint/front/002.png": {
       "anchor": [
@@ -1228,7 +1253,7 @@
         235,
         450
       ],
-      "drawScale": 0.62
+      "drawScale": 0.992
     },
     "sprint/front/003.png": {
       "anchor": [
@@ -1244,7 +1269,7 @@
         235,
         450
       ],
-      "drawScale": 0.62
+      "drawScale": 0.992
     },
     "sprint/front-left/000.png": {
       "anchor": [
@@ -1259,7 +1284,7 @@
         111,
         450
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.209,
       "sha256": "e78650d0fb5a1b3ca38ebe864967d7699060ef106ec355479e61ff9e9264915e",
       "source": "art-review/39t8-2/sprint-front-left/000.png"
     },
@@ -1276,7 +1301,7 @@
         111,
         450
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.209,
       "sha256": "99325dab18070f3d51fec030fa93f4df77f364f34f910b5d6585b93bf699126c",
       "source": "art-review/39t8-2/sprint-front-left/001.png"
     },
@@ -1293,7 +1318,7 @@
         111,
         450
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.209,
       "sha256": "356837589579a9c0f737945ae1e325b7e15d1b22dd1c642f6a1a187608b4441b",
       "source": "art-review/39t8-2/sprint-front-left/002.png"
     },
@@ -1310,7 +1335,7 @@
         111,
         450
       ],
-      "drawScale": 0.78,
+      "drawScale": 1.209,
       "sha256": "6cd1c86c4e66cf08d3f07000f9f085f15f34baf9fd3f7c956be0bc1037944f30",
       "source": "art-review/39t8-2/sprint-front-left/003.png"
     },
@@ -1329,7 +1354,7 @@
         21,
         450
       ],
-      "drawScale": 0.8
+      "drawScale": 1.36
     },
     "sprint/left/001.png": {
       "anchor": [
@@ -1346,7 +1371,7 @@
         21,
         450
       ],
-      "drawScale": 0.8
+      "drawScale": 1.36
     },
     "sprint/left/002.png": {
       "anchor": [
@@ -1363,7 +1388,7 @@
         21,
         450
       ],
-      "drawScale": 0.8
+      "drawScale": 1.36
     },
     "sprint/left/003.png": {
       "anchor": [
@@ -1380,7 +1405,7 @@
         21,
         450
       ],
-      "drawScale": 0.8
+      "drawScale": 1.36
     },
     "sprint/back-left/000.png": {
       "anchor": [
@@ -1395,7 +1420,7 @@
         164,
         369
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "53ec5580b20c759d22bf0ec8fb470ec50a0e11baa954b6f75f5b927652b18b44",
       "source": "art-review/39t8-2/sprint-back-left/000.png"
     },
@@ -1412,7 +1437,7 @@
         166,
         380
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "5b72a8d9c396ae31e7281c0be353ced34820464a4c432dac5f7b5f32314973bc",
       "source": "art-review/39t8-2/sprint-back-left/001.png"
     },
@@ -1429,7 +1454,7 @@
         125,
         369
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "d8a34d494b73adeef5427db5326e4cb81d9b6f1c35eb0c8f7a497c0d1bd9a992",
       "source": "art-review/39t8-2/sprint-back-left/002.png"
     },
@@ -1446,7 +1471,7 @@
         123,
         457
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "2613eb4251b6681e1df2bcaa4bb3812c1b4d05045ca429da2ca3659b21c35f42",
       "source": "art-review/39t8-2/sprint-back-left/003.png"
     },
@@ -1456,7 +1481,7 @@
         357
       ],
       "sha256": "2656a28bbabdd1d1830038c63cbffda4f22c7b55eed2abfa31ef29584990fd8b",
-      "drawScale": 0.68,
+      "drawScale": 1.19,
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
       "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
@@ -1467,7 +1492,7 @@
         362
       ],
       "sha256": "ff0bfb89ef6b3e56b83e4056bdae9860940ee42d1f232af01022b865a1ccb590",
-      "drawScale": 0.68,
+      "drawScale": 1.19,
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
       "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
@@ -1478,7 +1503,7 @@
         356
       ],
       "sha256": "e71eff5a3e1083188531b97cca0c98d9cd4f6ea7b658eb84d797e4b0b6f77229",
-      "drawScale": 0.68,
+      "drawScale": 1.19,
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
       "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
@@ -1489,7 +1514,7 @@
         359
       ],
       "sha256": "4415ce19c9944ec3efd06625f8022ef49a1a9c950c1429059f439031fd85af29",
-      "drawScale": 0.68,
+      "drawScale": 1.19,
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
       "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
@@ -1507,7 +1532,7 @@
         350,
         369
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "b023caf68a5f5286d7e6576005f3bf83b88eb9f6bc4d30a47241516a30f533f0",
       "source": "art-review/39t8-2/sprint-back-right/000.png"
     },
@@ -1524,7 +1549,7 @@
         346,
         380
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "cee5b3840d7c06a47b0a5a54c9b719c3ffcc8c3ee3be2525bd448409f0b1275a",
       "source": "art-review/39t8-2/sprint-back-right/001.png"
     },
@@ -1541,7 +1566,7 @@
         386,
         369
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "9e6189f719b5361c207fe0d1e90d530f420660782fbbd17cc50cca36399ddecf",
       "source": "art-review/39t8-2/sprint-back-right/002.png"
     },
@@ -1558,7 +1583,7 @@
         387,
         457
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.462,
       "sha256": "3ca98be31a868ede5bb14cd2f2f2bbca51373ee91b471c63b1c8da6b2af96337",
       "source": "art-review/39t8-2/sprint-back-right/003.png"
     },
@@ -1577,7 +1602,7 @@
         478,
         452
       ],
-      "drawScale": 0.9
+      "drawScale": 1.476
     },
     "stalk/right/001.png": {
       "anchor": [
@@ -1594,7 +1619,7 @@
         478,
         451
       ],
-      "drawScale": 0.9
+      "drawScale": 1.476
     },
     "stalk/right/002.png": {
       "anchor": [
@@ -1611,7 +1636,7 @@
         478,
         451
       ],
-      "drawScale": 0.9
+      "drawScale": 1.476
     },
     "stalk/right/003.png": {
       "anchor": [
@@ -1628,7 +1653,7 @@
         478,
         451
       ],
-      "drawScale": 0.9
+      "drawScale": 1.476
     },
     "jog/right/000.png": {
       "anchor": [
@@ -1645,7 +1670,7 @@
         469,
         455
       ],
-      "drawScale": 0.9
+      "drawScale": 1.476
     },
     "jog/right/001.png": {
       "anchor": [
@@ -1662,7 +1687,7 @@
         469,
         456
       ],
-      "drawScale": 0.9
+      "drawScale": 1.476
     },
     "jog/right/002.png": {
       "anchor": [
@@ -1679,7 +1704,7 @@
         469,
         454
       ],
-      "drawScale": 0.9
+      "drawScale": 1.476
     },
     "jog/right/003.png": {
       "anchor": [
@@ -1696,14 +1721,14 @@
         469,
         456
       ],
-      "drawScale": 0.9
+      "drawScale": 1.476
     },
     "stalk/left/000.png": {
       "anchor": [
         233,
         452
       ],
-      "drawScale": 0.8,
+      "drawScale": 1.48,
       "source": "39t8-2/stalk/left/000.png",
       "sha256": "355cc63896852d8c721c21a4be9d92aeb58e6d8a60600f18a6fe60cdf6d8a2a3",
       "muzzle": [
@@ -1720,7 +1745,7 @@
         233,
         455
       ],
-      "drawScale": 0.8,
+      "drawScale": 1.48,
       "source": "39t8-2/stalk/left/001.png",
       "sha256": "a46c4e24992d5513a0d10af0b3fa900e9d035308bb8ef04b215679d05c18b52e",
       "muzzle": [
@@ -1737,7 +1762,7 @@
         233,
         452
       ],
-      "drawScale": 0.8,
+      "drawScale": 1.48,
       "source": "39t8-2/stalk/left/002.png",
       "sha256": "5273ff99f9a3a025f0d2d60c1eab1c519b5813e69732d29473ff37bf642d0caf",
       "muzzle": [
@@ -1754,7 +1779,7 @@
         233,
         454
       ],
-      "drawScale": 0.8,
+      "drawScale": 1.48,
       "source": "39t8-2/stalk/left/003.png",
       "sha256": "b9be3b42fe48eb6cf2bf64f8f04fdf8f251e139138ed4277c6a139cda70fcc26",
       "muzzle": [
@@ -1771,7 +1796,7 @@
         233,
         456
       ],
-      "drawScale": 0.8,
+      "drawScale": 1.48,
       "sha256": "4ea8cdd2df5d5d88fcce4db8e6e35d8ab578ee04842dcf98d22fb0f47eced5df",
       "source": "39t8-2/jog/left/000.png",
       "muzzle": [
@@ -1788,7 +1813,7 @@
         233,
         455
       ],
-      "drawScale": 0.8,
+      "drawScale": 1.48,
       "sha256": "79ff03e74112287dd201c50caf564bd7e61e7722f330736667d0372d7f5700a1",
       "source": "39t8-2/jog/left/001.png",
       "muzzle": [
@@ -1805,7 +1830,7 @@
         233,
         420
       ],
-      "drawScale": 0.8,
+      "drawScale": 1.48,
       "sha256": "3ad928fe08b9ce31826e2f668245cb687a0b66b7bb26c71c6764b682034eded1",
       "source": "39t8-2/jog/left/002.png",
       "muzzle": [
@@ -1822,7 +1847,7 @@
         233,
         423
       ],
-      "drawScale": 0.8,
+      "drawScale": 1.48,
       "sha256": "fa1ce18051d0227a76bdad87476235f378272b0801676ec649fe97930d91d8e6",
       "source": "39t8-2/jog/left/003.png",
       "muzzle": [
@@ -1847,7 +1872,7 @@
         350,
         456
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.53,
       "sha256": "fcb16013baed3bac861e6000baab919222e49d1f1095c6848197dc389dbf2a41",
       "source": "exec-706e7a22-744a-4a71-88e5-26afb09c5cb1.png"
     },
@@ -1864,7 +1889,7 @@
         350,
         455
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.53,
       "sha256": "9e3cf6c68b859914c710b2f1d209ffd9e3ed83300f01e345dce18d9594722930",
       "source": "exec-706e7a22-744a-4a71-88e5-26afb09c5cb1.png"
     },
@@ -1881,7 +1906,7 @@
         351,
         452
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.53,
       "sha256": "f7ebca3a94d61092b61a5c3376464ae22c0271513267f94722e955d9a828aff2",
       "source": "exec-706e7a22-744a-4a71-88e5-26afb09c5cb1.png"
     },
@@ -1898,7 +1923,7 @@
         351,
         452
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.53,
       "sha256": "ebe3388927d2808a9593e866bc06a30bb4ebc485f57b7fd2f1ea43597844ac21",
       "source": "exec-706e7a22-744a-4a71-88e5-26afb09c5cb1.png"
     },
@@ -1915,7 +1940,7 @@
         344,
         455
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.53,
       "sha256": "b8fa3d66d765a4a9874c03dfe5305c105630fc8fd671499140f161dd3f7dd09c",
       "source": "exec-df8618d4-99e6-4e36-821e-9824c7df24e9.png"
     },
@@ -1932,7 +1957,7 @@
         344,
         455
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.53,
       "sha256": "c7dbcce353c3d4d9ed7e94dbf32a66f610d4ff974c2b92e3f914d8fb9eda98fc",
       "source": "exec-df8618d4-99e6-4e36-821e-9824c7df24e9.png"
     },
@@ -1949,7 +1974,7 @@
         344,
         448
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.53,
       "sha256": "052800bdfeb3ce5f09d0ab9cc64711472ed582c21aaf158314c067324202eb87",
       "source": "exec-df8618d4-99e6-4e36-821e-9824c7df24e9.png"
     },
@@ -1966,7 +1991,7 @@
         344,
         451
       ],
-      "drawScale": 0.85,
+      "drawScale": 1.53,
       "sha256": "c698fc4f422a67e5b109588f02656e5b8d6d32ecca26cdb3af98db89c013ad4f",
       "source": "exec-df8618d4-99e6-4e36-821e-9824c7df24e9.png"
     },
@@ -1983,7 +2008,7 @@
         174,
         455
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.632,
       "sha256": "030594319cb2632f23d9c7154fa376dfddf3f205ec4e3fa58ccf745684ca0eb8",
       "source": "exec-89396f95-b666-4c02-8489-b271ab6bcda4.png"
     },
@@ -2000,7 +2025,7 @@
         174,
         450
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.632,
       "sha256": "4f38db76a3fa2a301a5905105dbdcea2b078cad0176da12def7af4a64a7c10d3",
       "source": "exec-89396f95-b666-4c02-8489-b271ab6bcda4.png"
     },
@@ -2017,7 +2042,7 @@
         174,
         447
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.632,
       "sha256": "b95de2a4c9994b6f6459f950e809c83755445912d457b217f30bd5c22f3858e6",
       "source": "exec-89396f95-b666-4c02-8489-b271ab6bcda4.png"
     },
@@ -2034,7 +2059,7 @@
         174,
         447
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.632,
       "sha256": "61bff8074e5ee0d67c3948cbf0d48b09e0727326677e5ccd30a672cbbe5630b4",
       "source": "exec-89396f95-b666-4c02-8489-b271ab6bcda4.png"
     },
@@ -2051,7 +2076,7 @@
         170,
         451
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.632,
       "sha256": "e10ce573bd0b0deb09e9c0f7170ff43decac106b30a76bfd089209daafa7517a",
       "source": "exec-94794e01-edb4-4608-9294-de4df818d1bf.png"
     },
@@ -2068,7 +2093,7 @@
         170,
         441
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.632,
       "sha256": "89040e09334678c7f2afba388cb41407e73459fbbe7de87532ab8c5723a50c4f",
       "source": "exec-94794e01-edb4-4608-9294-de4df818d1bf.png"
     },
@@ -2085,7 +2110,7 @@
         170,
         445
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.632,
       "sha256": "68896b7eb2e7d782c6edff782c9c05029e2e30b1a1bdd73416f53a0700eb13f7",
       "source": "exec-94794e01-edb4-4608-9294-de4df818d1bf.png"
     },
@@ -2102,145 +2127,145 @@
         170,
         439
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.632,
       "sha256": "12075332bfbeb6fa2fda50f3985048fdd12f2ffd130a06c0f7d0e7089c37b6b4",
       "source": "exec-94794e01-edb4-4608-9294-de4df818d1bf.png"
     },
     "stalk/front/000.png": {
       "anchor": [
         256,
-        493
+        473
       ],
       "muzzle": [
         256,
-        320
+        312
       ],
       "muzzleGround": [
         256,
-        493
+        473
       ],
-      "drawScale": 0.78,
-      "sha256": "3eaf5a10071b1b60f3863fdd23f9c78ddf70a2111aac242ee38b3bac1e02dff3",
-      "source": "exec-8435f6ee-3275-4e52-93d3-fc006cfe4e97.png"
+      "drawScale": 1.2,
+      "sha256": "2bdbe41e86dcfe1987bf3e6a9ec9982d607633e96ceefaac5e09ae3ee3f139e4",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only"
     },
     "stalk/front/001.png": {
       "anchor": [
         256,
-        486
+        466
       ],
       "muzzle": [
         256,
-        320
+        312
       ],
       "muzzleGround": [
         256,
-        486
+        466
       ],
-      "drawScale": 0.78,
-      "sha256": "4dc3dedc50b2d9d75998a25423fc9ca0bd82c04608f70856aace980fb5692437",
-      "source": "exec-8435f6ee-3275-4e52-93d3-fc006cfe4e97.png"
+      "drawScale": 1.2,
+      "sha256": "fdb1a1ad6c67538bd6929d0d643f914139b18d429dc70f9f50ad700869ce2620",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only"
     },
     "stalk/front/002.png": {
       "anchor": [
         256,
-        473
+        445
       ],
       "muzzle": [
         256,
-        304
+        280
       ],
       "muzzleGround": [
         256,
-        473
+        445
       ],
-      "drawScale": 0.78,
-      "sha256": "5e54b3bd2778785a51ab541871cfd03c5f583b54fa6dbf77c9498594da5dfd59",
-      "source": "exec-8435f6ee-3275-4e52-93d3-fc006cfe4e97.png"
+      "drawScale": 1.2,
+      "sha256": "b3104cf2e17093ebaa669c8633d71c28e6fafa091ea9f490c5d2c20ddb7b28b2",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only"
     },
     "stalk/front/003.png": {
       "anchor": [
         256,
-        467
+        438
       ],
       "muzzle": [
         256,
-        304
+        280
       ],
       "muzzleGround": [
         256,
-        467
+        438
       ],
-      "drawScale": 0.78,
-      "sha256": "44532a57ee75485d30e46de0558825eab87a89b33ff32a6af9a9a11fa152f376",
-      "source": "exec-8435f6ee-3275-4e52-93d3-fc006cfe4e97.png"
+      "drawScale": 1.2,
+      "sha256": "9816c9c30fb8f1ac4b6e92a9dcd6826fc417e94c089a798135687ff34eb1788a",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only"
     },
     "jog/front/000.png": {
       "anchor": [
-        256,
-        450
+        250,
+        430
       ],
-      "sha256": "35da2c6eefd086b40149c1f93e70f70a0ca3dd5f889589869c295dab49dcb2f5",
-      "source": "exec-ad3ce3b2-8c59-4f44-b0b5-99bea5154b44.png",
+      "sha256": "f0657d5f62b04306e5177dd8e0fe77d14e244e745d35f3792dc186e386cf12b2",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
       "muzzle": [
-        253,
-        321
+        250,
+        307
       ],
       "muzzleGround": [
-        253,
-        450
+        250,
+        430
       ],
-      "drawScale": 0.9
+      "drawScale": 1.5
     },
     "jog/front/001.png": {
       "anchor": [
-        256,
-        450
+        250,
+        429
       ],
-      "sha256": "b9053846510ba873b333774e6bcbf0805bf2bba6df3e9b46f8c0aeb4728003dd",
-      "source": "exec-ecc64c6e-cf9e-43c1-9a1a-2c6ff71a4bb5.png",
+      "sha256": "ba2984bae80d6b956c2395c91c47eb6f1c516d815ab6f27a922dc56d8c3ecc4b",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
       "muzzle": [
-        253,
-        321
+        250,
+        307
       ],
       "muzzleGround": [
-        253,
-        450
+        250,
+        429
       ],
-      "drawScale": 0.9
+      "drawScale": 1.5
     },
     "jog/front/002.png": {
       "anchor": [
-        256,
-        450
+        250,
+        408
       ],
-      "sha256": "ddf8c13a17ed1b68b9eb12fb269e1c22103b0197823b03e819aa820f65ad870a",
-      "source": "exec-632042ef-a098-411c-9677-67904ddd5e48.png",
+      "sha256": "470037b121dee2b880944539c9367fb887184d2ccc3a9055fb42e1428d5bc619",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
       "muzzle": [
-        253,
-        321
+        250,
+        282
       ],
       "muzzleGround": [
-        253,
-        450
+        250,
+        408
       ],
-      "drawScale": 0.9
+      "drawScale": 1.5
     },
     "jog/front/003.png": {
       "anchor": [
-        256,
-        450
+        250,
+        406
       ],
-      "sha256": "3d56c839dd12571c4f3a52753345629a47e0fe6b3dbdc0ccd919d703fc61e8ee",
-      "source": "exec-ab929d6a-c5eb-4656-8506-12c357931540.png",
+      "sha256": "f65d2c7482b7fba47b0c935de62c0895574e0a4179c1791a46566372f09b35e7",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
       "muzzle": [
-        254,
-        321
+        250,
+        282
       ],
       "muzzleGround": [
-        254,
-        450
+        250,
+        406
       ],
-      "drawScale": 0.9
+      "drawScale": 1.5
     },
     "stalk/back/000.png": {
       "anchor": [
@@ -2251,7 +2276,8 @@
       "source": "exec-fd76e9de-b024-4ca3-9a8a-3c9280a3a0c6.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "stalk/back/001.png": {
       "anchor": [
@@ -2262,7 +2288,8 @@
       "source": "exec-dd323c32-8a93-4275-a7f8-f57162214e18.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "stalk/back/002.png": {
       "anchor": [
@@ -2273,7 +2300,8 @@
       "source": "exec-58030576-6283-4e75-8edb-e432a6673506.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "stalk/back/003.png": {
       "anchor": [
@@ -2284,7 +2312,8 @@
       "source": "exec-13f651ea-05a9-4775-9b58-0a457c509996.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jog/back/000.png": {
       "anchor": [
@@ -2295,7 +2324,8 @@
       "source": "exec-f37544a6-87e0-404f-821b-d333eb19b37c.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jog/back/001.png": {
       "anchor": [
@@ -2306,7 +2336,8 @@
       "source": "exec-6a2374ee-d2c5-4b44-97d2-0a27308ff1b3.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jog/back/002.png": {
       "anchor": [
@@ -2317,7 +2348,8 @@
       "source": "exec-0a086db4-2266-4e5b-9613-f54fc5903356.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jog/back/003.png": {
       "anchor": [
@@ -2328,7 +2360,8 @@
       "source": "exec-7e9894a7-e19c-4bce-be78-ce707af56d91.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jump/right/000.png": {
       "anchor": [
@@ -2345,7 +2378,7 @@
         441,
         416
       ],
-      "drawScale": 1.1
+      "drawScale": 1.804
     },
     "jump/right/001.png": {
       "anchor": [
@@ -2361,7 +2394,8 @@
       "muzzleGround": [
         438,
         450
-      ]
+      ],
+      "drawScale": 1.64
     },
     "jump/right/002.png": {
       "anchor": [
@@ -2377,7 +2411,8 @@
       "muzzleGround": [
         438,
         450
-      ]
+      ],
+      "drawScale": 1.64
     },
     "jump/right/003.png": {
       "anchor": [
@@ -2393,7 +2428,8 @@
       "muzzleGround": [
         439,
         462
-      ]
+      ],
+      "drawScale": 1.64
     },
     "jump/right/004.png": {
       "anchor": [
@@ -2410,7 +2446,7 @@
         437,
         450
       ],
-      "drawScale": 1.1
+      "drawScale": 1.804
     },
     "jump/right/005.png": {
       "anchor": [
@@ -2426,14 +2462,15 @@
       "muzzleGround": [
         436,
         450
-      ]
+      ],
+      "drawScale": 1.64
     },
     "jump/left/000.png": {
       "anchor": [
         240,
         442
       ],
-      "drawScale": 0.72,
+      "drawScale": 1.332,
       "sha256": "e46364398e984571033e0d857886028022863ed77f7d55842efbc3cae810a330",
       "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
       "muzzle": [
@@ -2450,7 +2487,7 @@
         240,
         435
       ],
-      "drawScale": 0.72,
+      "drawScale": 1.332,
       "sha256": "c19652327d4150ddb4714878c820141f92d1e71097d092f957d6fdcd37874c50",
       "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
       "muzzle": [
@@ -2467,7 +2504,7 @@
         240,
         425
       ],
-      "drawScale": 0.72,
+      "drawScale": 1.332,
       "sha256": "379d2a0abaa99efc9d0ed37d86475aa60fc8f3d5c9af5c9638587048045aa354",
       "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
       "muzzle": [
@@ -2484,7 +2521,7 @@
         240,
         406
       ],
-      "drawScale": 0.72,
+      "drawScale": 1.332,
       "sha256": "d5ef6cd86154cbab6112aef2da108fa7cf2e2ac0a93f857165d91600bb84d92d",
       "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
       "muzzle": [
@@ -2501,7 +2538,7 @@
         240,
         405
       ],
-      "drawScale": 0.72,
+      "drawScale": 1.332,
       "sha256": "767bcbb8a7a17e02cec7eb7d614e5e1717067e7643531eeb619b7ffe7a2e9bf3",
       "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
       "muzzle": [
@@ -2518,7 +2555,7 @@
         240,
         405
       ],
-      "drawScale": 0.72,
+      "drawScale": 1.332,
       "sha256": "d2aade8aad01897446a4a08048e428817227ab3f294d2ce9b3845b202e460036",
       "source": "exec-6dcd77eb-1a7e-45d2-9c70-52001d7dc005.png",
       "muzzle": [
@@ -2539,7 +2576,8 @@
       "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jump/back/001.png": {
       "anchor": [
@@ -2550,7 +2588,8 @@
       "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jump/back/002.png": {
       "anchor": [
@@ -2561,7 +2600,8 @@
       "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jump/back/003.png": {
       "anchor": [
@@ -2572,7 +2612,8 @@
       "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jump/back/004.png": {
       "anchor": [
@@ -2583,7 +2624,8 @@
       "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jump/back/005.png": {
       "anchor": [
@@ -2594,7 +2636,8 @@
       "source": "exec-a365536f-1b21-40f1-91b2-62e562033a8f.png",
       "muzzleVisibility": "occluded",
       "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
+      "drawScale": 1.75
     },
     "jump/back-left/000.png": {
       "anchor": [
@@ -2610,7 +2653,8 @@
       "muzzleGround": [
         161,
         374
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-left/001.png": {
       "anchor": [
@@ -2626,7 +2670,8 @@
       "muzzleGround": [
         159,
         368
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-left/002.png": {
       "anchor": [
@@ -2642,7 +2687,8 @@
       "muzzleGround": [
         161,
         356
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-left/003.png": {
       "anchor": [
@@ -2658,7 +2704,8 @@
       "muzzleGround": [
         158,
         368
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-left/004.png": {
       "anchor": [
@@ -2674,7 +2721,8 @@
       "muzzleGround": [
         156,
         354
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-left/005.png": {
       "anchor": [
@@ -2690,7 +2738,8 @@
       "muzzleGround": [
         160,
         354
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-right/000.png": {
       "anchor": [
@@ -2706,7 +2755,8 @@
       "muzzleGround": [
         372,
         388
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-right/001.png": {
       "anchor": [
@@ -2722,7 +2772,8 @@
       "muzzleGround": [
         367,
         364
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-right/002.png": {
       "anchor": [
@@ -2738,7 +2789,8 @@
       "muzzleGround": [
         372,
         333
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-right/003.png": {
       "anchor": [
@@ -2754,7 +2806,8 @@
       "muzzleGround": [
         383,
         346
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-right/004.png": {
       "anchor": [
@@ -2770,7 +2823,8 @@
       "muzzleGround": [
         368,
         368
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/back-right/005.png": {
       "anchor": [
@@ -2786,103 +2840,110 @@
       "muzzleGround": [
         372,
         365
-      ]
+      ],
+      "drawScale": 1.72
     },
     "jump/front/000.png": {
       "anchor": [
-        264,
-        450
+        263,
+        452
       ],
-      "sha256": "a5a534870cfc43a79dc6ed1681fb795ecac10317a6cc83f463ded7aacb1453e9",
-      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "sha256": "003e517a73ad2275f675376c2db63c50d457375cd6f54ae659e584b63eeacf55",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
       "muzzle": [
-        264,
-        341
+        263,
+        344
       ],
       "muzzleGround": [
-        264,
-        450
-      ]
+        263,
+        452
+      ],
+      "drawScale": 1.6
     },
     "jump/front/001.png": {
       "anchor": [
         257,
         450
       ],
-      "sha256": "438c44b2431d24ac2d67c99ec6a221ec06274efedcc658000a13e43fd0b62443",
-      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "sha256": "005893d12e31bc0d78177bf8c4ad498e0bae179e94a78f36f526015533b639bc",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
       "muzzle": [
         257,
-        326
-      ],
-      "muzzleGround": [
-        257,
-        450
-      ]
-    },
-    "jump/front/002.png": {
-      "anchor": [
-        244,
-        450
-      ],
-      "sha256": "1af10bfe9eaff3343040b3d3779729989654f6d9dea08d8bad734507bd3bcf65",
-      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
-      "muzzle": [
-        244,
-        319
-      ],
-      "muzzleGround": [
-        244,
-        450
-      ]
-    },
-    "jump/front/003.png": {
-      "anchor": [
-        264,
-        450
-      ],
-      "sha256": "d7b7564740b8b5822095d57aa85abf60fe0e58eddb4c3e31cb685568f10d0a9b",
-      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
-      "muzzle": [
-        264,
         331
       ],
       "muzzleGround": [
-        264,
+        257,
         450
-      ]
+      ],
+      "drawScale": 1.6
+    },
+    "jump/front/002.png": {
+      "anchor": [
+        242,
+        450
+      ],
+      "sha256": "c45adebb081b545b8dbb2c4f109f08e6ee76390d8d7ea1a19815ff4f6c0b834c",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
+      "muzzle": [
+        242,
+        322
+      ],
+      "muzzleGround": [
+        242,
+        450
+      ],
+      "drawScale": 1.6
+    },
+    "jump/front/003.png": {
+      "anchor": [
+        265,
+        450
+      ],
+      "sha256": "56e2beae5824ff0167e221194cd863e4af1c91fd64247f2a0685a093ac6df7f3",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
+      "muzzle": [
+        265,
+        323
+      ],
+      "muzzleGround": [
+        265,
+        450
+      ],
+      "drawScale": 1.6
     },
     "jump/front/004.png": {
       "anchor": [
-        257,
+        255,
         450
       ],
-      "sha256": "ac1e42b3e27f36cb37f5fda0795397397f8dd5e4c5120c4ff455530da229e37a",
-      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "sha256": "e0db8226ae9b4ce69bce8edf1d26c3be35f6220f9144b78f056d7ea1d3274570",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
       "muzzle": [
-        257,
-        356
+        255,
+        357
       ],
       "muzzleGround": [
-        257,
+        255,
         450
-      ]
+      ],
+      "drawScale": 1.6
     },
     "jump/front/005.png": {
       "anchor": [
         244,
         450
       ],
-      "sha256": "e840d93ffafe7fcdf1d36d1e4876286ea69a13fee15fc7043b27cb62f13f167c",
-      "source": "exec-b8a2cda8-a32f-43ef-9de6-2cf25f9b18bf.png",
+      "sha256": "f2e597e03ac5b00e6b8bd1e94e6efeaf47d30cd0cd42675a181c550472db6620",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
       "muzzle": [
         244,
-        331
+        329
       ],
       "muzzleGround": [
         244,
         450
-      ]
+      ],
+      "drawScale": 1.6
     },
     "jump/front-left/000.png": {
       "anchor": [
@@ -2898,7 +2959,8 @@
       "muzzleGround": [
         145,
         442
-      ]
+      ],
+      "drawScale": 1.7
     },
     "jump/front-left/001.png": {
       "anchor": [
@@ -2914,7 +2976,8 @@
       "muzzleGround": [
         147,
         435
-      ]
+      ],
+      "drawScale": 1.7
     },
     "jump/front-left/002.png": {
       "anchor": [
@@ -2930,7 +2993,8 @@
       "muzzleGround": [
         139,
         428
-      ]
+      ],
+      "drawScale": 1.7
     },
     "jump/front-left/003.png": {
       "anchor": [
@@ -2946,7 +3010,8 @@
       "muzzleGround": [
         152,
         428
-      ]
+      ],
+      "drawScale": 1.7
     },
     "jump/front-left/004.png": {
       "anchor": [
@@ -2962,7 +3027,8 @@
       "muzzleGround": [
         147,
         435
-      ]
+      ],
+      "drawScale": 1.7
     },
     "jump/front-left/005.png": {
       "anchor": [
@@ -2978,7 +3044,8 @@
       "muzzleGround": [
         146,
         441
-      ]
+      ],
+      "drawScale": 1.7
     },
     "jump/front-right/000.png": {
       "anchor": [
@@ -2994,7 +3061,8 @@
       "muzzleGround": [
         366,
         450
-      ]
+      ],
+      "drawScale": 1.8
     },
     "jump/front-right/001.png": {
       "anchor": [
@@ -3010,7 +3078,8 @@
       "muzzleGround": [
         355,
         441
-      ]
+      ],
+      "drawScale": 1.8
     },
     "jump/front-right/002.png": {
       "anchor": [
@@ -3026,7 +3095,8 @@
       "muzzleGround": [
         357,
         425
-      ]
+      ],
+      "drawScale": 1.8
     },
     "jump/front-right/003.png": {
       "anchor": [
@@ -3042,7 +3112,8 @@
       "muzzleGround": [
         366,
         435
-      ]
+      ],
+      "drawScale": 1.8
     },
     "jump/front-right/004.png": {
       "anchor": [
@@ -3058,7 +3129,8 @@
       "muzzleGround": [
         362,
         442
-      ]
+      ],
+      "drawScale": 1.8
     },
     "jump/front-right/005.png": {
       "anchor": [
@@ -3074,7 +3146,8 @@
       "muzzleGround": [
         357,
         440
-      ]
+      ],
+      "drawScale": 1.8
     },
     "stalk/back-left/000.png": {
       "anchor": [
@@ -3091,7 +3164,7 @@
       ],
       "source": "exec-592292c5-cd3e-4a10-815d-bb183a0d0958.png",
       "sha256": "1fcff5fe6ce75ef793d76096391c0274e96c8391d145478f2fab4190de80183a",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "stalk/back-left/001.png": {
       "anchor": [
@@ -3108,7 +3181,7 @@
       ],
       "source": "exec-592292c5-cd3e-4a10-815d-bb183a0d0958.png",
       "sha256": "264be8419724294f7ed52308f2e2c42e78dec1bdb6d36af3860ba6bafb5be04b",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "stalk/back-left/002.png": {
       "anchor": [
@@ -3125,7 +3198,7 @@
       ],
       "source": "exec-592292c5-cd3e-4a10-815d-bb183a0d0958.png",
       "sha256": "7937ead4eff428bcb5b5396ffd7a463cb37421208e48c8d8ab6c9bf9e394967b",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "stalk/back-left/003.png": {
       "anchor": [
@@ -3142,7 +3215,7 @@
       ],
       "source": "exec-592292c5-cd3e-4a10-815d-bb183a0d0958.png",
       "sha256": "66d72d3d8eaa2fc3872cdaacfe6086c9b9d17dcc28213cf34eb754fb367c5909",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "jog/back-left/000.png": {
       "anchor": [
@@ -3159,7 +3232,7 @@
       ],
       "source": "exec-0907d59d-74ae-4411-b3b0-daaa5b5319f2.png",
       "sha256": "305085944e51912532e8836df793827f52ec5a177870040a81c8352eb653403c",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "jog/back-left/001.png": {
       "anchor": [
@@ -3176,7 +3249,7 @@
       ],
       "source": "exec-0907d59d-74ae-4411-b3b0-daaa5b5319f2.png",
       "sha256": "816b5374e2a66375a14bca63cf91fa6cdf6dd8f276d81fad16aaea5c1cf2a01b",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "jog/back-left/002.png": {
       "anchor": [
@@ -3193,7 +3266,7 @@
       ],
       "source": "exec-0907d59d-74ae-4411-b3b0-daaa5b5319f2.png",
       "sha256": "8464138770bca829e77f868e2ac5f91bd01f3c9f82f7fcc51cabd59d88360d16",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "jog/back-left/003.png": {
       "anchor": [
@@ -3210,7 +3283,7 @@
       ],
       "source": "exec-0907d59d-74ae-4411-b3b0-daaa5b5319f2.png",
       "sha256": "177f4301e9f05b86400b5e3b24f707936eb190cf5fa7dbc50ff0a6b6c5d06876",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "stalk/back-right/000.png": {
       "anchor": [
@@ -3227,7 +3300,7 @@
       ],
       "source": "exec-27a77dc3-1952-4852-b73d-cfdbfa9f9bbd.png",
       "sha256": "29f5f11ba2f85992359824a92811b1ecb9b84d7f698ba0f4a2c271e5e421b1d8",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "stalk/back-right/001.png": {
       "anchor": [
@@ -3244,7 +3317,7 @@
       ],
       "source": "exec-27a77dc3-1952-4852-b73d-cfdbfa9f9bbd.png",
       "sha256": "4de1978899137dbb2cfd1e7973383644d8f72dbf48b18857934473ddd9fe8352",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "stalk/back-right/002.png": {
       "anchor": [
@@ -3261,7 +3334,7 @@
       ],
       "source": "exec-27a77dc3-1952-4852-b73d-cfdbfa9f9bbd.png",
       "sha256": "ef9cda1a9a5d1b170a756b7c0e49678a28c00f8cd1809f4a220dfb8455d203b1",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "stalk/back-right/003.png": {
       "anchor": [
@@ -3278,7 +3351,7 @@
       ],
       "source": "exec-27a77dc3-1952-4852-b73d-cfdbfa9f9bbd.png",
       "sha256": "87bb0061c9b3edf4ed6240a696c1a72c98a02e4048aa4728f976dea1c2b441da",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "jog/back-right/000.png": {
       "anchor": [
@@ -3295,7 +3368,7 @@
       ],
       "source": "exec-ada06aca-2f43-4a34-afc5-2109554b20b8.png",
       "sha256": "e794a70c8fce363e63089b776b1f475d524ace52a93c4ca0fe983ed439ea8275",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "jog/back-right/001.png": {
       "anchor": [
@@ -3312,7 +3385,7 @@
       ],
       "source": "exec-ada06aca-2f43-4a34-afc5-2109554b20b8.png",
       "sha256": "87c77a2cddf9be2c1965f406ab31d518333768244dbaa8db6c1a0637731abf9d",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "jog/back-right/002.png": {
       "anchor": [
@@ -3329,7 +3402,7 @@
       ],
       "source": "exec-ada06aca-2f43-4a34-afc5-2109554b20b8.png",
       "sha256": "87b13d6e85067cb0df3edef8e8f5150432c05fe5c5f935238838b99ad2dd0730",
-      "drawScale": 0.58
+      "drawScale": 0.87
     },
     "jog/back-right/003.png": {
       "anchor": [
@@ -3346,7 +3419,7 @@
       ],
       "source": "exec-ada06aca-2f43-4a34-afc5-2109554b20b8.png",
       "sha256": "6d6aee05caeab5a37f41a3fd2925128524f190f51436ed0ee11c3d220695a661",
-      "drawScale": 0.58
+      "drawScale": 0.87
     }
   },
   "slidePhases": [

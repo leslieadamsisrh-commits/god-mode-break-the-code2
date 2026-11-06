@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Raptor proportion review</title>
+<style>body{margin:0;padding:20px;background:#182632;color:#eaf5fc;font:16px system-ui}a{color:#8de6e8}button,select{font:inherit;padding:8px;margin:5px}canvas{width:100%;max-width:1400px;background:#253743}p{max-width:850px}</style>
+<a href="/studio/character-lab">Back to playtest</a><h1>Raptor proportions</h1>
+<p>All eight directions at one fixed scale. Jade is the standing size reference. Ground poses and jump phases retain their own posture. This player reviews artwork; the playtest supplies actual combat physics.</p>
+<label>Sequence <select id="mode"><option value="ground">Standing / movement / slide</option><option value="jump">Jump / landing / recovery</option></select></label><button id="pause">Pause</button><label>Speed <select id="speed"><option value="1">Normal</option><option value="0.25">Quarter</option></select></label><p id="status">Loading…</p><canvas id="view" width="1400" height="800"></canvas>
+<script>
+(async()=>{
+ const view=document.getElementById("view"), pause=document.getElementById("pause"), speed=document.getElementById("speed"), mode=document.getElementById("mode"), status=document.getElementById("status");
+ const m=await fetch('/assets/raptor-v2/manifest.json').then(r=>r.json()),images={},load=(src)=>new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>no(Error(src));i.src=src});
+ await Promise.all(Object.keys(m.frames).map(async k=>images[k]=await load('/assets/raptor-v2/'+k+'?v='+m.build)));
+ const jade=await load('/assets/raptor-review/jade-ready.webp'),g=view.getContext('2d');let paused=false,t=0,last=performance.now();pause.onclick=()=>{paused=!paused;pause.textContent=paused?'Play':'Pause'};
+ const ground=[['idle',0,.65],...Array.from({length:8},(_,i)=>['stalk',i%4,.14]),...Array.from({length:8},(_,i)=>['jog',i%4,.1]),...Array.from({length:8},(_,i)=>['sprint',i%4,.08]),['slide',0,.08],['slide',1,.34],['slide',2,.1],['idle',0,.65]];
+ const jump=[['idle',0,.65],['jump',0,.065],['jump',1,.22],['jump',2,.18],['jump',3,.22],['jump',4,.10],['jump',5,.14],['idle',0,.65]];
+ function loop(now){if(!paused)t+=(now-last)/1000*Number(speed.value);last=now;const seq=mode.value==='jump'?jump:ground;let phase=t%seq.reduce((s,x)=>s+x[2],0),item=seq[0];for(const x of seq){item=x;if(phase<x[2])break;phase-=x[2]}
+ g.clearRect(0,0,1400,800);m.directions.forEach((dir,n)=>{const x=n%4*350,y=Math.floor(n/4)*400,k=item[0]+'/'+dir+'/'+String(item[1]).padStart(3,'0')+'.png',r=m.frames[k],s=.26*(r.drawScale||1)*1.65,rootX=x+220,rootY=y+330;g.fillStyle='#eaf5fc';g.font='16px system-ui';g.fillText(dir,x+12,y+28);g.font='12px system-ui';g.fillText(item[0]+' '+item[1],x+12,y+48);g.strokeStyle='#66808a';g.beginPath();g.moveTo(x+10,rootY);g.lineTo(x+340,rootY);g.stroke();g.drawImage(jade,x-15,rootY-220*.825,250*.825,250*.825);g.drawImage(images[k],rootX-r.anchor[0]*s,rootY-r.anchor[1]*s,512*s,512*s)});
+ status.textContent=m.build+' · '+Object.keys(images).length+' frames loaded · '+item[0]+' '+item[1];requestAnimationFrame(loop)}requestAnimationFrame(loop);
+})().catch(e=>document.getElementById('status').textContent='ERROR: '+e.message);
+</script></html>
