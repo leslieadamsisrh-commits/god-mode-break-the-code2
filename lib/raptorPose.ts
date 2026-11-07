@@ -3,7 +3,7 @@ import {advanceRaptorJump,type JumpMemory,type JumpPhase} from './raptorJump';
 import inventory from '../public/assets/raptor-v2/manifest.json';
 
 export const RAPTOR_POSE_DIRECTIONS=['right','front-right','front','front-left','left','back-left','back','back-right'] as const;
-export type RaptorPoseFamily='idle'|'run'|'stalk'|'jog'|'sprint'|'slide'|'jump'|'cover-drive';
+export type RaptorPoseFamily='idle'|'run'|'stalk'|'jog'|'sprint'|'slide'|'jump'|'cover-drive'|'cover-hold';
 export type RaptorPoseFrame={family:RaptorPoseFamily;frame:number;angle:number;key:string};
 export type RaptorPoseSample={coverState11?:RaptorCoverState11;coverSpeed11?:number;time:number;x?:number;y?:number;angle:number;speed:number;travelAngle?:number;sliding:boolean;slideRemaining?:number;slideDuration?:number;airborne:boolean;verticalVelocity:number;hit:boolean;attached:boolean;firing:boolean};
 export type RaptorPoseMemory={
@@ -63,6 +63,7 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
   if(state==='catch')return{memory,frame:selected('slide',2,s.angle)};
   if(state==='drive'&&raptorPoseDirection(s.angle)==='front-right')return{memory,frame:selected('cover-drive',cover.phase>=.5?1:0,s.angle)};
   if(state==='shuffle'||state==='drive')return{memory,frame:selected('stalk',Math.floor(cover.phase*4),s.angle)};
+  if(raptorPoseDirection(s.angle)==='front-right')return{memory,frame:selected('cover-hold',0,s.angle)};
   return{memory,frame:selected('jump',4,s.angle)};
  }
 

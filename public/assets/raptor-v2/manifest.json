@@ -1,5 +1,5 @@
 {
-  "build": "39T11.1-cover-continuity",
+  "build": "39T11.3-cover-hold",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -9,7 +9,8 @@
     "stalk": 4,
     "jog": 4,
     "jump": 6,
-    "cover-drive": 2
+    "cover-drive": 2,
+    "cover-hold": 1
   },
   "directions": [
     "right",
@@ -3455,6 +3456,22 @@
       "drawScale": 1.12,
       "sha256": "35a0dceb6d9f1b4634594c91f1b574fb85e161ecdac25574c1c94b4d15b97616",
       "source": "exec-89bd82e6-ce53-48e9-a22e-401468d2c69d.png"
+    },
+    "cover-hold/front-right/000.png": {
+      "anchor": [
+        242,
+        431
+      ],
+      "muzzle": [
+        323,
+        356
+      ],
+      "muzzleGround": [
+        323,
+        431
+      ],
+      "drawScale": 1.45,
+      "sha256": "e1631a9cc891c0cee80bf73dfa0a52c6ad530d1891a0b60ccff7241572ce4067"
     }
   },
   "slidePhases": [
@@ -3499,6 +3516,9 @@
     "front-right"
   ],
   "coverDriveDirections": [
+    "front-right"
+  ],
+  "coverHoldDirections": [
     "front-right"
   ]
 }
