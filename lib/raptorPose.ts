@@ -1,10 +1,11 @@
+import type {RaptorCoverState11} from './raptorCover11';
 import {advanceRaptorJump,type JumpMemory,type JumpPhase} from './raptorJump';
 import inventory from '../public/assets/raptor-v2/manifest.json';
 
 export const RAPTOR_POSE_DIRECTIONS=['right','front-right','front','front-left','left','back-left','back','back-right'] as const;
-export type RaptorPoseFamily='idle'|'run'|'stalk'|'jog'|'sprint'|'slide'|'jump';
+export type RaptorPoseFamily='idle'|'run'|'stalk'|'jog'|'sprint'|'slide'|'jump'|'cover-drive';
 export type RaptorPoseFrame={family:RaptorPoseFamily;frame:number;angle:number;key:string};
-export type RaptorPoseSample={time:number;x?:number;y?:number;angle:number;speed:number;travelAngle?:number;sliding:boolean;slideRemaining?:number;slideDuration?:number;airborne:boolean;verticalVelocity:number;hit:boolean;attached:boolean;firing:boolean};
+export type RaptorPoseSample={coverState11?:RaptorCoverState11;time:number;x?:number;y?:number;angle:number;speed:number;travelAngle?:number;sliding:boolean;slideRemaining?:number;slideDuration?:number;airborne:boolean;verticalVelocity:number;hit:boolean;attached:boolean;firing:boolean};
 export type RaptorPoseMemory={
  gait:{time:number;x?:number;y?:number;phase:number;sprinting:boolean;jogging:boolean;airborne:boolean;landedAt:number};
  jump:JumpMemory;
@@ -45,6 +46,17 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
  else if(slide.active){slide.active=false;slide.recoveryUntil=s.time+.12;}
  slide.time=s.time;
  const memory={gait,jump:jump.memory,slide};
+ // Explicit reuse of approved poses, never an implicit idle fallback for attachment.
+ // Landing is the planted crouch; slide recovery supplies contact compression.
+ if(s.attached&&s.coverState11){
+  const state=s.coverState11;
+  if(state==='expose'||state==='fire')return{memory,frame:selected('idle',0,s.angle)};
+  if(state==='catch')return{memory,frame:selected('slide',2,s.angle)};
+  if(state==='drive'&&raptorPoseDirection(s.angle)==='front-right')return{memory,frame:selected('cover-drive',0,s.angle)};
+  if(state==='shuffle'||state==='drive')return{memory,frame:selected('stalk',Math.floor((s.time*s.speed/60)%4),s.angle)};
+  return{memory,frame:selected('jump',4,s.angle)};
+ }
+
  if(!interrupted&&s.sliding){
   const duration=Math.max(.01,s.slideDuration??.5),remaining=s.slideRemaining??duration*.5;
   return{memory,frame:selected('slide',s.time-slide.startedAt<.08?0:remaining<.06?2:1,s.angle)};
@@ -58,13 +70,14 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
  return{memory,frame:selected(s.speed>2?'run':'idle',s.speed>2?Math.floor(gait.phase*4):0,s.angle)};
 }
 
-export type RaptorPoseActor={x:number;y:number;vx:number;vy:number;aim:number;gunFacing:number;slide:number;pinball:number;slideFacing:number;grounded?:boolean;vz?:number;jumpHeight?:number;knock:number;hitUntil?:number;charging:boolean;coverId:string|null;coverMode?:string|null;coverSpeed?:number;coverAnchor?:{tx:number;ty:number;nx:number;ny:number}|null;fireState:number;recoil:number;returnToCover:number;pendingFireUntil?:number;input?:{x?:number;y?:number;fire?:boolean;coverAim?:boolean}};
+export type RaptorPoseActor={coverState11?:RaptorCoverState11;x:number;y:number;vx:number;vy:number;aim:number;gunFacing:number;slide:number;pinball:number;slideFacing:number;grounded?:boolean;vz?:number;jumpHeight?:number;knock:number;hitUntil?:number;charging:boolean;coverId:string|null;coverMode?:string|null;coverSpeed?:number;coverAnchor?:{tx:number;ty:number;nx:number;ny:number}|null;fireState:number;recoil:number;returnToCover:number;pendingFireUntil?:number;input?:{x?:number;y?:number;fire?:boolean;coverAim?:boolean}};
 /** Same facing rules as the original Raptor draw path, independent of a render clock. */
 export function raptorActorFacing(p:RaptorPoseActor){
  const speed=Math.hypot(p.vx,p.vy),sliding=p.slide>0||p.pinball>0;
  if(sliding)return p.slideFacing??p.aim??0;
  if(p.charging&&!p.coverId&&(typeof p.input?.x==='number'||typeof p.input?.y==='number'))return Math.hypot(p.input?.x||0,p.input?.y||0)>.18?Math.atan2(p.input!.y||0,p.input!.x||0):p.gunFacing??p.aim??0;
  if(p.coverId&&p.coverAnchor){
+  if(p.coverState11)return p.coverState11==='expose'||p.coverState11==='fire'?p.gunFacing:Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx);
   if(p.coverMode==='soft'){const moving=Math.abs(p.coverSpeed||0)>20;return moving?Math.atan2(p.coverAnchor.ty*Math.sign(p.coverSpeed||1),p.coverAnchor.tx*Math.sign(p.coverSpeed||1)):p.gunFacing??p.aim??Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx);}
   const exposed=p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0;
   return exposed?p.gunFacing??p.aim??0:Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx);
@@ -75,6 +88,6 @@ export function raptorActorFacing(p:RaptorPoseActor){
 export function raptorActorSample(p:RaptorPoseActor,time:number,slideDuration:number):RaptorPoseSample{
  const speed=Math.hypot(p.vx,p.vy);
  // Damage flash is cosmetic; only physical knockback interrupts the pose clock.
- return{time,x:p.x,y:p.y,angle:raptorActorFacing(p),speed,travelAngle:speed>2?Math.atan2(p.vy,p.vx):undefined,sliding:p.slide>0||p.pinball>0,slideRemaining:p.slide>0?p.slide:undefined,slideDuration,airborne:p.grounded===false||Math.abs(p.vz||0)>.1||(p.jumpHeight||0)>0,verticalVelocity:p.vz||0,hit:p.knock>0,attached:!!p.coverId,firing:!!p.input?.fire||p.pendingFireUntil!==undefined};
+ return{coverState11:p.coverState11,time,x:p.x,y:p.y,angle:raptorActorFacing(p),speed,travelAngle:speed>2?Math.atan2(p.vy,p.vx):undefined,sliding:p.slide>0||p.pinball>0,slideRemaining:p.slide>0?p.slide:undefined,slideDuration,airborne:p.grounded===false||Math.abs(p.vz||0)>.1||(p.jumpHeight||0)>0,verticalVelocity:p.vz||0,hit:p.knock>0,attached:!!p.coverId,firing:!!p.input?.fire||p.pendingFireUntil!==undefined};
 }
 
