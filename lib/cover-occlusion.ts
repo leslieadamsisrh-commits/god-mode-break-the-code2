@@ -1,11 +1,14 @@
 import {prisms33,type Fracture32} from './fracture32';
 // Presentation only: exact projected cover-face occlusion. Gameplay collision is untouched.
 import {bayObject} from "./bayBridgeMap";
-import {vertical46,relativeWorld46,setWorld46} from "./bayBridgePresentation";
+import {vertical46,relativeWorld46,setWorld46,withUpright} from "./bayBridgePresentation";
 export const COVER_HEIGHT=15616/332;
 type Point={x:number;y:number};
 type Cover={fracture32?:Fracture32;id?:string;x:number;y:number;w:number;h:number;a?:number;generated?:boolean;born?:number};
 const EPS=1.25;
+export function coverOcclusionActive(c:Cover,time:number){
+ return !(c.generated&&typeof c.born==='number'&&!(c as any).assembly44?.length&&time-c.born<.72);
+}
 function floorCorners(c:Cover):Point[]{
  const co=Math.cos(c.a||0),si=Math.sin(c.a||0);
  return [[-c.w/2,-c.h/2],[c.w/2,-c.h/2],[c.w/2,c.h/2],[-c.w/2,c.h/2]].map(([x,y])=>({x:c.x+x*co-y*si,y:c.y+x*si+y*co}));
@@ -50,7 +53,7 @@ export function withCoverOcclusion(g:CanvasRenderingContext2D,covers:Cover[],gro
  g.save();const base=g.getTransform();
  for(const c of covers){
   // Build35: all solid faces occlude, including neighbors of attached cover.
-  if(c.generated&&typeof c.born==="number"&&!(c as any).assembly44?.length&&time-c.born<.72)continue;
+  if(!coverOcclusionActive(c,time))continue;
   setWorld46(g,c.x,c.y);
   for(const polygon of coverOccluders(c,groundY,elevationScale)){
    // Exposure is determined by actual geometry, never by firing/aiming state.
@@ -65,3 +68,28 @@ export function withCoverOcclusion(g:CanvasRenderingContext2D,covers:Cover[],gro
  g.setTransform(base);draw();g.restore();
 }
 
+/** Same sparse local-only cue as architecture; solid cover and opponents stay opaque. */
+export function drawConcealedCoverCue(g:CanvasRenderingContext2D,covers:Cover[],actor:{x:number;y:number;z?:number;local30?:boolean;hp:number;slide:number;pinball?:number},time:number,scale:number,elevationScale=1){
+ if(!actor.local30||actor.hp<=0)return;
+ g.save();
+ const polygons:Point[][]=[];
+ for(const c of covers){
+  if(!coverOcclusionActive(c,time))continue;
+  setWorld46(g,c.x,c.y);const m=g.getTransform();
+  for(const poly of coverOccluders(c,actor.y,elevationScale))polygons.push(poly.map(p=>({x:m.a*p.x+m.c*p.y+m.e,y:m.b*p.x+m.d*p.y+m.f})));
+ }
+ if(!polygons.length){g.restore();return;}
+ // Clip in screen space so rotated and fractured faces use exactly the rendering mask.
+ g.setTransform(1,0,0,1,0,0);g.beginPath();
+ for(const poly of polygons){poly.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();}
+ g.clip();setWorld46(g,actor.x,actor.y);
+ withUpright(g,actor.x,actor.y,()=>{
+  const posture=actor.slide>0||(actor.pinball||0)>0?.58:1;
+  const outline=[[-8,70],[0,76],[8,70],[-15,57],[15,57],[-18,40],[18,40],[-11,23],[11,23],[-13,3],[13,3]];
+  for(let n=0;n<outline.length;n++){
+   const [x,y]=outline[n],pulse=.5+.5*Math.sin(time*2.8+n*2.399),r=.55+pulse*.5;
+   g.globalAlpha=.09+.16*pulse;g.fillStyle=n%3?'#9edce8':'#f2eaff';
+   g.fillRect(actor.x+x*scale-r,actor.y-(actor.z||0)-y*scale*posture-r,r*2,r*2);
+  }
+ });g.restore();
+}
