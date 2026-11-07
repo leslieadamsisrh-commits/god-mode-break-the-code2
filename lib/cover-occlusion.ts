@@ -69,7 +69,7 @@ export function withCoverOcclusion(g:CanvasRenderingContext2D,covers:Cover[],gro
 }
 
 /** Same sparse local-only cue as architecture; solid cover and opponents stay opaque. */
-export function drawConcealedCoverCue(g:CanvasRenderingContext2D,covers:Cover[],actor:{x:number;y:number;z?:number;local30?:boolean;hp:number;slide:number;pinball?:number},time:number,scale:number,elevationScale=1){
+export function drawConcealedCoverCue(g:CanvasRenderingContext2D,covers:Cover[],actor:{x:number;y:number;z?:number;local30?:boolean;hp:number;slide:number;pinball?:number;coverState11?:string},time:number,scale:number,elevationScale=1){
  if(!actor.local30||actor.hp<=0)return;
  g.save();
  const polygons:Point[][]=[];
@@ -84,12 +84,17 @@ export function drawConcealedCoverCue(g:CanvasRenderingContext2D,covers:Cover[],
  for(const poly of polygons){poly.forEach((p,n)=>n?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();}
  g.clip();setWorld46(g,actor.x,actor.y);
  withUpright(g,actor.x,actor.y,()=>{
-  const posture=actor.slide>0||(actor.pinball||0)>0?.58:1;
+  const protectedHold=!!actor.coverState11&&actor.coverState11!=="expose"&&actor.coverState11!=="fire"&&actor.coverState11!=="escape";
+  const posture=actor.slide>0||(actor.pinball||0)>0?.58:protectedHold?.72:1;
+  // A stable foot marker remains legible at gameplay scale, clipped to solid cover.
+  g.globalAlpha=.55;g.strokeStyle="#8de9ed";g.lineWidth=1.25;
+  g.beginPath();g.ellipse(actor.x,actor.y-(actor.z||0),14*scale,3*scale,0,0,Math.PI*2);g.stroke();
   const outline=[[-8,70],[0,76],[8,70],[-15,57],[15,57],[-18,40],[18,40],[-11,23],[11,23],[-13,3],[13,3]];
   for(let n=0;n<outline.length;n++){
    const [x,y]=outline[n],pulse=.5+.5*Math.sin(time*2.8+n*2.399),r=.55+pulse*.5;
-   g.globalAlpha=.09+.16*pulse;g.fillStyle=n%3?'#9edce8':'#f2eaff';
+   g.globalAlpha=.22+.16*pulse;g.fillStyle=n%3?'#9edce8':'#f2eaff';
    g.fillRect(actor.x+x*scale-r,actor.y-(actor.z||0)-y*scale*posture-r,r*2,r*2);
   }
  });g.restore();
 }
+

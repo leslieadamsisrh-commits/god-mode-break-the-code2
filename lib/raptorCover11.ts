@@ -30,3 +30,23 @@ export function jadeCoverFrame11(p:CoverStateActor11 & {coverState11?:CoverState
  return pose.brace;
 }
 
+
+
+/** Presentation follows accepted exposure, never a blocked LT request or stale recoil. */
+export function coverExposed13(p:{coverState11?:CoverState11;peek?:boolean}):boolean{
+ return p.coverState11?p.coverState11==='expose'||p.coverState11==='fire':!!p.peek;
+}
+
+export type CoverStride13={phase:number;time:number;x:number;y:number;sign:number;coverId:string|null};
+/** Measured travel freezes at rest; stale samples and teleports never advance feet. */
+export function coverStride13(previous:CoverStride13|undefined,p:{x:number;y:number;coverId?:string|null;coverSpeed?:number},time:number):CoverStride13{
+ const sign=Math.sign(p.coverSpeed||0),dt=previous?time-previous.time:0;
+ const same=previous&&previous.coverId===p.coverId&&dt>=0&&dt<=.25;
+ let phase=same?previous.phase:0;
+ if(same&&sign&&Math.abs(p.coverSpeed||0)>2){
+  const distance=Math.hypot(p.x-previous.x,p.y-previous.y);
+  if(distance<=Math.max(12,Math.abs(p.coverSpeed||0)*dt*2))phase+=distance/18;
+ }
+ if(same&&sign&&previous.sign&&sign!==previous.sign)phase=Math.ceil(phase/4)*4;
+ return{phase,time,x:p.x,y:p.y,sign:sign||previous?.sign||1,coverId:p.coverId??null};
+}

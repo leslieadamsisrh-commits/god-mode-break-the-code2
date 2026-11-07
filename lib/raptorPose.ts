@@ -66,7 +66,7 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
   if(state==='catch')return{memory,frame:selected('slide',2,s.angle)};
   if(state==='drive'&&raptorPoseDirection(s.angle)==='front-right')return{memory,frame:selected('cover-drive',cover.phase>=.5?1:0,s.angle)};
   if(state==='shuffle'||state==='drive')return{memory,frame:selected('stalk',Math.floor(cover.phase*4),s.angle)};
-  if(raptorPoseDirection(s.angle)==='front-right')return{memory,frame:selected('cover-hold',0,s.angle)};
+  if(raptorPoseDirection(s.angle)==='front-right'||raptorPoseDirection(s.angle)==='back')return{memory,frame:selected('cover-hold',0,s.angle)};
   return{memory,frame:selected('jump',4,s.angle)};
  }
 
@@ -103,4 +103,5 @@ export function raptorActorSample(p:RaptorPoseActor,time:number,slideDuration:nu
  // Damage flash is cosmetic; only physical knockback interrupts the pose clock.
  return{coverTall11:p.coverTall11,coverState11:p.coverState11,coverSpeed11:p.coverSpeed,time,x:p.x,y:p.y,angle:raptorActorFacing(p),speed,travelAngle:speed>2?Math.atan2(p.vy,p.vx):undefined,sliding:p.slide>0||p.pinball>0,slideRemaining:p.slide>0?p.slide:undefined,slideDuration,airborne:p.grounded===false||Math.abs(p.vz||0)>.1||(p.jumpHeight||0)>0,verticalVelocity:p.vz||0,hit:p.knock>0,attached:!!p.coverId,firing:!!p.input?.fire||p.pendingFireUntil!==undefined};
 }
+
 

@@ -1,5 +1,5 @@
 "use client";
-import {jadeCoverFrame11} from "../lib/raptorCover11";
+import {jadeCoverFrame11,coverExposed13,coverStride13,type CoverStride13} from "../lib/raptorCover11";
 import {SlideInputEdges} from "../lib/slideInputEdges";
 import {drawSpiral37} from '../lib/spiralPresentation37';
 import {interpolateCover35} from "../lib/presentation35";
@@ -65,7 +65,7 @@ let slideWasActive=false,slideWord=0,graffiti:any=null;
 function classicGraffiti(e:CanvasRenderingContext2D,t:HTMLImageElement|undefined,n:any,r=1){if(!t?.complete||!t.naturalWidth||n.life<=0)return;let i=CLASSIC_LETTERS[n.word],a=t.naturalHeight/2,o=Math.cos(n.angle),s=Math.sin(n.angle)*.58,c=classicClamp(n.age/.22,0,1),l=classicClamp(n.life/.24,0,1),u=1-Math.min(1,n.age/.2);e.save(),e.globalCompositeOperation=`screen`,e.translate(n.originX,n.originY-8),e.globalAlpha=r*l,e.shadowColor=`#75f6ff`,e.shadowBlur=11,e.strokeStyle=`#f8fbff`,e.lineWidth=1.3,e.beginPath(),e.arc(0,0,5+u*13,0,Math.PI*2),e.stroke();for(let t=0;t<7;t++){let i=t*2.399+n.angle,a=(8+t%3*5)*(1-u*.45);e.fillStyle=t%2?`#ff57b6`:`#72f7ff`,e.globalAlpha=r*l*(.35+u*.55),e.fillRect(Math.cos(i)*a-1,Math.sin(i)*a*.58-1,2+t%2,2+t%2)}for(let u=0;u<i.length;u++){let d=classicClamp((n.age-u*.032)/.16,0,1);if(d<=0)continue;let[f,p]=i[u],m=Math.round(f*t.naturalWidth),h=Math.max(1,Math.round((p-f)*t.naturalWidth)),g=h/a,_=27+u%2,v=classicClamp(g*_*.72,18,29),y=10+c*24+u*15,b=o*y,x=s*y-23-Math.sin(d*Math.PI)*4,ee=1+(1-d)*.28;e.save(),e.translate(b,x),e.rotate(Math.sin(n.angle)*.1),e.shadowColor=u%2?`#ff4eae`:`#67f5ff`,e.shadowBlur=8;for(let i=2;i>0;i--)e.globalAlpha=r*l*d*(.08+i*.035),e.drawImage(t,m,n.word*a,h,a,-v/2-o*i*7,-_/2-s*i*7,v*ee,_);e.globalAlpha=r*l*d*.95,e.drawImage(t,m,n.word*a,h,a,-v/2,-_/2,v*ee,_),e.strokeStyle=u%2?`#ff4eae`:`#67f5ff`,e.lineWidth=1.2,e.globalAlpha=r*l*d*.62,e.beginPath(),e.moveTo(-v*.4-o*4,-s*4),e.lineTo(-v*.4-o*(14+d*8),-s*(14+d*8)),e.stroke(),e.restore()}let d=classicClamp(n.age/.055,0,1),f=n.age<.34?1:classicClamp((.56-n.age)/.22,0,1);if(f>0){let i=1-(1-d)**3,c=n.word?104:94,l=n.word?29:28,u=o*(5+i*8),p=-9+s*(3+i*6)-i*4;e.save(),e.globalCompositeOperation=`source-over`,e.translate(u,p),e.rotate(Math.sin(n.angle)*.045),e.scale(.78+i*.22,.78+i*.22),e.globalAlpha=r*f,e.shadowColor=`#05070c`,e.shadowBlur=3,e.filter=`contrast(1.32) saturate(1.25)`,e.drawImage(t,0,n.word*a,t.naturalWidth,a,-c/2,-l/2,c,l),e.filter=`none`,e.shadowColor=n.word?`#ff48ad`:`#63f4ff`,e.shadowBlur=7,e.globalAlpha=r*f*.42,e.drawImage(t,0,n.word*a,t.naturalWidth,a,-c/2,-l/2,c,l),e.restore()}e.restore()}
 let loading=false;
 const coverAimVisual=new Map<string,number>();
-const coverTravelPhase=new Map<string,{phase:number,lastT:number,lastSign:number}>();
+const coverTravelPhase=new Map<string,CoverStride13>();
 type CoverTopology="FACE"|"EDGE"|"CORNER";
 const coverTopologyVisual=new Map<string,CoverTopology>();
 function coverTopology(p:any):CoverTopology{
@@ -430,6 +430,7 @@ function Director({cfg,patch,applyPreset,save,load,note}:{cfg:Config;applyPreset
 function spriteFacing(p:any,family:string,speed:number,movementThreshold=55){
  if(family==="slide")return p.slideFacing??p.aim??0;
  if(p.charging&&!p.coverId&&(typeof p.input?.x==="number"||typeof p.input?.y==="number"))return Math.hypot(p.input?.x||0,p.input?.y||0)>.18?Math.atan2(p.input.y,p.input.x):(p.gunFacing??p.aim??0);
+ if(p.coverId&&p.coverAnchor&&p.coverState11)return coverExposed13(p)?(p.gunFacing??p.aim??0):Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx);
  if(p.coverId&&p.coverAnchor){if(p.coverMode==="soft"){const moving=Math.abs(p.coverSpeed||0)>20;return moving?Math.atan2(p.coverAnchor.ty*Math.sign(p.coverSpeed||1),p.coverAnchor.tx*Math.sign(p.coverSpeed||1)):(p.gunFacing??p.aim??Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx))}const exposed=p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0;return exposed?(p.gunFacing??p.aim??0):Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx)}
  if(p.input?.fire||p.fireState>0)return p.gunFacing??p.aim??0;
  return family==="run"&&speed>movementThreshold?Math.atan2(p.vy,p.vx):(p.gunFacing??p.aim??0);
@@ -689,18 +690,10 @@ function coverTraversalPresentation(p:any){
  return{topology,moving:speed>20,edge:topology!=="FACE",corner:topology==="CORNER",speed};
 }
 function coverLateralFrame(p:any,t:number,total:number){
+ const key=p.id||p.token||"local",prev=coverStride13(coverTravelPhase.get(key),p,t);
+ coverTravelPhase.set(key,prev);
  if(total!==12||Math.abs(p.coverSpeed||0)<=2)return null;
- // Authored 12-cell cover atlas owns lateral locomotion. Direction selects the
- // leading stride; cadence stays presentation-only and never changes coverSpeed.
  const travel=coverTraversalPresentation(p),sign=(p.coverSpeed||0)<0?-1:1;
- // EDGE/CORNER slow the visual cadence slightly to sell planting without changing world movement.
- // Tie cadence to actual cover travel so feet do not cycle while barely moving.
- const key=p.id||"local",prev=coverTravelPhase.get(key)||{phase:0,lastT:t,lastSign:sign},dt=Math.max(0,Math.min(.1,t-prev.lastT));
- // Phase advances from actual cover displacement (speed * dt), not wall-clock cadence.
- // A reversal plants immediately before beginning the opposite stride.
- if(prev.lastSign!==sign){prev.phase=Math.ceil(prev.phase/4)*4;prev.lastSign=sign}
- const topologyScale=travel.corner?.72:travel.edge?.86:1,stepDistance=18;
- prev.phase+=Math.abs(p.coverSpeed||0)*dt/stepDistance*topologyScale;prev.lastT=t;coverTravelPhase.set(key,prev);
  const phase=Math.floor(prev.phase)%4;
  // Four-beat authored cycle: plant -> stride -> opposite plant -> settle.
  const faceCycle=sign<0?[5,6,5,4]:[6,5,6,4];
@@ -857,7 +850,7 @@ function drawCoverNeighbor(g:CanvasRenderingContext2D,p:any,cfg:Config,upperOnly
 }
 function coverVisualOffset(p:any){
  if(!p.coverId||!p.coverAnchor)return{x:0,y:0};
- const a=p.coverAnchor,exposed=!!(p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0);
+ const a=p.coverAnchor,exposed=coverExposed13(p);
  // Presentation-only contact correction. Gameplay root/collision remains authoritative.
  // Keep exposed poses closer to authored anchor; tucked poses sit just outside the physical face.
  // Face-specific socket correction derived from the attached cover basis.
@@ -1035,7 +1028,7 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
   // B03 planted rise is visual only and remains inside the authoritative .22s contact window.
   if(impact.rise)g.translate(p.coverAnchor.nx*impact.rise*.65,p.coverAnchor.ny*impact.rise*.65-impact.rise*1.1);
  }
-const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&p.input?.coverAim?supportedCoverDir(p):rawDir,im=safestSprite(family,d);const continuity=actorContinuity(p,family,d,t);if(continuity.y)g.translate(0,continuity.y);
+const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32?"slide":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),rawDir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,d=p.coverId&&p.coverMode==="braced"&&coverExposed13(p)?supportedCoverDir(p):rawDir,im=safestSprite(family,d);const continuity=actorContinuity(p,family,d,t);if(continuity.y)g.translate(0,continuity.y);
  let bridge=impact,renderFamily=family,renderIm=im;
  if(bridge?.kind==="slide"){renderFamily="slide";renderIm=safestSprite("slide",rawDir)}
  else if(bridge?.kind==="cover"){renderFamily="cover";renderIm=safestSprite("cover",rawDir)}
@@ -1043,8 +1036,9 @@ const speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pi
  let frame=bridge?.kind==="cover"?Math.min(frames-1,bridge.frame):bridge?.kind==="slide"?Math.min(frames-1,Math.max(0,Math.floor(bridge.phase*frames))):family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;
  if(!bridge&&family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(family);
  g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6*DECK_PITCH,25*sc,8*sc*DECK_PITCH,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle=p.local30?"#65f4f2":"#ff82c2";g.shadowColor=g.strokeStyle;g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
- const splitCover=poseAlpha===0&&p.coverId&&p.coverMode==="braced"&&Math.abs(p.coverSpeed||0)>20&&!!(p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0);
- if(splitCover&&renderIm){const lm=spriteCell(renderIm,renderFamily,frame),lr=spriteRegistration(renderFamily);g.save();g.beginPath();g.rect(-1e4,p.y-31,2e4,1e4);g.clip();g.drawImage(renderIm,lm.sx,lm.sy,lm.cell,lm.cell,p.x-displayCell*lr.groundAnchor.x*sc,p.y-displayCell*lr.groundAnchor.y*sc,displayCell*sc,displayCell*sc);g.restore()}
+ // Each selected pose owns its complete body. A stale recoil timer must not
+ // draw a second lower body beneath a full-body aim/retract or fallback cel.
+ const splitCover=false;
  const meleeArt=poseAlpha===0&&drawMelee38Pose(g,p,t,cfg);
  const packBrake=!meleeArt&&poseAlpha===0&&drawPack03Brake(g,p,cfg);
  const packAim=!meleeArt&&!packBrake&&poseAlpha===0&&drawPack03Aim(g,p,cfg);
@@ -1411,5 +1405,6 @@ function fxBody47(g:CanvasRenderingContext2D,f:any){
  if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){if(f.type==="brake"&&Number.isFinite(f.oldAngle)){const a=f.oldAngle+Math.PI,near=8+i*4,far=30+i*6;g.beginPath();g.moveTo(f.x+Math.cos(a)*near,f.y+Math.sin(a)*near);g.lineTo(f.x+Math.cos(a)*far,f.y+Math.sin(a)*far);g.stroke()}else{const dir=-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else if(f.type==="muzzle"){const a=Number.isFinite(f.angle)?f.angle:0,k=Math.max(0,Math.min(1,f.life/.18));g.save();g.translate(f.x,f.y);g.rotate(a);g.globalCompositeOperation="lighter";g.strokeStyle="#fff3b0";g.shadowColor="#ffcf62";g.shadowBlur=16;g.lineWidth=4;g.globalAlpha=.35+.65*k;g.beginPath();g.moveTo(-5,0);g.lineTo(34+20*k,0);g.stroke();g.fillStyle="#fff7cf";g.beginPath();g.moveTo(2,-10);g.lineTo(44+18*k,0);g.lineTo(2,10);g.lineTo(13,0);g.closePath();g.fill();g.strokeStyle="#ff5ebd";g.lineWidth=2;for(let j=-2;j<=2;j++){const aa=j*.12,len=30+Math.abs(j)*6+18*k;g.beginPath();g.moveTo(5,0);g.lineTo(Math.cos(aa)*len,Math.sin(aa)*len);g.stroke()}g.restore()}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
 
 function arrow(g:CanvasRenderingContext2D,x1:number,y1:number,x2:number,y2:number){const a=Math.atan2(y2-y1,x2-x1);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.beginPath();g.moveTo(x2,y2);g.lineTo(x2-Math.cos(a-.55)*11,y2-Math.sin(a-.55)*11);g.lineTo(x2-Math.cos(a+.55)*11,y2-Math.sin(a+.55)*11);g.closePath();g.fill()}
+
 
 
