@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'../public/assets/raptor-v2');
 const manifest=JSON.parse(fs.readFileSync(path.join(root,'manifest.json'),'utf8'));
 const failures=[],occluded=[],verified=new Map();
 const expectedDirections=['right','front-right','front','front-left','left','back-left','back','back-right'];
-const counts={idle:1,run:4,sprint:4,slide:3,stalk:4,jog:4,jump:6,'cover-drive':2,'cover-hold':1};
+const counts={idle:1,run:4,sprint:4,slide:3,stalk:4,jog:4,jump:6,'cover-drive':2,'cover-hold':1,'cover-lean':1};
 const check=(yes,message)=>{if(!yes)failures.push(message);};
 const finitePoint=p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite);
 const crcTable=Array.from({length:256},(_,n)=>{for(let k=0;k<8;k++)n=n&1?0xedb88320^(n>>>1):n>>>1;return n>>>0;});
@@ -62,7 +62,7 @@ for(const name of ['postureDirections','jumpDirections','standingDirections']){
 }
 
 for(const [key,record]of Object.entries(manifest.frames||{})){
- const match=/^(idle|run|sprint|slide|stalk|jog|jump|cover-drive|cover-hold)\/(right|front-right|front|front-left|left|back-left|back|back-right)\/(\d{3})\.png$/.exec(key);
+ const match=/^(idle|run|sprint|slide|stalk|jog|jump|cover-drive|cover-hold|cover-lean)\/(right|front-right|front|front-left|left|back-left|back|back-right)\/(\d{3})\.png$/.exec(key);
  if(!match){failures.push(`${key}: invalid frame path`);continue;}
  check(Number(match[3])<counts[match[1]],`${key}: frame index exceeds family count`);
  check(finitePoint(record.anchor),`${key}: finite two-axis anchor required`);
