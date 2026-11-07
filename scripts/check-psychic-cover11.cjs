@@ -36,3 +36,8 @@ console.log(`${passed} final checks passed`);
 
 test('neutral Raptor escape goes away from cover even when aiming into it',()=>{const {s,p}=driveFixture();p.coverDrive11=false;p.gunFacing=p.aim=Math.PI/2;tick(s,{slide:true,aim:Math.PI/2});assert.equal(p.coverId,null);assert.ok(p.vy<0);for(let i=0;i<30;i++)tick(s,{aim:Math.PI/2});assert.equal(p.coverId,null);assert.ok(p.y<471.5);});
 console.log(`${passed} final checks passed`);
+
+test('release aim immediately selects shuffle when moving, retract when planted',()=>{const {coverState11}=require('../lib/raptorCover11.ts');const p={coverId:'wall',coverMode:'braced',contact:0,returnToCover:.16,input:{coverAim:false}};for(const speed of [-80,80])assert.equal(coverState11({...p,coverSpeed:speed},2,false),'shuffle');assert.equal(coverState11({...p,coverSpeed:0},2,false),'retract');assert.equal(coverState11({...p,coverSpeed:0,returnToCover:0},2,false),'brace');assert.equal(coverState11({...p,coverSpeed:80,input:{coverAim:true}},2,true),'expose');});
+console.log(`${passed} final checks passed`);
+test('release-to-movement selects moving cover artwork through the combat loop',()=>{const {s,p}=driveFixture();p.coverDrive11=false;p.returnToCover=.16;tick(s,{x:1,aim:Math.PI/2});assert.ok(p.coverSpeed>0);assert.equal(p.coverState11,'shuffle');assert.equal(p.raptorFrame.family,'stalk');tick(s,{});assert.equal(p.coverSpeed,0);assert.equal(p.coverState11,'retract');assert.equal(p.raptorFrame.family,'jump');});
+console.log(`${passed} final checks passed`);
