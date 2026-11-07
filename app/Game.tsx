@@ -1,4 +1,5 @@
 "use client";
+import {jadeCoverFrame11} from "../lib/raptorCover11";
 import {SlideInputEdges} from "../lib/slideInputEdges";
 import {drawSpiral37} from '../lib/spiralPresentation37';
 import {interpolateCover35} from "../lib/presentation35";
@@ -436,7 +437,7 @@ function spriteFacing(p:any,family:string,speed:number,movementThreshold=55){
 const JADE_REG_LOCK08={root:{x:.5,y:1},ground:{x:.5,y:.88},crownY:.04,pelvis:{x:.5,y:.60},shoulders:{left:.31,right:.69,y:.31},helmet:{x:.5,y:.15,w:.29,h:.23},backpack:{x:.37,y:.40,w:.25,h:.35},cape:{x:.39,y:.38},weaponHand:{x:.65,y:.39},supportHand:{x:.72,y:.43},muzzle:{x:.88,y:.37},bodyEnvelope:{left:.18,right:.82,top:.04,bottom:.96}} as const;
 const FAMILY_REG08={ready:{ground:.88,y:0},run:{ground:.88,y:0},slide:{ground:.89,y:0},cover:{ground:.885,y:0},aim:{ground:.89,y:0},lower:{ground:.89,y:0},connectors:{ground:.89,y:0}} as const;
 function spriteRegistration(family:string){const r=(FAMILY_REG08 as any)[family]||FAMILY_REG08.ready;return{groundAnchor:{x:.5,y:r.ground},canonical:JADE_REG_LOCK08}}
-function SpriteInspector({s}:{s:any}){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32||p.exit?"slide":p.brake>0?"ready":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,state=p.gripCoverId?"PSYCHIC CARRY":p.gripId?"MATTER GRIP":p.exit?"EDGE-DASH":p.coverId?(p.coverMode==="soft"?"SOFT COVER":p.input?.coverAim?(p.peekEdge?"BRACED CORNER AIM":"BRACED AIM"):"BRACED"):p.brake>0?"KINETIC BRAKE":p.slide>0?"SLIDE":p.dash>0?"BOOST DASH":family.toUpperCase();return <aside className="spritePanel"><div className="panelTitle"><span>SPRITE WORKSHOP</span><b>RUNTIME INSPECTOR</b></div><dl><dt>STATE</dt><dd>{state}</dd><dt>DIRECTION</dt><dd>d{String(dir).padStart(2,"0")} · {Math.round(dir*15)}°</dd><dt>SPRITE</dt><dd>{family}-d{String(dir).padStart(2,"0")}.webp</dd><dt>SPEED</dt><dd>{Math.round(speed)}</dd><dt>COVER</dt><dd>{p.coverId||"FREE"}</dd><dt>STATUS</dt><dd>{p.gripCoverId?"GRIP POSE FALLBACK":"APPROVED RUNTIME"}</dd><dt>PRESENTATION QA</dt><dd>UNSUPPORTED AIM {presentationQA.unsupportedCoverAim} · EXACT MISS {presentationQA.missingExact}</dd></dl><p>Slide to catch soft cover; point away to walk off. A locks hard brace. LT plants feet and exposes; release LT retracts while staying braced. A + left stick kicks away. Tap LB to rip and launch; hold LB past the pulse, then release to keep protection. Fresh LB throws held material; RB places. RT fires the weapon when free and throws held material. Attached Raptor: hold LB to drive generated cover; RT launches it. H / R3 deliberately drops.</p></aside>}
+function SpriteInspector({s}:{s:any}){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0),family=p.coverId?"cover":p.slide>0||p.pinball>0||p.knock>.32||p.exit?"slide":p.brake>0?"ready":speed>34?"run":"ready",angle=spriteFacing(p,family,speed),dir=((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,state=p.gripCoverId?"PSYCHIC CARRY":p.gripId?"MATTER GRIP":p.exit?"EDGE-DASH":p.coverId?(p.coverMode==="soft"?"SOFT COVER":p.input?.coverAim?(p.peekEdge?"BRACED CORNER AIM":"BRACED AIM"):"BRACED"):p.brake>0?"KINETIC BRAKE":p.slide>0?"SLIDE":p.dash>0?"BOOST DASH":family.toUpperCase();return <aside className="spritePanel"><div className="panelTitle"><span>SPRITE WORKSHOP</span><b>RUNTIME INSPECTOR</b></div><dl><dt>STATE</dt><dd>{state}</dd><dt>DIRECTION</dt><dd>d{String(dir).padStart(2,"0")} · {Math.round(dir*15)}°</dd><dt>SPRITE</dt><dd>{family}-d{String(dir).padStart(2,"0")}.webp</dd><dt>SPEED</dt><dd>{Math.round(speed)}</dd><dt>COVER</dt><dd>{p.coverId||"FREE"}</dd><dt>STATUS</dt><dd>{p.gripCoverId?"GRIP POSE FALLBACK":"APPROVED RUNTIME"}</dd><dt>PRESENTATION QA</dt><dd>UNSUPPORTED AIM {presentationQA.unsupportedCoverAim} · EXACT MISS {presentationQA.missingExact}</dd></dl><p>Slide to catch soft cover; point away to walk off. A locks hard brace. LT plants feet and exposes; release LT retracts while staying braced. A + left stick kicks away. Tap LB to rip and launch; hold LB past the pulse, then release to keep protection. Fresh LB throws held material; RB places. RT fires the weapon when free and throws held material. Attached fighter: hold LB to drive generated cover; RT launches it. H / R3 deliberately drops.</p></aside>}
 function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx||0,p.vy||0);
  if(p.charging||p.powerFlash>0||p.powerReturn>0){const frame=powerFrame(p,s.config||DEFAULT),dir=powerDirection(p),front=hasFrontPower(p),right=hasRightPower(p);return {state:p.charging?((p.godCharge||0)>=.8?"GOD_CHARGE_LOOP":"GOD_CHARGE_ENTRY"):p.powerFlash>0?"GOD_FLAME_PEAK":"GOD_WEAPON_RETURN",family:"god-frame",dir,angleDeg:dir*15,frame:frame+1,total:12,file:right?(frame===1?"front-right-d03-dissolve-v1.png":"front-right-d03-sequence-v1.png"):front?(frame>=6&&frame<=8?"front-d06-loop-v1.png":"front-d06-transitions-v1.png"):"grounded-float-v1.png",expected:right?"APPROVED FRONT-RIGHT · d03":front?"APPROVED FRONT · d06":dir===0?"APPROVED FIRST VIEW · d00":"CHARGE VIEW MISSING · d00 FALLBACK",fallback:!right&&!front&&dir!==0}}
  const neighbor=coverNeighborFrame(p);if(neighbor!==null){const pose=COVER_NEIGHBOR_POSES[neighbor];return {state:neighbor%2?"COVER_EXPOSED_RECOIL":"COVER_EXPOSED_AIM",family:"cover-exposure",dir:pose.dir,angleDeg:pose.dir*15,frame:neighbor%2+1,total:2,file:"cover-d02-d04-exposure-v1.png",expected:`APPROVED OVER-COVER · d${String(pose.dir).padStart(2,"0")}`,fallback:false}}
@@ -448,7 +449,7 @@ function spriteLabInfo(s:any){const p=s?.players?.[0]||{},speed=Math.hypot(p.vx|
  else if(p.exit){state="COVER_EXIT";family="slide";expected="COVER_EXIT";fallback=true}
  else if(p.coverId&&p.fireState>0){state="COVER_FIRE";family="cover";expected="COVER_FIRE";fallback=true}
  else if(p.coverId&&p.recoil>0){state="COVER_RECOIL";family="cover";expected="COVER_RECOIL";fallback=true}
- else if(p.coverId&&p.returnToCover>0){state="COVER_RETURN";family="cover";expected="COVER_RETURN";fallback=true}
+ else if(p.coverId&&p.returnToCover>0&&Math.abs(p.coverSpeed||0)<=2){state="COVER_RETURN";family="cover";expected="COVER_RETURN";fallback=true}
  else if(p.coverId&&p.coverMode==="braced"&&p.input?.coverAim){state=p.peekEdge?"BRACED_CORNER_AIM":"BRACED_OVER_AIM";family="cover";expected=state;fallback=true}
  else if(p.coverId&&p.coverMode==="soft"&&Math.abs(p.coverSpeed||0)>35){state="SOFT_COVER_FLOW";family="cover";expected="SOFT_COVER_FLOW";fallback=true}
  else if(p.coverId&&p.coverMode==="soft"){state="SOFT_COVER";family="cover";expected="SOFT_COVER";fallback=true}
@@ -688,7 +689,7 @@ function coverTraversalPresentation(p:any){
  return{topology,moving:speed>20,edge:topology!=="FACE",corner:topology==="CORNER",speed};
 }
 function coverLateralFrame(p:any,t:number,total:number){
- if(total!==12||Math.abs(p.coverSpeed||0)<=20)return null;
+ if(total!==12||Math.abs(p.coverSpeed||0)<=2)return null;
  // Authored 12-cell cover atlas owns lateral locomotion. Direction selects the
  // leading stride; cadence stays presentation-only and never changes coverSpeed.
  const travel=coverTraversalPresentation(p),sign=(p.coverSpeed||0)<0?-1:1;
@@ -726,19 +727,7 @@ function softCoverFrame(p:any,t:number,total:number){
  return map[st];
 }
 function coverPoseFrame(p:any,t:number,total:number){
- const soft=softCoverFrame(p,t,total);if(soft!==null)return soft;
- const extended=total===12;
- // LT released always resolves toward the protected low cover family.
- // returnToCover may show an authored retract first; traversal input can interrupt immediately.
- if(p.coverId&&p.coverMode==="braced"&&!p.input?.coverAim&&p.returnToCover<=0&&Math.abs(p.coverSpeed||0)<=20)return extended?4:Math.min(total-1,2);
- const pose=extended?{contact:[0,1,2],brace:4,lateral:[5,6],peek:7,fire:8,return:9}:{contact:[0,1],brace:1,lateral:[],peek:2,fire:3,return:4};
- if(total!==6&&total!==12)return 0;
- if(p.fireState>0||p.recoil>0)return pose.fire;
- if(p.returnToCover>0&&!p.input?.coverAim)return pose.return;
- if(p.coverMode==="braced"&&p.input?.coverAim)return pose.peek;
- if(p.contact>t){const elapsed=Math.max(0,.22-(p.contact-t));return pose.contact[Math.min(pose.contact.length-1,Math.floor(elapsed/.22*pose.contact.length))]}
- const lateral=coverLateralFrame(p,t,total);if(lateral!==null)return lateral;
- return pose.brace;
+ return jadeCoverFrame11(p,t,total,coverLateralFrame(p,t,total));
 }
 
 const POWER_ANCHORS=[[263,493],[271,493],[276,493],[289,475],[287,475],[295,475],[293,490],[292,490],[294,490],[305,479],[306,479],[309,479]];
@@ -839,6 +828,7 @@ function coverExposureFrame(p:any){
 }
 function drawCoverExposure(g:CanvasRenderingContext2D,p:any,cfg:Config,upperOnly=false){const frame=coverExposureFrame(p);if(frame===null)return false;const im=powerAssets.get("cover-d03-exposure-v1")!,[sx,sy,w,h]=COVER_EXPOSURE_RECTS[frame],[ax,ay]=COVER_EXPOSURE_ANCHORS[frame],unit=(125*143/250/638)*cfg.spriteScale;g.save();if(upperOnly){g.beginPath();g.rect(-1e4,-1e4,2e4,p.y-31+1e4);g.clip()}g.drawImage(im,sx,sy,w,h,p.x-(ax-sx)*unit,p.y-(ay-sy)*unit,w*unit,h*unit);g.restore();return true;}
 function coverConnectorFrame(p:any){
+ if(p.coverPreview===undefined&&p.coverState11&&p.coverState11!=="retract"&&p.coverState11!=="fire"&&p.coverState11!=="expose")return null;
  if(!powerAssets.has("cover-d03-connectors-v1"))return null;
  if(p.coverPreview===0||p.coverPreview===1)return p.coverPreview;
  if(!p.coverId||p.coverMode!=="braced"||p.charging||p.powerFlash>0||p.powerReturn>0||p.knock>0||p.slide>0||p.dash>0||p.exit||p.gripId||p.gripCoverId||p.kickStage&&p.kickStage!=="none")return null;
@@ -889,7 +879,7 @@ function drawActorAtlasFrame(g:CanvasRenderingContext2D,im:HTMLImageElement,inde
  g.drawImage(im,sx,sy,cw,ch,p.x-w*.5+r.x*cfg.spriteScale,p.y-h*r.ground,w,h);return true;
 }
 function pack03AimIndex(p:any){
- if(!p.coverId||p.coverMode!=="braced"||!p.input?.coverAim)return null;
+ if(!p.coverId||p.coverMode!=="braced"||!p.peek||!p.input?.coverAim)return null;
  const sector=coverAimSector(p),base:Record<number,number>={4:0,6:4,8:8,10:12,12:16};
  const b=base[sector];if(b===undefined)return null;
  const state=p.recoil>0?2:p.fireState>0?1:0;return b+state;
@@ -904,6 +894,7 @@ function drawPack03Brake(g:CanvasRenderingContext2D,p:any,cfg:Config){
  return drawActorAtlasFrame(g,im,idx,4,2,p,cfg,1,"lower");
 }
 function pack03RetractIndex(p:any){
+ if(p.coverState11&&p.coverState11!=="retract")return null;
  if(!p.coverId||p.coverMode!=="braced"||!(p.returnToCover>0)||p.input?.coverAim)return null;
  const sector=coverAimSector(p);let pair:number|null=null;
  if(sector===8||sector===7||sector===9)pair=12; // R01
@@ -924,6 +915,7 @@ function drawPlantPunctuation(g:CanvasRenderingContext2D,p:any,t:number){
  g.save();g.globalAlpha=.22;g.fillStyle="#d9ffff";g.font="900 italic 9px Arial";g.fillText("CHK!",p.x-12,p.y+5);g.restore();
 }
 function coverCaptureBridge(p:any,t:number){
+ if(p.coverState11&&p.coverState11!=="catch")return null;
  if(!p.coverId||typeof p.contact!=="number"||p.contact<=t)return null;
  const age=Math.max(0,.22-(p.contact-t)),topology=coverTopology(p);
  // Three presentation-only bridge beats over the existing authoritative .22s contact window.
@@ -1419,4 +1411,5 @@ function fxBody47(g:CanvasRenderingContext2D,f:any){
  if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){if(f.type==="brake"&&Number.isFinite(f.oldAngle)){const a=f.oldAngle+Math.PI,near=8+i*4,far=30+i*6;g.beginPath();g.moveTo(f.x+Math.cos(a)*near,f.y+Math.sin(a)*near);g.lineTo(f.x+Math.cos(a)*far,f.y+Math.sin(a)*far);g.stroke()}else{const dir=-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else if(f.type==="muzzle"){const a=Number.isFinite(f.angle)?f.angle:0,k=Math.max(0,Math.min(1,f.life/.18));g.save();g.translate(f.x,f.y);g.rotate(a);g.globalCompositeOperation="lighter";g.strokeStyle="#fff3b0";g.shadowColor="#ffcf62";g.shadowBlur=16;g.lineWidth=4;g.globalAlpha=.35+.65*k;g.beginPath();g.moveTo(-5,0);g.lineTo(34+20*k,0);g.stroke();g.fillStyle="#fff7cf";g.beginPath();g.moveTo(2,-10);g.lineTo(44+18*k,0);g.lineTo(2,10);g.lineTo(13,0);g.closePath();g.fill();g.strokeStyle="#ff5ebd";g.lineWidth=2;for(let j=-2;j<=2;j++){const aa=j*.12,len=30+Math.abs(j)*6+18*k;g.beginPath();g.moveTo(5,0);g.lineTo(Math.cos(aa)*len,Math.sin(aa)*len);g.stroke()}g.restore()}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
 
 function arrow(g:CanvasRenderingContext2D,x1:number,y1:number,x2:number,y2:number){const a=Math.atan2(y2-y1,x2-x1);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.beginPath();g.moveTo(x2,y2);g.lineTo(x2-Math.cos(a-.55)*11,y2-Math.sin(a-.55)*11);g.lineTo(x2-Math.cos(a+.55)*11,y2-Math.sin(a+.55)*11);g.closePath();g.fill()}
+
 

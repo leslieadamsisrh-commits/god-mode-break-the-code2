@@ -262,8 +262,8 @@ function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
  const x=p.x,y=p.y,id=p.coverId;
  moveAlongCover11(p,s,i,dt);
  // Animation and muzzle authority consume measured motion, not stick intent.
- // Existing Jade movement and deliberate detach/drive velocity remain untouched.
- if(p.character==='raptor'&&p.coverId===id&&p.coverAnchor&&!p.coverDrive11){
+ // Shared measurement keeps both fighters planted at blocked edges.
+ if(p.coverId===id&&p.coverAnchor&&!p.coverDrive11){
   p.vx=(p.x-x)/Math.max(.001,dt);p.vy=(p.y-y)/Math.max(.001,dt);
   p.coverSpeed=p.vx*p.coverAnchor.tx+p.vy*p.coverAnchor.ty;
  }
@@ -287,15 +287,10 @@ function moveAlongCover11(p:Player,s:GameState,i:InputState,dt:number){
   placeOnCover(p,s);return;
  }
  const fragmented=s.covers.find(q=>q.id===p.coverId&&q.fracture32);
- if(fragmented){const along=i.x*a.tx+i.y*a.ty,raw=a.t+along*moveSpeed*dt;a.t=clamp(raw,0,a.length);p.coverSpeed=along*moveSpeed;p.vx=a.tx*p.coverSpeed;p.vy=a.ty*p.coverSpeed;placeOnCover(p,s);p.peek=false;p.peekEdge=Math.min(a.t,a.length-a.t)<18;if(Math.abs(raw-a.t)>.1&&p.coverMode==='soft')releaseCover(p,s,.08);return;}
+ if(fragmented){const along=i.x*a.tx+i.y*a.ty,raw=a.t+along*moveSpeed*dt;a.t=clamp(raw,0,a.length);p.coverSpeed=along*moveSpeed;p.vx=a.tx*p.coverSpeed;p.vy=a.ty*p.coverSpeed;placeOnCover(p,s);p.peek=false;p.peekEdge=Math.min(a.t,a.length-a.t)<18;return;}
  if(c.weaveEnabled<.5){
    const cv=s.covers.find(x=>x.id===p.coverId);if(!cv){releaseCover(p,s);return}
-   let edge=a.edge,cur=anchorForEdge(cv,edge,a.t),along=i.x*cur.tx+i.y*cur.ty,t=cur.t,g=0;
-   if(t<.5&&along<-.1)g=-1;else if(t>cur.length-.5&&along>.1)g=1;
-   if(g&&p.character!=='raptor'){
-     const ne=(edge+g+4)%4,next=anchorForEdge(cv,ne,g>0?0:(ne%2===0?cv.w:cv.h)),nextDot=i.x*next.tx+i.y*next.ty;
-     if(nextDot*g>.42){edge=ne;cur=next;t=g>0?0:next.length;along=nextDot}
-   }
+   const edge=a.edge,cur=anchorForEdge(cv,edge,a.t),along=i.x*cur.tx+i.y*cur.ty;let t=cur.t;
    const step=moveSpeed*dt*.78;t=clamp(t+along*step,0,cur.length);p.coverAnchor=anchorForEdge(cv,edge,t);p.coverSpeed=along*moveSpeed*.78;p.vx=p.coverAnchor.tx*p.coverSpeed;p.vy=p.coverAnchor.ty*p.coverSpeed;placeOnCover(p,s);
    if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor.nx+Math.sin(p.gunFacing)*p.coverAnchor.ny;p.peek=true;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}
    return;
@@ -303,9 +298,7 @@ function moveAlongCover11(p:Player,s:GameState,i:InputState,dt:number){
  const along=i.x*a.tx+i.y*a.ty;
  p.coverSpeed+=(along*moveSpeed-p.coverSpeed)*Math.min(1,dt*c.response);if(Math.abs(along)<.001)p.coverSpeed*=Math.pow(c.stopDrag,dt);
  const before=a.t,raw=a.t+along*moveSpeed*dt;a.t=clamp(raw,0,a.length);
- if(p.character!=='raptor'&&p.coverMode==="soft"&&Math.abs(raw-a.t)>.1&&Math.abs(along)>.2){
-   const cv=s.covers.find(x=>x.id===p.coverId);if(cv){const g=raw<0?-1:1,ne=(a.edge+g+4)%4,next=anchorForEdge(cv,ne,g>0?0:(ne%2===0?cv.w:cv.h)),nextDot=i.x*next.tx+i.y*next.ty;if(nextDot*g>.3)p.coverAnchor=next}
- }else if(a.t===before)p.coverSpeed=0;
+ if(a.t===before)p.coverSpeed=0;
  placeOnCover(p,s);
  if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor!.nx+Math.sin(p.gunFacing)*p.coverAnchor!.ny;p.peek=true;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}
 }
@@ -448,7 +441,7 @@ function slideAction(s:GameState,n:number,prev:InputState){const p=s.players[n],
  // Hard brace / planted cover keeps deliberate commitment, but A is still immediate escape.
  if(p.coverId&&p.coverMode==="braced"){
    const anchor=p.coverAnchor;
-   const escape=p.character==='raptor'&&anchor&&(mag<=.18||i.x*anchor.nx+i.y*anchor.ny<-.15)?Math.atan2(anchor.ny,anchor.nx):a;
+   const escape=anchor&&(mag<=.18||i.x*anchor.nx+i.y*anchor.ny<-.15)?Math.atan2(anchor.ny,anchor.nx):a;
    releaseCover(p,s,.085);startDash(p,s,escape);return true;
  }
  if(p.exit)return false;
@@ -841,7 +834,7 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  let gripThrow34=false;
  if(p.coverDrive11&&(!i.grip||!p.coverId||p.hp<=0||p.knock>0||i.cancelGrip34||i.dropMatter34))p.coverDrive11=false;
  let psychicContext11=false;
- if(p.character==='raptor'&&i.grip&&!prev.grip&&!p.gripCoverId&&!p.gripId&&!p.orbitIds.length&&!i.cover&&!i.cancelGrip34){
+ if(i.grip&&!prev.grip&&!p.gripCoverId&&!p.gripId&&!p.orbitIds.length&&!i.cover&&!i.cancelGrip34){
   const attached=s.covers.find(cv=>cv.id===p.coverId);
   if(attached){psychicContext11=true;p.coverDrive11=driveEligible11(p,attached,s);p.gripHint=p.coverDrive11?'COVER DRIVE · STICK MOVE · RT LAUNCH · A ESCAPE':'COVER CANNOT MOVE';p.gripHintUntil=s.time+1;}
   else psychicContext11=interceptCover11(p,s,n);
@@ -923,7 +916,7 @@ export function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:numbe
  // around/outside the owning face. Waist can expose over top from FACE.
  if(cv.coverClass==="tall"&&topology==="FACE")return{allowed:false,clearance:undefined,mode:"TALL_FACE"};
  const px=Math.cos(aim),py=Math.sin(aim),out=px*a.nx+py*a.ny,along=px*a.tx+py*a.ty;
- const sideClear=topology!=="FACE"&&Math.abs(along)>.18;
+ const sideClear=(a.t<18&&along<-.18)||(a.length-a.t<18&&along>.18);
  const overClear=cv.coverClass!=="tall"&&out>-.35;
  const allowed=sideClear||overClear;
  return{allowed,clearance:allowed&&!cv.fracture32?cv.id:undefined,mode:sideClear?"SIDE":overClear?"OVER":"BLOCKED"};
@@ -1278,10 +1271,10 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
   meleeStep(s,n);
   if(p.pendingFireUntil!==undefined&&(s.time>p.pendingFireUntil||p.hp<=0||p.charging||p.orbitIds.length||p.fireBlocked))p.pendingFireUntil=undefined;
   if(i.fire&&!prev[n]?.fire&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&!p.orbitIds.length&&!p.fireBlocked)p.pendingFireUntil=s.time+.12;
-  if(p.character==='raptor'){
+  {
    const cv=s.covers.find(q=>q.id===p.coverId);
    p.coverTall11=!!cv&&cv.coverClass==='tall';
-   const probe={...p,raptorFrame:raptorCoverExposureFrame(p.gunFacing,p.coverTall11)};
+   const probe=p.character==='raptor'?{...p,raptorFrame:raptorCoverExposureFrame(p.gunFacing,p.coverTall11)}:p;
    const canExpose=coverMuzzleClearance(probe,cv,barrelSocket27d(probe,c.spriteScale),p.gunFacing).allowed;
    p.coverState11=coverState11(p,s.time,canExpose);
    if(p.coverId&&i.coverAim&&!canExpose){p.gripHint=cv?.coverClass==='tall'?'TALL COVER · MOVE TO AN EDGE':'EXPOSURE BLOCKED · REPOSITION';p.gripHintUntil=s.time+.2;}
@@ -1289,11 +1282,10 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
    p.peek=!!p.coverId&&canExpose;
   }
   refreshRaptorPose(p,s.time,c.slideDuration);
-  if(!(p.character==='raptor'&&p.coverId&&p.coverState11!=='expose'&&p.coverState11!=='fire')&&(i.fire||p.pendingFireUntil!==undefined)&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
+  if(!(p.coverId&&p.coverState11!=='expose'&&p.coverState11!=='fire')&&(i.fire||p.pendingFireUntil!==undefined)&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
    const attachedCover=p.coverId?s.covers.find(cv=>cv.id===p.coverId):undefined;
    const muzzle=barrelSocket27d(p,c.spriteScale),legacyAimOrigin={x:muzzle.x,y:muzzle.y},physical=coverMuzzleClearance(p,attachedCover,muzzle,p.gunFacing);
-   // PASS06 TRIGGER AUTHORITY: cover never vetoes a ready trigger. If exposure
-   // is invalid, the attached cover remains collidable and consumes the blast.
+   // Shared cover state gates the trigger before character-specific socket clearance.
    // Authored Raptor XYZ must clear cover geometrically. Jade's exposure art
    // still uses its legacy clearance plus the matching raised muzzle below.
    const clearance=physical.allowed&&!muzzle.raptorAligned?physical.clearance:undefined;
@@ -1425,4 +1417,5 @@ export function applyArenaLayout27c(s:GameState,raw:unknown,local=false){
  if(local){respawn(s);}else{s.covers=instantiateLayout27c(layout);s.shots=[];}
  return layout;
 }
+
 
