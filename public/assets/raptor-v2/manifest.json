@@ -1,5 +1,5 @@
 {
-  "build": "39T13-cover-contact",
+  "build": "39T14",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -3501,6 +3501,108 @@
       "muzzleFallback": "legacy",
       "muzzleNote": "Protected rear hold hides barrel; existing authority fallback retained.",
       "source": "39T13 targeted rear hold; exec-5be31f7b-77b0-418e-90d5-8c58424a5a7d.png"
+    },
+    "cover-hold/right/000.png": {
+      "anchor": [
+        280,
+        357
+      ],
+      "drawScale": 1.4,
+      "muzzle": [
+        403,
+        269
+      ],
+      "muzzleGround": [
+        403,
+        357
+      ],
+      "sha256": "2cc699f46c66978b0d84ba6d972ba97f59701df7dfc9b1fd03e7bcbe390bf725",
+      "source": "39T14 targeted grounded hold; exec-57f7d9de-571d-48d9-a0eb-99749e91795c.png"
+    },
+    "cover-hold/front/000.png": {
+      "anchor": [
+        250,
+        475
+      ],
+      "drawScale": 0.85,
+      "muzzle": [
+        254,
+        348
+      ],
+      "muzzleGround": [
+        254,
+        475
+      ],
+      "sha256": "455123208173843caf7ac6a0227d25db7e680b6630c6c32863212d4600cee883",
+      "source": "39T14 targeted grounded hold; exec-10ed5c83-faa3-4a15-aa42-ec7dbfa54221.png"
+    },
+    "cover-hold/front-left/000.png": {
+      "anchor": [
+        230,
+        433
+      ],
+      "drawScale": 1.1,
+      "muzzle": [
+        135,
+        320
+      ],
+      "muzzleGround": [
+        135,
+        433
+      ],
+      "sha256": "c1cc225a391f81eafcef30bc084a4d0422bce7a116c493925e6f660fe13eb98b",
+      "source": "39T14 targeted grounded hold; exec-7c355279-f260-40b9-a47f-4910ceb59365.png"
+    },
+    "cover-hold/left/000.png": {
+      "anchor": [
+        203,
+        381
+      ],
+      "drawScale": 1.0,
+      "muzzle": [
+        67,
+        255
+      ],
+      "muzzleGround": [
+        67,
+        381
+      ],
+      "sha256": "9c9e20fd6629d53f30f6ec62bb6886ce0959a242328d47aaa9944fd8a01ea049",
+      "source": "39T14 targeted grounded hold; exec-8cf0c64b-ea20-4c84-ae3c-2b36833431de.png"
+    },
+    "cover-hold/back-left/000.png": {
+      "anchor": [
+        244,
+        414
+      ],
+      "drawScale": 1.05,
+      "muzzle": [
+        99,
+        224
+      ],
+      "muzzleGround": [
+        99,
+        414
+      ],
+      "sha256": "a822e3a93bf443183803aea769c753b6431197691dcb46b1afb4245d761aef05",
+      "source": "39T14 targeted grounded hold; exec-8ad75877-133e-4ca6-97c1-da0e75a325a9.png"
+    },
+    "cover-hold/back-right/000.png": {
+      "anchor": [
+        253,
+        430
+      ],
+      "drawScale": 1.0,
+      "muzzle": [
+        419,
+        224
+      ],
+      "muzzleGround": [
+        419,
+        430
+      ],
+      "sha256": "adeef0a157c30f4b848ce3defeec8b698a5f1980ce9e8c075271b5861ee8856e",
+      "source": "39T14 targeted grounded hold; exec-7cbeb34d-1d16-4def-9308-cf6f3e549df5.png"
     }
   },
   "slidePhases": [
@@ -3548,8 +3650,14 @@
     "front-right"
   ],
   "coverHoldDirections": [
+    "right",
     "front-right",
-    "back"
+    "front",
+    "front-left",
+    "left",
+    "back-left",
+    "back",
+    "back-right"
   ],
   "coverLeanDirections": [
     "front-right"

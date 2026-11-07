@@ -66,8 +66,7 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
   if(state==='catch')return{memory,frame:selected('slide',2,s.angle)};
   if(state==='drive'&&raptorPoseDirection(s.angle)==='front-right')return{memory,frame:selected('cover-drive',cover.phase>=.5?1:0,s.angle)};
   if(state==='shuffle'||state==='drive')return{memory,frame:selected('stalk',Math.floor(cover.phase*4),s.angle)};
-  if(raptorPoseDirection(s.angle)==='front-right'||raptorPoseDirection(s.angle)==='back')return{memory,frame:selected('cover-hold',0,s.angle)};
-  return{memory,frame:selected('jump',4,s.angle)};
+  return{memory,frame:selected('cover-hold',0,s.angle)};
  }
 
  if(!interrupted&&s.sliding){

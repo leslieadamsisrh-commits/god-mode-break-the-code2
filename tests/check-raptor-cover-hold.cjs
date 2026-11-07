@@ -5,8 +5,8 @@ const sample={time:1,x:0,y:0,angle:Math.PI/4,speed:0,attached:true,sliding:false
 let memory;
 for(const [state,family]of [['hold','cover-hold'],['brace','cover-hold'],['expose','idle'],['fire','idle'],['retract','cover-hold']]){const r=advanceRaptorPose(memory,{...sample,time:sample.time+=.1,coverState11:state});memory=r.memory;assert.equal(r.frame.family,family,state);assert.ok(fs.existsSync('public/assets/raptor-v2/'+r.frame.key));}
 assert.equal(advanceRaptorPose(undefined,{...sample,attached:false}).frame.family,'idle');
-assert.equal(advanceRaptorPose(undefined,{...sample,angle:Math.PI,coverState11:'hold'}).frame.family,'jump');
-console.log('PASS dedicated front-right hold/brace/retract, existing exposure/fire and other directions preserved');
+assert.equal(advanceRaptorPose(undefined,{...sample,angle:Math.PI,coverState11:'hold'}).frame.family,'cover-hold');
+console.log('PASS dedicated front-right hold/brace/retract, existing exposure/fire preserved; left hold now grounded');
 const {raptorCoverExposureFrame}=require('../lib/raptorPose.ts');
 const {barrelSocket27d}=require('../lib/ballistics27d.ts');
 for(const state of ['expose','fire']){
@@ -23,3 +23,4 @@ for(let d=0;d<8;d++)assert.equal(raptorCoverExposureFrame(d*Math.PI/4,true).fami
 assert.equal(raptorCoverExposureFrame(Math.PI/4,false).family,'idle');
 assert.equal(advanceRaptorPose(undefined,{...sample,coverTall11:true,coverState11:'retract'}).frame.family,'cover-hold');
 console.log('PASS tall lean shares clearance/render frame and authored barrel; low exposure, other directions and retraction preserved');
+
