@@ -259,6 +259,16 @@ export function interceptCover11(p:Player,s:GameState,n:number){
  actionOutcome(s,n,'intercept','activated','timed cover catch',cv.id,s.config.gripEnergy+s.config.coverThrowEnergy);return true;
 }
 function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
+ const x=p.x,y=p.y,id=p.coverId;
+ moveAlongCover11(p,s,i,dt);
+ // Animation and muzzle authority consume measured motion, not stick intent.
+ // Existing Jade movement and deliberate detach/drive velocity remain untouched.
+ if(p.character==='raptor'&&p.coverId===id&&p.coverAnchor&&!p.coverDrive11){
+  p.vx=(p.x-x)/Math.max(.001,dt);p.vy=(p.y-y)/Math.max(.001,dt);
+  p.coverSpeed=p.vx*p.coverAnchor.tx+p.vy*p.coverAnchor.ty;
+ }
+}
+function moveAlongCover11(p:Player,s:GameState,i:InputState,dt:number){
  const support=s.covers.find(cv=>cv.id===p.coverId);
  if(!support||!stableCoverFace(support,s)){releaseCover(p,s);return;}
  const a=p.coverAnchor;if(!a||!p.coverId)return;const c=s.config,moveSpeed=c.moveSpeed*(p.chargeMotion??1),mag=Math.hypot(i.x,i.y),away=i.x*a.nx+i.y*a.ny;
@@ -437,7 +447,9 @@ function slideAction(s:GameState,n:number,prev:InputState){const p=s.players[n],
  }
  // Hard brace / planted cover keeps deliberate commitment, but A is still immediate escape.
  if(p.coverId&&p.coverMode==="braced"){
-   releaseCover(p,s,.085);startDash(p,s,a);return true;
+   const anchor=p.coverAnchor;
+   const escape=p.character==='raptor'&&anchor&&(mag<=.18||i.x*anchor.nx+i.y*anchor.ny<-.15)?Math.atan2(anchor.ny,anchor.nx):a;
+   releaseCover(p,s,.085);startDash(p,s,escape);return true;
  }
  if(p.exit)return false;
  if(doubleTap){

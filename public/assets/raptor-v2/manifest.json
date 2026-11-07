@@ -1,5 +1,5 @@
 {
-  "build": "39T11-psychic-cover",
+  "build": "39T11.1-cover-continuity",
   "status": "playtest",
   "counts": {
     "idle": 1,
@@ -9,7 +9,7 @@
     "stalk": 4,
     "jog": 4,
     "jump": 6,
-    "cover-drive": 1
+    "cover-drive": 2
   },
   "directions": [
     "right",
@@ -3438,6 +3438,23 @@
       "drawScale": 1.12,
       "sha256": "a216fbda7e93f0a9ec31bd20504920d69dff5e25e47094d7ea210b1397bf4b81",
       "source": "exec-8c74bffc-fb73-4eab-ba7e-de7836ee89cd.png"
+    },
+    "cover-drive/front-right/001.png": {
+      "anchor": [
+        247,
+        413
+      ],
+      "muzzle": [
+        328,
+        291
+      ],
+      "muzzleGround": [
+        328,
+        413
+      ],
+      "drawScale": 1.12,
+      "sha256": "35a0dceb6d9f1b4634594c91f1b574fb85e161ecdac25574c1c94b4d15b97616",
+      "source": "exec-89bd82e6-ce53-48e9-a22e-401468d2c69d.png"
     }
   },
   "slidePhases": [
