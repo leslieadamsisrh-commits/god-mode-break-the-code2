@@ -1,0 +1,269 @@
+{
+  "status": "Provisional 512px source landmarks for isolated playback. Production manifest remains inactive.",
+  "frames": {
+    "cover-hold/front/000.png": {
+      "file": "ambush-pass/hold-front.png",
+      "anchor": [
+        254,
+        471
+      ],
+      "plantedFoot": [
+        143,
+        471
+      ],
+      "pelvis": [
+        264,
+        328
+      ],
+      "muzzle": [
+        472,
+        368
+      ],
+      "muzzleGround": [
+        472,
+        471
+      ],
+      "drawScale": 0.74
+    },
+    "cover-hold/front-right/000.png": {
+      "file": "ambush-pass/hold-front-right.png",
+      "anchor": [
+        251,
+        421
+      ],
+      "plantedFoot": [
+        150,
+        421
+      ],
+      "pelvis": [
+        258,
+        301
+      ],
+      "muzzle": [
+        496,
+        301
+      ],
+      "muzzleGround": [
+        496,
+        421
+      ],
+      "drawScale": 0.81
+    },
+    "cover-catch/front-right/000.png": {
+      "file": "ambush-pass/catch-front-right.png",
+      "anchor": [
+        277,
+        401
+      ],
+      "plantedFoot": [
+        388,
+        398
+      ],
+      "pelvis": [
+        280,
+        307
+      ],
+      "muzzle": [
+        476,
+        290
+      ],
+      "muzzleGround": [
+        476,
+        401
+      ],
+      "drawScale": 1.02
+    },
+    "cover-shuffle/front-right/000.png": {
+      "file": "ambush-pass/shuffle-front-right-a.png",
+      "anchor": [
+        249,
+        398
+      ],
+      "plantedFoot": [
+        151,
+        398
+      ],
+      "pelvis": [
+        250,
+        304
+      ],
+      "muzzle": [
+        498,
+        298
+      ],
+      "muzzleGround": [
+        498,
+        398
+      ],
+      "drawScale": 0.89
+    },
+    "cover-shuffle/front-right/001.png": {
+      "file": "ambush-pass/shuffle-front-right-b.png",
+      "anchor": [
+        255,
+        396
+      ],
+      "plantedFoot": [
+        361,
+        396
+      ],
+      "pelvis": [
+        257,
+        303
+      ],
+      "muzzle": [
+        492,
+        296
+      ],
+      "muzzleGround": [
+        492,
+        396
+      ],
+      "drawScale": 0.88
+    },
+    "cover-lean/front-right/000.png": {
+      "file": "ambush-pass/lean-front-right-end.png",
+      "anchor": [
+        249,
+        396
+      ],
+      "plantedFoot": [
+        154,
+        396
+      ],
+      "pelvis": [
+        252,
+        284
+      ],
+      "muzzle": [
+        500,
+        190
+      ],
+      "muzzleGround": [
+        500,
+        396
+      ],
+      "drawScale": 0.99
+    },
+    "cover-lean/front-right/001.png": {
+      "file": "ambush-pass/lean-front-right-start.png",
+      "anchor": [
+        238,
+        423
+      ],
+      "plantedFoot": [
+        165,
+        423
+      ],
+      "pelvis": [
+        231,
+        290
+      ],
+      "muzzle": [
+        470,
+        194
+      ],
+      "muzzleGround": [
+        470,
+        423
+      ],
+      "drawScale": 0.92
+    },
+    "slide/front-right/001.png": {
+      "file": "ambush-pass/slide-front-right-identity.png",
+      "anchor": [
+        219,
+        433
+      ],
+      "plantedFoot": [
+        446,
+        433
+      ],
+      "pelvis": [
+        207,
+        353
+      ],
+      "muzzle": [
+        435,
+        320
+      ],
+      "muzzleGround": [
+        435,
+        433
+      ],
+      "drawScale": 1.1
+    },
+    "cover-hold/left/000.png": {
+      "file": "ambush-pass/hold-left.png",
+      "anchor": [
+        243,
+        370
+      ],
+      "plantedFoot": [
+        327,
+        370
+      ],
+      "pelvis": [
+        243,
+        296
+      ],
+      "muzzle": [
+        22,
+        274
+      ],
+      "muzzleGround": [
+        22,
+        370
+      ],
+      "drawScale": 1.17
+    },
+    "cover-hold/back-left/000.png": {
+      "file": "ambush-pass/hold-back-left.png",
+      "anchor": [
+        249,
+        423
+      ],
+      "plantedFoot": [
+        172,
+        423
+      ],
+      "pelvis": [
+        246,
+        298
+      ],
+      "muzzle": [
+        19,
+        230
+      ],
+      "muzzleGround": [
+        19,
+        412
+      ],
+      "drawScale": 0.91
+    },
+    "cover-hold/back-right/000.png": {
+      "file": "ambush-pass/hold-back-right.png",
+      "anchor": [
+        245,
+        441
+      ],
+      "plantedFoot": [
+        332,
+        441
+      ],
+      "pelvis": [
+        244,
+        293
+      ],
+      "muzzle": [
+        480,
+        184
+      ],
+      "muzzleGround": [
+        480,
+        412
+      ],
+      "drawScale": 0.9
+    }
+  }
+}

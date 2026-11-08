@@ -7,7 +7,7 @@ import {type MatchRules31,validateRules31,unlimited31,availableEnergy31,canPay31
 import {SHAPES27J,RIP_TIME27J,splitBarrier27j,type Section27j} from './psychicMatter27j';
 import {resolveSupports27e,coverStructureBlocked27f,coverSupport27h} from './arenaStructures27e';
 import {barrelSocket27d,cylinderTime27d,coverTime27d} from './ballistics27d';
-import {raptorCoverExposureFrame,advanceRaptorPose,raptorActorSample,type RaptorPoseMemory,type RaptorPoseFrame} from './raptorPose';
+import {raptorCoverEdge,raptorCoverExposureFrame,advanceRaptorPose,raptorActorSample,type RaptorPoseMemory,type RaptorPoseFrame} from './raptorPose';
 import {chaseLayout27c,instantiateLayout27c,validateLayout27c,type ArenaLayout27c} from './arenaLayout27c';
 import {integrateVertical,surfaceShotTime,type ElevationState} from './verticalCombat27b';
 import {height as surfaceHeight27h} from './elevation27a';
@@ -900,15 +900,14 @@ export function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:numbe
  if(!cv||!p.coverAnchor)return{allowed:true,clearance:undefined as string|undefined,mode:"FREE"};
  if(p.character==='raptor'){
   if(p.coverMode!=='braced'||!p.input.coverAim)return {allowed:false,clearance:undefined,mode:'PROTECTED'};
-  const a=p.coverAnchor,along=Math.cos(aim)*a.tx+Math.sin(aim)*a.ty;
-  const left=a.t<18&&along<-.18,right=a.length-a.t<18&&along>.18;
-  if(cv.coverClass==='tall'&&!left&&!right)return {allowed:false,clearance:undefined,mode:'TALL_FACE'};
+  const edge=raptorCoverEdge(p.coverAnchor,aim);
+  if(cv.coverClass==='tall'&&!edge)return {allowed:false,clearance:undefined,mode:'TALL_FACE'};
   const socket=muzzle as {x:number;y:number;z?:number};
   if(socket.z===undefined)return {allowed:false,clearance:undefined,mode:'NO_SOCKET'};
   const z=socket.z-(cv.z||0)-(cv.hover||0),from={x:socket.x,y:socket.y,z};
   const clear=coverTime27d(from,{x:from.x+Math.cos(aim)*80,y:from.y+Math.sin(aim)*80,z},cv,cv.height27j??78)===null;
   const structureClear=!Number.isFinite(surfaceShotTime({...from,z:socket.z},{x:from.x+Math.cos(aim)*24,y:from.y+Math.sin(aim)*24,z:socket.z}));
-  return {allowed:clear&&structureClear,clearance:undefined,mode:clear&&structureClear?(left||right?'SIDE':'OVER'):'BLOCKED'};
+  return {allowed:clear&&structureClear,clearance:undefined,mode:clear&&structureClear?(edge?'SIDE':'OVER'):'BLOCKED'};
  }
  const a=p.coverAnchor,topology=Math.min(a.t,a.length-a.t)<18?"EDGE":"FACE";
  if(p.coverMode!=="braced"||!p.input.coverAim)return{allowed:false,clearance:undefined,mode:"PROTECTED"};
@@ -1274,7 +1273,9 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
   {
    const cv=s.covers.find(q=>q.id===p.coverId);
    p.coverTall11=!!cv&&cv.coverClass==='tall';
-   const probe=p.character==='raptor'?{...p,raptorFrame:raptorCoverExposureFrame(p.gunFacing,p.coverTall11)}:p;
+   const probe=p.character==='raptor'?{...p,raptorFrame:raptorCoverExposureFrame(
+    p.gunFacing,p.coverTall11,undefined,raptorCoverEdge(p.coverAnchor,p.gunFacing)
+   )}:p;
    const canExpose=coverMuzzleClearance(probe,cv,barrelSocket27d(probe,c.spriteScale),p.gunFacing).allowed;
    p.coverState11=coverState11(p,s.time,canExpose);
    if(p.coverId&&i.coverAim&&!canExpose){p.gripHint=cv?.coverClass==='tall'?'TALL COVER · MOVE TO AN EDGE':'EXPOSURE BLOCKED · REPOSITION';p.gripHintUntil=s.time+.2;}

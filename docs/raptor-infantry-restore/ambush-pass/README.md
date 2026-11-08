@@ -1,0 +1,13 @@
+# Controlled ambush pose trial
+
+Parent checkpoint: 9781e4a4832a5906f20a88c8235b5e6cbcdf9973. The original art, prior candidates, approved slide sprite and the 39T14 runtime manifest are retained. The revised front hold uses a slightly parted jaw, a natural gold anatomical left eye, and a single right red optic. Candidate assets in this folder are review inputs.
+
+Front-right review includes a repainted slide trial, catch, hold, two shuffle plants, and two independent tall exposure poses. The previously saved front-right standing and low-pop references are reused. Registration coordinates use the full 512px cell and uniform scale. The covered position and the aiming frame may face different directions, which is why every reachable adjoining transition needs review before activation.
+
+Independently authored left, rear-left and rear-right hold candidates complete the hold reference coverage. The two rear diagonals carry the approved compact housing and cables. The first rear-left result enlarged the housing and was superseded. Rear heel and tail occlusion and candidate registration still require turning playback.
+
+A separate local browser build used a temporary manifest and staged cover fixtures. The live app code painted the new catch, hold, both shuffle frames, low-pop and both tall endpoints. Keyboard fire consumed a shell from low cover and from each valid tall edge. The tall center rejected fire. A first run verified the Rematch button reset a fixture-finished round. Automated tests also exercised both shuffle signs, the shared exposure frame and clearance, and a simulated bot round and rematch. These checks are narrower than a visually complete normal round. Several external Jade assets failed to load in the browser.
+
+Use the existing cover and psychic regression suite. Before activation, validate both shuffle directions without crossing the end of the wall, finish the remaining independently authored catch, shuffle, low-pop and tall-edge directions, and recheck slide entry/recovery and active locomotion where they adjoin the replacement art. Recheck visual hit-region alignment in front-right low pop: the standing-derived crown is approximately 74.5 upright projection units above the candidate anchor, while the existing exposed hit regions total about 64 world units at sprite scale 0.82. Compare them through the actual projection and a shot trace before making any gameplay decision.
+
+No candidate paths have been added to the shipping manifest. Railway currently serves 39T12 and has the separate 39T14 source-only patch staged. Deploy after the complete connected batch passes.
