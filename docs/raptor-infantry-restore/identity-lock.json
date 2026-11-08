@@ -1,0 +1,27 @@
+{
+  "status": "original approved; restored views are candidates, not integrated",
+  "baseCommit": "2b64e2d09714ae15899c5399545da29b464f7c56",
+  "branch": "studio/39t15-infantry-restore",
+  "reference": "docs/raptor-infantry-restore/original-approved.jpeg",
+  "sha256": "06d09d47d4702923f3511cd4f11275e160265b56a9ef832d50aed44443dbea64",
+  "rejectedIdentitySources": [
+    "docs/raptor-design-b/",
+    "exec-2087bf67-20d3-4d3f-ac36-07ff7a2b0a3e.png"
+  ],
+  "rightEye": "red optic and headgear",
+  "leftEye": "natural",
+  "runtimePolicy": "No candidate may replace isolated frames until adjoining transitions and sockets are verified.",
+  "frameCount": 219,
+  "families": {
+    "cover-hold": 8,
+    "idle": 8,
+    "jog": 32,
+    "jump": 48,
+    "run": 32,
+    "slide": 24,
+    "sprint": 32,
+    "stalk": 32,
+    "cover-drive": 2,
+    "cover-lean": 1
+  }
+}
