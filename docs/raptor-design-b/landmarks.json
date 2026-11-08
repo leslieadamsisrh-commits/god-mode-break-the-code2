@@ -1,0 +1,174 @@
+{
+  "method": "Manual projected landmark estimates in 512px images; approximately +/-5px. Not skeletal or 3D measurements. Occluded joint positions are estimates. Scale factors apply uniformly for static review only.",
+  "front": {
+    "file": "front-candidate.png",
+    "reviewDrawScale": 0.78,
+    "skullWidthPx": 110,
+    "shoulderCentersPx": [
+      [
+        155,
+        145
+      ],
+      [
+        361,
+        145
+      ]
+    ],
+    "pelvisPx": [
+      242,
+      285
+    ],
+    "kneesPx": [
+      [
+        175,
+        334
+      ],
+      [
+        312,
+        346
+      ]
+    ],
+    "anklesPx": [
+      [
+        141,
+        401
+      ],
+      [
+        274,
+        403
+      ]
+    ],
+    "feetPx": [
+      [
+        146,
+        473
+      ],
+      [
+        286,
+        443
+      ]
+    ]
+  },
+  "standingFront": {
+    "file": "public/assets/raptor-v2/idle/front/000.png",
+    "existingDrawScale": 1.6,
+    "skullWidthPx": 67,
+    "shoulderCentersPx": [
+      [
+        208,
+        284
+      ],
+      [
+        287,
+        284
+      ]
+    ],
+    "pelvisPx": [
+      248,
+      344
+    ],
+    "kneesPx": [
+      [
+        214,
+        384
+      ],
+      [
+        281,
+        383
+      ]
+    ],
+    "feetPx": [
+      [
+        203,
+        450
+      ],
+      [
+        289,
+        450
+      ]
+    ]
+  },
+  "interpretation": "Front candidate projected skull width after review scale is about86 vs107 for existing frontal standing; shoulder-center span about161 vs126. Closed jaw and pose affect appearance, but a single uniform scale cannot eliminate both differences. Keep candidate, do not certify proportion lock.",
+  "side": {
+    "file": "side-candidate.png",
+    "reviewDrawScale": 1.08,
+    "skullWidthPx": 94,
+    "shoulderPx": [
+      296,
+      171
+    ],
+    "pelvisPx": [
+      272,
+      266
+    ],
+    "kneePx": [
+      328,
+      293
+    ],
+    "anklePx": [
+      282,
+      351
+    ],
+    "feetPx": [
+      [
+        231,
+        385
+      ],
+      [
+        304,
+        402
+      ]
+    ],
+    "packDepthPx": 20,
+    "tailRootThicknessPx": 50
+  },
+  "rear": {
+    "file": "rear-candidate.png",
+    "reviewDrawScale": 0.85,
+    "shoulderCentersPx": [
+      [
+        153,
+        150
+      ],
+      [
+        349,
+        150
+      ]
+    ],
+    "pelvisPx": [
+      247,
+      267
+    ],
+    "kneesPx": [
+      [
+        162,
+        329
+      ],
+      [
+        333,
+        324
+      ]
+    ],
+    "anklesPx": [
+      [
+        170,
+        393
+      ],
+      [
+        334,
+        378
+      ]
+    ],
+    "feetPx": [
+      [
+        168,
+        466
+      ],
+      [
+        334,
+        431
+      ]
+    ],
+    "tailRootThicknessPx": 94
+  }
+}

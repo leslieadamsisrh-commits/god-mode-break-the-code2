@@ -1,0 +1,35 @@
+{
+  "side-candidate.png": {
+    "sha256": "fd745b63f7450dd0c5de93e22cacf0c19d2bf6b3e144cb183356d531da23afca",
+    "size": [
+      512,
+      512
+    ],
+    "alphaRange": [
+      0,
+      255
+    ]
+  },
+  "front-candidate.png": {
+    "sha256": "96c2dafef6f4d95df087f81798d4c4df6b1e5a9f81334cd0c4c9573ca0e9db89",
+    "size": [
+      512,
+      512
+    ],
+    "alphaRange": [
+      0,
+      255
+    ]
+  },
+  "rear-candidate.png": {
+    "sha256": "154ae7d1107b743f847062418a901d8371ea8569fc254a96bca19271160bdd37",
+    "size": [
+      512,
+      512
+    ],
+    "alphaRange": [
+      0,
+      255
+    ]
+  }
+}

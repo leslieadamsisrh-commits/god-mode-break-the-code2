@@ -1,0 +1,89 @@
+{
+  "status": "reference-only; manually estimated anatomical/foot landmarks",
+  "scaleBasis": ".82*.26 at camera1.85; static comparison, not captured game",
+  "poses": [
+    {
+      "label": "Standing front",
+      "file": "public/assets/raptor-v2/idle/front/000.png",
+      "anchor": [
+        244,
+        450
+      ],
+      "sha256": "f2e597e03ac5b00e6b8bd1e94e6efeaf47d30cd0cd42675a181c550472db6620",
+      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
+      "muzzle": [
+        244,
+        329
+      ],
+      "muzzleGround": [
+        244,
+        450
+      ],
+      "drawScale": 1.6
+    },
+    {
+      "label": "B front candidate",
+      "file": "docs/raptor-design-b/front-candidate.png",
+      "anchor": [
+        239,
+        473
+      ],
+      "drawScale": 0.78
+    },
+    {
+      "label": "Standing side",
+      "file": "public/assets/raptor-v2/idle/right/000.png",
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "61e6ceaeab435005f94f1de7b754320578f445164a5cdf5bc7bd27294bf41bd0",
+      "source": "39t8-2 matched jump recovery",
+      "muzzle": [
+        436,
+        314
+      ],
+      "muzzleGround": [
+        436,
+        450
+      ],
+      "drawScale": 1.64
+    },
+    {
+      "label": "B side candidate",
+      "file": "docs/raptor-design-b/side-candidate.png",
+      "anchor": [
+        275,
+        402
+      ],
+      "drawScale": 1.08
+    },
+    {
+      "label": "Approved slide",
+      "file": "public/assets/raptor-v2/slide/front-right/001.png",
+      "anchor": [
+        256,
+        450
+      ],
+      "sha256": "9fcbe968bf1469434570a85bb863fa823f78468bb95942113f398f062c6b0c7b",
+      "muzzle": [
+        393,
+        327
+      ],
+      "muzzleGround": [
+        393,
+        450
+      ],
+      "drawScale": 1.23
+    },
+    {
+      "label": "B rear candidate",
+      "file": "docs/raptor-design-b/rear-candidate.png",
+      "anchor": [
+        244,
+        466
+      ],
+      "drawScale": 0.85
+    }
+  ]
+}
