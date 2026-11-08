@@ -1,0 +1,309 @@
+{
+  "status": "authoring trial; not active runtime registration",
+  "method": "Manual anatomical landmarks in 512px candidates, approximately +/-5px. Jade 250px ready-d03 reference uses existing 125px display cell; both use spriteScale .82 and same upright/camera projection. Crown excludes raised cables/tail/weapon. Side/front skull projections are not interchangeable lengths.",
+  "jade": {
+    "source": "https://god-helmet-arcade.leslieadams-isrh.chatgpt.site/assets/shotgun-complete/runtime/ready-d03.webp",
+    "anchor": [
+      125,
+      220
+    ],
+    "crownY": 47,
+    "plantedFootY": 218,
+    "unit": 0.41
+  },
+  "frames": {
+    "idle/front-right/000.png": {
+      "file": "batch-a/idle-front-right.png",
+      "anchor": [
+        259,
+        479
+      ],
+      "drawScale": 0.864,
+      "muzzle": [
+        469,
+        255
+      ],
+      "muzzleGround": [
+        469,
+        479
+      ],
+      "crownY": 60,
+      "skullLength": [
+        [
+          328,
+          88
+        ],
+        [
+          413,
+          103
+        ]
+      ],
+      "shoulder": [
+        219,
+        140
+      ],
+      "pelvis": [
+        264,
+        290
+      ],
+      "knee": [
+        219,
+        333
+      ],
+      "ankle": [
+        175,
+        405
+      ],
+      "plantedFoot": [
+        168,
+        479
+      ]
+    },
+    "cover-hold/front-right/000.png": {
+      "file": "crouch-front-right-candidate.png",
+      "anchor": [
+        248,
+        421
+      ],
+      "drawScale": 0.78,
+      "muzzle": [
+        499,
+        287
+      ],
+      "muzzleGround": [
+        499,
+        421
+      ],
+      "crownY": 135,
+      "skullLength": [
+        [
+          350,
+          158
+        ],
+        [
+          444,
+          181
+        ]
+      ],
+      "shoulder": [
+        228,
+        190
+      ],
+      "pelvis": [
+        257,
+        291
+      ],
+      "knee": [
+        210,
+        303
+      ],
+      "ankle": [
+        156,
+        372
+      ],
+      "plantedFoot": [
+        158,
+        421
+      ]
+    },
+    "cover-hold/right/000.png": {
+      "file": "batch-a/hold-right.png",
+      "anchor": [
+        264,
+        382
+      ],
+      "drawScale": 1.0,
+      "muzzle": [
+        467,
+        250
+      ],
+      "muzzleGround": [
+        467,
+        382
+      ],
+      "crownY": 168,
+      "shoulder": [
+        267,
+        207
+      ],
+      "pelvis": [
+        274,
+        285
+      ],
+      "plantedFoot": [
+        200,
+        382
+      ],
+      "source": "exec-448c79c2-831a-4ae2-883e-5fe4793a219f.png",
+      "status": "trial only: skull/mass vs front-right still needs turning playback; not a production registration"
+    },
+    "cover-hold/back/000.png": {
+      "file": "crouch-back-candidate.png",
+      "anchor": [
+        250,
+        415
+      ],
+      "drawScale": 0.78,
+      "muzzleVisibility": "occluded",
+      "shoulders": [
+        [
+          157,
+          184
+        ],
+        [
+          329,
+          184
+        ]
+      ],
+      "pelvis": [
+        249,
+        302
+      ],
+      "knees": [
+        [
+          153,
+          300
+        ],
+        [
+          337,
+          301
+        ]
+      ],
+      "ankles": [
+        [
+          166,
+          374
+        ],
+        [
+          337,
+          374
+        ]
+      ],
+      "plantedFeet": [
+        [
+          176,
+          410
+        ],
+        [
+          338,
+          410
+        ]
+      ]
+    },
+    "cover-hold/front/000.png": {
+      "file": "batch-a/hold-front.png",
+      "anchor": [
+        254,
+        468
+      ],
+      "drawScale": 0.74,
+      "muzzle": [
+        477,
+        367
+      ],
+      "muzzleGround": [
+        477,
+        468
+      ],
+      "crownY": 136,
+      "shoulders": [
+        [
+          190,
+          220
+        ],
+        [
+          389,
+          223
+        ]
+      ],
+      "pelvis": [
+        268,
+        326
+      ],
+      "knees": [
+        [
+          187,
+          351
+        ],
+        [
+          357,
+          367
+        ]
+      ],
+      "plantedFeet": [
+        [
+          136,
+          468
+        ],
+        [
+          357,
+          449
+        ]
+      ],
+      "source": "exec-3d8d8510-b2d9-458f-9bac-1c00ac314c53.png",
+      "note": "Targeted forward torso hinge and lower pelvis. Not a uniformly squashed copy."
+    },
+    "cover-pop/front-right/000.png": {
+      "file": "batch-a/pop-front-right.png",
+      "anchor": [
+        252,
+        472
+      ],
+      "drawScale": 0.91,
+      "muzzle": [
+        502,
+        147
+      ],
+      "muzzleGround": [
+        502,
+        472
+      ],
+      "crownY": 88,
+      "shoulder": [
+        210,
+        149
+      ],
+      "pelvis": [
+        254,
+        287
+      ],
+      "plantedFoot": [
+        143,
+        472
+      ],
+      "status": "candidate socket, requires clearance and live projection check",
+      "source": "exec-12bcad7a-b456-41f7-b921-98024f4c7028.png"
+    },
+    "cover-hold/front-left/000.png": {
+      "file": "batch-a/hold-front-left.png",
+      "anchor": [
+        261,
+        451
+      ],
+      "drawScale": 0.8,
+      "muzzle": [
+        24,
+        314
+      ],
+      "muzzleGround": [
+        24,
+        451
+      ],
+      "crownY": 135,
+      "shoulder": [
+        283,
+        187
+      ],
+      "pelvis": [
+        292,
+        303
+      ],
+      "plantedFoot": [
+        379,
+        451
+      ],
+      "source": "exec-3a21936c-d2d8-4979-8c46-16040ec23ff2.png",
+      "status": "candidate socket, requires live verification"
+    }
+  }
+}

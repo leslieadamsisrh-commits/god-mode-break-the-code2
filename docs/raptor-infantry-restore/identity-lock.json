@@ -1,7 +1,7 @@
 {
-  "status": "original approved; restored views are candidates, not integrated",
-  "baseCommit": "2b64e2d09714ae15899c5399545da29b464f7c56",
-  "branch": "studio/39t15-infantry-restore",
+  "status": "original and compact rear housing approved; restoration candidates accepted direction; runtime activation pending coherent transition batch",
+  "baseCommit": "a34d9eef86987dddef540e83198d82ae80ef43e1",
+  "branch": "studio/39t15-1-cover-restoration",
   "reference": "docs/raptor-infantry-restore/original-approved.jpeg",
   "sha256": "06d09d47d4702923f3511cd4f11275e160265b56a9ef832d50aed44443dbea64",
   "rejectedIdentitySources": [
@@ -23,5 +23,7 @@
     "stalk": 32,
     "cover-drive": 2,
     "cover-lean": 1
-  }
+  },
+  "rearHousingApproval": "User approved compact two-cell housing in crouch-back-candidate.png on 2026-11-08; preserve original cable/worn-armor connections. No renewed approval needed.",
+  "restoredCandidates": "Accepted restoration direction; calibration and runtime validation outstanding."
 }
