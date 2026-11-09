@@ -1,6 +1,6 @@
 {
-  "build": "39T14",
-  "status": "playtest",
+  "build": "39T15-stationary-wrap",
+  "status": "isolated playtest",
   "counts": {
     "idle": 1,
     "run": 4,
@@ -3558,7 +3558,7 @@
         203,
         381
       ],
-      "drawScale": 1.0,
+      "drawScale": 1,
       "muzzle": [
         67,
         255
@@ -3592,7 +3592,7 @@
         253,
         430
       ],
-      "drawScale": 1.0,
+      "drawScale": 1,
       "muzzle": [
         419,
         224
@@ -3603,6 +3603,102 @@
       ],
       "sha256": "adeef0a157c30f4b848ce3defeec8b698a5f1980ce9e8c075271b5861ee8856e",
       "source": "39T14 targeted grounded hold; exec-7cbeb34d-1d16-4def-9308-cf6f3e549df5.png"
+    },
+    "cover-wrap/left/000.png": {
+      "anchor": [
+        260,
+        387
+      ],
+      "drawScale": 1.16,
+      "muzzle": [
+        299,
+        190
+      ],
+      "muzzleGround": [
+        299,
+        387
+      ],
+      "sha256": "9e52fdc911ade94d1adaddc6a66787d2a44c1b615473402ac9fd3b78ce4a839b"
+    },
+    "cover-wrap/left/001.png": {
+      "anchor": [
+        260,
+        387
+      ],
+      "drawScale": 1.16,
+      "muzzle": [
+        114,
+        261
+      ],
+      "muzzleGround": [
+        114,
+        387
+      ],
+      "sha256": "ca4925c83811490a44edbb48f9fc2937b674443cbc2c81aa4f8c17365c2ecc61"
+    },
+    "cover-lean/left/000.png": {
+      "anchor": [
+        260,
+        387
+      ],
+      "drawScale": 1.16,
+      "muzzle": [
+        83,
+        246
+      ],
+      "muzzleGround": [
+        83,
+        387
+      ],
+      "sha256": "04e7dd2369d54a92f8e1c9f7f0ece14a45897449409f9fb3a419e022ad998cb3"
+    },
+    "cover-wrap/right/000.png": {
+      "anchor": [
+        266,
+        410
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        258,
+        210
+      ],
+      "muzzleGround": [
+        258,
+        410
+      ],
+      "sha256": "ad33a9ac8375ba2668d8442cef4ea2e5dffe880f5540dafe6940b0f284cc48f1"
+    },
+    "cover-wrap/right/001.png": {
+      "anchor": [
+        263,
+        409
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        455,
+        252
+      ],
+      "muzzleGround": [
+        455,
+        409
+      ],
+      "sha256": "47227770250ee692a9304794533aedcbb3720ab63a09c35856745a44da1268ee"
+    },
+    "cover-lean/right/000.png": {
+      "anchor": [
+        266,
+        412
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        480,
+        223
+      ],
+      "muzzleGround": [
+        480,
+        412
+      ],
+      "sha256": "50515653f37182116af9d8df4723f94e33b437db8f2fd78464a22a0884476105"
     }
   },
   "slidePhases": [
@@ -3660,6 +3756,13 @@
     "back-right"
   ],
   "coverLeanDirections": [
-    "front-right"
-  ]
+    "front-right",
+    "left",
+    "right"
+  ],
+  "coverWrapDirections": [
+    "left",
+    "right"
+  ],
+  "tallCoverSteel": true
 }

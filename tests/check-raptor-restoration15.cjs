@@ -20,7 +20,7 @@ for(let i=0;i<8;i++)for(const tall of [false,true]){
  assert.equal(current.family,tall&&live.coverLeanDirections.includes(dir)?'cover-lean':'idle');
 }
 assert.equal(raptorCoverExposureFrame(0,true,{postureDirections:[],coverLeanDirections:[]}).family,'idle');
-console.log('PASS 16 directional/height cases: authored availability, identical clearance/render selection, retraction, unchanged active inventory');
+console.log('PASS 16 directional/height cases: authored availability, identical clearance/render selection, retraction, active inventory');
 
 const {raptorCoverEdge,raptorActorSample,raptorPoseDirection}=require('../lib/raptorPose.ts');
 const frontRight=Math.PI/4;
@@ -100,7 +100,7 @@ for(const [kind,t,angle,expected] of [
 }
 console.log('PASS trial muzzle registration through real cover tick: low pop, two tall endpoints, blocked tall center and retraction');
 
-// The runtime gate remains off. Trial options model both physical ends of the
+// Explicit test options model both physical ends of the
 // same wall, then rotate that wall by half a turn to reverse its tangent.
 const wraps={postureDirections:RAPTOR_POSE_DIRECTIONS,coverLeanDirections:['left','right'],coverWrapDirections:['left','right'],
  coverCatchDirections:RAPTOR_POSE_DIRECTIONS};
@@ -158,8 +158,13 @@ console.log('PASS local endpoints own pivot and retract while firing follows the
 const path=require('node:path'),crypto=require('node:crypto');
 const trialDirectory=path.join(__dirname,'../docs/raptor-infantry-restore/stationary-wrap');
 const trial=require(path.join(trialDirectory,'registration.json'));
-assert.equal(live.coverWrapDirections,undefined,'local wrap trial stays out of the shipping manifest');
-assert.equal(live.tallCoverSteel,undefined,'steel trial stays out of the shipping manifest');
+assert.deepEqual(live.coverWrapDirections,['left','right'],'only verified lateral wraps are live');
+assert.equal(live.tallCoverSteel,true);
+for(const [key,pose] of Object.entries(trial.frames)){
+ const active=fs.readFileSync(path.join(__dirname,'../public/assets/raptor-v2',key));
+ assert.equal(crypto.createHash('sha256').update(active).digest('hex'),pose.sha256,key);
+ assert.equal(live.frames[key].sha256,pose.sha256,key);
+}
 for(const pose of Object.values(trial.frames)){
  const bytes=fs.readFileSync(path.join(trialDirectory,pose.file));
  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),pose.sha256);
