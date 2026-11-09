@@ -200,3 +200,35 @@ for(let i=0;i<8;i++){
  assert.notEqual(raptorPoseDirection(Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx)),RAPTOR_POSE_DIRECTIONS[i]);
 }
 console.log('PASS actual slide catches from all eight approach buckets into a different cover-facing bucket');
+
+// A clear physical shot is insufficient for the art gate. Project the painted
+// muzzle through the same upright transform and check the renderer's polygons.
+const {coverOccluders}=require('../lib/cover-occlusion.ts');
+const {arenaPoint46,arenaInverse46,ARENA_UPRIGHT_SCALE47}=require('../lib/bayBridgePresentation.ts');
+function withinPolygon(point,polygon){
+ let inside=false;
+ for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
+  const a=polygon[i],b=polygon[j];
+  if((a.y>point.y)!==(b.y>point.y)&&point.x<(b.x-a.x)*(point.y-a.y)/(b.y-a.y)+a.x)inside=!inside;
+ }
+ return inside;
+}
+for(const rotation of [-Math.PI/12,0,Math.PI/12]){
+ const wall={x:645,y:480,w:120,h:20,height27j:100,a:rotation};
+ const tx=Math.cos(rotation),ty=Math.sin(rotation);
+ for(const side of ['left','right']){
+  const sign=side==='left'?-1:1;
+  for(const inset of [0,8,12,17]){
+   const x=wall.x+tx*sign*(60-inset)+ty*28.5,y=wall.y+ty*sign*(60-inset)-tx*28.5;
+   const floor=arenaPoint46(x,y),polygons=coverOccluders(wall,y);
+   const obscured=key=>{
+    const pose=trial.frames[key],scale=.26*.82*pose.drawScale*1.536*ARENA_UPRIGHT_SCALE47;
+    const point=arenaInverse46(floor.x+(pose.muzzle[0]-pose.anchor[0])*scale,floor.y+(pose.muzzle[1]-pose.anchor[1])*scale);
+    return polygons.some(polygon=>withinPolygon(point,polygon));
+   };
+   assert.equal(obscured('cover-wrap/'+side+'/000.png'),true,`tuck ${side} at ${rotation}, inset ${inset}`);
+   assert.equal(obscured('cover-lean/'+side+'/000.png'),false,`aim ${side} at ${rotation}, inset ${inset}`);
+  }
+ }
+}
+console.log('PASS actual projected-face masks conceal both tucked barrel tips and clear both firing barrels, across rotations and insets');

@@ -28,14 +28,14 @@
       ],
       "drawScale": 1.16,
       "muzzle": [
-        187,
-        328
+        299,
+        190
       ],
       "muzzleGround": [
-        187,
+        299,
         387
       ],
-      "sha256": "81a577ba53f5e39b740af2e8efd9e23ae35c7574bf5fc6a5f00c56ce20b40408"
+      "sha256": "9e52fdc911ade94d1adaddc6a66787d2a44c1b615473402ac9fd3b78ce4a839b"
     },
     "cover-wrap/left/001.png": {
       "file": "left-pivot.png",
@@ -103,14 +103,14 @@
       ],
       "drawScale": 1,
       "muzzle": [
-        386,
-        315
+        258,
+        210
       ],
       "muzzleGround": [
-        386,
+        258,
         410
       ],
-      "sha256": "3c4831e7407b5218665a7d3bc32e019177c9a246cd0d80e86ddc57fe61d74989"
+      "sha256": "ad33a9ac8375ba2668d8442cef4ea2e5dffe880f5540dafe6940b0f284cc48f1"
     },
     "cover-wrap/right/001.png": {
       "file": "right-pivot.png",
