@@ -22,7 +22,7 @@ for(let i=0;i<8;i++)for(const tall of [false,true]){
 assert.equal(raptorCoverExposureFrame(0,true,{postureDirections:[],coverLeanDirections:[]}).family,'idle');
 console.log('PASS 16 directional/height cases: authored availability, identical clearance/render selection, retraction, unchanged active inventory');
 
-const {raptorCoverEdge,raptorActorSample}=require('../lib/raptorPose.ts');
+const {raptorCoverEdge,raptorActorSample,raptorPoseDirection}=require('../lib/raptorPose.ts');
 const frontRight=Math.PI/4;
 const complete={
  postureDirections:RAPTOR_POSE_DIRECTIONS,
@@ -130,6 +130,31 @@ for(let i=0;i<8;i++){
 }
 console.log('PASS stationary tuck/pivot/aim/retract, immediate trigger socket, opposite cover winding, eight incoming directions and drive isolation');
 
+// The stationary connector belongs to the wall endpoint, even if aiming
+// crosses a sprite sector. Firing still uses the weapon-facing frame.
+for(const rotation of [-Math.PI/12,Math.PI/12])for(const edge of ['start','end']){
+ const sign=edge==='start'?-1:1;
+ const endpoint=rotation+(sign<0?Math.PI:0),aim=endpoint+Math.sign(rotation)*Math.PI/6;
+ const {raptorPoseDirection}=require('../lib/raptorPose.ts');
+ const endpointDir=raptorPoseDirection(endpoint),aimDir=raptorPoseDirection(aim);
+ assert.notEqual(endpointDir,aimDir);
+ const available={...wraps,coverLeanDirections:[endpointDir,aimDir],coverWrapDirections:[endpointDir]};
+ const coverAnchor={tx:Math.cos(rotation),ty:Math.sin(rotation),nx:Math.sin(rotation),ny:-Math.cos(rotation),t:sign<0?0:80,length:80};
+ const p={...actor,coverAnchor,gunFacing:aim};
+ const at=(m,state,time,input={},gunFacing=aim)=>advanceRaptorPose(m,raptorActorSample({...p,gunFacing,coverState11:state,input},time,.5),available);
+ const tuck=at(undefined,'brace',1);
+ assert.equal(tuck.frame.key,`cover-wrap/${endpointDir}/000.png`);
+ const pivot=at(tuck.memory,'expose',1.01);
+ assert.equal(pivot.frame.key,`cover-wrap/${endpointDir}/001.png`);
+ const fire=at(pivot.memory,'fire',1.02,{fire:true});
+ assert.deepEqual(fire.frame,raptorCoverExposureFrame(aim,true,available,edge));
+ const afterAimChange=at(fire.memory,'expose',1.11,{},endpoint);
+ assert.equal(afterAimChange.frame.key,`cover-lean/${endpointDir}/000.png`);
+ assert.equal(at(afterAimChange.memory,'retract',1.12).frame.key,pivot.frame.key);
+ assert.equal(at(tuck.memory,'expose',1.01,{},endpoint+Math.sign(rotation)*Math.PI/3).frame.family,'idle');
+}
+console.log('PASS local endpoints own pivot and retract while firing follows the aim sector');
+
 const path=require('node:path'),crypto=require('node:crypto');
 const trialDirectory=path.join(__dirname,'../docs/raptor-infantry-restore/stationary-wrap');
 const trial=require(path.join(trialDirectory,'registration.json'));
@@ -232,3 +257,40 @@ for(const rotation of [-Math.PI/12,0,Math.PI/12]){
  }
 }
 console.log('PASS actual projected-face masks conceal both tucked barrel tips and clear both firing barrels, across rotations and insets');
+
+// Both endpoints can be reachable on a short face. The aim-selected end
+// owns the connector even when the other end is closer.
+const shortFace={edge:1,t:7,length:20,tx:1,ty:0,nx:0,ny:-1};
+for(const [aim,edge,dir] of [[0,'end','right'],[Math.PI,'start','left']]){
+ const sample=raptorActorSample({...actor,coverAnchor:shortFace,gunFacing:aim},1,.5);
+ assert.equal(sample.coverEdge,edge);
+ assert.equal(raptorPoseDirection(sample.coverEndpointAngle),dir);
+ assert.equal(advanceRaptorPose(undefined,sample,live).frame.key,`cover-wrap/${dir}/001.png`);
+}
+console.log('PASS both reachable short-face endpoints follow the selected aim, including the farther end');
+
+// At the rail limit, continued stick input must stop the shuffle art as well
+// as the actor. Exercise both movement branches and each local endpoint.
+for(const weaveEnabled of [0,1]){
+ for(const [sign,start] of [[-1,8],[1,112]]){
+  const s=game.newGame('Raptor','test',0,'solo');s.time=2;s.phase='playing';s.matter=[];s.config.weaveEnabled=weaveEnabled;
+  const wall={id:'shuffle-limit',x:645,y:480,z:0,w:120,h:20,a:0,hp:200,maxHp:200,build:0,vx:0,vy:0,coverClass:'waist',height27j:48};
+  s.covers=[wall];
+  const p=s.players[0];
+  Object.assign(p,{character:'raptor',x:wall.x+start-60,y:wall.y-28.5,coverId:wall.id,coverMode:'braced',
+   coverAnchor:{edge:0,t:start,length:120,half:60,offset:start-60,nx:0,ny:-1,tx:1,ty:0,face:'top'}});
+  const tick=()=>{game.setInput(s,0,p.lastSeq+1,{x:sign,aim:0});game.advance(s,s.lastAt+1000/60);};
+  tick();
+  assert.equal(p.coverState11,'shuffle');
+  for(let i=0;i<30;i++)tick();
+  const t=sign<0?0:120,root=[p.x,p.y];
+  assert.equal(p.coverAnchor.t,t);
+  assert.equal(p.coverSpeed,0);
+  assert.equal(p.coverState11,'brace');
+  assert.equal(p.raptorFrame.family,'cover-hold');
+  tick();
+  assert.deepEqual([p.x,p.y],root);
+  assert.deepEqual([wall.x,wall.y,wall.a],[645,480,0]);
+ }
+}
+console.log('PASS continued shuffle input at both stationary rail limits holds the feet and barrier');

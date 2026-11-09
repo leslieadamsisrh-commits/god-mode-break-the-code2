@@ -8,7 +8,7 @@ export type RaptorPoseFrame={family:RaptorPoseFamily;frame:number;angle:number;k
 export type RaptorPoseSample={coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEdge?:RaptorCoverEdge;coverId?:string|null;coverEndpointAngle?:number;coverEntryAngle?:number;coverSpeed11?:number;time:number;x?:number;y?:number;angle:number;speed:number;travelAngle?:number;sliding:boolean;slideRemaining?:number;slideDuration?:number;airborne:boolean;verticalVelocity:number;hit:boolean;attached:boolean;firing:boolean};
 export type RaptorPoseMemory={
  cover?:{time:number;x?:number;y?:number;phase:number;attached:boolean};
- wrap?:{coverId:string;edge:RaptorCoverEdge;angle:number;since:number;retracting:boolean};
+ wrap?:{coverId:string;edge:RaptorCoverEdge;endpointAngle:number;since:number;retracting:boolean};
  gait:{time:number;x?:number;y?:number;phase:number;sprinting:boolean;jogging:boolean;airborne:boolean;landedAt:number};
  jump:JumpMemory;
  slide:{time:number;active:boolean;startedAt:number;recoveryUntil:number;angle:number};
@@ -31,11 +31,11 @@ export function raptorCoverEdge(anchor:RaptorCoverAnchor|null|undefined,angle:nu
  if(anchor.length-anchor.t<COVER_ENDPOINT_DISTANCE&&along>.18)return 'end';
 }
 
-function raptorCoverEndpointAngle(anchor:RaptorCoverAnchor|null|undefined){
+function raptorCoverEndpointAngle(anchor:RaptorCoverAnchor|null|undefined,edge:RaptorCoverEdge|undefined){
  if(anchor?.t===undefined||anchor.length===undefined)return undefined;
  const end=anchor.length-anchor.t;
  if(Math.min(anchor.t,end)>=COVER_ENDPOINT_DISTANCE)return undefined;
- const sign=anchor.t<end?-1:1;
+ const sign=edge?(edge==='start'?-1:1):anchor.t<end?-1:1;
  return Math.atan2(anchor.ty*sign,anchor.tx*sign);
 }
 
@@ -99,15 +99,17 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
   const state=s.coverState11,direction=raptorPoseDirection(s.angle);
   const wrap=continuous&&previous.wrap&&previous.wrap.coverId===s.coverId?previous.wrap:undefined;
   if(state==='expose'||state==='fire'){
-   if(s.coverTall11&&s.coverId&&s.coverEdge&&available.coverWrapDirections?.includes(direction)){
-    const same=wrap&&!wrap.retracting&&wrap.edge===s.coverEdge&&raptorPoseDirection(wrap.angle)===direction;
+   const exposure=raptorCoverExposureFrame(s.angle,!!s.coverTall11,available,s.coverEdge);
+   const endpointAngle=s.coverEndpointAngle;
+   if(s.coverTall11&&s.coverId&&s.coverEdge&&endpointAngle!==undefined&&exposure.family==='cover-lean'&&available.coverWrapDirections?.includes(raptorPoseDirection(endpointAngle))){
+    const same=wrap&&!wrap.retracting&&wrap.edge===s.coverEdge&&raptorPoseDirection(wrap.endpointAngle)===raptorPoseDirection(endpointAngle);
     const since=same?wrap.since:s.time;
-    memory.wrap={coverId:s.coverId,edge:s.coverEdge,angle:s.angle,since,retracting:false};
+    memory.wrap={coverId:s.coverId,edge:s.coverEdge,endpointAngle,since,retracting:false};
     // A short visual pivot is skipped on the trigger tick so the authored
     // exposure barrel drives both the visible shot and the clearance probe.
-    if(state!=='fire'&&!s.firing&&s.time-since<WRAP_CONNECTOR_SECONDS)return{memory,frame:selected('cover-wrap',1,s.angle)};
+    if(state!=='fire'&&!s.firing&&s.time-since<WRAP_CONNECTOR_SECONDS)return{memory,frame:selected('cover-wrap',1,endpointAngle)};
    }
-   return{memory,frame:raptorCoverExposureFrame(s.angle,!!s.coverTall11,available,s.coverEdge)};
+   return{memory,frame:exposure};
   }
   if(state==='catch'){
    const entry=s.coverEntryAngle??s.angle;
@@ -126,7 +128,7 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
     const since=wrap.retracting?wrap.since:s.time;
     if(s.time-since<WRAP_CONNECTOR_SECONDS){
      memory.wrap={...wrap,since,retracting:true};
-     return{memory,frame:selected('cover-wrap',1,wrap.angle)};
+     return{memory,frame:selected('cover-wrap',1,wrap.endpointAngle)};
     }
    }
    if(available.coverWrapDirections?.includes(raptorPoseDirection(s.coverEndpointAngle)))return{memory,frame:selected('cover-wrap',0,s.coverEndpointAngle)};
@@ -164,8 +166,9 @@ export function raptorActorFacing(p:RaptorPoseActor){
 }
 export function raptorActorSample(p:RaptorPoseActor,time:number,slideDuration:number):RaptorPoseSample{
  const speed=Math.hypot(p.vx,p.vy);
+ const coverEdge=raptorCoverEdge(p.coverAnchor,p.gunFacing);
  // Damage flash is cosmetic; only physical knockback interrupts the pose clock.
- return{coverTall11:p.coverTall11,coverState11:p.coverState11,coverEdge:raptorCoverEdge(p.coverAnchor,p.gunFacing),coverId:p.coverId,coverEndpointAngle:raptorCoverEndpointAngle(p.coverAnchor),coverEntryAngle:p.coverEntryAngle,coverSpeed11:p.coverSpeed,time,x:p.x,y:p.y,angle:raptorActorFacing(p),speed,travelAngle:speed>2?Math.atan2(p.vy,p.vx):undefined,sliding:p.slide>0||p.pinball>0,slideRemaining:p.slide>0?p.slide:undefined,slideDuration,airborne:p.grounded===false||Math.abs(p.vz||0)>.1||(p.jumpHeight||0)>0,verticalVelocity:p.vz||0,hit:p.knock>0,attached:!!p.coverId,firing:!!p.input?.fire||p.pendingFireUntil!==undefined};
+ return{coverTall11:p.coverTall11,coverState11:p.coverState11,coverEdge,coverId:p.coverId,coverEndpointAngle:raptorCoverEndpointAngle(p.coverAnchor,coverEdge),coverEntryAngle:p.coverEntryAngle,coverSpeed11:p.coverSpeed,time,x:p.x,y:p.y,angle:raptorActorFacing(p),speed,travelAngle:speed>2?Math.atan2(p.vy,p.vx):undefined,sliding:p.slide>0||p.pinball>0,slideRemaining:p.slide>0?p.slide:undefined,slideDuration,airborne:p.grounded===false||Math.abs(p.vz||0)>.1||(p.jumpHeight||0)>0,verticalVelocity:p.vz||0,hit:p.knock>0,attached:!!p.coverId,firing:!!p.input?.fire||p.pendingFireUntil!==undefined};
 }
 
 

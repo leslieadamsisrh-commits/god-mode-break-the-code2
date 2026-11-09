@@ -292,18 +292,17 @@ function moveAlongCover11(p:Player,s:GameState,i:InputState,dt:number){
   placeOnCover(p,s);return;
  }
  const fragmented=s.covers.find(q=>q.id===p.coverId&&q.fracture32);
- if(fragmented){const along=i.x*a.tx+i.y*a.ty,raw=a.t+along*moveSpeed*dt;a.t=clamp(raw,0,a.length);p.coverSpeed=along*moveSpeed;p.vx=a.tx*p.coverSpeed;p.vy=a.ty*p.coverSpeed;placeOnCover(p,s);p.peek=false;p.peekEdge=Math.min(a.t,a.length-a.t)<18;return;}
+ if(fragmented){const along=i.x*a.tx+i.y*a.ty,before=a.t;a.t=clamp(before+along*moveSpeed*dt,0,a.length);p.coverSpeed=(a.t-before)/dt;p.vx=a.tx*p.coverSpeed;p.vy=a.ty*p.coverSpeed;placeOnCover(p,s);p.peek=false;p.peekEdge=Math.min(a.t,a.length-a.t)<18;return;}
  if(c.weaveEnabled<.5){
    const cv=s.covers.find(x=>x.id===p.coverId);if(!cv){releaseCover(p,s);return}
    const edge=a.edge,cur=anchorForEdge(cv,edge,a.t),along=i.x*cur.tx+i.y*cur.ty;let t=cur.t;
-   const step=moveSpeed*dt*.78;t=clamp(t+along*step,0,cur.length);p.coverAnchor=anchorForEdge(cv,edge,t);p.coverSpeed=along*moveSpeed*.78;p.vx=p.coverAnchor.tx*p.coverSpeed;p.vy=p.coverAnchor.ty*p.coverSpeed;placeOnCover(p,s);
+   const step=moveSpeed*dt*.78;t=clamp(t+along*step,0,cur.length);p.coverAnchor=anchorForEdge(cv,edge,t);p.coverSpeed=(t-cur.t)/dt;p.vx=p.coverAnchor.tx*p.coverSpeed;p.vy=p.coverAnchor.ty*p.coverSpeed;placeOnCover(p,s);
    if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor.nx+Math.sin(p.gunFacing)*p.coverAnchor.ny;p.peek=true;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor.t,p.coverAnchor.length-p.coverAnchor.t)<18}
    return;
  }
  const along=i.x*a.tx+i.y*a.ty;
- p.coverSpeed+=(along*moveSpeed-p.coverSpeed)*Math.min(1,dt*c.response);if(Math.abs(along)<.001)p.coverSpeed*=Math.pow(c.stopDrag,dt);
  const before=a.t,raw=a.t+along*moveSpeed*dt;a.t=clamp(raw,0,a.length);
- if(a.t===before)p.coverSpeed=0;
+ p.coverSpeed=(a.t-before)/dt;
  placeOnCover(p,s);
  if(p.coverMode==="braced"&&i.coverAim){const forward=Math.cos(p.gunFacing)*p.coverAnchor!.nx+Math.sin(p.gunFacing)*p.coverAnchor!.ny;p.peek=true;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}else{p.peek=false;p.peekEdge=Math.min(p.coverAnchor!.t,p.coverAnchor!.length-p.coverAnchor!.t)<18}
 }
@@ -1291,6 +1290,7 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
   if(!(p.coverId&&p.coverState11!=='expose'&&p.coverState11!=='fire')&&(i.fire||p.pendingFireUntil!==undefined)&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
    const attachedCover=p.coverId?s.covers.find(cv=>cv.id===p.coverId):undefined;
    const muzzle=barrelSocket27d(p,c.spriteScale),legacyAimOrigin={x:muzzle.x,y:muzzle.y},physical=coverMuzzleClearance(p,attachedCover,muzzle,p.gunFacing);
+   if(p.character==='raptor'&&!physical.allowed){p.pendingFireUntil=undefined;continue;}
    // Shared cover state gates the trigger before character-specific socket clearance.
    // Authored Raptor XYZ must clear cover geometrically. Jade's exposure art
    // still uses its legacy clearance plus the matching raised muzzle below.

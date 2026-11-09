@@ -34,3 +34,11 @@ The corrected left and right tucks draw the lowered barrels farther inboard whil
 The local Chromium character lab exercised tuck, pivot, aim, fire and retract at both ends of one tall wall, then repeated the exchange at 15° and 180°. The attached actor and wall stayed fixed during stationary aim. The same run exercised shuffle and stop, low-cover fire and release, and verified that tall-center fire consumed no shell. A normal-speed bot round and rematch used scripted keyboard input with all 96 Jade atlas entries loaded.
 
 The production build and the restoration, cover contact, shared-cover and psychic checks pass. The two lateral stationary sequences are ready for isolated review through the staging script above. The wider directional set remains in authoring and the shipping atlas still uses the existing frames.
+
+## Continuation checkpoint
+
+The continuation starts at verified branch tip `e30ee7c58774fef698285a2a1261459d4c7d62bf`, two commits past the preserved `14865675eed771d8cadad8be2d4f620489531baa`. Railway reported successful deployment `abb5a3b3-5b17-463b-987d-12d67f5a36bb` of 39T14 (`2b64e2d`) on the isolated Character Lab. The playtest route returned HTTP 200.
+
+Local verification on the staged 39T15 lab passed both endpoints at 0°, 15° and 180°, tall-center blocked fire, waist-cover fire and retract, and shuffle and stop. Attached roots and wall transforms were checked through aim and fire. A normal-speed Raptor-versus-Jade round finished and rematch reset with all 96 Jade atlas entries loaded. The six focused cover test scripts and the psychic-cover script also passed.
+
+A short face can make both local endpoints reachable. The connector now follows the endpoint chosen by aim, including the farther end. Shuffle speed reports actual travel after the rail clamp, and a Raptor shot is gated by the selected frame's actual muzzle clearance. The lateral sequences are available via the local staging command. The eight-direction art stays in [directional review](../directional-ink-review/README.md).
