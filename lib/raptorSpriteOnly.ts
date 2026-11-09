@@ -10,7 +10,7 @@ export type RaptorAction="idle"|"walk"|"run"|"slide"|"jump"|"land"|"shoot"|"hit"
 export const RAPTOR_DIRECTIONS=RAPTOR_POSE_DIRECTIONS;
 export type RaptorDirection=typeof RAPTOR_DIRECTIONS[number];
 // Physical inventory only. Other actions deliberately borrow these provisional families.
-export const RAPTOR_COUNTS={idle:1,run:4,stalk:4,jog:4,sprint:4,slide:3,jump:6,'cover-drive':2,'cover-hold':1,'cover-lean':2,'cover-pop':1,'cover-catch':1,'cover-shuffle':2} as const;
+export const RAPTOR_COUNTS={idle:1,run:4,stalk:4,jog:4,sprint:4,slide:3,jump:6,'cover-drive':2,'cover-hold':1,'cover-lean':2,'cover-pop':1,'cover-catch':1,'cover-shuffle':2,'cover-wrap':2} as const;
 export type RaptorFamily=keyof typeof RAPTOR_COUNTS;
 // New posture artwork is enabled only for complete, explicitly accepted directional sets.
 export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string;worldX?:number;worldY?:number;travelAngle?:number;verticalVelocity?:number;authoritativeFrame?:RaptorPoseFrame};

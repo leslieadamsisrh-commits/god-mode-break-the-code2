@@ -1,0 +1,166 @@
+{
+  "status": "Local stationary trial, inactive in production",
+  "availability": {
+    "coverWrapDirections": [
+      "left",
+      "right"
+    ],
+    "coverLeanDirections": [
+      "left",
+      "right"
+    ],
+    "tallCoverSteel": true
+  },
+  "frames": {
+    "cover-wrap/left/000.png": {
+      "file": "left-tuck.png",
+      "anchor": [
+        260,
+        387
+      ],
+      "supportFoot": [
+        197,
+        387
+      ],
+      "pelvis": [
+        301,
+        302
+      ],
+      "drawScale": 1.16,
+      "muzzle": [
+        187,
+        328
+      ],
+      "muzzleGround": [
+        187,
+        387
+      ],
+      "sha256": "81a577ba53f5e39b740af2e8efd9e23ae35c7574bf5fc6a5f00c56ce20b40408"
+    },
+    "cover-wrap/left/001.png": {
+      "file": "left-pivot.png",
+      "anchor": [
+        260,
+        387
+      ],
+      "supportFoot": [
+        197,
+        387
+      ],
+      "pelvis": [
+        298,
+        301
+      ],
+      "drawScale": 1.16,
+      "muzzle": [
+        114,
+        261
+      ],
+      "muzzleGround": [
+        114,
+        387
+      ],
+      "sha256": "ca4925c83811490a44edbb48f9fc2937b674443cbc2c81aa4f8c17365c2ecc61"
+    },
+    "cover-lean/left/000.png": {
+      "file": "left-aim.png",
+      "anchor": [
+        260,
+        387
+      ],
+      "supportFoot": [
+        197,
+        387
+      ],
+      "pelvis": [
+        304,
+        302
+      ],
+      "drawScale": 1.16,
+      "muzzle": [
+        83,
+        246
+      ],
+      "muzzleGround": [
+        83,
+        387
+      ],
+      "sha256": "04e7dd2369d54a92f8e1c9f7f0ece14a45897449409f9fb3a419e022ad998cb3"
+    },
+    "cover-wrap/right/000.png": {
+      "file": "right-tuck.png",
+      "anchor": [
+        266,
+        410
+      ],
+      "supportFoot": [
+        360,
+        410
+      ],
+      "pelvis": [
+        254,
+        295
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        386,
+        315
+      ],
+      "muzzleGround": [
+        386,
+        410
+      ],
+      "sha256": "3c4831e7407b5218665a7d3bc32e019177c9a246cd0d80e86ddc57fe61d74989"
+    },
+    "cover-wrap/right/001.png": {
+      "file": "right-pivot.png",
+      "anchor": [
+        263,
+        409
+      ],
+      "supportFoot": [
+        357,
+        409
+      ],
+      "pelvis": [
+        253,
+        299
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        455,
+        252
+      ],
+      "muzzleGround": [
+        455,
+        409
+      ],
+      "sha256": "47227770250ee692a9304794533aedcbb3720ab63a09c35856745a44da1268ee"
+    },
+    "cover-lean/right/000.png": {
+      "file": "right-aim.png",
+      "anchor": [
+        266,
+        412
+      ],
+      "supportFoot": [
+        360,
+        412
+      ],
+      "pelvis": [
+        260,
+        298
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        480,
+        223
+      ],
+      "muzzleGround": [
+        480,
+        412
+      ],
+      "sha256": "50515653f37182116af9d8df4723f94e33b437db8f2fd78464a22a0884476105"
+    }
+  }
+}

@@ -5,7 +5,8 @@ import {drawSpiral37} from '../lib/spiralPresentation37';
 import {interpolateCover35} from "../lib/presentation35";
 import {type MatchRules31,PRACTICE_RULES31,validateRules31} from "../lib/matchRules31";
 import {drawCitadel29} from '../lib/citadelPresentation29';
-import {drawSection27j} from '../lib/psychicPresentation27j';
+import {drawSection27j,RAPTOR_TALL_STEEL} from '../lib/psychicPresentation27j';
+import raptorInventory from '../public/assets/raptor-v2/manifest.json';
 import {drawStructures27e,withStructureOcclusion27e,drawConcealedSpark27h} from '../lib/arenaPresentation27e';
 import {barrelSocket27d} from "../lib/ballistics27d";
 import {useCallback,useEffect,useRef,useState} from "react";
@@ -146,6 +147,7 @@ function preload(onProgress?:(s:BootState)=>void){
   const environment=["damaged-jersey","fractured-divider","wrecked-sedan","service-van","maintenance-cabinet","fractured-girder","broken-railing","roadwork-equipment","service-module","maintenance-block"] as const;
   const evolution=[["helix-front","/assets/god-evolution-tier1/helix-front-atlas.svg"],["helix-rear","/assets/god-evolution-tier1/helix-rear-atlas.svg"],["flame","/assets/god-evolution-tier1/flame-atlas.svg"],["geometry","/assets/god-evolution-tier1/geometry-atlas.svg"],["crystal-code","/assets/god-evolution-tier1/crystal-atlas.svg"],["code","/assets/god-evolution-tier1/code-atlas.svg"],["ground-fracture","/assets/god-evolution-tier1/ground-atlas.svg"]] as const;
   const jobs:{label:string;src:string;fallback?:string;ready:(im:HTMLImageElement)=>void}[]=[
+   ...("tallCoverSteel" in raptorInventory&&raptorInventory.tallCoverSteel===true?[{label:RAPTOR_TALL_STEEL,src:"/assets/raptor-v2/tall-cover-steel.webp",ready:(im:HTMLImageElement)=>environmentAssets.set(RAPTOR_TALL_STEEL,im)}]:[]),
    {label:"baron29",src:"/assets/dimension33/build29/baron-broadcast.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("baron29",im)},
    {label:"matter42",src:"/assets/matter42/tumble-atlas.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("matter42",im)},
    {label:"war-foundation45",src:"/assets/dimension33/arena-evolution.svg",fallback:"/assets/war-games45/foundation.webp",ready:(im:HTMLImageElement)=>environmentAssets.set("war-foundation45",im)},
