@@ -1,5 +1,7 @@
 # Directional ink candidates
 
+This is the original 48-draft checkpoint. For current activation status and the corrected back-right shuffle, see the [directional cover pass](../directional-finish/README.md).
+
 This folder holds 48 full-body transparent drawing candidates across eight camera facings. Each direction has a slide catch, hold, two shuffle steps, low pop and tall aim. Registration records source crop, provisional pelvis and support-foot landmarks, uniform draw scale per facing, and the visible barrel tip. Each sprite is isolated from the wall. The active manifest and stationary-wrap install script exclude these frames.
 
 ## Reachable transitions

@@ -1,0 +1,645 @@
+{
+  "status": "Review exports. The back-right shuffle B drawing was separately installed as a runtime PNG.",
+  "frames": {
+    "back-right/shuffle-b": {
+      "file": "back-right-shuffle-b.webp",
+      "source": "75b1376a-cf29-479d-ab73-439b25ab024a",
+      "crop": [
+        104,
+        146,
+        1047,
+        948
+      ],
+      "anchor": [
+        245,
+        450
+      ],
+      "supportFoot": [
+        293,
+        450
+      ],
+      "pelvis": [
+        245,
+        309
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        466,
+        229
+      ],
+      "muzzleGround": [
+        466,
+        450
+      ],
+      "sha256": "73e2c892fd7b00e1351bcb91a4edbf0c7e59d9619bb7b298101ab3288b0f2229"
+    },
+    "front/aim": {
+      "file": "front-aim.webp",
+      "source": "d0b467fc-e7da-4dab-9f6d-5d0d28337006",
+      "crop": [
+        109,
+        82,
+        983,
+        1088
+      ],
+      "anchor": [
+        275,
+        466
+      ],
+      "supportFoot": [
+        157,
+        466
+      ],
+      "pelvis": [
+        275,
+        316
+      ],
+      "drawScale": 0.74,
+      "muzzle": [
+        294,
+        238
+      ],
+      "muzzleGround": [
+        294,
+        533
+      ],
+      "sha256": "b66652499b3b41446078619a6a1e5a6eb3f799e90e2b3a76ffcea8101d43dd39"
+    },
+    "front-right/tuck": {
+      "file": "front-right-tuck.webp",
+      "source": "56b6bdf9-ee95-4f93-8a6f-17a42bdb7aa6",
+      "crop": [
+        47,
+        77,
+        387,
+        378
+      ],
+      "anchor": [
+        296,
+        424
+      ],
+      "supportFoot": [
+        180,
+        424
+      ],
+      "pelvis": [
+        296,
+        306
+      ],
+      "drawScale": 0.91,
+      "muzzle": [
+        378,
+        286
+      ],
+      "muzzleGround": [
+        378,
+        424
+      ],
+      "sha256": "a46ef5da2816263936425e5bc5d74fe331a0ea47ae895077ba6839d3749cde49"
+    },
+    "front-right/pivot": {
+      "file": "front-right-pivot.webp",
+      "source": "56b6bdf9-ee95-4f93-8a6f-17a42bdb7aa6",
+      "crop": [
+        550,
+        75,
+        436,
+        380
+      ],
+      "anchor": [
+        275,
+        425
+      ],
+      "supportFoot": [
+        148,
+        425
+      ],
+      "pelvis": [
+        275,
+        306
+      ],
+      "drawScale": 0.91,
+      "muzzle": [
+        446,
+        254
+      ],
+      "muzzleGround": [
+        446,
+        425
+      ],
+      "sha256": "41b0569ce020114d659e03029a43ba9d7e5177b91b1aa366e6e5d5841442b38f"
+    },
+    "front-right/return": {
+      "file": "front-right-return.webp",
+      "source": "56b6bdf9-ee95-4f93-8a6f-17a42bdb7aa6",
+      "crop": [
+        1061,
+        73,
+        402,
+        382
+      ],
+      "anchor": [
+        295,
+        426
+      ],
+      "supportFoot": [
+        168,
+        426
+      ],
+      "pelvis": [
+        295,
+        306
+      ],
+      "drawScale": 0.91,
+      "muzzle": [
+        431,
+        316
+      ],
+      "muzzleGround": [
+        431,
+        426
+      ],
+      "sha256": "87d611b4c7538ce89f6622abd2f690e076d1aaabd2ea1cf854a9cb24c91aa7c6"
+    },
+    "front-left/tuck": {
+      "file": "front-left-tuck.webp",
+      "source": "56b6bdf9-ee95-4f93-8a6f-17a42bdb7aa6",
+      "crop": [
+        70,
+        569,
+        405,
+        388
+      ],
+      "anchor": [
+        244,
+        427
+      ],
+      "supportFoot": [
+        343,
+        427
+      ],
+      "pelvis": [
+        244,
+        309
+      ],
+      "drawScale": 0.87,
+      "muzzle": [
+        116,
+        294
+      ],
+      "muzzleGround": [
+        116,
+        427
+      ],
+      "sha256": "738fc34958a328a7f398e48c34c5d636a28370d07b89cdcc66293c061a996808"
+    },
+    "front-left/pivot": {
+      "file": "front-left-pivot.webp",
+      "source": "56b6bdf9-ee95-4f93-8a6f-17a42bdb7aa6",
+      "crop": [
+        527,
+        559,
+        463,
+        399
+      ],
+      "anchor": [
+        268,
+        432
+      ],
+      "supportFoot": [
+        367,
+        432
+      ],
+      "pelvis": [
+        268,
+        313
+      ],
+      "drawScale": 0.87,
+      "muzzle": [
+        55,
+        259
+      ],
+      "muzzleGround": [
+        55,
+        432
+      ],
+      "sha256": "41fb1bb238576659f3da92d08c835def3432fc0ab0b283f3eab9db6d05c611dc"
+    },
+    "front-left/return": {
+      "file": "front-left-return.webp",
+      "source": "56b6bdf9-ee95-4f93-8a6f-17a42bdb7aa6",
+      "crop": [
+        1071,
+        562,
+        435,
+        396
+      ],
+      "anchor": [
+        253,
+        431
+      ],
+      "supportFoot": [
+        351,
+        431
+      ],
+      "pelvis": [
+        253,
+        312
+      ],
+      "drawScale": 0.87,
+      "muzzle": [
+        66,
+        312
+      ],
+      "muzzleGround": [
+        66,
+        431
+      ],
+      "sha256": "126c87763461c889e35667cd7862d636d5b393a56311dc314fba4240c86f47bd"
+    },
+    "back-right/tuck": {
+      "file": "back-right-tuck.webp",
+      "source": "c772e1f2-59d4-4b0b-9aef-2a0c10bc01c9",
+      "crop": [
+        32,
+        88,
+        391,
+        372
+      ],
+      "anchor": [
+        267,
+        423
+      ],
+      "supportFoot": [
+        304,
+        423
+      ],
+      "pelvis": [
+        267,
+        297
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        399,
+        227
+      ],
+      "muzzleGround": [
+        399,
+        423
+      ],
+      "sha256": "7e160bf076dec3f99e274c60b3cade448da9af245d156c3d635500d0e829955e"
+    },
+    "back-right/pivot": {
+      "file": "back-right-pivot.webp",
+      "source": "c772e1f2-59d4-4b0b-9aef-2a0c10bc01c9",
+      "crop": [
+        526,
+        55,
+        415,
+        404
+      ],
+      "anchor": [
+        256,
+        439
+      ],
+      "supportFoot": [
+        288,
+        439
+      ],
+      "pelvis": [
+        256,
+        297
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        435,
+        223
+      ],
+      "muzzleGround": [
+        435,
+        439
+      ],
+      "sha256": "87bb01a1c55a4b2552b7aa177fef86bbbdf7b054970f134917f19ffb91ce24be"
+    },
+    "back-right/return": {
+      "file": "back-right-return.webp",
+      "source": "c772e1f2-59d4-4b0b-9aef-2a0c10bc01c9",
+      "crop": [
+        1032,
+        42,
+        392,
+        417
+      ],
+      "anchor": [
+        273,
+        445
+      ],
+      "supportFoot": [
+        290,
+        445
+      ],
+      "pelvis": [
+        273,
+        291
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        424,
+        268
+      ],
+      "muzzleGround": [
+        424,
+        445
+      ],
+      "sha256": "329b8eccd072c4ff8ee6c1e2417b45bf3e1be0edcb7fed6d1e005500b18af9a7"
+    },
+    "back-left/tuck": {
+      "file": "back-left-tuck.webp",
+      "source": "c772e1f2-59d4-4b0b-9aef-2a0c10bc01c9",
+      "crop": [
+        116,
+        569,
+        393,
+        392
+      ],
+      "anchor": [
+        258,
+        432
+      ],
+      "supportFoot": [
+        207,
+        432
+      ],
+      "pelvis": [
+        258,
+        304
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        83,
+        252
+      ],
+      "muzzleGround": [
+        83,
+        432
+      ],
+      "sha256": "add0cc3437c7b8b316644de8109e17c85f2f3284e9b8c10375bc12fcc57bd434"
+    },
+    "back-left/pivot": {
+      "file": "back-left-pivot.webp",
+      "source": "c772e1f2-59d4-4b0b-9aef-2a0c10bc01c9",
+      "crop": [
+        568,
+        537,
+        413,
+        424
+      ],
+      "anchor": [
+        268,
+        447
+      ],
+      "supportFoot": [
+        214,
+        447
+      ],
+      "pelvis": [
+        268,
+        315
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        75,
+        230
+      ],
+      "muzzleGround": [
+        75,
+        447
+      ],
+      "sha256": "1648f6fe4b65c9e651473f48de04b32531b02d5f645fe1545ddacd7cfadcba20"
+    },
+    "back-left/return": {
+      "file": "back-left-return.webp",
+      "source": "c772e1f2-59d4-4b0b-9aef-2a0c10bc01c9",
+      "crop": [
+        1083,
+        524,
+        390,
+        437
+      ],
+      "anchor": [
+        263,
+        453
+      ],
+      "supportFoot": [
+        208,
+        453
+      ],
+      "pelvis": [
+        263,
+        310
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        85,
+        273
+      ],
+      "muzzleGround": [
+        85,
+        453
+      ],
+      "sha256": "3bf6965ea6ddfad03867d58274a4d11a763ccafc616c4c7320ede24dd95217e0"
+    },
+    "front/tuck": {
+      "file": "front-tuck.webp",
+      "source": "6b787036-6b92-4e42-9ff9-9fd4f2acc041",
+      "crop": [
+        51,
+        17,
+        402,
+        457
+      ],
+      "anchor": [
+        273,
+        460
+      ],
+      "supportFoot": [
+        157,
+        460
+      ],
+      "pelvis": [
+        273,
+        326
+      ],
+      "drawScale": 0.74,
+      "muzzle": [
+        364,
+        306
+      ],
+      "muzzleGround": [
+        364,
+        460
+      ],
+      "sha256": "6181a90c1637f6ae53b80ffd87837197f51c0eddedd9429385f073146be2b4f9"
+    },
+    "front/return": {
+      "file": "front-return.webp",
+      "source": "6b787036-6b92-4e42-9ff9-9fd4f2acc041",
+      "crop": [
+        1043,
+        19,
+        419,
+        455
+      ],
+      "anchor": [
+        282,
+        459
+      ],
+      "supportFoot": [
+        162,
+        459
+      ],
+      "pelvis": [
+        282,
+        324
+      ],
+      "drawScale": 0.74,
+      "muzzle": [
+        430,
+        353
+      ],
+      "muzzleGround": [
+        430,
+        459
+      ],
+      "sha256": "22d9a72ba9c8806ea8a364c48ebfdeeb18fe56ab4d93b1f6da3d56d42a11c07f"
+    },
+    "back/tuck": {
+      "file": "back-tuck.webp",
+      "source": "6b787036-6b92-4e42-9ff9-9fd4f2acc041",
+      "crop": [
+        70,
+        512,
+        402,
+        467
+      ],
+      "anchor": [
+        252,
+        466
+      ],
+      "supportFoot": [
+        343,
+        466
+      ],
+      "pelvis": [
+        252,
+        307
+      ],
+      "drawScale": 0.79,
+      "muzzle": [
+        110,
+        253
+      ],
+      "muzzleGround": [
+        110,
+        466
+      ],
+      "sha256": "5cf302c1274f326071c474688a2747c3acc5b015ad364249a91351f070e805a5"
+    },
+    "back/aim": {
+      "file": "back-aim.webp",
+      "source": "7afd3154-c6d6-4fa9-a9cb-7af6178c8845",
+      "crop": [
+        162,
+        79,
+        941,
+        1074
+      ],
+      "anchor": [
+        251,
+        458
+      ],
+      "supportFoot": [
+        340,
+        458
+      ],
+      "pelvis": [
+        251,
+        304
+      ],
+      "drawScale": 0.79,
+      "muzzle": [
+        315,
+        116
+      ],
+      "muzzleGround": [
+        315,
+        359
+      ],
+      "sha256": "ffc721787e759a4e44391d351691f0e258dbefc4446a0b0db5b3fd500f992e6f"
+    },
+    "left/return": {
+      "file": "left-return.webp",
+      "source": "31a15d10-ae2e-4268-8a24-10d77170d452",
+      "crop": [
+        197,
+        27,
+        845,
+        648
+      ],
+      "anchor": [
+        261,
+        409
+      ],
+      "supportFoot": [
+        325,
+        409
+      ],
+      "pelvis": [
+        261,
+        326
+      ],
+      "drawScale": 1.12,
+      "muzzle": [
+        52,
+        302
+      ],
+      "muzzleGround": [
+        52,
+        409
+      ],
+      "sha256": "dc55c540388dda8483ac29a6fc2273d334f7114e1b539cbd0afabdd0d5ff160c"
+    },
+    "right/return": {
+      "file": "right-return.webp",
+      "source": "31a15d10-ae2e-4268-8a24-10d77170d452",
+      "crop": [
+        1153,
+        23,
+        857,
+        658
+      ],
+      "anchor": [
+        267,
+        409
+      ],
+      "supportFoot": [
+        170,
+        409
+      ],
+      "pelvis": [
+        267,
+        317
+      ],
+      "drawScale": 1.03,
+      "muzzle": [
+        459,
+        322
+      ],
+      "muzzleGround": [
+        459,
+        409
+      ],
+      "sha256": "85ad3eb00f7b1610a0b888723e0342746b012e029a9f50c1998e26b173905a9b"
+    }
+  }
+}

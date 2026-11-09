@@ -62,6 +62,50 @@ for(const sign of [-1,1]){
 }
 console.log('PASS isolated availability: each tall endpoint resolves one shared firing pose; dedicated catch and reversible shuffle stay gated');
 
+// Verify the installed back-right hold and opposing plants against the same
+// simulation that owns rail travel. Exercise both directions on a rotated wall.
+if(live.coverShuffleDirections?.includes('back-right')){
+ const path=require('node:path'),crypto=require('node:crypto'),game=require('../lib/game.ts');
+ const names=['cover-hold/back-right/000.png','cover-shuffle/back-right/000.png','cover-shuffle/back-right/001.png'];
+ const records=names.map(key=>{
+  const frame=live.frames[key];
+  const bytes=fs.readFileSync(path.join(__dirname,'../public/assets/raptor-v2',key));
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),frame.sha256,key);
+  assert.deepEqual([bytes.readUInt32BE(16),bytes.readUInt32BE(20),bytes[25]],[512,512,6],key);
+  assert.equal(frame.anchor[1],frame.supportFoot[1],key);
+  return frame;
+ });
+ assert.ok(records[1].supportFoot[0]<records[1].anchor[0]);
+ assert.ok(records[2].supportFoot[0]>records[2].anchor[0]);
+ for(const sign of [-1,1]){
+  const s=game.newGame('Raptor','test',0,'solo');s.time=2;s.phase='playing';s.matter=[];
+  const a=-3*Math.PI/4,tx=Math.cos(a),ty=Math.sin(a),nx=ty,ny=-tx,t=sign>0?35:145;
+  const wall={id:'back-right-rail',x:645,y:480,z:0,w:180,h:20,a,hp:200,maxHp:200,build:0,vx:0,vy:0,coverClass:'waist',height27j:48};
+  s.covers=[wall];
+  const p=s.players[0],aim=-Math.PI/4;
+  Object.assign(p,{character:'raptor',x:wall.x+(t-90)*tx+nx*28.5,y:wall.y+(t-90)*ty+ny*28.5,aim,gunFacing:aim,
+   coverId:wall.id,coverMode:'braced',coverAnchor:{edge:0,t,length:180,half:90,offset:t-90,nx,ny,tx,ty,face:'top'}});
+  const tick=input=>{game.setInput(s,0,p.lastSeq+1,{aim,...input});game.advance(s,s.lastAt+1000/60);};
+  tick({});
+  assert.equal(p.raptorFrame.key,names[0]);
+  const seen=new Set();
+  for(let i=0;i<30;i++){
+   tick({x:sign*tx,y:sign*ty});
+   if(p.raptorFrame.family==='cover-shuffle')seen.add(p.raptorFrame.key);
+  }
+  assert.deepEqual([...seen],sign>0?names.slice(1):names.slice(1).reverse());
+  assert.ok(sign*(p.coverAnchor.t-t)>30);
+  tick({});
+  const stopped=[p.x,p.y,p.coverAnchor.t];
+  assert.equal(p.raptorFrame.key,names[0]);
+  assert.equal(Math.abs(p.coverSpeed),0);
+  for(let i=0;i<8;i++)tick({});
+  assert.deepEqual([p.x,p.y,p.coverAnchor.t],stopped);
+  assert.deepEqual([wall.x,wall.y,wall.a],[645,480,a]);
+ }
+ console.log('PASS back-right authored alternating shuffle on both rail directions, stop, and fixed wall');
+}
+
 // Install trial metadata in this test process only. Exercise the same authority
 // tick and sockets used by the browser without activating the shipping atlas.
 const {frames:ambush}=require('../docs/raptor-infantry-restore/ambush-pass/registration.json');

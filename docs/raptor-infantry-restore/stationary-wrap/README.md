@@ -1,5 +1,7 @@
 # Stationary wrap production trial
 
+The six stationary frames were promoted to the isolated Character Lab in commit `da1c330`. The notes below describe the original local trial and how it was verified. See the [directional cover pass](../directional-finish/README.md) for the current activation status.
+
 This is the first production sprite batch from the approved left/right wrap storyboard. It starts from restoration commit 14865675eed771d8cadad8be2d4f620489531baa. The isolated service was verified on 39T14 / 2b64e2d09714ae15899c5399545da29b464f7c56. The runtime manifest remains byte-identical to the parent. The code and assets here can be reviewed without enabling an unfinished family.
 
 - Six full-body 512px RGBA frames. The two inked masters provide the aim poses. Each side has an independently authored tuck and pivot. The pivot reverses on retract while the support foot retains its frame-relative placement.

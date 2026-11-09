@@ -1,5 +1,5 @@
 {
-  "build": "39T15-stationary-wrap",
+  "build": "39T15-directional-cover",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -3589,20 +3589,27 @@
     },
     "cover-hold/back-right/000.png": {
       "anchor": [
-        253,
-        430
+        242,
+        429
       ],
-      "drawScale": 1,
+      "supportFoot": [
+        302,
+        429
+      ],
+      "pelvis": [
+        242,
+        298
+      ],
+      "drawScale": 0.83,
       "muzzle": [
-        419,
-        224
+        457,
+        233
       ],
       "muzzleGround": [
-        419,
-        430
+        457,
+        429
       ],
-      "sha256": "adeef0a157c30f4b848ce3defeec8b698a5f1980ce9e8c075271b5861ee8856e",
-      "source": "39T14 targeted grounded hold; exec-7cbeb34d-1d16-4def-9308-cf6f3e549df5.png"
+      "sha256": "e417486e24eaa0f7d0fc928f2b7bc10afd6d220a2b1a558871b52db1fe84cc74"
     },
     "cover-wrap/left/000.png": {
       "anchor": [
@@ -3699,6 +3706,54 @@
         412
       ],
       "sha256": "50515653f37182116af9d8df4723f94e33b437db8f2fd78464a22a0884476105"
+    },
+    "cover-shuffle/back-right/000.png": {
+      "anchor": [
+        237,
+        427
+      ],
+      "supportFoot": [
+        154,
+        427
+      ],
+      "pelvis": [
+        237,
+        292
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        453,
+        223
+      ],
+      "muzzleGround": [
+        453,
+        427
+      ],
+      "sha256": "06c309b6d4755e5bc8f247495e08dfcc0d4c37cd6df7771192185b0ced8db1de"
+    },
+    "cover-shuffle/back-right/001.png": {
+      "anchor": [
+        245,
+        450
+      ],
+      "supportFoot": [
+        293,
+        450
+      ],
+      "pelvis": [
+        245,
+        309
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        466,
+        229
+      ],
+      "muzzleGround": [
+        466,
+        450
+      ],
+      "sha256": "9b167a6b5c0d99cb2b7390a0c0c1c1c0852acc90f0685fb3505646dd89722151"
     }
   },
   "slidePhases": [
@@ -3764,5 +3819,8 @@
     "left",
     "right"
   ],
-  "tallCoverSteel": true
+  "tallCoverSteel": true,
+  "coverShuffleDirections": [
+    "back-right"
+  ]
 }
