@@ -1,0 +1,33 @@
+{
+  "status": "One corrected art candidate. Ground and muzzle landmarks are provisional.",
+  "file": "front-right-low-ready-review.png",
+  "source": "6456e5a0-b4ca-4310-b6a1-dade8e966f1a",
+  "crop": [
+    70,
+    192,
+    1033,
+    865
+  ],
+  "anchor": [
+    240,
+    436
+  ],
+  "supportFoot": [
+    122,
+    436
+  ],
+  "pelvis": [
+    240,
+    312
+  ],
+  "drawScale": 0.94,
+  "muzzle": [
+    468,
+    299
+  ],
+  "muzzleGround": [
+    468,
+    436
+  ],
+  "sha256": "74b35094048ff00472f25b3efb86c821d274919f1f0156d04bb81724303a0326"
+}
