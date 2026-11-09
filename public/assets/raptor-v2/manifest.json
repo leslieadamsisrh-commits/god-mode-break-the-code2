@@ -1,5 +1,5 @@
 {
-  "build": "39T15-directional-cover",
+  "build": "39T15-directional-cover-2",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -3754,6 +3754,78 @@
         450
       ],
       "sha256": "9b167a6b5c0d99cb2b7390a0c0c1c1c0852acc90f0685fb3505646dd89722151"
+    },
+    "cover-wrap/back-right/000.png": {
+      "anchor": [
+        282,
+        423
+      ],
+      "supportFoot": [
+        304,
+        423
+      ],
+      "pelvis": [
+        267,
+        297
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        399,
+        227
+      ],
+      "muzzleGround": [
+        399,
+        423
+      ],
+      "sha256": "fc24e276ef623b149376c3d97c5cc28d0066a697b34d0f614ac51b8e61b63924"
+    },
+    "cover-wrap/back-right/001.png": {
+      "anchor": [
+        266,
+        439
+      ],
+      "supportFoot": [
+        288,
+        439
+      ],
+      "pelvis": [
+        256,
+        297
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        435,
+        223
+      ],
+      "muzzleGround": [
+        435,
+        439
+      ],
+      "sha256": "a8d9747c98db538f622ca19ea41994acaacc142fd9e751020c1a4f5877c32bd6"
+    },
+    "cover-lean/back-right/000.png": {
+      "anchor": [
+        267,
+        444
+      ],
+      "supportFoot": [
+        289,
+        444
+      ],
+      "pelvis": [
+        223,
+        302
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        482,
+        145
+      ],
+      "muzzleGround": [
+        482,
+        444
+      ],
+      "sha256": "c9fd2d14236819ffbbf522a862b73f89c2399c1359f30fdbeae11ca33c141402"
     }
   },
   "slidePhases": [
@@ -3813,11 +3885,13 @@
   "coverLeanDirections": [
     "front-right",
     "left",
-    "right"
+    "right",
+    "back-right"
   ],
   "coverWrapDirections": [
     "left",
-    "right"
+    "right",
+    "back-right"
   ],
   "tallCoverSteel": true,
   "coverShuffleDirections": [
