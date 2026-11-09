@@ -1,11 +1,20 @@
 "use client";
 import {useState,useEffect} from "react";
 import Game from "../../Game";
-import {preloadRaptorSprites,getRaptorAnimationTrace,clearRaptorAnimationTrace} from "../../../lib/raptorSpriteOnly";
+import {loadRaptorSprite,preloadRaptorSprites,getRaptorAnimationTrace,clearRaptorAnimationTrace} from "../../../lib/raptorSpriteOnly";
 type Fighter="jade"|"raptor";
+const lowReadyFrame="cover-hold/front-right/001.png";
+const matchFrame="idle/right/000.png";
 export default function CombatLab(){
- const [artReady,setArtReady]=useState<boolean|null>(null);
- useEffect(()=>{void preloadRaptorSprites().then(setArtReady)},[]);
+ const [lowReady,setLowReady]=useState<boolean|null>(null),[matchReady,setMatchReady]=useState<boolean|null>(null);
+ const [artAttempt,setArtAttempt]=useState(0);
+ useEffect(()=>{
+  let active=true;
+  const low=loadRaptorSprite(lowReadyFrame,artAttempt>0).then(ready=>{if(active)setLowReady(ready)});
+  const match=loadRaptorSprite(matchFrame,artAttempt>0).then(ready=>{if(active)setMatchReady(ready)});
+  if(artAttempt===0)void Promise.all([low,match]).then(()=>{if(active)void preloadRaptorSprites()});
+  return ()=>{active=false};
+ },[artAttempt]);
  const [fighter,setFighter]=useState<Fighter|null>(null),[reset,setReset]=useState(0);
  const [pace,setPace]=useState(1);
  const [lowCover,setLowCover]=useState(false);
@@ -24,16 +33,22 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T15 LOW-READY PLAYTEST</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T15 SPRITE START PLAYTEST</p>
    <h1>PSYCHIC COVER COMBAT</h1>
    <a href="/raptor-proportion-review.html" style={{color:"#89e9f2"}}>Review proportions beside Jade</a><br/>
    <a href="/raptor-animation-review.html" style={{color:"#89e9f2"}}>Review movement and jump phases</a>
    <p>Both fighters use the newer XYZ combat engine. This is a test build, not a production character unlock.</p>
    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(230px,1fr))",gap:14,marginTop:25}}>
     <button style={button} onClick={()=>setFighter("jade")}>PLAY JADE VS BOT <small style={{display:"block",fontWeight:400,marginTop:10}}>Shared cover controls · Existing Jade artwork</small></button>
-    <button disabled={artReady!==true} style={{...button,borderColor:"#89e9f2",opacity:artReady?1:.5}} onClick={()=>{setLowCover(true);setFighter("raptor")}}>TRY NEW RAPTOR SPRITE <small style={{display:"block",fontWeight:400,marginTop:10}}>Start in low cover against the bot</small></button>
-    <button disabled={artReady!==true} style={{...button,borderColor:"#ff925e",opacity:artReady?1:.5}} onClick={()=>setFighter("raptor")}>PLAY RAPTOR VS BOT <small style={{display:"block",fontWeight:400,marginTop:10}}>{artReady===null?"Loading Raptor artwork…":artReady?"Start a match · Existing RIFT HUNTER opponent":"Artwork failed to load — reload to retry"}</small></button>
+    <button disabled={lowReady!==true} style={{...button,borderColor:"#89e9f2",opacity:lowReady?1:.5}} onClick={()=>{setLowCover(true);setFighter("raptor")}}>TRY NEW RAPTOR SPRITE <small style={{display:"block",fontWeight:400,marginTop:10}}>{lowReady===null?"Loading the opening pose…":lowReady?"Starts braced in low cover · Center the sticks and release LT":"Opening pose unavailable"}</small></button>
+    <button disabled={matchReady!==true} style={{...button,borderColor:"#ff925e",opacity:matchReady?1:.5}} onClick={()=>setFighter("raptor")}>PLAY RAPTOR VS BOT <small style={{display:"block",fontWeight:400,marginTop:10}}>{matchReady===null?"Loading the opening pose…":matchReady?"Start a match · Existing RIFT HUNTER opponent":"Opening pose unavailable"}</small></button>
    </div>
+   {(lowReady===false||matchReady===false)&&<button style={{...button,marginTop:12,fontSize:14,padding:12}} onClick={()=>{
+    if(lowReady===false)setLowReady(null);
+    if(matchReady===false)setMatchReady(null);
+    setArtAttempt(n=>n+1);
+   }}>RETRY OPENING POSE</button>}
+   <p style={{fontSize:14,marginTop:24}}>For the tall-cover wraps, slide into a horizontal tall wall with A. Center the left stick and tap A to brace. Shuffle to either end and stop. Point the right stick past that edge, hold LT to peek, tap RT to fire, then release LT to tuck back in. Open Animation trace to see which poses appeared.</p>
    <p style={{color:"#f5bf8e",fontSize:13,marginTop:24}}>All eight directions have dedicated standing, stalk, jog, sprint, slide, and six-phase jump artwork. Jump phases follow takeoff, flight, ground contact, and recovery. Use the pace selector with keyboard or touch to review the transitions. Controller stick pressure remains analog. Moving fire follows aim.</p>
   </div>
  </main>;

@@ -56,15 +56,37 @@ export function getRaptorAnimationTrace():string{
 export function clearRaptorAnimationTrace():void{animationTrace.clear();}
 const cache=new Map<string,HTMLImageElement>();
 const missing=new Set<string>();
-export function preloadRaptorSprites():Promise<boolean>{
- return Promise.all(Object.keys(inventory.frames).map(key=>{
-   return new Promise<boolean>(resolve=>{
-    const img=new Image();cache.set(key,img);
-    img.onload=()=>resolve(img.naturalWidth===512&&img.naturalHeight===512);
-    img.onerror=()=>{missing.add(key);resolve(false)};
-    img.src=`/assets/raptor-v2/${key}?v=${inventory.build}`;
-   });
-  })).then(results=>results.every(Boolean));
+const pending=new Map<string,Promise<boolean>>();
+export function loadRaptorSprite(key:string,retry=false):Promise<boolean>{
+ const existing=pending.get(key);
+ if(existing)return existing;
+ if(retry&&missing.delete(key))cache.delete(key);
+ if(missing.has(key))return Promise.resolve(false);
+ if(cache.has(key))return Promise.resolve(true);
+ const img=new Image();
+ cache.set(key,img);
+ const request=new Promise<boolean>(resolve=>{
+  const finish=(ready:boolean)=>{
+   clearTimeout(timeout);
+   img.onload=null;
+   img.onerror=null;
+   pending.delete(key);
+   if(!ready)missing.add(key);
+   resolve(ready);
+  };
+  const timeout=setTimeout(()=>finish(false),8000);
+  img.onload=()=>finish(img.naturalWidth===512&&img.naturalHeight===512);
+  img.onerror=()=>finish(false);
+ });
+ pending.set(key,request);
+ img.src=`/assets/raptor-v2/${key}?v=${inventory.build}`;
+ return request;
+}
+export async function preloadRaptorSprites():Promise<void>{
+ const keys=Object.keys(inventory.frames);
+ for(let i=0;i<keys.length;i+=8){
+  await Promise.all(keys.slice(i,i+8).map(key=>loadRaptorSprite(key)));
+ }
 }
 export function selectRaptorDirection(angle:number):RaptorDirection {
  return raptorPoseDirection(angle);
@@ -82,13 +104,8 @@ export function paintRaptorSprite(g:CanvasRenderingContext2D,state:RaptorVisualS
  const selected=state.authoritativeFrame??selectRaptorFrame(state),direction=selectRaptorDirection(selected.angle);
  const artAction=selected.family,artFrame=selected.frame;
  const key=`${artAction}/${direction}/${String(artFrame).padStart(3,"0")}.png`;
- let img=cache.get(key);
- if(!img&&!missing.has(key)){
-   img=new Image();
-   img.onerror=()=>missing.add(key);
-   img.src=`/assets/raptor-v2/${key}?v=${inventory.build}`;
-   cache.set(key,img);
- }
+ if(!cache.has(key))void loadRaptorSprite(key);
+ const img=cache.get(key);
  if(img?.complete&&img.naturalWidth===512&&img.naturalHeight===512){
    const traceKey=direction+" / "+artAction+(state.firing?" + fire":"");
    const seen=animationTrace.get(traceKey)||new Set<number>();seen.add(artFrame);animationTrace.set(traceKey,seen);
