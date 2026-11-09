@@ -218,6 +218,21 @@ function attachCover(p:Player,c:Cover,s:GameState,mode:"soft"|"braced"="soft"){i
   p.coverEntryAngle=moving?Math.atan2(p.vy,p.vx):p.slide>0?p.slideFacing:undefined;
  }
  p.coverId=c.id;p.coverMode=mode;p.coverAnchor=anchor;p.slide=0;p.dash=0;p.softImpact=mode==="soft"?impact:0;p.softImpactAt=s.time;p.vx=p.vy=0;p.coverSpeed=0;p.contact=s.time+.22;p.peek=false;placeOnCover(p,s);s.fx.push({id:uid(),type:mode==="soft"?"soft-cover":"cover-slam",x:p.x,y:p.y,life:.25,entrySpeed:incoming} as any);return true}
+/** Starting position for the Character Lab's local low-cover match. */
+export function placeRaptorLowCoverLab(s:GameState){
+ const p=s.players[0];
+ if(s.mode!=="bot"||p.character!=="raptor")return;
+ const wall:Cover={id:"raptor-low-ready-lab",x:645,y:480,w:120,h:20,a:-Math.PI/4,z:0,
+  hp:200,maxHp:200,build:0,variant:0,generated:true,anchored27j:true,coverClass:"waist",height27j:48};
+ s.covers.push(wall);
+ const distance=wall.h/2+18.5;
+ p.x=wall.x+Math.sin(wall.a)*distance;p.y=wall.y-Math.cos(wall.a)*distance;
+ p.aim=p.gunFacing=Math.PI/4;
+ if(attachCover(p,wall,s,"braced")){
+  p.contact=0;p.coverTall11=false;p.coverState11="brace";
+  refreshRaptorPose(p,s.time,s.config.slideDuration);
+ }
+}
 function releaseCover(p:Player,s:GameState,lock=.18){p.coverDrive11=false;p.coverEntryAngle=undefined;p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 export function driveEligible11(p:Player,cv:Cover,s:GameState){
  return p.hp>0&&p.grounded&&p.knock<=0&&stableCoverFace(cv,s)&&cv.generated&&!cv.anchored27j&&!cv.section27j?.anchored&&!cv.protected45&&!p.gripId&&!p.gripCoverId&&!p.arsenal37&&!s.players.some(q=>q!==p&&q.coverId===cv.id)&&canPay31(s,p,s.config.holdEnergy/60);

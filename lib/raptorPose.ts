@@ -16,7 +16,7 @@ export type RaptorPoseMemory={
 export type RaptorPoseAvailability={
  postureDirections:readonly string[];jumpDirections?:readonly string[];
  coverLeanDirections?:readonly string[];coverLeanAltDirections?:readonly string[];
- coverPopDirections?:readonly string[];coverCatchDirections?:readonly string[];coverShuffleDirections?:readonly string[];coverWrapDirections?:readonly string[];
+ coverLowReadyDirections?:readonly string[];coverPopDirections?:readonly string[];coverCatchDirections?:readonly string[];coverShuffleDirections?:readonly string[];coverWrapDirections?:readonly string[];
 };
 export type RaptorCoverEdge='start'|'end';
 type RaptorCoverAnchor={tx:number;ty:number;nx:number;ny:number;t?:number;length?:number};
@@ -133,7 +133,8 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
    }
    if(available.coverWrapDirections?.includes(raptorPoseDirection(s.coverEndpointAngle)))return{memory,frame:selected('cover-wrap',0,s.coverEndpointAngle)};
   }
-  return{memory,frame:selected('cover-hold',0,s.angle)};
+  const lowReady=s.coverTall11===false&&available.coverLowReadyDirections?.includes(direction);
+  return{memory,frame:selected('cover-hold',lowReady?1:0,s.angle)};
  }
 
  if(!interrupted&&s.sliding){

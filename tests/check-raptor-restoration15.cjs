@@ -95,7 +95,7 @@ for(const [kind,t,angle,expected] of [
   assert.deepEqual([flash.x,flash.y,flash.z],[muzzle.x,muzzle.y,muzzle.z]);
   tick({});
   assert.equal(p.coverState11,'retract');
-  assert.equal(p.raptorFrame.key,'cover-hold/front-right/000.png');
+  assert.equal(p.raptorFrame.key,kind==='waist'?'cover-hold/front-right/001.png':'cover-hold/front-right/000.png');
  }
 }
 console.log('PASS trial muzzle registration through real cover tick: low pop, two tall endpoints, blocked tall center and retraction');

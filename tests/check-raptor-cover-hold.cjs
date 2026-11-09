@@ -24,3 +24,23 @@ assert.equal(raptorCoverExposureFrame(Math.PI/4,false).family,'idle');
 assert.equal(advanceRaptorPose(undefined,{...sample,coverTall11:true,coverState11:'retract'}).frame.family,'cover-hold');
 console.log('PASS tall lean shares clearance/render frame and authored barrel; low exposure, other directions and retraction preserved');
 
+
+const {advance,newGame,placeRaptorLowCoverLab,setInput}=require('../lib/game.ts');
+const game=newGame('Les','local',0,'bot'),raptor=game.players[0];
+raptor.character='raptor';
+placeRaptorLowCoverLab(game);
+const lowReadyKey='cover-hold/front-right/001.png';
+assert.equal(raptor.raptorFrame.key,lowReadyKey);
+assert.equal(game.covers.find(wall=>wall.id===raptor.coverId).coverClass,'waist');
+assert.ok(fs.existsSync('public/assets/raptor-v2/'+lowReadyKey));
+const root=[raptor.x,raptor.y];
+const ammo=raptor.shells;
+game.phase='playing';
+setInput(game,0,0,{aim:Math.PI/4,fire:true});
+advance(game,game.lastAt+1000/60);
+assert.equal(raptor.raptorFrame.key,lowReadyKey);
+assert.equal(raptor.shells,ammo);
+assert.deepEqual([raptor.x,raptor.y],root);
+assert.equal(advanceRaptorPose(undefined,{...sample,coverTall11:false,coverState11:'brace'}).frame.key,lowReadyKey);
+assert.equal(advanceRaptorPose(undefined,{...sample,coverTall11:true,coverState11:'brace'}).frame.key,'cover-hold/front-right/000.png');
+console.log('PASS corrected sprite starts a local low-cover match and remains a protected pose');

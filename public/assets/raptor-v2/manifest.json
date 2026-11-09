@@ -1,5 +1,5 @@
 {
-  "build": "39T15-stationary-wrap",
+  "build": "39T15-low-ready",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -3699,6 +3699,30 @@
         412
       ],
       "sha256": "50515653f37182116af9d8df4723f94e33b437db8f2fd78464a22a0884476105"
+    },
+    "cover-hold/front-right/001.png": {
+      "anchor": [
+        240,
+        436
+      ],
+      "drawScale": 0.94,
+      "supportFoot": [
+        122,
+        436
+      ],
+      "pelvis": [
+        240,
+        312
+      ],
+      "muzzle": [
+        468,
+        299
+      ],
+      "muzzleGround": [
+        468,
+        436
+      ],
+      "sha256": "74b35094048ff00472f25b3efb86c821d274919f1f0156d04bb81724303a0326"
     }
   },
   "slidePhases": [
@@ -3764,5 +3788,8 @@
     "left",
     "right"
   ],
-  "tallCoverSteel": true
+  "tallCoverSteel": true,
+  "coverLowReadyDirections": [
+    "front-right"
+  ]
 }
