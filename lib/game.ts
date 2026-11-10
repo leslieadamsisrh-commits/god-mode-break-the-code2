@@ -216,8 +216,9 @@ function moveOnCover(p:Player,s:GameState,i:InputState,dt:number){
   // Authoritative cover root/anchor does not translate while held. Right-stick
   // aim remains independent and immediate; A/classic cover action still escapes.
   p.coverSpeed=0;p.vx=0;p.vy=0;
-  const forward=Math.cos(p.gunFacing)*a.nx+Math.sin(p.gunFacing)*a.ny;
-  p.peek=true;p.peekEdge=Math.min(a.t,a.length-a.t)<18;
+  const cover=s.covers.find(cv=>cv.id===p.coverId);
+  p.peek=cover?.coverClass!=="tall"||coverMuzzleClearance(p,cover,p.gunFacing).allowed;p.peekEdge=Math.min(a.t,a.length-a.t)<18;
+  if(cover?.coverClass==="tall"&&!p.peek){p.gripHint="TALL COVER · MOVE TO AN EDGE";p.gripHintUntil=s.time+.2;}
   placeOnCover(p,s);return;
  }
  const fragmented=s.covers.find(q=>q.id===p.coverId&&q.fracture32);
@@ -582,7 +583,8 @@ export function peelSources44(p:Player,s:GameState){return (s.groundSources44||[
 export function constructionSupply44(p:Player,s:GameState){const loose=fieldMatter(p,s);return{reinforced:loose.filter(m=>m.kind==="stone").length>=2&&loose.some(m=>m.kind==="metal"),looseStone:loose.filter(m=>m.kind==="stone").length,groundUnits:peelSources44(p,s).reduce((n,q)=>n+q.remaining,0)};}
 function releaseOrbit(p:Player,s:GameState){for(const id of p.orbitIds){const m=s.matter.find(m=>m.id===id);if(m){m.orbitBy=null;m.vx=m.vy=0}}p.orbitIds=[];}
 function constructionPlacement(p:Player,s:GameState,n:number,aim:number,id="placement",blocked?:string[]):Cover|undefined{
- const source=bayObject("war-generated-shell45")!,cv:Cover={id,z:p.z,x:0,y:0,w:SHAPES27J[p.coverShape||0].w,h:SHAPES27J[p.coverShape||0].h,height27j:SHAPES27J[p.coverShape||0].height27j,a:aim+Math.PI/2,hp:COVER_41.projectedHp,maxHp:COVER_41.projectedHp,generated:true,build:1,variant:0,born:s.time,artId:source.id,coverClass:source.coverClass||"waist",constructOwner:n};
+ const {w,h,height27j,coverClass}=SHAPES27J[p.coverShape||0];
+ const cv:Cover={id,z:p.z,x:0,y:0,w,h,height27j,coverClass,a:aim+Math.PI/2,hp:COVER_41.projectedHp,maxHp:COVER_41.projectedHp,generated:true,build:1,variant:0,born:s.time,artId:"war-generated-shell45",constructOwner:n};
  for(let d=100;d<=psychicField(p).radius;d+=20){cv.x=p.x+Math.cos(aim)*d;cv.y=p.y+Math.sin(aim)*d;const support=coverSupport27h(cv);cv.z=surfaceHeight27h(support,cv);const reason=Number.isFinite(surfaceShotTime({x:p.x,y:p.y,z:p.z+48},{x:cv.x,y:cv.y,z:(cv.z||0)+48}))?"STRUCTURE BLOCKS CONSTRUCTION":carryBlockReason21(cv,cv,s);if(!reason)return cv;blocked?.push(reason);}
 }
 export function constructionPreview21(p:Player,s:GameState,n:number){
@@ -814,7 +816,7 @@ export function throwAim34(p:Player,s:GameState,n:number,cv:Cover){
  const distance=valid?dist(cv,t):Number.isFinite(p.input.aimX)?Math.hypot(p.input.aimX!-cv.x,p.input.aimY!-cv.y):300,targetZ=valid?t.z+32:p.input.aimZ??p.z+32,speed=s.config.throwForce*.62*Math.sqrt(12/coverMass28(cv))*GRIP_STRENGTH;
  return{angle:valid?angle:p.aim,vz:clamp((targetZ-from.z)/Math.max(.12,distance/speed),-350,200)};
 }
-function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:number;y:number},aim:number){
+function coverMuzzleClearance(p:Player,cv:Cover|undefined,aim:number){
  if(!cv||!p.coverAnchor)return{allowed:true,clearance:undefined as string|undefined,mode:"FREE"};
  const a=p.coverAnchor,topology=Math.min(a.t,a.length-a.t)<18?"EDGE":"FACE";
  if(p.coverMode!=="braced"||!p.input.coverAim)return{allowed:false,clearance:undefined,mode:"PROTECTED"};
@@ -822,7 +824,8 @@ function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:number;y:num
  // around/outside the owning face. Waist can expose over top from FACE.
  if(cv.coverClass==="tall"&&topology==="FACE")return{allowed:false,clearance:undefined,mode:"TALL_FACE"};
  const px=Math.cos(aim),py=Math.sin(aim),out=px*a.nx+py*a.ny,along=px*a.tx+py*a.ty;
- const sideClear=topology!=="FACE"&&Math.abs(along)>.18;
+ const sideClear=cv.coverClass==="tall"?
+  (a.t<18&&along<-.18)||(a.length-a.t<18&&along>.18):topology!=="FACE"&&Math.abs(along)>.18;
  const overClear=cv.coverClass!=="tall"&&out>-.35;
  const allowed=sideClear||overClear;
  return{allowed,clearance:allowed&&!cv.fracture32?cv.id:undefined,mode:sideClear?"SIDE":overClear?"OVER":"BLOCKED"};
@@ -1106,7 +1109,7 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
    const reason=interrupted?'INTERRUPTED':carryBlockReason21(candidate,reshaping,s);
    if(reason){reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPE CANCELLED · '+reason;p.gripHintUntil=s.time+1.2;}
    else if(s.time-(reshaping.reshapeAt27j??s.time)>=.24){
-    Object.assign(reshaping,{w:target.w,h:target.h,height27j:target.height27j,coverClass:target.height27j>60?'tall':'waist'});
+    Object.assign(reshaping,{w:target.w,h:target.h,height27j:target.height27j,coverClass:target.coverClass});
     p.coverShape=next;reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPED · SAME HEALTH';p.gripHintUntil=s.time+1.2;
    }
    // Explicit release actions wait for the bounded .24s preparation to resolve.
@@ -1177,11 +1180,12 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
   meleeStep(s,n);
   if(p.pendingFireUntil!==undefined&&(s.time>p.pendingFireUntil||p.hp<=0||p.charging||p.orbitIds.length||p.fireBlocked))p.pendingFireUntil=undefined;
   if(i.fire&&!prev[n]?.fire&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&!p.orbitIds.length&&!p.fireBlocked)p.pendingFireUntil=s.time+.12;
-  if((i.fire||p.pendingFireUntil!==undefined)&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
-   const attachedCover=p.coverId?s.covers.find(cv=>cv.id===p.coverId):undefined;
-   const muzzle=barrelSocket27d(p,c.spriteScale),physical=coverMuzzleClearance(p,attachedCover,muzzle,p.gunFacing);
-   // PASS06 TRIGGER AUTHORITY: cover never vetoes a ready trigger. If exposure
-   // is invalid, the attached cover remains collidable and consumes the blast.
+  const attachedCover=p.coverId?s.covers.find(cv=>cv.id===p.coverId):undefined;
+  const blockedTallShot=attachedCover?.coverClass==="tall"&&!p.peek;
+  if(blockedTallShot)p.pendingFireUntil=undefined;
+  if(!blockedTallShot&&(i.fire||p.pendingFireUntil!==undefined)&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||i.coverAim)){
+   const muzzle=barrelSocket27d(p,c.spriteScale),physical=coverMuzzleClearance(p,attachedCover,p.gunFacing);
+   // Outside tall cover, a rejected exposure still produces a collidable blast.
    const clearance=physical.allowed?physical.clearance:undefined;
    const exposedD03=!!clearance&&muzzle.dir===3,artUnit=(125*143/250/638)*c.spriteScale;
    const neighbor=!!clearance?(muzzle.dir===2?{anchor:[1202,525.1677115987461],muzzle:[1424,97]}:muzzle.dir===4?{anchor:[1189,993.1677115987461],muzzle:[1420,624]}:null):null,neighborUnit=125*143/250/445*c.spriteScale;
