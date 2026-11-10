@@ -1,5 +1,5 @@
 {
-  "build": "39T15-low-ready",
+  "build": "39T15-cover-drill",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -3504,20 +3504,27 @@
     },
     "cover-hold/right/000.png": {
       "anchor": [
-        280,
-        357
+        248,
+        387
       ],
-      "drawScale": 1.4,
+      "supportFoot": [
+        185,
+        387
+      ],
+      "pelvis": [
+        248,
+        306
+      ],
+      "drawScale": 1.03,
       "muzzle": [
-        403,
-        269
+        458,
+        303
       ],
       "muzzleGround": [
-        403,
-        357
+        458,
+        387
       ],
-      "sha256": "2cc699f46c66978b0d84ba6d972ba97f59701df7dfc9b1fd03e7bcbe390bf725",
-      "source": "39T14 targeted grounded hold; exec-57f7d9de-571d-48d9-a0eb-99749e91795c.png"
+      "sha256": "6ebc49bdfa3bac2a6f5a7a0a97fecf0725826bafb04d7124be0f348be0695394"
     },
     "cover-hold/front/000.png": {
       "anchor": [
@@ -3723,6 +3730,78 @@
         436
       ],
       "sha256": "74b35094048ff00472f25b3efb86c821d274919f1f0156d04bb81724303a0326"
+    },
+    "cover-catch/right/000.png": {
+      "anchor": [
+        237,
+        388
+      ],
+      "supportFoot": [
+        196,
+        388
+      ],
+      "pelvis": [
+        237,
+        303
+      ],
+      "drawScale": 1.03,
+      "muzzle": [
+        467,
+        276
+      ],
+      "muzzleGround": [
+        467,
+        388
+      ],
+      "sha256": "0dab7fc9963084303466c5ac0e4b2c8abbac16f16eeb4eb360a40a8c7fcc920a"
+    },
+    "cover-shuffle/right/000.png": {
+      "anchor": [
+        242,
+        388
+      ],
+      "supportFoot": [
+        199,
+        388
+      ],
+      "pelvis": [
+        242,
+        295
+      ],
+      "drawScale": 1.03,
+      "muzzle": [
+        463,
+        276
+      ],
+      "muzzleGround": [
+        463,
+        388
+      ],
+      "sha256": "0cd4efe75908633060ac007aa7c02c89bb15e5dceae767b305b8ebffaecd6054"
+    },
+    "cover-shuffle/right/001.png": {
+      "anchor": [
+        248,
+        385
+      ],
+      "supportFoot": [
+        353,
+        385
+      ],
+      "pelvis": [
+        248,
+        304
+      ],
+      "drawScale": 1.03,
+      "muzzle": [
+        463,
+        286
+      ],
+      "muzzleGround": [
+        463,
+        385
+      ],
+      "sha256": "9518dce5863175ace27f2927296e79f645d31ad3a89ce319f1da6c3146d76f04"
     }
   },
   "slidePhases": [
@@ -3791,5 +3870,14 @@
   "tallCoverSteel": true,
   "coverLowReadyDirections": [
     "front-right"
+  ],
+  "coverCatchDirections": [
+    "right"
+  ],
+  "coverShuffleDirections": [
+    "right"
+  ],
+  "coverCatchProtectedDirections": [
+    "right"
   ]
 }

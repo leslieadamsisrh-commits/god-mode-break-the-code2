@@ -233,6 +233,21 @@ export function placeRaptorLowCoverLab(s:GameState){
   refreshRaptorPose(p,s.time,s.config.slideDuration);
  }
 }
+
+export type RaptorCoverDrill="shuffle"|"wrap"|"rotated-wrap";
+export function placeRaptorCoverDrill(s:GameState,drill:RaptorCoverDrill){
+ const [raptor,opponent]=s.players;
+ if(s.mode!=="bot"||raptor.character!=="raptor"||!opponent)return;
+ const tall=drill!=="shuffle",angle=drill==="shuffle"?Math.PI/2:drill==="rotated-wrap"?Math.PI/12:0;
+ const wall:Cover={id:"raptor-drill-wall",x:950,y:550,w:144,h:20,a:angle,z:0,
+  hp:280,maxHp:280,build:0,variant:0,generated:true,anchored27j:true,coverClass:tall?"tall":"waist",height27j:tall?100:48};
+ s.covers=[wall];
+ const distance=58,side=tall?-1:1,normalX=-Math.sin(angle)*side,normalY=Math.cos(angle)*side,aim=Math.atan2(-normalY,-normalX);
+ Object.assign(raptor,{x:wall.x+normalX*distance,y:wall.y+normalY*distance,aim,gunFacing:aim,raptorPose:undefined});
+ Object.assign(opponent,{x:1200,y:660,bot:false});
+ s.phase="playing";s.countdown=0;
+ refreshRaptorPose(raptor,s.time,s.config.slideDuration);
+}
 function releaseCover(p:Player,s:GameState,lock=.18){p.coverDrive11=false;p.coverEntryAngle=undefined;p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 export function driveEligible11(p:Player,cv:Cover,s:GameState){
  return p.hp>0&&p.grounded&&p.knock<=0&&stableCoverFace(cv,s)&&cv.generated&&!cv.anchored27j&&!cv.section27j?.anchored&&!cv.protected45&&!p.gripId&&!p.gripCoverId&&!p.arsenal37&&!s.players.some(q=>q!==p&&q.coverId===cv.id)&&canPay31(s,p,s.config.holdEnergy/60);
@@ -662,7 +677,8 @@ export function peelSources44(p:Player,s:GameState){return (s.groundSources44||[
 export function constructionSupply44(p:Player,s:GameState){const loose=fieldMatter(p,s);return{reinforced:loose.filter(m=>m.kind==="stone").length>=2&&loose.some(m=>m.kind==="metal"),looseStone:loose.filter(m=>m.kind==="stone").length,groundUnits:peelSources44(p,s).reduce((n,q)=>n+q.remaining,0)};}
 function releaseOrbit(p:Player,s:GameState){for(const id of p.orbitIds){const m=s.matter.find(m=>m.id===id);if(m){m.orbitBy=null;m.vx=m.vy=0}}p.orbitIds=[];}
 function constructionPlacement(p:Player,s:GameState,n:number,aim:number,id="placement",blocked?:string[]):Cover|undefined{
- const source=bayObject("war-generated-shell45")!,cv:Cover={id,z:p.z,x:0,y:0,w:SHAPES27J[p.coverShape||0].w,h:SHAPES27J[p.coverShape||0].h,height27j:SHAPES27J[p.coverShape||0].height27j,a:aim+Math.PI/2,hp:COVER_41.projectedHp,maxHp:COVER_41.projectedHp,generated:true,build:1,variant:0,born:s.time,artId:source.id,coverClass:source.coverClass||"waist",constructOwner:n};
+ const {w,h,height27j,coverClass}=SHAPES27J[p.coverShape||0];
+ const cv:Cover={id,z:p.z,x:0,y:0,w,h,height27j,coverClass,a:aim+Math.PI/2,hp:COVER_41.projectedHp,maxHp:COVER_41.projectedHp,generated:true,build:1,variant:0,born:s.time,artId:"war-generated-shell45",constructOwner:n};
  for(let d=100;d<=psychicField(p).radius;d+=20){cv.x=p.x+Math.cos(aim)*d;cv.y=p.y+Math.sin(aim)*d;const support=coverSupport27h(cv);cv.z=surfaceHeight27h(support,cv);const reason=Number.isFinite(surfaceShotTime({x:p.x,y:p.y,z:p.z+48},{x:cv.x,y:cv.y,z:(cv.z||0)+48}))?"STRUCTURE BLOCKS CONSTRUCTION":carryBlockReason21(cv,cv,s);if(!reason)return cv;blocked?.push(reason);}
 }
 export function constructionPreview21(p:Player,s:GameState,n:number){
@@ -1218,7 +1234,7 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
    const reason=interrupted?'INTERRUPTED':carryBlockReason21(candidate,reshaping,s);
    if(reason){reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPE CANCELLED · '+reason;p.gripHintUntil=s.time+1.2;}
    else if(s.time-(reshaping.reshapeAt27j??s.time)>=.24){
-    Object.assign(reshaping,{w:target.w,h:target.h,height27j:target.height27j,coverClass:target.height27j>60?'tall':'waist'});
+    Object.assign(reshaping,{w:target.w,h:target.h,height27j:target.height27j,coverClass:target.coverClass});
     p.coverShape=next;reshaping.reshapePending27j=undefined;reshaping.reshapeFrom27j=undefined;p.gripHint='RESHAPED · SAME HEALTH';p.gripHintUntil=s.time+1.2;
    }
    // Explicit release actions wait for the bounded .24s preparation to resolve.

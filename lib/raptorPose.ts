@@ -16,7 +16,7 @@ export type RaptorPoseMemory={
 export type RaptorPoseAvailability={
  postureDirections:readonly string[];jumpDirections?:readonly string[];
  coverLeanDirections?:readonly string[];coverLeanAltDirections?:readonly string[];
- coverLowReadyDirections?:readonly string[];coverPopDirections?:readonly string[];coverCatchDirections?:readonly string[];coverShuffleDirections?:readonly string[];coverWrapDirections?:readonly string[];
+ coverLowReadyDirections?:readonly string[];coverPopDirections?:readonly string[];coverCatchDirections?:readonly string[];coverCatchProtectedDirections?:readonly string[];coverShuffleDirections?:readonly string[];coverWrapDirections?:readonly string[];
 };
 export type RaptorCoverEdge='start'|'end';
 type RaptorCoverAnchor={tx:number;ty:number;nx:number;ny:number;t?:number;length?:number};
@@ -113,7 +113,9 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
   }
   if(state==='catch'){
    const entry=s.coverEntryAngle??s.angle;
-   const frame=available.coverCatchDirections?.includes(raptorPoseDirection(entry))?selected('cover-catch',0,entry):selected('slide',2,s.angle);
+   const incoming=raptorPoseDirection(entry);
+   const protectedReady=available.coverCatchProtectedDirections?.includes(direction)??true;
+   const frame=protectedReady&&available.coverCatchDirections?.includes(incoming)?selected('cover-catch',0,entry):selected('slide',2,s.angle);
    return{memory,frame};
   }
   if(state==='shuffle'&&available.coverShuffleDirections?.includes(direction)){
