@@ -11,7 +11,8 @@ const {createCanvas,loadImage}=require('@napi-rs/canvas');
    const entry=manifest.frames[r.frame.key],bytes=fs.readFileSync('public/assets/raptor-v2/'+r.frame.key),im=await loadImage(bytes);assert.equal(im.width,512);assert.equal(im.height,512);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),entry.sha256);
    const p=raptorSpritePlacement({x:100,y:100,scale:.7},entry);assert.ok(Math.abs(p.y+entry.anchor[1]*.7*entry.drawScale-100)<1e-8);
   }
-  assert.equal(advanceRaptorPose(undefined,{...base,coverState11:'catch'}).frame.family,'slide');
+  assert.equal(advanceRaptorPose(undefined,{...base,coverState11:'catch'}).frame.family,d===0?'cover-catch':'slide');
+  if(d!==0)assert.equal(advanceRaptorPose(undefined,{...base,coverState11:'catch',coverEntryAngle:0}).frame.family,'slide');
   assert.equal(advanceRaptorPose(undefined,{...base,attached:false,coverState11:undefined}).frame.family,'idle');
  }
  const im=await loadImage('public/assets/jade-cover14/cover-d09.png');assert.equal(im.width,1500);assert.equal(im.height,250);
@@ -20,5 +21,5 @@ const {createCanvas,loadImage}=require('@napi-rs/canvas');
  assert.equal(green,0,'no opaque green guide arrows/rectangles');
  const pixels=n=>g.getImageData(n*250,0,250,250).data;assert.deepEqual(pixels(4),pixels(1),'retract settles into the protected hold');
  assert.ok(fs.readFileSync('app/Game.tsx','utf8').includes('family==="cover"&&d===9?"/assets/jade-cover14/cover-d09.png"'));
- console.log('PASS batch14: all 8 grounded hold/brace/retract directions, saved hashes/dimensions, ground registration, catch/free movement preserved; local Jade atlas dimensions, guide removal and protected retract.');
+ console.log('PASS batch14: all 8 grounded hold/brace/retract directions, saved hashes/dimensions, ground registration, right catch and remaining fallbacks; local Jade atlas dimensions, guide removal and protected retract.');
 })().catch(e=>{console.error(e);process.exitCode=1});
