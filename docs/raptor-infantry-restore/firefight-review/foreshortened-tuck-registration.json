@@ -1,0 +1,56 @@
+{
+  "left": {
+    "file": "left-foreshortened-tuck.webp",
+    "anchor": [
+      260,
+      387
+    ],
+    "supportFoot": [
+      197,
+      387
+    ],
+    "pelvis": [
+      306,
+      300
+    ],
+    "drawScale": 1.16,
+    "muzzles": [
+      [
+        283,
+        205
+      ],
+      [
+        287,
+        216
+      ]
+    ],
+    "sha256": "89d524d854da605dddefe7cac52b0b86494f801cfbe0268c21efdc0d423c88e7"
+  },
+  "right": {
+    "file": "right-foreshortened-tuck.webp",
+    "anchor": [
+      266,
+      410
+    ],
+    "supportFoot": [
+      360,
+      410
+    ],
+    "pelvis": [
+      234,
+      309
+    ],
+    "drawScale": 1,
+    "muzzles": [
+      [
+        338,
+        205
+      ],
+      [
+        339,
+        219
+      ]
+    ],
+    "sha256": "2be23b6d9eaf198e4e37a3dc17732bdef4fe549615055ff118bf146947833b0a"
+  }
+}
