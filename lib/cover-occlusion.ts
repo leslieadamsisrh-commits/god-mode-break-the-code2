@@ -61,6 +61,16 @@ export function coverOccluders(c:Cover,groundY:number,elevationScale=1):Point[][
  if(farTop.length>=3)polys.push(farTop);
  return polys;
 }
+export function coverHidesPoint(c:Cover,groundY:number,point:Point){
+ return coverOccluders(c,groundY).some(poly=>{
+  let inside=false;
+  for(let i=0,j=poly.length-1;i<poly.length;j=i++){
+   const a=poly[i],b=poly[j];
+   if((a.y>point.y)!==(b.y>point.y)&&point.x<(b.x-a.x)*(point.y-a.y)/(b.y-a.y)+a.x)inside=!inside;
+  }
+  return inside;
+ });
+}
 export function withCoverOcclusion(g:CanvasRenderingContext2D,covers:Cover[],groundY:number,time:number,draw:()=>void,ownerId?:string|null,exposed=false,elevationScale=1){
 
  g.save();const base=g.getTransform();
@@ -110,4 +120,5 @@ export function drawConcealedCoverCue(g:CanvasRenderingContext2D,covers:Cover[],
   }
  });g.restore();
 }
+
 

@@ -45,7 +45,7 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T15 RAPTOR FIREFIGHT</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T16 RAPTOR FLUIDITY</p>
    <h1>PSYCHIC COVER COMBAT</h1>
    <a href="/raptor-proportion-review.html" style={{color:"#89e9f2"}}>Review proportions beside Jade</a><br/>
    <a href="/raptor-animation-review.html" style={{color:"#89e9f2"}}>Review movement and jump phases</a>
@@ -61,7 +61,7 @@ export default function CombatLab(){
      <button key={mode} disabled={matchReady!==true} style={{...button,fontSize:14,opacity:matchReady?1:.5}} onClick={()=>{clearRaptorAnimationTrace();setPosition({});setDrill(mode);setFighter("raptor")}}>{label}</button>)}
    </div>
    <p style={{fontSize:14}}>Low wall. Move toward the steel and tap A to attach. Center the left stick and tap A again to brace. Move up or down to shuffle. Stop, aim across the wall with the right stick, and tap RT. Hold LT to inspect the raised shotgun before firing.</p>
-   <p style={{fontSize:14}}>Tall drill. Move toward the wall and tap A, center the stick and tap A to brace, then shuffle to an end. Aim out past the end with the right stick. Hold LT to inspect the peek or tap RT to take a clear shot. Release the trigger and LT to return to cover. Reset restores the selected position.</p>
+   <p style={{fontSize:14}}>Tall drill. Move toward the wall and tap A, center the stick and tap A to brace, then shuffle to an end. Aim out past the end with the right stick. Hold LT to inspect the peek or tap RT to take a clear shot. Release the trigger and LT to return to cover. Reset restores the selected position. Switch to the near face to practice the rear shuffle into a corner.</p>
    {(lowReady===false||matchReady===false)&&<button style={{...button,marginTop:12,fontSize:14,padding:12}} onClick={()=>{
     if(lowReady===false)setLowReady(null);
     if(matchReady===false)setMatchReady(null);
@@ -71,6 +71,7 @@ export default function CombatLab(){
   </div>
  </main>;
 }
+
 
 
 

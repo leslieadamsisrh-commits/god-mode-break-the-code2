@@ -97,20 +97,24 @@ for(const mode of ['shuffle','shuffle-left']){
  }
  const root=[p.x,p.y,p.coverAnchor.t];
  const shell=p.shells;
+ seen.clear();
  tick({aim:aim+.2,coverAim:true},4);
+ assert.ok(seen.has('cover-bridge/'+direction+'/000.png'));
  assert.equal(p.raptorFrame.key,pop);
  tick({aim:aim-.2,coverAim:true},4);
  assert.equal(p.raptorFrame.key,pop);
  assert.deepEqual([p.x,p.y,p.coverAnchor.t],root);
  tick({fire:true});
  assert.equal(p.shells,shell-1,'RT alone fires a clear, braced waist shot');
- assert.equal(p.raptorFrame.key,pop);
+ assert.equal(p.raptorFrame.key,'cover-recoil/'+direction+'/000.png');
  const socket=require('../lib/ballistics27d.ts').barrelSocket27d(p,s.config.spriteScale);
  assert.equal(socket.raptorAligned,true);
  assert.ok(socket.z>wall.height27j+(wall.z||0));
  const flash=s.fx.findLast(f=>f.type==='muzzle'&&f.owner===0);
  assert.deepEqual([flash.x,flash.y,flash.z],[socket.x,socket.y,socket.z]);
  tick({},20);
+ assert.ok(seen.has('cover-recoil/'+direction+'/001.png'));
+ assert.ok(seen.has('cover-bridge/'+direction+'/001.png'));
  assert.equal(p.raptorFrame.key,hold);
  assert.deepEqual([p.x,p.y,p.coverAnchor.t],root);
  assert.deepEqual([wall.x,wall.y,wall.a],wallPose);
@@ -122,6 +126,7 @@ for(const mode of ['wrap','rotated-wrap'])for(const face of ['far','near'])for(c
  const sign=endpoint==='start'?-1:1,aim=Math.atan2(ty*sign,tx*sign);
  const dir=sign<0?'left':'right',start=[p.x,p.y,p.coverAnchor.t],shells=p.shells;
  assert.equal(p.coverAnchor.face,face==='far'?'top':'bottom');
+ tick({},6);
  assert.equal(p.raptorFrame.key,'cover-wrap/'+dir+'/000.png');
  tick({aim,coverAim:true},8);
  assert.ok(seen.has('cover-wrap/'+dir+'/001.png'));
@@ -135,3 +140,51 @@ for(const mode of ['wrap','rotated-wrap'])for(const face of ['far','near'])for(c
  assert.deepEqual([wall.x,wall.y,wall.a],wallPose);
 }
 console.log('PASS tall end starts on both faces of both drill rotations with visible pivot, RT and planted return');
+
+
+for(const mode of ['wrap','rotated-wrap']){
+ const {p,wall,s,tick,seen}=drill(mode,{face:'near'});
+ assert.equal(p.raptorFrame.key,'cover-hold/back/000.png');
+ const aim=Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx),shells=p.shells;
+ tick({aim,coverAim:true,fire:true},2);
+ assert.equal(p.shells,shells);
+ const left={x:-Math.cos(wall.a),y:-Math.sin(wall.a)};
+ tick(); seen.clear();
+ tick(left,20);
+ tick({},10);
+ assert.ok(seen.has('cover-shuffle/back/000.png')&&seen.has('cover-shuffle/back/001.png'));
+ assert.ok(seen.has('cover-corner/back-left/000.png'));
+ assert.equal(p.raptorFrame.key,'cover-wrap/left/000.png');
+ const root=[p.x,p.y,p.coverAnchor.t];
+ const out=-3*Math.PI/4;
+ tick({aim:out,coverAim:true},10);
+ assert.equal(p.raptorFrame.key,'cover-recoil/back-left/001.png');
+ tick({aim:out,fire:true});
+ assert.equal(p.shells,shells-1);
+ assert.equal(p.raptorFrame.key,'cover-recoil/back-left/000.png');
+ const socket=require('../lib/ballistics27d.ts').barrelSocket27d(p,s.config.spriteScale);
+ const flash=s.fx.findLast(f=>f.type==='muzzle'&&f.owner===0);
+ assert.deepEqual([flash.x,flash.y,flash.z],[socket.x,socket.y,socket.z]);
+ assert.equal(flash.raptorFrameKey,p.raptorFrame.key);
+ tick({aim:out},20);
+ assert.deepEqual([p.x,p.y,p.coverAnchor.t],root);
+ tick({aim:out,slide:true});
+ assert.equal(p.coverId,null);
+ assert.ok(p.raptorFrame.key.startsWith('recovery/'));
+}
+console.log('PASS rear brace, both distance-driven shuffle steps, corner connector, aimed diagonal shot and cover exit');
+
+{
+ const {advanceRaptorPose,RAPTOR_POSE_DIRECTIONS}=require('../lib/raptorPose.ts');
+ for(const [index,direction] of RAPTOR_POSE_DIRECTIONS.entries()){
+  const angle=index*Math.PI/4;
+  const planted={time:1,x:0,y:0,angle,speed:0,attached:true,sliding:false,airborne:false,verticalVelocity:0,hit:false,firing:false,coverState11:'brace'};
+  const hold=advanceRaptorPose(undefined,planted);
+  const traveling={...planted,time:1.016,x:2,y:2,attached:false,coverState11:undefined,speed:48,travelAngle:angle};
+  const exit=advanceRaptorPose(hold.memory,traveling);
+  assert.equal(exit.frame.key,'recovery/'+direction+'/000.png');
+  assert.equal(advanceRaptorPose(exit.memory,{...traveling,time:1.13,x:5,y:5}).frame.key,'stalk/'+direction+'/000.png');
+  assert.notEqual(advanceRaptorPose(hold.memory,{...traveling,airborne:true,verticalVelocity:25}).frame.family,'recovery');
+ }
+ console.log('PASS eight exit connectors lead to first planted stride and never replace airborne art');
+}

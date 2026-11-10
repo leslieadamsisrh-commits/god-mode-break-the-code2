@@ -1,5 +1,5 @@
 {
-  "build": "39T15-raptor-firefight",
+  "build": "39T16-raptor-fluidity",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -11,7 +11,11 @@
     "jump": 6,
     "cover-drive": 2,
     "cover-hold": 1,
-    "cover-lean": 1
+    "cover-lean": 1,
+    "cover-bridge": 2,
+    "cover-corner": 1,
+    "cover-recoil": 2,
+    "recovery": 1
   },
   "directions": [
     "right",
@@ -3491,16 +3495,29 @@
       "sha256": "0400fb9a6e8f6da9bd07cc38275a7c66f5aa5fc7da6da771c4dd4e7ada183ef4"
     },
     "cover-hold/back/000.png": {
+      "source": "832c971d-9983-4c72-8a0b-bdb4c99fdb39",
       "anchor": [
-        250,
-        384
+        244,
+        441
       ],
-      "drawScale": 1.25,
-      "sha256": "5ab26646da1e2e183c04b00b75d840cb277fe280eeb53b7df81424ea77c9a002",
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Protected rear hold hides barrel; existing authority fallback retained.",
-      "source": "39T13 targeted rear hold; exec-5be31f7b-77b0-418e-90d5-8c58424a5a7d.png"
+      "supportFoot": [
+        343,
+        441
+      ],
+      "pelvis": [
+        244,
+        313
+      ],
+      "drawScale": 0.79,
+      "muzzle": [
+        79,
+        253
+      ],
+      "muzzleGround": [
+        79,
+        441
+      ],
+      "sha256": "bfd84795792df46a59faf9f8b38ba861d72f7843ce7e46c63b4a7d4fbe74f229"
     },
     "cover-hold/right/000.png": {
       "anchor": [
@@ -3935,6 +3952,575 @@
         455
       ],
       "sha256": "75ef468dc98b4d41e5c6b1c3d515df850d3f36d93777043af928aa5fadd3d9a3"
+    },
+    "cover-shuffle/back/000.png": {
+      "source": "832c971d-9983-4c72-8a0b-bdb4c99fdb39",
+      "anchor": [
+        256,
+        439
+      ],
+      "supportFoot": [
+        176,
+        439
+      ],
+      "pelvis": [
+        256,
+        316
+      ],
+      "drawScale": 0.79,
+      "muzzle": [
+        72,
+        251
+      ],
+      "muzzleGround": [
+        72,
+        439
+      ],
+      "sha256": "8a10014a3cd96e400bff55f6935d500d66e4353478c5fe9ca290adf38603a2d2"
+    },
+    "cover-shuffle/back/001.png": {
+      "source": "832c971d-9983-4c72-8a0b-bdb4c99fdb39",
+      "anchor": [
+        241,
+        450
+      ],
+      "supportFoot": [
+        362,
+        450
+      ],
+      "pelvis": [
+        241,
+        318
+      ],
+      "drawScale": 0.79,
+      "muzzle": [
+        89,
+        240
+      ],
+      "muzzleGround": [
+        89,
+        450
+      ],
+      "sha256": "14da967ad749dd0120c8af742496c07532b13793c4318d9178fbf762f3bf34bf"
+    },
+    "cover-corner/back-left/000.png": {
+      "source": "c772e1f2-59d4-4b0b-9aef-2a0c10bc01c9",
+      "anchor": [
+        268,
+        447
+      ],
+      "supportFoot": [
+        214,
+        447
+      ],
+      "pelvis": [
+        268,
+        315
+      ],
+      "drawScale": 0.83,
+      "muzzle": [
+        75,
+        230
+      ],
+      "muzzleGround": [
+        75,
+        447
+      ],
+      "sha256": "3f5758950fa7fe5ca244bc07c60c0145c63dafc3b50592d9aa954a50ff769c3e"
+    },
+    "cover-bridge/right/000.png": {
+      "anchor": [
+        238,
+        430
+      ],
+      "drawScale": 1.03,
+      "supportFoot": [
+        175,
+        430
+      ],
+      "pelvis": [
+        265,
+        333
+      ],
+      "sha256": "f7105e1a68669f54efe8be547ecda9604eac370fd81db10d2770694fc294b5bf",
+      "source": "exec-320f0dce-1dc6-4788-b70f-3fa4b241d080.png",
+      "muzzle": [
+        450,
+        284
+      ],
+      "muzzleGround": [
+        450,
+        430
+      ]
+    },
+    "cover-bridge/right/001.png": {
+      "anchor": [
+        243,
+        430
+      ],
+      "drawScale": 1.03,
+      "supportFoot": [
+        180,
+        430
+      ],
+      "pelvis": [
+        264,
+        334
+      ],
+      "sha256": "17dad149e90bbb2546775c812840a8788856a8b1f759cac51a2154d999019e6e",
+      "source": "exec-320f0dce-1dc6-4788-b70f-3fa4b241d080.png",
+      "muzzle": [
+        454,
+        321
+      ],
+      "muzzleGround": [
+        454,
+        430
+      ]
+    },
+    "cover-bridge/left/000.png": {
+      "anchor": [
+        264,
+        430
+      ],
+      "drawScale": 1.12,
+      "supportFoot": [
+        172,
+        430
+      ],
+      "pelvis": [
+        264,
+        344
+      ],
+      "sha256": "23d9c5216ad6f0984376b585846652d2a893402f7c06ae177f39173adeca5020",
+      "source": "exec-320f0dce-1dc6-4788-b70f-3fa4b241d080.png",
+      "muzzle": [
+        66,
+        304
+      ],
+      "muzzleGround": [
+        66,
+        430
+      ]
+    },
+    "cover-bridge/left/001.png": {
+      "anchor": [
+        263,
+        430
+      ],
+      "drawScale": 1.12,
+      "supportFoot": [
+        171,
+        430
+      ],
+      "pelvis": [
+        264,
+        344
+      ],
+      "sha256": "ef397b074dd74822065d1cf56236c3ab1b5321eba5146b7ee8af529041cdccc2",
+      "source": "exec-320f0dce-1dc6-4788-b70f-3fa4b241d080.png",
+      "muzzle": [
+        66,
+        324
+      ],
+      "muzzleGround": [
+        66,
+        430
+      ]
+    },
+    "cover-recoil/right/000.png": {
+      "anchor": [
+        245,
+        430
+      ],
+      "drawScale": 1.03,
+      "supportFoot": [
+        182,
+        430
+      ],
+      "pelvis": [
+        264,
+        332
+      ],
+      "sha256": "29d6ef53b163a69fe4b8d99922f22d51001759e610ed8cba2322073ed379c820",
+      "source": "exec-1d0bf000-8832-48a1-8291-7904f3eca1cd.png",
+      "muzzle": [
+        442,
+        249
+      ],
+      "muzzleGround": [
+        442,
+        495
+      ]
+    },
+    "cover-recoil/right/001.png": {
+      "anchor": [
+        243,
+        430
+      ],
+      "drawScale": 1.03,
+      "supportFoot": [
+        180,
+        430
+      ],
+      "pelvis": [
+        265,
+        333
+      ],
+      "sha256": "ed51d4f337b702f41905e14dc3466d8f009cc8dea5633ce7ce45ae362c89a974",
+      "source": "exec-1d0bf000-8832-48a1-8291-7904f3eca1cd.png",
+      "muzzle": [
+        450,
+        266
+      ],
+      "muzzleGround": [
+        450,
+        512
+      ]
+    },
+    "cover-recoil/left/000.png": {
+      "anchor": [
+        268,
+        430
+      ],
+      "drawScale": 1.12,
+      "supportFoot": [
+        176,
+        430
+      ],
+      "pelvis": [
+        264,
+        344
+      ],
+      "sha256": "713962a35cc76b8c709159e105f39bbb2aaf6300683e3e0a413719cfb90f1d0f",
+      "source": "exec-1d0bf000-8832-48a1-8291-7904f3eca1cd.png",
+      "muzzle": [
+        76,
+        278
+      ],
+      "muzzleGround": [
+        76,
+        492
+      ]
+    },
+    "cover-recoil/left/001.png": {
+      "anchor": [
+        266,
+        430
+      ],
+      "drawScale": 1.12,
+      "supportFoot": [
+        174,
+        430
+      ],
+      "pelvis": [
+        264,
+        344
+      ],
+      "sha256": "aef08e6ebfc7ee212cc77e32faa53b48570cc90ec9feef742172c81d4d94a40e",
+      "source": "exec-1d0bf000-8832-48a1-8291-7904f3eca1cd.png",
+      "muzzle": [
+        70,
+        290
+      ],
+      "muzzleGround": [
+        70,
+        504
+      ]
+    },
+    "recovery/right/000.png": {
+      "anchor": [
+        265,
+        430
+      ],
+      "drawScale": 1.08,
+      "supportFoot": [
+        371,
+        430
+      ],
+      "pelvis": [
+        265,
+        322
+      ],
+      "sha256": "d3eeba1590c75d012a5d9a9dbab9d93148277322c4ab3ec6f219949dc050dbf2",
+      "source": "exec-f995cb3c-6534-4136-87d7-6944e8b26808.png",
+      "muzzle": [
+        478,
+        329
+      ],
+      "muzzleGround": [
+        478,
+        430
+      ]
+    },
+    "recovery/front-right/000.png": {
+      "anchor": [
+        252,
+        430
+      ],
+      "drawScale": 1.08,
+      "supportFoot": [
+        330,
+        430
+      ],
+      "pelvis": [
+        252,
+        316
+      ],
+      "sha256": "08a21c04a666fd981cb79e1962bfc5c4a17c8b2dca8386b94dc6d0ac50be0ad5",
+      "source": "exec-f995cb3c-6534-4136-87d7-6944e8b26808.png",
+      "muzzle": [
+        449,
+        318
+      ],
+      "muzzleGround": [
+        449,
+        430
+      ]
+    },
+    "recovery/front/000.png": {
+      "anchor": [
+        293,
+        430
+      ],
+      "drawScale": 1.08,
+      "supportFoot": [
+        333,
+        430
+      ],
+      "pelvis": [
+        293,
+        314
+      ],
+      "sha256": "c47c6641b510c7870d275e2268f991ba25e7b2b90c8041ad89e540a88bbd76d5",
+      "source": "exec-f995cb3c-6534-4136-87d7-6944e8b26808.png",
+      "muzzle": [
+        336,
+        294
+      ],
+      "muzzleGround": [
+        336,
+        430
+      ]
+    },
+    "recovery/front-left/000.png": {
+      "anchor": [
+        282,
+        427
+      ],
+      "drawScale": 1.08,
+      "supportFoot": [
+        311,
+        427
+      ],
+      "pelvis": [
+        282,
+        316
+      ],
+      "sha256": "44fb08e004519438fa1466b54c6a0f535bcdce585cb715838109a39725192c04",
+      "source": "exec-f995cb3c-6534-4136-87d7-6944e8b26808.png",
+      "muzzle": [
+        90,
+        297
+      ],
+      "muzzleGround": [
+        90,
+        430
+      ]
+    },
+    "recovery/left/000.png": {
+      "anchor": [
+        261,
+        430
+      ],
+      "drawScale": 1.08,
+      "supportFoot": [
+        146,
+        430
+      ],
+      "pelvis": [
+        261,
+        320
+      ],
+      "sha256": "0704a27af1b36549741b39965e417c3542b02a924f4c5e46d597e7730c4554a2",
+      "source": "exec-285bca4c-3115-4529-ad9e-1defd4ddac90.png",
+      "muzzle": [
+        25,
+        260
+      ],
+      "muzzleGround": [
+        25,
+        430
+      ]
+    },
+    "recovery/back-left/000.png": {
+      "anchor": [
+        206,
+        430
+      ],
+      "drawScale": 1.08,
+      "supportFoot": [
+        154,
+        430
+      ],
+      "pelvis": [
+        206,
+        318
+      ],
+      "sha256": "426b68667b05e071bd43a29db75d7e471d208513e29082380b2b6d64af0c444e",
+      "source": "exec-285bca4c-3115-4529-ad9e-1defd4ddac90.png",
+      "muzzle": [
+        56,
+        245
+      ],
+      "muzzleGround": [
+        56,
+        430
+      ]
+    },
+    "recovery/back/000.png": {
+      "anchor": [
+        263,
+        430
+      ],
+      "drawScale": 1.08,
+      "supportFoot": [
+        211,
+        430
+      ],
+      "pelvis": [
+        263,
+        310
+      ],
+      "sha256": "3dfff1fd1e8d9e475beddc05c9f4dc1985986e91ba24a6bd01fbc17a3e659fd8",
+      "source": "exec-285bca4c-3115-4529-ad9e-1defd4ddac90.png",
+      "muzzleVisibility": "occluded",
+      "muzzleFallback": "legacy"
+    },
+    "recovery/back-right/000.png": {
+      "anchor": [
+        296,
+        430
+      ],
+      "drawScale": 1.08,
+      "supportFoot": [
+        317,
+        430
+      ],
+      "pelvis": [
+        296,
+        319
+      ],
+      "sha256": "799a9937d21bf9df86fb38ee36a1f6d8ce0fd6892d101c417e18a48e5da31c3f",
+      "source": "exec-285bca4c-3115-4529-ad9e-1defd4ddac90.png",
+      "muzzle": [
+        443,
+        236
+      ],
+      "muzzleGround": [
+        443,
+        430
+      ]
+    },
+    "cover-recoil/back-left/000.png": {
+      "anchor": [
+        273,
+        405
+      ],
+      "drawScale": 0.87,
+      "supportFoot": [
+        203,
+        405
+      ],
+      "pelvis": [
+        276,
+        286
+      ],
+      "sha256": "e3eb959390fe87c36e2b428a181d40949dfa9c1a327e55e127245708d23fab51",
+      "source": "exec-cde1fdb9-e04c-49a6-b6ba-c1c1f256a54c.png",
+      "muzzle": [
+        123,
+        157
+      ],
+      "muzzleGround": [
+        123,
+        437
+      ]
+    },
+    "cover-recoil/back-left/001.png": {
+      "anchor": [
+        287,
+        402
+      ],
+      "drawScale": 0.87,
+      "supportFoot": [
+        217,
+        402
+      ],
+      "pelvis": [
+        277,
+        286
+      ],
+      "sha256": "e903933f87f8956646f0903496578ccd0287e1f12cd01b078ce6a1ea3b25363d",
+      "source": "exec-cde1fdb9-e04c-49a6-b6ba-c1c1f256a54c.png",
+      "muzzle": [
+        110,
+        164
+      ],
+      "muzzleGround": [
+        110,
+        444
+      ]
+    },
+    "cover-recoil/back/000.png": {
+      "anchor": [
+        242,
+        430
+      ],
+      "drawScale": 0.79,
+      "supportFoot": [
+        341,
+        430
+      ],
+      "pelvis": [
+        257,
+        273
+      ],
+      "sha256": "ca7732e7c87e1da2e746c3c3fd51b5429d117f7d6a3279e35f259f32dd30e8a1",
+      "source": "exec-383bbbf9-4d44-4317-8f11-f352862ddb18.png",
+      "muzzle": [
+        327,
+        104
+      ],
+      "muzzleGround": [
+        327,
+        413
+      ]
+    },
+    "cover-recoil/back/001.png": {
+      "anchor": [
+        242,
+        430
+      ],
+      "drawScale": 0.79,
+      "supportFoot": [
+        341,
+        430
+      ],
+      "pelvis": [
+        257,
+        273
+      ],
+      "sha256": "4240d2870e10d3be50a74cf9bac9480bc381b897ee295112472503a29aafea3d",
+      "source": "exec-383bbbf9-4d44-4317-8f11-f352862ddb18.png",
+      "muzzle": [
+        319,
+        103
+      ],
+      "muzzleGround": [
+        319,
+        412
+      ]
     }
   },
   "slidePhases": [
@@ -4010,7 +4596,8 @@
   ],
   "coverShuffleDirections": [
     "right",
-    "left"
+    "left",
+    "back"
   ],
   "coverCatchProtectedDirections": [
     "right",
@@ -4019,5 +4606,36 @@
   "coverPopDirections": [
     "right",
     "left"
+  ],
+  "coverBridgeDirections": [
+    "left",
+    "right"
+  ],
+  "coverCornerDirections": [
+    "back-left"
+  ],
+  "coverRecoilDirections": [
+    "left",
+    "right",
+    "back",
+    "back-left"
+  ],
+  "coverTallRecoilDirections": [
+    "back",
+    "back-left"
+  ],
+  "coverRecoilReadyDirections": [
+    "back",
+    "back-left"
+  ],
+  "recoveryDirections": [
+    "right",
+    "front-right",
+    "front",
+    "front-left",
+    "left",
+    "back-left",
+    "back",
+    "back-right"
   ]
 }

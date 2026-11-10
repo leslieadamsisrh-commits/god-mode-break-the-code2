@@ -7,7 +7,9 @@ import {type MatchRules31,validateRules31,unlimited31,availableEnergy31,canPay31
 import {SHAPES27J,RIP_TIME27J,splitBarrier27j,type Section27j} from './psychicMatter27j';
 import {resolveSupports27e,coverStructureBlocked27f,coverSupport27h} from './arenaStructures27e';
 import {barrelSocket27d,cylinderTime27d,coverTime27d} from './ballistics27d';
-import {raptorCoverEdge,raptorCoverExposureFrame,advanceRaptorPose,raptorActorSample,type RaptorPoseMemory,type RaptorPoseFrame} from './raptorPose';
+import {coverHidesPoint} from './cover-occlusion';
+import {vertical46} from './bayBridgePresentation';
+import {raptorCoverEdge,raptorCoverExposureFrame,raptorCoverRecoilFrame,advanceRaptorPose,raptorActorSample,type RaptorPoseMemory,type RaptorPoseFrame} from './raptorPose';
 import {chaseLayout27c,instantiateLayout27c,validateLayout27c,type ArenaLayout27c} from './arenaLayout27c';
 import {integrateVertical,surfaceShotTime,type ElevationState} from './verticalCombat27b';
 import {height as surfaceHeight27h} from './elevation27a';
@@ -45,12 +47,12 @@ export const DEFAULT_CONFIG:CombatConfig={legacyPowers:0,chargeMoveScale:.67145,
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
 export type Rip32={region36?:{x:number;y:number};path?:{x:number;y:number;z:number}[];sourceId:string;revision:number;cells:number[];seed:number;volume:number;capacity:number;aim:number;destination:{x:number;y:number;z:number};fallback:number};
-export type Player=ElevationState & {coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;coverDrive11?:boolean;interceptReady11?:number;character?:'jade'|'raptor';raptorPose?:RaptorPoseMemory;raptorFrame?:RaptorPoseFrame;arsenal37?:Transit37;recallCursor37?:number;recallNext37?:number;recallAt37?:number;coverGate37?:boolean;gripGate37?:boolean;quick36?:{until:number;paid:number;source:string};gripEdges34?:boolean[];gripDesired34?:boolean;gather34?:{kind?:"cover"|"matter";source:string;at:number;revision:number;protective?:boolean;plan?:Rip32};throwBuffer34?:number;avoidSide34?:number;avoidMode34?:string;throwTarget34?:number;hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player=ElevationState & {coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;coverDrive11?:boolean;interceptReady11?:number;character?:'jade'|'raptor';raptorPose?:RaptorPoseMemory;raptorCoverShot?:{at:number;coverId:string;frame:RaptorPoseFrame};raptorFrame?:RaptorPoseFrame;arsenal37?:Transit37;recallCursor37?:number;recallNext37?:number;recallAt37?:number;coverGate37?:boolean;gripGate37?:boolean;quick36?:{until:number;paid:number;source:string};gripEdges34?:boolean[];gripDesired34?:boolean;gather34?:{kind?:"cover"|"matter";source:string;at:number;revision:number;protective?:boolean;plan?:Rip32};throwBuffer34?:number;avoidSide34?:number;avoidMode34?:string;throwTarget34?:number;hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type FloorSlab46={floorPanel46?:{sourceId:string;originX:number;originY:number;creator:number}};
 export type Cover=FloorSlab46 & {interceptUntil11?:number;arsenalSlot37?:number;placed34?:boolean;acquire32?:{x:number;y:number;z:number};acquireQueue32?:{x:number;y:number;z:number}[];fracture32?:Fracture32;height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={unitId?:string;groundId?:string;groundScatter?:boolean;spin?:number;spinVelocity?:number;height?:number;liftVelocity?:number;scatterAt?:number;attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={vz?:number;attackId?:string;source?:string;radius?:number;realAge?:number;volleyId?:string;fieldOwners?:number[];projectileScale?:number;id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
-export type Fx={material?:"digital"|"cyber";strength?:number;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number};
+export type Fx={material?:"digital"|"cyber";strength?:number;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number;raptorFrameKey?:string};
 export type HitRegion="low"|"torso"|"head";
 export type CombatEvent={parry?:boolean;incomingAngle?:number;attackId?:string;source?:string;seq:number;round:number;at:number;kind:"hit"|"shield"|"cover"|"finish";owner:number;target?:number;region?:HitRegion;damage:number;x:number;y:number;z:number;material?:"stone"|"metal"};
 export const REGION_DAMAGE={low:.75,torso:1,head:1.25};
@@ -252,7 +254,7 @@ export function placeRaptorCoverDrill(s:GameState,drill:RaptorCoverDrill,positio
  s.phase="playing";s.countdown=0;
  refreshRaptorPose(raptor,s.time,s.config.slideDuration);
 }
-function releaseCover(p:Player,s:GameState,lock=.18){p.coverDrive11=false;p.coverEntryAngle=undefined;p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
+function releaseCover(p:Player,s:GameState,lock=.18){p.raptorCoverShot=undefined;p.coverDrive11=false;p.coverEntryAngle=undefined;p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 export function driveEligible11(p:Player,cv:Cover,s:GameState){
  return p.hp>0&&p.grounded&&p.knock<=0&&stableCoverFace(cv,s)&&cv.generated&&!cv.anchored27j&&!cv.section27j?.anchored&&!cv.protected45&&!p.gripId&&!p.gripCoverId&&!p.arsenal37&&!s.players.some(q=>q!==p&&q.coverId===cv.id)&&canPay31(s,p,s.config.holdEnergy/60);
 }
@@ -939,7 +941,7 @@ function raptorReadyExposure(p:Player,cv:Cover|undefined){
  if(p.character!=='raptor'||!cv||p.coverMode!=='braced'||p.coverDrive11||p.gripCoverId||p.gripId||p.orbitIds.length||p.charging)return false;
  const tall=cv.coverClass==='tall',edge=raptorCoverEdge(p.coverAnchor,p.gunFacing);
  const frame=raptorCoverExposureFrame(p.gunFacing,tall,undefined,edge);
- return tall?!!edge&&/^cover-lean\/(left|right)\//.test(frame.key):frame.family==='cover-pop';
+ return tall?!!edge&&(frame.family==='cover-recoil'||/^cover-lean\/(left|right)\//.test(frame.key)):frame.family==='cover-pop'||frame.family==='cover-recoil';
 }
 function coverAimRequested(p:Player,cv:Cover|undefined){
  return p.input.coverAim||(p.input.fire&&raptorReadyExposure(p,cv));
@@ -952,11 +954,16 @@ export function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:numbe
   if(cv.coverClass==='tall'&&!edge)return {allowed:false,clearance:undefined,mode:'TALL_FACE'};
   const socket=muzzle as {x:number;y:number;z?:number};
   if(socket.z===undefined)return {allowed:false,clearance:undefined,mode:'NO_SOCKET'};
+  if(p.raptorFrame?.family==='cover-recoil'){
+   const lift=vertical46(socket.x,socket.y,socket.z);
+   if(coverHidesPoint(cv,p.y,{x:socket.x+lift.x,y:socket.y+lift.y}))
+    return {allowed:false,clearance:undefined,mode:'OCCLUDED'};
+  }
   const z=socket.z-(cv.z||0)-(cv.hover||0),from={x:socket.x,y:socket.y,z};
   const height=cv.height27j??78;
   // A barrel authored beyond the far face must also have a clear path from
   // the firing stance. Starting the projectile outside steel cannot bypass it.
-  const barrelClear=p.raptorFrame?.family!=='cover-pop'||coverTime27d({x:p.x,y:p.y,z},from,cv,height)===null;
+  const barrelClear=!(p.raptorFrame?.family==='cover-pop'||p.raptorFrame?.family==='cover-recoil'&&cv.coverClass!=='tall')||coverTime27d({x:p.x,y:p.y,z},from,cv,height)===null;
   const clear=barrelClear&&coverTime27d(from,{x:from.x+Math.cos(aim)*80,y:from.y+Math.sin(aim)*80,z},cv,height)===null;
   const structureClear=!Number.isFinite(surfaceShotTime({...from,z:socket.z},{x:from.x+Math.cos(aim)*24,y:from.y+Math.sin(aim)*24,z:socket.z}));
   return {allowed:clear&&structureClear,clearance:undefined,mode:clear&&structureClear?(edge?'SIDE':'OVER'):'BLOCKED'};
@@ -1345,8 +1352,24 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
   refreshRaptorPose(p,s.time,c.slideDuration);
   if(!(p.coverId&&p.coverState11!=='expose'&&p.coverState11!=='fire')&&(i.fire||p.pendingFireUntil!==undefined)&&!p.meleeCombo&&s.time>=(p.blastPoseAt??-9)+.3&&!p.charging&&p.powerReturn<=0&&!p.fireBlocked&&s.time-p.lastShot>=c.shotCadence*(p.godTime>0?.7:1)&&(!p.coverId||p.coverMode==="soft"||p.peek)){
    const attachedCover=p.coverId?s.covers.find(cv=>cv.id===p.coverId):undefined;
-   const muzzle=barrelSocket27d(p,c.spriteScale),legacyAimOrigin={x:muzzle.x,y:muzzle.y},physical=coverMuzzleClearance(p,attachedCover,muzzle,p.gunFacing);
+   let shotPose=p;
+   if(p.character==='raptor'&&attachedCover){
+    const tall=attachedCover.coverClass==='tall';
+    const aimFrame=raptorCoverExposureFrame(p.gunFacing,tall,undefined,raptorCoverEdge(p.coverAnchor,p.gunFacing));
+    const recoilFrame=aimFrame.family==='idle'?undefined:raptorCoverRecoilFrame(p.gunFacing,tall);
+    shotPose={...p,raptorFrame:aimFrame};
+    if(recoilFrame){
+     const recoilPose={...p,raptorFrame:recoilFrame};
+     if(coverMuzzleClearance(recoilPose,attachedCover,barrelSocket27d(recoilPose,c.spriteScale),p.gunFacing).allowed)shotPose=recoilPose;
+    }
+   }
+   const muzzle=barrelSocket27d(shotPose,c.spriteScale),legacyAimOrigin={x:muzzle.x,y:muzzle.y},physical=coverMuzzleClearance(shotPose,attachedCover,muzzle,p.gunFacing);
    if(p.character==='raptor'&&!physical.allowed){p.pendingFireUntil=undefined;continue;}
+   if(shotPose!==p&&shotPose.raptorFrame){
+    p.raptorFrame=shotPose.raptorFrame;
+    p.raptorCoverShot=shotPose.raptorFrame.family==='cover-recoil'&&p.coverId
+      ?{at:s.time,coverId:p.coverId,frame:shotPose.raptorFrame}:undefined;
+   }
    // Shared cover state gates the trigger before character-specific socket clearance.
    // Authored Raptor XYZ must clear cover geometrically. Jade's exposure art
    // still uses its legacy clearance plus the matching raised muzzle below.
@@ -1362,7 +1385,7 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
    if(typeof p.shells==="number")p.shells=Math.max(0,p.shells-1);
    if(p.coverId)p.returnToCover=.28;
    for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),attackId:volleyId,source:"shotgun",volleyId,realAge:0,owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,damage:c.shotDamage*(p.godTime>0?c.godDamage:1),z:p.z+shotHeight,vz:verticalAim27b(s,n,p.z+shotHeight,c.shotSpeed,muzzle.raptorAligned?muzzle:legacyAimOrigin),renderOffsetX,clearanceCoverId:clearance})}
-   s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.18,owner:n,z:p.z+shotHeight,renderOffsetX,text:"BOOM",angle:p.gunFacing});
+   s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.18,owner:n,z:p.z+shotHeight,renderOffsetX,text:"BOOM",angle:p.gunFacing,raptorFrameKey:attachedCover&&muzzle.raptorAligned?p.raptorFrame?.key:undefined});
   }
  }
  for(const cv of s.covers){if(cv.constructOwner===undefined||cv.hp<=0)continue;const owner=s.players[cv.constructOwner];if(!owner||owner.hp<=0)dissolveFieldCover(cv,s);}
@@ -1456,7 +1479,7 @@ export function startOrRematch(s:GameState,slot:number){
  }
  respawn(s);
 }
-export function safeState(s:GameState){const {actions,actionCounts,energySpent,botExperience,botRound,fightRecording,...publicState}=s;const lab21=repulseView21(s);return{...publicState,...lab21?{lab21}:{},fightMemory:fightMemorySummary(s),players:s.players.map(({token,raptorPose,...p})=>p)}}
+export function safeState(s:GameState){const {actions,actionCounts,energySpent,botExperience,botRound,fightRecording,...publicState}=s;const lab21=repulseView21(s);return{...publicState,...lab21?{lab21}:{},fightMemory:fightMemorySummary(s),players:s.players.map(({token,raptorPose,raptorCoverShot,...p})=>p)}}
 
 
 
@@ -1479,6 +1502,7 @@ export function applyArenaLayout27c(s:GameState,raw:unknown,local=false){
  if(local){respawn(s);}else{s.covers=instantiateLayout27c(layout);s.shots=[];}
  return layout;
 }
+
 
 
 
