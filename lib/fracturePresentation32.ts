@@ -1,4 +1,4 @@
-import {type Shape32,localPolys32,faces33,hash32} from './fracture32';
+import {type Shape32,localPolys32,faces33,visibleFractureFaces33,hash32} from './fracture32';
 import {relativeWorld46,vertical46} from './bayBridgePresentation';
 import {coverSupport27h} from './arenaStructures27e';
 import {height} from './elevation27a';
@@ -9,7 +9,7 @@ export function drawFracture32(g:CanvasRenderingContext2D,c:Shape32&{hp:number;m
  const polygon=(p:{x:number;y:number}[],fill:string,stroke?:string,width=1)=>{g.beginPath();p.forEach((q,i)=>i?g.lineTo(q.x,q.y):g.moveTo(q.x,q.y));g.closePath();g.fillStyle=fill;g.fill();if(stroke){g.strokeStyle=stroke;g.lineWidth=width;g.stroke();}};
  g.save();const floor=height(coverSupport27h(c),c);
  for(const p of localPolys32(c))polygon(p.map(q=>project({...q,z:floor-base})),'#050c1438');
- const faces=faces33(c).filter(face=>{if(face.kind!=='side')return face.kind==='top';const [a,b]=face.points;return (b.x-a.x)*co-(b.y-a.y)*si<0;}).sort((a,b)=>{
+ const faces=visibleFractureFaces33(c).sort((a,b)=>{
   const depth=(f:typeof a)=>f.points.reduce((n,p)=>n+p.x*si+p.y*co,0)/f.points.length;return depth(a)-depth(b)||(a.kind==='top'?1:-1);
  });
  for(const face of faces){const projected=face.points.map(project),fracture=!face.exterior;

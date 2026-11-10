@@ -63,6 +63,14 @@ function candidates33(c:Shape32,aim:V32,battery:number){
  return out.slice(0,48);
 }
 export type Face33={id:number;kind:'top'|'side'|'bottom';exterior:boolean;points:(V32&{z:number})[]};
+export function visibleFractureFaces33(c:Shape32){
+ const co=Math.cos(c.a||0),si=Math.sin(c.a||0);
+ return faces33(c).filter(face=>{
+  if(face.kind!=='side')return face.kind==='top';
+  const [a,b]=face.points;
+  return (b.x-a.x)*co-(b.y-a.y)*si<0;
+ });
+}
 const faceCache33=new Map<string,Face33[]>();
 export function faces33(c:Shape32):Face33[]{
  const f=c.fracture32!,key=[f.sourceId,f.seed,f.width,f.depth,f.height,f.layers33?1:0,f.ox,f.oy,f.oz||0,f.cells.join(',')].join('/'),cached=faceCache33.get(key);if(cached)return cached;const grid=lattice32(f),out:Face33[]=[];
