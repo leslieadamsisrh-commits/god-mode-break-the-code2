@@ -1,0 +1,46 @@
+{
+  "left": {
+    "file": "left-tuck.png",
+    "anchor": [
+      256,
+      387
+    ],
+    "supportFoot": [
+      193,
+      387
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      276,
+      238
+    ],
+    "muzzleGround": [
+      276,
+      387
+    ],
+    "source": "exec-73e30042-2186-4827-9e22-895bfc8cb063.png",
+    "sha256": "04fd6eb44cf16a649a1d85d080e1f2dd1aea89c80f93181a6b3be4ba362994f0"
+  },
+  "right": {
+    "file": "right-tuck.png",
+    "anchor": [
+      286,
+      410
+    ],
+    "supportFoot": [
+      380,
+      410
+    ],
+    "drawScale": 1,
+    "muzzle": [
+      373,
+      244
+    ],
+    "muzzleGround": [
+      373,
+      410
+    ],
+    "source": "exec-73e30042-2186-4827-9e22-895bfc8cb063.png",
+    "sha256": "709ac82953eea44345344feb9bbb7038e1069e45ac16451bf64b3a2d91e9f424"
+  }
+}
