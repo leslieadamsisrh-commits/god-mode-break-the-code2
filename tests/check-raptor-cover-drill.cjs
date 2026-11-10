@@ -2,10 +2,10 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),ts=require('typ
 require.extensions['.ts']=(module,path)=>module._compile(ts.transpileModule(fs.readFileSync(path,'utf8'),{compilerOptions:{module:1,target:9,esModuleInterop:true}}).outputText,path);
 const {newGame,placeRaptorCoverDrill,setInput,advance,startOrRematch}=require('../lib/game.ts');
 
-function drill(mode){
+function drill(mode,position){
  const s=newGame('Drill','local',0,'bot');
  s.players[0].character='raptor';
- placeRaptorCoverDrill(s,mode);
+ placeRaptorCoverDrill(s,mode,position);
  const wall=s.covers[0],p=s.players[0],seen=new Set();
  const spawn=[p.x,p.y,p.gunFacing],wallPose=[wall.x,wall.y,wall.a];
  const tx=Math.cos(wall.a),ty=Math.sin(wall.a),aim=spawn[2];
@@ -80,3 +80,58 @@ for(const mode of ['wrap','rotated-wrap'])for(const side of [-1,1]){
  assert.deepEqual([wall.x,wall.y,wall.a],wallPose);
 }
 console.log('PASS Raptor drill catch, two shuffle directions and foot poses, stop, repeatable reset, both tall ends at 0° and 15°, blocked center, fire and planted retract');
+
+
+for(const mode of ['shuffle','shuffle-left']){
+ const {s,p,wall,wallPose,aim,tx,ty,tick,seen}=drill(mode);
+ const direction=mode==='shuffle'?'right':'left';
+ const hold='cover-hold/'+direction+'/000.png',pop='cover-pop/'+direction+'/000.png';
+ assert.ok(seen.has('cover-catch/'+direction+'/000.png'));
+ for(const sign of [-1,1]){
+  seen.clear();
+  tick({x:tx*sign,y:ty*sign},16);
+  assert.ok(seen.has('cover-shuffle/'+direction+'/000.png'));
+  assert.ok(seen.has('cover-shuffle/'+direction+'/001.png'));
+  tick();
+  assert.equal(p.raptorFrame.key,hold);
+ }
+ const root=[p.x,p.y,p.coverAnchor.t];
+ const shell=p.shells;
+ tick({aim:aim+.2,coverAim:true},4);
+ assert.equal(p.raptorFrame.key,pop);
+ tick({aim:aim-.2,coverAim:true},4);
+ assert.equal(p.raptorFrame.key,pop);
+ assert.deepEqual([p.x,p.y,p.coverAnchor.t],root);
+ tick({fire:true});
+ assert.equal(p.shells,shell-1,'RT alone fires a clear, braced waist shot');
+ assert.equal(p.raptorFrame.key,pop);
+ const socket=require('../lib/ballistics27d.ts').barrelSocket27d(p,s.config.spriteScale);
+ assert.equal(socket.raptorAligned,true);
+ assert.ok(socket.z>wall.height27j+(wall.z||0));
+ const flash=s.fx.findLast(f=>f.type==='muzzle'&&f.owner===0);
+ assert.deepEqual([flash.x,flash.y,flash.z],[socket.x,socket.y,socket.z]);
+ tick({},20);
+ assert.equal(p.raptorFrame.key,hold);
+ assert.deepEqual([p.x,p.y,p.coverAnchor.t],root);
+ assert.deepEqual([wall.x,wall.y,wall.a],wallPose);
+}
+console.log('PASS both waist facings keep planted root and fire on RT with the displayed muzzle');
+
+for(const mode of ['wrap','rotated-wrap'])for(const face of ['far','near'])for(const endpoint of ['start','end']){
+ const {p,wall,wallPose,tx,ty,seen,tick}=drill(mode,{face,endpoint});
+ const sign=endpoint==='start'?-1:1,aim=Math.atan2(ty*sign,tx*sign);
+ const dir=sign<0?'left':'right',start=[p.x,p.y,p.coverAnchor.t],shells=p.shells;
+ assert.equal(p.coverAnchor.face,face==='far'?'top':'bottom');
+ assert.equal(p.raptorFrame.key,'cover-wrap/'+dir+'/000.png');
+ tick({aim,coverAim:true},8);
+ assert.ok(seen.has('cover-wrap/'+dir+'/001.png'));
+ assert.equal(p.raptorFrame.key,'cover-lean/'+dir+'/000.png');
+ tick({aim,fire:true});
+ assert.equal(p.shells,shells-1);
+ assert.equal(p.raptorFrame.key,'cover-lean/'+dir+'/000.png');
+ tick({},20);
+ assert.equal(p.raptorFrame.key,'cover-wrap/'+dir+'/000.png');
+ assert.deepEqual([p.x,p.y,p.coverAnchor.t],start);
+ assert.deepEqual([wall.x,wall.y,wall.a],wallPose);
+}
+console.log('PASS tall end starts on both faces of both drill rotations with visible pivot, RT and planted return');

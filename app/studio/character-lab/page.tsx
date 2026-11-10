@@ -1,7 +1,7 @@
 "use client";
 import {useState,useEffect} from "react";
 import Game from "../../Game";
-import type {RaptorCoverDrill} from "../../../lib/game";
+import type {RaptorCoverDrill,RaptorDrillPosition} from "../../../lib/game";
 import {loadRaptorSprite,preloadRaptorSprites,getRaptorAnimationTrace,clearRaptorAnimationTrace} from "../../../lib/raptorSpriteOnly";
 type Fighter="jade"|"raptor";
 const lowReadyFrame="cover-hold/front-right/001.png";
@@ -21,12 +21,20 @@ export default function CombatLab(){
  const [lowCover,setLowCover]=useState(false);
  const [drill,setDrill]=useState<RaptorCoverDrill|null>(null);
  const [diagnostics,setDiagnostics]=useState(false);
+ const [position,setPosition]=useState<RaptorDrillPosition>({});
+ const tall=drill==="wrap"||drill==="rotated-wrap";
+ const resetAt=(next:RaptorDrillPosition)=>{setPosition(next);setReset(n=>n+1);clearRaptorAnimationTrace()};
  const [trace,setTrace]=useState("");
  useEffect(()=>{if(fighter!=="raptor")return;const timer=setInterval(()=>setTrace(getRaptorAnimationTrace()),250);return ()=>clearInterval(timer)},[fighter]);
  const button={padding:"18px 20px",background:"#14283a",border:"2px solid #5a8394",borderRadius:12,color:"#f5fbff",font:"bold 19px Arial",cursor:"pointer",touchAction:"manipulation" as const};
  if(fighter)return <main style={{position:"fixed",inset:0,background:"#080f1a"}}>
-  <Game combatLab labLowCover={lowCover} labCoverDrill={drill??undefined} labCoverDiagnostics={!!drill&&diagnostics} key={fighter+reset} character={fighter} cameraPreset="kinetic" labPace={fighter==="raptor"?pace:1}/>
+  <Game combatLab labLowCover={lowCover} labCoverDrill={drill??undefined} labDrillPosition={position} labCoverDiagnostics={!!drill&&diagnostics} key={fighter+reset} character={fighter} cameraPreset="kinetic" labPace={fighter==="raptor"?pace:1}/>
   {fighter==="raptor"&&<details style={{position:"fixed",right:12,top:145,zIndex:2147483647,maxHeight:"55vh",overflow:"auto",background:"#08101be8",color:"#b7e5ef",padding:8,font:"12px monospace"}}><summary>Animation trace</summary><button onClick={()=>clearRaptorAnimationTrace()}>Clear trace</button><pre>{trace}</pre></details>}
+  {tall&&<div style={{position:"fixed",right:12,top:68,zIndex:2147483646,display:"flex",gap:6}}>
+   <button style={{...button,fontSize:12,padding:8}} onClick={()=>resetAt({...position,endpoint:"start"})}>WALL START</button>
+   <button style={{...button,fontSize:12,padding:8}} onClick={()=>resetAt({...position,endpoint:"end"})}>WALL END</button>
+   <button style={{...button,fontSize:12,padding:8}} onClick={()=>resetAt({...position,face:position.face==="near"?"far":"near"})}>{position.face==="near"?"SWITCH TO FAR FACE":"SWITCH TO NEAR FACE"}</button>
+  </div>}
   <div style={{position:"fixed",right:12,top:12,zIndex:2147483647,display:"flex",gap:8}}>
    {drill&&<button style={{...button,fontSize:12,padding:12}} aria-pressed={diagnostics} onClick={()=>setDiagnostics(v=>!v)}>COVER DEBUG</button>}
    {fighter==="raptor"&&<label style={{fontSize:12,color:"#e9f3fa",background:"#14283a",padding:8,borderRadius:8}}>Keyboard / touch pace <select aria-label="Keyboard and touch pace" value={pace} onChange={e=>setPace(Number(e.target.value))} style={{padding:6,background:"#243b4d",color:"white"}}><option value={.25}>Stalk</option><option value={.55}>Jog</option><option value={1}>Full</option></select></label>}
@@ -37,7 +45,7 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T15 COVER DRILL</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T15 RAPTOR FIREFIGHT</p>
    <h1>PSYCHIC COVER COMBAT</h1>
    <a href="/raptor-proportion-review.html" style={{color:"#89e9f2"}}>Review proportions beside Jade</a><br/>
    <a href="/raptor-animation-review.html" style={{color:"#89e9f2"}}>Review movement and jump phases</a>
@@ -49,11 +57,11 @@ export default function CombatLab(){
    </div>
    <h2>Raptor cover drills</h2>
    <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-    {([["shuffle","COVER SHUFFLE DRILL"],["wrap","TALL WRAP DRILL"],["rotated-wrap","ROTATED TALL WRAP"]] as const).map(([mode,label])=>
-     <button key={mode} disabled={matchReady!==true} style={{...button,fontSize:14,opacity:matchReady?1:.5}} onClick={()=>{clearRaptorAnimationTrace();setDrill(mode);setFighter("raptor")}}>{label}</button>)}
+    {([["shuffle","LOW WALL · RIGHT-FACING"],["shuffle-left","LOW WALL · LEFT-FACING"],["wrap","TALL WRAP DRILL"],["rotated-wrap","ROTATED TALL WRAP"]] as const).map(([mode,label])=>
+     <button key={mode} disabled={matchReady!==true} style={{...button,fontSize:14,opacity:matchReady?1:.5}} onClick={()=>{clearRaptorAnimationTrace();setPosition({});setDrill(mode);setFighter("raptor")}}>{label}</button>)}
    </div>
-   <p style={{fontSize:14}}>Shuffle drill. Move right and tap A to attach. Center the stick and tap A to brace, then move up and down along the rail. Stop to return to hold.</p>
-   <p style={{fontSize:14}}>Tall drill. Move toward the wall and tap A, center the stick and tap A to brace, then shuffle to an end. Aim past the end with the right stick. Hold LT to peek, tap RT to fire, and release LT to tuck back in. Reset restores the same wall and start position.</p>
+   <p style={{fontSize:14}}>Low wall. Move toward the steel and tap A to attach. Center the left stick and tap A again to brace. Move up or down to shuffle. Stop, aim across the wall with the right stick, and tap RT. Hold LT to inspect the raised shotgun before firing.</p>
+   <p style={{fontSize:14}}>Tall drill. Move toward the wall and tap A, center the stick and tap A to brace, then shuffle to an end. Aim out past the end with the right stick. Hold LT to inspect the peek or tap RT to take a clear shot. Release the trigger and LT to return to cover. Reset restores the selected position.</p>
    {(lowReady===false||matchReady===false)&&<button style={{...button,marginTop:12,fontSize:14,padding:12}} onClick={()=>{
     if(lowReady===false)setLowReady(null);
     if(matchReady===false)setMatchReady(null);
@@ -63,5 +71,6 @@ export default function CombatLab(){
   </div>
  </main>;
 }
+
 
 

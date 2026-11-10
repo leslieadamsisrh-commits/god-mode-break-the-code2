@@ -1,5 +1,5 @@
 {
-  "build": "39T15-cover-drill",
+  "build": "39T15-raptor-firefight",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -3561,21 +3561,29 @@
       "source": "39T14 targeted grounded hold; exec-7c355279-f260-40b9-a47f-4910ceb59365.png"
     },
     "cover-hold/left/000.png": {
+      "source": "0fa3b283-58b0-49b6-b3b6-c2bcaaa39c45",
       "anchor": [
-        203,
-        381
+        259,
+        376
       ],
-      "drawScale": 1,
+      "supportFoot": [
+        167,
+        376
+      ],
+      "pelvis": [
+        259,
+        322
+      ],
+      "drawScale": 1.12,
       "muzzle": [
-        67,
-        255
+        64,
+        263
       ],
       "muzzleGround": [
-        67,
-        381
+        64,
+        376
       ],
-      "sha256": "9c9e20fd6629d53f30f6ec62bb6886ce0959a242328d47aaa9944fd8a01ea049",
-      "source": "39T14 targeted grounded hold; exec-8cf0c64b-ea20-4c84-ae3c-2b36833431de.png"
+      "sha256": "d6b65de7fef3bc42adbb28ba4af891839791f8d65d55eddaac85b3be4e6916f0"
     },
     "cover-hold/back-left/000.png": {
       "anchor": [
@@ -3802,6 +3810,131 @@
         385
       ],
       "sha256": "9518dce5863175ace27f2927296e79f645d31ad3a89ce319f1da6c3146d76f04"
+    },
+    "cover-pop/right/000.png": {
+      "source": "d80e9102-fd7d-482b-a2fb-a4a604678f88",
+      "anchor": [
+        224,
+        389
+      ],
+      "supportFoot": [
+        161,
+        389
+      ],
+      "pelvis": [
+        227,
+        306
+      ],
+      "drawScale": 1.03,
+      "muzzle": [
+        470,
+        223
+      ],
+      "muzzleGround": [
+        470,
+        460
+      ],
+      "sha256": "a9e8c1f0ea022399cac5d51b8e5fd23e0073d1e6bd2eaf7ea43fa8bad4dc594b"
+    },
+    "cover-catch/left/000.png": {
+      "source": "0fa3b283-58b0-49b6-b3b6-c2bcaaa39c45",
+      "anchor": [
+        235,
+        367
+      ],
+      "supportFoot": [
+        86,
+        367
+      ],
+      "pelvis": [
+        235,
+        334
+      ],
+      "drawScale": 1.12,
+      "muzzle": [
+        44,
+        264
+      ],
+      "muzzleGround": [
+        44,
+        367
+      ],
+      "sha256": "9aefe6758d455a1b4a088cc348eff80c7b18fa115c6d289653b86d44ec485a7e"
+    },
+    "cover-shuffle/left/000.png": {
+      "source": "0fa3b283-58b0-49b6-b3b6-c2bcaaa39c45",
+      "anchor": [
+        259,
+        376
+      ],
+      "supportFoot": [
+        167,
+        376
+      ],
+      "pelvis": [
+        259,
+        319
+      ],
+      "drawScale": 1.12,
+      "muzzle": [
+        49,
+        268
+      ],
+      "muzzleGround": [
+        49,
+        376
+      ],
+      "sha256": "c1810a417fe693be92889703865c37d092da27f5c33870ecc41c2cb84a70f47b"
+    },
+    "cover-shuffle/left/001.png": {
+      "source": "0fa3b283-58b0-49b6-b3b6-c2bcaaa39c45",
+      "anchor": [
+        246,
+        383
+      ],
+      "supportFoot": [
+        310,
+        383
+      ],
+      "pelvis": [
+        246,
+        314
+      ],
+      "drawScale": 1.12,
+      "muzzle": [
+        50,
+        256
+      ],
+      "muzzleGround": [
+        50,
+        383
+      ],
+      "sha256": "fb1c5ee69fd607b48d26e72682557454a85178cd96d70180a08eca839e977b23"
+    },
+    "cover-pop/left/000.png": {
+      "source": "0fa3b283-58b0-49b6-b3b6-c2bcaaa39c45",
+      "anchor": [
+        262,
+        387
+      ],
+      "supportFoot": [
+        170,
+        387
+      ],
+      "pelvis": [
+        270,
+        322
+      ],
+      "drawScale": 1.12,
+      "muzzle": [
+        51,
+        243
+      ],
+      "muzzleGround": [
+        51,
+        455
+      ],
+      "sha256": "75ef468dc98b4d41e5c6b1c3d515df850d3f36d93777043af928aa5fadd3d9a3"
     }
   },
   "slidePhases": [
@@ -3872,12 +4005,19 @@
     "front-right"
   ],
   "coverCatchDirections": [
-    "right"
+    "right",
+    "left"
   ],
   "coverShuffleDirections": [
-    "right"
+    "right",
+    "left"
   ],
   "coverCatchProtectedDirections": [
-    "right"
+    "right",
+    "left"
+  ],
+  "coverPopDirections": [
+    "right",
+    "left"
   ]
 }

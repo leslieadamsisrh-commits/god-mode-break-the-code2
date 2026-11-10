@@ -17,7 +17,7 @@ for(let i=0;i<8;i++)for(const tall of [false,true]){
  // Reference assets are not silently activated before adjoining frames are ready.
  const current=raptorCoverExposureFrame(angle,tall);
  assert.ok(fs.existsSync('public/assets/raptor-v2/'+current.key));
- assert.equal(current.family,tall&&live.coverLeanDirections.includes(dir)?'cover-lean':'idle');
+ assert.equal(current.family,tall&&live.coverLeanDirections.includes(dir)?'cover-lean':!tall&&live.coverPopDirections.includes(dir)?'cover-pop':'idle');
 }
 assert.equal(raptorCoverExposureFrame(0,true,{postureDirections:[],coverLeanDirections:[]}).family,'idle');
 console.log('PASS 16 directional/height cases: authored availability, identical clearance/render selection, retraction, active inventory');
@@ -299,3 +299,4 @@ for(const weaveEnabled of [0,1]){
  }
 }
 console.log('PASS continued shuffle input at both stationary rail limits holds the feet and barrier');
+
