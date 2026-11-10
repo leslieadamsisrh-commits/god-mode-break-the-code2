@@ -19,7 +19,7 @@ for(const state of ['expose','fire']){
  assert.equal(muzzle.raptorAligned,true);
  assert.ok(Number.isFinite(muzzle.x)&&Number.isFinite(muzzle.z));
 }
-for(let d=0;d<8;d++)assert.equal(raptorCoverExposureFrame(d*Math.PI/4,true).family,[0,1,4].includes(d)?'cover-lean':[5,6].includes(d)?'cover-recoil':'idle');
+for(let d=0;d<8;d++)assert.equal(raptorCoverExposureFrame(d*Math.PI/4,true).family,[0,1,4].includes(d)?'cover-lean':[5,6,7].includes(d)?'cover-recoil':'idle');
 assert.equal(raptorCoverExposureFrame(Math.PI/4,false).family,'idle');
 assert.equal(advanceRaptorPose(undefined,{...sample,coverTall11:true,coverState11:'retract'}).frame.family,'cover-hold');
 console.log('PASS tall lean shares clearance/render frame and authored barrel; low exposure, other directions and retraction preserved');

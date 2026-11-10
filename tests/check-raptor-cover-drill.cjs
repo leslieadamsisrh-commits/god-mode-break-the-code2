@@ -142,37 +142,43 @@ for(const mode of ['wrap','rotated-wrap'])for(const face of ['far','near'])for(c
 console.log('PASS tall end starts on both faces of both drill rotations with visible pivot, RT and planted return');
 
 
-for(const mode of ['wrap','rotated-wrap']){
+for(const mode of ['wrap','rotated-wrap'])for(const sign of [-1,1]){
  const {p,wall,s,tick,seen}=drill(mode,{face:'near'});
  assert.equal(p.raptorFrame.key,'cover-hold/back/000.png');
  const aim=Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx),shells=p.shells;
  tick({aim,coverAim:true,fire:true},2);
  assert.equal(p.shells,shells);
- const left={x:-Math.cos(wall.a),y:-Math.sin(wall.a)};
+ const direction=sign<0?'left':'right',diagonal='back-'+direction;
+ const movement={x:sign*Math.cos(wall.a),y:sign*Math.sin(wall.a)};
  tick(); seen.clear();
- tick(left,20);
+ tick(movement,20);
  tick({},10);
  assert.ok(seen.has('cover-shuffle/back/000.png')&&seen.has('cover-shuffle/back/001.png'));
- assert.ok(seen.has('cover-corner/back-left/000.png'));
- assert.equal(p.raptorFrame.key,'cover-wrap/left/000.png');
+ assert.ok(seen.has('cover-corner/'+diagonal+'/000.png'));
+ assert.equal(p.raptorFrame.key,'cover-wrap/'+direction+'/000.png');
  const root=[p.x,p.y,p.coverAnchor.t];
- const out=-3*Math.PI/4;
+ const out=sign<0?-3*Math.PI/4:-Math.PI/4;
  tick({aim:out,coverAim:true},10);
- assert.equal(p.raptorFrame.key,'cover-recoil/back-left/001.png');
+ assert.equal(p.raptorFrame.key,'cover-recoil/'+diagonal+'/001.png');
+ assert.deepEqual([p.x,p.y,p.coverAnchor.t],root);
  tick({aim:out,fire:true});
  assert.equal(p.shells,shells-1);
- assert.equal(p.raptorFrame.key,'cover-recoil/back-left/000.png');
+ assert.equal(p.raptorFrame.key,'cover-recoil/'+diagonal+'/000.png');
  const socket=require('../lib/ballistics27d.ts').barrelSocket27d(p,s.config.spriteScale);
  const flash=s.fx.findLast(f=>f.type==='muzzle'&&f.owner===0);
  assert.deepEqual([flash.x,flash.y,flash.z],[socket.x,socket.y,socket.z]);
  assert.equal(flash.raptorFrameKey,p.raptorFrame.key);
+ const pellet=s.shots.find(shot=>shot.owner===0);
+ assert.ok(pellet);
+ assert.ok(Math.hypot(pellet.x-pellet.vx*pellet.realAge-socket.x,pellet.y-pellet.vy*pellet.realAge-socket.y)<1e-6);
  tick({aim:out},20);
+ assert.equal(p.raptorFrame.key,'cover-wrap/'+direction+'/000.png');
  assert.deepEqual([p.x,p.y,p.coverAnchor.t],root);
  tick({aim:out,slide:true});
  assert.equal(p.coverId,null);
  assert.ok(p.raptorFrame.key.startsWith('recovery/'));
 }
-console.log('PASS rear brace, both distance-driven shuffle steps, corner connector, aimed diagonal shot and cover exit');
+console.log('PASS rear brace, distance-driven shuffle, both corner pivots, both authored diagonal shots and cover exit');
 
 {
  const {advanceRaptorPose,RAPTOR_POSE_DIRECTIONS}=require('../lib/raptorPose.ts');
@@ -187,4 +193,36 @@ console.log('PASS rear brace, both distance-driven shuffle steps, corner connect
   assert.notEqual(advanceRaptorPose(hold.memory,{...traveling,airborne:true,verticalVelocity:25}).frame.family,'recovery');
  }
  console.log('PASS eight exit connectors lead to first planted stride and never replace airborne art');
+}
+
+{
+ const {s,p,wall,tick}=drill('wrap',{face:'near',endpoint:'end'});
+ const jade=s.players[1];
+ jade.character='jade';
+ Object.assign(jade,{x:p.x+106,y:p.y+18,aim:Math.PI,gunFacing:Math.PI,bot:false});
+ const aim=Math.atan2(p.y-jade.y,p.x-jade.x);
+ setInput(s,1,jade.lastSeq+1,{aim});
+ const before=p.shells, pHP=p.hp, jadeHP=jade.hp;
+ tick({aim:-Math.PI/4,fire:true});
+ assert.equal(p.shells,before-1);
+ assert.equal(p.raptorFrame.key,'cover-recoil/back-right/000.png');
+ tick({},20);
+ assert.equal(jade.hp,jadeHP);
+ setInput(s,1,jade.lastSeq+1,{aim,fire:true});
+ tick({slide:true,y:1});
+ assert.equal(p.coverId,null);
+ assert.equal(p.raptorFrame.family,'recovery');
+ setInput(s,1,jade.lastSeq+1,{aim,fire:false});
+ tick({y:1},12);
+ assert.ok(p.hp<pHP);
+ assert.equal(s.covers[0],wall);
+ const round=s.round;
+ startOrRematch(s,0);
+ assert.equal(s.round,round+1);
+ assert.equal(s.phase,'countdown');
+ assert.equal(s.players[0].character,'raptor');
+ assert.equal(s.players[1].character,'jade');
+ assert.equal(s.players[0].coverId,null);
+ assert.equal(s.shots.length,0);
+ console.log('PASS missed cover shot, Jade punish, exit under pressure, and clean rematch');
 }

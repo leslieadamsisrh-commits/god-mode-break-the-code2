@@ -1,5 +1,5 @@
 {
-  "build": "39T16-raptor-fluidity",
+  "build": "39T17-raptor-rear-right",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -4521,6 +4521,81 @@
         319,
         412
       ]
+    },
+    "cover-corner/back-right/000.png": {
+      "anchor": [
+        252,
+        439
+      ],
+      "drawScale": 0.83,
+      "supportFoot": [
+        337,
+        439
+      ],
+      "pelvis": [
+        256,
+        322
+      ],
+      "muzzle": [
+        415,
+        225
+      ],
+      "muzzleGround": [
+        415,
+        439
+      ],
+      "sha256": "e96cac51a926a6e21efaea1dc4ad4c7f9ca7b94f5e306190d1ab8f9739345911",
+      "source": "exec-f128e7eb-a044-428d-8d81-397c14fd1360.png"
+    },
+    "cover-recoil/back-right/001.png": {
+      "anchor": [
+        252,
+        439
+      ],
+      "drawScale": 0.83,
+      "supportFoot": [
+        337,
+        439
+      ],
+      "pelvis": [
+        258,
+        318
+      ],
+      "muzzle": [
+        492,
+        176
+      ],
+      "muzzleGround": [
+        492,
+        467
+      ],
+      "sha256": "b12a0772a3c939cd731775793c7e2ff529df4efe44c88b6ad4acb45954a7f51e",
+      "source": "exec-f128e7eb-a044-428d-8d81-397c14fd1360.png"
+    },
+    "cover-recoil/back-right/000.png": {
+      "anchor": [
+        252,
+        439
+      ],
+      "drawScale": 0.83,
+      "supportFoot": [
+        337,
+        439
+      ],
+      "pelvis": [
+        256,
+        320
+      ],
+      "muzzle": [
+        486,
+        179
+      ],
+      "muzzleGround": [
+        486,
+        467
+      ],
+      "sha256": "9c95cbd707ab893b7f08d064406be3096b791d9e007fa0b5e9f4b94d9ac133c6",
+      "source": "exec-f128e7eb-a044-428d-8d81-397c14fd1360.png"
     }
   },
   "slidePhases": [
@@ -4612,7 +4687,8 @@
     "right"
   ],
   "coverCornerDirections": [
-    "back-left"
+    "back-left",
+    "back-right"
   ],
   "coverRecoilDirections": [
     "left",
@@ -4622,11 +4698,13 @@
   ],
   "coverTallRecoilDirections": [
     "back",
-    "back-left"
+    "back-left",
+    "back-right"
   ],
   "coverRecoilReadyDirections": [
     "back",
-    "back-left"
+    "back-left",
+    "back-right"
   ],
   "recoveryDirections": [
     "right",

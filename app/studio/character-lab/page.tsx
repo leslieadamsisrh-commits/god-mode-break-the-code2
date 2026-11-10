@@ -45,7 +45,7 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T16 RAPTOR FLUIDITY</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T17 RAPTOR REAR-RIGHT</p>
    <h1>PSYCHIC COVER COMBAT</h1>
    <a href="/raptor-proportion-review.html" style={{color:"#89e9f2"}}>Review proportions beside Jade</a><br/>
    <a href="/raptor-animation-review.html" style={{color:"#89e9f2"}}>Review movement and jump phases</a>
