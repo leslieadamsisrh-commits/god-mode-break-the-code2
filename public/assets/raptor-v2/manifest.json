@@ -1,5 +1,5 @@
 {
-  "build": "39T25-raptor-jump-design-lock",
+  "build": "39T26-raptor-neutral-design-lock",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -53,134 +53,227 @@
   "frames": {
     "idle/back/000.png": {
       "anchor": [
-        250,
-        358
+        256,
+        450
       ],
-      "sha256": "e63447be9223141ad26f4397a51321e7d53e418a40a136815a1ebe656fcca5ab",
-      "source": "39t8-2 matched jump recovery",
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
-      "drawScale": 1.75
+      "drawScale": 1.0,
+      "pelvis": [
+        256,
+        254
+      ],
+      "crownY": 88,
+      "supportFoot": [
+        337,
+        450
+      ],
+      "muzzle": [
+        321,
+        92
+      ],
+      "source": "exec-1c87dabc-b85c-47a1-9857-bb6e8b2750de.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        321,
+        423
+      ],
+      "sha256": "cc5688cf3edfa785997efae8c9a69d1788108fe92605efad1a9aed03da5b1a72",
+      "replacedSha256": "e63447be9223141ad26f4397a51321e7d53e418a40a136815a1ebe656fcca5ab"
     },
     "idle/back-left/000.png": {
-      "anchor": [
-        264,
-        354
-      ],
-      "sha256": "41cb01a3822cc6769f655ac2c308ba136a78692550b4d2fb3bc481afe04e5bef",
-      "source": "39t8-2 matched jump recovery",
-      "muzzle": [
-        160,
-        190
-      ],
-      "muzzleGround": [
-        160,
-        354
-      ],
-      "drawScale": 1.72
-    },
-    "idle/back-right/000.png": {
-      "anchor": [
-        252,
-        365
-      ],
-      "sha256": "a25b8d332a35dcde69f9ed8a73e461e675e5f20f54934f7cf10ab7294e797af7",
-      "source": "39t8-2 matched jump recovery",
-      "muzzle": [
-        372,
-        200
-      ],
-      "muzzleGround": [
-        372,
-        365
-      ],
-      "drawScale": 1.72
-    },
-    "idle/front/000.png": {
-      "anchor": [
-        244,
-        450
-      ],
-      "sha256": "f2e597e03ac5b00e6b8bd1e94e6efeaf47d30cd0cd42675a181c550472db6620",
-      "source": "39T9 targeted front head/neck correction from approved slide; uniform resampling only",
-      "muzzle": [
-        244,
-        329
-      ],
-      "muzzleGround": [
-        244,
-        450
-      ],
-      "drawScale": 1.6
-    },
-    "idle/front-left/000.png": {
-      "anchor": [
-        250,
-        441
-      ],
-      "sha256": "66185a646874168a9d63aeb5b078aa7bf31d99252977f01f3fdd3ad76e272835",
-      "source": "exec-fdc81d67-5d09-434e-a331-4c2022d37181.png",
-      "muzzle": [
-        146,
-        311
-      ],
-      "muzzleGround": [
-        146,
-        441
-      ],
-      "drawScale": 1.7
-    },
-    "idle/front-right/000.png": {
-      "anchor": [
-        260,
-        440
-      ],
-      "sha256": "7528d51533fa1750f931a07befd3035337ada2b31bf4db67fb67eff1e9503051",
-      "source": "exec-447af6e3-85af-4ae9-8d5e-605137af32eb.png",
-      "muzzle": [
-        357,
-        314
-      ],
-      "muzzleGround": [
-        357,
-        440
-      ],
-      "drawScale": 1.8
-    },
-    "idle/left/000.png": {
-      "anchor": [
-        240,
-        405
-      ],
-      "drawScale": 1.332,
-      "sha256": "d2aade8aad01897446a4a08048e428817227ab3f294d2ce9b3845b202e460036",
-      "source": "39t8-2 matched jump recovery",
-      "muzzle": [
-        25,
-        242
-      ],
-      "muzzleGround": [
-        25,
-        405
-      ]
-    },
-    "idle/right/000.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "61e6ceaeab435005f94f1de7b754320578f445164a5cdf5bc7bd27294bf41bd0",
-      "source": "39t8-2 matched jump recovery",
-      "muzzle": [
-        436,
-        314
+      "drawScale": 1.0,
+      "pelvis": [
+        256,
+        301
       ],
-      "muzzleGround": [
-        436,
+      "crownY": 88,
+      "supportFoot": [
+        157,
         450
       ],
-      "drawScale": 1.64
+      "muzzle": [
+        23,
+        163
+      ],
+      "source": "exec-8a66cbfa-c4f5-417b-98c6-4ba6247383a4.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        23,
+        423
+      ],
+      "sha256": "88deec617b420d01531fe053c195f24587eeb054e400ea3a0bfc38373c761481",
+      "replacedSha256": "41cb01a3822cc6769f655ac2c308ba136a78692550b4d2fb3bc481afe04e5bef"
+    },
+    "idle/back-right/000.png": {
+      "anchor": [
+        259,
+        450
+      ],
+      "drawScale": 1.0,
+      "pelvis": [
+        259,
+        287
+      ],
+      "crownY": 88,
+      "supportFoot": [
+        355,
+        450
+      ],
+      "muzzle": [
+        467,
+        150
+      ],
+      "source": "exec-9a8d8145-bf93-4347-868e-d972ee77eb14.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        467,
+        423
+      ],
+      "sha256": "586933daea4bcacf22d56aa1ba29edc26248fa30632b5a4c8a79431956b4bf81",
+      "replacedSha256": "a25b8d332a35dcde69f9ed8a73e461e675e5f20f54934f7cf10ab7294e797af7"
+    },
+    "idle/front/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "drawScale": 1.0,
+      "pelvis": [
+        256,
+        272
+      ],
+      "crownY": 88,
+      "supportFoot": [
+        341,
+        450
+      ],
+      "muzzle": [
+        259,
+        219
+      ],
+      "source": "exec-9a8d8145-bf93-4347-868e-d972ee77eb14.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        259,
+        450
+      ],
+      "sha256": "e7fc952be0bba22f467ad5268613cf3f36b750108fb45a126b3da7fff3d37dc7",
+      "replacedSha256": "f2e597e03ac5b00e6b8bd1e94e6efeaf47d30cd0cd42675a181c550472db6620"
+    },
+    "idle/front-left/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "drawScale": 1.0,
+      "pelvis": [
+        256,
+        283
+      ],
+      "crownY": 88,
+      "supportFoot": [
+        397,
+        450
+      ],
+      "muzzle": [
+        90,
+        217
+      ],
+      "source": "exec-9a8d8145-bf93-4347-868e-d972ee77eb14.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        90,
+        450
+      ],
+      "sha256": "bb72f95812b0c69ec3eea611ac1103fafa5c8a68d44c60c9d251d0640b138799",
+      "replacedSha256": "66185a646874168a9d63aeb5b078aa7bf31d99252977f01f3fdd3ad76e272835"
+    },
+    "idle/front-right/000.png": {
+      "anchor": [
+        256,
+        450
+      ],
+      "drawScale": 1.0,
+      "pelvis": [
+        256,
+        279
+      ],
+      "crownY": 89,
+      "supportFoot": [
+        351,
+        450
+      ],
+      "muzzle": [
+        442,
+        206
+      ],
+      "source": "exec-9a8d8145-bf93-4347-868e-d972ee77eb14.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        442,
+        450
+      ],
+      "sha256": "461e25ee2306704eb0a826e3e4b593a73a58e537f64731e679f8ed2020130757",
+      "replacedSha256": "7528d51533fa1750f931a07befd3035337ada2b31bf4db67fb67eff1e9503051"
+    },
+    "idle/left/000.png": {
+      "anchor": [
+        262,
+        450
+      ],
+      "drawScale": 1.2334,
+      "pelvis": [
+        262,
+        295
+      ],
+      "crownY": 157,
+      "supportFoot": [
+        105,
+        450
+      ],
+      "muzzle": [
+        15,
+        253
+      ],
+      "source": "exec-8a66cbfa-c4f5-417b-98c6-4ba6247383a4.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        15,
+        450
+      ],
+      "sha256": "02cca98f195ddc0a5aa4dcc79ade9e9afd66343ad88da36776a6380e1cb283a8",
+      "replacedSha256": "d2aade8aad01897446a4a08048e428817227ab3f294d2ce9b3845b202e460036"
+    },
+    "idle/right/000.png": {
+      "anchor": [
+        246,
+        450
+      ],
+      "drawScale": 1.2088,
+      "pelvis": [
+        246,
+        292
+      ],
+      "crownY": 151,
+      "supportFoot": [
+        391,
+        450
+      ],
+      "muzzle": [
+        494,
+        252
+      ],
+      "source": "exec-8a66cbfa-c4f5-417b-98c6-4ba6247383a4.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        494,
+        450
+      ],
+      "sha256": "2cd19d87ce73380f83b395a2707cfe5b7a47ca8c8d7c810918dc9b981ed33c74",
+      "replacedSha256": "61e6ceaeab435005f94f1de7b754320578f445164a5cdf5bc7bd27294bf41bd0"
     },
     "run/back/000.png": {
       "anchor": [
@@ -6109,29 +6202,31 @@
     },
     "movement/right/000.png": {
       "anchor": [
-        280,
+        246,
         450
       ],
-      "supportFoot": [
-        121,
-        450
-      ],
+      "drawScale": 1.2088,
       "pelvis": [
-        280,
-        345
+        246,
+        292
       ],
-      "drawScale": 0.96,
-      "muzzle": [
-        473,
-        321
-      ],
-      "muzzleGround": [
-        473,
+      "crownY": 151,
+      "supportFoot": [
+        391,
         450
       ],
-      "phase": "ready",
-      "source": "exec-93bf70ea-06d4-446b-be4f-4bc37ca01ab1.png",
-      "sha256": "61ed1a44e5cf0327e8527dcef0ad7cf08e69ec8830cfe823278831611f5f7033"
+      "muzzle": [
+        494,
+        252
+      ],
+      "source": "exec-8a66cbfa-c4f5-417b-98c6-4ba6247383a4.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        494,
+        450
+      ],
+      "sha256": "2cd19d87ce73380f83b395a2707cfe5b7a47ca8c8d7c810918dc9b981ed33c74",
+      "replacedSha256": "61ed1a44e5cf0327e8527dcef0ad7cf08e69ec8830cfe823278831611f5f7033"
     },
     "movement/right/001.png": {
       "anchor": [
@@ -6317,29 +6412,31 @@
     },
     "movement/left/000.png": {
       "anchor": [
-        275,
+        262,
         450
       ],
-      "supportFoot": [
-        350,
-        437
-      ],
+      "drawScale": 1.2334,
       "pelvis": [
-        275,
-        345
+        262,
+        295
       ],
-      "drawScale": 0.96,
-      "muzzle": [
-        32,
-        270
-      ],
-      "muzzleGround": [
-        32,
+      "crownY": 157,
+      "supportFoot": [
+        105,
         450
       ],
-      "phase": "ready",
-      "source": "exec-9721ec11-8b28-4125-a683-1842c8baefaa.png",
-      "sha256": "dc7efa0ff178af530e3797d8bca93cf97a50b662c24948e6f7bb411c8c233a84"
+      "muzzle": [
+        15,
+        253
+      ],
+      "source": "exec-8a66cbfa-c4f5-417b-98c6-4ba6247383a4.png",
+      "phase": "neutral-ready",
+      "muzzleGround": [
+        15,
+        450
+      ],
+      "sha256": "02cca98f195ddc0a5aa4dcc79ade9e9afd66343ad88da36776a6380e1cb283a8",
+      "replacedSha256": "dc7efa0ff178af530e3797d8bca93cf97a50b662c24948e6f7bb411c8c233a84"
     },
     "movement/left/001.png": {
       "anchor": [
@@ -6525,29 +6622,31 @@
     },
     "movement/back/000.png": {
       "anchor": [
-        246,
+        256,
         450
       ],
-      "supportFoot": [
-        335,
-        438
-      ],
+      "drawScale": 1.0,
       "pelvis": [
-        246,
-        330
+        256,
+        254
       ],
-      "drawScale": 0.75,
+      "crownY": 88,
+      "supportFoot": [
+        337,
+        450
+      ],
       "muzzle": [
-        353,
-        73
+        321,
+        92
       ],
+      "source": "exec-1c87dabc-b85c-47a1-9857-bb6e8b2750de.png",
+      "phase": "neutral-ready",
       "muzzleGround": [
-        353,
-        425
+        321,
+        423
       ],
-      "phase": "ready",
-      "source": "exec-88a2bfc2-20e5-4a7b-8e6a-d480fddd9669.png",
-      "sha256": "b3d6228ee0fc34bf874faf47fc6e0c5e13bbc3272ea09d0730980d0e0d76925d"
+      "sha256": "cc5688cf3edfa785997efae8c9a69d1788108fe92605efad1a9aed03da5b1a72",
+      "replacedSha256": "b3d6228ee0fc34bf874faf47fc6e0c5e13bbc3272ea09d0730980d0e0d76925d"
     },
     "movement/back/001.png": {
       "anchor": [
