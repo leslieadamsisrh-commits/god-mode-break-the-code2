@@ -15,7 +15,7 @@
 <div class="controls">
 <button id="play" type="button">Pause</button>
 <label>Speed <select id="speed"><option value="1">Normal</option><option value="0.25">Quarter speed</option></select></label>
-<label>Size <select id="size"><option value="3.3">Inspect</option><option value="1">Gameplay</option></select></label>
+<label>Size <select id="size"><option value="2.5">Inspect</option><option value="1">Gameplay</option></select></label>
 <label><input id="guides" type="checkbox">Ground and support heel</label>
 </div>
 <p id="status" role="status">Loading the new drawings…</p>
@@ -68,7 +68,7 @@ async function load(){
    const caption=document.createElement('figcaption');caption.textContent=labels[index];figure.append(c,caption);strip.append(figure);return {canvas:c,...frame};
   });document.querySelector('#stills').append(strip);sets.push({frames,phase,canvas,stills});
  }
- document.querySelector('#status').textContent='All 18 drawings loaded.';
+ document.querySelector('#status').textContent=`All ${sets.length*labels.length} drawings loaded.`;
  function redrawStills(){for(const set of sets)for(const still of set.stills)paint(still.canvas,still.image,still.record);}
  redrawStills();
  controls.size.addEventListener('change',redrawStills);
