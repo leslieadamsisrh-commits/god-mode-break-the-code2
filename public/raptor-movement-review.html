@@ -4,14 +4,15 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Raptor · Connected lateral movement</title>
 <style>
-:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0c151d;color:#edf4f0}*{box-sizing:border-box}body{max-width:1180px;margin:auto;padding:24px 18px 48px}a{color:#97e0d6}h1{font-size:clamp(26px,5vw,42px);margin:16px 0 10px}p{line-height:1.6;color:#b8c9cd;max-width:790px}.tag{color:#dfb57b;letter-spacing:.12em;font-size:12px}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:16px 0}button,select{font:inherit;color:#edf4f0;background:#1b303d;border:1px solid #607e8a;border-radius:8px;padding:10px 14px;min-height:44px;cursor:pointer}label{display:flex;align-items:center;gap:8px}input{width:20px;height:20px}.sets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.set{border:1px solid #34505d;border-radius:12px;background:#142530;overflow:hidden}.set h2{font-size:18px;margin:16px 16px 2px}.set .phase{display:block;margin:0 16px 12px;color:#b5e3c9;font-size:14px}canvas{display:block;width:100%;height:auto;background:#435963}.still{display:grid;grid-template-columns:repeat(6,minmax(125px,1fr));gap:8px;overflow:auto;padding:8px 0 16px}.still figure{margin:0;min-width:125px}.still figcaption{font-size:12px;text-align:center;padding:7px;color:#c4d4d7}.still canvas{border-radius:6px}.note{font-size:13px}details{margin-top:24px}summary{cursor:pointer;padding:14px 0;font-weight:600}@media(max-width:700px){.sets{grid-template-columns:1fr}.set{display:grid;grid-template-columns:1fr 1fr}.set canvas{grid-column:2;grid-row:1/4}.set h2{align-self:end}.still{grid-template-columns:repeat(6,150px)}}
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0c151d;color:#edf4f0}*{box-sizing:border-box}body{max-width:1180px;margin:auto;padding:24px 18px 48px}a{color:#97e0d6}h1{font-size:clamp(26px,5vw,42px);margin:16px 0 10px}p{line-height:1.6;color:#b8c9cd;max-width:790px}.tag{color:#dfb57b;letter-spacing:.12em;font-size:12px}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:16px 0}button,select{font:inherit;color:#edf4f0;background:#1b303d;border:1px solid #607e8a;border-radius:8px;padding:10px 14px;min-height:44px;cursor:pointer}label{display:flex;align-items:center;gap:8px}input{width:20px;height:20px}.sets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.set{border:1px solid #34505d;border-radius:12px;background:#142530;overflow:hidden}.set h2{font-size:18px;margin:16px 16px 2px}.set .phase{display:block;margin:0 16px 12px;color:#b5e3c9;font-size:14px}canvas{display:block;width:100%;height:auto;background:#435963}.still{display:grid;grid-template-columns:repeat(6,minmax(125px,1fr));gap:8px;overflow:auto;padding:8px 0 16px}.still figure{margin:0;min-width:125px}.still figcaption{font-size:12px;text-align:center;padding:7px;color:#c4d4d7}.still canvas{border-radius:6px}.note{font-size:13px}details{margin-top:24px}summary{cursor:pointer;padding:14px 0;font-weight:600}@media(max-width:700px){.sets{grid-template-columns:1fr}.set{display:grid;grid-template-columns:1fr 1fr}.set canvas{grid-column:2;grid-row:1/4}.set h2{align-self:end}.still{grid-template-columns:repeat(6,150px)}}
 </style>
 </head>
 <body>
 <a href="/studio/character-lab">← Character Lab</a>
-<p class="tag">GOD MODE · 39T19 · RAPTOR</p>
+<p><a href="/raptor-production-map.html">Open the complete sprite checklist →</a></p>
+<p class="tag">GOD MODE · 39T20 · RAPTOR</p>
 <h1>Connected lateral movement</h1>
-<p>16 new drawings cover left and right ready, push-off, low-speed stride, brake and settle. Right is playable. Left remains in review because its opposite-foot contact needs a clearer transfer. Jog, sprint and the other six body directions remain in the wider production pass.</p>
+<p>24 playable cels cover ready, push-off, alternating low-speed stride, brake and settle for right, left and straight rear. This batch adds eight rear drawings, two corrected left drawings and six reused left drafts. Jog, sprint and five other body directions remain in the wider production pass.</p>
 <div class="controls">
 <button id="play" type="button">Pause</button>
 <label>Speed <select id="speed"><option value="1">Normal</option><option value="0.25">Quarter speed</option></select></label>
@@ -21,11 +22,11 @@
 <p id="status" role="status">Loading the new drawings…</p>
 <div class="sets" id="sets"></div>
 <details><summary>Inspect all eight poses</summary><div id="stills"></div></details>
-<p class="note">These previews show the authored art sequence. The playable lab selects phases from movement, aim, cover clearance and accepted shots. Use low stick pressure or the lab’s Stalk pace for the playable right-facing batch. Jog, sprint, turns and reactions remain in the production map.</p>
+<p class="note">These previews show the authored art sequence. The playable lab selects phases from movement, aim, cover clearance and accepted shots. Use low stick pressure or the lab’s Stalk pace for the playable right, left and rear batches. Jog, sprint, turns and reactions remain in the production map.</p>
 <script>
 'use strict';
-const directions=['right','left'];
-const names={right:'Right · playable',left:'Left · review'};
+const directions=['right','left','back'];
+const names={right:'Right · playable',left:'Left · playable',back:'Rear · playable'};
 const labels=['Ready','Push','Left contact','Left pass','Right contact','Right pass','Brake','Settle'];
 const timeline=[0,1,2,3,4,5,2,3,4,5,6,7];
 const durations=[400,100,180,120,180,120,180,120,180,120,100,140];
@@ -46,7 +47,7 @@ function paint(canvas,image,record){
  }
 }
 async function load(){
- const response=await fetch('/assets/raptor-v2/manifest.json?v=39T19-raptor-lateral-movement');
+ const response=await fetch('/assets/raptor-v2/manifest.json?v=39T20-raptor-left-rear-movement');
  if(!response.ok)throw Error('The sprite list did not load. Reload this page to try again.');
  const manifest=await response.json();
  const sets=[];

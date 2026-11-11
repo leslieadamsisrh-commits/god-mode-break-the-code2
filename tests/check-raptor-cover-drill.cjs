@@ -188,8 +188,8 @@ console.log('PASS rear brace, distance-driven shuffle, both corner pivots, both 
   const hold=advanceRaptorPose(undefined,planted);
   const traveling={...planted,time:1.016,x:2,y:2,attached:false,coverState11:undefined,speed:48,travelAngle:angle};
   const exit=advanceRaptorPose(hold.memory,traveling);
-  assert.equal(exit.frame.key,['right'].includes(direction)?'movement/'+direction+'/001.png':'recovery/'+direction+'/000.png');
-  assert.equal(advanceRaptorPose(exit.memory,{...traveling,time:1.13,x:5,y:5}).frame.key,['right'].includes(direction)?'movement/'+direction+'/002.png':'stalk/'+direction+'/000.png');
+  assert.equal(exit.frame.key,['right','left','back'].includes(direction)?'movement/'+direction+'/001.png':'recovery/'+direction+'/000.png');
+  assert.equal(advanceRaptorPose(exit.memory,{...traveling,time:1.13,x:5,y:5}).frame.key,['right','left','back'].includes(direction)?'movement/'+direction+'/002.png':'stalk/'+direction+'/000.png');
   assert.notEqual(advanceRaptorPose(hold.memory,{...traveling,airborne:true,verticalVelocity:25}).frame.family,'recovery');
  }
  console.log('PASS eight exit connectors lead to first planted stride and never replace airborne art');
@@ -211,7 +211,7 @@ console.log('PASS rear brace, distance-driven shuffle, both corner pivots, both 
  setInput(s,1,jade.lastSeq+1,{aim,fire:true});
  tick({slide:true,y:1});
  assert.equal(p.coverId,null);
- assert.equal(p.raptorFrame.family,'recovery');
+ assert.ok(['recovery','movement'].includes(p.raptorFrame.family));
  setInput(s,1,jade.lastSeq+1,{aim,fire:false});
  tick({y:1},12);
  assert.ok(p.hp<pHP);

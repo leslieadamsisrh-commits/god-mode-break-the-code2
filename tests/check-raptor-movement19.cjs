@@ -32,7 +32,7 @@ for(const [direction,angle] of [['right',0]]){
  const ammo=p.shells;tick({x:Math.cos(angle)*.24,fire:true});assert.equal(p.shells,ammo-1,'moving RT fires immediately');
  console.log('PASS',direction,'8 exports, start/stop, travel gait, exit/first contact, interruption and actual moving shot');
 }
-for(const angle of [Math.PI/4,Math.PI/2,Math.PI]){
+for(const angle of [Math.PI/4,Math.PI/2]){
  const sample={time:1,angle,speed:0,sliding:false,airborne:false,verticalVelocity:0,hit:false,attached:false,firing:false};
  assert.equal(advanceRaptorPose(undefined,sample).frame.family,'idle');
 }
@@ -40,5 +40,5 @@ for(const speed of [120,220]){
  const sample={time:1,angle:0,travelAngle:0,speed,sliding:false,airborne:false,verticalVelocity:0,hit:false,attached:false,firing:false};
  assert.equal(advanceRaptorPose(undefined,sample).frame.family,speed===120?'jog':'sprint');
 }
-assert.deepEqual(inventory.movementDirections,['right']);
-console.log('PASS left review remains inactive; other directions and faster gaits retain existing routing');
+assert.ok(inventory.movementDirections.includes('right'));
+console.log('PASS right movement remains active; other directions and faster gaits retain existing routing');

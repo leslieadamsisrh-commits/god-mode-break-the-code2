@@ -21,9 +21,10 @@
       "phase": "neutral",
       "priority": "P2",
       "existing": "idle/right/000.png",
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/000.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "ready/right/breath",
@@ -95,9 +96,10 @@
       "phase": "neutral",
       "priority": "P2",
       "existing": "idle/left/000.png",
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/000.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "ready/left/breath",
@@ -133,7 +135,10 @@
       "phase": "neutral",
       "priority": "P2",
       "existing": "idle/back/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "movement/back/000.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "ready/back/breath",
@@ -457,9 +462,10 @@
       "phase": "push",
       "priority": "P1",
       "existing": null,
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/001.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "movement-start/right/first-contact",
@@ -468,9 +474,10 @@
       "phase": "first-contact",
       "priority": "P1",
       "existing": null,
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/002.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "movement-start/front-right/push",
@@ -533,9 +540,10 @@
       "phase": "push",
       "priority": "P1",
       "existing": null,
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/001.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "movement-start/left/first-contact",
@@ -544,9 +552,10 @@
       "phase": "first-contact",
       "priority": "P1",
       "existing": null,
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/002.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "movement-start/back-left/push",
@@ -573,7 +582,10 @@
       "phase": "push",
       "priority": "P1",
       "existing": null,
-      "status": "needs-art-or-approved-reuse"
+      "status": "validated-local",
+      "candidate": "movement/back/001.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "movement-start/back/first-contact",
@@ -582,7 +594,10 @@
       "phase": "first-contact",
       "priority": "P1",
       "existing": null,
-      "status": "needs-art-or-approved-reuse"
+      "status": "validated-local",
+      "candidate": "movement/back/002.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "movement-start/back-right/push",
@@ -609,9 +624,10 @@
       "phase": "left-contact",
       "priority": "P2",
       "existing": "stalk/right/000.png",
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/002.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "stalk/right/left-pass",
@@ -620,9 +636,10 @@
       "phase": "left-pass",
       "priority": "P2",
       "existing": "stalk/right/001.png",
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/003.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "stalk/right/right-contact",
@@ -631,9 +648,10 @@
       "phase": "right-contact",
       "priority": "P2",
       "existing": "stalk/right/002.png",
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/004.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "stalk/right/right-pass",
@@ -642,9 +660,10 @@
       "phase": "right-pass",
       "priority": "P2",
       "existing": "stalk/right/003.png",
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/005.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "stalk/front-right/left-contact",
@@ -761,9 +780,10 @@
       "phase": "left-contact",
       "priority": "P2",
       "existing": "stalk/left/000.png",
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/002.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "stalk/left/left-pass",
@@ -772,9 +792,10 @@
       "phase": "left-pass",
       "priority": "P2",
       "existing": "stalk/left/001.png",
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/003.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "stalk/left/right-contact",
@@ -783,9 +804,10 @@
       "phase": "right-contact",
       "priority": "P2",
       "existing": "stalk/left/002.png",
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/004.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "stalk/left/right-pass",
@@ -794,9 +816,10 @@
       "phase": "right-pass",
       "priority": "P2",
       "existing": "stalk/left/003.png",
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/005.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "stalk/back-left/left-contact",
@@ -841,7 +864,10 @@
       "phase": "left-contact",
       "priority": "P2",
       "existing": "stalk/back/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "movement/back/002.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "stalk/back/left-pass",
@@ -850,7 +876,10 @@
       "phase": "left-pass",
       "priority": "P2",
       "existing": "stalk/back/001.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "movement/back/003.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "stalk/back/right-contact",
@@ -859,7 +888,10 @@
       "phase": "right-contact",
       "priority": "P2",
       "existing": "stalk/back/002.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "movement/back/004.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "stalk/back/right-pass",
@@ -868,7 +900,10 @@
       "phase": "right-pass",
       "priority": "P2",
       "existing": "stalk/back/003.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "movement/back/005.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "stalk/back-right/left-contact",
@@ -1489,9 +1524,10 @@
       "phase": "brake",
       "priority": "P1",
       "existing": null,
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/006.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "movement-stop/right/settle",
@@ -1500,9 +1536,10 @@
       "phase": "settle",
       "priority": "P1",
       "existing": null,
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/007.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "movement-stop/front-right/brake",
@@ -1565,9 +1602,10 @@
       "phase": "brake",
       "priority": "P1",
       "existing": null,
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/006.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "movement-stop/left/settle",
@@ -1576,9 +1614,10 @@
       "phase": "settle",
       "priority": "P1",
       "existing": null,
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/007.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "movement-stop/back-left/brake",
@@ -1605,7 +1644,10 @@
       "phase": "brake",
       "priority": "P1",
       "existing": null,
-      "status": "needs-art-or-approved-reuse"
+      "status": "validated-local",
+      "candidate": "movement/back/006.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "movement-stop/back/settle",
@@ -1614,7 +1656,10 @@
       "phase": "settle",
       "priority": "P1",
       "existing": null,
-      "status": "needs-art-or-approved-reuse"
+      "status": "validated-local",
+      "candidate": "movement/back/007.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "movement-stop/back-right/brake",
@@ -2145,9 +2190,10 @@
       "phase": "weight-under-hips",
       "priority": "P1",
       "existing": "recovery/right/000.png",
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/001.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "slide-recovery/right/first-contact",
@@ -2156,9 +2202,10 @@
       "phase": "first-contact",
       "priority": "P1",
       "existing": null,
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/002.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "slide-recovery/front-right/weight-under-hips",
@@ -2221,9 +2268,10 @@
       "phase": "weight-under-hips",
       "priority": "P1",
       "existing": "recovery/left/000.png",
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/001.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "slide-recovery/left/first-contact",
@@ -2232,9 +2280,10 @@
       "phase": "first-contact",
       "priority": "P1",
       "existing": null,
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/002.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "slide-recovery/back-left/weight-under-hips",
@@ -2261,7 +2310,10 @@
       "phase": "weight-under-hips",
       "priority": "P1",
       "existing": "recovery/back/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "movement/back/001.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "slide-recovery/back/first-contact",
@@ -2270,7 +2322,10 @@
       "phase": "first-contact",
       "priority": "P1",
       "existing": null,
-      "status": "needs-art-or-approved-reuse"
+      "status": "validated-local",
+      "candidate": "movement/back/002.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "slide-recovery/back-right/weight-under-hips",
@@ -3827,9 +3882,10 @@
       "phase": "release",
       "priority": "P1",
       "existing": "recovery/right/000.png",
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/001.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "cover-exit/right/first-contact",
@@ -3838,9 +3894,10 @@
       "phase": "first-contact",
       "priority": "P1",
       "existing": null,
-      "status": "integrated-awaiting-live-check",
+      "status": "verified-live",
       "candidate": "movement/right/002.png",
-      "batch": "39T19"
+      "batch": "39T19",
+      "active": true
     },
     {
       "id": "cover-exit/front-right/release",
@@ -3903,9 +3960,10 @@
       "phase": "release",
       "priority": "P1",
       "existing": "recovery/left/000.png",
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/001.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "cover-exit/left/first-contact",
@@ -3914,9 +3972,10 @@
       "phase": "first-contact",
       "priority": "P1",
       "existing": null,
-      "status": "review-leg-alternation",
+      "status": "validated-local",
       "candidate": "movement/left/002.png",
-      "batch": "39T19"
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "cover-exit/back-left/release",
@@ -3943,7 +4002,10 @@
       "phase": "release",
       "priority": "P1",
       "existing": "recovery/back/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "movement/back/001.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "cover-exit/back/first-contact",
@@ -3952,7 +4014,10 @@
       "phase": "first-contact",
       "priority": "P1",
       "existing": null,
-      "status": "needs-art-or-approved-reuse"
+      "status": "validated-local",
+      "candidate": "movement/back/002.png",
+      "batch": "39T20",
+      "active": true
     },
     {
       "id": "cover-exit/back-right/release",
@@ -4899,6 +4964,14 @@
       "corrected_drawings": 0,
       "reused_drawings": 0,
       "note": "16 new drawings: eight right integrated, eight left kept in review for clearer opposite-foot transfer. Exit/recovery reuse contexts do not add drawings."
+    },
+    {
+      "id": "39T20",
+      "new_drawings": 8,
+      "corrected_drawings": 2,
+      "reused_drafts": 6,
+      "activated_frames": 16,
+      "note": "Eight new rear movement drawings; two corrected left drawings and six reused left drafts. Earlier left trial atlases remain inactive."
     }
   ]
 }
