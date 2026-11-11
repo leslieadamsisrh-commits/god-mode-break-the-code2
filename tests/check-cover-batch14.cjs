@@ -13,7 +13,7 @@ const {createCanvas,loadImage}=require('@napi-rs/canvas');
   }
   assert.equal(advanceRaptorPose(undefined,{...base,coverState11:'catch'}).frame.family,manifest.coverCatchDirections.includes(RAPTOR_POSE_DIRECTIONS[d])?'cover-catch':'slide');
   if(!manifest.coverCatchProtectedDirections.includes(RAPTOR_POSE_DIRECTIONS[d]))assert.equal(advanceRaptorPose(undefined,{...base,coverState11:'catch',coverEntryAngle:0}).frame.family,'slide');
-  assert.equal(advanceRaptorPose(undefined,{...base,attached:false,coverState11:undefined}).frame.family,'idle');
+  assert.equal(advanceRaptorPose(undefined,{...base,attached:false,coverState11:undefined}).frame.family,manifest.movementDirections.includes(RAPTOR_POSE_DIRECTIONS[d])?'movement':'idle');
  }
  const im=await loadImage('public/assets/jade-cover14/cover-d09.png');assert.equal(im.width,1500);assert.equal(im.height,250);
  const c=createCanvas(1500,250),g=c.getContext('2d');g.drawImage(im,0,0);const data=g.getImageData(0,0,1500,250).data;let green=0;

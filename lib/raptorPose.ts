@@ -3,7 +3,7 @@ import {advanceRaptorJump,type JumpMemory,type JumpPhase} from './raptorJump';
 import inventory from '../public/assets/raptor-v2/manifest.json';
 
 export const RAPTOR_POSE_DIRECTIONS=['right','front-right','front','front-left','left','back-left','back','back-right'] as const;
-export type RaptorPoseFamily='idle'|'run'|'stalk'|'jog'|'sprint'|'slide'|'jump'|'cover-drive'|'cover-hold'|'cover-lean'|'cover-pop'|'cover-catch'|'cover-shuffle'|'cover-wrap'|'cover-bridge'|'cover-corner'|'cover-recoil'|'cover-sequence'|'recovery';
+export type RaptorPoseFamily='idle'|'run'|'stalk'|'jog'|'sprint'|'slide'|'jump'|'cover-drive'|'cover-hold'|'cover-lean'|'cover-pop'|'cover-catch'|'cover-shuffle'|'cover-wrap'|'cover-bridge'|'cover-corner'|'cover-recoil'|'cover-sequence'|'recovery'|'movement';
 export type RaptorPoseFrame={family:RaptorPoseFamily;frame:number;angle:number;key:string};
 type RaptorCoverShot={at:number;coverId:string;frame:RaptorPoseFrame};
 export type RaptorPoseSample={aimAngle?:number;coverProtectedAngle?:number;coverShot?:RaptorCoverShot;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEdge?:RaptorCoverEdge;coverId?:string|null;coverEndpointAngle?:number;coverEntryAngle?:number;coverSpeed11?:number;time:number;x?:number;y?:number;angle:number;speed:number;travelAngle?:number;sliding:boolean;slideRemaining?:number;slideDuration?:number;airborne:boolean;verticalVelocity:number;hit:boolean;attached:boolean;firing:boolean};
@@ -11,6 +11,7 @@ export type RaptorPoseMemory={
  cover?:{time:number;x?:number;y?:number;phase:number;attached:boolean};
  waistAim?:{id:string;angle:number;since:number;lowering:boolean};
  corner?:{id:string;angle:number;since:number};
+ travel?:{moving:boolean;since:number;stoppedAt?:number;angle:number};
  recoveryUntil?:number;
  wrap?:{coverId:string;edge:RaptorCoverEdge;endpointAngle:number;since:number;retracting:boolean};
  gait:{time:number;x?:number;y?:number;phase:number;sprinting:boolean;jogging:boolean;airborne:boolean;landedAt:number};
@@ -18,6 +19,7 @@ export type RaptorPoseMemory={
  slide:{time:number;active:boolean;startedAt:number;recoveryUntil:number;angle:number};
 };
 export type RaptorPoseAvailability={
+ movementDirections?:readonly string[];
  postureDirections:readonly string[];jumpDirections?:readonly string[];
  coverLeanDirections?:readonly string[];coverLeanAltDirections?:readonly string[];
  coverSequenceDirections?:readonly string[];
@@ -109,7 +111,12 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
   if(distance<=Math.max(12,s.speed*dt*2))cover.phase=((cover.phase+Math.sign(s.coverSpeed11??s.speed)*distance/60)%1+1)%1;
  }
  cover.time=s.time;cover.x=s.x;cover.y=s.y;cover.attached=s.attached;
- const memory:RaptorPoseMemory={gait,jump:jump.memory,slide,cover};
+ const moving=s.speed>2;
+ const previousTravel=continuous?previous.travel:undefined;
+ const travel={moving,since:moving&&previousTravel?.moving?previousTravel.since:s.time,
+  stoppedAt:!moving&&previousTravel?.moving?s.time:!moving?previousTravel?.stoppedAt:undefined,
+  angle:moving?s.angle:previousTravel?.angle??s.angle};
+ const memory:RaptorPoseMemory={gait,jump:jump.memory,slide,cover,travel};
  if(!interrupted)memory.recoveryUntil=leavingCover?s.time+.09:continuous?previous.recoveryUntil:undefined;
  // Explicit reuse of approved poses, never an implicit idle fallback for attachment.
  // Landing is the planted crouch; slide recovery supplies contact compression.
@@ -206,13 +213,21 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
  const recovering=s.time<(memory.recoveryUntil??0)||s.time<slide.recoveryUntil;
  if(!interrupted&&!s.firing&&recovering&&available.recoveryDirections?.includes(raptorPoseDirection(recoveryAngle))){
   gait.phase=0;
-  return{memory,frame:selected('recovery',0,recoveryAngle)};
+  return{memory,frame:selected(available.movementDirections?.includes(raptorPoseDirection(recoveryAngle))?'movement':'recovery',available.movementDirections?.includes(raptorPoseDirection(recoveryAngle))?1:0,recoveryAngle)};
  }
  if(!interrupted&&s.time<slide.recoveryUntil)return{memory,frame:selected('slide',2,s.firing?s.angle:slide.angle)};
  if(jump.phase&&(available.jumpDirections??[]).includes(raptorPoseDirection(s.angle)))return{memory,frame:selected('jump',jumpPhases.indexOf(jump.phase),s.angle)};
  if(interrupted||s.time-gait.landedAt<.075)return{memory,frame:selected('idle',0,s.angle)};
  const contactFrame=(gait.phase>=.5?2:0)+(gait.phase%.5>=.28?1:0);
  if(gait.sprinting)return{memory,frame:selected('sprint',contactFrame,s.angle)};
+ const movement=available.movementDirections?.includes(raptorPoseDirection(s.angle));
+ if(movement&&!gait.jogging){
+  if(moving)return{memory,frame:selected('movement',!s.firing&&s.time-travel.since<.065?1:2+contactFrame,s.angle)};
+  const stopAge=travel.stoppedAt===undefined?Infinity:s.time-travel.stoppedAt;
+  // A stop connector is cosmetic and may never hold up aiming or an immediate shot.
+  if(!s.firing&&stopAge<.10&&raptorPoseDirection(travel.angle)===raptorPoseDirection(s.angle))return{memory,frame:selected('movement',stopAge<.05?6:7,s.angle)};
+  return{memory,frame:selected('movement',0,s.angle)};
+ }
  if(s.speed>2&&hasPostures)return{memory,frame:selected(gait.jogging?'jog':'stalk',contactFrame,s.angle)};
  return{memory,frame:selected(s.speed>2?'run':'idle',s.speed>2?Math.floor(gait.phase*4):0,s.angle)};
 }

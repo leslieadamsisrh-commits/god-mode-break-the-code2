@@ -176,7 +176,7 @@ for(const mode of ['wrap','rotated-wrap'])for(const sign of [-1,1]){
  assert.deepEqual([p.x,p.y,p.coverAnchor.t],root);
  tick({aim:out,slide:true});
  assert.equal(p.coverId,null);
- assert.ok(p.raptorFrame.key.startsWith('recovery/'));
+ assert.ok(p.raptorFrame.key.startsWith('recovery/')||p.raptorFrame.key.startsWith('movement/'));
 }
 console.log('PASS rear brace, distance-driven shuffle, both corner pivots, both authored diagonal shots and cover exit');
 
@@ -188,8 +188,8 @@ console.log('PASS rear brace, distance-driven shuffle, both corner pivots, both 
   const hold=advanceRaptorPose(undefined,planted);
   const traveling={...planted,time:1.016,x:2,y:2,attached:false,coverState11:undefined,speed:48,travelAngle:angle};
   const exit=advanceRaptorPose(hold.memory,traveling);
-  assert.equal(exit.frame.key,'recovery/'+direction+'/000.png');
-  assert.equal(advanceRaptorPose(exit.memory,{...traveling,time:1.13,x:5,y:5}).frame.key,'stalk/'+direction+'/000.png');
+  assert.equal(exit.frame.key,['right'].includes(direction)?'movement/'+direction+'/001.png':'recovery/'+direction+'/000.png');
+  assert.equal(advanceRaptorPose(exit.memory,{...traveling,time:1.13,x:5,y:5}).frame.key,['right'].includes(direction)?'movement/'+direction+'/002.png':'stalk/'+direction+'/000.png');
   assert.notEqual(advanceRaptorPose(hold.memory,{...traveling,airborne:true,verticalVelocity:25}).frame.family,'recovery');
  }
  console.log('PASS eight exit connectors lead to first planted stride and never replace airborne art');
