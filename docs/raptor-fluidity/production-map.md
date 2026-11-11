@@ -110,3 +110,11 @@ Sixteen new drawings replace the legacy lateral jog and sprint cels at their exi
 The original distance-driven selector carries foot phase across pace changes. The batch preserves the existing shot timing and uses the muzzle registered to each replacement drawing. The registration lists source atlases, pelvis, support foot, muzzle and checksum for each export. The source prompts reference the approved cover and Stalk cels and specify jog and sprint in four phases. Targeted sheets repair contacts and passes whose initial versions repeated a support leg.
 
 The Lab preview compares Stalk, Jog and Full Sprint at normal or quarter speed. Other directions, hit, slide and jump art still require the corresponding anatomy pass.
+
+## 39T22 rear jog and sprint
+
+Eight new cels replace the legacy straight-back jog and sprint. Each pace has independently drawn left contact, left pass, right contact and right pass. The sprint foreshortens the upper body and streams the tail between the feet. The jog retains the higher body and the shallower stride. Both use the rear movement references for the two-cell housing, cable routing, ink and over-shoulder twin-barrel silhouette.
+
+The generation prompts specified an isolated 2-by-2 atlas per pace at the fixed elevated rear camera and explicitly described which leg supports weight in each phase. The jog atlas repeated the right support in its second cel. A targeted single-cel edit kept the same rear equipment, tail curve and muzzle direction while changing the support to the left foot. The registrations record the source images, pelvis, planted support, muzzle, ground projection and exported checksum. The pelvis stays in the same cell position while the support claw shifts in projected depth.
+
+The existing pose selector plays the replacement frames without a timing change. The lab movement preview now shows all three paces on the left, right and straight back. Five other directions still use the older fast-gait art.

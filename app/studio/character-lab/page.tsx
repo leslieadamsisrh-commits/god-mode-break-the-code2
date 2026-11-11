@@ -45,7 +45,7 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T21 RAPTOR LEFT + RIGHT RUN</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T22 RAPTOR SIDE AND REAR RUN</p>
    <h1>PSYCHIC COVER COMBAT</h1>
    <p><a href="/raptor-production-map.html" style={{color:"#89e9f2"}}>Full sprite production checklist · every phase and direction</a></p>
    <p><a href="/raptor-movement-review.html" style={{color:"#89e9f2"}}>See Raptor stalk, jog and sprint side by side</a></p>

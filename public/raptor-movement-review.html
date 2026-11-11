@@ -10,9 +10,9 @@
 <body>
 <a href="/studio/character-lab">← Character Lab</a>
 <p><a href="/raptor-production-map.html">Open the complete sprite checklist →</a></p>
-<p class="tag">GOD MODE · 39T21 · RAPTOR</p>
+<p class="tag">GOD MODE · 39T22 · RAPTOR</p>
 <h1>Raptor movement by pace</h1>
-<p>Compare the measured Stalk, forward-leaning Jog, and low Full Sprint on both sides. The rear Stalk is available under Stalk.</p>
+<p>Compare the measured Stalk, forward-leaning Jog, and low Full Sprint from the left, right and straight-back views.</p>
 <div class="controls">
 <button id="play" type="button">Pause</button>
 <label>Pace <select id="pace"><option value="build">Build speed</option><option value="movement">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option></select></label>
@@ -23,7 +23,7 @@
 <p id="status" role="status">Loading the new drawings…</p>
 <div class="sets" id="sets"></div>
 <details><summary>Inspect all poses</summary><div id="stills"></div></details>
-<p class="note">In the Character Lab, choose Stalk, Jog or Full under keyboard and touch pace. Move left or right and open Animation trace to see the selected gait.</p>
+<p class="note">In the Character Lab, choose Stalk, Jog or Full under keyboard and touch pace. Move left, right or away from the camera and open Animation trace to see the selected gait.</p>
 <script>
 'use strict';
 const directions=['right','left','back'];
@@ -106,7 +106,7 @@ async function load(){
    });
    document.querySelector('#stills').append(title,strip);
   }
-  sets.push({box,direction,frames,phase,canvas,stills});
+  sets.push({frames,phase,canvas,stills});
  }
  document.querySelector('#status').textContent='All '+loaded+' drawings loaded.';
  function redrawStills(){for(const set of sets)for(const still of set.stills)paint(still.canvas,still.image,still.record);}
@@ -127,8 +127,6 @@ async function load(){
    remaining-=entry.duration;
   }
   for(const set of sets){
-   set.box.hidden=set.direction==='back'&&pace.value!=='movement';
-   if(set.box.hidden)continue;
    const frame=set.frames[step.family][step.index];
    paint(set.canvas,frame.image,frame.record);
    set.phase.textContent=paceNames[step.family]+' · '+labels[step.family][step.index];

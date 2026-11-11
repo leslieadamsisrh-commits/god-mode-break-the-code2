@@ -1,5 +1,5 @@
 {
-  "build": "39T21-raptor-lateral-jog-sprint",
+  "build": "39T22-raptor-rear-jog-sprint",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -1559,46 +1559,106 @@
     "sprint/back/000.png": {
       "anchor": [
         256,
-        357
+        450
       ],
-      "sha256": "2656a28bbabdd1d1830038c63cbffda4f22c7b55eed2abfa31ef29584990fd8b",
-      "drawScale": 1.19,
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "pelvis": [
+        256,
+        285
+      ],
+      "supportFoot": [
+        175,
+        416
+      ],
+      "drawScale": 0.75,
+      "muzzle": [
+        349,
+        176
+      ],
+      "muzzleGround": [
+        349,
+        425
+      ],
+      "phase": "left-contact",
+      "source": "exec-824fc280-5a4c-4a72-988d-f8f51f2ef644.png",
+      "sha256": "b5ff8eed799b4af702dfffe9146e5cf9df8056631bd5387ba7b29228cb852562"
     },
     "sprint/back/001.png": {
       "anchor": [
         256,
-        362
+        450
       ],
-      "sha256": "ff0bfb89ef6b3e56b83e4056bdae9860940ee42d1f232af01022b865a1ccb590",
-      "drawScale": 1.19,
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "pelvis": [
+        256,
+        285
+      ],
+      "supportFoot": [
+        171,
+        477
+      ],
+      "drawScale": 0.75,
+      "muzzle": [
+        347,
+        182
+      ],
+      "muzzleGround": [
+        347,
+        425
+      ],
+      "phase": "left-pass",
+      "source": "exec-824fc280-5a4c-4a72-988d-f8f51f2ef644.png",
+      "sha256": "c1fb0503791b5bab010c508d177cb16a82d8f86006d9d147308ce50557c7c079"
     },
     "sprint/back/002.png": {
       "anchor": [
         256,
-        356
+        450
       ],
-      "sha256": "e71eff5a3e1083188531b97cca0c98d9cd4f6ea7b658eb84d797e4b0b6f77229",
-      "drawScale": 1.19,
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "pelvis": [
+        256,
+        285
+      ],
+      "supportFoot": [
+        329,
+        426
+      ],
+      "drawScale": 0.75,
+      "muzzle": [
+        350,
+        177
+      ],
+      "muzzleGround": [
+        350,
+        425
+      ],
+      "phase": "right-contact",
+      "source": "exec-824fc280-5a4c-4a72-988d-f8f51f2ef644.png",
+      "sha256": "565bbb93f49f43d17b0ae785ccc58ecde1c456e3c90b6a793094ce536d72c955"
     },
     "sprint/back/003.png": {
       "anchor": [
         256,
-        359
+        450
       ],
-      "sha256": "4415ce19c9944ec3efd06625f8022ef49a1a9c950c1429059f439031fd85af29",
-      "drawScale": 1.19,
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained."
+      "pelvis": [
+        256,
+        285
+      ],
+      "supportFoot": [
+        312,
+        493
+      ],
+      "drawScale": 0.75,
+      "muzzle": [
+        346,
+        181
+      ],
+      "muzzleGround": [
+        346,
+        425
+      ],
+      "phase": "right-pass",
+      "source": "exec-824fc280-5a4c-4a72-988d-f8f51f2ef644.png",
+      "sha256": "2e2a694563d5537a837f18bf30906c383e6299a25229bb907e9466ee8388384c"
     },
     "sprint/back-right/000.png": {
       "anchor": [
@@ -2473,48 +2533,104 @@
         256,
         450
       ],
-      "sha256": "f6cad93421dcf2d1cbdc3c38082de6ddf7fcd456e80908881a4c8a7e29e2ed74",
-      "source": "exec-f37544a6-87e0-404f-821b-d333eb19b37c.png",
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
-      "drawScale": 1.75
+      "pelvis": [
+        256,
+        285
+      ],
+      "supportFoot": [
+        196,
+        427
+      ],
+      "drawScale": 0.75,
+      "muzzle": [
+        341,
+        149
+      ],
+      "muzzleGround": [
+        341,
+        425
+      ],
+      "phase": "left-contact",
+      "source": "exec-b7cb98a2-2719-47d0-bb73-c4cfb2795fd9.png",
+      "sha256": "15354250d9fa1e7db4c87a71e388fdf963aae8f58b1df24c97445744cacbff3b"
     },
     "jog/back/001.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "bb10b7f9131ab89e3cfa126756f1d7e8a9b8543c3b0fa4ab054b500984e7669a",
-      "source": "exec-6a2374ee-d2c5-4b44-97d2-0a27308ff1b3.png",
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
-      "drawScale": 1.75
+      "pelvis": [
+        256,
+        285
+      ],
+      "supportFoot": [
+        218,
+        455
+      ],
+      "drawScale": 0.75,
+      "muzzle": [
+        349,
+        148
+      ],
+      "muzzleGround": [
+        349,
+        425
+      ],
+      "phase": "left-pass",
+      "source": "exec-e4b258c5-4e2e-4eee-ab52-a6a563de74fa.png",
+      "sha256": "22add7f845f0a0e38278c68eb3448380f5f471688b593adb0adebf1721325e8d"
     },
     "jog/back/002.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "84349bad15c1b264347958edbb78d84ca535d6cad49f2efa2538f26c7ea06cd3",
-      "source": "exec-0a086db4-2266-4e5b-9613-f54fc5903356.png",
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
-      "drawScale": 1.75
+      "pelvis": [
+        256,
+        285
+      ],
+      "supportFoot": [
+        305,
+        450
+      ],
+      "drawScale": 0.75,
+      "muzzle": [
+        340,
+        148
+      ],
+      "muzzleGround": [
+        340,
+        425
+      ],
+      "phase": "right-contact",
+      "source": "exec-b7cb98a2-2719-47d0-bb73-c4cfb2795fd9.png",
+      "sha256": "eb0ef5f7f38830d12765e1bd12a35605809afe5cbc5c07bbb7f7fceac93bcfb4"
     },
     "jog/back/003.png": {
       "anchor": [
         256,
         450
       ],
-      "sha256": "0e595e3bf095646c5636bebfeffd667f883941130b166b13586d7c84905f76d5",
-      "source": "exec-7e9894a7-e19c-4bce-be78-ce707af56d91.png",
-      "muzzleVisibility": "occluded",
-      "muzzleFallback": "legacy",
-      "muzzleNote": "Straight-back artwork hides the barrel mouth behind the torso; visible-barrel alignment cannot be established. Existing authoritative fallback retained.",
-      "drawScale": 1.75
+      "pelvis": [
+        256,
+        285
+      ],
+      "supportFoot": [
+        301,
+        449
+      ],
+      "drawScale": 0.75,
+      "muzzle": [
+        332,
+        153
+      ],
+      "muzzleGround": [
+        332,
+        425
+      ],
+      "phase": "right-pass",
+      "source": "exec-b7cb98a2-2719-47d0-bb73-c4cfb2795fd9.png",
+      "sha256": "72df8a07dbcfdcd2be5f58411a7c9871d83abf37666b8194ea61c1fa7d9d04b6"
     },
     "jump/right/000.png": {
       "anchor": [
@@ -5968,6 +6084,7 @@
   "movementReviewDirections": [],
   "fastMovementDirections": [
     "right",
-    "left"
+    "left",
+    "back"
   ]
 }

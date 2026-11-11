@@ -11,14 +11,17 @@ require.extensions['.ts'] = (module, path) => {
 };
 const {newGame, setInput, advance} = require('../lib/game.ts');
 const {barrelSocket27d} = require('../lib/ballistics27d.ts');
-const {advanceRaptorPose} = require('../lib/raptorPose.ts');
+const {advanceRaptorPose, RAPTOR_POSE_DIRECTIONS} = require('../lib/raptorPose.ts');
 const inventory = require('../public/assets/raptor-v2/manifest.json');
-const registration = require('../docs/raptor-fluidity/batch21-registration.json');
+const registration = {
+  ...require('../docs/raptor-fluidity/batch21-registration.json'),
+  ...require('../docs/raptor-fluidity/batch22-registration.json'),
+};
 const phases = ['left-contact', 'left-pass', 'right-contact', 'right-pass'];
 
 for (const direction of inventory.fastMovementDirections) {
-  const sign = direction === 'right' ? 1 : -1;
-  const angle = sign === 1 ? 0 : Math.PI;
+  const angle = RAPTOR_POSE_DIRECTIONS.indexOf(direction) * Math.PI / 4;
+  const dx = Math.cos(angle), dy = Math.sin(angle);
   const sample = {
     time: 1, x: 600, y: 500, speed: 45, angle, travelAngle: angle,
     attached: false, airborne: false, hit: false, sliding: false, firing: false,
@@ -40,7 +43,7 @@ for (const direction of inventory.fastMovementDirections) {
     Object.assign(actor, {character: 'raptor', x: 680, y: 500, aim: angle, gunFacing: angle});
     Object.assign(opponent, {bot: false, x: 1300, y: 660});
     const tick = (fire = false) => {
-      setInput(game, 0, actor.lastSeq + 1, {aim: angle, x: sign * pressure, y: 0, fire});
+      setInput(game, 0, actor.lastSeq + 1, {aim: angle, x: dx * pressure, y: dy * pressure, fire});
       advance(game, game.lastAt + 1000 / 60);
     };
     const painted = new Set();
@@ -59,7 +62,12 @@ for (const direction of inventory.fastMovementDirections) {
       assert.deepEqual(record, registration[key]);
       assert.equal(record.phase, phases[frame]);
       assert.equal(record.anchor[1], 450);
+      if (direction === 'back') {
+        assert.equal(record.supportFoot[0] < record.pelvis[0], frame < 2, 'rear support alternates by anatomical side');
+      }
     }
+    // Center the shot so a pellet cannot leave the arena during its first tick.
+    Object.assign(actor, {x: 800, y: 420});
     const shells = actor.shells;
     tick(true);
     assert.equal(actor.shells, shells - 1, 'moving fire is immediate');
@@ -68,6 +76,10 @@ for (const direction of inventory.fastMovementDirections) {
     const flash = game.fx.findLast(effect => effect.type === 'muzzle' && effect.owner === 0);
     assert.ok(socket.raptorAligned);
     assert.deepEqual([flash.x, flash.y, flash.z], [socket.x, socket.y, socket.z]);
+    const pellet = game.shots.findLast(shot => shot.owner === 0);
+    assert.ok(pellet, 'moving shot spawns pellets');
+    assert.ok(Math.hypot(pellet.x - pellet.vx * pellet.realAge - socket.x,
+      pellet.y - pellet.vy * pellet.realAge - socket.y) < 1e-6, 'pellets originate at the painted muzzle');
     console.log('PASS', direction, family, 'all four phases and immediate registered moving fire');
   }
 }
