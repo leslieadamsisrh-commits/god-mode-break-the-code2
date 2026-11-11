@@ -941,7 +941,7 @@ function raptorReadyExposure(p:Player,cv:Cover|undefined){
  if(p.character!=='raptor'||!cv||p.coverMode!=='braced'||p.coverDrive11||p.gripCoverId||p.gripId||p.orbitIds.length||p.charging)return false;
  const tall=cv.coverClass==='tall',edge=raptorCoverEdge(p.coverAnchor,p.gunFacing);
  const frame=raptorCoverExposureFrame(p.gunFacing,tall,undefined,edge);
- return tall?!!edge&&(frame.family==='cover-recoil'||/^cover-lean\/(left|right)\//.test(frame.key)):frame.family==='cover-pop'||frame.family==='cover-recoil';
+ return tall?!!edge&&(frame.family==='cover-recoil'||frame.family==='cover-sequence'||/^cover-lean\/(left|right)\//.test(frame.key)):frame.family==='cover-pop'||frame.family==='cover-recoil'||frame.family==='cover-sequence';
 }
 function coverAimRequested(p:Player,cv:Cover|undefined){
  return p.input.coverAim||(p.input.fire&&raptorReadyExposure(p,cv));
@@ -954,7 +954,7 @@ export function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:numbe
   if(cv.coverClass==='tall'&&!edge)return {allowed:false,clearance:undefined,mode:'TALL_FACE'};
   const socket=muzzle as {x:number;y:number;z?:number};
   if(socket.z===undefined)return {allowed:false,clearance:undefined,mode:'NO_SOCKET'};
-  if(p.raptorFrame?.family==='cover-recoil'){
+  if(p.raptorFrame?.family==='cover-recoil'||p.raptorFrame?.family==='cover-sequence'){
    const lift=vertical46(socket.x,socket.y,socket.z);
    if(coverHidesPoint(cv,p.y,{x:socket.x+lift.x,y:socket.y+lift.y}))
     return {allowed:false,clearance:undefined,mode:'OCCLUDED'};
@@ -963,7 +963,7 @@ export function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:numbe
   const height=cv.height27j??78;
   // A barrel authored beyond the far face must also have a clear path from
   // the firing stance. Starting the projectile outside steel cannot bypass it.
-  const barrelClear=!(p.raptorFrame?.family==='cover-pop'||p.raptorFrame?.family==='cover-recoil'&&cv.coverClass!=='tall')||coverTime27d({x:p.x,y:p.y,z},from,cv,height)===null;
+  const barrelClear=!(p.raptorFrame?.family==='cover-pop'||(p.raptorFrame?.family==='cover-recoil'||p.raptorFrame?.family==='cover-sequence')&&cv.coverClass!=='tall')||coverTime27d({x:p.x,y:p.y,z},from,cv,height)===null;
   const clear=barrelClear&&coverTime27d(from,{x:from.x+Math.cos(aim)*80,y:from.y+Math.sin(aim)*80,z},cv,height)===null;
   const structureClear=!Number.isFinite(surfaceShotTime({...from,z:socket.z},{x:from.x+Math.cos(aim)*24,y:from.y+Math.sin(aim)*24,z:socket.z}));
   return {allowed:clear&&structureClear,clearance:undefined,mode:clear&&structureClear?(edge?'SIDE':'OVER'):'BLOCKED'};
@@ -1367,7 +1367,7 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
    if(p.character==='raptor'&&!physical.allowed){p.pendingFireUntil=undefined;continue;}
    if(shotPose!==p&&shotPose.raptorFrame){
     p.raptorFrame=shotPose.raptorFrame;
-    p.raptorCoverShot=shotPose.raptorFrame.family==='cover-recoil'&&p.coverId
+    p.raptorCoverShot=(shotPose.raptorFrame.family==='cover-recoil'||shotPose.raptorFrame.family==='cover-sequence')&&p.coverId
       ?{at:s.time,coverId:p.coverId,frame:shotPose.raptorFrame}:undefined;
    }
    // Shared cover state gates the trigger before character-specific socket clearance.

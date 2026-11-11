@@ -3,7 +3,7 @@ import {advanceRaptorJump,type JumpMemory,type JumpPhase} from './raptorJump';
 import inventory from '../public/assets/raptor-v2/manifest.json';
 
 export const RAPTOR_POSE_DIRECTIONS=['right','front-right','front','front-left','left','back-left','back','back-right'] as const;
-export type RaptorPoseFamily='idle'|'run'|'stalk'|'jog'|'sprint'|'slide'|'jump'|'cover-drive'|'cover-hold'|'cover-lean'|'cover-pop'|'cover-catch'|'cover-shuffle'|'cover-wrap'|'cover-bridge'|'cover-corner'|'cover-recoil'|'recovery';
+export type RaptorPoseFamily='idle'|'run'|'stalk'|'jog'|'sprint'|'slide'|'jump'|'cover-drive'|'cover-hold'|'cover-lean'|'cover-pop'|'cover-catch'|'cover-shuffle'|'cover-wrap'|'cover-bridge'|'cover-corner'|'cover-recoil'|'cover-sequence'|'recovery';
 export type RaptorPoseFrame={family:RaptorPoseFamily;frame:number;angle:number;key:string};
 type RaptorCoverShot={at:number;coverId:string;frame:RaptorPoseFrame};
 export type RaptorPoseSample={aimAngle?:number;coverProtectedAngle?:number;coverShot?:RaptorCoverShot;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEdge?:RaptorCoverEdge;coverId?:string|null;coverEndpointAngle?:number;coverEntryAngle?:number;coverSpeed11?:number;time:number;x?:number;y?:number;angle:number;speed:number;travelAngle?:number;sliding:boolean;slideRemaining?:number;slideDuration?:number;airborne:boolean;verticalVelocity:number;hit:boolean;attached:boolean;firing:boolean};
@@ -20,6 +20,7 @@ export type RaptorPoseMemory={
 export type RaptorPoseAvailability={
  postureDirections:readonly string[];jumpDirections?:readonly string[];
  coverLeanDirections?:readonly string[];coverLeanAltDirections?:readonly string[];
+ coverSequenceDirections?:readonly string[];
  coverBridgeDirections?:readonly string[];coverCornerDirections?:readonly string[];
  coverRecoilDirections?:readonly string[];coverTallRecoilDirections?:readonly string[];coverRecoilReadyDirections?:readonly string[];
  recoveryDirections?:readonly string[];
@@ -54,6 +55,7 @@ function selected(family:RaptorPoseFamily,frame:number,angle:number):RaptorPoseF
 /** Shared by clearance probing and rendered exposure: never test a different barrel. */
 export function raptorCoverExposureFrame(angle:number,tall:boolean,available:RaptorPoseAvailability=inventory,edge?:RaptorCoverEdge):RaptorPoseFrame{
  const direction=raptorPoseDirection(angle);
+ if(available.coverSequenceDirections?.includes(direction))return selected('cover-sequence',2,angle);
  const lean=available.coverLeanDirections??inventory.coverLeanDirections;
  const pop=available.coverPopDirections??[];
  if(available.coverRecoilReadyDirections?.includes(direction)&&raptorCoverRecoilFrame(angle,tall,available))return selected('cover-recoil',1,angle);
@@ -65,6 +67,7 @@ export function raptorCoverExposureFrame(angle:number,tall:boolean,available:Rap
 }
 
 export function raptorCoverRecoilFrame(angle:number,tall:boolean,available:RaptorPoseAvailability=inventory){
+ if(available.coverSequenceDirections?.includes(raptorPoseDirection(angle)))return selected('cover-sequence',3,angle);
  const directions=tall?available.coverTallRecoilDirections:available.coverRecoilDirections;
  return directions?.includes(raptorPoseDirection(angle))?selected('cover-recoil',0,angle):undefined;
 }
@@ -122,24 +125,27 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
      raptorPoseDirection(shot.frame.angle)===raptorPoseDirection(s.aimAngle??s.angle)){
    memory.waistAim=waist;
    memory.wrap=wrap;
-   return{memory,frame:shotAge<.055?shot.frame:selected('cover-recoil',1,shot.frame.angle)};
+   const sequence=shot.frame.family==='cover-sequence';
+   const settled=selected(sequence?'cover-sequence':'cover-recoil',sequence?4:1,shot.frame.angle);
+   return{memory,frame:shotAge<.055?shot.frame:settled};
   }
   if(state==='expose'||state==='fire'){
    const exposure=raptorCoverExposureFrame(s.angle,!!s.coverTall11,available,s.coverEdge);
    const endpointAngle=s.coverEndpointAngle;
-   if(!s.coverTall11&&s.coverId&&available.coverBridgeDirections?.includes(direction)&&
-      raptorPoseDirection(s.coverProtectedAngle??s.angle)===direction){
+   const sequence=available.coverSequenceDirections?.includes(direction);
+   if(s.coverId&&(sequence||!s.coverTall11&&available.coverBridgeDirections?.includes(direction)&&
+      raptorPoseDirection(s.coverProtectedAngle??s.angle)===direction)){
     const since=waist&&!waist.lowering&&raptorPoseDirection(waist.angle)===direction?waist.since:s.time;
     memory.waistAim={id:s.coverId,angle:s.angle,since,lowering:false};
-    if(!s.firing&&state==='expose'&&s.time-since<.045)return{memory,frame:selected('cover-bridge',0,s.angle)};
+    if(!s.coverTall11&&!s.firing&&state==='expose'&&s.time-since<.045)return{memory,frame:selected(sequence?'cover-sequence':'cover-bridge',sequence?1:0,s.angle)};
    }
-   if(s.coverTall11&&s.coverId&&s.coverEdge&&endpointAngle!==undefined&&(exposure.family==='cover-lean'||exposure.family==='cover-recoil')&&available.coverWrapDirections?.includes(raptorPoseDirection(endpointAngle))){
+   if(s.coverTall11&&s.coverId&&s.coverEdge&&endpointAngle!==undefined&&(exposure.family==='cover-lean'||exposure.family==='cover-recoil'||sequence)&&available.coverWrapDirections?.includes(raptorPoseDirection(endpointAngle))){
     const same=wrap&&!wrap.retracting&&wrap.edge===s.coverEdge&&raptorPoseDirection(wrap.endpointAngle)===raptorPoseDirection(endpointAngle);
     const since=same?wrap.since:s.time;
     memory.wrap={coverId:s.coverId,edge:s.coverEdge,endpointAngle,since,retracting:false};
     // A short visual pivot is skipped on the trigger tick so the authored
     // exposure barrel drives both the visible shot and the clearance probe.
-    if(state!=='fire'&&!s.firing&&s.time-since<WRAP_CONNECTOR_SECONDS)return{memory,frame:selected('cover-wrap',1,endpointAngle)};
+    if(state!=='fire'&&!s.firing&&s.time-since<WRAP_CONNECTOR_SECONDS)return{memory,frame:selected(sequence?'cover-sequence':'cover-wrap',1,sequence?s.angle:endpointAngle)};
    }
    return{memory,frame:exposure};
   }
@@ -150,11 +156,13 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
    const frame=protectedReady&&available.coverCatchDirections?.includes(incoming)?selected('cover-catch',0,entry):selected('slide',2,s.angle);
    return{memory,frame};
   }
-  if(!s.coverTall11&&state==='retract'&&waist){
+  const sequenceLower=waist&&available.coverSequenceDirections?.includes(raptorPoseDirection(waist.angle));
+  if((!s.coverTall11||sequenceLower)&&state==='retract'&&waist){
    const since=waist.lowering?waist.since:s.time;
    if(s.time-since<.065){
     memory.waistAim={...waist,since,lowering:true};
-    return{memory,frame:selected('cover-bridge',1,waist.angle)};
+    if(sequenceLower)memory.wrap=undefined;
+    return{memory,frame:selected(sequenceLower?'cover-sequence':'cover-bridge',sequenceLower?5:1,waist.angle)};
    }
   }
   if(s.coverTall11&&s.coverId&&s.coverEndpointAngle!==undefined&&direction==='back'&&
@@ -185,6 +193,7 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
    }
    if(available.coverWrapDirections?.includes(raptorPoseDirection(s.coverEndpointAngle)))return{memory,frame:selected('cover-wrap',0,s.coverEndpointAngle)};
   }
+  if(available.coverSequenceDirections?.includes(direction))return{memory,frame:selected('cover-sequence',0,s.angle)};
   const lowReady=s.coverTall11===false&&available.coverLowReadyDirections?.includes(direction);
   return{memory,frame:selected('cover-hold',lowReady?1:0,s.angle)};
  }

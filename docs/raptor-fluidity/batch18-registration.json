@@ -1,0 +1,480 @@
+{
+  "phases": [
+    "hold",
+    "raise",
+    "ready",
+    "recoil",
+    "settle",
+    "lower"
+  ],
+  "frames": {
+    "cover-sequence/front-right/000.png": {
+      "anchor": [
+        250,
+        460
+      ],
+      "supportFoot": [
+        158,
+        460
+      ],
+      "pelvis": [
+        274,
+        340
+      ],
+      "drawScale": 0.72,
+      "muzzle": [
+        373,
+        319
+      ],
+      "muzzleGround": [
+        373,
+        520
+      ],
+      "sha256": "86bfa9dd85b24db21fed6f85aed47d3bad7ddac5ecd685fd4fd2469d5f364352",
+      "source": "exec-426c5aa1-039a-495c-9de0-efbff2a05131.png",
+      "phase": "hold"
+    },
+    "cover-sequence/front-right/001.png": {
+      "anchor": [
+        250,
+        460
+      ],
+      "supportFoot": [
+        158,
+        460
+      ],
+      "pelvis": [
+        274,
+        340
+      ],
+      "drawScale": 0.72,
+      "muzzle": [
+        405,
+        215
+      ],
+      "muzzleGround": [
+        405,
+        545
+      ],
+      "sha256": "ee77467dd1823782985d78c0ca332ad4b066bbf365d5f4987ab7e1c2ad431c3c",
+      "source": "exec-0f6bac84-11b4-40d0-ab2d-f35b19f125a1.png",
+      "phase": "raise"
+    },
+    "cover-sequence/front-right/002.png": {
+      "anchor": [
+        250,
+        460
+      ],
+      "supportFoot": [
+        158,
+        460
+      ],
+      "pelvis": [
+        274,
+        315
+      ],
+      "drawScale": 0.72,
+      "muzzle": [
+        445,
+        107
+      ],
+      "muzzleGround": [
+        445,
+        522
+      ],
+      "sha256": "2cf0c540e79df01c6cd6ab8234752327b2e1e9e7aca2a35748b90bfca0202f88",
+      "source": "exec-551759cc-cfa2-4f5d-8a06-d247667ddc7f.png",
+      "phase": "ready"
+    },
+    "cover-sequence/front-right/003.png": {
+      "anchor": [
+        250,
+        460
+      ],
+      "supportFoot": [
+        158,
+        460
+      ],
+      "pelvis": [
+        274,
+        320
+      ],
+      "drawScale": 0.72,
+      "muzzle": [
+        444,
+        101
+      ],
+      "muzzleGround": [
+        444,
+        522
+      ],
+      "sha256": "66c13446dbaadd57272b82eb340f442e4b83601979af78de6a62dae1245a98e8",
+      "source": "exec-551759cc-cfa2-4f5d-8a06-d247667ddc7f.png",
+      "phase": "recoil"
+    },
+    "cover-sequence/front-right/004.png": {
+      "anchor": [
+        250,
+        460
+      ],
+      "supportFoot": [
+        158,
+        460
+      ],
+      "pelvis": [
+        274,
+        315
+      ],
+      "drawScale": 0.72,
+      "muzzle": [
+        446,
+        107
+      ],
+      "muzzleGround": [
+        446,
+        522
+      ],
+      "sha256": "a26b712ae677fc404cdb27fe35a32c0967720fb1afb7974576a6f00a4c0811a2",
+      "source": "exec-551759cc-cfa2-4f5d-8a06-d247667ddc7f.png",
+      "phase": "settle"
+    },
+    "cover-sequence/front-right/005.png": {
+      "anchor": [
+        250,
+        460
+      ],
+      "supportFoot": [
+        158,
+        460
+      ],
+      "pelvis": [
+        274,
+        340
+      ],
+      "drawScale": 0.72,
+      "muzzle": [
+        417,
+        209
+      ],
+      "muzzleGround": [
+        417,
+        547
+      ],
+      "sha256": "c49f98a9dceb5d028fc556ed5f90dda405b32b3da9fea67cfb251241cccfac2f",
+      "source": "exec-0f6bac84-11b4-40d0-ab2d-f35b19f125a1.png",
+      "phase": "lower"
+    },
+    "cover-sequence/front/000.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        250,
+        339
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        252,
+        307
+      ],
+      "muzzleGround": [
+        252,
+        510
+      ],
+      "sha256": "723606624933d3c5d184b3a7c1acba540d49da17f42da1fbfb0dc3219d837f12",
+      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
+      "phase": "hold"
+    },
+    "cover-sequence/front/001.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        250,
+        339
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        252,
+        262
+      ],
+      "muzzleGround": [
+        252,
+        540
+      ],
+      "sha256": "2ed7135bd2ba7b9224008c8a3a8401819a26a5658470954f242c3cb81b78fce0",
+      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
+      "phase": "raise"
+    },
+    "cover-sequence/front/002.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        250,
+        339
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        212,
+        203
+      ],
+      "muzzleGround": [
+        212,
+        560
+      ],
+      "sha256": "f283bd117b05e8cae7305e8481ca367fbf2a71668db8d4bd7c8cb484fe42606d",
+      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
+      "phase": "ready"
+    },
+    "cover-sequence/front/003.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        250,
+        339
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        209,
+        157
+      ],
+      "muzzleGround": [
+        209,
+        560
+      ],
+      "sha256": "8c0fdd9865ea37593a770ae38417ee7d0410ae2001026d38f6f9a2ce37f89355",
+      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
+      "phase": "recoil"
+    },
+    "cover-sequence/front/004.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        250,
+        339
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        213,
+        205
+      ],
+      "muzzleGround": [
+        213,
+        560
+      ],
+      "sha256": "4a5b3b1237e0816c0d184cb6af0ddd8bc46c219af232e391f837c01407eabd5d",
+      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
+      "phase": "settle"
+    },
+    "cover-sequence/front/005.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        250,
+        339
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        252,
+        265
+      ],
+      "muzzleGround": [
+        252,
+        540
+      ],
+      "sha256": "9fdde6aaedd0edf6f5540c3d9c072c94dfe9b17e766a601bea2b89f352f8bdec",
+      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
+      "phase": "lower"
+    },
+    "cover-sequence/front-left/000.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        259,
+        339
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        139,
+        339
+      ],
+      "muzzleGround": [
+        139,
+        530
+      ],
+      "sha256": "83d787fd8d5e896b5149edd3060bb822f5cf23277b895f2cd10abb4312577510",
+      "source": "exec-0fcd78bf-0be3-40d4-bca4-feb2eec51444.png",
+      "phase": "hold"
+    },
+    "cover-sequence/front-left/001.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        259,
+        339
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        91,
+        248
+      ],
+      "muzzleGround": [
+        91,
+        550
+      ],
+      "sha256": "f0e1109a451f6ceb36ee4f7495ec12f743a72a18466e269a914d9296f83d9cad",
+      "source": "exec-0fcd78bf-0be3-40d4-bca4-feb2eec51444.png",
+      "phase": "raise"
+    },
+    "cover-sequence/front-left/002.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        259,
+        315
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        80,
+        112
+      ],
+      "muzzleGround": [
+        80,
+        523
+      ],
+      "sha256": "ad866cc885b9f85b23ba8d45568d7ca5a14d6848385e524e5d65ce733f7c6ecb",
+      "source": "exec-551759cc-cfa2-4f5d-8a06-d247667ddc7f.png",
+      "phase": "ready"
+    },
+    "cover-sequence/front-left/003.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        259,
+        320
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        82,
+        101
+      ],
+      "muzzleGround": [
+        82,
+        523
+      ],
+      "sha256": "01a4d0a4fd337afd836c10c9aefa884099603e550051ff39cde94efd308c4815",
+      "source": "exec-551759cc-cfa2-4f5d-8a06-d247667ddc7f.png",
+      "phase": "recoil"
+    },
+    "cover-sequence/front-left/004.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        259,
+        315
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        84,
+        113
+      ],
+      "muzzleGround": [
+        84,
+        523
+      ],
+      "sha256": "50692bb2f7ba25ec7986970eac57c1a6053637cb17c598f23b35995f4faeb132",
+      "source": "exec-551759cc-cfa2-4f5d-8a06-d247667ddc7f.png",
+      "phase": "settle"
+    },
+    "cover-sequence/front-left/005.png": {
+      "anchor": [
+        242,
+        460
+      ],
+      "supportFoot": [
+        150,
+        460
+      ],
+      "pelvis": [
+        259,
+        339
+      ],
+      "drawScale": 0.71,
+      "muzzle": [
+        83,
+        208
+      ],
+      "muzzleGround": [
+        83,
+        550
+      ],
+      "sha256": "99bddc0e3be16d79545c90596c1cd715d838cfb46549b9f3864536074393c368",
+      "source": "exec-0fcd78bf-0be3-40d4-bca4-feb2eec51444.png",
+      "phase": "lower"
+    }
+  }
+}

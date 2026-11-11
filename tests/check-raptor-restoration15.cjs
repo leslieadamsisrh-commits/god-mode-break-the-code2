@@ -18,7 +18,7 @@ for(let i=0;i<8;i++)for(const tall of [false,true]){
  const current=raptorCoverExposureFrame(angle,tall);
  assert.ok(fs.existsSync('public/assets/raptor-v2/'+current.key));
  const recoilReady=live.coverRecoilReadyDirections.includes(dir)&&(tall?live.coverTallRecoilDirections:live.coverRecoilDirections).includes(dir);
- assert.equal(current.family,recoilReady?'cover-recoil':tall&&live.coverLeanDirections.includes(dir)?'cover-lean':!tall&&live.coverPopDirections.includes(dir)?'cover-pop':'idle');
+ assert.equal(current.family,live.coverSequenceDirections.includes(dir)?'cover-sequence':recoilReady?'cover-recoil':tall&&live.coverLeanDirections.includes(dir)?'cover-lean':!tall&&live.coverPopDirections.includes(dir)?'cover-pop':'idle');
 }
 assert.equal(raptorCoverExposureFrame(0,true,{postureDirections:[],coverLeanDirections:[]}).family,'idle');
 console.log('PASS 16 directional/height cases: authored availability, identical clearance/render selection, retraction, active inventory');
@@ -68,6 +68,8 @@ console.log('PASS isolated availability: each tall endpoint resolves one shared 
 const {frames:ambush}=require('../docs/raptor-infantry-restore/ambush-pass/registration.json');
 const {frames:batchA}=require('../docs/raptor-infantry-restore/batch-a/registration.json');
 const game=require('../lib/game.ts'),{barrelSocket27d}=require('../lib/ballistics27d.ts');
+// The historical trial below deliberately validates its saved atlas independently.
+live.coverSequenceDirections=[];
 Object.assign(live.frames,ambush,{'cover-pop/front-right/000.png':batchA['cover-pop/front-right/000.png']});
 Object.assign(live,{coverPopDirections:['front-right'],coverLeanAltDirections:['front-right']});
 for(const [kind,t,angle,expected] of [

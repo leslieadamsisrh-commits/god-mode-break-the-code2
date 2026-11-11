@@ -7,7 +7,7 @@ const {createCanvas,loadImage}=require('@napi-rs/canvas');
  for(let d=0;d<8;d++){
   const angle=d*Math.PI/4,base={time:1,x:100,y:100,angle,speed:0,attached:true,sliding:false,airborne:false,verticalVelocity:0,hit:false,firing:false};
   for(const state of ['hold','brace','retract']){
-   const r=advanceRaptorPose(undefined,{...base,coverState11:state});assert.equal(r.frame.key,`cover-hold/${RAPTOR_POSE_DIRECTIONS[d]}/000.png`);
+   const r=advanceRaptorPose(undefined,{...base,coverState11:state});assert.equal(r.frame.key,`${manifest.coverSequenceDirections.includes(RAPTOR_POSE_DIRECTIONS[d])?'cover-sequence':'cover-hold'}/${RAPTOR_POSE_DIRECTIONS[d]}/000.png`);
    const entry=manifest.frames[r.frame.key],bytes=fs.readFileSync('public/assets/raptor-v2/'+r.frame.key),im=await loadImage(bytes);assert.equal(im.width,512);assert.equal(im.height,512);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),entry.sha256);
    const p=raptorSpritePlacement({x:100,y:100,scale:.7},entry);assert.ok(Math.abs(p.y+entry.anchor[1]*.7*entry.drawScale-100)<1e-8);
   }

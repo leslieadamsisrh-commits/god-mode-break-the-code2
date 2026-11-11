@@ -1,0 +1,4843 @@
+{
+  "baseline": "3ba0f89ca269bf8e54dfd639014e71b75594ca9c",
+  "design_master": "cover-hold/right/000.png",
+  "directions": [
+    "right",
+    "front-right",
+    "front",
+    "front-left",
+    "left",
+    "back-left",
+    "back",
+    "back-right"
+  ],
+  "existing_runtime_files": 260,
+  "note": "Coverage slots include existing art and approved reuse. Slot count is not the number of new drawings. The earlier 90\u2013130 budget remains an incremental priority pass.",
+  "slots": [
+    {
+      "id": "ready/right/neutral",
+      "family": "ready",
+      "direction": "right",
+      "phase": "neutral",
+      "priority": "P2",
+      "existing": "idle/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "ready/right/breath",
+      "family": "ready",
+      "direction": "right",
+      "phase": "breath",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "ready/front-right/neutral",
+      "family": "ready",
+      "direction": "front-right",
+      "phase": "neutral",
+      "priority": "P2",
+      "existing": "idle/front-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "ready/front-right/breath",
+      "family": "ready",
+      "direction": "front-right",
+      "phase": "breath",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "ready/front/neutral",
+      "family": "ready",
+      "direction": "front",
+      "phase": "neutral",
+      "priority": "P2",
+      "existing": "idle/front/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "ready/front/breath",
+      "family": "ready",
+      "direction": "front",
+      "phase": "breath",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "ready/front-left/neutral",
+      "family": "ready",
+      "direction": "front-left",
+      "phase": "neutral",
+      "priority": "P2",
+      "existing": "idle/front-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "ready/front-left/breath",
+      "family": "ready",
+      "direction": "front-left",
+      "phase": "breath",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "ready/left/neutral",
+      "family": "ready",
+      "direction": "left",
+      "phase": "neutral",
+      "priority": "P2",
+      "existing": "idle/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "ready/left/breath",
+      "family": "ready",
+      "direction": "left",
+      "phase": "breath",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "ready/back-left/neutral",
+      "family": "ready",
+      "direction": "back-left",
+      "phase": "neutral",
+      "priority": "P2",
+      "existing": "idle/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "ready/back-left/breath",
+      "family": "ready",
+      "direction": "back-left",
+      "phase": "breath",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "ready/back/neutral",
+      "family": "ready",
+      "direction": "back",
+      "phase": "neutral",
+      "priority": "P2",
+      "existing": "idle/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "ready/back/breath",
+      "family": "ready",
+      "direction": "back",
+      "phase": "breath",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "ready/back-right/neutral",
+      "family": "ready",
+      "direction": "back-right",
+      "phase": "neutral",
+      "priority": "P2",
+      "existing": "idle/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "ready/back-right/breath",
+      "family": "ready",
+      "direction": "back-right",
+      "phase": "breath",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/right/weight-transfer",
+      "family": "turn-clockwise",
+      "direction": "right",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/right/foot-plant",
+      "family": "turn-clockwise",
+      "direction": "right",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/front-right/weight-transfer",
+      "family": "turn-clockwise",
+      "direction": "front-right",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/front-right/foot-plant",
+      "family": "turn-clockwise",
+      "direction": "front-right",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/front/weight-transfer",
+      "family": "turn-clockwise",
+      "direction": "front",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/front/foot-plant",
+      "family": "turn-clockwise",
+      "direction": "front",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/front-left/weight-transfer",
+      "family": "turn-clockwise",
+      "direction": "front-left",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/front-left/foot-plant",
+      "family": "turn-clockwise",
+      "direction": "front-left",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/left/weight-transfer",
+      "family": "turn-clockwise",
+      "direction": "left",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/left/foot-plant",
+      "family": "turn-clockwise",
+      "direction": "left",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/back-left/weight-transfer",
+      "family": "turn-clockwise",
+      "direction": "back-left",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/back-left/foot-plant",
+      "family": "turn-clockwise",
+      "direction": "back-left",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/back/weight-transfer",
+      "family": "turn-clockwise",
+      "direction": "back",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/back/foot-plant",
+      "family": "turn-clockwise",
+      "direction": "back",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/back-right/weight-transfer",
+      "family": "turn-clockwise",
+      "direction": "back-right",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-clockwise/back-right/foot-plant",
+      "family": "turn-clockwise",
+      "direction": "back-right",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/right/weight-transfer",
+      "family": "turn-counterclockwise",
+      "direction": "right",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/right/foot-plant",
+      "family": "turn-counterclockwise",
+      "direction": "right",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/front-right/weight-transfer",
+      "family": "turn-counterclockwise",
+      "direction": "front-right",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/front-right/foot-plant",
+      "family": "turn-counterclockwise",
+      "direction": "front-right",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/front/weight-transfer",
+      "family": "turn-counterclockwise",
+      "direction": "front",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/front/foot-plant",
+      "family": "turn-counterclockwise",
+      "direction": "front",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/front-left/weight-transfer",
+      "family": "turn-counterclockwise",
+      "direction": "front-left",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/front-left/foot-plant",
+      "family": "turn-counterclockwise",
+      "direction": "front-left",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/left/weight-transfer",
+      "family": "turn-counterclockwise",
+      "direction": "left",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/left/foot-plant",
+      "family": "turn-counterclockwise",
+      "direction": "left",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/back-left/weight-transfer",
+      "family": "turn-counterclockwise",
+      "direction": "back-left",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/back-left/foot-plant",
+      "family": "turn-counterclockwise",
+      "direction": "back-left",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/back/weight-transfer",
+      "family": "turn-counterclockwise",
+      "direction": "back",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/back/foot-plant",
+      "family": "turn-counterclockwise",
+      "direction": "back",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/back-right/weight-transfer",
+      "family": "turn-counterclockwise",
+      "direction": "back-right",
+      "phase": "weight-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "turn-counterclockwise/back-right/foot-plant",
+      "family": "turn-counterclockwise",
+      "direction": "back-right",
+      "phase": "foot-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/right/push",
+      "family": "movement-start",
+      "direction": "right",
+      "phase": "push",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/right/first-contact",
+      "family": "movement-start",
+      "direction": "right",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/front-right/push",
+      "family": "movement-start",
+      "direction": "front-right",
+      "phase": "push",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/front-right/first-contact",
+      "family": "movement-start",
+      "direction": "front-right",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/front/push",
+      "family": "movement-start",
+      "direction": "front",
+      "phase": "push",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/front/first-contact",
+      "family": "movement-start",
+      "direction": "front",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/front-left/push",
+      "family": "movement-start",
+      "direction": "front-left",
+      "phase": "push",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/front-left/first-contact",
+      "family": "movement-start",
+      "direction": "front-left",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/left/push",
+      "family": "movement-start",
+      "direction": "left",
+      "phase": "push",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/left/first-contact",
+      "family": "movement-start",
+      "direction": "left",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/back-left/push",
+      "family": "movement-start",
+      "direction": "back-left",
+      "phase": "push",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/back-left/first-contact",
+      "family": "movement-start",
+      "direction": "back-left",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/back/push",
+      "family": "movement-start",
+      "direction": "back",
+      "phase": "push",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/back/first-contact",
+      "family": "movement-start",
+      "direction": "back",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/back-right/push",
+      "family": "movement-start",
+      "direction": "back-right",
+      "phase": "push",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-start/back-right/first-contact",
+      "family": "movement-start",
+      "direction": "back-right",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "stalk/right/left-contact",
+      "family": "stalk",
+      "direction": "right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "stalk/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/right/left-pass",
+      "family": "stalk",
+      "direction": "right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "stalk/right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/right/right-contact",
+      "family": "stalk",
+      "direction": "right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "stalk/right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/right/right-pass",
+      "family": "stalk",
+      "direction": "right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "stalk/right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front-right/left-contact",
+      "family": "stalk",
+      "direction": "front-right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "stalk/front-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front-right/left-pass",
+      "family": "stalk",
+      "direction": "front-right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "stalk/front-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front-right/right-contact",
+      "family": "stalk",
+      "direction": "front-right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "stalk/front-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front-right/right-pass",
+      "family": "stalk",
+      "direction": "front-right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "stalk/front-right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front/left-contact",
+      "family": "stalk",
+      "direction": "front",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "stalk/front/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front/left-pass",
+      "family": "stalk",
+      "direction": "front",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "stalk/front/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front/right-contact",
+      "family": "stalk",
+      "direction": "front",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "stalk/front/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front/right-pass",
+      "family": "stalk",
+      "direction": "front",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "stalk/front/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front-left/left-contact",
+      "family": "stalk",
+      "direction": "front-left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "stalk/front-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front-left/left-pass",
+      "family": "stalk",
+      "direction": "front-left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "stalk/front-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front-left/right-contact",
+      "family": "stalk",
+      "direction": "front-left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "stalk/front-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/front-left/right-pass",
+      "family": "stalk",
+      "direction": "front-left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "stalk/front-left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/left/left-contact",
+      "family": "stalk",
+      "direction": "left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "stalk/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/left/left-pass",
+      "family": "stalk",
+      "direction": "left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "stalk/left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/left/right-contact",
+      "family": "stalk",
+      "direction": "left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "stalk/left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/left/right-pass",
+      "family": "stalk",
+      "direction": "left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "stalk/left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back-left/left-contact",
+      "family": "stalk",
+      "direction": "back-left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "stalk/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back-left/left-pass",
+      "family": "stalk",
+      "direction": "back-left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "stalk/back-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back-left/right-contact",
+      "family": "stalk",
+      "direction": "back-left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "stalk/back-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back-left/right-pass",
+      "family": "stalk",
+      "direction": "back-left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "stalk/back-left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back/left-contact",
+      "family": "stalk",
+      "direction": "back",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "stalk/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back/left-pass",
+      "family": "stalk",
+      "direction": "back",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "stalk/back/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back/right-contact",
+      "family": "stalk",
+      "direction": "back",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "stalk/back/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back/right-pass",
+      "family": "stalk",
+      "direction": "back",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "stalk/back/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back-right/left-contact",
+      "family": "stalk",
+      "direction": "back-right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "stalk/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back-right/left-pass",
+      "family": "stalk",
+      "direction": "back-right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "stalk/back-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back-right/right-contact",
+      "family": "stalk",
+      "direction": "back-right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "stalk/back-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "stalk/back-right/right-pass",
+      "family": "stalk",
+      "direction": "back-right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "stalk/back-right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/right/left-contact",
+      "family": "jog",
+      "direction": "right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "jog/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/right/left-pass",
+      "family": "jog",
+      "direction": "right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "jog/right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/right/right-contact",
+      "family": "jog",
+      "direction": "right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "jog/right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/right/right-pass",
+      "family": "jog",
+      "direction": "right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "jog/right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front-right/left-contact",
+      "family": "jog",
+      "direction": "front-right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "jog/front-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front-right/left-pass",
+      "family": "jog",
+      "direction": "front-right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "jog/front-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front-right/right-contact",
+      "family": "jog",
+      "direction": "front-right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "jog/front-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front-right/right-pass",
+      "family": "jog",
+      "direction": "front-right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "jog/front-right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front/left-contact",
+      "family": "jog",
+      "direction": "front",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "jog/front/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front/left-pass",
+      "family": "jog",
+      "direction": "front",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "jog/front/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front/right-contact",
+      "family": "jog",
+      "direction": "front",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "jog/front/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front/right-pass",
+      "family": "jog",
+      "direction": "front",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "jog/front/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front-left/left-contact",
+      "family": "jog",
+      "direction": "front-left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "jog/front-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front-left/left-pass",
+      "family": "jog",
+      "direction": "front-left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "jog/front-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front-left/right-contact",
+      "family": "jog",
+      "direction": "front-left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "jog/front-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/front-left/right-pass",
+      "family": "jog",
+      "direction": "front-left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "jog/front-left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/left/left-contact",
+      "family": "jog",
+      "direction": "left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "jog/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/left/left-pass",
+      "family": "jog",
+      "direction": "left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "jog/left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/left/right-contact",
+      "family": "jog",
+      "direction": "left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "jog/left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/left/right-pass",
+      "family": "jog",
+      "direction": "left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "jog/left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back-left/left-contact",
+      "family": "jog",
+      "direction": "back-left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "jog/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back-left/left-pass",
+      "family": "jog",
+      "direction": "back-left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "jog/back-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back-left/right-contact",
+      "family": "jog",
+      "direction": "back-left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "jog/back-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back-left/right-pass",
+      "family": "jog",
+      "direction": "back-left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "jog/back-left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back/left-contact",
+      "family": "jog",
+      "direction": "back",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "jog/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back/left-pass",
+      "family": "jog",
+      "direction": "back",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "jog/back/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back/right-contact",
+      "family": "jog",
+      "direction": "back",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "jog/back/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back/right-pass",
+      "family": "jog",
+      "direction": "back",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "jog/back/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back-right/left-contact",
+      "family": "jog",
+      "direction": "back-right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "jog/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back-right/left-pass",
+      "family": "jog",
+      "direction": "back-right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "jog/back-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back-right/right-contact",
+      "family": "jog",
+      "direction": "back-right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "jog/back-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jog/back-right/right-pass",
+      "family": "jog",
+      "direction": "back-right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "jog/back-right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/right/left-contact",
+      "family": "sprint",
+      "direction": "right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "sprint/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/right/left-pass",
+      "family": "sprint",
+      "direction": "right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "sprint/right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/right/right-contact",
+      "family": "sprint",
+      "direction": "right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "sprint/right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/right/right-pass",
+      "family": "sprint",
+      "direction": "right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "sprint/right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front-right/left-contact",
+      "family": "sprint",
+      "direction": "front-right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "sprint/front-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front-right/left-pass",
+      "family": "sprint",
+      "direction": "front-right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "sprint/front-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front-right/right-contact",
+      "family": "sprint",
+      "direction": "front-right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "sprint/front-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front-right/right-pass",
+      "family": "sprint",
+      "direction": "front-right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "sprint/front-right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front/left-contact",
+      "family": "sprint",
+      "direction": "front",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "sprint/front/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front/left-pass",
+      "family": "sprint",
+      "direction": "front",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "sprint/front/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front/right-contact",
+      "family": "sprint",
+      "direction": "front",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "sprint/front/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front/right-pass",
+      "family": "sprint",
+      "direction": "front",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "sprint/front/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front-left/left-contact",
+      "family": "sprint",
+      "direction": "front-left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "sprint/front-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front-left/left-pass",
+      "family": "sprint",
+      "direction": "front-left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "sprint/front-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front-left/right-contact",
+      "family": "sprint",
+      "direction": "front-left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "sprint/front-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/front-left/right-pass",
+      "family": "sprint",
+      "direction": "front-left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "sprint/front-left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/left/left-contact",
+      "family": "sprint",
+      "direction": "left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "sprint/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/left/left-pass",
+      "family": "sprint",
+      "direction": "left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "sprint/left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/left/right-contact",
+      "family": "sprint",
+      "direction": "left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "sprint/left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/left/right-pass",
+      "family": "sprint",
+      "direction": "left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "sprint/left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back-left/left-contact",
+      "family": "sprint",
+      "direction": "back-left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "sprint/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back-left/left-pass",
+      "family": "sprint",
+      "direction": "back-left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "sprint/back-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back-left/right-contact",
+      "family": "sprint",
+      "direction": "back-left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "sprint/back-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back-left/right-pass",
+      "family": "sprint",
+      "direction": "back-left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "sprint/back-left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back/left-contact",
+      "family": "sprint",
+      "direction": "back",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "sprint/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back/left-pass",
+      "family": "sprint",
+      "direction": "back",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "sprint/back/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back/right-contact",
+      "family": "sprint",
+      "direction": "back",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "sprint/back/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back/right-pass",
+      "family": "sprint",
+      "direction": "back",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "sprint/back/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back-right/left-contact",
+      "family": "sprint",
+      "direction": "back-right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": "sprint/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back-right/left-pass",
+      "family": "sprint",
+      "direction": "back-right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": "sprint/back-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back-right/right-contact",
+      "family": "sprint",
+      "direction": "back-right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": "sprint/back-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "sprint/back-right/right-pass",
+      "family": "sprint",
+      "direction": "back-right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": "sprint/back-right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "movement-stop/right/brake",
+      "family": "movement-stop",
+      "direction": "right",
+      "phase": "brake",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/right/settle",
+      "family": "movement-stop",
+      "direction": "right",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/front-right/brake",
+      "family": "movement-stop",
+      "direction": "front-right",
+      "phase": "brake",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/front-right/settle",
+      "family": "movement-stop",
+      "direction": "front-right",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/front/brake",
+      "family": "movement-stop",
+      "direction": "front",
+      "phase": "brake",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/front/settle",
+      "family": "movement-stop",
+      "direction": "front",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/front-left/brake",
+      "family": "movement-stop",
+      "direction": "front-left",
+      "phase": "brake",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/front-left/settle",
+      "family": "movement-stop",
+      "direction": "front-left",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/left/brake",
+      "family": "movement-stop",
+      "direction": "left",
+      "phase": "brake",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/left/settle",
+      "family": "movement-stop",
+      "direction": "left",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/back-left/brake",
+      "family": "movement-stop",
+      "direction": "back-left",
+      "phase": "brake",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/back-left/settle",
+      "family": "movement-stop",
+      "direction": "back-left",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/back/brake",
+      "family": "movement-stop",
+      "direction": "back",
+      "phase": "brake",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/back/settle",
+      "family": "movement-stop",
+      "direction": "back",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/back-right/brake",
+      "family": "movement-stop",
+      "direction": "back-right",
+      "phase": "brake",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "movement-stop/back-right/settle",
+      "family": "movement-stop",
+      "direction": "back-right",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/right/left-contact",
+      "family": "moving-fire",
+      "direction": "right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/right/left-pass",
+      "family": "moving-fire",
+      "direction": "right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/right/right-contact",
+      "family": "moving-fire",
+      "direction": "right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/right/right-pass",
+      "family": "moving-fire",
+      "direction": "right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front-right/left-contact",
+      "family": "moving-fire",
+      "direction": "front-right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front-right/left-pass",
+      "family": "moving-fire",
+      "direction": "front-right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front-right/right-contact",
+      "family": "moving-fire",
+      "direction": "front-right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front-right/right-pass",
+      "family": "moving-fire",
+      "direction": "front-right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front/left-contact",
+      "family": "moving-fire",
+      "direction": "front",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front/left-pass",
+      "family": "moving-fire",
+      "direction": "front",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front/right-contact",
+      "family": "moving-fire",
+      "direction": "front",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front/right-pass",
+      "family": "moving-fire",
+      "direction": "front",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front-left/left-contact",
+      "family": "moving-fire",
+      "direction": "front-left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front-left/left-pass",
+      "family": "moving-fire",
+      "direction": "front-left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front-left/right-contact",
+      "family": "moving-fire",
+      "direction": "front-left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/front-left/right-pass",
+      "family": "moving-fire",
+      "direction": "front-left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/left/left-contact",
+      "family": "moving-fire",
+      "direction": "left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/left/left-pass",
+      "family": "moving-fire",
+      "direction": "left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/left/right-contact",
+      "family": "moving-fire",
+      "direction": "left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/left/right-pass",
+      "family": "moving-fire",
+      "direction": "left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back-left/left-contact",
+      "family": "moving-fire",
+      "direction": "back-left",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back-left/left-pass",
+      "family": "moving-fire",
+      "direction": "back-left",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back-left/right-contact",
+      "family": "moving-fire",
+      "direction": "back-left",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back-left/right-pass",
+      "family": "moving-fire",
+      "direction": "back-left",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back/left-contact",
+      "family": "moving-fire",
+      "direction": "back",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back/left-pass",
+      "family": "moving-fire",
+      "direction": "back",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back/right-contact",
+      "family": "moving-fire",
+      "direction": "back",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back/right-pass",
+      "family": "moving-fire",
+      "direction": "back",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back-right/left-contact",
+      "family": "moving-fire",
+      "direction": "back-right",
+      "phase": "left-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back-right/left-pass",
+      "family": "moving-fire",
+      "direction": "back-right",
+      "phase": "left-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back-right/right-contact",
+      "family": "moving-fire",
+      "direction": "back-right",
+      "phase": "right-contact",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "moving-fire/back-right/right-pass",
+      "family": "moving-fire",
+      "direction": "back-right",
+      "phase": "right-pass",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "slide/right/entry",
+      "family": "slide",
+      "direction": "right",
+      "phase": "entry",
+      "priority": "P2",
+      "existing": "slide/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/right/hold",
+      "family": "slide",
+      "direction": "right",
+      "phase": "hold",
+      "priority": "P2",
+      "existing": "slide/right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/right/recovery",
+      "family": "slide",
+      "direction": "right",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "slide/right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/front-right/entry",
+      "family": "slide",
+      "direction": "front-right",
+      "phase": "entry",
+      "priority": "P2",
+      "existing": "slide/front-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/front-right/hold",
+      "family": "slide",
+      "direction": "front-right",
+      "phase": "hold",
+      "priority": "P2",
+      "existing": "slide/front-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/front-right/recovery",
+      "family": "slide",
+      "direction": "front-right",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "slide/front-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/front/entry",
+      "family": "slide",
+      "direction": "front",
+      "phase": "entry",
+      "priority": "P2",
+      "existing": "slide/front/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/front/hold",
+      "family": "slide",
+      "direction": "front",
+      "phase": "hold",
+      "priority": "P2",
+      "existing": "slide/front/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/front/recovery",
+      "family": "slide",
+      "direction": "front",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "slide/front/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/front-left/entry",
+      "family": "slide",
+      "direction": "front-left",
+      "phase": "entry",
+      "priority": "P2",
+      "existing": "slide/front-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/front-left/hold",
+      "family": "slide",
+      "direction": "front-left",
+      "phase": "hold",
+      "priority": "P2",
+      "existing": "slide/front-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/front-left/recovery",
+      "family": "slide",
+      "direction": "front-left",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "slide/front-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/left/entry",
+      "family": "slide",
+      "direction": "left",
+      "phase": "entry",
+      "priority": "P2",
+      "existing": "slide/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/left/hold",
+      "family": "slide",
+      "direction": "left",
+      "phase": "hold",
+      "priority": "P2",
+      "existing": "slide/left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/left/recovery",
+      "family": "slide",
+      "direction": "left",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "slide/left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/back-left/entry",
+      "family": "slide",
+      "direction": "back-left",
+      "phase": "entry",
+      "priority": "P2",
+      "existing": "slide/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/back-left/hold",
+      "family": "slide",
+      "direction": "back-left",
+      "phase": "hold",
+      "priority": "P2",
+      "existing": "slide/back-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/back-left/recovery",
+      "family": "slide",
+      "direction": "back-left",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "slide/back-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/back/entry",
+      "family": "slide",
+      "direction": "back",
+      "phase": "entry",
+      "priority": "P2",
+      "existing": "slide/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/back/hold",
+      "family": "slide",
+      "direction": "back",
+      "phase": "hold",
+      "priority": "P2",
+      "existing": "slide/back/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/back/recovery",
+      "family": "slide",
+      "direction": "back",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "slide/back/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/back-right/entry",
+      "family": "slide",
+      "direction": "back-right",
+      "phase": "entry",
+      "priority": "P2",
+      "existing": "slide/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/back-right/hold",
+      "family": "slide",
+      "direction": "back-right",
+      "phase": "hold",
+      "priority": "P2",
+      "existing": "slide/back-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide/back-right/recovery",
+      "family": "slide",
+      "direction": "back-right",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "slide/back-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide-recovery/right/weight-under-hips",
+      "family": "slide-recovery",
+      "direction": "right",
+      "phase": "weight-under-hips",
+      "priority": "P1",
+      "existing": "recovery/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide-recovery/right/first-contact",
+      "family": "slide-recovery",
+      "direction": "right",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "slide-recovery/front-right/weight-under-hips",
+      "family": "slide-recovery",
+      "direction": "front-right",
+      "phase": "weight-under-hips",
+      "priority": "P1",
+      "existing": "recovery/front-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide-recovery/front-right/first-contact",
+      "family": "slide-recovery",
+      "direction": "front-right",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "slide-recovery/front/weight-under-hips",
+      "family": "slide-recovery",
+      "direction": "front",
+      "phase": "weight-under-hips",
+      "priority": "P1",
+      "existing": "recovery/front/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide-recovery/front/first-contact",
+      "family": "slide-recovery",
+      "direction": "front",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "slide-recovery/front-left/weight-under-hips",
+      "family": "slide-recovery",
+      "direction": "front-left",
+      "phase": "weight-under-hips",
+      "priority": "P1",
+      "existing": "recovery/front-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide-recovery/front-left/first-contact",
+      "family": "slide-recovery",
+      "direction": "front-left",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "slide-recovery/left/weight-under-hips",
+      "family": "slide-recovery",
+      "direction": "left",
+      "phase": "weight-under-hips",
+      "priority": "P1",
+      "existing": "recovery/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide-recovery/left/first-contact",
+      "family": "slide-recovery",
+      "direction": "left",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "slide-recovery/back-left/weight-under-hips",
+      "family": "slide-recovery",
+      "direction": "back-left",
+      "phase": "weight-under-hips",
+      "priority": "P1",
+      "existing": "recovery/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide-recovery/back-left/first-contact",
+      "family": "slide-recovery",
+      "direction": "back-left",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "slide-recovery/back/weight-under-hips",
+      "family": "slide-recovery",
+      "direction": "back",
+      "phase": "weight-under-hips",
+      "priority": "P1",
+      "existing": "recovery/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide-recovery/back/first-contact",
+      "family": "slide-recovery",
+      "direction": "back",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "slide-recovery/back-right/weight-under-hips",
+      "family": "slide-recovery",
+      "direction": "back-right",
+      "phase": "weight-under-hips",
+      "priority": "P1",
+      "existing": "recovery/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "slide-recovery/back-right/first-contact",
+      "family": "slide-recovery",
+      "direction": "back-right",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "jump/right/push-off",
+      "family": "jump",
+      "direction": "right",
+      "phase": "push-off",
+      "priority": "P2",
+      "existing": "jump/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/right/ascent",
+      "family": "jump",
+      "direction": "right",
+      "phase": "ascent",
+      "priority": "P2",
+      "existing": "jump/right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/right/apex",
+      "family": "jump",
+      "direction": "right",
+      "phase": "apex",
+      "priority": "P2",
+      "existing": "jump/right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/right/descent",
+      "family": "jump",
+      "direction": "right",
+      "phase": "descent",
+      "priority": "P2",
+      "existing": "jump/right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/right/landing",
+      "family": "jump",
+      "direction": "right",
+      "phase": "landing",
+      "priority": "P2",
+      "existing": "jump/right/004.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/right/recovery",
+      "family": "jump",
+      "direction": "right",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "jump/right/005.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-right/push-off",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "push-off",
+      "priority": "P2",
+      "existing": "jump/front-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-right/ascent",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "ascent",
+      "priority": "P2",
+      "existing": "jump/front-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-right/apex",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "apex",
+      "priority": "P2",
+      "existing": "jump/front-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-right/descent",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "descent",
+      "priority": "P2",
+      "existing": "jump/front-right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-right/landing",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "landing",
+      "priority": "P2",
+      "existing": "jump/front-right/004.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-right/recovery",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "jump/front-right/005.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front/push-off",
+      "family": "jump",
+      "direction": "front",
+      "phase": "push-off",
+      "priority": "P2",
+      "existing": "jump/front/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front/ascent",
+      "family": "jump",
+      "direction": "front",
+      "phase": "ascent",
+      "priority": "P2",
+      "existing": "jump/front/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front/apex",
+      "family": "jump",
+      "direction": "front",
+      "phase": "apex",
+      "priority": "P2",
+      "existing": "jump/front/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front/descent",
+      "family": "jump",
+      "direction": "front",
+      "phase": "descent",
+      "priority": "P2",
+      "existing": "jump/front/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front/landing",
+      "family": "jump",
+      "direction": "front",
+      "phase": "landing",
+      "priority": "P2",
+      "existing": "jump/front/004.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front/recovery",
+      "family": "jump",
+      "direction": "front",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "jump/front/005.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-left/push-off",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "push-off",
+      "priority": "P2",
+      "existing": "jump/front-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-left/ascent",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "ascent",
+      "priority": "P2",
+      "existing": "jump/front-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-left/apex",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "apex",
+      "priority": "P2",
+      "existing": "jump/front-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-left/descent",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "descent",
+      "priority": "P2",
+      "existing": "jump/front-left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-left/landing",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "landing",
+      "priority": "P2",
+      "existing": "jump/front-left/004.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/front-left/recovery",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "jump/front-left/005.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/left/push-off",
+      "family": "jump",
+      "direction": "left",
+      "phase": "push-off",
+      "priority": "P2",
+      "existing": "jump/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/left/ascent",
+      "family": "jump",
+      "direction": "left",
+      "phase": "ascent",
+      "priority": "P2",
+      "existing": "jump/left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/left/apex",
+      "family": "jump",
+      "direction": "left",
+      "phase": "apex",
+      "priority": "P2",
+      "existing": "jump/left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/left/descent",
+      "family": "jump",
+      "direction": "left",
+      "phase": "descent",
+      "priority": "P2",
+      "existing": "jump/left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/left/landing",
+      "family": "jump",
+      "direction": "left",
+      "phase": "landing",
+      "priority": "P2",
+      "existing": "jump/left/004.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/left/recovery",
+      "family": "jump",
+      "direction": "left",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "jump/left/005.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-left/push-off",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "push-off",
+      "priority": "P2",
+      "existing": "jump/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-left/ascent",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "ascent",
+      "priority": "P2",
+      "existing": "jump/back-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-left/apex",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "apex",
+      "priority": "P2",
+      "existing": "jump/back-left/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-left/descent",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "descent",
+      "priority": "P2",
+      "existing": "jump/back-left/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-left/landing",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "landing",
+      "priority": "P2",
+      "existing": "jump/back-left/004.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-left/recovery",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "jump/back-left/005.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back/push-off",
+      "family": "jump",
+      "direction": "back",
+      "phase": "push-off",
+      "priority": "P2",
+      "existing": "jump/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back/ascent",
+      "family": "jump",
+      "direction": "back",
+      "phase": "ascent",
+      "priority": "P2",
+      "existing": "jump/back/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back/apex",
+      "family": "jump",
+      "direction": "back",
+      "phase": "apex",
+      "priority": "P2",
+      "existing": "jump/back/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back/descent",
+      "family": "jump",
+      "direction": "back",
+      "phase": "descent",
+      "priority": "P2",
+      "existing": "jump/back/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back/landing",
+      "family": "jump",
+      "direction": "back",
+      "phase": "landing",
+      "priority": "P2",
+      "existing": "jump/back/004.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back/recovery",
+      "family": "jump",
+      "direction": "back",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "jump/back/005.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-right/push-off",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "push-off",
+      "priority": "P2",
+      "existing": "jump/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-right/ascent",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "ascent",
+      "priority": "P2",
+      "existing": "jump/back-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-right/apex",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "apex",
+      "priority": "P2",
+      "existing": "jump/back-right/002.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-right/descent",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "descent",
+      "priority": "P2",
+      "existing": "jump/back-right/003.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-right/landing",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "landing",
+      "priority": "P2",
+      "existing": "jump/back-right/004.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "jump/back-right/recovery",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "recovery",
+      "priority": "P2",
+      "existing": "jump/back-right/005.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-catch/right/impact",
+      "family": "cover-catch",
+      "direction": "right",
+      "phase": "impact",
+      "priority": "P1",
+      "existing": "cover-catch/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-catch/right/compress",
+      "family": "cover-catch",
+      "direction": "right",
+      "phase": "compress",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/front-right/impact",
+      "family": "cover-catch",
+      "direction": "front-right",
+      "phase": "impact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/front-right/compress",
+      "family": "cover-catch",
+      "direction": "front-right",
+      "phase": "compress",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/front/impact",
+      "family": "cover-catch",
+      "direction": "front",
+      "phase": "impact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/front/compress",
+      "family": "cover-catch",
+      "direction": "front",
+      "phase": "compress",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/front-left/impact",
+      "family": "cover-catch",
+      "direction": "front-left",
+      "phase": "impact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/front-left/compress",
+      "family": "cover-catch",
+      "direction": "front-left",
+      "phase": "compress",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/left/impact",
+      "family": "cover-catch",
+      "direction": "left",
+      "phase": "impact",
+      "priority": "P1",
+      "existing": "cover-catch/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-catch/left/compress",
+      "family": "cover-catch",
+      "direction": "left",
+      "phase": "compress",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/back-left/impact",
+      "family": "cover-catch",
+      "direction": "back-left",
+      "phase": "impact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/back-left/compress",
+      "family": "cover-catch",
+      "direction": "back-left",
+      "phase": "compress",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/back/impact",
+      "family": "cover-catch",
+      "direction": "back",
+      "phase": "impact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/back/compress",
+      "family": "cover-catch",
+      "direction": "back",
+      "phase": "compress",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/back-right/impact",
+      "family": "cover-catch",
+      "direction": "back-right",
+      "phase": "impact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-catch/back-right/compress",
+      "family": "cover-catch",
+      "direction": "back-right",
+      "phase": "compress",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-hold/right/protected",
+      "family": "cover-hold",
+      "direction": "right",
+      "phase": "protected",
+      "priority": "P0",
+      "existing": "cover-hold/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-hold/right/breath",
+      "family": "cover-hold",
+      "direction": "right",
+      "phase": "breath",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-hold/front-right/protected",
+      "family": "cover-hold",
+      "direction": "front-right",
+      "phase": "protected",
+      "priority": "P0",
+      "existing": "cover-hold/front-right/000.png",
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-right/000.png"
+    },
+    {
+      "id": "cover-hold/front-right/breath",
+      "family": "cover-hold",
+      "direction": "front-right",
+      "phase": "breath",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-hold/front/protected",
+      "family": "cover-hold",
+      "direction": "front",
+      "phase": "protected",
+      "priority": "P0",
+      "existing": "cover-hold/front/000.png",
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front/000.png"
+    },
+    {
+      "id": "cover-hold/front/breath",
+      "family": "cover-hold",
+      "direction": "front",
+      "phase": "breath",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-hold/front-left/protected",
+      "family": "cover-hold",
+      "direction": "front-left",
+      "phase": "protected",
+      "priority": "P0",
+      "existing": "cover-hold/front-left/000.png",
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-left/000.png"
+    },
+    {
+      "id": "cover-hold/front-left/breath",
+      "family": "cover-hold",
+      "direction": "front-left",
+      "phase": "breath",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-hold/left/protected",
+      "family": "cover-hold",
+      "direction": "left",
+      "phase": "protected",
+      "priority": "P0",
+      "existing": "cover-hold/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-hold/left/breath",
+      "family": "cover-hold",
+      "direction": "left",
+      "phase": "breath",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-hold/back-left/protected",
+      "family": "cover-hold",
+      "direction": "back-left",
+      "phase": "protected",
+      "priority": "P0",
+      "existing": "cover-hold/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-hold/back-left/breath",
+      "family": "cover-hold",
+      "direction": "back-left",
+      "phase": "breath",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-hold/back/protected",
+      "family": "cover-hold",
+      "direction": "back",
+      "phase": "protected",
+      "priority": "P0",
+      "existing": "cover-hold/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-hold/back/breath",
+      "family": "cover-hold",
+      "direction": "back",
+      "phase": "breath",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-hold/back-right/protected",
+      "family": "cover-hold",
+      "direction": "back-right",
+      "phase": "protected",
+      "priority": "P0",
+      "existing": "cover-hold/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-hold/back-right/breath",
+      "family": "cover-hold",
+      "direction": "back-right",
+      "phase": "breath",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/right/left-plant",
+      "family": "cover-shuffle",
+      "direction": "right",
+      "phase": "left-plant",
+      "priority": "P1",
+      "existing": "cover-shuffle/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-shuffle/right/left-transfer",
+      "family": "cover-shuffle",
+      "direction": "right",
+      "phase": "left-transfer",
+      "priority": "P1",
+      "existing": "cover-shuffle/right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-shuffle/right/right-plant",
+      "family": "cover-shuffle",
+      "direction": "right",
+      "phase": "right-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/right/right-transfer",
+      "family": "cover-shuffle",
+      "direction": "right",
+      "phase": "right-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front-right/left-plant",
+      "family": "cover-shuffle",
+      "direction": "front-right",
+      "phase": "left-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front-right/left-transfer",
+      "family": "cover-shuffle",
+      "direction": "front-right",
+      "phase": "left-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front-right/right-plant",
+      "family": "cover-shuffle",
+      "direction": "front-right",
+      "phase": "right-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front-right/right-transfer",
+      "family": "cover-shuffle",
+      "direction": "front-right",
+      "phase": "right-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front/left-plant",
+      "family": "cover-shuffle",
+      "direction": "front",
+      "phase": "left-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front/left-transfer",
+      "family": "cover-shuffle",
+      "direction": "front",
+      "phase": "left-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front/right-plant",
+      "family": "cover-shuffle",
+      "direction": "front",
+      "phase": "right-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front/right-transfer",
+      "family": "cover-shuffle",
+      "direction": "front",
+      "phase": "right-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front-left/left-plant",
+      "family": "cover-shuffle",
+      "direction": "front-left",
+      "phase": "left-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front-left/left-transfer",
+      "family": "cover-shuffle",
+      "direction": "front-left",
+      "phase": "left-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front-left/right-plant",
+      "family": "cover-shuffle",
+      "direction": "front-left",
+      "phase": "right-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/front-left/right-transfer",
+      "family": "cover-shuffle",
+      "direction": "front-left",
+      "phase": "right-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/left/left-plant",
+      "family": "cover-shuffle",
+      "direction": "left",
+      "phase": "left-plant",
+      "priority": "P1",
+      "existing": "cover-shuffle/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-shuffle/left/left-transfer",
+      "family": "cover-shuffle",
+      "direction": "left",
+      "phase": "left-transfer",
+      "priority": "P1",
+      "existing": "cover-shuffle/left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-shuffle/left/right-plant",
+      "family": "cover-shuffle",
+      "direction": "left",
+      "phase": "right-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/left/right-transfer",
+      "family": "cover-shuffle",
+      "direction": "left",
+      "phase": "right-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back-left/left-plant",
+      "family": "cover-shuffle",
+      "direction": "back-left",
+      "phase": "left-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back-left/left-transfer",
+      "family": "cover-shuffle",
+      "direction": "back-left",
+      "phase": "left-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back-left/right-plant",
+      "family": "cover-shuffle",
+      "direction": "back-left",
+      "phase": "right-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back-left/right-transfer",
+      "family": "cover-shuffle",
+      "direction": "back-left",
+      "phase": "right-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back/left-plant",
+      "family": "cover-shuffle",
+      "direction": "back",
+      "phase": "left-plant",
+      "priority": "P1",
+      "existing": "cover-shuffle/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-shuffle/back/left-transfer",
+      "family": "cover-shuffle",
+      "direction": "back",
+      "phase": "left-transfer",
+      "priority": "P1",
+      "existing": "cover-shuffle/back/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-shuffle/back/right-plant",
+      "family": "cover-shuffle",
+      "direction": "back",
+      "phase": "right-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back/right-transfer",
+      "family": "cover-shuffle",
+      "direction": "back",
+      "phase": "right-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back-right/left-plant",
+      "family": "cover-shuffle",
+      "direction": "back-right",
+      "phase": "left-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back-right/left-transfer",
+      "family": "cover-shuffle",
+      "direction": "back-right",
+      "phase": "left-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back-right/right-plant",
+      "family": "cover-shuffle",
+      "direction": "back-right",
+      "phase": "right-plant",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-shuffle/back-right/right-transfer",
+      "family": "cover-shuffle",
+      "direction": "back-right",
+      "phase": "right-transfer",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/right/hip-pivot",
+      "family": "cover-corner",
+      "direction": "right",
+      "phase": "hip-pivot",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/right/shoulder-turn",
+      "family": "cover-corner",
+      "direction": "right",
+      "phase": "shoulder-turn",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/front-right/hip-pivot",
+      "family": "cover-corner",
+      "direction": "front-right",
+      "phase": "hip-pivot",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/front-right/shoulder-turn",
+      "family": "cover-corner",
+      "direction": "front-right",
+      "phase": "shoulder-turn",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/front/hip-pivot",
+      "family": "cover-corner",
+      "direction": "front",
+      "phase": "hip-pivot",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/front/shoulder-turn",
+      "family": "cover-corner",
+      "direction": "front",
+      "phase": "shoulder-turn",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/front-left/hip-pivot",
+      "family": "cover-corner",
+      "direction": "front-left",
+      "phase": "hip-pivot",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/front-left/shoulder-turn",
+      "family": "cover-corner",
+      "direction": "front-left",
+      "phase": "shoulder-turn",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/left/hip-pivot",
+      "family": "cover-corner",
+      "direction": "left",
+      "phase": "hip-pivot",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/left/shoulder-turn",
+      "family": "cover-corner",
+      "direction": "left",
+      "phase": "shoulder-turn",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/back-left/hip-pivot",
+      "family": "cover-corner",
+      "direction": "back-left",
+      "phase": "hip-pivot",
+      "priority": "P1",
+      "existing": "cover-corner/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-corner/back-left/shoulder-turn",
+      "family": "cover-corner",
+      "direction": "back-left",
+      "phase": "shoulder-turn",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/back/hip-pivot",
+      "family": "cover-corner",
+      "direction": "back",
+      "phase": "hip-pivot",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/back/shoulder-turn",
+      "family": "cover-corner",
+      "direction": "back",
+      "phase": "shoulder-turn",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-corner/back-right/hip-pivot",
+      "family": "cover-corner",
+      "direction": "back-right",
+      "phase": "hip-pivot",
+      "priority": "P1",
+      "existing": "cover-corner/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-corner/back-right/shoulder-turn",
+      "family": "cover-corner",
+      "direction": "back-right",
+      "phase": "shoulder-turn",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-raise/right/half-raise",
+      "family": "cover-raise",
+      "direction": "right",
+      "phase": "half-raise",
+      "priority": "P0",
+      "existing": "cover-bridge/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-raise/front-right/half-raise",
+      "family": "cover-raise",
+      "direction": "front-right",
+      "phase": "half-raise",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-right/001.png"
+    },
+    {
+      "id": "cover-raise/front/half-raise",
+      "family": "cover-raise",
+      "direction": "front",
+      "phase": "half-raise",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front/001.png"
+    },
+    {
+      "id": "cover-raise/front-left/half-raise",
+      "family": "cover-raise",
+      "direction": "front-left",
+      "phase": "half-raise",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-left/001.png"
+    },
+    {
+      "id": "cover-raise/left/half-raise",
+      "family": "cover-raise",
+      "direction": "left",
+      "phase": "half-raise",
+      "priority": "P0",
+      "existing": "cover-bridge/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-raise/back-left/half-raise",
+      "family": "cover-raise",
+      "direction": "back-left",
+      "phase": "half-raise",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-raise/back/half-raise",
+      "family": "cover-raise",
+      "direction": "back",
+      "phase": "half-raise",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-raise/back-right/half-raise",
+      "family": "cover-raise",
+      "direction": "back-right",
+      "phase": "half-raise",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-aim/right/aim",
+      "family": "cover-aim",
+      "direction": "right",
+      "phase": "aim",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-aim/front-right/aim",
+      "family": "cover-aim",
+      "direction": "front-right",
+      "phase": "aim",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-right/002.png"
+    },
+    {
+      "id": "cover-aim/front/aim",
+      "family": "cover-aim",
+      "direction": "front",
+      "phase": "aim",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front/002.png"
+    },
+    {
+      "id": "cover-aim/front-left/aim",
+      "family": "cover-aim",
+      "direction": "front-left",
+      "phase": "aim",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-left/002.png"
+    },
+    {
+      "id": "cover-aim/left/aim",
+      "family": "cover-aim",
+      "direction": "left",
+      "phase": "aim",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-aim/back-left/aim",
+      "family": "cover-aim",
+      "direction": "back-left",
+      "phase": "aim",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-aim/back/aim",
+      "family": "cover-aim",
+      "direction": "back",
+      "phase": "aim",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-aim/back-right/aim",
+      "family": "cover-aim",
+      "direction": "back-right",
+      "phase": "aim",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-fire/right/recoil",
+      "family": "cover-fire",
+      "direction": "right",
+      "phase": "recoil",
+      "priority": "P0",
+      "existing": "cover-recoil/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-fire/right/settle",
+      "family": "cover-fire",
+      "direction": "right",
+      "phase": "settle",
+      "priority": "P0",
+      "existing": "cover-recoil/right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-fire/front-right/recoil",
+      "family": "cover-fire",
+      "direction": "front-right",
+      "phase": "recoil",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-right/003.png"
+    },
+    {
+      "id": "cover-fire/front-right/settle",
+      "family": "cover-fire",
+      "direction": "front-right",
+      "phase": "settle",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-right/004.png"
+    },
+    {
+      "id": "cover-fire/front/recoil",
+      "family": "cover-fire",
+      "direction": "front",
+      "phase": "recoil",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front/003.png"
+    },
+    {
+      "id": "cover-fire/front/settle",
+      "family": "cover-fire",
+      "direction": "front",
+      "phase": "settle",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front/004.png"
+    },
+    {
+      "id": "cover-fire/front-left/recoil",
+      "family": "cover-fire",
+      "direction": "front-left",
+      "phase": "recoil",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-left/003.png"
+    },
+    {
+      "id": "cover-fire/front-left/settle",
+      "family": "cover-fire",
+      "direction": "front-left",
+      "phase": "settle",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-left/004.png"
+    },
+    {
+      "id": "cover-fire/left/recoil",
+      "family": "cover-fire",
+      "direction": "left",
+      "phase": "recoil",
+      "priority": "P0",
+      "existing": "cover-recoil/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-fire/left/settle",
+      "family": "cover-fire",
+      "direction": "left",
+      "phase": "settle",
+      "priority": "P0",
+      "existing": "cover-recoil/left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-fire/back-left/recoil",
+      "family": "cover-fire",
+      "direction": "back-left",
+      "phase": "recoil",
+      "priority": "P0",
+      "existing": "cover-recoil/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-fire/back-left/settle",
+      "family": "cover-fire",
+      "direction": "back-left",
+      "phase": "settle",
+      "priority": "P0",
+      "existing": "cover-recoil/back-left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-fire/back/recoil",
+      "family": "cover-fire",
+      "direction": "back",
+      "phase": "recoil",
+      "priority": "P0",
+      "existing": "cover-recoil/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-fire/back/settle",
+      "family": "cover-fire",
+      "direction": "back",
+      "phase": "settle",
+      "priority": "P0",
+      "existing": "cover-recoil/back/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-fire/back-right/recoil",
+      "family": "cover-fire",
+      "direction": "back-right",
+      "phase": "recoil",
+      "priority": "P0",
+      "existing": "cover-recoil/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-fire/back-right/settle",
+      "family": "cover-fire",
+      "direction": "back-right",
+      "phase": "settle",
+      "priority": "P0",
+      "existing": "cover-recoil/back-right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-lower/right/half-lower",
+      "family": "cover-lower",
+      "direction": "right",
+      "phase": "half-lower",
+      "priority": "P0",
+      "existing": "cover-bridge/right/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-lower/front-right/half-lower",
+      "family": "cover-lower",
+      "direction": "front-right",
+      "phase": "half-lower",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-right/005.png"
+    },
+    {
+      "id": "cover-lower/front/half-lower",
+      "family": "cover-lower",
+      "direction": "front",
+      "phase": "half-lower",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front/005.png"
+    },
+    {
+      "id": "cover-lower/front-left/half-lower",
+      "family": "cover-lower",
+      "direction": "front-left",
+      "phase": "half-lower",
+      "priority": "P0",
+      "existing": null,
+      "status": "verified-in-local-drills",
+      "candidate": "cover-sequence/front-left/005.png"
+    },
+    {
+      "id": "cover-lower/left/half-lower",
+      "family": "cover-lower",
+      "direction": "left",
+      "phase": "half-lower",
+      "priority": "P0",
+      "existing": "cover-bridge/left/001.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-lower/back-left/half-lower",
+      "family": "cover-lower",
+      "direction": "back-left",
+      "phase": "half-lower",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-lower/back/half-lower",
+      "family": "cover-lower",
+      "direction": "back",
+      "phase": "half-lower",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-lower/back-right/half-lower",
+      "family": "cover-lower",
+      "direction": "back-right",
+      "phase": "half-lower",
+      "priority": "P0",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-exit/right/release",
+      "family": "cover-exit",
+      "direction": "right",
+      "phase": "release",
+      "priority": "P1",
+      "existing": "recovery/right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-exit/right/first-contact",
+      "family": "cover-exit",
+      "direction": "right",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-exit/front-right/release",
+      "family": "cover-exit",
+      "direction": "front-right",
+      "phase": "release",
+      "priority": "P1",
+      "existing": "recovery/front-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-exit/front-right/first-contact",
+      "family": "cover-exit",
+      "direction": "front-right",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-exit/front/release",
+      "family": "cover-exit",
+      "direction": "front",
+      "phase": "release",
+      "priority": "P1",
+      "existing": "recovery/front/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-exit/front/first-contact",
+      "family": "cover-exit",
+      "direction": "front",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-exit/front-left/release",
+      "family": "cover-exit",
+      "direction": "front-left",
+      "phase": "release",
+      "priority": "P1",
+      "existing": "recovery/front-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-exit/front-left/first-contact",
+      "family": "cover-exit",
+      "direction": "front-left",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-exit/left/release",
+      "family": "cover-exit",
+      "direction": "left",
+      "phase": "release",
+      "priority": "P1",
+      "existing": "recovery/left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-exit/left/first-contact",
+      "family": "cover-exit",
+      "direction": "left",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-exit/back-left/release",
+      "family": "cover-exit",
+      "direction": "back-left",
+      "phase": "release",
+      "priority": "P1",
+      "existing": "recovery/back-left/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-exit/back-left/first-contact",
+      "family": "cover-exit",
+      "direction": "back-left",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-exit/back/release",
+      "family": "cover-exit",
+      "direction": "back",
+      "phase": "release",
+      "priority": "P1",
+      "existing": "recovery/back/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-exit/back/first-contact",
+      "family": "cover-exit",
+      "direction": "back",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "cover-exit/back-right/release",
+      "family": "cover-exit",
+      "direction": "back-right",
+      "phase": "release",
+      "priority": "P1",
+      "existing": "recovery/back-right/000.png",
+      "status": "existing-needs-design-audit"
+    },
+    {
+      "id": "cover-exit/back-right/first-contact",
+      "family": "cover-exit",
+      "direction": "back-right",
+      "phase": "first-contact",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/right/ready",
+      "family": "free-fire",
+      "direction": "right",
+      "phase": "ready",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/right/recoil",
+      "family": "free-fire",
+      "direction": "right",
+      "phase": "recoil",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/right/settle",
+      "family": "free-fire",
+      "direction": "right",
+      "phase": "settle",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/front-right/ready",
+      "family": "free-fire",
+      "direction": "front-right",
+      "phase": "ready",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/front-right/recoil",
+      "family": "free-fire",
+      "direction": "front-right",
+      "phase": "recoil",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/front-right/settle",
+      "family": "free-fire",
+      "direction": "front-right",
+      "phase": "settle",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/front/ready",
+      "family": "free-fire",
+      "direction": "front",
+      "phase": "ready",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/front/recoil",
+      "family": "free-fire",
+      "direction": "front",
+      "phase": "recoil",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/front/settle",
+      "family": "free-fire",
+      "direction": "front",
+      "phase": "settle",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/front-left/ready",
+      "family": "free-fire",
+      "direction": "front-left",
+      "phase": "ready",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/front-left/recoil",
+      "family": "free-fire",
+      "direction": "front-left",
+      "phase": "recoil",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/front-left/settle",
+      "family": "free-fire",
+      "direction": "front-left",
+      "phase": "settle",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/left/ready",
+      "family": "free-fire",
+      "direction": "left",
+      "phase": "ready",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/left/recoil",
+      "family": "free-fire",
+      "direction": "left",
+      "phase": "recoil",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/left/settle",
+      "family": "free-fire",
+      "direction": "left",
+      "phase": "settle",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/back-left/ready",
+      "family": "free-fire",
+      "direction": "back-left",
+      "phase": "ready",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/back-left/recoil",
+      "family": "free-fire",
+      "direction": "back-left",
+      "phase": "recoil",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/back-left/settle",
+      "family": "free-fire",
+      "direction": "back-left",
+      "phase": "settle",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/back/ready",
+      "family": "free-fire",
+      "direction": "back",
+      "phase": "ready",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/back/recoil",
+      "family": "free-fire",
+      "direction": "back",
+      "phase": "recoil",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/back/settle",
+      "family": "free-fire",
+      "direction": "back",
+      "phase": "settle",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/back-right/ready",
+      "family": "free-fire",
+      "direction": "back-right",
+      "phase": "ready",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/back-right/recoil",
+      "family": "free-fire",
+      "direction": "back-right",
+      "phase": "recoil",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "free-fire/back-right/settle",
+      "family": "free-fire",
+      "direction": "back-right",
+      "phase": "settle",
+      "priority": "P2",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/right/impact",
+      "family": "hit",
+      "direction": "right",
+      "phase": "impact",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/right/yield",
+      "family": "hit",
+      "direction": "right",
+      "phase": "yield",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/front-right/impact",
+      "family": "hit",
+      "direction": "front-right",
+      "phase": "impact",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/front-right/yield",
+      "family": "hit",
+      "direction": "front-right",
+      "phase": "yield",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/front/impact",
+      "family": "hit",
+      "direction": "front",
+      "phase": "impact",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/front/yield",
+      "family": "hit",
+      "direction": "front",
+      "phase": "yield",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/front-left/impact",
+      "family": "hit",
+      "direction": "front-left",
+      "phase": "impact",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/front-left/yield",
+      "family": "hit",
+      "direction": "front-left",
+      "phase": "yield",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/left/impact",
+      "family": "hit",
+      "direction": "left",
+      "phase": "impact",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/left/yield",
+      "family": "hit",
+      "direction": "left",
+      "phase": "yield",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/back-left/impact",
+      "family": "hit",
+      "direction": "back-left",
+      "phase": "impact",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/back-left/yield",
+      "family": "hit",
+      "direction": "back-left",
+      "phase": "yield",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/back/impact",
+      "family": "hit",
+      "direction": "back",
+      "phase": "impact",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/back/yield",
+      "family": "hit",
+      "direction": "back",
+      "phase": "yield",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/back-right/impact",
+      "family": "hit",
+      "direction": "back-right",
+      "phase": "impact",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit/back-right/yield",
+      "family": "hit",
+      "direction": "back-right",
+      "phase": "yield",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit-recovery/right/recover",
+      "family": "hit-recovery",
+      "direction": "right",
+      "phase": "recover",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit-recovery/front-right/recover",
+      "family": "hit-recovery",
+      "direction": "front-right",
+      "phase": "recover",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit-recovery/front/recover",
+      "family": "hit-recovery",
+      "direction": "front",
+      "phase": "recover",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit-recovery/front-left/recover",
+      "family": "hit-recovery",
+      "direction": "front-left",
+      "phase": "recover",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit-recovery/left/recover",
+      "family": "hit-recovery",
+      "direction": "left",
+      "phase": "recover",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit-recovery/back-left/recover",
+      "family": "hit-recovery",
+      "direction": "back-left",
+      "phase": "recover",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit-recovery/back/recover",
+      "family": "hit-recovery",
+      "direction": "back",
+      "phase": "recover",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "hit-recovery/back-right/recover",
+      "family": "hit-recovery",
+      "direction": "back-right",
+      "phase": "recover",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/right/loss-of-balance",
+      "family": "defeat",
+      "direction": "right",
+      "phase": "loss-of-balance",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/right/fall",
+      "family": "defeat",
+      "direction": "right",
+      "phase": "fall",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/right/rest",
+      "family": "defeat",
+      "direction": "right",
+      "phase": "rest",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/front-right/loss-of-balance",
+      "family": "defeat",
+      "direction": "front-right",
+      "phase": "loss-of-balance",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/front-right/fall",
+      "family": "defeat",
+      "direction": "front-right",
+      "phase": "fall",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/front-right/rest",
+      "family": "defeat",
+      "direction": "front-right",
+      "phase": "rest",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/front/loss-of-balance",
+      "family": "defeat",
+      "direction": "front",
+      "phase": "loss-of-balance",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/front/fall",
+      "family": "defeat",
+      "direction": "front",
+      "phase": "fall",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/front/rest",
+      "family": "defeat",
+      "direction": "front",
+      "phase": "rest",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/front-left/loss-of-balance",
+      "family": "defeat",
+      "direction": "front-left",
+      "phase": "loss-of-balance",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/front-left/fall",
+      "family": "defeat",
+      "direction": "front-left",
+      "phase": "fall",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/front-left/rest",
+      "family": "defeat",
+      "direction": "front-left",
+      "phase": "rest",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/left/loss-of-balance",
+      "family": "defeat",
+      "direction": "left",
+      "phase": "loss-of-balance",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/left/fall",
+      "family": "defeat",
+      "direction": "left",
+      "phase": "fall",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/left/rest",
+      "family": "defeat",
+      "direction": "left",
+      "phase": "rest",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/back-left/loss-of-balance",
+      "family": "defeat",
+      "direction": "back-left",
+      "phase": "loss-of-balance",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/back-left/fall",
+      "family": "defeat",
+      "direction": "back-left",
+      "phase": "fall",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/back-left/rest",
+      "family": "defeat",
+      "direction": "back-left",
+      "phase": "rest",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/back/loss-of-balance",
+      "family": "defeat",
+      "direction": "back",
+      "phase": "loss-of-balance",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/back/fall",
+      "family": "defeat",
+      "direction": "back",
+      "phase": "fall",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/back/rest",
+      "family": "defeat",
+      "direction": "back",
+      "phase": "rest",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/back-right/loss-of-balance",
+      "family": "defeat",
+      "direction": "back-right",
+      "phase": "loss-of-balance",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/back-right/fall",
+      "family": "defeat",
+      "direction": "back-right",
+      "phase": "fall",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "defeat/back-right/rest",
+      "family": "defeat",
+      "direction": "back-right",
+      "phase": "rest",
+      "priority": "P3",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "tall-wrap/left/tuck",
+      "family": "tall-wrap",
+      "direction": "left",
+      "phase": "tuck",
+      "priority": "P0",
+      "existing": "cover-wrap/left/000.png",
+      "status": "verified-saved-wrap"
+    },
+    {
+      "id": "tall-wrap/left/pivot",
+      "family": "tall-wrap",
+      "direction": "left",
+      "phase": "pivot",
+      "priority": "P0",
+      "existing": "cover-wrap/left/001.png",
+      "status": "verified-saved-wrap"
+    },
+    {
+      "id": "tall-wrap/left/retract",
+      "family": "tall-wrap",
+      "direction": "left",
+      "phase": "retract",
+      "priority": "P0",
+      "existing": "cover-wrap/left/001.png",
+      "status": "verified-saved-wrap"
+    },
+    {
+      "id": "tall-wrap/right/tuck",
+      "family": "tall-wrap",
+      "direction": "right",
+      "phase": "tuck",
+      "priority": "P0",
+      "existing": "cover-wrap/right/000.png",
+      "status": "verified-saved-wrap"
+    },
+    {
+      "id": "tall-wrap/right/pivot",
+      "family": "tall-wrap",
+      "direction": "right",
+      "phase": "pivot",
+      "priority": "P0",
+      "existing": "cover-wrap/right/001.png",
+      "status": "verified-saved-wrap"
+    },
+    {
+      "id": "tall-wrap/right/retract",
+      "family": "tall-wrap",
+      "direction": "right",
+      "phase": "retract",
+      "priority": "P0",
+      "existing": "cover-wrap/right/001.png",
+      "status": "verified-saved-wrap"
+    },
+    {
+      "id": "aim-between/right-to-front-right/ready",
+      "family": "aim-between",
+      "direction": "right-to-front-right",
+      "phase": "ready",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/right-to-front-right/recoil",
+      "family": "aim-between",
+      "direction": "right-to-front-right",
+      "phase": "recoil",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/right-to-front-right/settle",
+      "family": "aim-between",
+      "direction": "right-to-front-right",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/front-right-to-front/ready",
+      "family": "aim-between",
+      "direction": "front-right-to-front",
+      "phase": "ready",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/front-right-to-front/recoil",
+      "family": "aim-between",
+      "direction": "front-right-to-front",
+      "phase": "recoil",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/front-right-to-front/settle",
+      "family": "aim-between",
+      "direction": "front-right-to-front",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/front-to-front-left/ready",
+      "family": "aim-between",
+      "direction": "front-to-front-left",
+      "phase": "ready",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/front-to-front-left/recoil",
+      "family": "aim-between",
+      "direction": "front-to-front-left",
+      "phase": "recoil",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/front-to-front-left/settle",
+      "family": "aim-between",
+      "direction": "front-to-front-left",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/front-left-to-left/ready",
+      "family": "aim-between",
+      "direction": "front-left-to-left",
+      "phase": "ready",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/front-left-to-left/recoil",
+      "family": "aim-between",
+      "direction": "front-left-to-left",
+      "phase": "recoil",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/front-left-to-left/settle",
+      "family": "aim-between",
+      "direction": "front-left-to-left",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/left-to-back-left/ready",
+      "family": "aim-between",
+      "direction": "left-to-back-left",
+      "phase": "ready",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/left-to-back-left/recoil",
+      "family": "aim-between",
+      "direction": "left-to-back-left",
+      "phase": "recoil",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/left-to-back-left/settle",
+      "family": "aim-between",
+      "direction": "left-to-back-left",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/back-left-to-back/ready",
+      "family": "aim-between",
+      "direction": "back-left-to-back",
+      "phase": "ready",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/back-left-to-back/recoil",
+      "family": "aim-between",
+      "direction": "back-left-to-back",
+      "phase": "recoil",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/back-left-to-back/settle",
+      "family": "aim-between",
+      "direction": "back-left-to-back",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/back-to-back-right/ready",
+      "family": "aim-between",
+      "direction": "back-to-back-right",
+      "phase": "ready",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/back-to-back-right/recoil",
+      "family": "aim-between",
+      "direction": "back-to-back-right",
+      "phase": "recoil",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/back-to-back-right/settle",
+      "family": "aim-between",
+      "direction": "back-to-back-right",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/back-right-to-right/ready",
+      "family": "aim-between",
+      "direction": "back-right-to-right",
+      "phase": "ready",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/back-right-to-right/recoil",
+      "family": "aim-between",
+      "direction": "back-right-to-right",
+      "phase": "recoil",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    },
+    {
+      "id": "aim-between/back-right-to-right/settle",
+      "family": "aim-between",
+      "direction": "back-right-to-right",
+      "phase": "settle",
+      "priority": "P1",
+      "existing": null,
+      "status": "needs-art-or-approved-reuse"
+    }
+  ],
+  "candidate_build": "39T18-raptor-front-sequences"
+}
