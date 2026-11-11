@@ -102,3 +102,11 @@ Count this batch as eight new drawings, two corrected drawings, six reused draft
 Source prompts used the built-in image generator. Rear prompt: an eight-cel 4-by-2 transparent rear atlas, same olive anatomy, compact two-cell housing, rear heels and alternating support legs; a targeted edit preserves the leg poses and changes only arms/gun to the approved foreshortened rear aim. Left contact prompt: preserve the existing left body, amber eye, equipment and two-hand grip while the near thigh crosses visibly ahead of the far thigh and the opposite foot trails. Left pass prompt: preserve the low crouch while the far right foot supports weight and the near left foot tucks offground. Sources and sockets are in `batch20-registration.json`; production files are under `public/assets/raptor-v2/movement`.
 
 The interactive checklist is `/raptor-production-map.html`. Every row records a required phase and body direction; existing files remain candidates until audited. The 534 rows include reuse and existing art, so they are not a demand for 534 new drawings. Psychic and special-action art stays a later pass preserving existing mechanics.
+
+## 39T21 left and right jog and sprint
+
+Sixteen new drawings replace the legacy lateral jog and sprint cels at their existing frame keys. Each speed has two contacts and two passing poses with opposite support legs. The sprint lowers the head and chest, lengthens the stride and streams the tail back. The anatomical left shows the natural amber eye. The right shows the red optic. The covered character masters establish the striped olive anatomy, worn armor, long arms, connected cables and two-handed original shotgun.
+
+The original distance-driven selector carries foot phase across pace changes. The batch preserves the existing shot timing and uses the muzzle registered to each replacement drawing. The registration lists source atlases, pelvis, support foot, muzzle and checksum for each export. The source prompts reference the approved cover and Stalk cels and specify jog and sprint in four phases. Targeted sheets repair contacts and passes whose initial versions repeated a support leg.
+
+The Lab preview compares Stalk, Jog and Full Sprint at normal or quarter speed. Other directions, hit, slide and jump art still require the corresponding anatomy pass.

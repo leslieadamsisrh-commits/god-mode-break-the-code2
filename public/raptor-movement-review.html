@@ -2,35 +2,47 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Raptor · Connected lateral movement</title>
+<title>Raptor · Raptor movement by pace</title>
 <style>
-:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0c151d;color:#edf4f0}*{box-sizing:border-box}body{max-width:1180px;margin:auto;padding:24px 18px 48px}a{color:#97e0d6}h1{font-size:clamp(26px,5vw,42px);margin:16px 0 10px}p{line-height:1.6;color:#b8c9cd;max-width:790px}.tag{color:#dfb57b;letter-spacing:.12em;font-size:12px}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:16px 0}button,select{font:inherit;color:#edf4f0;background:#1b303d;border:1px solid #607e8a;border-radius:8px;padding:10px 14px;min-height:44px;cursor:pointer}label{display:flex;align-items:center;gap:8px}input{width:20px;height:20px}.sets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.set{border:1px solid #34505d;border-radius:12px;background:#142530;overflow:hidden}.set h2{font-size:18px;margin:16px 16px 2px}.set .phase{display:block;margin:0 16px 12px;color:#b5e3c9;font-size:14px}canvas{display:block;width:100%;height:auto;background:#435963}.still{display:grid;grid-template-columns:repeat(6,minmax(125px,1fr));gap:8px;overflow:auto;padding:8px 0 16px}.still figure{margin:0;min-width:125px}.still figcaption{font-size:12px;text-align:center;padding:7px;color:#c4d4d7}.still canvas{border-radius:6px}.note{font-size:13px}details{margin-top:24px}summary{cursor:pointer;padding:14px 0;font-weight:600}@media(max-width:700px){.sets{grid-template-columns:1fr}.set{display:grid;grid-template-columns:1fr 1fr}.set canvas{grid-column:2;grid-row:1/4}.set h2{align-self:end}.still{grid-template-columns:repeat(6,150px)}}
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0c151d;color:#edf4f0}*{box-sizing:border-box}body{max-width:1180px;margin:auto;padding:24px 18px 48px}a{color:#97e0d6}h1{font-size:clamp(26px,5vw,42px);margin:16px 0 10px}p{line-height:1.6;color:#b8c9cd;max-width:790px}.tag{color:#dfb57b;letter-spacing:.12em;font-size:12px}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:16px 0}button,select{font:inherit;color:#edf4f0;background:#1b303d;border:1px solid #607e8a;border-radius:8px;padding:10px 14px;min-height:44px;cursor:pointer}label{display:flex;align-items:center;gap:8px}input{width:20px;height:20px}.sets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.set[hidden]{display:none}.set{border:1px solid #34505d;border-radius:12px;background:#142530;overflow:hidden}.set h2{font-size:18px;margin:16px 16px 2px}.set .phase{display:block;margin:0 16px 12px;color:#b5e3c9;font-size:14px}canvas{display:block;width:100%;height:auto;background:#435963}.still{display:grid;grid-template-columns:repeat(6,minmax(125px,1fr));gap:8px;overflow:auto;padding:8px 0 16px}.still figure{margin:0;min-width:125px}.still figcaption{font-size:12px;text-align:center;padding:7px;color:#c4d4d7}.still canvas{border-radius:6px}.note{font-size:13px}details{margin-top:24px}summary{cursor:pointer;padding:14px 0;font-weight:600}@media(max-width:700px){.sets{grid-template-columns:1fr}.set{display:grid;grid-template-columns:1fr 1fr}.set canvas{grid-column:2;grid-row:1/4}.set h2{align-self:end}.still{grid-template-columns:repeat(6,150px)}}
 </style>
 </head>
 <body>
 <a href="/studio/character-lab">← Character Lab</a>
 <p><a href="/raptor-production-map.html">Open the complete sprite checklist →</a></p>
-<p class="tag">GOD MODE · 39T20 · RAPTOR</p>
-<h1>Connected lateral movement</h1>
-<p>24 playable cels cover ready, push-off, alternating low-speed stride, brake and settle for right, left and straight rear. This batch adds eight rear drawings, two corrected left drawings and six reused left drafts. Jog, sprint and five other body directions remain in the wider production pass.</p>
+<p class="tag">GOD MODE · 39T21 · RAPTOR</p>
+<h1>Raptor movement by pace</h1>
+<p>Compare the measured Stalk, forward-leaning Jog, and low Full Sprint on both sides. The rear Stalk is available under Stalk.</p>
 <div class="controls">
 <button id="play" type="button">Pause</button>
+<label>Pace <select id="pace"><option value="build">Build speed</option><option value="movement">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option></select></label>
 <label>Speed <select id="speed"><option value="1">Normal</option><option value="0.25">Quarter speed</option></select></label>
 <label>Size <select id="size"><option value="2.5">Inspect</option><option value="1">Gameplay</option></select></label>
 <label><input id="guides" type="checkbox">Ground and support heel</label>
 </div>
 <p id="status" role="status">Loading the new drawings…</p>
 <div class="sets" id="sets"></div>
-<details><summary>Inspect all eight poses</summary><div id="stills"></div></details>
-<p class="note">These previews show the authored art sequence. The playable lab selects phases from movement, aim, cover clearance and accepted shots. Use low stick pressure or the lab’s Stalk pace for the playable right, left and rear batches. Jog, sprint, turns and reactions remain in the production map.</p>
+<details><summary>Inspect all poses</summary><div id="stills"></div></details>
+<p class="note">In the Character Lab, choose Stalk, Jog or Full under keyboard and touch pace. Move left or right and open Animation trace to see the selected gait.</p>
 <script>
 'use strict';
 const directions=['right','left','back'];
 const names={right:'Right · playable',left:'Left · playable',back:'Rear · playable'};
-const labels=['Ready','Push','Left contact','Left pass','Right contact','Right pass','Brake','Settle'];
-const timeline=[0,1,2,3,4,5,2,3,4,5,6,7];
-const durations=[400,100,180,120,180,120,180,120,180,120,100,140];
-const total=durations.reduce((sum,value)=>sum+value,0);
+const phaseLabels=['Left contact','Left pass','Right contact','Right pass'];
+const labels={movement:['Ready','Push',...phaseLabels,'Brake','Settle'],jog:phaseLabels,sprint:phaseLabels};
+const paceNames={movement:'Stalk',jog:'Jog',sprint:'Full Sprint'};
+const cycle=(family,start,durations)=>durations.map((duration,index)=>({family,index:start+index,duration}));
+const stalk=cycle('movement',2,[180,120,180,120]);
+const jog=cycle('jog',0,[145,100,145,100]);
+const sprint=cycle('sprint',0,[105,80,105,80]);
+const timelines={
+ build:[...cycle('movement',0,[350,100]),...stalk,...jog,...sprint,...sprint,...jog,...cycle('movement',6,[125,150])],
+ movement:[...cycle('movement',0,[350,100]),...stalk,...stalk,...cycle('movement',6,[125,150])],
+ jog,
+ sprint,
+};
+const pace=document.querySelector('#pace');
+pace.addEventListener('change',()=>{elapsed=0;});
 const controls={play:document.querySelector('#play'),speed:document.querySelector('#speed'),size:document.querySelector('#size'),guides:document.querySelector('#guides')};
 let paused=false,elapsed=0,last=performance.now();
 controls.play.addEventListener('click',()=>{paused=!paused;controls.play.textContent=paused?'Play':'Pause'});
@@ -47,38 +59,80 @@ function paint(canvas,image,record){
  }
 }
 async function load(){
- const response=await fetch('/assets/raptor-v2/manifest.json?v=39T20-raptor-left-rear-movement');
+ const response=await fetch('/assets/raptor-v2/manifest.json',{cache:'no-store'});
  if(!response.ok)throw Error('The sprite list did not load. Reload this page to try again.');
  const manifest=await response.json();
  const sets=[];
+ let loaded=0;
  for(const direction of directions){
-  const frames=await Promise.all(labels.map(async(label,index)=>{
-   const key='movement/'+direction+'/'+String(index).padStart(3,'0')+'.png';
-   const image=new Image();image.src='/assets/raptor-v2/'+key+'?v='+manifest.build;await image.decode();
-   return {image,record:manifest.frames[key]};
-  }));
-  const box=document.createElement('article');box.className='set';
-  const heading=document.createElement('h2');heading.textContent=names[direction];
-  const phase=document.createElement('span');phase.className='phase';
-  const canvas=document.createElement('canvas');canvas.width=600;canvas.height=530;
-  box.append(heading,phase,canvas);document.querySelector('#sets').append(box);
-  const title=document.createElement('h2');title.textContent=names[direction];document.querySelector('#stills').append(title);
-  const strip=document.createElement('div');strip.className='still';
-  const stills=frames.map((frame,index)=>{
-   const figure=document.createElement('figure');const c=document.createElement('canvas');c.width=300;c.height=265;
-   const caption=document.createElement('figcaption');caption.textContent=labels[index];figure.append(c,caption);strip.append(figure);return {canvas:c,...frame};
-  });document.querySelector('#stills').append(strip);sets.push({frames,phase,canvas,stills});
+  const box=document.createElement('article');
+  box.className='set';
+  const heading=document.createElement('h2');
+  heading.textContent=names[direction];
+  const phase=document.createElement('span');
+  phase.className='phase';
+  const canvas=document.createElement('canvas');
+  canvas.width=600;
+  canvas.height=530;
+  box.append(heading,phase,canvas);
+  document.querySelector('#sets').append(box);
+
+  const frames={};
+  const stills=[];
+  const families=manifest.fastMovementDirections.includes(direction)?['movement','jog','sprint']:['movement'];
+  for(const family of families){
+   frames[family]=await Promise.all(labels[family].map(async(label,index)=>{
+    const key=family+'/'+direction+'/'+String(index).padStart(3,'0')+'.png';
+    const image=new Image();
+    image.src='/assets/raptor-v2/'+key+'?v='+manifest.build;
+    await image.decode();
+    return {image,record:manifest.frames[key]};
+   }));
+   loaded+=frames[family].length;
+   const title=document.createElement('h2');
+   title.textContent=names[direction]+' / '+paceNames[family];
+   const strip=document.createElement('div');
+   strip.className='still';
+   frames[family].forEach((frame,index)=>{
+    const figure=document.createElement('figure');
+    const c=document.createElement('canvas');
+    c.width=300;
+    c.height=265;
+    const caption=document.createElement('figcaption');
+    caption.textContent=labels[family][index];
+    figure.append(c,caption);
+    strip.append(figure);
+    stills.push({canvas:c,...frame});
+   });
+   document.querySelector('#stills').append(title,strip);
+  }
+  sets.push({box,direction,frames,phase,canvas,stills});
  }
- document.querySelector('#status').textContent=`All ${sets.length*labels.length} drawings loaded.`;
+ document.querySelector('#status').textContent='All '+loaded+' drawings loaded.';
  function redrawStills(){for(const set of sets)for(const still of set.stills)paint(still.canvas,still.image,still.record);}
  redrawStills();
  controls.size.addEventListener('change',redrawStills);
  controls.guides.addEventListener('change',redrawStills);
  function draw(now){
-  const dt=Math.min(100,now-last);last=now;if(!paused)elapsed=(elapsed+dt*Number(controls.speed.value))%total;
-  let remaining=elapsed,step=0;while(step<durations.length-1&&remaining>=durations[step])remaining-=durations[step++];
-  const index=timeline[step];
-  for(const set of sets){paint(set.canvas,set.frames[index].image,set.frames[index].record);set.phase.textContent=labels[index];}
+  const timeline=timelines[pace.value];
+  const total=timeline.reduce((sum,step)=>sum+step.duration,0);
+  const dt=Math.min(100,now-last);
+  last=now;
+  if(!paused)elapsed=(elapsed+dt*Number(controls.speed.value))%total;
+  let remaining=elapsed;
+  let step=timeline[0];
+  for(const entry of timeline){
+   step=entry;
+   if(remaining<entry.duration)break;
+   remaining-=entry.duration;
+  }
+  for(const set of sets){
+   set.box.hidden=set.direction==='back'&&pace.value!=='movement';
+   if(set.box.hidden)continue;
+   const frame=set.frames[step.family][step.index];
+   paint(set.canvas,frame.image,frame.record);
+   set.phase.textContent=paceNames[step.family]+' · '+labels[step.family][step.index];
+  }
   requestAnimationFrame(draw);
  }
  requestAnimationFrame(draw);

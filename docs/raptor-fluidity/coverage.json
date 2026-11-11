@@ -948,7 +948,10 @@
       "phase": "left-contact",
       "priority": "P2",
       "existing": "jog/right/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "jog/right/000.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "jog/right/left-pass",
@@ -957,7 +960,10 @@
       "phase": "left-pass",
       "priority": "P2",
       "existing": "jog/right/001.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "jog/right/001.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "jog/right/right-contact",
@@ -966,7 +972,10 @@
       "phase": "right-contact",
       "priority": "P2",
       "existing": "jog/right/002.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "jog/right/002.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "jog/right/right-pass",
@@ -975,7 +984,10 @@
       "phase": "right-pass",
       "priority": "P2",
       "existing": "jog/right/003.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "jog/right/003.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "jog/front-right/left-contact",
@@ -1092,7 +1104,10 @@
       "phase": "left-contact",
       "priority": "P2",
       "existing": "jog/left/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "jog/left/000.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "jog/left/left-pass",
@@ -1101,7 +1116,10 @@
       "phase": "left-pass",
       "priority": "P2",
       "existing": "jog/left/001.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "jog/left/001.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "jog/left/right-contact",
@@ -1110,7 +1128,10 @@
       "phase": "right-contact",
       "priority": "P2",
       "existing": "jog/left/002.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "jog/left/002.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "jog/left/right-pass",
@@ -1119,7 +1140,10 @@
       "phase": "right-pass",
       "priority": "P2",
       "existing": "jog/left/003.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "jog/left/003.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "jog/back-left/left-contact",
@@ -1236,7 +1260,10 @@
       "phase": "left-contact",
       "priority": "P2",
       "existing": "sprint/right/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "sprint/right/000.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "sprint/right/left-pass",
@@ -1245,7 +1272,10 @@
       "phase": "left-pass",
       "priority": "P2",
       "existing": "sprint/right/001.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "sprint/right/001.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "sprint/right/right-contact",
@@ -1254,7 +1284,10 @@
       "phase": "right-contact",
       "priority": "P2",
       "existing": "sprint/right/002.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "sprint/right/002.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "sprint/right/right-pass",
@@ -1263,7 +1296,10 @@
       "phase": "right-pass",
       "priority": "P2",
       "existing": "sprint/right/003.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "sprint/right/003.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "sprint/front-right/left-contact",
@@ -1380,7 +1416,10 @@
       "phase": "left-contact",
       "priority": "P2",
       "existing": "sprint/left/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "sprint/left/000.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "sprint/left/left-pass",
@@ -1389,7 +1428,10 @@
       "phase": "left-pass",
       "priority": "P2",
       "existing": "sprint/left/001.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "sprint/left/001.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "sprint/left/right-contact",
@@ -1398,7 +1440,10 @@
       "phase": "right-contact",
       "priority": "P2",
       "existing": "sprint/left/002.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "sprint/left/002.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "sprint/left/right-pass",
@@ -1407,7 +1452,10 @@
       "phase": "right-pass",
       "priority": "P2",
       "existing": "sprint/left/003.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "sprint/left/003.png",
+      "active": true,
+      "batch": "39T21"
     },
     {
       "id": "sprint/back-left/left-contact",
@@ -4972,6 +5020,14 @@
       "reused_drafts": 6,
       "activated_frames": 16,
       "note": "Eight new rear movement drawings; two corrected left drawings and six reused left drafts. Earlier left trial atlases remain inactive."
+    },
+    {
+      "id": "39T21",
+      "new_drawings": 16,
+      "corrected_drawings": 0,
+      "reused_drafts": 0,
+      "activated_frames": 16,
+      "note": "New independently authored lateral jog and sprint cycles replace sixteen legacy drawings."
     }
   ]
 }

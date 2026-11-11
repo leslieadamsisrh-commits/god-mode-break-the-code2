@@ -1,0 +1,73 @@
+const fs = require('node:fs');
+const assert = require('node:assert/strict');
+const {createHash} = require('node:crypto');
+const ts = require('typescript');
+
+require.extensions['.ts'] = (module, path) => {
+  const source = fs.readFileSync(path, 'utf8');
+  module._compile(ts.transpileModule(source, {
+    compilerOptions: {module: 1, target: 9, esModuleInterop: true},
+  }).outputText, path);
+};
+const {newGame, setInput, advance} = require('../lib/game.ts');
+const {barrelSocket27d} = require('../lib/ballistics27d.ts');
+const {advanceRaptorPose} = require('../lib/raptorPose.ts');
+const inventory = require('../public/assets/raptor-v2/manifest.json');
+const registration = require('../docs/raptor-fluidity/batch21-registration.json');
+const phases = ['left-contact', 'left-pass', 'right-contact', 'right-pass'];
+
+for (const direction of inventory.fastMovementDirections) {
+  const sign = direction === 'right' ? 1 : -1;
+  const angle = sign === 1 ? 0 : Math.PI;
+  const sample = {
+    time: 1, x: 600, y: 500, speed: 45, angle, travelAngle: angle,
+    attached: false, airborne: false, hit: false, sliding: false, firing: false,
+  };
+  const stalk = advanceRaptorPose(undefined, sample);
+  stalk.memory.gait.phase = .58;
+  const jog = advanceRaptorPose(stalk.memory, {...sample, speed: 120});
+  const sprint = advanceRaptorPose(jog.memory, {...sample, speed: 185});
+  assert.deepEqual([jog.frame.family, jog.frame.frame], ['jog', 2]);
+  assert.deepEqual([sprint.frame.family, sprint.frame.frame], ['sprint', 2]);
+  assert.equal(sprint.memory.gait.phase, .58, 'pace changes preserve foot phase');
+
+  for (const [family, pressure] of [['jog', .55], ['sprint', 1]]) {
+    const game = newGame('Raptor', 'local', 0, 'bot');
+    game.phase = 'playing';
+    game.covers = [];
+    game.matter = [];
+    const [actor, opponent] = game.players;
+    Object.assign(actor, {character: 'raptor', x: 680, y: 500, aim: angle, gunFacing: angle});
+    Object.assign(opponent, {bot: false, x: 1300, y: 660});
+    const tick = (fire = false) => {
+      setInput(game, 0, actor.lastSeq + 1, {aim: angle, x: sign * pressure, y: 0, fire});
+      advance(game, game.lastAt + 1000 / 60);
+    };
+    const painted = new Set();
+    for (let i = 0; i < 100; i++) {
+      tick();
+      painted.add(actor.raptorFrame.key);
+    }
+    for (let frame = 0; frame < 4; frame++) {
+      const key = family + '/' + direction + '/' + String(frame).padStart(3, '0') + '.png';
+      assert.ok(painted.has(key), 'authority reaches ' + key);
+      const bytes = fs.readFileSync('public/assets/raptor-v2/' + key);
+      const record = inventory.frames[key];
+      assert.equal(bytes.readUInt32BE(16), 512);
+      assert.equal(bytes.readUInt32BE(20), 512);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), record.sha256);
+      assert.deepEqual(record, registration[key]);
+      assert.equal(record.phase, phases[frame]);
+      assert.equal(record.anchor[1], 450);
+    }
+    const shells = actor.shells;
+    tick(true);
+    assert.equal(actor.shells, shells - 1, 'moving fire is immediate');
+    assert.equal(actor.raptorFrame.family, family, 'fire keeps the moving gait');
+    const socket = barrelSocket27d(actor, game.config.spriteScale);
+    const flash = game.fx.findLast(effect => effect.type === 'muzzle' && effect.owner === 0);
+    assert.ok(socket.raptorAligned);
+    assert.deepEqual([flash.x, flash.y, flash.z], [socket.x, socket.y, socket.z]);
+    console.log('PASS', direction, family, 'all four phases and immediate registered moving fire');
+  }
+}
