@@ -1,0 +1,2128 @@
+{
+  "build": "39T25-raptor-jump-design-lock",
+  "registeredFiles": 302,
+  "selectorAndGameplayVerifiedFiles": 262,
+  "notes": [
+    "The selector sweep exercised pose routes including protected and exposed cover, shots, gait transitions and interruption.",
+    "Actual game ticks also reached every jump and slide phase, including all eight jump push-offs.",
+    "The authority and render fallback share advanceRaptorPose. The renderer uses the frame registration and displays a missing-art marker if that file fails to load.",
+    "Stationary and moving fire, melee, shield, charge, bullet time, psychic abilities and reactions can reuse these keys. The current selector does not map those actions to separate sprite families.",
+    "The 534 production-map slots include prospective drawings and reuse; they count design requirements rather than distinct active files."
+  ],
+  "slots": [
+    {
+      "key": "cover-bridge/left/000.png",
+      "family": "cover-bridge",
+      "direction": "left",
+      "phase": "raise",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-bridge/left/001.png",
+      "family": "cover-bridge",
+      "direction": "left",
+      "phase": "lower",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-bridge/right/000.png",
+      "family": "cover-bridge",
+      "direction": "right",
+      "phase": "raise",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-bridge/right/001.png",
+      "family": "cover-bridge",
+      "direction": "right",
+      "phase": "lower",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-catch/left/000.png",
+      "family": "cover-catch",
+      "direction": "left",
+      "phase": "incoming slide catch",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-catch/right/000.png",
+      "family": "cover-catch",
+      "direction": "right",
+      "phase": "incoming slide catch",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-corner/back-left/000.png",
+      "family": "cover-corner",
+      "direction": "back-left",
+      "phase": "corner transfer",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-corner/back-right/000.png",
+      "family": "cover-corner",
+      "direction": "back-right",
+      "phase": "corner transfer",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-drive/front-right/000.png",
+      "family": "cover-drive",
+      "direction": "front-right",
+      "phase": "drive contact A",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-drive/front-right/001.png",
+      "family": "cover-drive",
+      "direction": "front-right",
+      "phase": "drive contact B",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-hold/back-left/000.png",
+      "family": "cover-hold",
+      "direction": "back-left",
+      "phase": "tuck / brace / rest",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-hold/back-right/000.png",
+      "family": "cover-hold",
+      "direction": "back-right",
+      "phase": "tuck / brace / rest",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-hold/back/000.png",
+      "family": "cover-hold",
+      "direction": "back",
+      "phase": "tuck / brace / rest",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-hold/front-left/000.png",
+      "family": "cover-hold",
+      "direction": "front-left",
+      "phase": "tuck / brace / rest",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "cover-hold/front-right/000.png",
+      "family": "cover-hold",
+      "direction": "front-right",
+      "phase": "tuck / brace / rest",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "cover-hold/front-right/001.png",
+      "family": "cover-hold",
+      "direction": "front-right",
+      "phase": "low ready",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "cover-hold/front/000.png",
+      "family": "cover-hold",
+      "direction": "front",
+      "phase": "tuck / brace / rest",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "cover-hold/left/000.png",
+      "family": "cover-hold",
+      "direction": "left",
+      "phase": "tuck / brace / rest",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-hold/right/000.png",
+      "family": "cover-hold",
+      "direction": "right",
+      "phase": "tuck / brace / rest",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-lean/front-right/000.png",
+      "family": "cover-lean",
+      "direction": "front-right",
+      "phase": "tall edge aim",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "cover-lean/left/000.png",
+      "family": "cover-lean",
+      "direction": "left",
+      "phase": "tall edge aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-lean/right/000.png",
+      "family": "cover-lean",
+      "direction": "right",
+      "phase": "tall edge aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-pop/left/000.png",
+      "family": "cover-pop",
+      "direction": "left",
+      "phase": "low pop aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-pop/right/000.png",
+      "family": "cover-pop",
+      "direction": "right",
+      "phase": "low pop aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/back-left/000.png",
+      "family": "cover-recoil",
+      "direction": "back-left",
+      "phase": "recoil",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/back-left/001.png",
+      "family": "cover-recoil",
+      "direction": "back-left",
+      "phase": "settle / aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/back-right/000.png",
+      "family": "cover-recoil",
+      "direction": "back-right",
+      "phase": "recoil",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/back-right/001.png",
+      "family": "cover-recoil",
+      "direction": "back-right",
+      "phase": "settle / aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/back/000.png",
+      "family": "cover-recoil",
+      "direction": "back",
+      "phase": "recoil",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/back/001.png",
+      "family": "cover-recoil",
+      "direction": "back",
+      "phase": "settle / aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/left/000.png",
+      "family": "cover-recoil",
+      "direction": "left",
+      "phase": "recoil",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/left/001.png",
+      "family": "cover-recoil",
+      "direction": "left",
+      "phase": "settle / aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/right/000.png",
+      "family": "cover-recoil",
+      "direction": "right",
+      "phase": "recoil",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-recoil/right/001.png",
+      "family": "cover-recoil",
+      "direction": "right",
+      "phase": "settle / aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-left/000.png",
+      "family": "cover-sequence",
+      "direction": "front-left",
+      "phase": "hold",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-left/001.png",
+      "family": "cover-sequence",
+      "direction": "front-left",
+      "phase": "raise / pivot",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-left/002.png",
+      "family": "cover-sequence",
+      "direction": "front-left",
+      "phase": "aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-left/003.png",
+      "family": "cover-sequence",
+      "direction": "front-left",
+      "phase": "recoil",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-left/004.png",
+      "family": "cover-sequence",
+      "direction": "front-left",
+      "phase": "settle",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-left/005.png",
+      "family": "cover-sequence",
+      "direction": "front-left",
+      "phase": "lower",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-right/000.png",
+      "family": "cover-sequence",
+      "direction": "front-right",
+      "phase": "hold",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-right/001.png",
+      "family": "cover-sequence",
+      "direction": "front-right",
+      "phase": "raise / pivot",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-right/002.png",
+      "family": "cover-sequence",
+      "direction": "front-right",
+      "phase": "aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-right/003.png",
+      "family": "cover-sequence",
+      "direction": "front-right",
+      "phase": "recoil",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-right/004.png",
+      "family": "cover-sequence",
+      "direction": "front-right",
+      "phase": "settle",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front-right/005.png",
+      "family": "cover-sequence",
+      "direction": "front-right",
+      "phase": "lower",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front/000.png",
+      "family": "cover-sequence",
+      "direction": "front",
+      "phase": "hold",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front/001.png",
+      "family": "cover-sequence",
+      "direction": "front",
+      "phase": "raise / pivot",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front/002.png",
+      "family": "cover-sequence",
+      "direction": "front",
+      "phase": "aim",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front/003.png",
+      "family": "cover-sequence",
+      "direction": "front",
+      "phase": "recoil",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front/004.png",
+      "family": "cover-sequence",
+      "direction": "front",
+      "phase": "settle",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-sequence/front/005.png",
+      "family": "cover-sequence",
+      "direction": "front",
+      "phase": "lower",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-shuffle/back/000.png",
+      "family": "cover-shuffle",
+      "direction": "back",
+      "phase": "shuffle step A",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-shuffle/back/001.png",
+      "family": "cover-shuffle",
+      "direction": "back",
+      "phase": "shuffle step B",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-shuffle/left/000.png",
+      "family": "cover-shuffle",
+      "direction": "left",
+      "phase": "shuffle step A",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-shuffle/left/001.png",
+      "family": "cover-shuffle",
+      "direction": "left",
+      "phase": "shuffle step B",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-shuffle/right/000.png",
+      "family": "cover-shuffle",
+      "direction": "right",
+      "phase": "shuffle step A",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-shuffle/right/001.png",
+      "family": "cover-shuffle",
+      "direction": "right",
+      "phase": "shuffle step B",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-wrap/left/000.png",
+      "family": "cover-wrap",
+      "direction": "left",
+      "phase": "tuck",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-wrap/left/001.png",
+      "family": "cover-wrap",
+      "direction": "left",
+      "phase": "pivot / retract",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-wrap/right/000.png",
+      "family": "cover-wrap",
+      "direction": "right",
+      "phase": "tuck",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "cover-wrap/right/001.png",
+      "family": "cover-wrap",
+      "direction": "right",
+      "phase": "pivot / retract",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "idle/back-left/000.png",
+      "family": "idle",
+      "direction": "back-left",
+      "phase": "neutral / stationary fire / interruption",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "idle/back-right/000.png",
+      "family": "idle",
+      "direction": "back-right",
+      "phase": "neutral / stationary fire / interruption",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "idle/back/000.png",
+      "family": "idle",
+      "direction": "back",
+      "phase": "neutral / stationary fire / interruption",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "idle/front-left/000.png",
+      "family": "idle",
+      "direction": "front-left",
+      "phase": "neutral / stationary fire / interruption",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "idle/front-right/000.png",
+      "family": "idle",
+      "direction": "front-right",
+      "phase": "neutral / stationary fire / interruption",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "idle/front/000.png",
+      "family": "idle",
+      "direction": "front",
+      "phase": "neutral / stationary fire / interruption",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "idle/left/000.png",
+      "family": "idle",
+      "direction": "left",
+      "phase": "neutral / stationary fire / interruption",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "idle/right/000.png",
+      "family": "idle",
+      "direction": "right",
+      "phase": "neutral / stationary fire / interruption",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back-left/000.png",
+      "family": "jog",
+      "direction": "back-left",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back-left/001.png",
+      "family": "jog",
+      "direction": "back-left",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back-left/002.png",
+      "family": "jog",
+      "direction": "back-left",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back-left/003.png",
+      "family": "jog",
+      "direction": "back-left",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back-right/000.png",
+      "family": "jog",
+      "direction": "back-right",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back-right/001.png",
+      "family": "jog",
+      "direction": "back-right",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back-right/002.png",
+      "family": "jog",
+      "direction": "back-right",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back-right/003.png",
+      "family": "jog",
+      "direction": "back-right",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back/000.png",
+      "family": "jog",
+      "direction": "back",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back/001.png",
+      "family": "jog",
+      "direction": "back",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back/002.png",
+      "family": "jog",
+      "direction": "back",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/back/003.png",
+      "family": "jog",
+      "direction": "back",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front-left/000.png",
+      "family": "jog",
+      "direction": "front-left",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front-left/001.png",
+      "family": "jog",
+      "direction": "front-left",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front-left/002.png",
+      "family": "jog",
+      "direction": "front-left",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front-left/003.png",
+      "family": "jog",
+      "direction": "front-left",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front-right/000.png",
+      "family": "jog",
+      "direction": "front-right",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front-right/001.png",
+      "family": "jog",
+      "direction": "front-right",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front-right/002.png",
+      "family": "jog",
+      "direction": "front-right",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front-right/003.png",
+      "family": "jog",
+      "direction": "front-right",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front/000.png",
+      "family": "jog",
+      "direction": "front",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front/001.png",
+      "family": "jog",
+      "direction": "front",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front/002.png",
+      "family": "jog",
+      "direction": "front",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/front/003.png",
+      "family": "jog",
+      "direction": "front",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/left/000.png",
+      "family": "jog",
+      "direction": "left",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/left/001.png",
+      "family": "jog",
+      "direction": "left",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/left/002.png",
+      "family": "jog",
+      "direction": "left",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/left/003.png",
+      "family": "jog",
+      "direction": "left",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/right/000.png",
+      "family": "jog",
+      "direction": "right",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/right/001.png",
+      "family": "jog",
+      "direction": "right",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/right/002.png",
+      "family": "jog",
+      "direction": "right",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jog/right/003.png",
+      "family": "jog",
+      "direction": "right",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "jump/back-left/000.png",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "push-off",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-left/001.png",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "ascent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-left/002.png",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "apex",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-left/003.png",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "descent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-left/004.png",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "landing",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-left/005.png",
+      "family": "jump",
+      "direction": "back-left",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-right/000.png",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "push-off",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-right/001.png",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "ascent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-right/002.png",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "apex",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-right/003.png",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "descent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-right/004.png",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "landing",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back-right/005.png",
+      "family": "jump",
+      "direction": "back-right",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back/000.png",
+      "family": "jump",
+      "direction": "back",
+      "phase": "push-off",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back/001.png",
+      "family": "jump",
+      "direction": "back",
+      "phase": "ascent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back/002.png",
+      "family": "jump",
+      "direction": "back",
+      "phase": "apex",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back/003.png",
+      "family": "jump",
+      "direction": "back",
+      "phase": "descent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back/004.png",
+      "family": "jump",
+      "direction": "back",
+      "phase": "landing",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/back/005.png",
+      "family": "jump",
+      "direction": "back",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-left/000.png",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "push-off",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-left/001.png",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "ascent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-left/002.png",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "apex",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-left/003.png",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "descent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-left/004.png",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "landing",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-left/005.png",
+      "family": "jump",
+      "direction": "front-left",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-right/000.png",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "push-off",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-right/001.png",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "ascent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-right/002.png",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "apex",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-right/003.png",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "descent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-right/004.png",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "landing",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front-right/005.png",
+      "family": "jump",
+      "direction": "front-right",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front/000.png",
+      "family": "jump",
+      "direction": "front",
+      "phase": "push-off",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front/001.png",
+      "family": "jump",
+      "direction": "front",
+      "phase": "ascent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front/002.png",
+      "family": "jump",
+      "direction": "front",
+      "phase": "apex",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front/003.png",
+      "family": "jump",
+      "direction": "front",
+      "phase": "descent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front/004.png",
+      "family": "jump",
+      "direction": "front",
+      "phase": "landing",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/front/005.png",
+      "family": "jump",
+      "direction": "front",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/left/000.png",
+      "family": "jump",
+      "direction": "left",
+      "phase": "push-off",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/left/001.png",
+      "family": "jump",
+      "direction": "left",
+      "phase": "ascent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/left/002.png",
+      "family": "jump",
+      "direction": "left",
+      "phase": "apex",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/left/003.png",
+      "family": "jump",
+      "direction": "left",
+      "phase": "descent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/left/004.png",
+      "family": "jump",
+      "direction": "left",
+      "phase": "landing",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/left/005.png",
+      "family": "jump",
+      "direction": "left",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/right/000.png",
+      "family": "jump",
+      "direction": "right",
+      "phase": "push-off",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/right/001.png",
+      "family": "jump",
+      "direction": "right",
+      "phase": "ascent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/right/002.png",
+      "family": "jump",
+      "direction": "right",
+      "phase": "apex",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/right/003.png",
+      "family": "jump",
+      "direction": "right",
+      "phase": "descent",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/right/004.png",
+      "family": "jump",
+      "direction": "right",
+      "phase": "landing",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "jump/right/005.png",
+      "family": "jump",
+      "direction": "right",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "movement/back/000.png",
+      "family": "movement",
+      "direction": "back",
+      "phase": "ready",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/back/001.png",
+      "family": "movement",
+      "direction": "back",
+      "phase": "push",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/back/002.png",
+      "family": "movement",
+      "direction": "back",
+      "phase": "left contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/back/003.png",
+      "family": "movement",
+      "direction": "back",
+      "phase": "left pass",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/back/004.png",
+      "family": "movement",
+      "direction": "back",
+      "phase": "right contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/back/005.png",
+      "family": "movement",
+      "direction": "back",
+      "phase": "right pass",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/back/006.png",
+      "family": "movement",
+      "direction": "back",
+      "phase": "brake",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/back/007.png",
+      "family": "movement",
+      "direction": "back",
+      "phase": "settle",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/left/000.png",
+      "family": "movement",
+      "direction": "left",
+      "phase": "ready",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/left/001.png",
+      "family": "movement",
+      "direction": "left",
+      "phase": "push",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/left/002.png",
+      "family": "movement",
+      "direction": "left",
+      "phase": "left contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/left/003.png",
+      "family": "movement",
+      "direction": "left",
+      "phase": "left pass",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/left/004.png",
+      "family": "movement",
+      "direction": "left",
+      "phase": "right contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/left/005.png",
+      "family": "movement",
+      "direction": "left",
+      "phase": "right pass",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/left/006.png",
+      "family": "movement",
+      "direction": "left",
+      "phase": "brake",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/left/007.png",
+      "family": "movement",
+      "direction": "left",
+      "phase": "settle",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/right/000.png",
+      "family": "movement",
+      "direction": "right",
+      "phase": "ready",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/right/001.png",
+      "family": "movement",
+      "direction": "right",
+      "phase": "push",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/right/002.png",
+      "family": "movement",
+      "direction": "right",
+      "phase": "left contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/right/003.png",
+      "family": "movement",
+      "direction": "right",
+      "phase": "left pass",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/right/004.png",
+      "family": "movement",
+      "direction": "right",
+      "phase": "right contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/right/005.png",
+      "family": "movement",
+      "direction": "right",
+      "phase": "right pass",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/right/006.png",
+      "family": "movement",
+      "direction": "right",
+      "phase": "brake",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "movement/right/007.png",
+      "family": "movement",
+      "direction": "right",
+      "phase": "settle",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "recovery/back-left/000.png",
+      "family": "recovery",
+      "direction": "back-left",
+      "phase": "cover exit / slide recovery",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "recovery/back-right/000.png",
+      "family": "recovery",
+      "direction": "back-right",
+      "phase": "cover exit / slide recovery",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "recovery/back/000.png",
+      "family": "recovery",
+      "direction": "back",
+      "phase": "cover exit / slide recovery",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "recovery/front-left/000.png",
+      "family": "recovery",
+      "direction": "front-left",
+      "phase": "cover exit / slide recovery",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "recovery/front-right/000.png",
+      "family": "recovery",
+      "direction": "front-right",
+      "phase": "cover exit / slide recovery",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "recovery/front/000.png",
+      "family": "recovery",
+      "direction": "front",
+      "phase": "cover exit / slide recovery",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "recovery/left/000.png",
+      "family": "recovery",
+      "direction": "left",
+      "phase": "cover exit / slide recovery",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "recovery/right/000.png",
+      "family": "recovery",
+      "direction": "right",
+      "phase": "cover exit / slide recovery",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back-left/000.png",
+      "family": "run",
+      "direction": "back-left",
+      "phase": "left-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back-left/001.png",
+      "family": "run",
+      "direction": "back-left",
+      "phase": "left-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back-left/002.png",
+      "family": "run",
+      "direction": "back-left",
+      "phase": "right-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back-left/003.png",
+      "family": "run",
+      "direction": "back-left",
+      "phase": "right-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back-right/000.png",
+      "family": "run",
+      "direction": "back-right",
+      "phase": "left-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back-right/001.png",
+      "family": "run",
+      "direction": "back-right",
+      "phase": "left-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back-right/002.png",
+      "family": "run",
+      "direction": "back-right",
+      "phase": "right-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back-right/003.png",
+      "family": "run",
+      "direction": "back-right",
+      "phase": "right-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back/000.png",
+      "family": "run",
+      "direction": "back",
+      "phase": "left-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back/001.png",
+      "family": "run",
+      "direction": "back",
+      "phase": "left-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back/002.png",
+      "family": "run",
+      "direction": "back",
+      "phase": "right-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/back/003.png",
+      "family": "run",
+      "direction": "back",
+      "phase": "right-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front-left/000.png",
+      "family": "run",
+      "direction": "front-left",
+      "phase": "left-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front-left/001.png",
+      "family": "run",
+      "direction": "front-left",
+      "phase": "left-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front-left/002.png",
+      "family": "run",
+      "direction": "front-left",
+      "phase": "right-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front-left/003.png",
+      "family": "run",
+      "direction": "front-left",
+      "phase": "right-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front-right/000.png",
+      "family": "run",
+      "direction": "front-right",
+      "phase": "left-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front-right/001.png",
+      "family": "run",
+      "direction": "front-right",
+      "phase": "left-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front-right/002.png",
+      "family": "run",
+      "direction": "front-right",
+      "phase": "right-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front-right/003.png",
+      "family": "run",
+      "direction": "front-right",
+      "phase": "right-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front/000.png",
+      "family": "run",
+      "direction": "front",
+      "phase": "left-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front/001.png",
+      "family": "run",
+      "direction": "front",
+      "phase": "left-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front/002.png",
+      "family": "run",
+      "direction": "front",
+      "phase": "right-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/front/003.png",
+      "family": "run",
+      "direction": "front",
+      "phase": "right-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/left/000.png",
+      "family": "run",
+      "direction": "left",
+      "phase": "left-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/left/001.png",
+      "family": "run",
+      "direction": "left",
+      "phase": "left-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/left/002.png",
+      "family": "run",
+      "direction": "left",
+      "phase": "right-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/left/003.png",
+      "family": "run",
+      "direction": "left",
+      "phase": "right-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/right/000.png",
+      "family": "run",
+      "direction": "right",
+      "phase": "left-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/right/001.png",
+      "family": "run",
+      "direction": "right",
+      "phase": "left-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/right/002.png",
+      "family": "run",
+      "direction": "right",
+      "phase": "right-contact",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "run/right/003.png",
+      "family": "run",
+      "direction": "right",
+      "phase": "right-support-passing",
+      "status": "unselected-with-current-availability"
+    },
+    {
+      "key": "slide/back-left/000.png",
+      "family": "slide",
+      "direction": "back-left",
+      "phase": "entry",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/back-left/001.png",
+      "family": "slide",
+      "direction": "back-left",
+      "phase": "hold",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/back-left/002.png",
+      "family": "slide",
+      "direction": "back-left",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/back-right/000.png",
+      "family": "slide",
+      "direction": "back-right",
+      "phase": "entry",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/back-right/001.png",
+      "family": "slide",
+      "direction": "back-right",
+      "phase": "hold",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/back-right/002.png",
+      "family": "slide",
+      "direction": "back-right",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/back/000.png",
+      "family": "slide",
+      "direction": "back",
+      "phase": "entry",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/back/001.png",
+      "family": "slide",
+      "direction": "back",
+      "phase": "hold",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/back/002.png",
+      "family": "slide",
+      "direction": "back",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/front-left/000.png",
+      "family": "slide",
+      "direction": "front-left",
+      "phase": "entry",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/front-left/001.png",
+      "family": "slide",
+      "direction": "front-left",
+      "phase": "hold",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/front-left/002.png",
+      "family": "slide",
+      "direction": "front-left",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/front-right/000.png",
+      "family": "slide",
+      "direction": "front-right",
+      "phase": "entry",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/front-right/001.png",
+      "family": "slide",
+      "direction": "front-right",
+      "phase": "hold",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/front-right/002.png",
+      "family": "slide",
+      "direction": "front-right",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/front/000.png",
+      "family": "slide",
+      "direction": "front",
+      "phase": "entry",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/front/001.png",
+      "family": "slide",
+      "direction": "front",
+      "phase": "hold",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/front/002.png",
+      "family": "slide",
+      "direction": "front",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/left/000.png",
+      "family": "slide",
+      "direction": "left",
+      "phase": "entry",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/left/001.png",
+      "family": "slide",
+      "direction": "left",
+      "phase": "hold",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/left/002.png",
+      "family": "slide",
+      "direction": "left",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/right/000.png",
+      "family": "slide",
+      "direction": "right",
+      "phase": "entry",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/right/001.png",
+      "family": "slide",
+      "direction": "right",
+      "phase": "hold",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "slide/right/002.png",
+      "family": "slide",
+      "direction": "right",
+      "phase": "recovery",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "sprint/back-left/000.png",
+      "family": "sprint",
+      "direction": "back-left",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back-left/001.png",
+      "family": "sprint",
+      "direction": "back-left",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back-left/002.png",
+      "family": "sprint",
+      "direction": "back-left",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back-left/003.png",
+      "family": "sprint",
+      "direction": "back-left",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back-right/000.png",
+      "family": "sprint",
+      "direction": "back-right",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back-right/001.png",
+      "family": "sprint",
+      "direction": "back-right",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back-right/002.png",
+      "family": "sprint",
+      "direction": "back-right",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back-right/003.png",
+      "family": "sprint",
+      "direction": "back-right",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back/000.png",
+      "family": "sprint",
+      "direction": "back",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back/001.png",
+      "family": "sprint",
+      "direction": "back",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back/002.png",
+      "family": "sprint",
+      "direction": "back",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/back/003.png",
+      "family": "sprint",
+      "direction": "back",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front-left/000.png",
+      "family": "sprint",
+      "direction": "front-left",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front-left/001.png",
+      "family": "sprint",
+      "direction": "front-left",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front-left/002.png",
+      "family": "sprint",
+      "direction": "front-left",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front-left/003.png",
+      "family": "sprint",
+      "direction": "front-left",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front-right/000.png",
+      "family": "sprint",
+      "direction": "front-right",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front-right/001.png",
+      "family": "sprint",
+      "direction": "front-right",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front-right/002.png",
+      "family": "sprint",
+      "direction": "front-right",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front-right/003.png",
+      "family": "sprint",
+      "direction": "front-right",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front/000.png",
+      "family": "sprint",
+      "direction": "front",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front/001.png",
+      "family": "sprint",
+      "direction": "front",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front/002.png",
+      "family": "sprint",
+      "direction": "front",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/front/003.png",
+      "family": "sprint",
+      "direction": "front",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/left/000.png",
+      "family": "sprint",
+      "direction": "left",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/left/001.png",
+      "family": "sprint",
+      "direction": "left",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/left/002.png",
+      "family": "sprint",
+      "direction": "left",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/left/003.png",
+      "family": "sprint",
+      "direction": "left",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/right/000.png",
+      "family": "sprint",
+      "direction": "right",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/right/001.png",
+      "family": "sprint",
+      "direction": "right",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/right/002.png",
+      "family": "sprint",
+      "direction": "right",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "sprint/right/003.png",
+      "family": "sprint",
+      "direction": "right",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back-left/000.png",
+      "family": "stalk",
+      "direction": "back-left",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back-left/001.png",
+      "family": "stalk",
+      "direction": "back-left",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back-left/002.png",
+      "family": "stalk",
+      "direction": "back-left",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back-left/003.png",
+      "family": "stalk",
+      "direction": "back-left",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back-right/000.png",
+      "family": "stalk",
+      "direction": "back-right",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back-right/001.png",
+      "family": "stalk",
+      "direction": "back-right",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back-right/002.png",
+      "family": "stalk",
+      "direction": "back-right",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back-right/003.png",
+      "family": "stalk",
+      "direction": "back-right",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back/000.png",
+      "family": "stalk",
+      "direction": "back",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back/001.png",
+      "family": "stalk",
+      "direction": "back",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back/002.png",
+      "family": "stalk",
+      "direction": "back",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/back/003.png",
+      "family": "stalk",
+      "direction": "back",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front-left/000.png",
+      "family": "stalk",
+      "direction": "front-left",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front-left/001.png",
+      "family": "stalk",
+      "direction": "front-left",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front-left/002.png",
+      "family": "stalk",
+      "direction": "front-left",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front-left/003.png",
+      "family": "stalk",
+      "direction": "front-left",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front-right/000.png",
+      "family": "stalk",
+      "direction": "front-right",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front-right/001.png",
+      "family": "stalk",
+      "direction": "front-right",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front-right/002.png",
+      "family": "stalk",
+      "direction": "front-right",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front-right/003.png",
+      "family": "stalk",
+      "direction": "front-right",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front/000.png",
+      "family": "stalk",
+      "direction": "front",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front/001.png",
+      "family": "stalk",
+      "direction": "front",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front/002.png",
+      "family": "stalk",
+      "direction": "front",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/front/003.png",
+      "family": "stalk",
+      "direction": "front",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/left/000.png",
+      "family": "stalk",
+      "direction": "left",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/left/001.png",
+      "family": "stalk",
+      "direction": "left",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/left/002.png",
+      "family": "stalk",
+      "direction": "left",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/left/003.png",
+      "family": "stalk",
+      "direction": "left",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/right/000.png",
+      "family": "stalk",
+      "direction": "right",
+      "phase": "left-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/right/001.png",
+      "family": "stalk",
+      "direction": "right",
+      "phase": "left-support-passing",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/right/002.png",
+      "family": "stalk",
+      "direction": "right",
+      "phase": "right-contact",
+      "status": "open-for-replacement"
+    },
+    {
+      "key": "stalk/right/003.png",
+      "family": "stalk",
+      "direction": "right",
+      "phase": "right-support-passing",
+      "status": "open-for-replacement"
+    }
+  ]
+}

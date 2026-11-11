@@ -1,0 +1,1298 @@
+{
+  "jump/right/000.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      380
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      418,
+      367
+    ],
+    "muzzleGround": [
+      418,
+      449
+    ],
+    "supportFoot": [
+      221,
+      445
+    ],
+    "phase": "push-off",
+    "source": "exec-05480ee3-36d8-454c-8d5b-f9651c7015e5.png",
+    "sha256": "43d23a47472f83892efb14746fee80dd88b37c13c2884bcaba92323ca9de7367",
+    "replacedSha256": "5ce7c1d01fc5f416d0d087182ea4227bc96ff8d4c1f9acc943c3965d79c3d76a"
+  },
+  "jump/right/001.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      336
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      428,
+      345
+    ],
+    "muzzleGround": [
+      428,
+      449
+    ],
+    "supportFoot": [
+      377,
+      439
+    ],
+    "phase": "ascent",
+    "source": "exec-05480ee3-36d8-454c-8d5b-f9651c7015e5.png",
+    "sha256": "70a798db7a3976f3a6befdfe909a2e84b422bceb0f35f0d41dc2f414732bbb23",
+    "replacedSha256": "7696ea708dbf93ebdb6c98dd72035c9a56aa7ac6a186caa98fd75e5bede7a877"
+  },
+  "jump/right/002.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      357
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      419,
+      343
+    ],
+    "muzzleGround": [
+      419,
+      449
+    ],
+    "supportFoot": [
+      251,
+      429
+    ],
+    "phase": "apex",
+    "source": "exec-05480ee3-36d8-454c-8d5b-f9651c7015e5.png",
+    "sha256": "54c435f382544de87985f509c90fafb11168433b8fe7fb693ebb5a07c0f0d24c",
+    "replacedSha256": "3edeb27b13e836faef103b8ac2324b5bd0e3046ba109d101fc53d56421e4c53e"
+  },
+  "jump/right/003.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      341
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      417,
+      330
+    ],
+    "muzzleGround": [
+      417,
+      449
+    ],
+    "supportFoot": [
+      360,
+      441
+    ],
+    "phase": "descent",
+    "source": "exec-05480ee3-36d8-454c-8d5b-f9651c7015e5.png",
+    "sha256": "94016c90f17833c68b67eb5eec655e2daea5e8961bca42af34cf90e3c34a102e",
+    "replacedSha256": "39a0eb503d280b6e25ab8f631cc182782649ca398968b33e89102b97dbb179e7"
+  },
+  "jump/right/004.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      375
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      422,
+      366
+    ],
+    "muzzleGround": [
+      422,
+      449
+    ],
+    "supportFoot": [
+      225,
+      445
+    ],
+    "phase": "landing",
+    "source": "exec-05480ee3-36d8-454c-8d5b-f9651c7015e5.png",
+    "sha256": "6a4ac2e926debae9e5cff82d75d8df27c7668efdb4be841e7638f064017f9287",
+    "replacedSha256": "703837f767c510d749b74d3b63ddfba8aa570e13909085eb5d195a943349bb50"
+  },
+  "jump/right/005.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      372
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      436,
+      366
+    ],
+    "muzzleGround": [
+      436,
+      449
+    ],
+    "supportFoot": [
+      206,
+      445
+    ],
+    "phase": "recovery",
+    "source": "exec-05480ee3-36d8-454c-8d5b-f9651c7015e5.png",
+    "sha256": "3f0cfce9f9554129335202a69401c90eb6995607f9703920d7adfbd4e0a15311",
+    "replacedSha256": "43feaf9771855b9e90d54482a6bfbbd78e34585e6ff60d5fc68d850d89db7c14"
+  },
+  "jump/left/000.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      372
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      72,
+      338
+    ],
+    "muzzleGround": [
+      72,
+      449
+    ],
+    "supportFoot": [
+      294,
+      445
+    ],
+    "phase": "push-off",
+    "source": "exec-b8006a25-b6d2-4798-bc87-84e2e371d75c.png",
+    "sha256": "a7906dc2a3051bb0262a98b569ab6155c38dfcdddec0dcf5e3aa38e999013af3",
+    "replacedSha256": "dd0a4faedbbc3a1dc9de436fa12317b4f349bae2306aab380ca8c1841aed8b57"
+  },
+  "jump/left/001.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      343
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      74,
+      316
+    ],
+    "muzzleGround": [
+      74,
+      449
+    ],
+    "supportFoot": [
+      378,
+      439
+    ],
+    "phase": "ascent",
+    "source": "exec-b8006a25-b6d2-4798-bc87-84e2e371d75c.png",
+    "sha256": "5c1dd2fc6c9723f416709061e75d0a3dcdd65298b08e48f3aca85096a9ab6627",
+    "replacedSha256": "59b362e4a09323c2fab5a191272678b62734468166a956c6bcc1794e8f4162b8"
+  },
+  "jump/left/002.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      346
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      68,
+      320
+    ],
+    "muzzleGround": [
+      68,
+      449
+    ],
+    "supportFoot": [
+      250,
+      429
+    ],
+    "phase": "apex",
+    "source": "exec-b8006a25-b6d2-4798-bc87-84e2e371d75c.png",
+    "sha256": "caa6c976e1a9c04a2e194e953f8ec728051b35e410a1234b53d07c9b25c1667a",
+    "replacedSha256": "0c0d43e19032cf8bf1b77610d919603e62cdb5bbc09226471744e63b5ffe0b86"
+  },
+  "jump/left/003.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      345
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      74,
+      323
+    ],
+    "muzzleGround": [
+      74,
+      449
+    ],
+    "supportFoot": [
+      146,
+      441
+    ],
+    "phase": "descent",
+    "source": "exec-b8006a25-b6d2-4798-bc87-84e2e371d75c.png",
+    "sha256": "cb0507f65e3f4ba0004ff743ef7a48ef2623ea0f4bcca8425270f23b349963c2",
+    "replacedSha256": "3753dad24022e30927689faf02de307a84ea5a8bd34b4684a04b99f9bb8fbdb2"
+  },
+  "jump/left/004.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      383
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      86,
+      346
+    ],
+    "muzzleGround": [
+      86,
+      449
+    ],
+    "supportFoot": [
+      197,
+      445
+    ],
+    "phase": "landing",
+    "source": "exec-b8006a25-b6d2-4798-bc87-84e2e371d75c.png",
+    "sha256": "22ed3a91c6326052f46b65326835742ed646f032187eb7bf450c310cd8bd8455",
+    "replacedSha256": "521733b10bb519962d8047889ed20a43d09a7e4523b00942c734ec4bc81e4fa6"
+  },
+  "jump/left/005.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      374
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      79,
+      341
+    ],
+    "muzzleGround": [
+      79,
+      449
+    ],
+    "supportFoot": [
+      187,
+      445
+    ],
+    "phase": "recovery",
+    "source": "exec-b8006a25-b6d2-4798-bc87-84e2e371d75c.png",
+    "sha256": "9f6bff1c3bd2aa07958b0c5f2ced126d2cbf085046104eaf196bc9a8717d7aaa",
+    "replacedSha256": "bf598f440c32896f447923ba0b2d78120443b39316014288d737b2a00327377d"
+  },
+  "jump/back/000.png": {
+    "anchor": [
+      256,
+      438
+    ],
+    "pelvis": [
+      256,
+      376
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      316,
+      272
+    ],
+    "muzzleGround": [
+      316,
+      411
+    ],
+    "supportFoot": [
+      216,
+      434
+    ],
+    "phase": "push-off",
+    "source": "exec-a34a4ee4-dde2-46f5-9eed-48c4255519d3.png",
+    "sha256": "9e1ceced9baac0c92c79d95c4f562e62894655e8e061b2dddfba69a417c30737",
+    "replacedSha256": "8ecf4744351574eaed9bb21edfc96b5aae30b9994ade1524e901148d862071de"
+  },
+  "jump/back/001.png": {
+    "anchor": [
+      256,
+      438
+    ],
+    "pelvis": [
+      256,
+      321
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      315,
+      219
+    ],
+    "muzzleGround": [
+      315,
+      411
+    ],
+    "supportFoot": [
+      204,
+      428
+    ],
+    "phase": "ascent",
+    "source": "exec-62ea8a14-0dee-4f68-942c-ade654d003bb.png",
+    "sha256": "71c20de9c12872c0308f8598a1a5fc0d0700d3f2ed5201bce71d8721df509e56",
+    "replacedSha256": "d0e60e400b2595be8b896af957af55c1a5a58eca2bb7328f2e8cbafac1c1fb73"
+  },
+  "jump/back/002.png": {
+    "anchor": [
+      256,
+      438
+    ],
+    "pelvis": [
+      256,
+      374
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      317,
+      267
+    ],
+    "muzzleGround": [
+      317,
+      411
+    ],
+    "supportFoot": [
+      231,
+      418
+    ],
+    "phase": "apex",
+    "source": "exec-c5741182-164c-438a-a9e2-8c85360ad342.png",
+    "sha256": "14f3d6fa0aae0186845e7ccd3f2bcf428fa0200953031c7503de2610bec87c3c",
+    "replacedSha256": "664018f4ccb6500aadc56142fc99fc17c813746ec1218570185e54a899d2a8d0"
+  },
+  "jump/back/003.png": {
+    "anchor": [
+      256,
+      438
+    ],
+    "pelvis": [
+      256,
+      323
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      317,
+      222
+    ],
+    "muzzleGround": [
+      317,
+      411
+    ],
+    "supportFoot": [
+      209,
+      430
+    ],
+    "phase": "descent",
+    "source": "exec-3b5934dd-118a-441c-8946-0fc811dff7a1.png",
+    "sha256": "b275141087fcaf79cff2a70ae2bf35307a7dd6d97697b66360e95502136a6cbf",
+    "replacedSha256": "52d66c0ba678b4868a7fb1844566755f50481d6e7b51dd7856b13b192908a46d"
+  },
+  "jump/back/004.png": {
+    "anchor": [
+      256,
+      438
+    ],
+    "pelvis": [
+      256,
+      350
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      318,
+      244
+    ],
+    "muzzleGround": [
+      318,
+      411
+    ],
+    "supportFoot": [
+      204,
+      434
+    ],
+    "phase": "landing",
+    "source": "exec-5f041639-d24a-44d0-9c3a-5869710e30d0.png",
+    "sha256": "d2c9be5f2a3e9a09ff3880272aaafaa9eac3180c4835005f9d731166d5bf749d",
+    "replacedSha256": "f55a8026beed3c9ca973acacabc0e0fb383ffd62de06236bde051fab2cc4ff56"
+  },
+  "jump/back/005.png": {
+    "anchor": [
+      256,
+      438
+    ],
+    "pelvis": [
+      256,
+      346
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      315,
+      240
+    ],
+    "muzzleGround": [
+      315,
+      411
+    ],
+    "supportFoot": [
+      211,
+      434
+    ],
+    "phase": "recovery",
+    "source": "exec-966dd4a2-4a82-4ede-9d48-f1abfd9b1e52.png",
+    "sha256": "693ca0c4076501b55c06cc5c23f565f188fcda9a7fd71c670be6c30c7cbcd1de",
+    "replacedSha256": "0c217752432973eed0d16aa4ed60a52afc0853b2708f26e293150e38f6557de0"
+  },
+  "jump/back-right/000.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      365
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      371,
+      297
+    ],
+    "muzzleGround": [
+      371,
+      418
+    ],
+    "supportFoot": [
+      283,
+      441
+    ],
+    "phase": "push-off",
+    "source": "exec-a9d695ea-67a0-4e00-b488-aae4db246379.png",
+    "sha256": "feeaa9b45b9c830e431c0a37c0871f3fb52a3d6f054464fbb2deec552c0f475a",
+    "replacedSha256": "ec9bf2cb4c00cd2e6cfff8f7ac253807e1a0c9105c15011a28b6c7a4a610360e"
+  },
+  "jump/back-right/001.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      325
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      391,
+      236
+    ],
+    "muzzleGround": [
+      391,
+      418
+    ],
+    "supportFoot": [
+      226,
+      435
+    ],
+    "phase": "ascent",
+    "source": "exec-a9d695ea-67a0-4e00-b488-aae4db246379.png",
+    "sha256": "690520c30b3df8b3412c21bfd6a8fc44c1d36a6a5c72536dda7eb75cb812c31a",
+    "replacedSha256": "718a1a80407f08691cedc2e42989775336ea85f976d77bc71eb8687b7b3ece8b"
+  },
+  "jump/back-right/002.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      360
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      382,
+      286
+    ],
+    "muzzleGround": [
+      382,
+      418
+    ],
+    "supportFoot": [
+      242,
+      425
+    ],
+    "phase": "apex",
+    "source": "exec-a9d695ea-67a0-4e00-b488-aae4db246379.png",
+    "sha256": "9b16114b429663e34b8a7ac084db439f51e31c5064497fdd3412b6157ef39585",
+    "replacedSha256": "c4b87d51e8280e9e92ced92149129ff43ebd876d1905238654b6fabc6fbbda3b"
+  },
+  "jump/back-right/003.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      321
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      382,
+      256
+    ],
+    "muzzleGround": [
+      382,
+      418
+    ],
+    "supportFoot": [
+      330,
+      437
+    ],
+    "phase": "descent",
+    "source": "exec-a9d695ea-67a0-4e00-b488-aae4db246379.png",
+    "sha256": "e8f634a0dbca0b316828a9de24894ad7c76602af0d9f360221c6d70937272be3",
+    "replacedSha256": "83b0631355bf8e59af15dd3c49fed19fc5d108273703b9a39d000dd0d5514576"
+  },
+  "jump/back-right/004.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      362
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      395,
+      287
+    ],
+    "muzzleGround": [
+      395,
+      418
+    ],
+    "supportFoot": [
+      312,
+      441
+    ],
+    "phase": "landing",
+    "source": "exec-a9d695ea-67a0-4e00-b488-aae4db246379.png",
+    "sha256": "1bd94982c8a082128920734e8a726a0a0a25f41fb16e4120cd5ef6079ab4a902",
+    "replacedSha256": "0fd3015b277f8bc0aa0dda655574eb23fabc633eb1920225950093c49a4a3da6"
+  },
+  "jump/back-right/005.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      351
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      398,
+      271
+    ],
+    "muzzleGround": [
+      398,
+      418
+    ],
+    "supportFoot": [
+      334,
+      441
+    ],
+    "phase": "recovery",
+    "source": "exec-a9d695ea-67a0-4e00-b488-aae4db246379.png",
+    "sha256": "822767a43d39d648cc170b3df1009f5348fa2f1c5b6bb99fef1dbfdc4daf520f",
+    "replacedSha256": "a6b000df822a43b9faef6a48c82e2281e488d585de5cf1238603157ca1d77b57"
+  },
+  "jump/front/000.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      394
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      254,
+      341
+    ],
+    "muzzleGround": [
+      254,
+      449
+    ],
+    "supportFoot": [
+      179,
+      445
+    ],
+    "phase": "push-off",
+    "source": "exec-5c168280-257d-4be0-9179-54f74ea49786.png",
+    "sha256": "f4ca86f2323480e07ec6df8df5eff3e6c094a5cb79fe52fa08eb02500d06a3bb",
+    "replacedSha256": "7d3b4ed094e7c5d87225462bf1e0ba3615723895faeee19217e237866e0734e2"
+  },
+  "jump/front/001.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      322
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      252,
+      273
+    ],
+    "muzzleGround": [
+      252,
+      449
+    ],
+    "supportFoot": [
+      218,
+      439
+    ],
+    "phase": "ascent",
+    "source": "exec-5c168280-257d-4be0-9179-54f74ea49786.png",
+    "sha256": "0298fe617da53413613b569b26052494a645e29755e5413af7503ee8325454e8",
+    "replacedSha256": "f575916b92b9fa682534c48d935747f7efdef63d16ce3869e34e568bf29748a6"
+  },
+  "jump/front/002.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      376
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      246,
+      317
+    ],
+    "muzzleGround": [
+      246,
+      449
+    ],
+    "supportFoot": [
+      231,
+      429
+    ],
+    "phase": "apex",
+    "source": "exec-5c168280-257d-4be0-9179-54f74ea49786.png",
+    "sha256": "b430df200e7973e3dfb1626a6b6b8b53081efa78139bb912bfdb4092345f24b4",
+    "replacedSha256": "4c371471c70b59a2dd4c7d587e8ae1959698585ca4b9470bd04a8ea49b5dd500"
+  },
+  "jump/front/003.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      310
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      253,
+      260
+    ],
+    "muzzleGround": [
+      253,
+      449
+    ],
+    "supportFoot": [
+      227,
+      441
+    ],
+    "phase": "descent",
+    "source": "exec-5c168280-257d-4be0-9179-54f74ea49786.png",
+    "sha256": "9480579f51a3bbd30659be3db263351addd605bf8e7cb725df66fafea70ffd64",
+    "replacedSha256": "c3fceaf1680628d8466be7eb2dc10361afb7836b9a82ec61f1f77711d6b6da62"
+  },
+  "jump/front/004.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      388
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      251,
+      320
+    ],
+    "muzzleGround": [
+      251,
+      449
+    ],
+    "supportFoot": [
+      188,
+      445
+    ],
+    "phase": "landing",
+    "source": "exec-5c168280-257d-4be0-9179-54f74ea49786.png",
+    "sha256": "ee29e6f8a114e8525656d54d700932a6fb92bdff72bd28576b143eecc0d853d3",
+    "replacedSha256": "38bf51ae34cef575b2df315bb278952a49ff8e5f58439653c3e593b88f3baf1f"
+  },
+  "jump/front/005.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      364
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      253,
+      302
+    ],
+    "muzzleGround": [
+      253,
+      449
+    ],
+    "supportFoot": [
+      195,
+      445
+    ],
+    "phase": "recovery",
+    "source": "exec-5c168280-257d-4be0-9179-54f74ea49786.png",
+    "sha256": "4042a964b96974273652cce0cd33c9c7014b2c2a21a618bb63733495daacce35",
+    "replacedSha256": "4a597b230cfab0e71e3cdfda4eda3d59ee6b374d997f794d36d929c028fb43c6"
+  },
+  "jump/back-left/000.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      387
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      107,
+      307
+    ],
+    "muzzleGround": [
+      107,
+      418
+    ],
+    "supportFoot": [
+      192,
+      441
+    ],
+    "phase": "push-off",
+    "source": "exec-c4a28d31-ec98-4dc6-b711-3a84fb0ef47f.png",
+    "sha256": "94497fd0a8d4ef92ee5c1799ac80986cb63368a3541c774e131550f90c951f97",
+    "replacedSha256": "ed1be2fb4698680a774a90378d4a8fd0e25c756751ed9560592fa26145475cc7"
+  },
+  "jump/back-left/001.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      331
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      112,
+      244
+    ],
+    "muzzleGround": [
+      112,
+      418
+    ],
+    "supportFoot": [
+      292,
+      435
+    ],
+    "phase": "ascent",
+    "source": "exec-c4a28d31-ec98-4dc6-b711-3a84fb0ef47f.png",
+    "sha256": "7471890238275383e247ff1e5031577d48997b5efd6b0d30e6445fa6e8a8ec39",
+    "replacedSha256": "7a0c56913327262fa31e91636a4e02438fd81e65e7bd1d40c71cea894a72611e"
+  },
+  "jump/back-left/002.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      371
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      115,
+      297
+    ],
+    "muzzleGround": [
+      115,
+      418
+    ],
+    "supportFoot": [
+      216,
+      425
+    ],
+    "phase": "apex",
+    "source": "exec-c4a28d31-ec98-4dc6-b711-3a84fb0ef47f.png",
+    "sha256": "0aad2a23236fe7a63f9b6a46028a11056c1df00049c219a184eb7576072ee7fa",
+    "replacedSha256": "87d1b6db41d1319ea25be2904fcd314f321566f1c5d945be2c2e05870b496b7d"
+  },
+  "jump/back-left/003.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      325
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      112,
+      244
+    ],
+    "muzzleGround": [
+      112,
+      418
+    ],
+    "supportFoot": [
+      162,
+      437
+    ],
+    "phase": "descent",
+    "source": "exec-c4a28d31-ec98-4dc6-b711-3a84fb0ef47f.png",
+    "sha256": "275232dfcb307f36512ee1c95f0daa8ae9517619e826fd63c0b2597e749396e5",
+    "replacedSha256": "76a800fa4cdb6126ac03870d5ce061c5bd49fb22d89ab75e5e986d4c3e192c16"
+  },
+  "jump/back-left/004.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      375
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      110,
+      293
+    ],
+    "muzzleGround": [
+      110,
+      418
+    ],
+    "supportFoot": [
+      186,
+      441
+    ],
+    "phase": "landing",
+    "source": "exec-c4a28d31-ec98-4dc6-b711-3a84fb0ef47f.png",
+    "sha256": "620e11966381b12c7f3b25bc492e357863811d201a33dcc6981deffa02a0aee8",
+    "replacedSha256": "05c42ee633d66f908abb5c036db76a0757fde6fb190a43be6fae30f82339b922"
+  },
+  "jump/back-left/005.png": {
+    "anchor": [
+      256,
+      445
+    ],
+    "pelvis": [
+      256,
+      370
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      104,
+      288
+    ],
+    "muzzleGround": [
+      104,
+      418
+    ],
+    "supportFoot": [
+      191,
+      441
+    ],
+    "phase": "recovery",
+    "source": "exec-c4a28d31-ec98-4dc6-b711-3a84fb0ef47f.png",
+    "sha256": "0432e622254729e5fc615f43badb0988bafb3a4bf8fef625a247bac78f5a6bca",
+    "replacedSha256": "486817caeaafe4e7b30528133163251f8263c2be8b3d1e61ea50771bad741ea9"
+  },
+  "jump/front-right/000.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      384
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      369,
+      312
+    ],
+    "muzzleGround": [
+      369,
+      449
+    ],
+    "supportFoot": [
+      194,
+      445
+    ],
+    "phase": "push-off",
+    "source": "exec-95d3e53a-62ba-4c9f-8df5-3747da0409ba.png",
+    "sha256": "c50afc38da16fa3cf84abfa1e902e34cddd3471853f045fb3458b8f67c1f32d8",
+    "replacedSha256": "08b61d2bbe9a2224394d3088e30dec849a4ed8cbd6db81bb37cf833a62fd253c"
+  },
+  "jump/front-right/001.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      321
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      392,
+      226
+    ],
+    "muzzleGround": [
+      392,
+      449
+    ],
+    "supportFoot": [
+      171,
+      439
+    ],
+    "phase": "ascent",
+    "source": "exec-95d3e53a-62ba-4c9f-8df5-3747da0409ba.png",
+    "sha256": "76ba4f3eddc0d1c5ff8b703c7cf62be5f10e0ae33b14533fe1311d957c043680",
+    "replacedSha256": "df94a59692194ea319c815f199ab474aab78f39a5e2566748e7107a11eb2b749"
+  },
+  "jump/front-right/002.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      346
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      376,
+      267
+    ],
+    "muzzleGround": [
+      376,
+      449
+    ],
+    "supportFoot": [
+      213,
+      429
+    ],
+    "phase": "apex",
+    "source": "exec-95d3e53a-62ba-4c9f-8df5-3747da0409ba.png",
+    "sha256": "da3cfd07502256fcc24a633d7903898e5d0b579715baa63f63bfdf46c94d5fa4",
+    "replacedSha256": "49b528515479281c71a6efa584bf21faa26cb785cd0c73dec5e31825bf1c58cb"
+  },
+  "jump/front-right/003.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      318
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      381,
+      235
+    ],
+    "muzzleGround": [
+      381,
+      449
+    ],
+    "supportFoot": [
+      331,
+      441
+    ],
+    "phase": "descent",
+    "source": "exec-95d3e53a-62ba-4c9f-8df5-3747da0409ba.png",
+    "sha256": "717f95990e312877e65e08b1139a5c0584812040d626ed94701b04140da8ca01",
+    "replacedSha256": "a7f3a4b755805e6b56f95fb15638e83fe4b893701a184c3513fd2e528f4f9062"
+  },
+  "jump/front-right/004.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      371
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      375,
+      289
+    ],
+    "muzzleGround": [
+      375,
+      449
+    ],
+    "supportFoot": [
+      191,
+      445
+    ],
+    "phase": "landing",
+    "source": "exec-95d3e53a-62ba-4c9f-8df5-3747da0409ba.png",
+    "sha256": "5f47ab623df92a6dadb362d6a90a8c2ae43fee3ce8fc312933871fd31998bd42",
+    "replacedSha256": "2994e35a85f30e9eed627bd90ce712aab8e97209a8a8131b7a4308d91ba913a8"
+  },
+  "jump/front-right/005.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      355
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      393,
+      258
+    ],
+    "muzzleGround": [
+      393,
+      449
+    ],
+    "supportFoot": [
+      201,
+      445
+    ],
+    "phase": "recovery",
+    "source": "exec-95d3e53a-62ba-4c9f-8df5-3747da0409ba.png",
+    "sha256": "c98201659e97dfff2b693f552d3892e4ff6b8974916de9be4f2d54d41cffe893",
+    "replacedSha256": "a76e7c7a5294168175eaa8e9d5b8633970f9e4dad7b8ae58fe0245f49fef884c"
+  },
+  "jump/front-left/000.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      369
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      134,
+      317
+    ],
+    "muzzleGround": [
+      134,
+      449
+    ],
+    "supportFoot": [
+      189,
+      445
+    ],
+    "phase": "push-off",
+    "source": "exec-39a25b57-b47a-4023-9f79-eaacef9e13bb.png",
+    "sha256": "89ac2ebb18371c4b509db37f2bf0e476ee1025d0e9cd70c21b0f10c4fc1b5c10",
+    "replacedSha256": "3f09df50b5798fce9d7aa2e1687eb91b128080b52bc76f3591fa12c83e6f54bd"
+  },
+  "jump/front-left/001.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      322
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      104,
+      238
+    ],
+    "muzzleGround": [
+      104,
+      449
+    ],
+    "supportFoot": [
+      383,
+      439
+    ],
+    "phase": "ascent",
+    "source": "exec-39a25b57-b47a-4023-9f79-eaacef9e13bb.png",
+    "sha256": "e966577c44d885fc31ec22907c01a3e4083483f8a09a6b056c62fa7bab440635",
+    "replacedSha256": "6ca0ff18a956ff4cbc4d1645bc2be9bff7af84e1501b3475c7073373e4a8c977"
+  },
+  "jump/front-left/002.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      340
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      110,
+      302
+    ],
+    "muzzleGround": [
+      110,
+      449
+    ],
+    "supportFoot": [
+      256,
+      429
+    ],
+    "phase": "apex",
+    "source": "exec-39a25b57-b47a-4023-9f79-eaacef9e13bb.png",
+    "sha256": "7c80bc2d85fe957a1aa154758bd5106753deadf5e9130f559a3aff51c3968607",
+    "replacedSha256": "21048210fd3489c272b36208c3a7be2b6cc5644fa59bf92c9b79dffcfb0df83a"
+  },
+  "jump/front-left/003.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      314
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      128,
+      261
+    ],
+    "muzzleGround": [
+      128,
+      449
+    ],
+    "supportFoot": [
+      230,
+      441
+    ],
+    "phase": "descent",
+    "source": "exec-39a25b57-b47a-4023-9f79-eaacef9e13bb.png",
+    "sha256": "de3ef4a9921655ec37d750c599357ee2f740cfde73fb11e82981bc69884e1205",
+    "replacedSha256": "a9929d3e775ef7a11febd7e3a1d901991785cf1c3ea94dd5062d9b05177a4967"
+  },
+  "jump/front-left/004.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      371
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      116,
+      321
+    ],
+    "muzzleGround": [
+      116,
+      449
+    ],
+    "supportFoot": [
+      166,
+      445
+    ],
+    "phase": "landing",
+    "source": "exec-39a25b57-b47a-4023-9f79-eaacef9e13bb.png",
+    "sha256": "4801259ec35a7eec262b5bc3cff12cab0599387d0413c32d35f1f93d8d02938e",
+    "replacedSha256": "0d824b74a52643d235a8bef3b21d8cffc9109ab55b95ee1cdc222081161c3f8e"
+  },
+  "jump/front-left/005.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "pelvis": [
+      256,
+      353
+    ],
+    "drawScale": 1.16,
+    "muzzle": [
+      106,
+      302
+    ],
+    "muzzleGround": [
+      106,
+      449
+    ],
+    "supportFoot": [
+      179,
+      445
+    ],
+    "phase": "recovery",
+    "source": "exec-39a25b57-b47a-4023-9f79-eaacef9e13bb.png",
+    "sha256": "141f7598abdaa642d0cd9cea757ffab56e4f28b70ac91dcc0b3b03f40fc00b3c",
+    "replacedSha256": "6409decd5b738ef5a631d3f201f36ad2dedffa0d6751f246e9d733c1be50b344"
+  }
+}

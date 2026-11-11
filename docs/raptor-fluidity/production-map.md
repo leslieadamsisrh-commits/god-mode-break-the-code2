@@ -132,3 +132,31 @@ The verified 39T23 checkpoint is `245ca624d6a750b259291bec15f20b846f4153eb`. Thi
 The live pose selectors share the slide recovery frame with some catch and transition paths. The new exports keep those keys and preserve the selector and input behavior. The preview includes every slide direction and the previously released jump sequences. The 39T24 replacement pass covers slides. The 48 existing jump frames and the other runtime families are still open for that pass.
 
 The baseline manifest registers 302 files. The shared selector can reuse authored idle, gait, jump and cover frames for special actions rather than using a dedicated special-action atlas. Audit reachability through both the server pose selector and the renderer's selection path before declaring the full replacement complete.
+
+## 39T25 full jump replacement
+
+This batch replaces all 48 jump files after 39T24 replaced all 24 slide files. The approved cover and equipment masters guided the new art. Each direction runs through push-off, ascent, apex, descent, landing and recovery. The 512px registration records the visual root, foot landmarks and visible twin-barrel midpoint. Game jump height and frame selection still follow the existing authority. The render and firing paths share the same registered frame.
+
+### Runtime inventory
+
+[Runtime inventory](runtime-inventory.json) records each registered key by action, direction and phase. The selector sweep and the real jump and slide tests account for 262 of the 302 registered keys. The other 40 keys are disabled or shadowed under current availability. The table also includes those registered keys so availability changes can be audited.
+
+All jump directions share a 1.16 draw scale to match the prior jump silhouette at the gameplay camera. The unadjusted exports rendered roughly one fifth smaller. Scale is applied about the registered ground anchor and is shared by rendering and muzzle projection.
+
+| Family | Directions | Frame indexes |
+| --- | --- | --- |
+| Idle | All eight | 000 |
+| Run, stalk, jog, sprint | All eight per family | 000–003 |
+| Movement | Right, left, back | 000–007 |
+| Recovery | All eight | 000 |
+| Cover drive | Front-right | 000–001 |
+| Cover hold | All eight | 000, plus 001 for front-right |
+| Cover lean | Left, right, front-right | 000 |
+| Cover wrap | Left, right | 000–001 |
+| Cover catch | Left, right | 000 |
+| Cover shuffle | Left, right, back | 000–001 |
+| Cover pop | Left, right | 000 |
+| Cover corner | Back-left, back-right | 000 |
+| Cover bridge | Left, right | 000–001 |
+| Cover recoil | Left, right, back-left, back, back-right | 000–001 |
+| Cover sequence | Front-left, front, front-right | 000–005 |

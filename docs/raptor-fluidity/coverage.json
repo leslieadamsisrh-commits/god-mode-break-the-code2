@@ -2499,7 +2499,7 @@
       "status": "validated-local",
       "candidate": "jump/right/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/right/ascent",
@@ -2511,7 +2511,7 @@
       "status": "validated-local",
       "candidate": "jump/right/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/right/apex",
@@ -2523,7 +2523,7 @@
       "status": "validated-local",
       "candidate": "jump/right/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/right/descent",
@@ -2535,7 +2535,7 @@
       "status": "validated-local",
       "candidate": "jump/right/003.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/right/landing",
@@ -2547,7 +2547,7 @@
       "status": "validated-local",
       "candidate": "jump/right/004.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/right/recovery",
@@ -2559,7 +2559,7 @@
       "status": "validated-local",
       "candidate": "jump/right/005.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-right/push-off",
@@ -2571,7 +2571,7 @@
       "status": "validated-local",
       "candidate": "jump/front-right/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-right/ascent",
@@ -2583,7 +2583,7 @@
       "status": "validated-local",
       "candidate": "jump/front-right/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-right/apex",
@@ -2595,7 +2595,7 @@
       "status": "validated-local",
       "candidate": "jump/front-right/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-right/descent",
@@ -2607,7 +2607,7 @@
       "status": "validated-local",
       "candidate": "jump/front-right/003.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-right/landing",
@@ -2619,7 +2619,7 @@
       "status": "validated-local",
       "candidate": "jump/front-right/004.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-right/recovery",
@@ -2631,7 +2631,7 @@
       "status": "validated-local",
       "candidate": "jump/front-right/005.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front/push-off",
@@ -2643,7 +2643,7 @@
       "status": "validated-local",
       "candidate": "jump/front/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front/ascent",
@@ -2655,7 +2655,7 @@
       "status": "validated-local",
       "candidate": "jump/front/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front/apex",
@@ -2667,7 +2667,7 @@
       "status": "validated-local",
       "candidate": "jump/front/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front/descent",
@@ -2679,7 +2679,7 @@
       "status": "validated-local",
       "candidate": "jump/front/003.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front/landing",
@@ -2691,7 +2691,7 @@
       "status": "validated-local",
       "candidate": "jump/front/004.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front/recovery",
@@ -2703,7 +2703,7 @@
       "status": "validated-local",
       "candidate": "jump/front/005.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-left/push-off",
@@ -2715,7 +2715,7 @@
       "status": "validated-local",
       "candidate": "jump/front-left/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-left/ascent",
@@ -2727,7 +2727,7 @@
       "status": "validated-local",
       "candidate": "jump/front-left/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-left/apex",
@@ -2739,7 +2739,7 @@
       "status": "validated-local",
       "candidate": "jump/front-left/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-left/descent",
@@ -2751,7 +2751,7 @@
       "status": "validated-local",
       "candidate": "jump/front-left/003.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-left/landing",
@@ -2763,7 +2763,7 @@
       "status": "validated-local",
       "candidate": "jump/front-left/004.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/front-left/recovery",
@@ -2775,7 +2775,7 @@
       "status": "validated-local",
       "candidate": "jump/front-left/005.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/left/push-off",
@@ -2787,7 +2787,7 @@
       "status": "validated-local",
       "candidate": "jump/left/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/left/ascent",
@@ -2799,7 +2799,7 @@
       "status": "validated-local",
       "candidate": "jump/left/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/left/apex",
@@ -2811,7 +2811,7 @@
       "status": "validated-local",
       "candidate": "jump/left/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/left/descent",
@@ -2823,7 +2823,7 @@
       "status": "validated-local",
       "candidate": "jump/left/003.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/left/landing",
@@ -2835,7 +2835,7 @@
       "status": "validated-local",
       "candidate": "jump/left/004.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/left/recovery",
@@ -2847,7 +2847,7 @@
       "status": "validated-local",
       "candidate": "jump/left/005.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-left/push-off",
@@ -2859,7 +2859,7 @@
       "status": "validated-local",
       "candidate": "jump/back-left/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-left/ascent",
@@ -2871,7 +2871,7 @@
       "status": "validated-local",
       "candidate": "jump/back-left/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-left/apex",
@@ -2883,7 +2883,7 @@
       "status": "validated-local",
       "candidate": "jump/back-left/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-left/descent",
@@ -2895,7 +2895,7 @@
       "status": "validated-local",
       "candidate": "jump/back-left/003.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-left/landing",
@@ -2907,7 +2907,7 @@
       "status": "validated-local",
       "candidate": "jump/back-left/004.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-left/recovery",
@@ -2919,7 +2919,7 @@
       "status": "validated-local",
       "candidate": "jump/back-left/005.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back/push-off",
@@ -2931,7 +2931,7 @@
       "status": "validated-local",
       "candidate": "jump/back/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back/ascent",
@@ -2943,7 +2943,7 @@
       "status": "validated-local",
       "candidate": "jump/back/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back/apex",
@@ -2955,7 +2955,7 @@
       "status": "validated-local",
       "candidate": "jump/back/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back/descent",
@@ -2967,7 +2967,7 @@
       "status": "validated-local",
       "candidate": "jump/back/003.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back/landing",
@@ -2979,7 +2979,7 @@
       "status": "validated-local",
       "candidate": "jump/back/004.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back/recovery",
@@ -2991,7 +2991,7 @@
       "status": "validated-local",
       "candidate": "jump/back/005.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-right/push-off",
@@ -3003,7 +3003,7 @@
       "status": "validated-local",
       "candidate": "jump/back-right/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-right/ascent",
@@ -3015,7 +3015,7 @@
       "status": "validated-local",
       "candidate": "jump/back-right/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-right/apex",
@@ -3027,7 +3027,7 @@
       "status": "validated-local",
       "candidate": "jump/back-right/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-right/descent",
@@ -3039,7 +3039,7 @@
       "status": "validated-local",
       "candidate": "jump/back-right/003.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-right/landing",
@@ -3051,7 +3051,7 @@
       "status": "validated-local",
       "candidate": "jump/back-right/004.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "jump/back-right/recovery",
@@ -3063,7 +3063,7 @@
       "status": "validated-local",
       "candidate": "jump/back-right/005.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T25"
     },
     {
       "id": "cover-catch/right/impact",
@@ -5244,7 +5244,7 @@
       "status": "needs-art-or-approved-reuse"
     }
   ],
-  "candidate_build": "39T24-raptor-slide-design-lock",
+  "candidate_build": "39T25-raptor-jump-design-lock",
   "batches": [
     {
       "id": "39T19",
@@ -5292,6 +5292,14 @@
       "reused_drafts": 0,
       "activated_frames": 24,
       "note": "All eight slide directions, with three connected phases each."
+    },
+    {
+      "id": "39T25",
+      "new_drawings": 48,
+      "corrected_drawings": 0,
+      "reused_drafts": 0,
+      "activated_frames": 48,
+      "note": "All eight jump directions with six connected phases each."
     }
   ]
 }

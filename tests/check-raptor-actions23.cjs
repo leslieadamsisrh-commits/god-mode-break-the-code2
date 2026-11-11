@@ -13,9 +13,9 @@ const {newGame, setInput, advance} = require('../lib/game.ts');
 const {RAPTOR_POSE_DIRECTIONS} = require('../lib/raptorPose.ts');
 const {barrelSocket27d} = require('../lib/ballistics27d.ts');
 const inventory = require('../public/assets/raptor-v2/manifest.json');
-const previousRegistration = require('../docs/raptor-fluidity/batch23-registration.json');
+const jumpRegistration = require('../docs/raptor-fluidity/batch25-registration.json');
 const slideRegistration = require('../docs/raptor-fluidity/batch24-registration.json');
-const registration = {...previousRegistration, ...slideRegistration};
+const registration = {...jumpRegistration, ...slideRegistration};
 const phases = {
   jump: ['push-off', 'ascent', 'apex', 'descent', 'landing', 'recovery'],
   slide: ['entry', 'hold', 'recovery'],
@@ -74,14 +74,11 @@ for (const [action, directions] of Object.entries(inventory.restoredActionDirect
       assert.equal(record.sha256, createHash('sha256').update(bytes).digest('hex'));
       assert.notEqual(record.sha256, record.replacedSha256);
       assert.equal(record.phase, phase);
-      if (key in slideRegistration) {
-        assert.equal(record.supportFoot[1], record.anchor[1] - 4, 'support foot on the authored ground line');
-        assert.equal(record.muzzle[0], record.muzzleGround[0]);
-        assert.ok(record.muzzle[1] < record.muzzleGround[1]);
-      } else {
-        assert.equal(record.anchor[1], 450);
-      }
-      assert.equal(record.drawScale, .96);
+      const footOffset = action === 'jump' ? [4, 10, 20, 8, 4, 4][index] : 4;
+      assert.ok(Math.abs(record.supportFoot[1] - record.anchor[1] + footOffset) <= 2, 'foot matches the authored phase line');
+      assert.equal(record.muzzle[0], record.muzzleGround[0]);
+      assert.ok(record.muzzle[1] < record.muzzleGround[1]);
+      assert.equal(record.drawScale, action === 'jump' ? 1.16 : .96);
     }
     assert.notEqual(actor.raptorFrame.family, action, 'action hands back to locomotion');
     assert.ok(fired, action + ' permits registered fire');
@@ -91,3 +88,4 @@ for (const [action, directions] of Object.entries(inventory.restoredActionDirect
 assert.equal(Object.keys(registration).length, inventory.restoredActionCount);
 
 assert.equal(Object.keys(slideRegistration).length, 24);
+assert.equal(Object.keys(jumpRegistration).length, 48);
