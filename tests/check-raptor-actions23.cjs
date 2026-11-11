@@ -13,7 +13,9 @@ const {newGame, setInput, advance} = require('../lib/game.ts');
 const {RAPTOR_POSE_DIRECTIONS} = require('../lib/raptorPose.ts');
 const {barrelSocket27d} = require('../lib/ballistics27d.ts');
 const inventory = require('../public/assets/raptor-v2/manifest.json');
-const registration = require('../docs/raptor-fluidity/batch23-registration.json');
+const previousRegistration = require('../docs/raptor-fluidity/batch23-registration.json');
+const slideRegistration = require('../docs/raptor-fluidity/batch24-registration.json');
+const registration = {...previousRegistration, ...slideRegistration};
 const phases = {
   jump: ['push-off', 'ascent', 'apex', 'descent', 'landing', 'recovery'],
   slide: ['entry', 'hold', 'recovery'],
@@ -72,12 +74,20 @@ for (const [action, directions] of Object.entries(inventory.restoredActionDirect
       assert.equal(record.sha256, createHash('sha256').update(bytes).digest('hex'));
       assert.notEqual(record.sha256, record.replacedSha256);
       assert.equal(record.phase, phase);
-      assert.equal(record.anchor[1], 450);
+      if (key in slideRegistration) {
+        assert.equal(record.supportFoot[1], record.anchor[1] - 4, 'support foot on the authored ground line');
+        assert.equal(record.muzzle[0], record.muzzleGround[0]);
+        assert.ok(record.muzzle[1] < record.muzzleGround[1]);
+      } else {
+        assert.equal(record.anchor[1], 450);
+      }
       assert.equal(record.drawScale, .96);
     }
     assert.notEqual(actor.raptorFrame.family, action, 'action hands back to locomotion');
-    if (action === 'jump') assert.ok(fired, 'jump permits registered fire');
+    assert.ok(fired, action + ' permits registered fire');
     console.log('PASS', action, direction, seen.size, 'new frames reached through gameplay');
   }
 }
 assert.equal(Object.keys(registration).length, inventory.restoredActionCount);
+
+assert.equal(Object.keys(slideRegistration).length, 24);

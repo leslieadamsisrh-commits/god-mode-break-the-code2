@@ -11,8 +11,8 @@
     "back",
     "back-right"
   ],
-  "existing_runtime_files": 260,
-  "note": "Coverage slots include existing art and approved reuse. Slot count is not the number of new drawings. The earlier 90\u2013130 budget remains an incremental priority pass.",
+  "existing_runtime_files": 302,
+  "note": "Coverage slots include existing art and approved reuse. The full design pass tracks the reachable runtime artwork separately from proposed art slots.",
   "slots": [
     {
       "id": "ready/right/neutral",
@@ -2049,7 +2049,7 @@
       "status": "validated-local",
       "candidate": "slide/right/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/right/hold",
@@ -2061,7 +2061,7 @@
       "status": "validated-local",
       "candidate": "slide/right/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/right/recovery",
@@ -2073,7 +2073,7 @@
       "status": "validated-local",
       "candidate": "slide/right/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/front-right/entry",
@@ -2085,7 +2085,7 @@
       "status": "validated-local",
       "candidate": "slide/front-right/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/front-right/hold",
@@ -2097,7 +2097,7 @@
       "status": "validated-local",
       "candidate": "slide/front-right/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/front-right/recovery",
@@ -2109,7 +2109,7 @@
       "status": "validated-local",
       "candidate": "slide/front-right/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/front/entry",
@@ -2121,7 +2121,7 @@
       "status": "validated-local",
       "candidate": "slide/front/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/front/hold",
@@ -2133,7 +2133,7 @@
       "status": "validated-local",
       "candidate": "slide/front/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/front/recovery",
@@ -2145,7 +2145,7 @@
       "status": "validated-local",
       "candidate": "slide/front/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/front-left/entry",
@@ -2157,7 +2157,7 @@
       "status": "validated-local",
       "candidate": "slide/front-left/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/front-left/hold",
@@ -2169,7 +2169,7 @@
       "status": "validated-local",
       "candidate": "slide/front-left/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/front-left/recovery",
@@ -2181,7 +2181,7 @@
       "status": "validated-local",
       "candidate": "slide/front-left/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/left/entry",
@@ -2193,7 +2193,7 @@
       "status": "validated-local",
       "candidate": "slide/left/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/left/hold",
@@ -2205,7 +2205,7 @@
       "status": "validated-local",
       "candidate": "slide/left/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/left/recovery",
@@ -2217,7 +2217,7 @@
       "status": "validated-local",
       "candidate": "slide/left/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/back-left/entry",
@@ -2229,7 +2229,7 @@
       "status": "validated-local",
       "candidate": "slide/back-left/000.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/back-left/hold",
@@ -2241,7 +2241,7 @@
       "status": "validated-local",
       "candidate": "slide/back-left/001.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/back-left/recovery",
@@ -2253,7 +2253,7 @@
       "status": "validated-local",
       "candidate": "slide/back-left/002.png",
       "active": true,
-      "batch": "39T23"
+      "batch": "39T24"
     },
     {
       "id": "slide/back/entry",
@@ -2262,7 +2262,10 @@
       "phase": "entry",
       "priority": "P2",
       "existing": "slide/back/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "slide/back/000.png",
+      "batch": "39T24",
+      "active": true
     },
     {
       "id": "slide/back/hold",
@@ -2271,7 +2274,10 @@
       "phase": "hold",
       "priority": "P2",
       "existing": "slide/back/001.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "slide/back/001.png",
+      "batch": "39T24",
+      "active": true
     },
     {
       "id": "slide/back/recovery",
@@ -2280,7 +2286,10 @@
       "phase": "recovery",
       "priority": "P2",
       "existing": "slide/back/002.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "slide/back/002.png",
+      "batch": "39T24",
+      "active": true
     },
     {
       "id": "slide/back-right/entry",
@@ -2289,7 +2298,10 @@
       "phase": "entry",
       "priority": "P2",
       "existing": "slide/back-right/000.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "slide/back-right/000.png",
+      "batch": "39T24",
+      "active": true
     },
     {
       "id": "slide/back-right/hold",
@@ -2298,7 +2310,10 @@
       "phase": "hold",
       "priority": "P2",
       "existing": "slide/back-right/001.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "slide/back-right/001.png",
+      "batch": "39T24",
+      "active": true
     },
     {
       "id": "slide/back-right/recovery",
@@ -2307,7 +2322,10 @@
       "phase": "recovery",
       "priority": "P2",
       "existing": "slide/back-right/002.png",
-      "status": "existing-needs-design-audit"
+      "status": "validated-local",
+      "candidate": "slide/back-right/002.png",
+      "batch": "39T24",
+      "active": true
     },
     {
       "id": "slide-recovery/right/weight-under-hips",
@@ -5226,7 +5244,7 @@
       "status": "needs-art-or-approved-reuse"
     }
   ],
-  "candidate_build": "39T23-raptor-action-art",
+  "candidate_build": "39T24-raptor-slide-design-lock",
   "batches": [
     {
       "id": "39T19",
@@ -5266,6 +5284,14 @@
       "reused_drafts": 0,
       "activated_frames": 66,
       "note": "New jump and slide drawings replace the older gold-armored frames in the reviewed directions."
+    },
+    {
+      "id": "39T24",
+      "new_drawings": 24,
+      "corrected_drawings": 0,
+      "reused_drafts": 0,
+      "activated_frames": 24,
+      "note": "All eight slide directions, with three connected phases each."
     }
   ]
 }

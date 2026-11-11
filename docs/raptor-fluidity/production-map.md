@@ -124,3 +124,11 @@ The existing pose selector plays the replacement frames without a timing change.
 The 39T22 recording at 13–18 and 20–28 seconds showed the old gold armor during jumps and slides. This batch replaces 66 files at the keys already selected by the game. Jump has six phases in each of the eight directions. Slide has entry, hold and recovery in left, right, front, front-left, front-right and back-left. Straight-back and back-right slide still use their 39T22 art and are listed in the production map. Earlier artwork is recoverable at 39T22.
 
 The approved olive movement and cover artwork supplied the design references. The source atlases were independently drawn by facing and use the original motion as silhouette reference. Each exported cell is registered to a 512-pixel canvas with a consistent drawing scale, a measured pelvis, a visible muzzle and contact points where applicable. The manifest preserves the replaced hashes and identifies the active restored directions. Jump physics and slide timing are unchanged. The movement review includes Jump and Slide and displays the newly registered phases at normal or quarter speed.
+
+## 39T24 full slide replacement
+
+The verified 39T23 checkpoint is `245ca624d6a750b259291bec15f20b846f4153eb`. This batch replaces all 24 slide files, including straight-back and back-right entry, hold and recovery. It uses the original approved side peeks, the stationary wrap pivots, and the approved compact rear housing as the art references. The atlas source and manually measured pelvis, muzzle and support foot for each export are recorded in `batch24-registration.json`.
+
+The live pose selectors share the slide recovery frame with some catch and transition paths. The new exports keep those keys and preserve the selector and input behavior. The preview includes every slide direction and the previously released jump sequences. The 39T24 replacement pass covers slides. The 48 existing jump frames and the other runtime families are still open for that pass.
+
+The baseline manifest registers 302 files. The shared selector can reuse authored idle, gait, jump and cover frames for special actions rather than using a dedicated special-action atlas. Audit reachability through both the server pose selector and the renderer's selection path before declaring the full replacement complete.
