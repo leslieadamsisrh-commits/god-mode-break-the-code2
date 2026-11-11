@@ -118,3 +118,9 @@ Eight new cels replace the legacy straight-back jog and sprint. Each pace has in
 The generation prompts specified an isolated 2-by-2 atlas per pace at the fixed elevated rear camera and explicitly described which leg supports weight in each phase. The jog atlas repeated the right support in its second cel. A targeted single-cel edit kept the same rear equipment, tail curve and muzzle direction while changing the support to the left foot. The registrations record the source images, pelvis, planted support, muzzle, ground projection and exported checksum. The pelvis stays in the same cell position while the support claw shifts in projected depth.
 
 The existing pose selector plays the replacement frames without a timing change. The lab movement preview now shows all three paces on the left, right and straight back. Five other directions still use the older fast-gait art.
+
+## 39T23 jump and slide artwork
+
+The 39T22 recording at 13–18 and 20–28 seconds showed the old gold armor during jumps and slides. This batch replaces 66 files at the keys already selected by the game. Jump has six phases in each of the eight directions. Slide has entry, hold and recovery in left, right, front, front-left, front-right and back-left. Straight-back and back-right slide still use their 39T22 art and are listed in the production map. Earlier artwork is recoverable at 39T22.
+
+The approved olive movement and cover artwork supplied the design references. The source atlases were independently drawn by facing and use the original motion as silhouette reference. Each exported cell is registered to a 512-pixel canvas with a consistent drawing scale, a measured pelvis, a visible muzzle and contact points where applicable. The manifest preserves the replaced hashes and identifies the active restored directions. Jump physics and slide timing are unchanged. The movement review includes Jump and Slide and displays the newly registered phases at normal or quarter speed.

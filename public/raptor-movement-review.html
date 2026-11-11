@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Raptor · Raptor movement by pace</title>
+<title>Raptor · Raptor movement, jump and slide</title>
 <style>
 :root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0c151d;color:#edf4f0}*{box-sizing:border-box}body{max-width:1180px;margin:auto;padding:24px 18px 48px}a{color:#97e0d6}h1{font-size:clamp(26px,5vw,42px);margin:16px 0 10px}p{line-height:1.6;color:#b8c9cd;max-width:790px}.tag{color:#dfb57b;letter-spacing:.12em;font-size:12px}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:16px 0}button,select{font:inherit;color:#edf4f0;background:#1b303d;border:1px solid #607e8a;border-radius:8px;padding:10px 14px;min-height:44px;cursor:pointer}label{display:flex;align-items:center;gap:8px}input{width:20px;height:20px}.sets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.set[hidden]{display:none}.set{border:1px solid #34505d;border-radius:12px;background:#142530;overflow:hidden}.set h2{font-size:18px;margin:16px 16px 2px}.set .phase{display:block;margin:0 16px 12px;color:#b5e3c9;font-size:14px}canvas{display:block;width:100%;height:auto;background:#435963}.still{display:grid;grid-template-columns:repeat(6,minmax(125px,1fr));gap:8px;overflow:auto;padding:8px 0 16px}.still figure{margin:0;min-width:125px}.still figcaption{font-size:12px;text-align:center;padding:7px;color:#c4d4d7}.still canvas{border-radius:6px}.note{font-size:13px}details{margin-top:24px}summary{cursor:pointer;padding:14px 0;font-weight:600}@media(max-width:700px){.sets{grid-template-columns:1fr}.set{display:grid;grid-template-columns:1fr 1fr}.set canvas{grid-column:2;grid-row:1/4}.set h2{align-self:end}.still{grid-template-columns:repeat(6,150px)}}
 </style>
@@ -10,12 +10,12 @@
 <body>
 <a href="/studio/character-lab">← Character Lab</a>
 <p><a href="/raptor-production-map.html">Open the complete sprite checklist →</a></p>
-<p class="tag">GOD MODE · 39T22 · RAPTOR</p>
-<h1>Raptor movement by pace</h1>
-<p>Compare the measured Stalk, forward-leaning Jog, and low Full Sprint from the left, right and straight-back views.</p>
+<p class="tag">GOD MODE · 39T23 · RAPTOR</p>
+<h1>Raptor movement, jump and slide</h1>
+<p>Compare Stalk, Jog and Full Sprint, or inspect the new jump and slide sequences.</p>
 <div class="controls">
 <button id="play" type="button">Pause</button>
-<label>Pace <select id="pace"><option value="build">Build speed</option><option value="movement">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option></select></label>
+<label>Animation <select id="pace"><option value="build">Build speed</option><option value="movement">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option><option value="jump">Jump</option><option value="slide">Slide</option></select></label>
 <label>Speed <select id="speed"><option value="1">Normal</option><option value="0.25">Quarter speed</option></select></label>
 <label>Size <select id="size"><option value="2.5">Inspect</option><option value="1">Gameplay</option></select></label>
 <label><input id="guides" type="checkbox">Ground and support heel</label>
@@ -26,11 +26,10 @@
 <p class="note">In the Character Lab, choose Stalk, Jog or Full under keyboard and touch pace. Move left, right or away from the camera and open Animation trace to see the selected gait.</p>
 <script>
 'use strict';
-const directions=['right','left','back'];
-const names={right:'Right · playable',left:'Left · playable',back:'Rear · playable'};
+const names={right:'Right',left:'Left',back:'Rear',front:'Front','front-left':'Front left','front-right':'Front right','back-left':'Rear left','back-right':'Rear right'};
 const phaseLabels=['Left contact','Left pass','Right contact','Right pass'];
-const labels={movement:['Ready','Push',...phaseLabels,'Brake','Settle'],jog:phaseLabels,sprint:phaseLabels};
-const paceNames={movement:'Stalk',jog:'Jog',sprint:'Full Sprint'};
+const labels={movement:['Ready','Push',...phaseLabels,'Brake','Settle'],jog:phaseLabels,sprint:phaseLabels,jump:['Push-off','Ascent','Apex','Descent','Landing','Recovery'],slide:['Entry','Hold','Recovery']};
+const paceNames={movement:'Stalk',jog:'Jog',sprint:'Full Sprint',jump:'Jump',slide:'Slide'};
 const cycle=(family,start,durations)=>durations.map((duration,index)=>({family,index:start+index,duration}));
 const stalk=cycle('movement',2,[180,120,180,120]);
 const jog=cycle('jog',0,[145,100,145,100]);
@@ -40,8 +39,12 @@ const timelines={
  movement:[...cycle('movement',0,[350,100]),...stalk,...stalk,...cycle('movement',6,[125,150])],
  jog,
  sprint,
+ jump:cycle('jump',0,[140,180,160,180,140,180]),
+ slide:cycle('slide',0,[140,360,175]),
 };
 const pace=document.querySelector('#pace');
+const requested=new URLSearchParams(location.search).get('pace');
+if(Object.hasOwn(timelines,requested))pace.value=requested;
 pace.addEventListener('change',()=>{elapsed=0;});
 const controls={play:document.querySelector('#play'),speed:document.querySelector('#speed'),size:document.querySelector('#size'),guides:document.querySelector('#guides')};
 let paused=false,elapsed=0,last=performance.now();
@@ -55,7 +58,9 @@ function paint(canvas,image,record){
  ctx.drawImage(image,root.x-record.anchor[0]*unit,root.y-record.anchor[1]*unit,512*unit,512*unit);
  if(controls.guides.checked){
   ctx.strokeStyle='#a7ccd4';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,root.y);ctx.lineTo(canvas.width,root.y);ctx.stroke();
-  ctx.fillStyle='#75f2c1';ctx.beginPath();ctx.arc(root.x+(record.supportFoot[0]-record.anchor[0])*unit,root.y+(record.supportFoot[1]-record.anchor[1])*unit,3*factor,0,Math.PI*2);ctx.fill();
+  if(record.supportFoot){
+   ctx.fillStyle='#75f2c1';ctx.beginPath();ctx.arc(root.x+(record.supportFoot[0]-record.anchor[0])*unit,root.y+(record.supportFoot[1]-record.anchor[1])*unit,3*factor,0,Math.PI*2);ctx.fill();
+  }
  }
 }
 async function load(){
@@ -64,6 +69,8 @@ async function load(){
  const manifest=await response.json();
  const sets=[];
  let loaded=0;
+ const actions=manifest.restoredActionDirections;
+ const directions=[...new Set([...manifest.movementDirections,...actions.jump,...actions.slide])];
  for(const direction of directions){
   const box=document.createElement('article');
   box.className='set';
@@ -79,7 +86,10 @@ async function load(){
 
   const frames={};
   const stills=[];
-  const families=manifest.fastMovementDirections.includes(direction)?['movement','jog','sprint']:['movement'];
+  const families=[];
+  if(manifest.movementDirections.includes(direction))families.push('movement');
+  if(manifest.fastMovementDirections.includes(direction))families.push('jog','sprint');
+  for(const action of ['jump','slide'])if(actions[action].includes(direction))families.push(action);
   for(const family of families){
    frames[family]=await Promise.all(labels[family].map(async(label,index)=>{
     const key=family+'/'+direction+'/'+String(index).padStart(3,'0')+'.png';
@@ -106,7 +116,7 @@ async function load(){
    });
    document.querySelector('#stills').append(title,strip);
   }
-  sets.push({frames,phase,canvas,stills});
+  sets.push({box,frames,phase,canvas,stills});
  }
  document.querySelector('#status').textContent='All '+loaded+' drawings loaded.';
  function redrawStills(){for(const set of sets)for(const still of set.stills)paint(still.canvas,still.image,still.record);}
@@ -127,7 +137,9 @@ async function load(){
    remaining-=entry.duration;
   }
   for(const set of sets){
-   const frame=set.frames[step.family][step.index];
+   const frame=set.frames[step.family]?.[step.index];
+   set.box.hidden=!frame;
+   if(!frame)continue;
    paint(set.canvas,frame.image,frame.record);
    set.phase.textContent=paceNames[step.family]+' · '+labels[step.family][step.index];
   }
