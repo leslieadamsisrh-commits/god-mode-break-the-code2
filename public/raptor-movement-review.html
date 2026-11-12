@@ -10,7 +10,7 @@
 <body>
 <a href="/studio/character-lab">← Character Lab</a>
 <p><a href="/raptor-production-map.html">Open the complete sprite checklist →</a></p>
-<p class="tag">GOD MODE · 39T31 · RAPTOR</p>
+<p class="tag">GOD MODE · 39T32 · RAPTOR</p>
 <h1>Raptor movement, jump and slide</h1>
 <p>Review the eight ready poses, movement cycles, jumps, slides, and recovery.</p>
 <div class="controls">
@@ -94,7 +94,7 @@ async function load(){
   if(manifest.movementDirections.includes(direction))families.push('movement');
   if(designGait||manifest.fastMovementDirections.includes(direction))families.push('jog','sprint');
   for(const action of ['jump','slide'])if(actions[action].includes(direction))families.push(action);
-  if(['front','front-right','back-left','back-right'].includes(direction))families.push('recovery');
+  if(manifest.frames['recovery/'+direction+'/000.png'] && !manifest.movementDirections.includes(direction))families.push('recovery');
   for(const family of families){
    frames[family]=await Promise.all(labels[family].map(async(label,index)=>{
     const key=family+'/'+direction+'/'+String(index).padStart(3,'0')+'.png';

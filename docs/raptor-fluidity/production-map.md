@@ -176,3 +176,7 @@ Run `node tests/check-raptor-runtime-inventory.cjs --release` for every open run
 ## 39T31 front-left gait and cover
 
 This batch registers front-left stalk, jog and sprint with four phases each. Two rear tuck poses, two front-right cover-drive contacts and front-left recovery complete the reachable cover and recovery replacements. The remaining 36 open keys are the four phases at all three paces in front-right, back-left and back-right. The selector and combat controls are unchanged.
+
+## 39T32 front-right gait
+
+This batch registers four front-right phases for each pace. The remaining open keys are the four phases of all three paces in back-left and back-right. The main game menu can start an authoritative local Raptor session once all reachable keys clear the inventory check.

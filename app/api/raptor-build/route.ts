@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server';
 import manifest from '../../../public/assets/raptor-v2/manifest.json';
 import inventory from '../../../docs/raptor-fluidity/runtime-inventory.json';
-import batch from '../../../docs/raptor-fluidity/batch31-registration.json';
+import batch from '../../../docs/raptor-fluidity/batch32-registration.json';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +19,7 @@ export function GET() {
   fastMovementPlayable,
   restoredActionDirections: manifest.restoredActionDirections,
   restoredActionCount: manifest.restoredActionCount,
-  batch: {coverReplacements: 4, recoveryReplacements: 1, gaitReplacements: 12, activated: Object.keys(batch).length},
+  batch: {gaitReplacements: 12, activated: Object.keys(batch).length},
   inventory: {reachable: approved+reused+revalidated+open, approved: approved+reused+revalidated, reused, revalidated, open},
  }, {headers: {'Cache-Control':'no-store'}});
 }

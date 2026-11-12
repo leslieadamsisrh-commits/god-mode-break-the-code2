@@ -16,10 +16,11 @@ const inventory = require('../public/assets/raptor-v2/manifest.json');
 const registration = {
   ...require('../docs/raptor-fluidity/batch27-registration.json'),
   ...require('../docs/raptor-fluidity/batch31-registration.json'),
+  ...require('../docs/raptor-fluidity/batch32-registration.json'),
 };
 const phases = inventory.gaitPhases;
 
-for (const direction of ['front', 'front-left']) {
+for (const direction of ['front', 'front-left', 'front-right']) {
   const angle = RAPTOR_POSE_DIRECTIONS.indexOf(direction) * Math.PI / 4;
   const dx = Math.cos(angle), dy = Math.sin(angle);
   const sample = {
