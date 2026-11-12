@@ -10,12 +10,12 @@
 <body>
 <a href="/studio/character-lab">← Character Lab</a>
 <p><a href="/raptor-production-map.html">Open the complete sprite checklist →</a></p>
-<p class="tag">GOD MODE · 39T25 · RAPTOR</p>
+<p class="tag">GOD MODE · 39T28 · RAPTOR</p>
 <h1>Raptor movement, jump and slide</h1>
-<p>Compare Stalk, Jog and Full Sprint, or inspect all eight jump and slide directions.</p>
+<p>Review the eight ready poses, movement cycles, jumps, and slides.</p>
 <div class="controls">
 <button id="play" type="button">Pause</button>
-<label>Animation <select id="pace"><option value="build">Build speed</option><option value="movement">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option><option value="jump">Jump</option><option value="slide">Slide</option></select></label>
+<label>Animation <select id="pace"><option value="build">Build speed</option><option value="idle">Ready</option><option value="stalk">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option><option value="jump">Jump</option><option value="slide">Slide</option></select></label>
 <label>Speed <select id="speed"><option value="1">Normal</option><option value="0.25">Quarter speed</option></select></label>
 <label>Size <select id="size"><option value="2.5">Inspect</option><option value="1">Gameplay</option></select></label>
 <label><input id="guides" type="checkbox">Ground and support heel</label>
@@ -23,20 +23,21 @@
 <p id="status" role="status">Loading the new drawings…</p>
 <div class="sets" id="sets"></div>
 <details><summary>Inspect all poses</summary><div id="stills"></div></details>
-<p class="note">In the Character Lab, choose Stalk, Jog or Full under keyboard and touch pace. Move left, right or away from the camera and open Animation trace to see the selected gait.</p>
+<p class="note">In the Character Lab, choose Stalk, Jog or Full under keyboard and touch pace. Move toward or away from the camera, left, or right and open Animation trace to see the selected gait.</p>
 <script>
 'use strict';
 const names={right:'Right',left:'Left',back:'Rear',front:'Front','front-left':'Front left','front-right':'Front right','back-left':'Rear left','back-right':'Rear right'};
 const phaseLabels=['Left contact','Left pass','Right contact','Right pass'];
-const labels={movement:['Ready','Push',...phaseLabels,'Brake','Settle'],jog:phaseLabels,sprint:phaseLabels,jump:['Push-off','Ascent','Apex','Descent','Landing','Recovery'],slide:['Entry','Hold','Recovery']};
-const paceNames={movement:'Stalk',jog:'Jog',sprint:'Full Sprint',jump:'Jump',slide:'Slide'};
+const labels={idle:['Ready'],stalk:phaseLabels,movement:['Ready','Push',...phaseLabels,'Brake','Settle'],jog:phaseLabels,sprint:phaseLabels,jump:['Push-off','Ascent','Apex','Descent','Landing','Recovery'],slide:['Entry','Hold','Recovery']};
+const paceNames={idle:'Ready',stalk:'Stalk',movement:'Movement',jog:'Jog',sprint:'Full Sprint',jump:'Jump',slide:'Slide'};
 const cycle=(family,start,durations)=>durations.map((duration,index)=>({family,index:start+index,duration}));
 const stalk=cycle('movement',2,[180,120,180,120]);
 const jog=cycle('jog',0,[145,100,145,100]);
 const sprint=cycle('sprint',0,[105,80,105,80]);
 const timelines={
  build:[...cycle('movement',0,[350,100]),...stalk,...jog,...sprint,...sprint,...jog,...cycle('movement',6,[125,150])],
- movement:[...cycle('movement',0,[350,100]),...stalk,...stalk,...cycle('movement',6,[125,150])],
+ idle:cycle('idle',0,[1000]),
+ stalk:cycle('stalk',0,[180,120,180,120]),
  jog,
  sprint,
  jump:cycle('jump',0,[140,180,160,180,140,180]),
@@ -86,9 +87,11 @@ async function load(){
 
   const frames={};
   const stills=[];
-  const families=[];
+  const families=['idle'];
+  const designGait=manifest.designGaitDirections.includes(direction);
+  if(designGait)families.push('stalk');
   if(manifest.movementDirections.includes(direction))families.push('movement');
-  if(manifest.fastMovementDirections.includes(direction))families.push('jog','sprint');
+  if(designGait||manifest.fastMovementDirections.includes(direction))families.push('jog','sprint');
   for(const action of ['jump','slide'])if(actions[action].includes(direction))families.push(action);
   for(const family of families){
    frames[family]=await Promise.all(labels[family].map(async(label,index)=>{
@@ -137,11 +140,17 @@ async function load(){
    remaining-=entry.duration;
   }
   for(const set of sets){
-   const frame=set.frames[step.family]?.[step.index];
+   let {family,index}=step;
+   if(family==='stalk'&&!set.frames.stalk){family='movement';index+=2;}
+   if(family==='movement'&&!set.frames.movement&&set.frames.stalk){
+    if(index>=2&&index<=5){family='stalk';index-=2;}
+    else {family='idle';index=0;}
+   }
+   const frame=set.frames[family]?.[index];
    set.box.hidden=!frame;
    if(!frame)continue;
    paint(set.canvas,frame.image,frame.record);
-   set.phase.textContent=paceNames[step.family]+' · '+labels[step.family][step.index];
+   set.phase.textContent=paceNames[family]+' · '+labels[family][index];
   }
   requestAnimationFrame(draw);
  }

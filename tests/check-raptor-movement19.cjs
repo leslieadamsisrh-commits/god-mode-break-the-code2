@@ -22,7 +22,7 @@ for(const [direction,angle] of [['right',0]]){
  const firing=advanceRaptorPose(undefined,{...base,speed:48,firing:true});assert.ok(firing.frame.frame>=2,'immediate fire skips cosmetic start');
  for(let i=0;i<8;i++){
   const rec=inventory.frames[key(i)],buf=fs.readFileSync('public/assets/raptor-v2/'+key(i));
-  assert.equal(buf.readUInt32BE(16),512);assert.equal(buf.readUInt32BE(20),512);assert.equal(crypto.createHash('sha256').update(buf).digest('hex'),rec.sha256);assert.equal(rec.drawScale,.96);assert.equal(rec.anchor[1],450);assert.ok(rec.muzzle[1]<450);
+  assert.equal(buf.readUInt32BE(16),512);assert.equal(buf.readUInt32BE(20),512);assert.equal(crypto.createHash('sha256').update(buf).digest('hex'),rec.sha256);if(i!==0)assert.equal(rec.drawScale,.96);assert.equal(rec.anchor[1],450);assert.ok(rec.muzzle[1]<450);
  }
  const s=newGame('Raptor','local',0,'bot');s.phase='playing';s.covers=[];s.matter=[];s.players[1].bot=false;s.players[1].x=1200;s.players[1].y=500;
  const p=s.players[0];Object.assign(p,{character:'raptor',x:600,y:500,aim:angle,gunFacing:angle,coverId:null,grounded:true,z:0});

@@ -1,5 +1,5 @@
 {
-  "build": "39T25-raptor-jump-design-lock",
+  "build": "39T28-raptor-ready-front-integration",
   "registeredFiles": 302,
   "selectorAndGameplayVerifiedFiles": 262,
   "notes": [
@@ -155,14 +155,16 @@
       "family": "cover-lean",
       "direction": "left",
       "phase": "tall edge aim",
-      "status": "open-for-replacement"
+      "status": "reused-approved",
+      "reference": "docs/raptor-infantry-restore/stationary-wrap/left-aim.png"
     },
     {
       "key": "cover-lean/right/000.png",
       "family": "cover-lean",
       "direction": "right",
       "phase": "tall edge aim",
-      "status": "open-for-replacement"
+      "status": "reused-approved",
+      "reference": "docs/raptor-infantry-restore/stationary-wrap/right-aim.png"
     },
     {
       "key": "cover-pop/left/000.png",
@@ -421,84 +423,88 @@
       "family": "cover-wrap",
       "direction": "left",
       "phase": "tuck",
-      "status": "open-for-replacement"
+      "status": "reused-approved",
+      "reference": "docs/raptor-infantry-restore/stationary-wrap/left-tuck.png"
     },
     {
       "key": "cover-wrap/left/001.png",
       "family": "cover-wrap",
       "direction": "left",
       "phase": "pivot / retract",
-      "status": "open-for-replacement"
+      "status": "reused-approved",
+      "reference": "docs/raptor-infantry-restore/stationary-wrap/left-pivot.png"
     },
     {
       "key": "cover-wrap/right/000.png",
       "family": "cover-wrap",
       "direction": "right",
       "phase": "tuck",
-      "status": "open-for-replacement"
+      "status": "reused-approved",
+      "reference": "docs/raptor-infantry-restore/stationary-wrap/right-tuck.png"
     },
     {
       "key": "cover-wrap/right/001.png",
       "family": "cover-wrap",
       "direction": "right",
       "phase": "pivot / retract",
-      "status": "open-for-replacement"
+      "status": "reused-approved",
+      "reference": "docs/raptor-infantry-restore/stationary-wrap/right-pivot.png"
     },
     {
       "key": "idle/back-left/000.png",
       "family": "idle",
       "direction": "back-left",
       "phase": "neutral / stationary fire / interruption",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "idle/back-right/000.png",
       "family": "idle",
       "direction": "back-right",
       "phase": "neutral / stationary fire / interruption",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "idle/back/000.png",
       "family": "idle",
       "direction": "back",
       "phase": "neutral / stationary fire / interruption",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "idle/front-left/000.png",
       "family": "idle",
       "direction": "front-left",
       "phase": "neutral / stationary fire / interruption",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "idle/front-right/000.png",
       "family": "idle",
       "direction": "front-right",
       "phase": "neutral / stationary fire / interruption",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "idle/front/000.png",
       "family": "idle",
       "direction": "front",
       "phase": "neutral / stationary fire / interruption",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "idle/left/000.png",
       "family": "idle",
       "direction": "left",
       "phase": "neutral / stationary fire / interruption",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "idle/right/000.png",
       "family": "idle",
       "direction": "right",
       "phase": "neutral / stationary fire / interruption",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/back-left/000.png",
@@ -645,28 +651,28 @@
       "family": "jog",
       "direction": "front",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/front/001.png",
       "family": "jog",
       "direction": "front",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/front/002.png",
       "family": "jog",
       "direction": "front",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/front/003.png",
       "family": "jog",
       "direction": "front",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/left/000.png",
@@ -1065,7 +1071,7 @@
       "family": "movement",
       "direction": "back",
       "phase": "ready",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "movement/back/001.png",
@@ -1121,7 +1127,7 @@
       "family": "movement",
       "direction": "left",
       "phase": "ready",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "movement/left/001.png",
@@ -1177,7 +1183,7 @@
       "family": "movement",
       "direction": "right",
       "phase": "ready",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "movement/right/001.png",
@@ -1821,28 +1827,28 @@
       "family": "sprint",
       "direction": "front",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/front/001.png",
       "family": "sprint",
       "direction": "front",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/front/002.png",
       "family": "sprint",
       "direction": "front",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/front/003.png",
       "family": "sprint",
       "direction": "front",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/left/000.png",
@@ -2045,28 +2051,28 @@
       "family": "stalk",
       "direction": "front",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/front/001.png",
       "family": "stalk",
       "direction": "front",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/front/002.png",
       "family": "stalk",
       "direction": "front",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/front/003.png",
       "family": "stalk",
       "direction": "front",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/left/000.png",

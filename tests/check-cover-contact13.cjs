@@ -22,8 +22,9 @@ assert.ok(!source.includes('if(splitCover&&renderIm)'),'no duplicate lower-body 
 console.log('PASS contact13: real renderer facing/offset under blocked aim and stale timers; five wall normals; actual-distance stride, rest/gap/teleport/reattach; single body layer.');
 const {advanceRaptorPose}=require('../lib/raptorPose.ts'),manifest=require('../public/assets/raptor-v2/manifest.json');
 const {loadImage}=require('@napi-rs/canvas');
+const rearHold=require('../docs/raptor-infantry-restore/directional-ink-review/registration.json').frames['cover-hold/back/000.png'];
 for(const state of ['hold','brace','retract']){
  const r=advanceRaptorPose(undefined,{time:1,angle:-Math.PI/2,speed:0,sliding:false,airborne:false,verticalVelocity:0,hit:false,attached:true,firing:false,coverState11:state});
  assert.equal(r.frame.key,'cover-hold/back/000.png');
 }
-(async()=>{const key='cover-hold/back/000.png',path='public/assets/raptor-v2/'+key,bytes=fs.readFileSync(path),im=await loadImage(bytes);assert.equal(im.width,512);assert.equal(im.height,512);assert.equal(require('crypto').createHash('sha256').update(bytes).digest('hex'),manifest.frames[key].sha256);assert.deepEqual(manifest.frames[key].anchor,[250,384]);console.log('PASS rear hold/brace/retract selects saved 512px asset with verified hash and registered ground anchor')})().catch(e=>{console.error(e);process.exitCode=1});
+(async()=>{const key='cover-hold/back/000.png',path='public/assets/raptor-v2/'+key,bytes=fs.readFileSync(path),im=await loadImage(bytes);assert.equal(im.width,512);assert.equal(im.height,512);assert.equal(require('crypto').createHash('sha256').update(bytes).digest('hex'),manifest.frames[key].sha256);assert.equal(manifest.frames[key].sha256,rearHold.sha256);assert.deepEqual(manifest.frames[key].anchor,rearHold.anchor);console.log('PASS rear hold/brace/retract selects saved 512px asset with verified hash and registered ground anchor')})().catch(e=>{console.error(e);process.exitCode=1});

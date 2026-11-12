@@ -4,6 +4,7 @@ const {advanceRaptorPose,RAPTOR_POSE_DIRECTIONS}=require('../lib/raptorPose.ts')
 const {newGame,setInput,advance}=require('../lib/game.ts');
 const {barrelSocket27d}=require('../lib/ballistics27d.ts');
 const inventory=require('../public/assets/raptor-v2/manifest.json'),registration=require('../docs/raptor-fluidity/batch20-registration.json');
+const readyRegistration=require('../docs/raptor-fluidity/batch26-registration.json');
 for(const direction of inventory.movementDirections){
  const angle=RAPTOR_POSE_DIRECTIONS.indexOf(direction)*Math.PI/4,dx=Math.cos(angle),dy=Math.sin(angle),key=i=>`movement/${direction}/${String(i).padStart(3,'0')}.png`;
  const base={time:1,x:600,y:500,angle,travelAngle:angle,speed:0,sliding:false,airborne:false,verticalVelocity:0,hit:false,attached:false,firing:false};
@@ -22,7 +23,7 @@ for(const direction of inventory.movementDirections){
  for(const interruption of [{airborne:true,verticalVelocity:50},{hit:true},{sliding:true},{attached:true,coverState11:'brace'}])assert.notEqual(advanceRaptorPose(pose.memory,{...base,time:time+.24,...interruption}).frame.family,'movement');
  for(let i=0;i<8;i++){
   const rec=inventory.frames[key(i)],bytes=fs.readFileSync('public/assets/raptor-v2/'+key(i));
-  assert.equal(bytes.readUInt32BE(16),512);assert.equal(bytes.readUInt32BE(20),512);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),rec.sha256);assert.deepEqual(rec,registration.frames[key(i)]);assert.equal(rec.anchor[1],450);assert.ok(rec.muzzleGround[1]>rec.muzzle[1]);
+  assert.equal(bytes.readUInt32BE(16),512);assert.equal(bytes.readUInt32BE(20),512);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),rec.sha256);assert.deepEqual(rec,readyRegistration[key(i)]??registration.frames[key(i)]);assert.equal(rec.anchor[1],450);assert.ok(rec.muzzleGround[1]>rec.muzzle[1]);
  }
  const s=newGame('Raptor','local',0,'bot');s.phase='playing';s.covers=[];s.matter=[];s.players[1].bot=false;s.players[1].x=1200;s.players[1].y=660;
  const p=s.players[0];Object.assign(p,{character:'raptor',x:600,y:500,aim:angle,gunFacing:angle,coverId:null,grounded:true,z:0});
