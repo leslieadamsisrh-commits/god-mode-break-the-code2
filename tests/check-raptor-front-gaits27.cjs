@@ -13,10 +13,13 @@ const {newGame, setInput, advance} = require('../lib/game.ts');
 const {barrelSocket27d} = require('../lib/ballistics27d.ts');
 const {advanceRaptorPose, RAPTOR_POSE_DIRECTIONS} = require('../lib/raptorPose.ts');
 const inventory = require('../public/assets/raptor-v2/manifest.json');
-const registration = require('../docs/raptor-fluidity/batch27-registration.json');
+const registration = {
+  ...require('../docs/raptor-fluidity/batch27-registration.json'),
+  ...require('../docs/raptor-fluidity/batch31-registration.json'),
+};
 const phases = inventory.gaitPhases;
 
-for (const direction of ['front']) {
+for (const direction of ['front', 'front-left']) {
   const angle = RAPTOR_POSE_DIRECTIONS.indexOf(direction) * Math.PI / 4;
   const dx = Math.cos(angle), dy = Math.sin(angle);
   const sample = {
@@ -46,7 +49,7 @@ for (const direction of ['front']) {
     Object.assign(actor, {vx:0,vy:0});
     setInput(game, 0, actor.lastSeq + 1, {aim:angle});
     advance(game, game.lastAt + 1000/60);
-    assert.equal(actor.raptorFrame.key, 'idle/front/000.png');
+    assert.equal(actor.raptorFrame.key, 'idle/' + direction + '/000.png');
     const painted = new Set();
     for (let i = 0; i < 100; i++) {
       tick();
@@ -63,7 +66,9 @@ for (const direction of ['front']) {
       assert.deepEqual(record, registration[key]);
       assert.equal(record.phase, phases[frame]);
       assert.equal(record.anchor[1], 449);
-      assert.equal(record.supportFoot[0] > record.pelvis[0], frame < 2, 'front support alternates by anatomical side');
+      if (direction === 'front') {
+        assert.equal(record.supportFoot[0] > record.pelvis[0], frame < 2, 'front support alternates by anatomical side');
+      }
       assert.ok(record.muzzle[1] < record.muzzleGround[1]);
     }
     // Center the shot so a pellet cannot leave the arena during its first tick.

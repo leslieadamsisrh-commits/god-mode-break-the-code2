@@ -1,0 +1,461 @@
+{
+  "cover-drive/front-right/000.png": {
+    "anchor": [
+      241,
+      423
+    ],
+    "muzzle": [
+      382,
+      306
+    ],
+    "muzzleGround": [
+      382,
+      423
+    ],
+    "drawScale": 1.12,
+    "sha256": "6f8d041966b95ecbe7e9de9ed6e1e17a0a507fb2d4a44412fd84ab385b90bfb6",
+    "source": "exec-5566891d-d2f5-46c2-b29c-28d739a0235a.png",
+    "pelvis": [
+      241,
+      296
+    ],
+    "supportFoot": [
+      323,
+      423
+    ],
+    "phase": "drive contact A",
+    "replacedSha256": "a216fbda7e93f0a9ec31bd20504920d69dff5e25e47094d7ea210b1397bf4b81"
+  },
+  "cover-drive/front-right/001.png": {
+    "anchor": [
+      247,
+      413
+    ],
+    "muzzle": [
+      385,
+      288
+    ],
+    "muzzleGround": [
+      385,
+      413
+    ],
+    "drawScale": 1.12,
+    "sha256": "5597ae268d9e9d1e6303fe37039abaa3b4309122e6b4f1f4a0f5ca16270776ee",
+    "source": "exec-5566891d-d2f5-46c2-b29c-28d739a0235a.png",
+    "pelvis": [
+      247,
+      285
+    ],
+    "supportFoot": [
+      340,
+      413
+    ],
+    "phase": "drive contact B",
+    "replacedSha256": "35a0dceb6d9f1b4634594c91f1b574fb85e161ecdac25574c1c94b4d15b97616"
+  },
+  "cover-hold/back-left/000.png": {
+    "anchor": [
+      244,
+      414
+    ],
+    "drawScale": 1.05,
+    "muzzle": [
+      100,
+      203
+    ],
+    "muzzleGround": [
+      100,
+      414
+    ],
+    "sha256": "4294f9ac12da01dca081186d70c1355cb3bd12593c633329f9ddab1b21b1a909",
+    "source": "exec-287e3df9-7b49-4c68-86aa-40b6fa517c40.png",
+    "pelvis": [
+      244,
+      298
+    ],
+    "supportFoot": [
+      183,
+      414
+    ],
+    "phase": "tuck / brace / rest",
+    "replacedSha256": "a822e3a93bf443183803aea769c753b6431197691dcb46b1afb4245d761aef05"
+  },
+  "cover-hold/back-right/000.png": {
+    "anchor": [
+      253,
+      430
+    ],
+    "drawScale": 1,
+    "muzzle": [
+      425,
+      211
+    ],
+    "muzzleGround": [
+      425,
+      430
+    ],
+    "sha256": "797bb83b53e7bad92059fefa76371a22d31b74d2b1e452efd17b19548fc2e4fe",
+    "source": "exec-e9c0ccab-c9df-4d75-8e35-cfd08101b93d.png",
+    "pelvis": [
+      253,
+      306
+    ],
+    "supportFoot": [
+      340,
+      430
+    ],
+    "phase": "tuck / brace / rest",
+    "replacedSha256": "adeef0a157c30f4b848ce3defeec8b698a5f1980ce9e8c075271b5861ee8856e"
+  },
+  "recovery/front-left/000.png": {
+    "anchor": [
+      282,
+      427
+    ],
+    "drawScale": 1.08,
+    "supportFoot": [
+      151,
+      427
+    ],
+    "pelvis": [
+      282,
+      304
+    ],
+    "sha256": "7b5e2c47c7d07092ada4cfb357fd89fd06d4fd588e693ee3e61efd8326330e24",
+    "source": "exec-5566891d-d2f5-46c2-b29c-28d739a0235a.png",
+    "muzzle": [
+      79,
+      273
+    ],
+    "muzzleGround": [
+      79,
+      427
+    ],
+    "phase": "cover exit / slide recovery",
+    "replacedSha256": "44fb08e004519438fa1466b54c6a0f535bcdce585cb715838109a39725192c04"
+  },
+  "stalk/front-left/000.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      62,
+      354
+    ],
+    "muzzleGround": [
+      62,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "9577c4ae9dd6b3bc43220d3f27853dbc9601eac51cb6569020dc55aaf2fddc6b",
+    "source": "exec-c82862e4-b7c3-4a3d-859c-553a6fcc7e31.png",
+    "pelvis": [
+      256,
+      321
+    ],
+    "supportFoot": [
+      172,
+      449
+    ],
+    "phase": "left-contact",
+    "replacedSha256": "030594319cb2632f23d9c7154fa376dfddf3f205ec4e3fa58ccf745684ca0eb8"
+  },
+  "stalk/front-left/001.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      84,
+      364
+    ],
+    "muzzleGround": [
+      84,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "d802577b67c0098833a6cfe80c2b94e8ba9a175c425e5338b8a3c0c6e8a3d01c",
+    "source": "exec-c82862e4-b7c3-4a3d-859c-553a6fcc7e31.png",
+    "pelvis": [
+      256,
+      325
+    ],
+    "supportFoot": [
+      233,
+      449
+    ],
+    "phase": "left-support-passing",
+    "replacedSha256": "4f38db76a3fa2a301a5905105dbdcea2b078cad0176da12def7af4a64a7c10d3"
+  },
+  "stalk/front-left/002.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      95,
+      339
+    ],
+    "muzzleGround": [
+      95,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "0eaea57b2e0675ef613883d98ef1e97d43bd5f6165d5a65632b6761ed8a8daa2",
+    "source": "exec-7d82dd78-2160-4b57-a6dc-204eef8b3358.png",
+    "pelvis": [
+      256,
+      314
+    ],
+    "supportFoot": [
+      101,
+      449
+    ],
+    "phase": "right-contact",
+    "replacedSha256": "b95de2a4c9994b6f6459f950e809c83755445912d457b217f30bd5c22f3858e6"
+  },
+  "stalk/front-left/003.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      94,
+      340
+    ],
+    "muzzleGround": [
+      94,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "454eed6577078c2c43ba4ee7d63069308420d98502f28b3894351d16eb486f3f",
+    "source": "exec-7d82dd78-2160-4b57-a6dc-204eef8b3358.png",
+    "pelvis": [
+      256,
+      316
+    ],
+    "supportFoot": [
+      184,
+      449
+    ],
+    "phase": "right-support-passing",
+    "replacedSha256": "61bff8074e5ee0d67c3948cbf0d48b09e0727326677e5ccd30a672cbbe5630b4"
+  },
+  "jog/front-left/000.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      78,
+      336
+    ],
+    "muzzleGround": [
+      78,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "52257ac7222b929fb0ee077e84693f24a3414d986a5c48a6dcdeea081937fc18",
+    "source": "exec-c82862e4-b7c3-4a3d-859c-553a6fcc7e31.png",
+    "pelvis": [
+      256,
+      290
+    ],
+    "supportFoot": [
+      172,
+      449
+    ],
+    "phase": "left-contact",
+    "replacedSha256": "e10ce573bd0b0deb09e9c0f7170ff43decac106b30a76bfd089209daafa7517a"
+  },
+  "jog/front-left/001.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      84,
+      328
+    ],
+    "muzzleGround": [
+      84,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "f17124d13623b0a96fc3b7e507e5033d5c6dce2f14b01d8f86699bc035ce8566",
+    "source": "exec-c82862e4-b7c3-4a3d-859c-553a6fcc7e31.png",
+    "pelvis": [
+      256,
+      281
+    ],
+    "supportFoot": [
+      198,
+      449
+    ],
+    "phase": "left-support-passing",
+    "replacedSha256": "89040e09334678c7f2afba388cb41407e73459fbbe7de87532ab8c5723a50c4f"
+  },
+  "jog/front-left/002.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      75,
+      318
+    ],
+    "muzzleGround": [
+      75,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "935496b334d152d6a5de628d1bc2dc2d76a7f10d143a335209c56ad1d2f8c63a",
+    "source": "exec-7d82dd78-2160-4b57-a6dc-204eef8b3358.png",
+    "pelvis": [
+      256,
+      276
+    ],
+    "supportFoot": [
+      76,
+      449
+    ],
+    "phase": "right-contact",
+    "replacedSha256": "68896b7eb2e7d782c6edff782c9c05029e2e30b1a1bdd73416f53a0700eb13f7"
+  },
+  "jog/front-left/003.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      82,
+      320
+    ],
+    "muzzleGround": [
+      82,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "54ba679bb055cab692802204c0776589b23fffb0d1dcde0fc0b1d2d7be82b8ce",
+    "source": "exec-7d82dd78-2160-4b57-a6dc-204eef8b3358.png",
+    "pelvis": [
+      256,
+      282
+    ],
+    "supportFoot": [
+      180,
+      449
+    ],
+    "phase": "right-support-passing",
+    "replacedSha256": "12075332bfbeb6fa2fda50f3985048fdd12f2ffd130a06c0f7d0e7089c37b6b4"
+  },
+  "sprint/front-left/000.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      51,
+      369
+    ],
+    "muzzleGround": [
+      51,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "7cae55bb497d6abcb313d5e663fd9c384b29f015783885b3cd845d97938527eb",
+    "source": "exec-c82862e4-b7c3-4a3d-859c-553a6fcc7e31.png",
+    "pelvis": [
+      256,
+      305
+    ],
+    "supportFoot": [
+      141,
+      449
+    ],
+    "phase": "left-contact",
+    "replacedSha256": "e78650d0fb5a1b3ca38ebe864967d7699060ef106ec355479e61ff9e9264915e"
+  },
+  "sprint/front-left/001.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      55,
+      374
+    ],
+    "muzzleGround": [
+      55,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "fab8d2b43b3fcaa33b5e4aa1bb69fb96e8e277a687b8856f7609a74aba0ffb67",
+    "source": "exec-c82862e4-b7c3-4a3d-859c-553a6fcc7e31.png",
+    "pelvis": [
+      256,
+      324
+    ],
+    "supportFoot": [
+      228,
+      449
+    ],
+    "phase": "left-support-passing",
+    "replacedSha256": "99325dab18070f3d51fec030fa93f4df77f364f34f910b5d6585b93bf699126c"
+  },
+  "sprint/front-left/002.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      50,
+      363
+    ],
+    "muzzleGround": [
+      50,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "bccc2281eae4efa03316f2a2650a83e57aa668f958868e8ec8b1929b5c737581",
+    "source": "exec-7d82dd78-2160-4b57-a6dc-204eef8b3358.png",
+    "pelvis": [
+      256,
+      297
+    ],
+    "supportFoot": [
+      61,
+      449
+    ],
+    "phase": "right-contact",
+    "replacedSha256": "356837589579a9c0f737945ae1e325b7e15d1b22dd1c642f6a1a187608b4441b"
+  },
+  "sprint/front-left/003.png": {
+    "anchor": [
+      256,
+      449
+    ],
+    "muzzle": [
+      62,
+      368
+    ],
+    "muzzleGround": [
+      62,
+      449
+    ],
+    "drawScale": 1,
+    "sha256": "61022e378e0d23cc6e0c09b39643353935fbfa2d0ef7b93685befd3b42b9afd5",
+    "source": "exec-7d82dd78-2160-4b57-a6dc-204eef8b3358.png",
+    "pelvis": [
+      256,
+      307
+    ],
+    "supportFoot": [
+      176,
+      449
+    ],
+    "phase": "right-support-passing",
+    "replacedSha256": "6cd1c86c4e66cf08d3f07000f9f085f15f34baf9fd3f7c956be0bc1037944f30"
+  }
+}

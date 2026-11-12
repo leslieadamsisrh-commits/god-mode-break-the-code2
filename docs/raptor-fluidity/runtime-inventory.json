@@ -1,5 +1,5 @@
 {
-  "build": "39T30-raptor-front-cover-barrel-registration",
+  "build": "39T31-raptor-front-left-gaits-and-cover",
   "registeredFiles": 302,
   "selectorAndGameplayVerifiedFiles": 262,
   "notes": [
@@ -71,28 +71,28 @@
       "family": "cover-drive",
       "direction": "front-right",
       "phase": "drive contact A",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-drive/front-right/001.png",
       "family": "cover-drive",
       "direction": "front-right",
       "phase": "drive contact B",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-hold/back-left/000.png",
       "family": "cover-hold",
       "direction": "back-left",
       "phase": "tuck / brace / rest",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-hold/back-right/000.png",
       "family": "cover-hold",
       "direction": "back-right",
       "phase": "tuck / brace / rest",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-hold/back/000.png",
@@ -595,28 +595,28 @@
       "family": "jog",
       "direction": "front-left",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/front-left/001.png",
       "family": "jog",
       "direction": "front-left",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/front-left/002.png",
       "family": "jog",
       "direction": "front-left",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/front-left/003.png",
       "family": "jog",
       "direction": "front-left",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/front-right/000.png",
@@ -1260,7 +1260,7 @@
       "family": "recovery",
       "direction": "front-left",
       "phase": "cover exit / slide recovery",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "recovery/front-right/000.png",
@@ -1771,28 +1771,28 @@
       "family": "sprint",
       "direction": "front-left",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/front-left/001.png",
       "family": "sprint",
       "direction": "front-left",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/front-left/002.png",
       "family": "sprint",
       "direction": "front-left",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/front-left/003.png",
       "family": "sprint",
       "direction": "front-left",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/front-right/000.png",
@@ -1995,28 +1995,28 @@
       "family": "stalk",
       "direction": "front-left",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/front-left/001.png",
       "family": "stalk",
       "direction": "front-left",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/front-left/002.png",
       "family": "stalk",
       "direction": "front-left",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/front-left/003.png",
       "family": "stalk",
       "direction": "front-left",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/front-right/000.png",

@@ -102,6 +102,8 @@ const open = reachable.filter(slot => !['replaced-in-design-pass','reused-approv
 for (const slot of reachable) {
   const entry = manifest.frames[slot.key];
   assert.ok(entry.anchor?.length===2 && entry.anchor.every(Number.isFinite) && entry.drawScale>0,slot.key+' invalid anchor');
+  assert.ok(entry.muzzle?.length===2 && entry.muzzle.every(point=>Number.isFinite(point)&&point>=0&&point<512),slot.key+' invalid muzzle');
+  assert.ok(entry.muzzleGround?.length===2 && entry.muzzleGround.every(Number.isFinite),slot.key+' invalid muzzle ground projection');
   const file = fs.readFileSync(path.join(root,'public/assets/raptor-v2',slot.key));
   assert.equal(file.readUInt32BE(16),512,slot.key);
   assert.equal(file.readUInt32BE(20),512,slot.key);

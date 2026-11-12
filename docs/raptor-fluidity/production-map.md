@@ -172,3 +172,7 @@ The visual review and cover regressions revalidated the existing lateral bridge,
 The six front cover frames now use two barrels and registered muzzle points. The rear-left corner was cleaned without moving its anchor. Both rear diagonal recoil pairs and the rear-right corner passed review. The front, front-right, back-left and back-right exit recoveries now use independently drawn and registered frames.
 
 Run `node tests/check-raptor-runtime-inventory.cjs --release` for every open runtime slot by action, direction and phase.
+
+## 39T31 front-left gait and cover
+
+This batch registers front-left stalk, jog and sprint with four phases each. Two rear tuck poses, two front-right cover-drive contacts and front-left recovery complete the reachable cover and recovery replacements. The remaining 36 open keys are the four phases at all three paces in front-right, back-left and back-right. The selector and combat controls are unchanged.
