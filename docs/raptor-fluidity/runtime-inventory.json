@@ -511,56 +511,56 @@
       "family": "jog",
       "direction": "back-left",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/back-left/001.png",
       "family": "jog",
       "direction": "back-left",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/back-left/002.png",
       "family": "jog",
       "direction": "back-left",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/back-left/003.png",
       "family": "jog",
       "direction": "back-left",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/back-right/000.png",
       "family": "jog",
       "direction": "back-right",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/back-right/001.png",
       "family": "jog",
       "direction": "back-right",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/back-right/002.png",
       "family": "jog",
       "direction": "back-right",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/back-right/003.png",
       "family": "jog",
       "direction": "back-right",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "jog/back/000.png",
@@ -1687,56 +1687,56 @@
       "family": "sprint",
       "direction": "back-left",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/back-left/001.png",
       "family": "sprint",
       "direction": "back-left",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/back-left/002.png",
       "family": "sprint",
       "direction": "back-left",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/back-left/003.png",
       "family": "sprint",
       "direction": "back-left",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/back-right/000.png",
       "family": "sprint",
       "direction": "back-right",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/back-right/001.png",
       "family": "sprint",
       "direction": "back-right",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/back-right/002.png",
       "family": "sprint",
       "direction": "back-right",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/back-right/003.png",
       "family": "sprint",
       "direction": "back-right",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "sprint/back/000.png",
@@ -1911,56 +1911,56 @@
       "family": "stalk",
       "direction": "back-left",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/back-left/001.png",
       "family": "stalk",
       "direction": "back-left",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/back-left/002.png",
       "family": "stalk",
       "direction": "back-left",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/back-left/003.png",
       "family": "stalk",
       "direction": "back-left",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/back-right/000.png",
       "family": "stalk",
       "direction": "back-right",
       "phase": "left-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/back-right/001.png",
       "family": "stalk",
       "direction": "back-right",
       "phase": "left-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/back-right/002.png",
       "family": "stalk",
       "direction": "back-right",
       "phase": "right-contact",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/back-right/003.png",
       "family": "stalk",
       "direction": "back-right",
       "phase": "right-support-passing",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "stalk/back/000.png",

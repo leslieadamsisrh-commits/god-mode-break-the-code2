@@ -45,7 +45,7 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T32 RAPTOR FRONT-DIAGONAL GAITS</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T33 RAPTOR REAR-DIAGONAL GAITS</p>
    <h1>PSYCHIC COVER COMBAT</h1>
    <p><a href="/raptor-production-map.html" style={{color:"#89e9f2"}}>Full sprite production checklist · every phase and direction</a></p>
    <p><a href="/raptor-movement-review.html" style={{color:"#89e9f2"}}>See Raptor stalk, jog and sprint side by side</a></p>
@@ -70,7 +70,7 @@ export default function CombatLab(){
     if(matchReady===false)setMatchReady(null);
     setArtAttempt(n=>n+1);
    }}>RETRY OPENING POSE</button>}
-   <p style={{color:"#f5bf8e",fontSize:13,marginTop:24}}>This batch adds front-right stalk, jog and sprint to complete the front-facing gait directions. All eight jump and slide directions are available. Use the pace selector with keyboard or touch to review the transitions. Controller stick pressure remains analog. Moving fire follows aim.</p>
+   <p style={{color:"#f5bf8e",fontSize:13,marginTop:24}}>This batch replaces the rear-diagonal stalk, jog and sprint cycles. All eight directions are available for movement, jumps and slides. Use the pace selector with keyboard or touch to review the transitions. Controller stick pressure remains analog. Moving fire follows aim.</p>
   </div>
  </main>;
 }

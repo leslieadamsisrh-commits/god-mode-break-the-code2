@@ -17,10 +17,11 @@ const registration = {
   ...require('../docs/raptor-fluidity/batch27-registration.json'),
   ...require('../docs/raptor-fluidity/batch31-registration.json'),
   ...require('../docs/raptor-fluidity/batch32-registration.json'),
+  ...require('../docs/raptor-fluidity/batch33-registration.json'),
 };
 const phases = inventory.gaitPhases;
 
-for (const direction of ['front', 'front-left', 'front-right']) {
+for (const direction of ['front', 'front-left', 'front-right', 'back-left', 'back-right']) {
   const angle = RAPTOR_POSE_DIRECTIONS.indexOf(direction) * Math.PI / 4;
   const dx = Math.cos(angle), dy = Math.sin(angle);
   const sample = {
@@ -73,7 +74,7 @@ for (const direction of ['front', 'front-left', 'front-right']) {
       assert.ok(record.muzzle[1] < record.muzzleGround[1]);
     }
     // Center the shot so a pellet cannot leave the arena during its first tick.
-    Object.assign(actor, {x: 800, y: 420});
+    Object.assign(actor, {x: 800, y: 500, z: 0, vz: 0, grounded: true, supportSurfaceId: "ground"});
     const shells = actor.shells;
     tick(true);
     assert.equal(actor.shells, shells - 1, 'moving fire is immediate');
