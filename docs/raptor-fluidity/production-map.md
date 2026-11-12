@@ -160,3 +160,9 @@ All jump directions share a 1.16 draw scale to match the prior jump silhouette a
 | Cover bridge | Left, right | 000–001 |
 | Cover recoil | Left, right, back-left, back, back-right | 000–001 |
 | Cover sequence | Front-left, front, front-right | 000–005 |
+
+## 39T29 locomotion and cover continuity
+
+The left, right, and straight-back locomotion batches use the previously registered 39T19–22 drawings. The runtime draw scale now matches the new ready poses. The 21 movement and 24 jog/sprint registrations retain the authored anchors, support-foot positions and muzzle sockets. The 12 separate stalk keys reuse the corresponding crouched movement cycle in the same directions, closing the old art path that is still reachable through cover shuffle and drive.
+
+The visual review and cover regressions revalidated the existing lateral bridge, catch, hold, pop, recoil and shuffle sequences, straight-back hold, recoil and shuffle, and the front-right and front-left six-frame cover sequences. These 35 cover files retain their exact existing bytes and anchor geometry. The front cover sequence, diagonal rear cover, drive and open recovery poses remain listed individually in the runtime inventory. For a full-game promotion, run the inventory check with `--release` and require zero open poses.

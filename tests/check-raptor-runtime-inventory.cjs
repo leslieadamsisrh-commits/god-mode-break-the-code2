@@ -98,7 +98,7 @@ const catalog = new Map(inventory.slots.map(slot => [slot.key,slot]));
 assert.deepEqual([...catalog.keys()].sort(),registered,'Inventory keys must match the runtime manifest');
 const reachable = [...catalog.values()].filter(slot => slot.status!=='unselected-with-current-availability');
 assert.deepEqual([...reached].sort(),reachable.map(slot=>slot.key).sort(),'Update the inventory if selector reachability changes');
-const open = reachable.filter(slot => !['replaced-in-design-pass','reused-approved'].includes(slot.status));
+const open = reachable.filter(slot => !['replaced-in-design-pass','reused-approved','revalidated-design-pass'].includes(slot.status));
 for (const slot of reachable) {
   const entry = manifest.frames[slot.key];
   assert.ok(entry.anchor?.length===2 && entry.anchor.every(Number.isFinite) && entry.drawScale>0,slot.key+' invalid anchor');

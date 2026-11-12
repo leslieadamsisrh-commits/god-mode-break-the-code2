@@ -16,6 +16,7 @@ const inventory = require('../public/assets/raptor-v2/manifest.json');
 const registration = {
   ...require('../docs/raptor-fluidity/batch21-registration.json'),
   ...require('../docs/raptor-fluidity/batch22-registration.json'),
+  ...require('../docs/raptor-fluidity/batch29-registration.json'),
 };
 const phases = ['left-contact', 'left-pass', 'right-contact', 'right-pass'];
 

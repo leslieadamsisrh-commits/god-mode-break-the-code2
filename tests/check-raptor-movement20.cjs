@@ -23,7 +23,7 @@ for(const direction of inventory.movementDirections){
  for(const interruption of [{airborne:true,verticalVelocity:50},{hit:true},{sliding:true},{attached:true,coverState11:'brace'}])assert.notEqual(advanceRaptorPose(pose.memory,{...base,time:time+.24,...interruption}).frame.family,'movement');
  for(let i=0;i<8;i++){
   const rec=inventory.frames[key(i)],bytes=fs.readFileSync('public/assets/raptor-v2/'+key(i));
-  assert.equal(bytes.readUInt32BE(16),512);assert.equal(bytes.readUInt32BE(20),512);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),rec.sha256);assert.deepEqual(rec,readyRegistration[key(i)]??registration.frames[key(i)]);assert.equal(rec.anchor[1],450);assert.ok(rec.muzzleGround[1]>rec.muzzle[1]);
+  assert.equal(bytes.readUInt32BE(16),512);assert.equal(bytes.readUInt32BE(20),512);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),rec.sha256);assert.deepEqual(rec,require('../docs/raptor-fluidity/batch29-registration.json')[key(i)]??readyRegistration[key(i)]??registration.frames[key(i)]);assert.equal(rec.anchor[1],450);assert.ok(rec.muzzleGround[1]>rec.muzzle[1]);
  }
  const s=newGame('Raptor','local',0,'bot');s.phase='playing';s.covers=[];s.matter=[];s.players[1].bot=false;s.players[1].x=1200;s.players[1].y=660;
  const p=s.players[0];Object.assign(p,{character:'raptor',x:600,y:500,aim:angle,gunFacing:angle,coverId:null,grounded:true,z:0});
