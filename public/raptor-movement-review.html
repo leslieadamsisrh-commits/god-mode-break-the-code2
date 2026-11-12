@@ -10,12 +10,12 @@
 <body>
 <a href="/studio/character-lab">← Character Lab</a>
 <p><a href="/raptor-production-map.html">Open the complete sprite checklist →</a></p>
-<p class="tag">GOD MODE · 39T29 · RAPTOR</p>
+<p class="tag">GOD MODE · 39T30 · RAPTOR</p>
 <h1>Raptor movement, jump and slide</h1>
-<p>Review the eight ready poses, movement cycles, jumps, and slides.</p>
+<p>Review the eight ready poses, movement cycles, jumps, slides, and recovery.</p>
 <div class="controls">
 <button id="play" type="button">Pause</button>
-<label>Animation <select id="pace"><option value="build">Build speed</option><option value="idle">Ready</option><option value="stalk">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option><option value="jump">Jump</option><option value="slide">Slide</option></select></label>
+<label>Animation <select id="pace"><option value="build">Build speed</option><option value="idle">Ready</option><option value="stalk">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option><option value="jump">Jump</option><option value="slide">Slide</option><option value="recovery">Slide to Ready</option></select></label>
 <label>Speed <select id="speed"><option value="1">Normal</option><option value="0.25">Quarter speed</option></select></label>
 <label>Size <select id="size"><option value="2.5">Inspect</option><option value="1">Gameplay</option></select></label>
 <label><input id="guides" type="checkbox">Ground and support heel</label>
@@ -28,8 +28,8 @@
 'use strict';
 const names={right:'Right',left:'Left',back:'Rear',front:'Front','front-left':'Front left','front-right':'Front right','back-left':'Rear left','back-right':'Rear right'};
 const phaseLabels=['Left contact','Left pass','Right contact','Right pass'];
-const labels={idle:['Ready'],stalk:phaseLabels,movement:['Ready','Push',...phaseLabels,'Brake','Settle'],jog:phaseLabels,sprint:phaseLabels,jump:['Push-off','Ascent','Apex','Descent','Landing','Recovery'],slide:['Entry','Hold','Recovery']};
-const paceNames={idle:'Ready',stalk:'Stalk',movement:'Movement',jog:'Jog',sprint:'Full Sprint',jump:'Jump',slide:'Slide'};
+const labels={idle:['Ready'],stalk:phaseLabels,movement:['Ready','Push',...phaseLabels,'Brake','Settle'],jog:phaseLabels,sprint:phaseLabels,jump:['Push-off','Ascent','Apex','Descent','Landing','Recovery'],slide:['Entry','Hold','Recovery'],recovery:['Exit / Recover']};
+const paceNames={idle:'Ready',stalk:'Stalk',movement:'Movement',jog:'Jog',sprint:'Full Sprint',jump:'Jump',slide:'Slide',recovery:'Recovery'};
 const cycle=(family,start,durations)=>durations.map((duration,index)=>({family,index:start+index,duration}));
 const stalk=cycle('movement',2,[180,120,180,120]);
 const jog=cycle('jog',0,[145,100,145,100]);
@@ -42,6 +42,7 @@ const timelines={
  sprint,
  jump:cycle('jump',0,[140,180,160,180,140,180]),
  slide:cycle('slide',0,[140,360,175]),
+ recovery:[...cycle('slide',2,[175]),...cycle('recovery',0,[135]),...cycle('idle',0,[400])],
 };
 const pace=document.querySelector('#pace');
 const requested=new URLSearchParams(location.search).get('pace');
@@ -93,6 +94,7 @@ async function load(){
   if(manifest.movementDirections.includes(direction))families.push('movement');
   if(designGait||manifest.fastMovementDirections.includes(direction))families.push('jog','sprint');
   for(const action of ['jump','slide'])if(actions[action].includes(direction))families.push(action);
+  if(['front','front-right','back-left','back-right'].includes(direction))families.push('recovery');
   for(const family of families){
    frames[family]=await Promise.all(labels[family].map(async(label,index)=>{
     const key=family+'/'+direction+'/'+String(index).padStart(3,'0')+'.png';
@@ -146,7 +148,7 @@ async function load(){
     if(index>=2&&index<=5){family='stalk';index-=2;}
     else {family='idle';index=0;}
    }
-   const frame=set.frames[family]?.[index];
+   const frame=pace.value==='recovery'&&!set.frames.recovery?null:set.frames[family]?.[index];
    set.box.hidden=!frame;
    if(!frame)continue;
    paint(set.canvas,frame.image,frame.record);

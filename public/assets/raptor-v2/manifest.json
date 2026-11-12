@@ -1,5 +1,5 @@
 {
-  "build": "39T29-raptor-lateral-and-rear-movement",
+  "build": "39T30-raptor-front-cover-barrel-registration",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -5411,7 +5411,8 @@
         75,
         447
       ],
-      "sha256": "3f5758950fa7fe5ca244bc07c60c0145c63dafc3b50592d9aa954a50ff769c3e"
+      "sha256": "e249aa5ef6a296922d96c4643b05965e8f0f985cbdeb51936e234b0335d4cfb0",
+      "replacedSha256": "3f5758950fa7fe5ca244bc07c60c0145c63dafc3b50592d9aa954a50ff769c3e"
     },
     "cover-bridge/right/000.png": {
       "anchor": [
@@ -5645,23 +5646,24 @@
       ],
       "drawScale": 1.08,
       "supportFoot": [
-        330,
+        161,
         430
       ],
       "pelvis": [
         252,
-        316
+        321
       ],
-      "sha256": "08a21c04a666fd981cb79e1962bfc5c4a17c8b2dca8386b94dc6d0ac50be0ad5",
-      "source": "exec-f995cb3c-6534-4136-87d7-6944e8b26808.png",
+      "sha256": "8dafe7709a719ad229739e0454cdad671fef2ba02ef5a1c30d9b8245fb4b4578",
+      "source": "exec-713653f8-f5f0-4419-b2cd-952fc74b67e8.png",
       "muzzle": [
-        449,
-        318
+        403,
+        245
       ],
       "muzzleGround": [
-        449,
+        403,
         430
-      ]
+      ],
+      "replacedSha256": "08a21c04a666fd981cb79e1962bfc5c4a17c8b2dca8386b94dc6d0ac50be0ad5"
     },
     "recovery/front/000.png": {
       "anchor": [
@@ -5670,23 +5672,24 @@
       ],
       "drawScale": 1.08,
       "supportFoot": [
-        333,
+        236,
         430
       ],
       "pelvis": [
         293,
-        314
+        279
       ],
-      "sha256": "c47c6641b510c7870d275e2268f991ba25e7b2b90c8041ad89e540a88bbd76d5",
-      "source": "exec-f995cb3c-6534-4136-87d7-6944e8b26808.png",
+      "sha256": "bb500c61c05ffa2685b145653cba04622805b40fc53c75dcef7f82eaba41cce9",
+      "source": "exec-a913f5e9-d46b-41ff-a15d-2202a0aefac1.png",
       "muzzle": [
-        336,
-        294
+        291,
+        253
       ],
       "muzzleGround": [
-        336,
+        291,
         430
-      ]
+      ],
+      "replacedSha256": "c47c6641b510c7870d275e2268f991ba25e7b2b90c8041ad89e540a88bbd76d5"
     },
     "recovery/front-left/000.png": {
       "anchor": [
@@ -5745,23 +5748,24 @@
       ],
       "drawScale": 1.08,
       "supportFoot": [
-        154,
+        139,
         430
       ],
       "pelvis": [
         206,
-        318
+        309
       ],
-      "sha256": "426b68667b05e071bd43a29db75d7e471d208513e29082380b2b6d64af0c444e",
-      "source": "exec-285bca4c-3115-4529-ad9e-1defd4ddac90.png",
+      "sha256": "1464682c1eb146971c6ca57f49c60309f43fc533abc68a7aa0abc09dd04751b9",
+      "source": "exec-d151f1f4-b202-4a9d-9149-6e88042a271d.png",
       "muzzle": [
-        56,
-        245
+        61,
+        223
       ],
       "muzzleGround": [
-        56,
+        61,
         430
-      ]
+      ],
+      "replacedSha256": "426b68667b05e071bd43a29db75d7e471d208513e29082380b2b6d64af0c444e"
     },
     "recovery/back/000.png": {
       "anchor": [
@@ -5789,23 +5793,24 @@
       ],
       "drawScale": 1.08,
       "supportFoot": [
-        317,
+        361,
         430
       ],
       "pelvis": [
         296,
-        319
+        309
       ],
-      "sha256": "799a9937d21bf9df86fb38ee36a1f6d8ce0fd6892d101c417e18a48e5da31c3f",
-      "source": "exec-285bca4c-3115-4529-ad9e-1defd4ddac90.png",
+      "sha256": "ed1459889e35ab3be30de20056541c88722f3b0935b17c0ef5eb8eb5c0e29a86",
+      "source": "exec-b7193f10-9adb-4e01-b211-5bcea671c680.png",
       "muzzle": [
-        443,
-        236
+        490,
+        210
       ],
       "muzzleGround": [
-        443,
+        490,
         430
-      ]
+      ],
+      "replacedSha256": "799a9937d21bf9df86fb38ee36a1f6d8ce0fd6892d101c417e18a48e5da31c3f"
     },
     "cover-recoil/back-left/000.png": {
       "anchor": [
@@ -6154,15 +6159,16 @@
       "drawScale": 0.71,
       "muzzle": [
         252,
-        307
+        305
       ],
       "muzzleGround": [
         252,
         510
       ],
-      "sha256": "723606624933d3c5d184b3a7c1acba540d49da17f42da1fbfb0dc3219d837f12",
-      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
-      "phase": "hold"
+      "sha256": "4f10e2483977e15886100ad9f5bac2c862479c14f0171f985be87e45e7843226",
+      "source": "exec-277b2336-b6e8-4eb8-a40e-e42101264256.png",
+      "phase": "hold",
+      "replacedSha256": "723606624933d3c5d184b3a7c1acba540d49da17f42da1fbfb0dc3219d837f12"
     },
     "cover-sequence/front/001.png": {
       "anchor": [
@@ -6179,16 +6185,17 @@
       ],
       "drawScale": 0.71,
       "muzzle": [
-        252,
-        262
+        247,
+        252
       ],
       "muzzleGround": [
-        252,
+        247,
         540
       ],
-      "sha256": "2ed7135bd2ba7b9224008c8a3a8401819a26a5658470954f242c3cb81b78fce0",
-      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
-      "phase": "raise"
+      "sha256": "59af824c8dd03323c806c42b7b01e0f8a5ff79287776a47c4ddca4ddde4c7884",
+      "source": "exec-603645e7-a920-4698-b3f3-3f089ef82bde.png",
+      "phase": "raise",
+      "replacedSha256": "2ed7135bd2ba7b9224008c8a3a8401819a26a5658470954f242c3cb81b78fce0"
     },
     "cover-sequence/front/002.png": {
       "anchor": [
@@ -6205,16 +6212,17 @@
       ],
       "drawScale": 0.71,
       "muzzle": [
-        212,
-        203
+        208,
+        205
       ],
       "muzzleGround": [
-        212,
+        208,
         560
       ],
-      "sha256": "f283bd117b05e8cae7305e8481ca367fbf2a71668db8d4bd7c8cb484fe42606d",
-      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
-      "phase": "ready"
+      "sha256": "03dd1cc8901cb50866c71bcadb12b9e797ddcc3c818b02b0062f272ceadf029a",
+      "source": "exec-8365595c-a082-48c1-8207-84ac3c19a3e4.png",
+      "phase": "ready",
+      "replacedSha256": "f283bd117b05e8cae7305e8481ca367fbf2a71668db8d4bd7c8cb484fe42606d"
     },
     "cover-sequence/front/003.png": {
       "anchor": [
@@ -6232,15 +6240,16 @@
       "drawScale": 0.71,
       "muzzle": [
         209,
-        157
+        167
       ],
       "muzzleGround": [
         209,
         560
       ],
-      "sha256": "8c0fdd9865ea37593a770ae38417ee7d0410ae2001026d38f6f9a2ce37f89355",
-      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
-      "phase": "recoil"
+      "sha256": "18284990640d06222dc515d227ec4a9bc2fa523cb90f497439631f062bf54455",
+      "source": "exec-5924add8-88de-48e2-934e-6413c1562ad8.png",
+      "phase": "recoil",
+      "replacedSha256": "8c0fdd9865ea37593a770ae38417ee7d0410ae2001026d38f6f9a2ce37f89355"
     },
     "cover-sequence/front/004.png": {
       "anchor": [
@@ -6257,16 +6266,17 @@
       ],
       "drawScale": 0.71,
       "muzzle": [
-        213,
+        208,
         205
       ],
       "muzzleGround": [
-        213,
+        208,
         560
       ],
-      "sha256": "4a5b3b1237e0816c0d184cb6af0ddd8bc46c219af232e391f837c01407eabd5d",
-      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
-      "phase": "settle"
+      "sha256": "88d5c850da3034cf0eceaa19957d9b5577be218a13600c5085d993acece85d3e",
+      "source": "exec-00392e11-5375-4487-8a6d-6982a2cb1098.png",
+      "phase": "settle",
+      "replacedSha256": "4a5b3b1237e0816c0d184cb6af0ddd8bc46c219af232e391f837c01407eabd5d"
     },
     "cover-sequence/front/005.png": {
       "anchor": [
@@ -6283,16 +6293,17 @@
       ],
       "drawScale": 0.71,
       "muzzle": [
-        252,
-        265
+        246,
+        260
       ],
       "muzzleGround": [
-        252,
+        246,
         540
       ],
-      "sha256": "9fdde6aaedd0edf6f5540c3d9c072c94dfe9b17e766a601bea2b89f352f8bdec",
-      "source": "exec-360ab1df-2844-4d22-a28f-cfd17b5f94ef.png",
-      "phase": "lower"
+      "sha256": "490854e66346a948489dbbd062d4ef7d485f973042938e681670832f4c0f6f08",
+      "source": "exec-3629f9ad-2798-403d-af64-deae933af62e.png",
+      "phase": "lower",
+      "replacedSha256": "9fdde6aaedd0edf6f5540c3d9c072c94dfe9b17e766a601bea2b89f352f8bdec"
     },
     "cover-sequence/front-left/000.png": {
       "anchor": [

@@ -1,5 +1,5 @@
 {
-  "build": "39T29-raptor-lateral-and-rear-movement",
+  "build": "39T30-raptor-front-cover-barrel-registration",
   "registeredFiles": 302,
   "selectorAndGameplayVerifiedFiles": 262,
   "notes": [
@@ -57,14 +57,14 @@
       "family": "cover-corner",
       "direction": "back-left",
       "phase": "corner transfer",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-corner/back-right/000.png",
       "family": "cover-corner",
       "direction": "back-right",
       "phase": "corner transfer",
-      "status": "open-for-replacement"
+      "status": "revalidated-design-pass"
     },
     {
       "key": "cover-drive/front-right/000.png",
@@ -185,28 +185,28 @@
       "family": "cover-recoil",
       "direction": "back-left",
       "phase": "recoil",
-      "status": "open-for-replacement"
+      "status": "revalidated-design-pass"
     },
     {
       "key": "cover-recoil/back-left/001.png",
       "family": "cover-recoil",
       "direction": "back-left",
       "phase": "settle / aim",
-      "status": "open-for-replacement"
+      "status": "revalidated-design-pass"
     },
     {
       "key": "cover-recoil/back-right/000.png",
       "family": "cover-recoil",
       "direction": "back-right",
       "phase": "recoil",
-      "status": "open-for-replacement"
+      "status": "revalidated-design-pass"
     },
     {
       "key": "cover-recoil/back-right/001.png",
       "family": "cover-recoil",
       "direction": "back-right",
       "phase": "settle / aim",
-      "status": "open-for-replacement"
+      "status": "revalidated-design-pass"
     },
     {
       "key": "cover-recoil/back/000.png",
@@ -339,42 +339,42 @@
       "family": "cover-sequence",
       "direction": "front",
       "phase": "hold",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-sequence/front/001.png",
       "family": "cover-sequence",
       "direction": "front",
       "phase": "raise / pivot",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-sequence/front/002.png",
       "family": "cover-sequence",
       "direction": "front",
       "phase": "aim",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-sequence/front/003.png",
       "family": "cover-sequence",
       "direction": "front",
       "phase": "recoil",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-sequence/front/004.png",
       "family": "cover-sequence",
       "direction": "front",
       "phase": "settle",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-sequence/front/005.png",
       "family": "cover-sequence",
       "direction": "front",
       "phase": "lower",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-shuffle/back/000.png",
@@ -1239,14 +1239,14 @@
       "family": "recovery",
       "direction": "back-left",
       "phase": "cover exit / slide recovery",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "recovery/back-right/000.png",
       "family": "recovery",
       "direction": "back-right",
       "phase": "cover exit / slide recovery",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "recovery/back/000.png",
@@ -1267,14 +1267,14 @@
       "family": "recovery",
       "direction": "front-right",
       "phase": "cover exit / slide recovery",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "recovery/front/000.png",
       "family": "recovery",
       "direction": "front",
       "phase": "cover exit / slide recovery",
-      "status": "open-for-replacement"
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "recovery/left/000.png",

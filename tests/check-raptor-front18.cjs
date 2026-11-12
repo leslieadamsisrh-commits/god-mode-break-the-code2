@@ -4,7 +4,7 @@ const {newGame,setInput,advance,coverMuzzleClearance}=require('../lib/game.ts');
 const {advanceRaptorPose,raptorCoverExposureFrame,raptorCoverRecoilFrame,RAPTOR_POSE_DIRECTIONS}=require('../lib/raptorPose.ts');
 const {barrelSocket27d}=require('../lib/ballistics27d.ts');
 const inventory=require('../public/assets/raptor-v2/manifest.json');
-const registration=require('../docs/raptor-fluidity/batch18-registration.json');
+const registration={...require('../docs/raptor-fluidity/batch18-registration.json').frames,...require('../docs/raptor-fluidity/batch30-registration.json')};
 for(const direction of inventory.coverSequenceDirections){
  const angle=RAPTOR_POSE_DIRECTIONS.indexOf(direction)*Math.PI/4;
  const frames=Array.from({length:6},(_,index)=>inventory.frames[`cover-sequence/${direction}/${String(index).padStart(3,'0')}.png`]);
@@ -28,7 +28,7 @@ for(const direction of inventory.coverSequenceDirections){
   const key=`cover-sequence/${direction}/${String(index).padStart(3,'0')}.png`,record=frames[index],bytes=fs.readFileSync('public/assets/raptor-v2/'+key);
   assert.equal(bytes.readUInt32BE(16),512);assert.equal(bytes.readUInt32BE(20),512);
   assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),record.sha256);
-  assert.deepEqual(record,registration.frames[key]);
+  assert.deepEqual(record,registration[key]);
   assert.deepEqual(record.anchor,frames[0].anchor);assert.deepEqual(record.supportFoot,frames[0].supportFoot);assert.equal(record.drawScale,frames[0].drawScale);
  }
  assert.equal(advanceRaptorPose(undefined,{...sample,coverState11:'expose',firing:true}).frame.frame,2,'RT skips cosmetic raise');

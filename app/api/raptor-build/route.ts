@@ -1,15 +1,11 @@
 import {NextResponse} from 'next/server';
 import manifest from '../../../public/assets/raptor-v2/manifest.json';
 import inventory from '../../../docs/raptor-fluidity/runtime-inventory.json';
-import movement from '../../../docs/raptor-fluidity/batch29-registration.json';
+import batch from '../../../docs/raptor-fluidity/batch30-registration.json';
 
 export const dynamic = 'force-dynamic';
 
 export function GET() {
- const registrations = Object.values(movement);
- const integrated = registrations.length;
- const newDrawings = 0;
- const recalibrated = Object.keys(movement).filter(key => !key.startsWith('stalk/')).length;
  const fastMovementPlayable = [...new Set([...manifest.fastMovementDirections,...manifest.designGaitDirections])];
  const approved = inventory.slots.filter(slot => slot.status === 'replaced-in-design-pass').length;
  const reused = inventory.slots.filter(slot => slot.status === 'reused-approved').length;
@@ -23,7 +19,7 @@ export function GET() {
   fastMovementPlayable,
   restoredActionDirections: manifest.restoredActionDirections,
   restoredActionCount: manifest.restoredActionCount,
-  batch: {newDrawings, replacedLegacyDrawings: integrated-recalibrated, recalibrated, activated: integrated, totalMovementPlayable: 8 + 8 * (manifest.movementDirections.length + fastMovementPlayable.length) + 4 * manifest.designGaitDirections.length},
+  batch: {coverReplacements: 7, recoveryReplacements: 4, revalidated: 5, activated: Object.keys(batch).length},
   inventory: {reachable: approved+reused+revalidated+open, approved: approved+reused+revalidated, reused, revalidated, open},
  }, {headers: {'Cache-Control':'no-store'}});
 }
