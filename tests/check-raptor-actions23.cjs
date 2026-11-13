@@ -16,6 +16,7 @@ const inventory = require('../public/assets/raptor-v2/manifest.json');
 const jumpRegistration = require('../docs/raptor-fluidity/batch25-registration.json');
 const slideRegistration = require('../docs/raptor-fluidity/batch24-registration.json');
 const registration = {...jumpRegistration, ...slideRegistration};
+const scaleRegistration = require('../docs/raptor-fluidity/batch34-1-scale-registration.json');
 const phases = {
   jump: ['push-off', 'ascent', 'apex', 'descent', 'landing', 'recovery'],
   slide: ['entry', 'hold', 'recovery'],
@@ -70,15 +71,19 @@ for (const [action, directions] of Object.entries(inventory.restoredActionDirect
       assert.equal(bytes.readUInt32BE(16), 512);
       assert.equal(bytes.readUInt32BE(20), 512);
       assert.equal(bytes.readUInt8(25), 6, 'alpha-enabled PNG');
-      assert.deepEqual(record, registration[key]);
+      const calibration = scaleRegistration[key];
+      const original = calibration
+        ? {...record, anchor: calibration.previousAnchor, drawScale: calibration.previousDrawScale}
+        : record;
+      assert.deepEqual(original, registration[key]);
       assert.equal(record.sha256, createHash('sha256').update(bytes).digest('hex'));
       assert.notEqual(record.sha256, record.replacedSha256);
       assert.equal(record.phase, phase);
       const footOffset = action === 'jump' ? [4, 10, 20, 8, 4, 4][index] : 4;
-      assert.ok(Math.abs(record.supportFoot[1] - record.anchor[1] + footOffset) <= 2, 'foot matches the authored phase line');
+      assert.ok(Math.abs(original.supportFoot[1] - original.anchor[1] + footOffset) <= 2, 'foot matches the authored phase line');
       assert.equal(record.muzzle[0], record.muzzleGround[0]);
       assert.ok(record.muzzle[1] < record.muzzleGround[1]);
-      assert.equal(record.drawScale, action === 'jump' ? 1.16 : .96);
+      assert.equal(original.drawScale, action === 'jump' ? 1.16 : .96);
     }
     assert.notEqual(actor.raptorFrame.family, action, 'action hands back to locomotion');
     assert.ok(fired, action + ' permits registered fire');

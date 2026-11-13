@@ -1,5 +1,5 @@
 {
-  "build": "39T34-raptor-continuity-wrap",
+  "build": "39T34-1-raptor-scale-continuity",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -49,7 +49,7 @@
     "strafe": "run",
     "backpedal": "run"
   },
-  "source": "39T9: slide-reference anatomical registration; standing stature calibrated beside Jade. Gameplay dimensions unchanged.",
+  "source": "39T34.1: measured profile slide and straight-back gait/slide registration. Gameplay dimensions unchanged.",
   "frames": {
     "idle/back/000.png": {
       "anchor": [
@@ -563,14 +563,14 @@
     },
     "slide/right/001.png": {
       "anchor": [
-        256,
-        450
+        252.04034,
+        448.86867
       ],
       "pelvis": [
         256,
         408
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.3386,
       "muzzle": [
         441,
         391
@@ -644,14 +644,14 @@
     },
     "slide/left/001.png": {
       "anchor": [
-        256,
-        450
+        257.46825,
+        448.8254
       ],
       "pelvis": [
         256,
         415
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.3591,
       "muzzle": [
         76,
         390
@@ -698,14 +698,14 @@
     },
     "slide/back/001.png": {
       "anchor": [
-        256,
-        365
+        245.28828,
+        364.3699
       ],
       "pelvis": [
         256,
         318
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.1395,
       "muzzle": [
         314,
         193
@@ -833,14 +833,14 @@
     },
     "slide/right/002.png": {
       "anchor": [
-        256,
-        450
+        241.9921,
+        448.80784
       ],
       "pelvis": [
         256,
         380
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.3676,
       "muzzle": [
         428,
         359
@@ -860,14 +860,14 @@
     },
     "slide/right/000.png": {
       "anchor": [
-        256,
-        450
+        245.53519,
+        448.86867
       ],
       "pelvis": [
         256,
         390
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.3386,
       "muzzle": [
         432,
         374
@@ -968,14 +968,14 @@
     },
     "slide/left/000.png": {
       "anchor": [
-        256,
-        450
+        264.99305,
+        448.83961
       ],
       "pelvis": [
         256,
         368
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.3523,
       "muzzle": [
         83,
         356
@@ -995,14 +995,14 @@
     },
     "slide/left/002.png": {
       "anchor": [
-        256,
-        450
+        236.56341,
+        448.83961
       ],
       "pelvis": [
         256,
         379
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.3523,
       "muzzle": [
         91,
         351
@@ -1049,14 +1049,14 @@
     },
     "slide/back/002.png": {
       "anchor": [
-        256,
-        365
+        245.28828,
+        364.3699
       ],
       "pelvis": [
         256,
         266
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.1395,
       "muzzle": [
         302,
         135
@@ -1076,14 +1076,14 @@
     },
     "slide/back/000.png": {
       "anchor": [
-        256,
-        365
+        248.91136,
+        364.3699
       ],
       "pelvis": [
         256,
         282
       ],
-      "drawScale": 0.96,
+      "drawScale": 1.1395,
       "muzzle": [
         308,
         148
@@ -2083,8 +2083,8 @@
     },
     "sprint/back/000.png": {
       "anchor": [
-        256,
-        450
+        252.69039,
+        448.61078
       ],
       "pelvis": [
         256,
@@ -2094,7 +2094,7 @@
         175,
         416
       ],
-      "drawScale": 1.0,
+      "drawScale": 1.0426,
       "muzzle": [
         349,
         176
@@ -2109,8 +2109,8 @@
     },
     "sprint/back/001.png": {
       "anchor": [
-        256,
-        450
+        250.79722,
+        451.65265
       ],
       "pelvis": [
         256,
@@ -2120,7 +2120,7 @@
         171,
         477
       ],
-      "drawScale": 1.0,
+      "drawScale": 1.0652,
       "muzzle": [
         347,
         182
@@ -2135,8 +2135,8 @@
     },
     "sprint/back/002.png": {
       "anchor": [
-        256,
-        450
+        258.98274,
+        449.01937
       ],
       "pelvis": [
         256,
@@ -2146,7 +2146,7 @@
         329,
         426
       ],
-      "drawScale": 1.0,
+      "drawScale": 1.0426,
       "muzzle": [
         350,
         177
@@ -2161,8 +2161,8 @@
     },
     "sprint/back/003.png": {
       "anchor": [
-        256,
-        450
+        259.42771,
+        452.63199
       ],
       "pelvis": [
         256,
@@ -2172,7 +2172,7 @@
         312,
         493
       ],
-      "drawScale": 1.0,
+      "drawScale": 1.0652,
       "muzzle": [
         346,
         181
@@ -3463,8 +3463,8 @@
     },
     "jog/back/000.png": {
       "anchor": [
-        256,
-        450
+        246.205,
+        446.24525
       ],
       "pelvis": [
         256,
@@ -3474,7 +3474,7 @@
         196,
         427
       ],
-      "drawScale": 1.0,
+      "drawScale": 1.1951,
       "muzzle": [
         341,
         149
@@ -3489,8 +3489,8 @@
     },
     "jog/back/001.png": {
       "anchor": [
-        256,
-        450
+        250.5705,
+        450.71441
       ],
       "pelvis": [
         256,
@@ -3500,7 +3500,7 @@
         218,
         455
       ],
-      "drawScale": 1.0,
+      "drawScale": 1.1667,
       "muzzle": [
         349,
         148
@@ -3515,8 +3515,8 @@
     },
     "jog/back/002.png": {
       "anchor": [
-        256,
-        450
+        263.0012,
+        450.0
       ],
       "pelvis": [
         256,
@@ -3526,7 +3526,7 @@
         305,
         450
       ],
-      "drawScale": 1.0,
+      "drawScale": 1.1667,
       "muzzle": [
         340,
         148
@@ -3541,8 +3541,8 @@
     },
     "jog/back/003.png": {
       "anchor": [
-        256,
-        450
+        263.34625,
+        449.83675
       ],
       "pelvis": [
         256,
@@ -3552,7 +3552,7 @@
         301,
         449
       ],
-      "drawScale": 1.0,
+      "drawScale": 1.1951,
       "muzzle": [
         332,
         153

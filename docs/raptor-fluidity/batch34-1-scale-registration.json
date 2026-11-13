@@ -1,0 +1,257 @@
+{
+  "slide/left/000.png": {
+    "landmark": "snout to rear crown cable width",
+    "sourceSpan": 199,
+    "targetSpan": 269.1,
+    "previousDrawScale": 0.96,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.3523,
+    "anchor": [
+      264.99305,
+      448.83961
+    ]
+  },
+  "slide/left/001.png": {
+    "landmark": "snout to rear crown cable width",
+    "sourceSpan": 198,
+    "targetSpan": 269.1,
+    "previousDrawScale": 0.96,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.3591,
+    "anchor": [
+      257.46825,
+      448.8254
+    ]
+  },
+  "slide/left/002.png": {
+    "landmark": "snout to rear crown cable width",
+    "sourceSpan": 199,
+    "targetSpan": 269.1,
+    "previousDrawScale": 0.96,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.3523,
+    "anchor": [
+      236.56341,
+      448.83961
+    ]
+  },
+  "slide/right/000.png": {
+    "landmark": "snout to rear crown cable width",
+    "sourceSpan": 189,
+    "targetSpan": 253.0,
+    "previousDrawScale": 0.96,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.3386,
+    "anchor": [
+      245.53519,
+      448.86867
+    ]
+  },
+  "slide/right/001.png": {
+    "landmark": "snout to rear crown cable width",
+    "sourceSpan": 189,
+    "targetSpan": 253.0,
+    "previousDrawScale": 0.96,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.3386,
+    "anchor": [
+      252.04034,
+      448.86867
+    ]
+  },
+  "slide/right/002.png": {
+    "landmark": "snout to rear crown cable width",
+    "sourceSpan": 185,
+    "targetSpan": 253.0,
+    "previousDrawScale": 0.96,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.3676,
+    "anchor": [
+      241.9921,
+      448.80784
+    ]
+  },
+  "jog/back/000.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 41,
+    "targetSpan": 49,
+    "previousDrawScale": 1.0,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.1951,
+    "anchor": [
+      246.205,
+      446.24525
+    ]
+  },
+  "jog/back/001.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 42,
+    "targetSpan": 49,
+    "previousDrawScale": 1.0,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.1667,
+    "anchor": [
+      250.5705,
+      450.71441
+    ]
+  },
+  "jog/back/002.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 42,
+    "targetSpan": 49,
+    "previousDrawScale": 1.0,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.1667,
+    "anchor": [
+      263.0012,
+      450.0
+    ]
+  },
+  "jog/back/003.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 41,
+    "targetSpan": 49,
+    "previousDrawScale": 1.0,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.1951,
+    "anchor": [
+      263.34625,
+      449.83675
+    ]
+  },
+  "sprint/back/000.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 47,
+    "targetSpan": 49,
+    "previousDrawScale": 1.0,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.0426,
+    "anchor": [
+      252.69039,
+      448.61078
+    ]
+  },
+  "sprint/back/001.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 46,
+    "targetSpan": 49,
+    "previousDrawScale": 1.0,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.0652,
+    "anchor": [
+      250.79722,
+      451.65265
+    ]
+  },
+  "sprint/back/002.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 47,
+    "targetSpan": 49,
+    "previousDrawScale": 1.0,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.0426,
+    "anchor": [
+      258.98274,
+      449.01937
+    ]
+  },
+  "sprint/back/003.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 46,
+    "targetSpan": 49,
+    "previousDrawScale": 1.0,
+    "previousAnchor": [
+      256,
+      450
+    ],
+    "drawScale": 1.0652,
+    "anchor": [
+      259.42771,
+      452.63199
+    ]
+  },
+  "slide/back/000.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 43,
+    "targetSpan": 49,
+    "previousDrawScale": 0.96,
+    "previousAnchor": [
+      256,
+      365
+    ],
+    "drawScale": 1.1395,
+    "anchor": [
+      248.91136,
+      364.3699
+    ]
+  },
+  "slide/back/001.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 43,
+    "targetSpan": 49,
+    "previousDrawScale": 0.96,
+    "previousAnchor": [
+      256,
+      365
+    ],
+    "drawScale": 1.1395,
+    "anchor": [
+      245.28828,
+      364.3699
+    ]
+  },
+  "slide/back/002.png": {
+    "landmark": "two-cell housing width",
+    "sourceSpan": 43,
+    "targetSpan": 49,
+    "previousDrawScale": 0.96,
+    "previousAnchor": [
+      256,
+      365
+    ],
+    "drawScale": 1.1395,
+    "anchor": [
+      245.28828,
+      364.3699
+    ]
+  }
+}

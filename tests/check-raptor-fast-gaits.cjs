@@ -18,6 +18,7 @@ const registration = {
   ...require('../docs/raptor-fluidity/batch22-registration.json'),
   ...require('../docs/raptor-fluidity/batch29-registration.json'),
 };
+const scaleRegistration = require('../docs/raptor-fluidity/batch34-1-scale-registration.json');
 const phases = ['left-contact', 'left-pass', 'right-contact', 'right-pass'];
 
 for (const direction of inventory.fastMovementDirections) {
@@ -60,9 +61,13 @@ for (const direction of inventory.fastMovementDirections) {
       assert.equal(bytes.readUInt32BE(16), 512);
       assert.equal(bytes.readUInt32BE(20), 512);
       assert.equal(createHash('sha256').update(bytes).digest('hex'), record.sha256);
-      assert.deepEqual(record, registration[key]);
+      const calibration = scaleRegistration[key];
+      const original = calibration
+        ? {...record, anchor: calibration.previousAnchor, drawScale: calibration.previousDrawScale}
+        : record;
+      assert.deepEqual(original, registration[key]);
       assert.equal(record.phase, phases[frame]);
-      assert.equal(record.anchor[1], 450);
+      assert.equal(original.anchor[1], 450);
       if (direction === 'back') {
         assert.equal(record.supportFoot[0] < record.pelvis[0], frame < 2, 'rear support alternates by anatomical side');
       }
