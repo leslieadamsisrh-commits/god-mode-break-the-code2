@@ -2,18 +2,17 @@
 import {useState,useEffect} from "react";
 import Game from "../../Game";
 import type {RaptorCoverDrill,RaptorDrillPosition} from "../../../lib/game";
-import {loadRaptorSprite,preloadRaptorSprites,getRaptorAnimationTrace,clearRaptorAnimationTrace} from "../../../lib/raptorSpriteOnly";
+import {loadRaptorSprite,prepareRaptorMatch,preloadRaptorSprites,getRaptorAnimationTrace,clearRaptorAnimationTrace} from "../../../lib/raptorSpriteOnly";
 type Fighter="jade"|"raptor";
-const lowReadyFrame="cover-hold/front-right/001.png";
-const matchFrame="idle/right/000.png";
+const lowReadyFrame="cover-sequence/front-right/000.png";
 export default function CombatLab(){
  const [lowReady,setLowReady]=useState<boolean|null>(null),[matchReady,setMatchReady]=useState<boolean|null>(null);
  const [artAttempt,setArtAttempt]=useState(0);
  useEffect(()=>{
   let active=true;
-  const low=loadRaptorSprite(lowReadyFrame,artAttempt>0).then(ready=>{if(active)setLowReady(ready)});
-  const match=loadRaptorSprite(matchFrame,artAttempt>0).then(ready=>{if(active)setMatchReady(ready)});
-  if(artAttempt===0)void Promise.all([low,match]).then(()=>{if(active)void preloadRaptorSprites()});
+  const low=Promise.all([loadRaptorSprite(lowReadyFrame,true),prepareRaptorMatch()]).then(results=>results.every(Boolean)).then(ready=>{if(active)setLowReady(ready)});
+  const match=prepareRaptorMatch().then(ready=>{if(active)setMatchReady(ready)});
+  void Promise.all([low,match]).then(()=>{if(active)void preloadRaptorSprites()});
   return ()=>{active=false};
  },[artAttempt]);
  const [fighter,setFighter]=useState<Fighter|null>(null),[reset,setReset]=useState(0);
@@ -45,7 +44,7 @@ export default function CombatLab(){
  return <main style={{minHeight:"100vh",background:"#08101b",color:"#f5fbff",fontFamily:"Arial",padding:"max(25px,env(safe-area-inset-top)) 20px"}}>
   <div style={{maxWidth:800,margin:"auto"}}>
    <a href="/studio" style={{color:"#89e9f2"}}>← BACK TO STUDIO</a>
-   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T33 RAPTOR REAR-DIAGONAL GAITS</p>
+   <p style={{color:"#ff8d9e",letterSpacing:2,fontSize:12}}>GOD MODE / BUILD 39T34 RAPTOR CONTINUITY AND WRAP</p>
    <h1>PSYCHIC COVER COMBAT</h1>
    <p><a href="/raptor-production-map.html" style={{color:"#89e9f2"}}>Full sprite production checklist · every phase and direction</a></p>
    <p><a href="/raptor-movement-review.html" style={{color:"#89e9f2"}}>See Raptor stalk, jog and sprint side by side</a></p>

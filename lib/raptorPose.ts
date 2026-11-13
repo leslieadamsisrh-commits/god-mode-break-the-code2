@@ -19,7 +19,7 @@ export type RaptorPoseMemory={
  slide:{time:number;active:boolean;startedAt:number;recoveryUntil:number;angle:number};
 };
 export type RaptorPoseAvailability={
- movementDirections?:readonly string[];
+ movementDirections?:readonly string[];movementConnectorDirections?:readonly string[];
  postureDirections:readonly string[];jumpDirections?:readonly string[];
  coverLeanDirections?:readonly string[];coverLeanAltDirections?:readonly string[];
  coverSequenceDirections?:readonly string[];
@@ -213,14 +213,23 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
  const recovering=s.time<(memory.recoveryUntil??0)||s.time<slide.recoveryUntil;
  if(!interrupted&&!s.firing&&recovering&&available.recoveryDirections?.includes(raptorPoseDirection(recoveryAngle))){
   gait.phase=0;
-  return{memory,frame:selected(available.movementDirections?.includes(raptorPoseDirection(recoveryAngle))?'movement':'recovery',available.movementDirections?.includes(raptorPoseDirection(recoveryAngle))?1:0,recoveryAngle)};
+  const facing=raptorPoseDirection(recoveryAngle);
+  const connector=available.movementDirections?.includes(facing)||available.movementConnectorDirections?.includes(facing);
+  return{memory,frame:selected(connector?'movement':'recovery',connector?1:0,recoveryAngle)};
  }
  if(!interrupted&&s.time<slide.recoveryUntil)return{memory,frame:selected('slide',2,s.firing?s.angle:slide.angle)};
  if(jump.phase&&(available.jumpDirections??[]).includes(raptorPoseDirection(s.angle)))return{memory,frame:selected('jump',jumpPhases.indexOf(jump.phase),s.angle)};
  if(interrupted||s.time-gait.landedAt<.075)return{memory,frame:selected('idle',0,s.angle)};
  const contactFrame=(gait.phase>=.5?2:0)+(gait.phase%.5>=.28?1:0);
  if(gait.sprinting)return{memory,frame:selected('sprint',contactFrame,s.angle)};
- const movement=available.movementDirections?.includes(raptorPoseDirection(s.angle));
+ const facing=raptorPoseDirection(s.angle);
+ const movement=available.movementDirections?.includes(facing);
+ if(!s.firing&&available.movementConnectorDirections?.includes(facing)){
+  if(moving&&!gait.jogging&&s.time-travel.since<.065)return{memory,frame:selected('movement',1,s.angle)};
+  const stopAge=travel.stoppedAt===undefined?Infinity:s.time-travel.stoppedAt;
+  if(!moving&&stopAge<.10&&raptorPoseDirection(travel.angle)===facing)
+   return{memory,frame:selected('movement',stopAge<.05?6:7,s.angle)};
+ }
  if(movement&&!gait.jogging){
   if(moving)return{memory,frame:selected('movement',!s.firing&&s.time-travel.since<.065?1:2+contactFrame,s.angle)};
   const stopAge=travel.stoppedAt===undefined?Infinity:s.time-travel.stoppedAt;

@@ -1,5 +1,5 @@
 {
-  "build": "39T33-raptor-rear-diagonal-gaits",
+  "build": "39T34-raptor-continuity-wrap",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -7612,6 +7612,110 @@
       "phase": "settle",
       "source": "exec-88a2bfc2-20e5-4a7b-8e6a-d480fddd9669.png",
       "sha256": "b1c6214d565127b4199aeb1767246bb76c4cff6951158730cd51794d686665c4"
+    },
+    "movement/back-left/001.png": {
+      "anchor": [
+        256,
+        449
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        107,
+        242
+      ],
+      "muzzleGround": [
+        107,
+        449
+      ],
+      "pelvis": [
+        256,
+        323
+      ],
+      "supportFoot": [
+        184,
+        449
+      ],
+      "phase": "push",
+      "source": "exec-f7013fa8-fae2-4029-a5e6-1e0ea5aebc98.png",
+      "sha256": "6dfa3b2c4b56f88d23cf639ebc44110bc2a3e0287ebda1860ccca8dcf77327db"
+    },
+    "movement/back-left/006.png": {
+      "anchor": [
+        256,
+        449
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        124,
+        218
+      ],
+      "muzzleGround": [
+        124,
+        449
+      ],
+      "pelvis": [
+        256,
+        310
+      ],
+      "supportFoot": [
+        172,
+        449
+      ],
+      "phase": "brake",
+      "source": "exec-f7013fa8-fae2-4029-a5e6-1e0ea5aebc98.png",
+      "sha256": "f701a15826f0029d299b6181f4cd482ab92e45745296551fb0ccf8e09ee3b1ef"
+    },
+    "movement/back-left/007.png": {
+      "anchor": [
+        256,
+        449
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        91,
+        245
+      ],
+      "muzzleGround": [
+        91,
+        449
+      ],
+      "pelvis": [
+        256,
+        326
+      ],
+      "supportFoot": [
+        163,
+        449
+      ],
+      "phase": "settle",
+      "source": "exec-f7013fa8-fae2-4029-a5e6-1e0ea5aebc98.png",
+      "sha256": "1d3cd475f75d8262c96f4b8601fbd743689aa72a09949b5a2cd060b1cfb9f634"
+    },
+    "cover-catch/back-left/000.png": {
+      "anchor": [
+        256,
+        449
+      ],
+      "drawScale": 1,
+      "muzzle": [
+        93,
+        304
+      ],
+      "muzzleGround": [
+        93,
+        449
+      ],
+      "pelvis": [
+        256,
+        374
+      ],
+      "supportFoot": [
+        177,
+        449
+      ],
+      "phase": "compress",
+      "source": "exec-f7013fa8-fae2-4029-a5e6-1e0ea5aebc98.png",
+      "sha256": "26f34ebe1ce7511180d735d7ef1f9293f2728944c781b393cec15b525efa7ba2"
     }
   },
   "slidePhases": [
@@ -7683,7 +7787,8 @@
   ],
   "coverCatchDirections": [
     "right",
-    "left"
+    "left",
+    "back-left"
   ],
   "coverShuffleDirections": [
     "right",
@@ -7692,7 +7797,8 @@
   ],
   "coverCatchProtectedDirections": [
     "right",
-    "left"
+    "left",
+    "back-left"
   ],
   "coverPopDirections": [
     "right",
@@ -7778,5 +7884,8 @@
     "front-right",
     "back-left",
     "back-right"
+  ],
+  "movementConnectorDirections": [
+    "back-left"
   ]
 }

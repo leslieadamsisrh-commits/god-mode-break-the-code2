@@ -1248,7 +1248,7 @@ function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
  return i;
 }
 function repulseHooks21(s:GameState){return{blocked:(a:{x:number;y:number},b:{x:number;y:number})=>s.covers.some(c=>c.hp>0&&segmentCover(a,b,c)),emit:(owner:number,status:ActionOutcome['status'],reason:string)=>{actionOutcome(s,owner,'repulse',status,reason);},spend:(owner:number,amount:number)=>spendEnergy(s.players[owner],s,amount)};}
-function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)if(!p.bot&&p.gripDesired34!==undefined)p.input.grip=p.gripEdges34?.length?p.gripEdges34.shift()!:p.gripDesired34;const before=s.players.map(p=>({...p,orbitIds:[...p.orbitIds]})),requests=s.players.map((p,n)=>actionRequests(p,p.input,prev[n]||empty(),s.time,!!s.config.legacyPowers)),firstSeq=s.actionSeq||0;requests.forEach((xs,n)=>xs.forEach(action=>actionOutcome(s,n,action,"attempted")));const c=s.config,rawInputs=s.players.map(p=>p.input),playerStarts=s.players.map(p=>({x:p.x,y:p.y,z:p.z}));
+function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:string)=>boolean){for(const p of s.players)if(!p.bot&&p.gripDesired34!==undefined)p.input.grip=p.gripEdges34?.length?p.gripEdges34.shift()!:p.gripDesired34;const before=s.players.map(p=>({...p,orbitIds:[...p.orbitIds]})),requests=s.players.map((p,n)=>actionRequests(p,p.input,prev[n]||empty(),s.time,!!s.config.legacyPowers)),firstSeq=s.actionSeq||0;requests.forEach((xs,n)=>xs.forEach(action=>actionOutcome(s,n,action,"attempted")));const c=s.config,rawInputs=s.players.map(p=>p.input),playerStarts=s.players.map(p=>({x:p.x,y:p.y,z:p.z}));
  s.players.forEach((p,n)=>p.input=repulseInput21(s,n,chargeIntent(p,s,rawInputs[n],dt)));
  if(combatFight(s))s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0);
  stepRepulse21(s,repulseHooks21(s));
@@ -1363,6 +1363,7 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
      if(coverMuzzleClearance(recoilPose,attachedCover,barrelSocket27d(recoilPose,c.spriteScale),p.gunFacing).allowed)shotPose=recoilPose;
     }
    }
+   if(shotPose.character==='raptor'&&shotPose.raptorFrame&&raptorShotReady&&!raptorShotReady(shotPose.raptorFrame.key))continue;
    const muzzle=barrelSocket27d(shotPose,c.spriteScale),legacyAimOrigin={x:muzzle.x,y:muzzle.y},physical=coverMuzzleClearance(shotPose,attachedCover,muzzle,p.gunFacing);
    if(p.character==='raptor'&&!physical.allowed){p.pendingFireUntil=undefined;continue;}
    if(shotPose!==p&&shotPose.raptorFrame){
@@ -1385,7 +1386,7 @@ function step(s:GameState,dt:number,prev:InputState[]){for(const p of s.players)
    if(typeof p.shells==="number")p.shells=Math.max(0,p.shells-1);
    if(p.coverId)p.returnToCover=.28;
    for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),attackId:volleyId,source:"shotgun",volleyId,realAge:0,owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,damage:c.shotDamage*(p.godTime>0?c.godDamage:1),z:p.z+shotHeight,vz:verticalAim27b(s,n,p.z+shotHeight,c.shotSpeed,muzzle.raptorAligned?muzzle:legacyAimOrigin),renderOffsetX,clearanceCoverId:clearance})}
-   s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.18,owner:n,z:p.z+shotHeight,renderOffsetX,text:"BOOM",angle:p.gunFacing,raptorFrameKey:attachedCover&&muzzle.raptorAligned?p.raptorFrame?.key:undefined});
+   s.fx.push({id:uid(),type:"muzzle",x:muzzle.x,y:muzzle.y,life:.18,owner:n,z:p.z+shotHeight,renderOffsetX,text:"BOOM",angle:p.gunFacing,raptorFrameKey:muzzle.raptorAligned?p.raptorFrame?.key:undefined});
   }
  }
  for(const cv of s.covers){if(cv.constructOwner===undefined||cv.hp<=0)continue;const owner=s.players[cv.constructOwner];if(!owner||owner.hp<=0)dissolveFieldCover(cv,s);}
@@ -1459,7 +1460,7 @@ function aftermath(s:GameState,elapsed:number){
   s.matter=s.matter.filter(m=>m.life>0);s.fx.forEach(f=>f.life-=d);s.fx=s.fx.filter(f=>f.life>0);elapsed-=dt;
  }if(s.finisher<=1e-9){s.finisher=0;s.phase="finished";finishFightRound(s);s.timeScale=.92;for(const p of s.players)p.vx=p.vy=0;}
 }
-export function advance(s:GameState,now=Date.now()){
+export function advance(s:GameState,now=Date.now(),raptorShotReady?:(key:string)=>boolean){
  if(unlimited31(s))s.players.forEach(p=>p.battery=100);
  let elapsed=clamp((now-s.lastAt)/1000,0,.25);s.lastAt=now;
  if(s.mode==="watch"&&s.watchPaused)return;
@@ -1467,7 +1468,7 @@ export function advance(s:GameState,now=Date.now()){
  if(s.phase==="countdown"){s.countdown=Math.max(0,s.countdown-elapsed);s.players.forEach(p=>p.processedInput={...p.input});if(!s.countdown){s.phase="playing";s.fightUntil=s.time+.65;}return;}
  if(s.phase==="finisher"){aftermath(s,elapsed);return;}
  if(s.phase!=="playing"||(s.mode!=="solo"&&s.players.length<2))return;
- let prev=s.players.map(p=>({...p.processedInput}));while(elapsed>1e-9){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,prev);s.players.forEach(p=>p.processedInput={...p.input});prev=s.players.map(p=>({...p.input}));elapsed-=dt;if(s.phase!=="playing"){if(s.phase==="finisher")aftermath(s,elapsed);break;}}
+ let prev=s.players.map(p=>({...p.processedInput}));while(elapsed>1e-9){const dt=Math.min(1/60,elapsed);s.time+=dt;botInput(s);step(s,dt,prev,raptorShotReady);s.players.forEach(p=>p.processedInput={...p.input});prev=s.players.map(p=>({...p.input}));elapsed-=dt;if(s.phase!=="playing"){if(s.phase==="finisher")aftermath(s,elapsed);break;}}
 }
 export function startOrRematch(s:GameState,slot:number){
  if(s.mode==='solo'){respawn(s);return;}

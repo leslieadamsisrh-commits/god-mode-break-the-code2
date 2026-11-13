@@ -7,7 +7,7 @@ import {registerRepulseLab21,configureRepulse21} from './repulse21';
 export function isLocalMode(mode:unknown){return mode==="solo"||mode==="practice"||mode==="bot";}
 export class LocalCombat {
  state:GameState;room:string;token:string;private clock:number|null=null;private remainder=0;private seq=0;
- constructor(name:string,mode:"solo"|"practice"|"bot",now:number,rules?:unknown,character?:unknown){
+ constructor(name:string,mode:"solo"|"practice"|"bot",now:number,rules?:unknown,character?:unknown,private raptorShotReady?:(key:string)=>boolean){
   this.token=crypto.randomUUID();this.room="local-"+crypto.randomUUID();this.state=newGame(name,this.token,now,mode);
   this.state.players[0].character=character==='raptor'?'raptor':'jade';
   refreshRaptorPose(this.state.players[0],this.state.time,this.state.config.slideDuration);
@@ -20,7 +20,7 @@ export class LocalCombat {
   if(this.clock===null){this.clock=now;return this.reply();}
   this.remainder+=Math.max(0,Math.min(100,now-this.clock));this.clock=now;
   const step=1000/60;
-  while(this.remainder+1e-6>=step){setInput(this.state,0,++this.seq,edges.shift()||latest);advance(this.state,this.state.lastAt+step);this.remainder-=step;}
+  while(this.remainder+1e-6>=step){setInput(this.state,0,++this.seq,edges.shift()||latest);advance(this.state,this.state.lastAt+step,this.raptorShotReady);this.remainder-=step;}
   return this.reply();
  }
  command(body:any){

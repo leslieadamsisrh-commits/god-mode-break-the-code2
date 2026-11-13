@@ -1239,7 +1239,7 @@
       "family": "recovery",
       "direction": "back-left",
       "phase": "cover exit / slide recovery",
-      "status": "replaced-in-design-pass"
+      "status": "unselected-with-current-availability"
     },
     {
       "key": "recovery/back-right/000.png",
@@ -2128,6 +2128,34 @@
       "family": "stalk",
       "direction": "right",
       "phase": "right-support-passing",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "movement/back-left/001.png",
+      "family": "movement",
+      "direction": "back-left",
+      "phase": "push",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "movement/back-left/006.png",
+      "family": "movement",
+      "direction": "back-left",
+      "phase": "brake",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "movement/back-left/007.png",
+      "family": "movement",
+      "direction": "back-left",
+      "phase": "settle",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "cover-catch/back-left/000.png",
+      "family": "cover-catch",
+      "direction": "back-left",
+      "phase": "compress",
       "status": "replaced-in-design-pass"
     }
   ]

@@ -13,7 +13,7 @@ export type RaptorDirection=typeof RAPTOR_DIRECTIONS[number];
 export const RAPTOR_COUNTS={idle:1,run:4,stalk:4,jog:4,sprint:4,slide:3,jump:6,'cover-drive':2,'cover-hold':1,'cover-lean':2,'cover-pop':1,'cover-catch':1,'cover-shuffle':2,'cover-wrap':2,'cover-bridge':2,'cover-corner':1,'cover-recoil':2,'cover-sequence':6,recovery:1,movement:8} as const;
 export type RaptorFamily=keyof typeof RAPTOR_COUNTS;
 // New posture artwork is enabled only for complete, explicitly accepted directional sets.
-export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string;worldX?:number;worldY?:number;travelAngle?:number;verticalVelocity?:number;authoritativeFrame?:RaptorPoseFrame};
+export type RaptorVisualState={x:number;y:number;angle:number;speed:number;sliding:boolean;airborne:boolean;hit:boolean;firing:boolean;time:number;scale:number;slideRemaining?:number;slideDuration?:number;attached?:boolean;actorId?:string;worldX?:number;worldY?:number;travelAngle?:number;verticalVelocity?:number;animationState?:string;authoritativeFrame?:RaptorPoseFrame};
 export type RaptorRegistration={anchor:number[];drawScale?:number};
 /** Clamp digital diagonals before applying the lab's simulated stick pressure.
  * Controller values bypass this helper and retain their native analog magnitude.
@@ -54,40 +54,86 @@ export function getRaptorAnimationTrace():string{
  return [...animationTrace].map(([key,frames])=>key+": "+[...frames].sort().join(",")).join("\n")||"Move or slide to record painted frames.";
 }
 export function clearRaptorAnimationTrace():void{animationTrace.clear();}
+type AssetResult = "loading" | "ready" | "network-error" | "decode-error" | "timeout" | "unregistered";
+type SpriteDiagnostic = {requested: string; displayed: string | null; state: string; result: AssetResult};
 const cache=new Map<string,HTMLImageElement>();
-const missing=new Set<string>();
+const results=new Map<string,AssetResult>();
 const pending=new Map<string,Promise<boolean>>();
+const diagnostics:SpriteDiagnostic[]=[];
+const lastByActor=new Map<string,SpriteDiagnostic>();
+const frames:Record<string,RaptorRegistration>=inventory.frames;
+
+export function getRaptorSpriteDiagnostics(){return diagnostics.slice();}
+
 export function loadRaptorSprite(key:string,retry=false):Promise<boolean>{
+ if(!Object.hasOwn(frames,key))return Promise.resolve(false);
+ if(cache.has(key))return Promise.resolve(true);
  const existing=pending.get(key);
  if(existing)return existing;
- if(retry&&missing.delete(key))cache.delete(key);
- if(missing.has(key))return Promise.resolve(false);
- if(cache.has(key))return Promise.resolve(true);
+ if(results.has(key)&&!retry)return Promise.resolve(false);
  const img=new Image();
- cache.set(key,img);
+ img.decoding="async";
+ results.set(key,"loading");
  const request=new Promise<boolean>(resolve=>{
-  const finish=(ready:boolean)=>{
+  let settled=false;
+  const finish=(result:AssetResult)=>{
+   if(settled)return;
+   settled=true;
    clearTimeout(timeout);
    img.onload=null;
    img.onerror=null;
    pending.delete(key);
-   if(!ready)missing.add(key);
-   resolve(ready);
+   results.set(key,result);
+   if(result==="ready")cache.set(key,img);
+   resolve(result==="ready");
   };
-  const timeout=setTimeout(()=>finish(false),8000);
-  img.onload=()=>finish(img.naturalWidth===512&&img.naturalHeight===512);
-  img.onerror=()=>finish(false);
+  const timeout=setTimeout(()=>finish("timeout"),15000);
+  img.onload=async()=>{
+   try{
+    await img.decode();
+    finish(img.naturalWidth===512&&img.naturalHeight===512?"ready":"decode-error");
+   }catch{finish("decode-error");}
+  };
+  img.onerror=()=>finish("network-error");
  });
  pending.set(key,request);
  img.src=`/assets/raptor-v2/${key}?v=${inventory.build}`;
  return request;
 }
-export async function preloadRaptorSprites():Promise<void>{
- const keys=Object.keys(inventory.frames);
+
+const openingKeys=Object.keys(frames).filter(key=>
+ key.startsWith("idle/")||/^movement\/[^/]+\/000\.png$/.test(key)||
+ /^(?:stalk|jog|sprint|jump|slide|recovery)\/[^/]+\/000\.png$/.test(key));
+async function loadRaptorBatch(keys:string[],retry=false){
+ let ready=true;
  for(let i=0;i<keys.length;i+=8){
-  await Promise.all(keys.slice(i,i+8).map(key=>loadRaptorSprite(key)));
+  const batch=await Promise.all(keys.slice(i,i+8).map(key=>loadRaptorSprite(key,retry)));
+  ready=batch.every(Boolean)&&ready;
  }
+ return ready;
 }
+export function prepareRaptorMatch(){return loadRaptorBatch(openingKeys,true);}
+let backgroundLoad:Promise<void>|undefined;
+export function preloadRaptorSprites():Promise<void>{
+ if(!backgroundLoad){
+  const keys=Object.keys(frames).filter(key=>!openingKeys.includes(key)&&!key.startsWith("run/"));
+  const priority=(key:string)=>/^(?:movement|stalk|jog|sprint|jump|slide)\//.test(key)?0:1;
+  keys.sort((a,b)=>priority(a)-priority(b));
+  backgroundLoad=loadRaptorBatch(keys,true).then(()=>{}).finally(()=>{backgroundLoad=undefined;});
+ }
+ return backgroundLoad;
+}
+export function requestRaptorShotSprite(key:string){
+ if(cache.has(key))return true;
+ if(!Object.hasOwn(frames,key))return false;
+ const now=Date.now();
+ if(!pending.has(key)&&(shotRetryAt.get(key)??0)<=now){
+  shotRetryAt.set(key,now+3000);
+  void loadRaptorSprite(key,true);
+ }
+ return false;
+}
+const shotRetryAt=new Map<string,number>();
 export function selectRaptorDirection(angle:number):RaptorDirection {
  return raptorPoseDirection(angle);
 }
@@ -101,30 +147,36 @@ export function selectRaptorAction(state:{speed:number;sliding:boolean;airborne:
  return "idle";
 }
 export function paintRaptorSprite(g:CanvasRenderingContext2D,state:RaptorVisualState):boolean{
- const selected=state.authoritativeFrame??selectRaptorFrame(state),direction=selectRaptorDirection(selected.angle);
- const artAction=selected.family,artFrame=selected.frame;
- const key=`${artAction}/${direction}/${String(artFrame).padStart(3,"0")}.png`;
- if(!cache.has(key))void loadRaptorSprite(key);
- const img=cache.get(key);
- if(img?.complete&&img.naturalWidth===512&&img.naturalHeight===512){
-   const traceKey=direction+" / "+artAction+(state.firing?" + fire":"");
-   const seen=animationTrace.get(traceKey)||new Set<number>();seen.add(artFrame);animationTrace.set(traceKey,seen);
-   const placement=raptorSpritePlacement(state,inventory.frames[key] as RaptorRegistration);
-   g.drawImage(img,placement.x,placement.y,placement.size,placement.size);
-   return true;
+ const selected=state.authoritativeFrame??advanceVisualPose(state).frame;
+ const direction=selectRaptorDirection(selected.angle);
+ const {key,family,frame}=selected;
+ if(!cache.has(key))requestRaptorShotSprite(key);
+ const status=Object.hasOwn(frames,key)?results.get(key)??"loading":"unregistered";
+ const actor=state.actorId||"local";
+ const previous=lastByActor.get(actor);
+ const familyKey=`${family}/${direction}/`;
+ const related=previous?.displayed?.startsWith(familyKey)?previous.displayed:undefined;
+ // Fallback is presentation only. The local combat shot gate checks the exact
+ // selected sprite before a shell or a muzzle effect can be committed.
+ const candidates=[key,related,`${familyKey}000.png`,
+  `idle/${direction}/000.png`,previous?.displayed,"idle/right/000.png"];
+ const displayed=candidates.find(candidate=>candidate&&cache.has(candidate));
+ const sample={requested:key,displayed:displayed??null,state:state.animationState??family,result:status};
+ if(!previous||previous.requested!==key||previous.displayed!==sample.displayed||previous.result!==status||previous.state!==sample.state){
+  lastByActor.set(actor,sample);
+  if(status!=="ready"||displayed!==key){
+   if(diagnostics.length>=160)diagnostics.shift();
+   diagnostics.push(sample);
+  }
  }
- // Explicit missing-art marker; NEVER impersonate the approved Raptor with a skeletal rig.
- g.save();g.translate(state.x,state.y);
- g.fillStyle="#1b2a36";g.strokeStyle="#ff865d";g.lineWidth=2;
- g.fillRect(-18,-64,36,64);g.strokeRect(-18,-64,36,64);
- g.fillStyle="#fff";g.font="bold 9px monospace";g.textAlign="center";
- g.fillText("RAPTOR V2",0,-72);g.fillText("ART PENDING",0,-83);
- g.restore();return false;
+ if(!displayed)return false;
+ if(displayed===key){
+  const traceKey=direction+" / "+family+(state.firing?" + fire":"");
+  const seen=animationTrace.get(traceKey)||new Set<number>();
+  seen.add(frame);
+  animationTrace.set(traceKey,seen);
+ }
+ const placement=raptorSpritePlacement(state,frames[displayed]);
+ g.drawImage(cache.get(displayed)!,placement.x,placement.y,placement.size,placement.size);
+ return displayed===key;
 }
-
-
-
-
-
-
-
