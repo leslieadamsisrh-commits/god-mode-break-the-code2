@@ -54,6 +54,10 @@ for (const angle of [0,Math.PI/12,Math.PI/2]) for (const side of [-1,1]) for (co
     requested = key;
     return ready;
   });
+  if(angle===0&&side===1){
+    assert.ok(trace.has('cover-catch/back/000.png'),'Straight rear Tall Slab reaches impact');
+    assert.ok(trace.has('cover-catch/back/001.png'),'Straight rear Tall Slab reaches compression');
+  }
   const shells = p.shells;
   tick({aim:into,fire:true,coverAim:true},3);
   assert.equal(p.shells,shells,'Tall center preserves the shell');
@@ -120,4 +124,10 @@ assert.equal(pose(1.47,diagonal,0,{attached:true,coverState11:'catch'}),'cover-c
 assert.equal(pose(1.70,diagonal,0,{attached:true,coverState11:'brace'}),'cover-hold/back-left/000.png');
 assert.equal(pose(1.72,diagonal,40),'movement/back-left/001.png');
 assert.match(pose(1.84,diagonal,45),/^stalk\/back-left\//);
+memory=undefined;
+const frontLeft=3*Math.PI/4;
+assert.equal(pose(2,frontLeft,0),'idle/front-left/000.png');
+assert.equal(pose(2.02,frontLeft,35),'movement/front-left/001.png');
+assert.match(pose(2.04,frontLeft,40,{firing:true}),/^stalk\/front-left\//);
+assert.match(pose(2.09,frontLeft,42),/^stalk\/front-left\//);
 console.log('PASS registered left, rear-left and back movement-to-cover sequence');

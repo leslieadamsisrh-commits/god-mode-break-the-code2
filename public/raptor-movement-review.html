@@ -15,7 +15,7 @@
 <p>Review the eight ready poses, movement cycles, jumps, slides, and recovery.</p>
 <div class="controls">
 <button id="play" type="button">Pause</button>
-<label>Animation <select id="pace"><option value="build">Build speed</option><option value="idle">Ready</option><option value="stalk">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option><option value="jump">Jump</option><option value="slide">Slide</option><option value="recovery">Slide to Ready</option><option value="continuity">Left to Rear Cover Chain</option></select></label>
+<label>Animation <select id="pace"><option value="build">Build speed</option><option value="idle">Ready</option><option value="stalk">Stalk</option><option value="jog">Jog</option><option value="sprint">Full Sprint</option><option value="jump">Jump</option><option value="slide">Slide</option><option value="recovery">Slide to Ready</option><option value="continuity">Left to Rear Cover Chain</option><option value="rearCatch">Rear Slide to Cover</option><option value="frontLeftPush">Front-left Push to Sprint</option></select></label>
 <label>Speed <select id="speed"><option value="1">Normal</option><option value="0.25">Quarter speed</option></select></label>
 <label>Size <select id="size"><option value="2.5">Inspect</option><option value="1">Gameplay</option></select></label>
 <label><input id="guides" type="checkbox">Ground and support heel</label>
@@ -53,7 +53,17 @@ const continuity=[
  ['cover-catch','back-left',0,160],['cover-hold','back-left',0,260],
  ['movement','back-left',1,100],['stalk','back-left',0,160],
 ];
-timelines.continuity=continuity.map(([family,direction,index,duration])=>({family,direction,index,duration}));
+const chains={
+ continuity,
+ rearCatch:[['sprint','back-left',3,110],['sprint','back',0,100],['slide','back',0,80],
+  ['slide','back',1,270],['slide','back',2,60],['cover-catch','back',0,80],
+  ['cover-catch','back',1,140],['cover-hold','back',0,320],['movement','back',1,90],['movement','back',2,145]],
+ frontLeftPush:[['idle','front-left',0,300],['movement','front-left',1,65],['stalk','front-left',0,140],
+  ['jog','front-left',1,100],['sprint','front-left',2,100],['sprint','front-left',3,80],
+  ['jog','front-left',0,145],['idle','front-left',0,260]],
+};
+const chainTitles={continuity:'Left to Rear Cover Chain',rearCatch:'Rear Slide to Cover',frontLeftPush:'Front-left Push to Sprint'};
+for(const [name,chain] of Object.entries(chains))timelines[name]=chain.map(([family,direction,index,duration])=>({family,direction,index,duration}));
 const pace=document.querySelector('#pace');
 const requested=new URLSearchParams(location.search).get('pace');
 if(Object.hasOwn(timelines,requested))pace.value=requested;
@@ -131,7 +141,7 @@ async function load(){
    });
    document.querySelector('#stills').append(title,strip);
   }
-  for(const [family,dir,index] of continuity){
+  for(const [family,dir,index] of Object.values(chains).flat()){
    if(dir!==direction||frames[family]?.[index])continue;
    const key=family+'/'+dir+'/'+String(index).padStart(3,'0')+'.png';
    const image=new Image();
@@ -160,12 +170,12 @@ async function load(){
    if(remaining<entry.duration)break;
    remaining-=entry.duration;
   }
-  if(pace.value==='continuity'){
+  if(Object.hasOwn(chains,pace.value)){
    const stage=sets[0];
    for(const set of sets)set.box.hidden=set!==stage;
    const frame=sets.find(set=>set.direction===step.direction).frames[step.family][step.index];
-   stage.heading.textContent='Left to Rear Cover Chain';
-   stage.phase.textContent=names[step.direction]+' · '+paceNames[step.family]+' · '+labels[step.family][step.index];
+   stage.heading.textContent=chainTitles[pace.value];
+   stage.phase.textContent=names[step.direction]+' · '+paceNames[step.family]+' · '+(step.family==='cover-catch'&&step.direction==='back'?['Impact','Compress'][step.index]:labels[step.family][step.index]);
    paint(stage.canvas,frame.image,frame.record);
    requestAnimationFrame(draw);
    return;

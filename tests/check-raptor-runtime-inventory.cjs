@@ -60,7 +60,7 @@ for (const angle of headings) {
         let memory;
         for(let i=0;i<76;i++) {
           const time=i/60, speed=state==='shuffle'||state==='drive'?80:0;
-          memory=sample(memory,{...anchor,coverState11:state,time,speed,x:speed*time,coverSpeed11:speed});
+          memory=sample(memory,{...anchor,coverState11:state,coverContactUntil:state==='catch'?.22:undefined,time,speed,x:speed*time,coverSpeed11:speed});
         }
       }
       let memory;

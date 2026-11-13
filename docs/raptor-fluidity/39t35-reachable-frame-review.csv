@@ -1,0 +1,269 @@
+asset,action,direction,phase,drawScale,anchorX,anchorY,paintedWidth,paintedHeight,review
+cover-bridge/left/000.png,cover-bridge,left,raise,1.12,264,430,94.56,63.76,review upper body and equipment against matching hold/exposure; keep planted root
+cover-bridge/left/001.png,cover-bridge,left,lower,1.12,263,430,94.56,63.76,review upper body and equipment against matching hold/exposure; keep planted root
+cover-bridge/right/000.png,cover-bridge,right,raise,1.03,238,430,89.81,65.66,review upper body and equipment against matching hold/exposure; keep planted root
+cover-bridge/right/001.png,cover-bridge,right,lower,1.03,243,430,91.79,65.66,review upper body and equipment against matching hold/exposure; keep planted root
+cover-catch/back-left/000.png,cover-catch,back-left,compress,1,256,449,81.44,51.81,review upper body and equipment against matching hold/exposure; keep planted root
+cover-catch/back/000.png,cover-catch,back,impact,1.0,229,378,42.64,74.19,new drawing; draft registered foot and scale; both barrel tips checked
+cover-catch/back/001.png,cover-catch,back,compress,1.0,256,429,45.2,61.4,new drawing; draft registered foot and scale; both barrel tips checked
+cover-catch/left/000.png,cover-catch,left,incoming slide catch,1.12,235,367,106.74,57.07,review upper body and equipment against matching hold/exposure; keep planted root
+cover-catch/right/000.png,cover-catch,right,incoming slide catch,1.03,237,388,98.82,66.76,review upper body and equipment against matching hold/exposure; keep planted root
+cover-corner/back-left/000.png,cover-corner,back-left,corner transfer,0.83,268,447,67.6,69.9,review upper body and equipment against matching hold/exposure; keep planted root
+cover-corner/back-right/000.png,cover-corner,back-right,corner transfer,0.83,252,439,67.95,66.36,review upper body and equipment against matching hold/exposure; keep planted root
+cover-drive/front-right/000.png,cover-drive,front-right,drive contact A,1.12,241,423,101.01,76.65,review upper body and equipment against matching hold/exposure; keep planted root
+cover-drive/front-right/001.png,cover-drive,front-right,drive contact B,1.12,247,413,105.3,78.32,review upper body and equipment against matching hold/exposure; keep planted root
+cover-hold/back-left/000.png,cover-hold,back-left,tuck / brace / rest,1.05,244,414,81.04,77.68,review upper body and equipment against matching hold/exposure; keep planted root
+cover-hold/back-right/000.png,cover-hold,back-right,tuck / brace / rest,1,253,430,82.72,74.41,review upper body and equipment against matching hold/exposure; keep planted root
+cover-hold/back/000.png,cover-hold,back,tuck / brace / rest,0.79,244,441,67.88,68.89,review upper body and equipment against matching hold/exposure; keep planted root
+cover-hold/left/000.png,cover-hold,left,tuck / brace / rest,1.12,259,376,96.95,61.37,review upper body and equipment against matching hold/exposure; keep planted root
+cover-hold/right/000.png,cover-hold,right,tuck / brace / rest,1.03,248,387,95.3,66.1,review upper body and equipment against matching hold/exposure; keep planted root
+cover-lean/left/000.png,cover-lean,left,tall edge aim,1.16,260,387,102.14,70.24,review upper body and equipment against matching hold/exposure; keep planted root
+cover-lean/right/000.png,cover-lean,right,tall edge aim,1,266,412,99.78,66.73,review upper body and equipment against matching hold/exposure; keep planted root
+cover-pop/left/000.png,cover-pop,left,low pop aim,1.12,262,387,103.63,67.1,review upper body and equipment against matching hold/exposure; keep planted root
+cover-pop/right/000.png,cover-pop,right,low pop aim,1.03,224,389,100.36,68.07,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/back-left/000.png,cover-recoil,back-left,recoil,0.87,273,405,51.75,70.3,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/back-left/001.png,cover-recoil,back-left,settle / aim,0.87,287,402,56.39,70.3,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/back-right/000.png,cover-recoil,back-right,recoil,0.83,252,439,72.91,67.77,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/back-right/001.png,cover-recoil,back-right,settle / aim,0.83,252,439,75.21,69.37,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/back/000.png,cover-recoil,back,recoil,0.79,242,430,59.12,68.89,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/back/001.png,cover-recoil,back,settle / aim,0.79,242,430,59.46,68.89,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/left/000.png,cover-recoil,left,recoil,1.12,268,430,89.54,63.76,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/left/001.png,cover-recoil,left,settle / aim,1.12,266,430,92.41,63.76,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/right/000.png,cover-recoil,right,recoil,1.03,245,430,86.96,65.66,review upper body and equipment against matching hold/exposure; keep planted root
+cover-recoil/right/001.png,cover-recoil,right,settle / aim,1.03,243,430,89.81,65.66,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-left/000.png,cover-sequence,front-left,hold,0.71,242,460,65.85,69.33,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-left/001.png,cover-sequence,front-left,raise / pivot,0.71,242,460,65.85,69.48,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-left/002.png,cover-sequence,front-left,aim,0.71,242,460,65.09,71.75,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-left/003.png,cover-sequence,front-left,recoil,0.71,242,460,65.09,70.69,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-left/004.png,cover-sequence,front-left,settle,0.71,242,460,64.94,71.75,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-left/005.png,cover-sequence,front-left,lower,0.71,242,460,65.85,69.33,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-right/000.png,cover-sequence,front-right,hold,0.72,250,460,67.08,69.08,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-right/001.png,cover-sequence,front-right,raise / pivot,0.72,250,460,65.09,68.46,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-right/002.png,cover-sequence,front-right,aim,0.72,250,460,66.93,72.61,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-right/003.png,cover-sequence,front-right,recoil,0.72,250,460,67.08,71.23,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-right/004.png,cover-sequence,front-right,settle,0.72,250,460,66.93,72.61,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front-right/005.png,cover-sequence,front-right,lower,0.72,250,460,64.93,68.77,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front/000.png,cover-sequence,front,hold,0.71,242,460,68.72,69.78,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front/001.png,cover-sequence,front,raise / pivot,0.71,242,460,68.57,70.09,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front/002.png,cover-sequence,front,aim,0.71,242,460,68.57,70.39,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front/003.png,cover-sequence,front,recoil,0.71,242,460,68.57,70.84,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front/004.png,cover-sequence,front,settle,0.71,242,460,68.42,70.24,review upper body and equipment against matching hold/exposure; keep planted root
+cover-sequence/front/005.png,cover-sequence,front,lower,0.71,242,460,68.42,69.78,review upper body and equipment against matching hold/exposure; keep planted root
+cover-shuffle/back/000.png,cover-shuffle,back,shuffle step A,0.79,256,439,66.87,69.22,review upper body and equipment against matching hold/exposure; keep planted root
+cover-shuffle/back/001.png,cover-shuffle,back,shuffle step B,0.79,241,450,68.21,71.41,review upper body and equipment against matching hold/exposure; keep planted root
+cover-shuffle/left/000.png,cover-shuffle,left,shuffle step A,1.12,259,376,104.35,61.85,review upper body and equipment against matching hold/exposure; keep planted root
+cover-shuffle/left/001.png,cover-shuffle,left,shuffle step B,1.12,246,383,103.63,64.47,review upper body and equipment against matching hold/exposure; keep planted root
+cover-shuffle/right/000.png,cover-shuffle,right,shuffle step A,1.03,242,388,97.5,66.98,review upper body and equipment against matching hold/exposure; keep planted root
+cover-shuffle/right/001.png,cover-shuffle,right,shuffle step B,1.03,248,385,97.5,66.1,review upper body and equipment against matching hold/exposure; keep planted root
+cover-wrap/left/000.png,cover-wrap,left,tuck,1.16,260,387,92.49,69.25,review upper body and equipment against matching hold/exposure; keep planted root
+cover-wrap/left/001.png,cover-wrap,left,pivot / retract,1.16,260,387,110.05,73.7,review upper body and equipment against matching hold/exposure; keep planted root
+cover-wrap/right/000.png,cover-wrap,right,tuck,1,266,410,82.51,66.09,review upper body and equipment against matching hold/exposure; keep planted root
+cover-wrap/right/001.png,cover-wrap,right,pivot / retract,1,263,409,93.17,66.52,review upper body and equipment against matching hold/exposure; keep planted root
+idle/back-left/000.png,idle,back-left,neutral / stationary fire / interruption,1.0,256,450,99.56,84.21,review silhouette and head-to-torso proportions across adjacent ready turns
+idle/back-right/000.png,idle,back-right,neutral / stationary fire / interruption,1.0,259,450,100.63,86.35,review silhouette and head-to-torso proportions across adjacent ready turns
+idle/back/000.png,idle,back,neutral / stationary fire / interruption,1.0,256,450,55.65,93.59,review silhouette and head-to-torso proportions across adjacent ready turns
+idle/front-left/000.png,idle,front-left,neutral / stationary fire / interruption,1.0,256,450,89.76,87.2,review silhouette and head-to-torso proportions across adjacent ready turns
+idle/front-right/000.png,idle,front-right,neutral / stationary fire / interruption,1.0,256,450,91.89,87.84,review silhouette and head-to-torso proportions across adjacent ready turns
+idle/front/000.png,idle,front,neutral / stationary fire / interruption,1.0,256,450,74.62,90.61,review silhouette and head-to-torso proportions across adjacent ready turns
+idle/left/000.png,idle,left,neutral / stationary fire / interruption,1.2334,262,450,130.43,96.24,review silhouette and head-to-torso proportions across adjacent ready turns
+idle/right/000.png,idle,right,neutral / stationary fire / interruption,1.2088,246,450,127.83,93.81,review silhouette and head-to-torso proportions across adjacent ready turns
+jog/back-left/000.png,jog,back-left,left-contact,1,256,449,69.29,62.47,review same-facing pace seam; preserve phase and torso lean
+jog/back-left/001.png,jog,back-left,left-support-passing,1,256,449,67.58,63.11,review same-facing pace seam; preserve phase and torso lean
+jog/back-left/002.png,jog,back-left,right-contact,1,256,449,77.39,65.24,review same-facing pace seam; preserve phase and torso lean
+jog/back-left/003.png,jog,back-left,right-support-passing,1,256,449,69.5,62.47,review same-facing pace seam; preserve phase and torso lean
+jog/back-right/000.png,jog,back-right,left-contact,1,256,449,67.58,63.11,review same-facing pace seam; preserve phase and torso lean
+jog/back-right/001.png,jog,back-right,left-support-passing,1,256,449,68.01,63.96,review same-facing pace seam; preserve phase and torso lean
+jog/back-right/002.png,jog,back-right,right-contact,1,256,449,71.21,63.53,review same-facing pace seam; preserve phase and torso lean
+jog/back-right/003.png,jog,back-right,right-support-passing,1,256,449,69.08,64.39,review same-facing pace seam; preserve phase and torso lean
+jog/back/000.png,jog,back,left-contact,1.1951,246.205,446.24525,59.37,91.47,review same-facing pace seam; preserve phase and torso lean
+jog/back/001.png,jog,back,left-support-passing,1.1667,250.5705,450.71441,57.21,85.57,review same-facing pace seam; preserve phase and torso lean
+jog/back/002.png,jog,back,right-contact,1.1667,263.0012,450.0,53.73,84.82,review same-facing pace seam; preserve phase and torso lean
+jog/back/003.png,jog,back,right-support-passing,1.1951,263.34625,449.83675,55.8,86.12,review same-facing pace seam; preserve phase and torso lean
+jog/front-left/000.png,jog,front-left,left-contact,1,256,449,81.02,74.19,review same-facing pace seam; preserve phase and torso lean
+jog/front-left/001.png,jog,front-left,left-support-passing,1,256,449,79.74,74.19,review same-facing pace seam; preserve phase and torso lean
+jog/front-left/002.png,jog,front-left,right-contact,1,256,449,82.93,72.7,review same-facing pace seam; preserve phase and torso lean
+jog/front-left/003.png,jog,front-left,right-support-passing,1,256,449,78.03,71.64,review same-facing pace seam; preserve phase and torso lean
+jog/front-right/000.png,jog,front-right,left-contact,1,256,449,84.85,69.08,review same-facing pace seam; preserve phase and torso lean
+jog/front-right/001.png,jog,front-right,left-support-passing,1,256,449,82.08,66.73,review same-facing pace seam; preserve phase and torso lean
+jog/front-right/002.png,jog,front-right,right-contact,1,256,449,88.26,66.09,review same-facing pace seam; preserve phase and torso lean
+jog/front-right/003.png,jog,front-right,right-support-passing,1,256,449,84.85,67.37,review same-facing pace seam; preserve phase and torso lean
+jog/front/000.png,jog,front,left-contact,1,256,449,58.2,84.0,review same-facing pace seam; preserve phase and torso lean
+jog/front/001.png,jog,front,left-support-passing,1,256,449,50.95,81.87,review same-facing pace seam; preserve phase and torso lean
+jog/front/002.png,jog,front,right-contact,1,256,449,52.02,83.79,review same-facing pace seam; preserve phase and torso lean
+jog/front/003.png,jog,front,right-support-passing,1,256,449,54.37,81.02,review same-facing pace seam; preserve phase and torso lean
+jog/left/000.png,jog,left,left-contact,1.15,277,450,108.61,83.12,review same-facing pace seam; preserve phase and torso lean
+jog/left/001.png,jog,left,left-support-passing,1.15,282,450,104.69,83.61,review same-facing pace seam; preserve phase and torso lean
+jog/left/002.png,jog,left,right-contact,1.15,245,450,102.98,84.59,review same-facing pace seam; preserve phase and torso lean
+jog/left/003.png,jog,left,right-support-passing,1.15,255,450,103.47,84.83,review same-facing pace seam; preserve phase and torso lean
+jog/right/000.png,jog,right,left-contact,1.15,252,450,111.07,73.31,review same-facing pace seam; preserve phase and torso lean
+jog/right/001.png,jog,right,left-support-passing,1.15,269,450,106.65,81.64,review same-facing pace seam; preserve phase and torso lean
+jog/right/002.png,jog,right,right-contact,1.15,267,450,106.16,81.89,review same-facing pace seam; preserve phase and torso lean
+jog/right/003.png,jog,right,right-support-passing,1.15,256,450,106.65,81.89,review same-facing pace seam; preserve phase and torso lean
+jump/back-left/000.png,jump,back-left,push-off,1.16,256,445,77.16,54.66,review head/pack continuity through landing and first gait contact
+jump/back-left/001.png,jump,back-left,ascent,1.16,256,445,73.45,70.73,review head/pack continuity through landing and first gait contact
+jump/back-left/002.png,jump,back-left,apex,1.16,256,445,75.68,55.65,review head/pack continuity through landing and first gait contact
+jump/back-left/003.png,jump,back-left,descent,1.16,256,445,75.92,70.98,review head/pack continuity through landing and first gait contact
+jump/back-left/004.png,jump,back-left,landing,1.16,256,445,78.65,57.87,review head/pack continuity through landing and first gait contact
+jump/back-left/005.png,jump,back-left,recovery,1.16,256,445,78.15,59.85,review head/pack continuity through landing and first gait contact
+jump/back-right/000.png,jump,back-right,push-off,1.16,256,445,74.44,58.12,review head/pack continuity through landing and first gait contact
+jump/back-right/001.png,jump,back-right,ascent,1.16,256,445,74.94,73.45,review head/pack continuity through landing and first gait contact
+jump/back-right/002.png,jump,back-right,apex,1.16,256,445,76.42,57.38,review head/pack continuity through landing and first gait contact
+jump/back-right/003.png,jump,back-right,descent,1.16,256,445,75.68,68.51,review head/pack continuity through landing and first gait contact
+jump/back-right/004.png,jump,back-right,landing,1.16,256,445,81.61,61.58,review head/pack continuity through landing and first gait contact
+jump/back-right/005.png,jump,back-right,recovery,1.16,256,445,79.88,64.3,review head/pack continuity through landing and first gait contact
+jump/back/000.png,jump,back,push-off,1.16,256,438,39.82,58.12,review head/pack continuity through landing and first gait contact
+jump/back/001.png,jump,back,ascent,1.16,256,438,37.1,66.03,review head/pack continuity through landing and first gait contact
+jump/back/002.png,jump,back,apex,1.16,256,438,35.61,58.37,review head/pack continuity through landing and first gait contact
+jump/back/003.png,jump,back,descent,1.16,256,438,37.1,66.77,review head/pack continuity through landing and first gait contact
+jump/back/004.png,jump,back,landing,1.16,256,438,46.25,61.33,review head/pack continuity through landing and first gait contact
+jump/back/005.png,jump,back,recovery,1.16,256,438,43.28,65.04,review head/pack continuity through landing and first gait contact
+jump/front-left/000.png,jump,front-left,push-off,1.16,256,449,70.24,64.55,review head/pack continuity through landing and first gait contact
+jump/front-left/001.png,jump,front-left,ascent,1.16,256,449,80.62,76.17,review head/pack continuity through landing and first gait contact
+jump/front-left/002.png,jump,front-left,apex,1.16,256,449,73.45,62.32,review head/pack continuity through landing and first gait contact
+jump/front-left/003.png,jump,front-left,descent,1.16,256,449,75.18,75.92,review head/pack continuity through landing and first gait contact
+jump/front-left/004.png,jump,front-left,landing,1.16,256,449,76.91,63.06,review head/pack continuity through landing and first gait contact
+jump/front-left/005.png,jump,front-left,recovery,1.16,256,449,77.16,67.52,review head/pack continuity through landing and first gait contact
+jump/front-right/000.png,jump,front-right,push-off,1.16,256,449,75.43,59.6,review head/pack continuity through landing and first gait contact
+jump/front-right/001.png,jump,front-right,ascent,1.16,256,449,72.71,78.65,review head/pack continuity through landing and first gait contact
+jump/front-right/002.png,jump,front-right,apex,1.16,256,449,73.2,65.54,review head/pack continuity through landing and first gait contact
+jump/front-right/003.png,jump,front-right,descent,1.16,256,449,77.16,75.43,review head/pack continuity through landing and first gait contact
+jump/front-right/004.png,jump,front-right,landing,1.16,256,449,77.41,63.81,review head/pack continuity through landing and first gait contact
+jump/front-right/005.png,jump,front-right,recovery,1.16,256,449,75.18,71.72,review head/pack continuity through landing and first gait contact
+jump/front/000.png,jump,front,push-off,1.16,256,449,64.8,62.57,review head/pack continuity through landing and first gait contact
+jump/front/001.png,jump,front,ascent,1.16,256,449,53.42,77.16,review head/pack continuity through landing and first gait contact
+jump/front/002.png,jump,front,apex,1.16,256,449,56.88,61.58,review head/pack continuity through landing and first gait contact
+jump/front/003.png,jump,front,descent,1.16,256,449,57.62,81.61,review head/pack continuity through landing and first gait contact
+jump/front/004.png,jump,front,landing,1.16,256,449,61.83,67.02,review head/pack continuity through landing and first gait contact
+jump/front/005.png,jump,front,recovery,1.16,256,449,65.29,72.96,review head/pack continuity through landing and first gait contact
+jump/left/000.png,jump,left,push-off,1.16,256,449,83.34,60.1,review head/pack continuity through landing and first gait contact
+jump/left/001.png,jump,left,ascent,1.16,256,449,100.41,64.55,review head/pack continuity through landing and first gait contact
+jump/left/002.png,jump,left,apex,1.16,256,449,93.48,60.84,review head/pack continuity through landing and first gait contact
+jump/left/003.png,jump,left,descent,1.16,256,449,93.24,64.55,review head/pack continuity through landing and first gait contact
+jump/left/004.png,jump,left,landing,1.16,256,449,97.94,58.37,review head/pack continuity through landing and first gait contact
+jump/left/005.png,jump,left,recovery,1.16,256,449,93.24,59.35,review head/pack continuity through landing and first gait contact
+jump/right/000.png,jump,right,push-off,1.16,256,449,85.08,54.16,review head/pack continuity through landing and first gait contact
+jump/right/001.png,jump,right,ascent,1.16,256,449,95.96,58.12,review head/pack continuity through landing and first gait contact
+jump/right/002.png,jump,right,apex,1.16,256,449,90.52,56.88,review head/pack continuity through landing and first gait contact
+jump/right/003.png,jump,right,descent,1.16,256,449,91.26,62.32,review head/pack continuity through landing and first gait contact
+jump/right/004.png,jump,right,landing,1.16,256,449,97.44,54.9,review head/pack continuity through landing and first gait contact
+jump/right/005.png,jump,right,recovery,1.16,256,449,89.53,55.89,review head/pack continuity through landing and first gait contact
+movement/back-left/001.png,movement,back-left,push,1,256,449,75.47,59.7,review recovery handoff against next stride
+movement/back-left/006.png,movement,back-left,brake,1,256,449,81.02,64.6,review recovery handoff against next stride
+movement/back-left/007.png,movement,back-left,settle,1,256,449,79.31,60.34,review recovery handoff against next stride
+movement/back/000.png,movement,back,ready,1.0,256,450,55.65,93.59,review silhouette and head-to-torso proportions across adjacent ready turns
+movement/back/001.png,movement,back,push,1.0,246,450,71.21,91.04,review recovery handoff against next stride
+movement/back/002.png,movement,back,left contact,1.0,246,450,63.96,92.74,review recovery handoff against next stride
+movement/back/003.png,movement,back,left pass,1.0,246,450,62.47,89.33,review recovery handoff against next stride
+movement/back/004.png,movement,back,right contact,1.0,246,450,65.45,90.61,review recovery handoff against next stride
+movement/back/005.png,movement,back,right pass,1.0,246,450,65.03,88.26,review recovery handoff against next stride
+movement/back/006.png,movement,back,brake,1.0,246,450,81.66,89.54,review recovery handoff against next stride
+movement/back/007.png,movement,back,settle,1.0,246,450,75.9,88.9,review recovery handoff against next stride
+movement/front-left/001.png,movement,front-left,push,1.0,246,451,80.59,71.42,new drawing; draft registered foot and scale; both barrel tips checked
+movement/left/000.png,movement,left,ready,1.2334,262,450,130.43,96.24,review silhouette and head-to-torso proportions across adjacent ready turns
+movement/left/001.png,movement,left,push,1.15,275,450,117.44,83.85,review recovery handoff against next stride
+movement/left/002.png,movement,left,left contact,1.15,310,450,116.95,87.04,review recovery handoff against next stride
+movement/left/003.png,movement,left,left pass,1.15,275,450,116.95,84.34,review recovery handoff against next stride
+movement/left/004.png,movement,left,right contact,1.15,275,450,116.95,82.14,review recovery handoff against next stride
+movement/left/005.png,movement,left,right pass,1.15,300,450,116.22,77.48,review recovery handoff against next stride
+movement/left/006.png,movement,left,brake,1.15,275,450,117.69,81.4,review recovery handoff against next stride
+movement/left/007.png,movement,left,settle,1.15,275,450,118.18,81.89,review recovery handoff against next stride
+movement/right/000.png,movement,right,ready,1.2088,246,450,127.83,93.81,review silhouette and head-to-torso proportions across adjacent ready turns
+movement/right/001.png,movement,right,push,1.15,280,450,113.76,80.66,review recovery handoff against next stride
+movement/right/002.png,movement,right,left contact,1.15,280,450,114.5,81.15,review recovery handoff against next stride
+movement/right/003.png,movement,right,left pass,1.15,280,450,116.22,80.91,review recovery handoff against next stride
+movement/right/004.png,movement,right,right contact,1.15,280,450,114.99,81.15,review recovery handoff against next stride
+movement/right/005.png,movement,right,right pass,1.15,280,450,115.72,79.44,review recovery handoff against next stride
+movement/right/006.png,movement,right,brake,1.15,280,450,114.99,78.95,review recovery handoff against next stride
+movement/right/007.png,movement,right,settle,1.15,280,450,115.48,79.44,review recovery handoff against next stride
+recovery/back-right/000.png,recovery,back-right,cover exit / slide recovery,1.08,296,430,92.1,75.98,review recovery handoff against next stride
+recovery/front-left/000.png,recovery,front-left,cover exit / slide recovery,1.08,282,427,93.48,74.83,review recovery handoff against next stride
+recovery/front-right/000.png,recovery,front-right,cover exit / slide recovery,1.08,252,430,85.89,77.83,review recovery handoff against next stride
+recovery/front/000.png,recovery,front,cover exit / slide recovery,1.08,293,430,51.81,79.21,review recovery handoff against next stride
+slide/back-left/000.png,slide,back-left,entry,0.96,256,423,67.75,57.1,review equipment and support-foot alignment through slide exit
+slide/back-left/001.png,slide,back-left,hold,0.96,256,423,82.07,48.51,review equipment and support-foot alignment through slide exit
+slide/back-left/002.png,slide,back-left,recovery,0.96,256,423,66.93,52.81,review equipment and support-foot alignment through slide exit
+slide/back-right/000.png,slide,back-right,entry,0.96,256,376,66.72,77.16,review equipment and support-foot alignment through slide exit
+slide/back-right/001.png,slide,back-right,hold,0.96,256,376,78.59,68.77,review equipment and support-foot alignment through slide exit
+slide/back-right/002.png,slide,back-right,recovery,0.96,256,376,67.13,79.41,review equipment and support-foot alignment through slide exit
+slide/back/000.png,slide,back,entry,1.1395,248.91136,364.3699,38.14,89.16,redrawn; retained scale and foot offset; both barrel tips checked
+slide/back/001.png,slide,back,hold,1.1395,245.28828,364.3699,59.52,86.49,redrawn; retained scale and foot offset; both barrel tips checked
+slide/back/002.png,slide,back,recovery,1.1395,245.28828,364.3699,42.51,85.52,redrawn; retained scale and foot offset; both barrel tips checked
+slide/front-left/000.png,slide,front-left,entry,0.96,256,450,69.59,57.31,review equipment and support-foot alignment through slide exit
+slide/front-left/001.png,slide,front-left,hold,0.96,256,450,83.51,49.74,review equipment and support-foot alignment through slide exit
+slide/front-left/002.png,slide,front-left,recovery,0.96,256,450,71.23,56.28,review equipment and support-foot alignment through slide exit
+slide/front-right/000.png,slide,front-right,entry,0.96,256,450,74.3,55.26,review equipment and support-foot alignment through slide exit
+slide/front-right/001.png,slide,front-right,hold,0.96,256,450,80.44,47.69,review equipment and support-foot alignment through slide exit
+slide/front-right/002.png,slide,front-right,recovery,0.96,256,450,70.61,50.96,review equipment and support-foot alignment through slide exit
+slide/front/000.png,slide,front,entry,0.96,256,450,50.96,65.9,review equipment and support-foot alignment through slide exit
+slide/front/001.png,slide,front,hold,0.96,256,450,60.38,55.88,review equipment and support-foot alignment through slide exit
+slide/front/002.png,slide,front,recovery,0.96,256,450,50.55,59.97,review equipment and support-foot alignment through slide exit
+slide/left/000.png,slide,left,entry,1.3523,264.99305,448.83961,110.13,66.6,retain 39T34.1 scale calibration; review slide exit seam
+slide/left/001.png,slide,left,hold,1.3591,257.46825,448.8254,122.86,58.82,retain 39T34.1 scale calibration; review slide exit seam
+slide/left/002.png,slide,left,recovery,1.3523,236.56341,448.83961,105.52,66.02,retain 39T34.1 scale calibration; review slide exit seam
+slide/right/000.png,slide,right,entry,1.3386,245.53519,448.86867,110.73,61.64,retain 39T34.1 scale calibration; review slide exit seam
+slide/right/001.png,slide,right,hold,1.3386,252.04034,448.86867,119.01,54.51,retain 39T34.1 scale calibration; review slide exit seam
+slide/right/002.png,slide,right,recovery,1.3676,241.9921,448.80784,106.13,65.02,retain 39T34.1 scale calibration; review slide exit seam
+sprint/back-left/000.png,sprint,back-left,left-contact,1,256,449,79.52,55.86,review same-facing pace seam; preserve phase and torso lean
+sprint/back-left/001.png,sprint,back-left,left-support-passing,1,256,449,72.7,56.71,review same-facing pace seam; preserve phase and torso lean
+sprint/back-left/002.png,sprint,back-left,right-contact,1,256,449,93.17,52.66,review same-facing pace seam; preserve phase and torso lean
+sprint/back-left/003.png,sprint,back-left,right-support-passing,1,256,449,75.47,56.07,review same-facing pace seam; preserve phase and torso lean
+sprint/back-right/000.png,sprint,back-right,left-contact,1,256,449,90.4,53.3,review same-facing pace seam; preserve phase and torso lean
+sprint/back-right/001.png,sprint,back-right,left-support-passing,1,256,449,76.33,57.78,review same-facing pace seam; preserve phase and torso lean
+sprint/back-right/002.png,sprint,back-right,right-contact,1,256,449,81.44,56.07,review same-facing pace seam; preserve phase and torso lean
+sprint/back-right/003.png,sprint,back-right,right-support-passing,1,256,449,74.62,57.99,review same-facing pace seam; preserve phase and torso lean
+sprint/back/000.png,sprint,back,left-contact,1.0426,252.69039,448.61078,49.35,77.8,review same-facing pace seam; preserve phase and torso lean
+sprint/back/001.png,sprint,back,left-support-passing,1.0652,250.79722,451.65265,51.1,75.17,review same-facing pace seam; preserve phase and torso lean
+sprint/back/002.png,sprint,back,right-contact,1.0426,258.98274,449.01937,45.12,73.13,review same-facing pace seam; preserve phase and torso lean
+sprint/back/003.png,sprint,back,right-support-passing,1.0652,259.42771,452.63199,43.15,78.8,review same-facing pace seam; preserve phase and torso lean
+sprint/front-left/000.png,sprint,front-left,left-contact,1,256,449,87.84,56.71,review same-facing pace seam; preserve phase and torso lean
+sprint/front-left/001.png,sprint,front-left,left-support-passing,1,256,449,86.99,54.79,review same-facing pace seam; preserve phase and torso lean
+sprint/front-left/002.png,sprint,front-left,right-contact,1,256,449,89.12,58.63,review same-facing pace seam; preserve phase and torso lean
+sprint/front-left/003.png,sprint,front-left,right-support-passing,1,256,449,90.4,55.43,review same-facing pace seam; preserve phase and torso lean
+sprint/front-right/000.png,sprint,front-right,left-contact,1,256,449,97.43,48.61,review same-facing pace seam; preserve phase and torso lean
+sprint/front-right/001.png,sprint,front-right,left-support-passing,1,256,449,73.55,55.65,review same-facing pace seam; preserve phase and torso lean
+sprint/front-right/002.png,sprint,front-right,right-contact,1,256,449,90.82,59.06,review same-facing pace seam; preserve phase and torso lean
+sprint/front-right/003.png,sprint,front-right,right-support-passing,1,256,449,89.97,57.14,review same-facing pace seam; preserve phase and torso lean
+sprint/front/000.png,sprint,front,left-contact,1,256,449,64.81,77.82,review same-facing pace seam; preserve phase and torso lean
+sprint/front/001.png,sprint,front,left-support-passing,1,256,449,66.52,75.05,review same-facing pace seam; preserve phase and torso lean
+sprint/front/002.png,sprint,front,right-contact,1,256,449,65.45,78.88,review same-facing pace seam; preserve phase and torso lean
+sprint/front/003.png,sprint,front,right-support-passing,1,256,449,67.37,75.26,review same-facing pace seam; preserve phase and torso lean
+sprint/left/000.png,sprint,left,left-contact,1.15,268,450,114.99,68.65,review same-facing pace seam; preserve phase and torso lean
+sprint/left/001.png,sprint,left,left-support-passing,1.15,266,450,115.48,68.41,review same-facing pace seam; preserve phase and torso lean
+sprint/left/002.png,sprint,left,right-contact,1.15,267,450,118.42,64.97,review same-facing pace seam; preserve phase and torso lean
+sprint/left/003.png,sprint,left,right-support-passing,1.15,244,450,118.42,67.42,review same-facing pace seam; preserve phase and torso lean
+sprint/right/000.png,sprint,right,left-contact,1.15,242,450,115.23,67.67,review same-facing pace seam; preserve phase and torso lean
+sprint/right/001.png,sprint,right,left-support-passing,1.15,250,450,112.29,69.63,review same-facing pace seam; preserve phase and torso lean
+sprint/right/002.png,sprint,right,right-contact,1.15,263,450,115.97,70.61,review same-facing pace seam; preserve phase and torso lean
+sprint/right/003.png,sprint,right,right-support-passing,1.15,255,450,115.72,66.69,review same-facing pace seam; preserve phase and torso lean
+stalk/back-left/000.png,stalk,back-left,left-contact,1,256,449,62.25,64.81,review same-facing pace seam; preserve phase and torso lean
+stalk/back-left/001.png,stalk,back-left,left-support-passing,1,256,449,61.61,64.6,review same-facing pace seam; preserve phase and torso lean
+stalk/back-left/002.png,stalk,back-left,right-contact,1,256,449,84.85,64.39,review same-facing pace seam; preserve phase and torso lean
+stalk/back-left/003.png,stalk,back-left,right-support-passing,1,256,449,63.53,65.03,review same-facing pace seam; preserve phase and torso lean
+stalk/back-right/000.png,stalk,back-right,left-contact,1,256,449,63.32,63.96,review same-facing pace seam; preserve phase and torso lean
+stalk/back-right/001.png,stalk,back-right,left-support-passing,1,256,449,59.7,65.88,review same-facing pace seam; preserve phase and torso lean
+stalk/back-right/002.png,stalk,back-right,right-contact,1,256,449,60.76,65.67,review same-facing pace seam; preserve phase and torso lean
+stalk/back-right/003.png,stalk,back-right,right-support-passing,1,256,449,60.76,65.67,review same-facing pace seam; preserve phase and torso lean
+stalk/back/000.png,stalk,back,left-contact,1.0,246,450,63.96,92.74,review same-facing pace seam; preserve phase and torso lean
+stalk/back/001.png,stalk,back,left-support-passing,1.0,246,450,62.47,89.33,review same-facing pace seam; preserve phase and torso lean
+stalk/back/002.png,stalk,back,right-contact,1.0,246,450,65.45,90.61,review same-facing pace seam; preserve phase and torso lean
+stalk/back/003.png,stalk,back,right-support-passing,1.0,246,450,65.03,88.26,review same-facing pace seam; preserve phase and torso lean
+stalk/front-left/000.png,stalk,front-left,left-contact,1,256,449,77.18,66.31,review same-facing pace seam; preserve phase and torso lean
+stalk/front-left/001.png,stalk,front-left,left-support-passing,1,256,449,76.75,64.81,review same-facing pace seam; preserve phase and torso lean
+stalk/front-left/002.png,stalk,front-left,right-contact,1,256,449,73.98,65.03,review same-facing pace seam; preserve phase and torso lean
+stalk/front-left/003.png,stalk,front-left,right-support-passing,1,256,449,71.85,63.53,review same-facing pace seam; preserve phase and torso lean
+stalk/front-right/000.png,stalk,front-right,left-contact,1,256,449,85.49,66.09,review same-facing pace seam; preserve phase and torso lean
+stalk/front-right/001.png,stalk,front-right,left-support-passing,1,256,449,82.72,62.89,review same-facing pace seam; preserve phase and torso lean
+stalk/front-right/002.png,stalk,front-right,right-contact,1,256,449,85.71,63.53,review same-facing pace seam; preserve phase and torso lean
+stalk/front-right/003.png,stalk,front-right,right-support-passing,1,256,449,83.36,63.96,review same-facing pace seam; preserve phase and torso lean
+stalk/front/000.png,stalk,front,left-contact,1,256,449,62.68,70.36,review same-facing pace seam; preserve phase and torso lean
+stalk/front/001.png,stalk,front,left-support-passing,1,256,449,63.11,69.5,review same-facing pace seam; preserve phase and torso lean
+stalk/front/002.png,stalk,front,right-contact,1,256,449,61.61,69.93,review same-facing pace seam; preserve phase and torso lean
+stalk/front/003.png,stalk,front,right-support-passing,1,256,449,63.53,69.5,review same-facing pace seam; preserve phase and torso lean
+stalk/left/000.png,stalk,left,left-contact,1.15,310,450,116.95,87.04,review same-facing pace seam; preserve phase and torso lean
+stalk/left/001.png,stalk,left,left-support-passing,1.15,275,450,116.95,84.34,review same-facing pace seam; preserve phase and torso lean
+stalk/left/002.png,stalk,left,right-contact,1.15,275,450,116.95,82.14,review same-facing pace seam; preserve phase and torso lean
+stalk/left/003.png,stalk,left,right-support-passing,1.15,300,450,116.22,77.48,review same-facing pace seam; preserve phase and torso lean
+stalk/right/000.png,stalk,right,left-contact,1.15,280,450,114.5,81.15,review same-facing pace seam; preserve phase and torso lean
+stalk/right/001.png,stalk,right,left-support-passing,1.15,280,450,116.22,80.91,review same-facing pace seam; preserve phase and torso lean
+stalk/right/002.png,stalk,right,right-contact,1.15,280,450,114.99,81.15,review same-facing pace seam; preserve phase and torso lean
+stalk/right/003.png,stalk,right,right-support-passing,1.15,280,450,115.72,79.44,review same-facing pace seam; preserve phase and torso lean

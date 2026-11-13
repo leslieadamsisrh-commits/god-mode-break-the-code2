@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server';
 import manifest from '../../../public/assets/raptor-v2/manifest.json';
 import inventory from '../../../docs/raptor-fluidity/runtime-inventory.json';
-import batch from '../../../docs/raptor-fluidity/batch34-registration.json';
+import batch from '../../../docs/raptor-fluidity/batch35-registration.json';
 
 export const dynamic = 'force-dynamic';
 

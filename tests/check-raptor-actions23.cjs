@@ -16,6 +16,7 @@ const inventory = require('../public/assets/raptor-v2/manifest.json');
 const jumpRegistration = require('../docs/raptor-fluidity/batch25-registration.json');
 const slideRegistration = require('../docs/raptor-fluidity/batch24-registration.json');
 const registration = {...jumpRegistration, ...slideRegistration};
+const batch35 = require('../docs/raptor-fluidity/batch35-registration.json');
 const scaleRegistration = require('../docs/raptor-fluidity/batch34-1-scale-registration.json');
 const phases = {
   jump: ['push-off', 'ascent', 'apex', 'descent', 'landing', 'recovery'],
@@ -75,7 +76,7 @@ for (const [action, directions] of Object.entries(inventory.restoredActionDirect
       const original = calibration
         ? {...record, anchor: calibration.previousAnchor, drawScale: calibration.previousDrawScale}
         : record;
-      assert.deepEqual(original, registration[key]);
+      assert.deepEqual(batch35[key] ? record : original, batch35[key] ?? registration[key]);
       assert.equal(record.sha256, createHash('sha256').update(bytes).digest('hex'));
       assert.notEqual(record.sha256, record.replacedSha256);
       assert.equal(record.phase, phase);

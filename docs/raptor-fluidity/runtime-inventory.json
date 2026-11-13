@@ -1,11 +1,11 @@
 {
-  "build": "39T32-raptor-front-diagonal-gaits",
-  "registeredFiles": 302,
-  "selectorAndGameplayVerifiedFiles": 262,
+  "build": "39T35-raptor-continuity",
+  "registeredFiles": 309,
+  "selectorAndGameplayVerifiedFiles": 268,
   "notes": [
     "The selector sweep exercised pose routes including protected and exposed cover, shots, gait transitions and interruption.",
     "Actual game ticks also reached every jump and slide phase, including all eight jump push-offs.",
-    "The authority and render fallback share advanceRaptorPose. The renderer uses the frame registration and displays a missing-art marker if that file fails to load.",
+    "The authority and render fallback share advanceRaptorPose. The renderer tracks requested and displayed keys and can hold a loaded pose during decoding.",
     "Stationary and moving fire, melee, shield, charge, bullet time, psychic abilities and reactions can reuse these keys. The current selector does not map those actions to separate sprite families.",
     "The 534 production-map slots include prospective drawings and reuse; they count design requirements rather than distinct active files."
   ],
@@ -37,6 +37,27 @@
       "direction": "right",
       "phase": "lower",
       "status": "revalidated-design-pass"
+    },
+    {
+      "key": "cover-catch/back-left/000.png",
+      "family": "cover-catch",
+      "direction": "back-left",
+      "phase": "compress",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "cover-catch/back/000.png",
+      "family": "cover-catch",
+      "direction": "back",
+      "phase": "impact",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "cover-catch/back/001.png",
+      "family": "cover-catch",
+      "direction": "back",
+      "phase": "compress",
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-catch/left/000.png",
@@ -1067,6 +1088,27 @@
       "status": "replaced-in-design-pass"
     },
     {
+      "key": "movement/back-left/001.png",
+      "family": "movement",
+      "direction": "back-left",
+      "phase": "push",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "movement/back-left/006.png",
+      "family": "movement",
+      "direction": "back-left",
+      "phase": "brake",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "movement/back-left/007.png",
+      "family": "movement",
+      "direction": "back-left",
+      "phase": "settle",
+      "status": "replaced-in-design-pass"
+    },
+    {
       "key": "movement/back/000.png",
       "family": "movement",
       "direction": "back",
@@ -1120,6 +1162,13 @@
       "family": "movement",
       "direction": "back",
       "phase": "settle",
+      "status": "replaced-in-design-pass"
+    },
+    {
+      "key": "movement/front-left/001.png",
+      "family": "movement",
+      "direction": "front-left",
+      "phase": "push",
       "status": "replaced-in-design-pass"
     },
     {
@@ -2128,34 +2177,6 @@
       "family": "stalk",
       "direction": "right",
       "phase": "right-support-passing",
-      "status": "replaced-in-design-pass"
-    },
-    {
-      "key": "movement/back-left/001.png",
-      "family": "movement",
-      "direction": "back-left",
-      "phase": "push",
-      "status": "replaced-in-design-pass"
-    },
-    {
-      "key": "movement/back-left/006.png",
-      "family": "movement",
-      "direction": "back-left",
-      "phase": "brake",
-      "status": "replaced-in-design-pass"
-    },
-    {
-      "key": "movement/back-left/007.png",
-      "family": "movement",
-      "direction": "back-left",
-      "phase": "settle",
-      "status": "replaced-in-design-pass"
-    },
-    {
-      "key": "cover-catch/back-left/000.png",
-      "family": "cover-catch",
-      "direction": "back-left",
-      "phase": "compress",
       "status": "replaced-in-design-pass"
     }
   ]
