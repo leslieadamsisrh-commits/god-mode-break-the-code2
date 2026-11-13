@@ -57,6 +57,7 @@ for (const angle of [0,Math.PI/12,Math.PI/2]) for (const side of [-1,1]) for (co
   if(angle===0&&side===1){
     assert.ok(trace.has('cover-catch/back/000.png'),'Straight rear Tall Slab reaches impact');
     assert.ok(trace.has('cover-catch/back/001.png'),'Straight rear Tall Slab reaches compression');
+    assert.ok(trace.has('cover-hold/back/001.png'),'Compression reaches registered rear brace connector');
   }
   const shells = p.shells;
   tick({aim:into,fire:true,coverAim:true},3);

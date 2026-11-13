@@ -269,3 +269,7 @@ body:has(.arenaBuilder27c) nav[aria-label="Studio access"]{display:none}
 
 /* Build 31: explicit next-session rules, usable with touch and keyboard. */
 .rules31{display:grid;gap:10px;padding:12px;border:1px solid #507583;background:#101b28;color:#d8edf5}.rules31 label{display:grid;gap:4px}.rules31 select{min-height:44px;width:100%;background:#182a38;color:#fff;border:1px solid #6ea7ba;padding:8px}.rules31 small{line-height:1.4}.studioDropdown{max-height:80dvh;overflow-y:auto}
+
+.play30 .combatAudit.movementCalibration{display:block!important}
+.movementCalibration label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px}
+.movementCalibration input{width:120px}

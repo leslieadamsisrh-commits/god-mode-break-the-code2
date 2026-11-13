@@ -63,8 +63,10 @@ for (const angle of headings) {
           memory=sample(memory,{...anchor,coverState11:state,coverContactUntil:state==='catch'?.22:undefined,time,speed,x:speed*time,coverSpeed11:speed});
         }
       }
+      let transition=sample(undefined,{...anchor,coverState11:'catch',coverContactUntil:.22,time:.2});
+      sample(transition,{...anchor,coverState11:'brace',time:.23});
       let memory;
-      for(const [time,state] of [[0,'hold'],[.02,'expose'],[.04,'expose'],[.11,'expose'],[.13,'retract'],[.17,'retract'],[.22,'hold']]) {
+      for(const [time,state] of [[0,'catch'],[.02,'expose'],[.04,'expose'],[.11,'expose'],[.13,'retract'],[.17,'retract'],[.22,'hold']]) {
         memory=sample(memory,{...anchor,time,coverState11:state});
       }
     }
@@ -102,8 +104,13 @@ const open = reachable.filter(slot => !['replaced-in-design-pass','reused-approv
 for (const slot of reachable) {
   const entry = manifest.frames[slot.key];
   assert.ok(entry.anchor?.length===2 && entry.anchor.every(Number.isFinite) && entry.drawScale>0,slot.key+' invalid anchor');
-  assert.ok(entry.muzzle?.length===2 && entry.muzzle.every(point=>Number.isFinite(point)&&point>=0&&point<512),slot.key+' invalid muzzle');
-  assert.ok(entry.muzzleGround?.length===2 && entry.muzzleGround.every(Number.isFinite),slot.key+' invalid muzzle ground projection');
+  if(slot.phase==='rear-catch-brace'){
+    assert.equal(entry.muzzle,undefined,'protected connector has no visible barrel');
+    assert.equal(entry.muzzleGround,undefined);
+  }else{
+    assert.ok(entry.muzzle?.length===2 && entry.muzzle.every(point=>Number.isFinite(point)&&point>=0&&point<512),slot.key+' invalid muzzle');
+    assert.ok(entry.muzzleGround?.length===2 && entry.muzzleGround.every(Number.isFinite),slot.key+' invalid muzzle ground projection');
+  }
   const file = fs.readFileSync(path.join(root,'public/assets/raptor-v2',slot.key));
   assert.equal(file.readUInt32BE(16),512,slot.key);
   assert.equal(file.readUInt32BE(20),512,slot.key);

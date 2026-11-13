@@ -144,7 +144,7 @@ console.log('PASS tall end starts on both faces of both drill rotations with vis
 
 for(const mode of ['wrap','rotated-wrap'])for(const sign of [-1,1]){
  const {p,wall,s,tick,seen}=drill(mode,{face:'near'});
- assert.equal(p.raptorFrame.key,'cover-hold/back/000.png');
+ assert.equal(p.raptorFrame.key,'cover-hold/back/001.png');
  const aim=Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx),shells=p.shells;
  tick({aim,coverAim:true,fire:true},2);
  assert.equal(p.shells,shells);

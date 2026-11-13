@@ -1,7 +1,7 @@
 {
-  "build": "39T35-raptor-continuity",
-  "registeredFiles": 309,
-  "selectorAndGameplayVerifiedFiles": 268,
+  "build": "39T36-shared-kinetic-movement",
+  "registeredFiles": 310,
+  "selectorAndGameplayVerifiedFiles": 269,
   "notes": [
     "The selector sweep exercised pose routes including protected and exposed cover, shots, gait transitions and interruption.",
     "Actual game ticks also reached every jump and slide phase, including all eight jump push-offs.",
@@ -121,6 +121,13 @@
       "direction": "back",
       "phase": "tuck / brace / rest",
       "status": "revalidated-design-pass"
+    },
+    {
+      "key": "cover-hold/back/001.png",
+      "family": "cover-hold",
+      "direction": "back",
+      "phase": "rear-catch-brace",
+      "status": "replaced-in-design-pass"
     },
     {
       "key": "cover-hold/front-left/000.png",

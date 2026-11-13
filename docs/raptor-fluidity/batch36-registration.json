@@ -1,0 +1,20 @@
+{
+  "cover-hold/back/001.png": {
+    "anchor": [
+      256,
+      429
+    ],
+    "drawScale": 1,
+    "supportFoot": [
+      204,
+      425
+    ],
+    "pelvis": [
+      264,
+      348
+    ],
+    "source": "exec-aac7e24e-a566-4dcc-b559-d46cc7a34119.png",
+    "phase": "rear-catch-brace",
+    "sha256": "21384a6727f625eac188375dd51a843a39a9533afec4c718982a3613d0ee0622"
+  }
+}

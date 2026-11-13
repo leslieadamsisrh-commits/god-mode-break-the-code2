@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server';
 import manifest from '../../../public/assets/raptor-v2/manifest.json';
 import inventory from '../../../docs/raptor-fluidity/runtime-inventory.json';
-import batch from '../../../docs/raptor-fluidity/batch35-registration.json';
+import batch from '../../../docs/raptor-fluidity/batch36-registration.json';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +14,7 @@ export function GET() {
  return NextResponse.json({
   commit: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.GOD_MODE_BUILD_SHA || null,
   build: manifest.build,
+  movementDefault: "39T35 DEFAULT",
   movementPlayable: manifest.movementDirections,
   movementReview: manifest.movementReviewDirections,
   fastMovementPlayable,

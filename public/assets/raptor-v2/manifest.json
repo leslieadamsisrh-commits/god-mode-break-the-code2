@@ -1,5 +1,5 @@
 {
-  "build": "39T35-raptor-continuity",
+  "build": "39T36-shared-kinetic-movement",
   "status": "isolated playtest",
   "counts": {
     "idle": 1,
@@ -7818,6 +7818,24 @@
       "phase": "push",
       "source": "exec-07ca26f2-063d-4ef3-8908-7c8b1a300ffd.png",
       "sha256": "9553344ad6c3467e5f3557e85f8aa44a0b26c5a7cea5f1a5cf0a0481e9b50f57"
+    },
+    "cover-hold/back/001.png": {
+      "anchor": [
+        256,
+        429
+      ],
+      "drawScale": 1,
+      "supportFoot": [
+        204,
+        425
+      ],
+      "pelvis": [
+        264,
+        348
+      ],
+      "source": "exec-aac7e24e-a566-4dcc-b559-d46cc7a34119.png",
+      "phase": "rear-catch-brace",
+      "sha256": "21384a6727f625eac188375dd51a843a39a9533afec4c718982a3613d0ee0622"
     }
   },
   "slidePhases": [
@@ -7997,5 +8015,8 @@
   ],
   "movementPushDirections": [
     "front-left"
+  ],
+  "rearCatchBraceDirections": [
+    "back"
   ]
 }

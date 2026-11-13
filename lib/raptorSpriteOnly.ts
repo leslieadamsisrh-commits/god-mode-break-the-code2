@@ -102,7 +102,7 @@ export function loadRaptorSprite(key:string,retry=false):Promise<boolean>{
 }
 
 const openingKeys=Object.keys(frames).filter(key=>
- key.startsWith("idle/")||key==="movement/front-left/001.png"||key.startsWith("cover-catch/back/")||/^movement\/[^/]+\/000\.png$/.test(key)||
+ key.startsWith("idle/")||key==="movement/front-left/001.png"||(key.startsWith("cover-catch/back/")||key==="cover-hold/back/001.png")||/^movement\/[^/]+\/000\.png$/.test(key)||
  /^(?:stalk|jog|sprint|jump|slide|recovery)\/[^/]+\/000\.png$/.test(key));
 async function loadRaptorBatch(keys:string[],retry=false){
  let ready=true;
