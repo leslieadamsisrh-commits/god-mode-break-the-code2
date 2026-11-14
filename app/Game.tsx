@@ -1,4 +1,5 @@
 "use client";
+import {JadeChargeTrails,drawJadeChargeLayer,jadeChargeFrame} from "../lib/jadeChargeVfx";
 import {kineticPose} from "../lib/kineticPose";
 import {jadeCoverFrame11,coverExposed13,coverStride13,type CoverStride13} from "../lib/raptorCover11";
 import {SlideInputEdges} from "../lib/slideInputEdges";
@@ -126,6 +127,7 @@ function presentation(s:any,now:number){
 }
 const powerAssets=new Map<string,HTMLImageElement>();
 const evolutionAssets=new Map<string,HTMLImageElement>();
+const jadeChargeAssets=new Map<string,HTMLImageElement>();
 const actorAssets=new Map<string,HTMLImageElement>();
 const environmentAssets=new Map<string,HTMLImageElement>();
 type BootState={done:number;total:number;failed:number;label:string};
@@ -158,6 +160,7 @@ function preload(onProgress?:(s:BootState)=>void){
    {label:D33_BARRIER_A20.key,src:D33_BARRIER_A20.path,ready:(im:HTMLImageElement)=>environmentAssets.set(D33_BARRIER_A20.key,im)},
    ...D33_ATLASES20.map(name=>({label:d33ImageKey20(name),src:'/assets/dimension33/map20/'+name+'.webp',ready:(im:HTMLImageElement)=>environmentAssets.set(d33ImageKey20(name),im)})),
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
+   ...["rear","front","ground"].map(key=>({label:"jade-charge-"+key,src:"/assets/jade-charge/"+key+".webp",ready:(im:HTMLImageElement)=>jadeChargeAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...["front-right","rear-left"].map(key=>({label:"melee38-"+key,src:"/assets/melee38/"+key+".webp",ready:(im:HTMLImageElement)=>powerAssets.set("melee38-"+key,im)})),
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
@@ -286,6 +289,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  const debugRef21=useRef(false);const [debug21,setDebug21]=useState(false);
  const selectorGate22=useRef(new SelectorGate22());
  const localCombat=useRef<LocalCombat|null>(null);
+ const chargeTrails=useRef({key:"",trail:new JadeChargeTrails()});
  const drillRecording=useRef<ReturnType<LocalCombat["reply"]>["state"][]>([]);
  const drillReplay=useRef<{started:number;frames:typeof drillRecording.current}|null>(null);
  const [replayingDrill,setReplayingDrill]=useState(false);
@@ -306,6 +310,9 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  if(seen.room!==room||seen.round!==incoming.round){seen.room=room;seen.round=incoming.round;seen.seq=incoming.eventSeq||0;seen.cue="";}
  else{const fresh=(incoming.events||[]).filter((e:any)=>e.seq>seen.seq&&incoming.time-e.at<.3);seen.seq=Math.max(seen.seq,incoming.eventSeq||0);const cue=pickFeedback43(fresh,session.current?.slot||0,incoming);if(cue){combatTone(cue.kind,cue.angle);hapticFeedback43(cue);}}
  const cue=incoming.phase==="countdown"?String(Math.ceil(incoming.countdown)):incoming.phase==="playing"&&incoming.time<(incoming.fightUntil||0)?"fight":"";if(cue&&cue!==seen.cue)combatTone(cue);seen.cue=cue;
+ const trailKey=v.room+"/"+incoming.round;
+ if(chargeTrails.current.key!==trailKey)chargeTrails.current={key:trailKey,trail:new JadeChargeTrails()};
+ chargeTrails.current.trail.update(incoming.players,incoming.time);
  if(!incoming.local)recordSnapshot(incoming,at);
  if(incoming.local&&(labCoverDrill||incoming.mode==="practice")){
   const frames=drillRecording.current;
@@ -355,7 +362,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
   if(t>replay.frames[replay.frames.length-1].time){drillReplay.current=null;setReplayingDrill(false);}
   else{let n=replay.frames.length-1;while(n>0&&replay.frames[n].time>t)n--;frame=replay.frames[n];}
  }
- draw(canvas.current,frame,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current,session.current?.slot||0,frame?.players?.[session.current?.slot||0]?.character==="raptor"?"raptor":characterRef.current,cameraPresetRef.current,debugRef21.current,cameraModeRef38.current,cameraZoomRef38.current,!!labCoverDrill,labCoverDiagnosticsRef.current);const s=state.current;recordFrame43(stamp,performance.now()-start,(session.current?.room||"")+"/"+s?.round,!document.hidden&&!!s&&["playing","finisher"].includes(s.phase));id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[labCoverDrill]);
+ draw(canvas.current,frame,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current,session.current?.slot||0,frame?.players?.[session.current?.slot||0]?.character==="raptor"?"raptor":characterRef.current,cameraPresetRef.current,debugRef21.current,cameraModeRef38.current,cameraZoomRef38.current,!!labCoverDrill,labCoverDiagnosticsRef.current,chargeTrails.current.trail);const s=state.current;recordFrame43(stamp,performance.now()-start,(session.current?.room||"")+"/"+s?.round,!document.hidden&&!!s&&["playing","finisher"].includes(s.phase));id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[labCoverDrill]);
  const point=(e:React.PointerEvent)=>{const c=canvas.current;if(!c)return;const r=c.getBoundingClientRect();mouse.current.x=(e.clientX-r.left)/r.width*1000;mouse.current.y=(e.clientY-r.top)/r.height*620};
  const patch=async(key:keyof Config,value:number)=>{const s=session.current;if(s)try{const reply=await post({action:"config",...s,patch:{[key]:value}});if(s.mode==="practice")trainingMovement.current={...trainingMovement.current,[key]:value};accept(reply)}catch{}};
  const applyMovementPreset=async(name:string)=>{const preset=MOVEMENT_PRESETS[name];if(!preset)return;const values=movementProfile(name);const saved=session.current;if(!saved)return;try{accept(await post({action:"config",...saved,patch:values}));if(saved.mode==="practice")trainingMovement.current=values;setTestPass({});setNote(name+" APPLIED")}catch(e:any){setNote(e.message||"PRESET FAILED")}};
@@ -604,7 +611,7 @@ function cachedSkyline(im:HTMLImageElement){
  g.drawImage(im,0,im.naturalHeight-75,im.naturalWidth,75,0,349,1200,441);skylineCache.set(im,c);return c;
 }
 const cameraMemory27b:CameraMemory27b={};
-function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"|"kinetic"="default",debug21=false,cameraMode38:CameraMode38="auto",cameraZoomAdjust38=0,fixedCoverZoom=false,coverDiagnostics=false){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
+function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"|"kinetic"="default",debug21=false,cameraMode38:CameraMode38="auto",cameraZoomAdjust38=0,fixedCoverZoom=false,coverDiagnostics=false,chargeTrails?:JadeChargeTrails){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
  const renderNow=performance.now();s={...presentation(s,renderNow),debug21};const cfg=s.config||DEFAULT,p=s.players[localSlot]||s.players[0],local={...p,id:"fighter-"+localSlot};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
  // Independent close camera with stable encounter framing and bounded look-ahead.
  const frameDt=cameraState.last?Math.max(0,Math.min(.05,(renderNow-cameraState.last)/1000)):1/60;
@@ -620,7 +627,10 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  drawDimension33Architecture(g);
  drawCitadel29(g,environmentAssets);
  drawGround44(g,s);
+ const burnAtlas=jadeChargeAssets.get("ground");
+ if(burnAtlas)chargeTrails?.draw(g,burnAtlas,s.time,false);
  drawStructures27e(g,environmentAssets);
+ if(burnAtlas)chargeTrails?.draw(g,burnAtlas,s.time,true);
  drawKineticCyclone18(g,s);
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
@@ -630,7 +640,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  if(graffiti){graffiti.age+=frameDt;graffiti.life-=frameDt;if(graffiti.life<=0)graffiti=null}
  for(const mark of hoverWake)mark.age-=frameDt;
  while(hoverWake.length&&hoverWake[0].age<=0)hoverWake.shift();
- const hoverEnergy=powerAura(local),lastWake=hoverWake[hoverWake.length-1];
+ const hoverEnergy=local.charging&&local.character!=="raptor"&&burnAtlas?0:powerAura(local),lastWake=hoverWake[hoverWake.length-1];
  if(hoverEnergy>.05&&travelLen>20&&(!lastWake||Math.hypot(local.x-lastWake.x,local.y-lastWake.y)>10)){hoverWake.push({x:local.x,y:local.y,age:.65,strength:hoverEnergy});if(hoverWake.length>24)hoverWake.shift()}
  for(const mark of hoverWake){g.save();g.globalAlpha=mark.age/.65*mark.strength*.65;g.strokeStyle="#ff41b8";g.shadowColor="#ff41b8";g.shadowBlur=9;g.lineWidth=2;g.beginPath();g.ellipse(mark.x,mark.y+5,20,6,0,0,Math.PI*2);g.stroke();g.strokeStyle="#67f5ff";g.beginPath();g.moveTo(mark.x-11,mark.y+4);g.lineTo(mark.x+9,mark.y+7);g.stroke();g.restore()}
  for(const mark of floorWake)mark.age-=frameDt;
@@ -662,7 +672,15 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>withStructureOcclusion27e(g,c,()=>withWorld46(g,c.x,c.y,()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id),selectedRip27j:selectedRip27j===c.id,gatherProgress36:local.gather34?.source===c.id?Math.max(0,Math.min(1,(s.time-local.gather34.at-.2))):undefined,protective36:local.gather34?.source===c.id&&local.gather34.protective,selectedCells32:(local.ripCommit32?.sourceId===c.id?local.ripCommit32:local.ripPreview32?.sourceId===c.id?local.ripPreview32:undefined)?.cells,heldRelation30:s.players.findIndex((p:any)=>p.gripCoverId===c.id)===localSlot?'local':heldCoverIds.has(c.id)?'opponent':undefined,blocked30:s.time-(c.carryBlockedAt??-9)<.25},s.time,environmentLights))));
  const actors=[
   ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",player:{x:m.x,y:m.y,z:m.height||0},fn:()=>withUpright(g,m.x,m.y,()=>matter(g,m))})),
-  ...s.players.map((raw:any,index:number)=>{const actor={...(index===localSlot?local:{...raw,id:"fighter-"+index}),local30:index===localSlot};return{y:actor.y,kind:"player",player:actor,fn:()=>{drawGodGround(g,actor,s.time);withUpright(g,actor.x,actor.y,()=>{g.translate(0,-(actor.z||0));if(actor.hp>0){drawGodRear(g,actor,s.time);fighter(g,actor,s.time,cfg,index===localSlot?character:"jade");drawGodFront(g,actor,s.time)}else{g.save();const age=Math.max(0,s.time-(actor.deathAt??s.time)),fade=Math.max(.12,1-age/1.5);g.globalAlpha=fade;for(let n=0;n<28;n++){const a=n*2.399,r=8+age*(15+n%5*9);g.fillStyle=actor.bot?(n%3===0?"#d9e1e7":n%2?"#84324f":"#151b26"):(n%3===0?"#f0eaff":n%2?"#65efff":"#ff69bd");const x=actor.x+Math.cos(a)*r,y=actor.y-12-n*1.7+Math.sin(a)*r*.5+age*age*17;if(actor.bot){g.beginPath();g.ellipse(x,y,2+n%3,1+n%2,a,0,Math.PI*2);g.fill()}else g.fillRect(x,y,2+n%3,2+n%2)}g.restore();}g.save();g.fillStyle=index===localSlot?"#65efff":"#ff69bd";g.font="bold 8px monospace";g.textAlign="center";g.fillText(s.mode==="watch"?actor.name:index===localSlot?"YOU":actor.name,actor.x,actor.y-84);g.restore()})}}})
+  ...s.players.map((raw:any,index:number)=>{const actor={...(index===localSlot?local:{...raw,id:"fighter-"+index}),local30:index===localSlot};return{y:actor.y,kind:"player",player:actor,fn:()=>{const fighterKind=index===localSlot?character:"jade",auraRear=jadeChargeAssets.get("rear"),auraFront=jadeChargeAssets.get("front"),auraFrame=fighterKind==="jade"&&auraRear&&auraFront?jadeChargeFrame(actor,cfg.powerChargeSeconds):null;
+   if(auraFrame===null||!burnAtlas)drawGodGround(g,actor,s.time);
+   withUpright(g,actor.x,actor.y,()=>{g.translate(0,-(actor.z||0));if(actor.hp>0){const footY=actor.y-powerHover(actor)*cfg.spriteScale;
+    const opacity=actor.charging?1:actor.powerFlash>0?Math.min(1,actor.powerFlash/.14):Math.min(1,actor.powerReturn/.12);
+    if(auraFrame!==null)drawJadeChargeLayer(g,auraRear!,auraFrame,actor.x,footY,cfg.spriteScale,opacity);
+    else drawGodRear(g,actor,s.time);
+    fighter(g,actor,s.time,cfg,fighterKind,auraFrame!==null);
+    if(auraFrame!==null)drawJadeChargeLayer(g,auraFront!,auraFrame,actor.x,footY,cfg.spriteScale,opacity);
+    else drawGodFront(g,actor,s.time)}else{g.save();const age=Math.max(0,s.time-(actor.deathAt??s.time)),fade=Math.max(.12,1-age/1.5);g.globalAlpha=fade;for(let n=0;n<28;n++){const a=n*2.399,r=8+age*(15+n%5*9);g.fillStyle=actor.bot?(n%3===0?"#d9e1e7":n%2?"#84324f":"#151b26"):(n%3===0?"#f0eaff":n%2?"#65efff":"#ff69bd");const x=actor.x+Math.cos(a)*r,y=actor.y-12-n*1.7+Math.sin(a)*r*.5+age*age*17;if(actor.bot){g.beginPath();g.ellipse(x,y,2+n%3,1+n%2,a,0,Math.PI*2);g.fill()}else g.fillRect(x,y,2+n%3,2+n%2)}g.restore();}g.save();g.fillStyle=index===localSlot?"#65efff":"#ff69bd";g.font="bold 8px monospace";g.textAlign="center";g.fillText(s.mode==="watch"?actor.name:index===localSlot?"YOU":actor.name,actor.x,actor.y-84);g.restore()})}}})
  ].sort((a,b)=>a.y-b.y);
  actors.forEach(o=>{
   if(o.kind==="player"&&(o as any).player.local30&&local.hp>0){
@@ -1108,7 +1126,7 @@ function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,ch
  }
  g.restore();
 }
-function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade"){
+function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade",chargeOverlay=false){
  if(p.character==="raptor"||character==="raptor"){
   const speed=Math.hypot(p.vx||0,p.vy||0);
   const visual={x:0,y:0};
@@ -1146,7 +1164,7 @@ const kinetic=kineticPose(p,cfg.dashDuration);
  let frame=bridge?.kind==="cover"?Math.min(frames-1,bridge.frame):bridge?.kind==="slide"?Math.min(frames-1,Math.max(0,Math.floor(bridge.phase*frames))):family==="cover"?coverPoseFrame(p,t,frames):family==="ready"?0:Math.floor(t*(family==="run"?10:7))%frames;
  if(!bridge&&kinetic)frame=Math.round((frames-1)*kinetic.frame/2);
  if(!bridge&&family==="slide"&&p.slide>0)frame=Math.min(frames-1,Math.max(0,Math.floor((1-p.slide/cfg.slideDuration)*frames)));const sc=cfg.spriteScale,displayCell=125,registration=spriteRegistration(family);
- g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6*DECK_PITCH,25*sc,8*sc*DECK_PITCH,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle=p.local30?"#65f4f2":"#ff82c2";g.shadowColor=g.strokeStyle;g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
+ g.fillStyle="#0008";g.beginPath();g.ellipse(p.x,p.y+6*DECK_PITCH,25*sc,8*sc*DECK_PITCH,0,0,Math.PI*2);g.fill();if(p.shield){g.strokeStyle=p.local30?"#65f4f2":"#ff82c2";g.shadowColor=g.strokeStyle;g.shadowBlur=18;g.lineWidth=4;g.beginPath();g.ellipse(p.x,p.y-34*sc,38*sc,55*sc,0,0,Math.PI*2);g.stroke();g.shadowBlur=0}const aura=powerAura(p);g.save();if(aura>0&&!chargeOverlay){g.shadowColor="#ff37b8";g.shadowBlur=18*aura;g.strokeStyle=`rgba(255,65,180,${aura*.7})`;g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y-(40+powerHover(p))*sc,32*sc,57*sc,0,0,Math.PI*2);g.stroke()}const alpha=powerPoseAlpha(p),hasPower=powerAssets.has("grounded-float-v1")||powerAssets.has(powerFrame(p,cfg)<6?"opening":"continuation"),poseAlpha=hasPower?alpha:0;
  // Each selected pose owns its complete body. A stale recoil timer must not
  // draw a second lower body beneath a full-body aim/retract or fallback cel.
  const splitCover=false;
