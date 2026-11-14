@@ -1,5 +1,6 @@
 "use client";
 import {JadeChargeTrails,drawJadeChargeLayer,jadeChargeFrame} from "../lib/jadeChargeVfx";
+import {drawJadeChargeV2,jadeChargeBeat,JADE_PALETTES,type JadePalette} from "../lib/jadeChargeV2";
 import {kineticPose} from "../lib/kineticPose";
 import {jadeCoverFrame11,coverExposed13,coverStride13,type CoverStride13} from "../lib/raptorCover11";
 import {SlideInputEdges} from "../lib/slideInputEdges";
@@ -160,7 +161,7 @@ function preload(onProgress?:(s:BootState)=>void){
    {label:D33_BARRIER_A20.key,src:D33_BARRIER_A20.path,ready:(im:HTMLImageElement)=>environmentAssets.set(D33_BARRIER_A20.key,im)},
    ...D33_ATLASES20.map(name=>({label:d33ImageKey20(name),src:'/assets/dimension33/map20/'+name+'.webp',ready:(im:HTMLImageElement)=>environmentAssets.set(d33ImageKey20(name),im)})),
    ...environment.map(key=>({label:"env-"+key,src:"/assets/bay-bridge/manga-v13/"+key+".webp",fallback:"/assets/bay-bridge/actors/"+key+".svg",ready:(im:HTMLImageElement)=>environmentAssets.set(key,im)})),
-   ...["rear","front","ground"].map(key=>({label:"jade-charge-"+key,src:"/assets/jade-charge/"+key+".webp",ready:(im:HTMLImageElement)=>jadeChargeAssets.set(key,im)})),
+   ...["rear","front","ground","flame-v2","impact-v2","pose-v2"].map(key=>({label:"jade-charge-"+key,src:"/assets/jade-charge/"+key+".webp",ready:(im:HTMLImageElement)=>jadeChargeAssets.set(key,im)})),
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...["front-right","rear-left"].map(key=>({label:"melee38-"+key,src:"/assets/melee38/"+key+".webp",ready:(im:HTMLImageElement)=>powerAssets.set("melee38-"+key,im)})),
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
@@ -289,6 +290,8 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  const debugRef21=useRef(false);const [debug21,setDebug21]=useState(false);
  const selectorGate22=useRef(new SelectorGate22());
  const localCombat=useRef<LocalCombat|null>(null);
+ const [jadePalette,setJadePalette]=useState<JadePalette>("Standard");
+ const jadePaletteRef=useRef(jadePalette);jadePaletteRef.current=jadePalette;
  const chargeTrails=useRef({key:"",trail:new JadeChargeTrails()});
  const drillRecording=useRef<ReturnType<LocalCombat["reply"]>["state"][]>([]);
  const drillReplay=useRef<{started:number;frames:typeof drillRecording.current}|null>(null);
@@ -362,7 +365,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
   if(t>replay.frames[replay.frames.length-1].time){drillReplay.current=null;setReplayingDrill(false);}
   else{let n=replay.frames.length-1;while(n>0&&replay.frames[n].time>t)n--;frame=replay.frames[n];}
  }
- draw(canvas.current,frame,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current,session.current?.slot||0,frame?.players?.[session.current?.slot||0]?.character==="raptor"?"raptor":characterRef.current,cameraPresetRef.current,debugRef21.current,cameraModeRef38.current,cameraZoomRef38.current,!!labCoverDrill,labCoverDiagnosticsRef.current,chargeTrails.current.trail);const s=state.current;recordFrame43(stamp,performance.now()-start,(session.current?.room||"")+"/"+s?.round,!document.hidden&&!!s&&["playing","finisher"].includes(s.phase));id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[labCoverDrill]);
+ draw(canvas.current,frame,lastAccept.current,mouse.current,keys.current,psychicPreview.current,coverPreview.current,session.current?.slot||0,frame?.players?.[session.current?.slot||0]?.character==="raptor"?"raptor":characterRef.current,cameraPresetRef.current,debugRef21.current,cameraModeRef38.current,cameraZoomRef38.current,!!labCoverDrill,labCoverDiagnosticsRef.current,chargeTrails.current.trail,jadePaletteRef.current);const s=state.current;recordFrame43(stamp,performance.now()-start,(session.current?.room||"")+"/"+s?.round,!document.hidden&&!!s&&["playing","finisher"].includes(s.phase));id=requestAnimationFrame(loop)};id=requestAnimationFrame(loop);return()=>cancelAnimationFrame(id)},[labCoverDrill]);
  const point=(e:React.PointerEvent)=>{const c=canvas.current;if(!c)return;const r=c.getBoundingClientRect();mouse.current.x=(e.clientX-r.left)/r.width*1000;mouse.current.y=(e.clientY-r.top)/r.height*620};
  const patch=async(key:keyof Config,value:number)=>{const s=session.current;if(s)try{const reply=await post({action:"config",...s,patch:{[key]:value}});if(s.mode==="practice")trainingMovement.current={...trainingMovement.current,[key]:value};accept(reply)}catch{}};
  const applyMovementPreset=async(name:string)=>{const preset=MOVEMENT_PRESETS[name];if(!preset)return;const values=movementProfile(name);const saved=session.current;if(!saved)return;try{accept(await post({action:"config",...saved,patch:values}));if(saved.mode==="practice")trainingMovement.current=values;setTestPass({});setNote(name+" APPLIED")}catch(e:any){setNote(e.message||"PRESET FAILED")}};
@@ -470,6 +473,12 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
    <details className="combatAudit"><summary>COMBAT AUDIT · FEEDBACK & PERFORMANCE</summary>{p?.character==="raptor"&&<button onClick={()=>setAuditStatus(getRaptorAnimationTrace()+"\n"+JSON.stringify(getRaptorSpriteDiagnostics(),null,2))}>RAPTOR SPRITE TRACE</button>}<label><input type="checkbox" checked={debug21} onChange={e=>{debugRef21.current=e.target.checked;setDebug21(e.target.checked)}}/> Detailed HUD and bot intentions</label><label><input type="checkbox" checked={sound43} onChange={e=>feedbackSettings43(e.target.checked,rumble43)}/> Combat sound</label><label><input type="checkbox" checked={rumble43} onChange={e=>feedbackSettings43(sound43,e.target.checked)}/> Controller vibration (optional; device support required)</label><button onClick={reviewCombat}>REFRESH CONFIRMED OUTCOMES</button><p>{auditStatus}</p>{combatAudit&&<><p>Round {combatAudit.round} · {combatAudit.phase}<br/>Input request RTT: {combatAudit.inputSamples?`${combatAudit.inputRtt.toFixed(0)} ms`:"not sampled"} · snapshot gap {combatAudit.snapshotGap.toFixed(0)} ms<br/>Battery loss: {(combatAudit.energySpent||[]).map((v:number,n:number)=>`P${n+1} ${v.toFixed(1)}`).join(" · ")}</p><pre>{JSON.stringify(combatAudit.holds33||[],null,2)}</pre><ol>{(combatAudit.actions||[]).slice(-12).reverse().map((e:any)=><li key={e.seq}>P{e.owner+1} · {e.action} · {e.status}{e.reason?` · ${e.reason}`:""}{e.amount!==undefined?` · ${e.amount.toFixed(1)}`:""}</li>)}</ol>{combatAudit.frameTimes&&<p>Active frame window: {combatAudit.frameTimes.samples}/300 samples<br/>Frame interval median / p95 / p99 / worst: {[combatAudit.frameTimes.median,combatAudit.frameTimes.p95,combatAudit.frameTimes.p99,combatAudit.frameTimes.worst].map(v=>v==null?"collecting":v.toFixed(1)+" ms").join(" / ")}<br/>Draw CPU median / p95: {[combatAudit.frameTimes.drawMedian,combatAudit.frameTimes.drawP95].map(v=>v==null?"collecting":v.toFixed(1)+" ms").join(" / ")}<br/>Frames over 33 ms: {combatAudit.frameTimes.over33} · over 50 ms: {combatAudit.frameTimes.over50}<br/>Observed long tasks: {combatAudit.frameTimes.longTasks} · {combatAudit.frameTimes.longTaskMs.toFixed(0)} ms total (supported browsers only)</p>}<small>Draw CPU excludes GPU completion; frame intervals are browser measurements, not input latency. Hidden-tab gaps are excluded. Request timings are not controller-to-screen latency. Outcomes are authoritative; captions remain intentions.</small></>}</details>
    {hud?.local&&hud?.lab21&&!!config.legacyPowers&&<details className="combatAudit"><summary>LOCAL EXPERIMENT · REPULSE (BUILD 21)</summary><label><input type="checkbox" checked={!!hud.lab21.repulseEnabled} onChange={e=>void repulseLab21(e.target.checked)}/> Enable Repulse for this local session</label><p>Cycle powers with D-pad down to REPULSE; use X (keyboard V). 120° cone, 0.12s wind-up, 0.34s action commitment, zero damage and no hit stun. Shield blocks it; cover obstructs it. Move away, flank, or punish the wind-up. Taking a hit or shielding cancels it without refund. Attached cover, held matter and bullets are unaffected.</p>{([['range',60,120,1],['cost',10,30,1],['cooldown',1,3,.1]] as const).map(([key,min,max,step])=><label key={key}>{key} <input aria-label={'Repulse '+key} type="number" min={min} max={max} step={step} value={hud.lab21.repulse[key]} onChange={e=>void repulseLab21(hud.lab21.repulseEnabled,{[key]:Number(e.target.value)})}/></label>)}<small>Local only; disabled in every new session. Never enabled for watch rooms or multiplayer. Existing controls and loadouts remain unchanged.</small></details>}
    {diagnostics30&&<PlaytestGuide/>}
+   {hud?.mode==="practice"&&p?.character!=="raptor"&&<details className="combatAudit">
+    <summary>Jade charge effects</summary>
+    <label>Charge palette <select aria-label="Charge palette" value={jadePalette} onChange={e=>setJadePalette(e.target.value as JadePalette)}>
+     {Object.keys(JADE_PALETTES).map(name=><option key={name}>{name}</option>)}
+    </select></label>
+   </details>}
    {hud?.mode==="practice"&&<details className="combatAudit movementCalibration">
     <summary>Movement calibration · {activeMovementProfile(config)}</summary>
     <label>Profile <select aria-label="Movement profile" value={activeMovementProfile(config)} onChange={e=>void applyMovementPreset(e.target.value)}>
@@ -611,7 +620,7 @@ function cachedSkyline(im:HTMLImageElement){
  g.drawImage(im,0,im.naturalHeight-75,im.naturalWidth,75,0,349,1200,441);skylineCache.set(im,c);return c;
 }
 const cameraMemory27b:CameraMemory27b={};
-function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"|"kinetic"="default",debug21=false,cameraMode38:CameraMode38="auto",cameraZoomAdjust38=0,fixedCoverZoom=false,coverDiagnostics=false,chargeTrails?:JadeChargeTrails){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
+function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:number;y:number;down:boolean},keyState:Record<string,boolean>,psychicPreview=-1,coverPreview=-1,localSlot=0,character:"jade"|"raptor"="jade",cameraPreset:"default"|"close"|"kinetic"="default",debug21=false,cameraMode38:CameraMode38="auto",cameraZoomAdjust38=0,fixedCoverZoom=false,coverDiagnostics=false,chargeTrails?:JadeChargeTrails,jadePalette:JadePalette="Standard"){if(!canvas)return;let g=canvas.getContext("2d")!;const sx=canvas.width/1000,sy=canvas.height/620;g.setTransform(sx,0,0,sy,0,0);g.clearRect(0,0,1000,620);if(!s)return;
  const renderNow=performance.now();s={...presentation(s,renderNow),debug21};const cfg=s.config||DEFAULT,p=s.players[localSlot]||s.players[0],local={...p,id:"fighter-"+localSlot};if(psychicPreview>=0){local.psychicPreview=psychicPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}if(coverPreview>=0){local.coverPreview=coverPreview;local.charging=false;local.powerFlash=local.powerReturn=0;}
  // Independent close camera with stable encounter framing and bounded look-ahead.
  const frameDt=cameraState.last?Math.max(0,Math.min(.05,(renderNow-cameraState.last)/1000)):1/60;
@@ -627,10 +636,11 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  drawDimension33Architecture(g);
  drawCitadel29(g,environmentAssets);
  drawGround44(g,s);
- const burnAtlas=jadeChargeAssets.get("ground");
- if(burnAtlas)chargeTrails?.draw(g,burnAtlas,s.time,false);
+ const burnAtlas=jadeChargeAssets.get("ground"),flame=jadeChargeAssets.get("flame-v2"),impact=jadeChargeAssets.get("impact-v2");
+ const chargeArt=flame&&impact?{flame,impact}:undefined;
+ if(burnAtlas)chargeTrails?.draw(g,burnAtlas,s.time,false,chargeArt?.impact,jadePalette);
  drawStructures27e(g,environmentAssets);
- if(burnAtlas)chargeTrails?.draw(g,burnAtlas,s.time,true);
+ if(burnAtlas)chargeTrails?.draw(g,burnAtlas,s.time,true,chargeArt?.impact,jadePalette);
  drawKineticCyclone18(g,s);
  const travelLen=Math.hypot(local.vx||0,local.vy||0),tx=travelLen?(local.vx/travelLen):0,ty=travelLen?(local.vy/travelLen):0;
  const now=renderNow,echoDt=frameDt;
@@ -672,14 +682,17 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>withStructureOcclusion27e(g,c,()=>withWorld46(g,c.x,c.y,()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id),selectedRip27j:selectedRip27j===c.id,gatherProgress36:local.gather34?.source===c.id?Math.max(0,Math.min(1,(s.time-local.gather34.at-.2))):undefined,protective36:local.gather34?.source===c.id&&local.gather34.protective,selectedCells32:(local.ripCommit32?.sourceId===c.id?local.ripCommit32:local.ripPreview32?.sourceId===c.id?local.ripPreview32:undefined)?.cells,heldRelation30:s.players.findIndex((p:any)=>p.gripCoverId===c.id)===localSlot?'local':heldCoverIds.has(c.id)?'opponent':undefined,blocked30:s.time-(c.carryBlockedAt??-9)<.25},s.time,environmentLights))));
  const actors=[
   ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",player:{x:m.x,y:m.y,z:m.height||0},fn:()=>withUpright(g,m.x,m.y,()=>matter(g,m))})),
-  ...s.players.map((raw:any,index:number)=>{const actor={...(index===localSlot?local:{...raw,id:"fighter-"+index}),local30:index===localSlot};return{y:actor.y,kind:"player",player:actor,fn:()=>{const fighterKind=index===localSlot?character:"jade",auraRear=jadeChargeAssets.get("rear"),auraFront=jadeChargeAssets.get("front"),auraFrame=fighterKind==="jade"&&auraRear&&auraFront?jadeChargeFrame(actor,cfg.powerChargeSeconds):null;
-   if(auraFrame===null||!burnAtlas)drawGodGround(g,actor,s.time);
+  ...s.players.map((raw:any,index:number)=>{const actor={...(index===localSlot?local:{...raw,id:"fighter-"+index}),local30:index===localSlot};return{y:actor.y,kind:"player",player:actor,fn:()=>{const fighterKind=actor.character==="raptor"?"raptor":index===localSlot?character:"jade",auraRear=jadeChargeAssets.get("rear"),auraFront=jadeChargeAssets.get("front"),auraFrame=fighterKind==="jade"&&auraRear&&auraFront?jadeChargeFrame(actor,cfg.powerChargeSeconds):null;
+   const v2=fighterKind==="jade"&&chargeArt&&(actor.charging||actor.powerFlash>0||actor.powerReturn>0);
+   if(!v2&&(auraFrame===null||!burnAtlas))drawGodGround(g,actor,s.time);
    withUpright(g,actor.x,actor.y,()=>{g.translate(0,-(actor.z||0));if(actor.hp>0){const footY=actor.y-powerHover(actor)*cfg.spriteScale;
     const opacity=actor.charging?1:actor.powerFlash>0?Math.min(1,actor.powerFlash/.14):Math.min(1,actor.powerReturn/.12);
-    if(auraFrame!==null)drawJadeChargeLayer(g,auraRear!,auraFrame,actor.x,footY,cfg.spriteScale,opacity);
+    if(v2)drawJadeChargeV2(g,chargeArt,actor,actor.x,actor.y,footY,cfg.spriteScale,cfg.powerChargeSeconds,jadePalette,false);
+    else if(auraFrame!==null)drawJadeChargeLayer(g,auraRear!,auraFrame,actor.x,footY,cfg.spriteScale,opacity);
     else drawGodRear(g,actor,s.time);
-    fighter(g,actor,s.time,cfg,fighterKind,auraFrame!==null);
-    if(auraFrame!==null)drawJadeChargeLayer(g,auraFront!,auraFrame,actor.x,footY,cfg.spriteScale,opacity);
+    fighter(g,actor,s.time,cfg,fighterKind,!!v2||auraFrame!==null);
+    if(v2)drawJadeChargeV2(g,chargeArt,actor,actor.x,actor.y,footY,cfg.spriteScale,cfg.powerChargeSeconds,jadePalette,true);
+    else if(auraFrame!==null)drawJadeChargeLayer(g,auraFront!,auraFrame,actor.x,footY,cfg.spriteScale,opacity);
     else drawGodFront(g,actor,s.time)}else{g.save();const age=Math.max(0,s.time-(actor.deathAt??s.time)),fade=Math.max(.12,1-age/1.5);g.globalAlpha=fade;for(let n=0;n<28;n++){const a=n*2.399,r=8+age*(15+n%5*9);g.fillStyle=actor.bot?(n%3===0?"#d9e1e7":n%2?"#84324f":"#151b26"):(n%3===0?"#f0eaff":n%2?"#65efff":"#ff69bd");const x=actor.x+Math.cos(a)*r,y=actor.y-12-n*1.7+Math.sin(a)*r*.5+age*age*17;if(actor.bot){g.beginPath();g.ellipse(x,y,2+n%3,1+n%2,a,0,Math.PI*2);g.fill()}else g.fillRect(x,y,2+n%3,2+n%2)}g.restore();}g.save();g.fillStyle=index===localSlot?"#65efff":"#ff69bd";g.font="bold 8px monospace";g.textAlign="center";g.fillText(s.mode==="watch"?actor.name:index===localSlot?"YOU":actor.name,actor.x,actor.y-84);g.restore()})}}})
  ].sort((a,b)=>a.y-b.y);
  actors.forEach(o=>{
@@ -913,6 +926,12 @@ function drawPowerFrame(g:CanvasRenderingContext2D,p:any,cfg:Config,frame:number
  return true;
 }
 function drawPowerPose(g:CanvasRenderingContext2D,p:any,cfg:Config){
+ const beat=jadeChargeBeat(p,cfg.powerChargeSeconds),connector=jadeChargeAssets.get("pose-v2");
+ if(connector&&p.charging&&powerDirection(p)===0&&beat>=3&&beat<=6){
+  const size=113*cfg.spriteScale;
+  g.drawImage(connector,beat===3?0:256,0,256,256,p.x-size*.53,p.y-size*.96,size,size);
+  return true;
+ }
  // Keep the approved inkwork opaque: overlapping full poses produce double outlines.
  return drawPowerFrame(g,p,cfg,powerFrame(p,cfg));
 }

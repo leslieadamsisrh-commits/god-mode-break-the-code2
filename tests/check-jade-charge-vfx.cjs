@@ -47,3 +47,25 @@ assert.ok(raised.length>0&&raised.every(x=>x.origin[1]<450));
 step(0,{charging:false});
 assert.deepEqual(capture(0),[]);
 console.log("PASS Jade charge cels, release and interruption, distance-based stamps, cooling, reheating, elevation, and reset");
+
+const {jadeChargeBeat,JADE_CHARGE_BEATS,JADE_PALETTES}=require("../lib/jadeChargeV2.ts");
+assert.equal(JADE_CHARGE_BEATS.length,16);
+assert.deepEqual([0,.09,.18,.27].map(chargeAge=>jadeChargeBeat({charging:true,chargeAge},duration)),[1,2,3,4]);
+assert.deepEqual([.02,.09,.18,.30,.43,.60,.75,.89,.97,1,1].map((godCharge,i)=>
+ jadeChargeBeat({charging:true,godCharge,chargeAge:i===10?3.1:.35+godCharge*duration},duration)),
+ [5,6,7,8,9,10,11,12,13,13,14]);
+assert.equal(jadeChargeBeat({powerFlash:.4},duration),15);
+assert.equal(jadeChargeBeat({},duration),16);
+assert.equal(Object.keys(JADE_PALETTES).length,6);
+const releaseTrace=new JadeChargeTrails();
+let rings=0;
+Object.assign(context,{save(){},restore(){},ellipse(){rings++;},stroke(){}});
+releaseTrace.update([jade],0);
+releaseTrace.update([{...jade,charging:false}],.1);
+releaseTrace.draw(context,{},.2,false,{naturalWidth:768,naturalHeight:512});
+assert.equal(rings,0);
+releaseTrace.update([jade],.3);
+releaseTrace.update([{...jade,charging:false,powerFlash:.65}],.4);
+releaseTrace.draw(context,{},.5,false,{naturalWidth:768,naturalHeight:512});
+assert.equal(rings,1);
+console.log("PASS V2 beats, six palettes and shockwave only on confirmed activation");

@@ -1,11 +1,12 @@
+import {drawJadeCrater,drawJadeShock,type JadePalette} from "./jadeChargeV2";
 import {COMBAT_SURFACES} from "./arenaStructures27e";
 import {height,inside} from "./elevation27a";
 import {vertical46,withWorld46} from "./bayBridgePresentation";
 
 type Charge = {charging?:boolean;chargeAge?:number;godCharge?:number;powerFlash?:number;powerReturn?:number};
 type Actor = Charge & {x:number;y:number;z:number;hp:number;character?:string;vx?:number;vy?:number;supportSurfaceId?:string|null};
-type Mark = {x:number;y:number;z:number;surface:string;born:number;heats:{at:number;heat:number}[];kind:number};
-type Trail = {active:boolean;last?:Mark;marks:Mark[]};
+type Mark = {x:number;y:number;z:number;surface:string;born:number;heats:{at:number;heat:number}[];kind:number;craterAt?:number};
+type Trail = {active:boolean;last?:Mark;marks:Mark[];releases:Array<{mark:Mark;at:number}>};
 
 const spacing=22;
 const hotSeconds=.85;
@@ -53,8 +54,14 @@ export class JadeChargeTrails {
   if(time===this.time)return;
   this.time=time;
   players.forEach((actor,index)=>{
-   const trail=this.trails[index]??={marks:[],active:false};
+   const trail=this.trails[index]??={marks:[],active:false,releases:[]};
    if(actor.character==="raptor"||actor.hp<=0||!actor.charging){
+    if(trail.active&&trail.last&&(actor.powerFlash??0)>0&&actor.hp>0&&actor.character!=="raptor"){
+     const floor=beneath(actor,actor.x,actor.y);
+     const origin=floor?{...trail.last,...floor,x:actor.x,y:actor.y}:trail.last;
+     trail.releases.push({mark:origin,at:time});
+     trail.releases=trail.releases.filter(release=>time-release.at<4);
+    }
     trail.active=false;trail.last=undefined;return;
    }
    const root=beneath(actor,actor.x,actor.y);
@@ -66,6 +73,7 @@ export class JadeChargeTrails {
     const earlier=trail.marks.findLast(m=>m.surface===floor.surface&&Math.hypot(m.x-x,m.y-y)<spacing*.54);
     const mark=earlier??{...floor,x,y,born:time,heats:[],kind:ignition?0:1+(this.serial++%2)};
     if(!earlier){trail.marks.push(mark);if(trail.marks.length>markLimit)trail.marks.shift();}
+    if((actor.godCharge??0)>=.94&&mark.craterAt===undefined&&Math.hypot(actor.vx??0,actor.vy??0)<4)mark.craterAt=time;
     const previous=mark.heats.at(-1);
     if(!previous||time-previous.at>=.12){
      mark.heats.push({at:time,heat:Math.min(1,Math.max(heat,(previous?.heat??0)*.95)+.1)});
@@ -87,7 +95,7 @@ export class JadeChargeTrails {
   });
  }
 
- draw(g:CanvasRenderingContext2D,atlas:HTMLImageElement,time:number,elevated:boolean){
+ draw(g:CanvasRenderingContext2D,atlas:HTMLImageElement,time:number,elevated:boolean,impact?:HTMLImageElement,palette:JadePalette="Standard"){
   for(const trail of this.trails)for(const mark of trail.marks){
    if(mark.born>time||(mark.surface!=="ground")!==elevated)continue;
    const event=mark.heats.findLast(h=>h.at<=time);
@@ -117,8 +125,18 @@ export class JadeChargeTrails {
      g.drawImage(atlas,frame%3*256,Math.floor(frame/3)*144,256,144,-w/2,-h/2,w,h);
     };
     paint(crack?2:5,crack ? .9 : .78);
-    if(hot>.01)paint(crack?(time-mark.born<.23?0:1):mark.kind+2,hot*event.heat);
+    if(impact&&(crack||mark.craterAt!==undefined&&mark.craterAt<=time)){
+     const crater=mark.craterAt!==undefined&&mark.craterAt<=time;
+     g.globalAlpha=1;
+     drawJadeCrater(g,impact,-64,-45,128,90,hot*event.heat,crater,palette);
+    }else if(hot>.01)paint(crack?(time-mark.born<.23?0:1):mark.kind+2,hot*event.heat);
    });
+  }
+  if(!impact)return;
+  for(const trail of this.trails)for(const {mark,at} of trail.releases){
+   if(time<at||time-at>=.54||(mark.surface!=="ground")!==elevated)continue;
+   const offset=vertical46(mark.x,mark.y,mark.z);
+   withWorld46(g,mark.x,mark.y,()=>drawJadeShock(g,mark.x+offset.x,mark.y+offset.y,time-at,palette));
   }
  }
 }
