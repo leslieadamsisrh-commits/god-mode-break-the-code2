@@ -48,17 +48,18 @@ export const DEFAULT_CONFIG:CombatConfig={legacyPowers:0,chargeMoveScale:.67145,
 export type CoverAnchor={face:"left"|"right"|"top"|"bottom";edge:number;t:number;length:number;offset:number;half:number;nx:number;ny:number;tx:number;ty:number};
 export type CoverExit={points:{x:number;y:number}[];index:number;dx:number;dy:number;until:number;travel:number;total:number;coverId:string};
 export type Rip32={region36?:{x:number;y:number};path?:{x:number;y:number;z:number}[];sourceId:string;revision:number;cells:number[];seed:number;volume:number;capacity:number;aim:number;destination:{x:number;y:number;z:number};fallback:number};
-export type Player=ElevationState & {brakeTurn?:KineticBrakeTurn;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;coverDrive11?:boolean;interceptReady11?:number;character?:'jade'|'raptor';raptorPose?:RaptorPoseMemory;raptorCoverShot?:{at:number;coverId:string;frame:RaptorPoseFrame};raptorFrame?:RaptorPoseFrame;arsenal37?:Transit37;recallCursor37?:number;recallNext37?:number;recallAt37?:number;coverGate37?:boolean;gripGate37?:boolean;quick36?:{until:number;paid:number;source:string};gripEdges34?:boolean[];gripDesired34?:boolean;gather34?:{kind?:"cover"|"matter";source:string;at:number;revision:number;protective?:boolean;plan?:Rip32};throwBuffer34?:number;avoidSide34?:number;avoidMode34?:string;throwTarget34?:number;hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player=ElevationState & {brakeTurn?:KineticBrakeTurn;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;coverDrive11?:boolean;interceptReady11?:number;character?:'jade'|'raptor';raptorPose?:RaptorPoseMemory;raptorCoverShot?:{at:number;coverId:string;frame:RaptorPoseFrame};raptorFrame?:RaptorPoseFrame;arsenal37?:Transit37;recallCursor37?:number;recallNext37?:number;recallGoal37?:Transit37["pose"];recallAt37?:number;coverGate37?:boolean;gripGate37?:boolean;quick36?:{until:number;paid:number;source:string};gripEdges34?:boolean[];gripDesired34?:boolean;gather34?:{kind?:"cover"|"matter";source:string;at:number;revision:number;protective?:boolean;plan?:Rip32};throwBuffer34?:number;avoidSide34?:number;avoidMode34?:string;throwTarget34?:number;hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type FloorSlab46={floorPanel46?:{sourceId:string;originX:number;originY:number;creator:number}};
 export type Cover=FloorSlab46 & {interceptUntil11?:number;arsenalSlot37?:number;placed34?:boolean;acquire32?:{x:number;y:number;z:number};acquireQueue32?:{x:number;y:number;z:number}[];fracture32?:Fracture32;height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={unitId?:string;groundId?:string;groundScatter?:boolean;spin?:number;spinVelocity?:number;height?:number;liftVelocity?:number;scatterAt?:number;attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={vz?:number;attackId?:string;source?:string;radius?:number;realAge?:number;volleyId?:string;fieldOwners?:number[];projectileScale?:number;id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
-export type Fx={material?:"digital"|"cyber";strength?:number;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number;raptorFrameKey?:string};
+export type Fx={material?:"digital"|"cyber";strength?:number;outcomeKey?:string;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number;raptorFrameKey?:string};
 export type HitRegion="low"|"torso"|"head";
-export type CombatEvent={parry?:boolean;incomingAngle?:number;attackId?:string;source?:string;seq:number;round:number;at:number;kind:"hit"|"shield"|"cover"|"finish";owner:number;target?:number;region?:HitRegion;damage:number;x:number;y:number;z:number;material?:"stone"|"metal"};
+export type CombatEvent={parry?:boolean;incomingAngle?:number;attackId?:string;source?:string;seq:number;round:number;at:number;kind:"hit"|"shield"|"cover"|"muzzle"|"finish";owner:number;target?:number;region?:HitRegion;damage:number;x:number;y:number;z:number;material?:"stone"|"metal"};
 export const REGION_DAMAGE={low:.75,torso:1,head:1.25};
 export const FINISHER_SECONDS=1.25;
-export type GameState={rules31?:MatchRules31;arenaLayout?:ArenaLayout27c;groundSources44?:GroundSource44[];botStrategy?:"baseline"|"adaptive";botExperience?:BotExperience[];botRound?:FightRound;fightRecording?:FightRecording;actionSeq?:number;actions?:ActionOutcome[];actionCounts?:Record<string,number>;energySpent?:number[];watchPaused?:boolean;watchNextAt?:number;events?:CombatEvent[];eventSeq?:number;timeScale?:number;fightUntil?:number;build:string;mode:"bot"|"solo"|"duel"|"practice"|"watch";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
+type RoundCombatSummary={damageTaken:Record<string,number>;stops:Record<"cover"|"shield"|"muzzle",number>};
+export type GameState={roundSummary?:RoundCombatSummary[];readabilityDrill?:"open"|"shield"|"cover"|"exchange";rules31?:MatchRules31;arenaLayout?:ArenaLayout27c;groundSources44?:GroundSource44[];botStrategy?:"baseline"|"adaptive";botExperience?:BotExperience[];botRound?:FightRound;fightRecording?:FightRecording;actionSeq?:number;actions?:ActionOutcome[];actionCounts?:Record<string,number>;energySpent?:number[];watchPaused?:boolean;watchNextAt?:number;events?:CombatEvent[];eventSeq?:number;timeScale?:number;fightUntil?:number;build:string;mode:"bot"|"solo"|"duel"|"practice"|"watch";phase:"lobby"|"countdown"|"playing"|"finisher"|"finished";round:number;winner:number|null;countdown:number;finisher:number;createdAt:number;lastAt:number;time:number;config:CombatConfig;players:Player[];covers:Cover[];matter:Matter[];shots:Shot[];fx:Fx[]};
 
 export type ActionOutcome={fracture32?:Rip32;nominalEnergy?:number;attackId?:string;context?:string;objectClass?:string;distanceBand?:string;spawnSide?:string;opponentBehavior?:string;speed?:number;mass?:number;round:number;seq:number;at:number;wallAt:number;owner:number;action:string;status:"attempted"|"activated"|"rejected"|"buffered"|"cancelled"|"contact"|"missed"|"recovered";reason?:string;objectId?:string;amount?:number};
 function actionOutcome(s:GameState,owner:number,action:string,status:ActionOutcome["status"],reason?:string,objectId?:string,amount?:number,attackId?:string){
@@ -162,7 +163,7 @@ export function newGame(name:string,token:string,now=Date.now(),mode:"bot"|"solo
  // Eight finite recipes in mirrored salvage clusters; no passive material spawning.
  const matter:Matter[]=[];if(mode==="duel"||mode==="watch")for(let side=0;side<2;side++)for(const [station,[x,y]] of [[170,460],[240,400],[370,470],[400,150]].entries())for(let j=0;j<3;j++)matter.push({id:`salvage-${side}-${station}-${j}`,x:side?D33_WORLD25.width-x-j*18:x+j*18,y:y+100,vx:0,vy:0,r:5+j%2,kind:j===2?"metal":"stone",heldBy:null,orbitBy:null,life:999,sourceArt:j===2?"maintenance-cabinet":"damaged-jersey",fragment:j});
  const arenaLayout=chaseLayout27c();const covers:Cover[]=instantiateLayout27c(arenaLayout); // Clear single-player practice arena; preserve multiplayer maps.
- return{arenaLayout,build:"BUILD-34-GUNHAND-GODHAND",groundSources44:groundSources44(),mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,events:[],eventSeq:0,actions:[],actionCounts:{},energySpent:[],actionSeq:0,timeScale:1,fightUntil:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
+ return{arenaLayout,build:"BUILD-34-GUNHAND-GODHAND",groundSources44:groundSources44(),mode,phase:mode==="solo"?"playing":mode==="duel"?"lobby":"countdown",round:1,winner:null,countdown:3,finisher:0,roundSummary:[],events:[],eventSeq:0,actions:[],actionCounts:{},energySpent:[],actionSeq:0,timeScale:1,fightUntil:0,createdAt:now,lastAt:now,time:0,config,players,covers,matter,shots:[],fx:[]}
 }
 export function setMatchRules31(s:GameState,value:unknown,slot:number){
  if(slot!==0)throw Error("HOST_ONLY");
@@ -172,7 +173,7 @@ export function setMatchRules31(s:GameState,value:unknown,slot:number){
 }
 export function updateConfig(s:GameState,patch:Partial<CombatConfig>){s.config={...s.config,...patch};for(const p of s.players)p.hp=Math.min(p.hp,s.config.maxHealth)}
 export function joinGame(s:GameState,name:string,token:string){if(s.mode==="watch")throw Error("Spectator session is not joinable");if(s.mode==="practice")throw Error("Practice is not joinable");if(s.mode==="solo")throw Error("Solo session is not joinable");const b=s.players.findIndex(p=>p.bot);if(b>=0){s.players[b]={...s.players[b],name,token,bot:false,lastSeq:-1,input:empty(),processedInput:empty()};return}if(s.players.length>1)throw Error("Room is full");s.players.push(player(BAY_SPAWNS[1].x,BAY_SPAWNS[1].y,Math.PI,name,token,false,s.config.maxHealth))}
-function respawn(s:GameState){if(s.fightRecording?.active&&s.phase!=="finished")s.fightRecording.abandoned++;const cfg={...s.config},ids=s.players.map(p=>({name:p.name,token:p.token,bot:p.bot,score:p.score,character:p.character})),fresh=newGame(ids[0].name,ids[0].token,s.lastAt,s.mode);fresh.arenaLayout=validateLayout27c(s.arenaLayout||chaseLayout27c());fresh.covers=instantiateLayout27c(fresh.arenaLayout);fresh.config=cfg;fresh.rules31=s.rules31?{...s.rules31}:undefined;fresh.players[0].hp=cfg.maxHealth;if(ids[1])fresh.players[1]=player(BAY_SPAWNS[1].x,BAY_SPAWNS[1].y,Math.PI,ids[1].name,ids[1].token,ids[1].bot,cfg.maxHealth);fresh.players.forEach((p,i)=>{p.score=ids[i]?.score||0;p.character=ids[i]?.character==='raptor'?'raptor':'jade';refreshRaptorPose(p,fresh.time,cfg.slideDuration);});fresh.round=s.round+1;fresh.createdAt=s.createdAt;fresh.botRound=undefined;fresh.watchNextAt=undefined;fresh.botStrategy=s.botStrategy;fresh.botExperience=s.botExperience;fresh.fightRecording=s.fightRecording;if(fresh.fightRecording?.active&&fresh.fightRecording.rounds.length%2===1){[fresh.players[0].x,fresh.players[1].x]=[fresh.players[1].x,fresh.players[0].x];fresh.players.forEach((p,i)=>p.aim=p.gunFacing=i?0:Math.PI);}fresh.phase=s.mode==="solo"?"playing":"countdown";Object.assign(s,fresh)}
+function respawn(s:GameState){if(s.fightRecording?.active&&s.phase!=="finished")s.fightRecording.abandoned++;const cfg={...s.config},ids=s.players.map(p=>({name:p.name,token:p.token,bot:p.bot,score:p.score,character:p.character})),fresh=newGame(ids[0].name,ids[0].token,s.lastAt,s.mode);fresh.arenaLayout=validateLayout27c(s.arenaLayout||chaseLayout27c());fresh.covers=instantiateLayout27c(fresh.arenaLayout);fresh.config=cfg;fresh.rules31=s.rules31?{...s.rules31}:undefined;fresh.players[0].hp=cfg.maxHealth;if(ids[1])fresh.players[1]=player(BAY_SPAWNS[1].x,BAY_SPAWNS[1].y,Math.PI,ids[1].name,ids[1].token,ids[1].bot,cfg.maxHealth);fresh.players.forEach((p,i)=>{p.score=ids[i]?.score||0;p.character=ids[i]?.character==='raptor'?'raptor':'jade';refreshRaptorPose(p,fresh.time,cfg.slideDuration);});fresh.round=s.round+1;fresh.createdAt=s.createdAt;fresh.botRound=undefined;fresh.watchNextAt=undefined;fresh.botStrategy=s.botStrategy;fresh.botExperience=s.botExperience;fresh.fightRecording=s.fightRecording;if(fresh.fightRecording?.active&&fresh.fightRecording.rounds.length%2===1){[fresh.players[0].x,fresh.players[1].x]=[fresh.players[1].x,fresh.players[0].x];fresh.players.forEach((p,i)=>p.aim=p.gunFacing=i?0:Math.PI);}fresh.phase=s.mode==="solo"?"playing":"countdown";s.readabilityDrill=undefined;Object.assign(s,fresh)}
 export function setInput(s:GameState,slot:number,seq:number,input:Partial<InputState>){const p=s.players[slot];if(!p||s.mode==="watch"||!Number.isSafeInteger(seq)||seq<=p.lastSeq)return;p.lastSeq=seq;if(input.cancelGrip34){if(p.arsenal37)p.arsenal37.cancelled=true;cancelTear36(p,s);cancelQuick36(p,s,'input cancelled');p.gripCancelRelease=true;p.gripEdges34=[];p.gather34=undefined;p.throwBuffer34=undefined;}else if(!!input.grip!==(p.gripDesired34??!!p.input.grip)){const queue=p.gripEdges34??=[];if(queue.length<4)queue.push(!!input.grip);}p.gripDesired34=!!input.grip;p.gripCancelRelease=!!input.cancelGrip34;let x=clamp(Number(input.x)||0,-1,1),y=clamp(Number(input.y)||0,-1,1),m=Math.hypot(x,y);if(m>1){x/=m;y/=m}let gripAxes:Partial<InputState>={};if(Number.isFinite(input.gripX)&&Number.isFinite(input.gripY)){let gx=clamp(input.gripX!,-1,1),gy=clamp(input.gripY!,-1,1),gm=Math.hypot(gx,gy);if(gm>1){gx/=gm;gy/=gm;}gripAxes={gripX:gx,gripY:gy};}const aimPoint=Number.isFinite(input.aimX)&&Number.isFinite(input.aimY)&&Number.isFinite(input.aimZ)?{aimX:clamp(input.aimX!,-500,2000),aimY:clamp(input.aimY!,-500,1500),aimZ:clamp(input.aimZ!,0,500)}:{aimX:undefined,aimY:undefined,aimZ:undefined};p.input={...empty(),...input,...aimPoint,gripX:undefined,gripY:undefined,...gripAxes,x,y,aim:Number.isFinite(input.aim)?wrap(input.aim as number):p.aim}}
 
 function localPoint(c:Cover,x:number,y:number){const ca=Math.cos(c.a||0),sa=Math.sin(c.a||0),dx=x-c.x,dy=y-c.y;return{x:dx*ca+dy*sa,y:-dx*sa+dy*ca}}
@@ -550,6 +551,19 @@ function meleeStep(s:GameState,n:number){const p=s.players[n],m=p.meleeCombo;if(
 function combatFight(s:GameState){return true} // One collision/physics contract across practice, duel and roam.
 function combatEvent(s:GameState,event:Omit<CombatEvent,"seq"|"round"|"at">){
  if(event.kind!=="finish")actionOutcome(s,event.owner,event.source||"contact","contact",event.kind,event.target!==undefined?"player-"+event.target:undefined,event.damage,event.attackId);
+ const summary=(slot:number)=>((s.roundSummary??=[])[slot]??={damageTaken:{},stops:{cover:0,shield:0,muzzle:0}});
+ if(event.kind==="hit"&&event.target!==undefined){
+  const damage=summary(event.target).damageTaken;
+  const source=event.source||"contact";
+  damage[source]=(damage[source]||0)+event.damage;
+ }
+ if(event.source==="shotgun"&&(event.kind!=="finish")){
+  const outcomeKey=event.attackId?event.attackId+":"+event.kind+":"+event.owner:undefined;
+  if(!outcomeKey||!s.fx.some(f=>f.outcomeKey===outcomeKey)){
+   if(event.owner>=0&&event.kind!=="hit")summary(event.owner).stops[event.kind]++;
+   s.fx.push({id:uid(),type:"shot-result-"+event.kind,outcomeKey,x:event.x,y:event.y,z:event.z,life:.32,owner:event.owner});
+  }
+ }
  const e={...event,seq:(s.eventSeq||0)+1,round:s.round,at:s.time};s.eventSeq=e.seq;(s.events??=[]).push(e);s.events=s.events.slice(-64);return e;
 }
 function duelContact(s:GameState,owner:number,target:Player,damage:number,vx=0,vy=0,region:HitRegion="torso",point?:{x:number;y:number;z:number},source="contact",attackId?:string){
@@ -703,7 +717,7 @@ export function constructionPreview21(p:Player,s:GameState,n:number){
  return{cover,reason,valid:!reason,limit,groundUnits,aim};
 }
 export const ARSENAL37={slots:4,assembly:.2,cue:.08,speed:900,range:900,maxLength:1400,lift:96,timeout:3,wait:.3};
-type Transit37={cancelled?:boolean;kind:'assemble'|'recall';phase:'cue'|'transit'|'return'|'wait';object:Cover;origin:{x:number;y:number;z:number;a:number};pose:{x:number;y:number;z:number;a:number};route:{x:number;y:number;z:number;a:number}[];visited:{x:number;y:number;z:number;a:number}[];at:number;started:number;slot:number};
+type Transit37={cancelled?:boolean;kind:'assemble'|'recall';phase:'cue'|'transit'|'return'|'wait';object:Cover;origin:{x:number;y:number;z:number;a:number};pose:{x:number;y:number;z:number;a:number};goal?:{x:number;y:number;z:number;a:number};route:{x:number;y:number;z:number;a:number}[];visited:{x:number;y:number;z:number;a:number}[];at:number;started:number;slot:number};
 function owned37(s:GameState,n:number){return s.covers.filter(c=>c.hp>0&&c.constructOwner===n);}
 function slots37(s:GameState,n:number){const own=owned37(s,n),used=new Set(own.map(c=>c.arsenalSlot37).filter(Boolean));for(const cv of own.filter(c=>!c.arsenalSlot37).sort((a,b)=>a.id.localeCompare(b.id))){const free=[1,2,3,4].find(k=>!used.has(k));if(free){cv.arsenalSlot37=free;used.add(free);}}return own;}
 function eligible37(cv:Cover,s:GameState){
@@ -732,7 +746,7 @@ function startArsenal37(p:Player,s:GameState,n:number){
  const a=arsenalPreview37(p,s,n);let cv:Cover|undefined,route:ReturnType<typeof pose37>[]=[],kind:'assemble'|'recall'='assemble';
  if(a.free){const preview=constructionPreview21(p,s,n);if(preview.reason||!preview.cover){p.gripHint=preview.reason||'NO BUILD SPACE';p.gripHintUntil=s.time+1;return;}cv={...preview.cover,id:uid(),arsenalSlot37:a.free};}
  else {kind='recall';if(!a.next||!a.route){p.gripHint=a.reason||'RECALL BLOCKED';p.gripHintUntil=s.time+1;return;}cv=a.next;route=a.route;}
- p.coverGate37=true;p.arsenal37={kind,phase:'cue',object:cv,origin:pose37(cv),pose:pose37(cv),route,visited:[pose37(cv)],at:s.time,started:s.time,slot:cv.arsenalSlot37!};p.gripHint=kind==='assemble'?'ASSEMBLING':'RECALL '+cv.arsenalSlot37;p.gripHintUntil=s.time+.3;
+ p.coverGate37=true;p.arsenal37={kind,phase:'cue',object:cv,origin:pose37(cv),pose:pose37(cv),route,goal:a.goal,visited:[pose37(cv)],at:s.time,started:s.time,slot:cv.arsenalSlot37!};p.gripHint=kind==='assemble'?'ASSEMBLING':'RECALL '+cv.arsenalSlot37;p.gripHintUntil=s.time+.3;
 }
 function stepArsenal37(p:Player,s:GameState,n:number,dt:number){const t=p.arsenal37;if(!t)return;
  const hint=(v:string)=>{p.gripHint=v;p.gripHintUntil=s.time+.7;};
@@ -750,7 +764,7 @@ function stepArsenal37(p:Player,s:GameState,n:number,dt:number){const t=p.arsena
   if(cancel||eligible37(t.object,s)||!s.covers.includes(t.object)){hint('RECALL CANCELLED');p.arsenal37=undefined;return;}
   if(s.time-t.at<ARSENAL37.cue)return;
   const goal=destination37(p,s,n,t.object),route=goal&&route37(t.object,pose37(t.object),goal,s);if(!route){hint('RECALL BLOCKED');p.arsenal37=undefined;return;}
-  t.route=route;t.phase='transit';s.covers=s.covers.filter(c=>c.id!==t.object.id);actionOutcome(s,n,'recall','activated','dissolved',t.object.id,0);
+  t.route=route;t.goal=goal;t.phase='transit';s.covers=s.covers.filter(c=>c.id!==t.object.id);actionOutcome(s,n,'recall','activated','dissolved',t.object.id,0);
  }
  if((cancel||s.time-t.started>ARSENAL37.timeout)&&t.phase!=='return'){t.phase='return';t.route=t.visited.slice().reverse();if(!t.route.length)t.route=[t.origin];}
  if(t.phase==='wait'&&s.time-t.at>ARSENAL37.wait){t.phase='return';t.route=t.visited.slice().reverse();if(!t.route.length)t.route=[t.origin];}
@@ -1207,7 +1221,32 @@ function watchBotInput(s:GameState,n:number,opponent:InputState){
  const guard=opponent.fire&&!blocked&&cycle>9.5&&cycle<10.3;
  set(guard?"SHIELD → COUNTER":heavy?"HEAVY GAUNTLET → SHOTGUN":range<62?"MELEE → SHOTGUN":blocked?"FLANK BLOCKED SIGHTLINE":"ADVANCE → SHOTGUN",{shield:guard,fire:!guard&&!blocked&&range<450&&(s.time+n*.25)%1.1<.45,heavy:heavy&&!p.processedInput.heavy,melee:!heavy&&range<62&&!p.processedInput.melee,slide:range>330&&!blocked&&(s.time+n*.3)%4<.03});
 }
+export function startReadabilityDrill(s:GameState,drill:unknown){
+ if(s.mode!=="practice"||!["open","shield","cover","exchange"].includes(String(drill)))throw Error("Training drill unavailable");
+ const mode=drill as NonNullable<GameState["readabilityDrill"]>;
+ startOrRematch(s,0);
+ s.readabilityDrill=mode;
+ const [shooter,target]=s.players;
+ const exchange=mode==="exchange";
+ Object.assign(shooter,{x:exchange?950:830,y:exchange?700:430,aim:exchange?-Math.PI/2:0,gunFacing:exchange?-Math.PI/2:0});
+ Object.assign(target,{x:exchange?1060:1030,y:exchange?480:430,aim:Math.PI,gunFacing:Math.PI,bot:true});
+ if(mode==="cover"||exchange){
+  s.covers.push({...SHAPES27J[1],id:"readability-wall",x:exchange?950:930,y:exchange?550:430,
+   a:exchange?0:Math.PI/2,z:0,hp:180,maxHp:180,build:0,variant:0,generated:true,artId:"war-generated-shell45"});
+ }
+ refreshRaptorPose(shooter,s.time,s.config.slideDuration,s.config.dashDuration);
+}
 function botInput(s:GameState){
+ if(s.mode==="practice"&&s.readabilityDrill){
+  const [player,defender]=s.players;
+  const exchange=s.readabilityDrill==="exchange";
+  const phase=(s.time%4);
+  const aim=Math.atan2(player.y-defender.y,player.x-defender.x);
+  defender.input={...empty(),aim,shield:s.readabilityDrill==="shield"||exchange&&phase>=1&&phase<2.2,
+   x:exchange&&phase>=2.2?.35:0};
+  defender.botIntent=defender.input.shield?"TRAINING · SHIELD":exchange&&phase>=2.2?"TRAINING · CHANGE ANGLE":"TRAINING · HOLD";
+  return;
+ }
  if((s.mode==="practice"||s.mode==="bot")&&s.rules31?.opponent!==undefined&&s.rules31.opponent!=="full"){
   const prior=s.players.map(p=>({...p.input}));
   s.players.forEach((p,n)=>{if(!p.bot)return;
@@ -1282,7 +1321,8 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
   else if(p.coverId&&p.coverMode==="braced"&&(i.coverAim||p.character==="raptor"))p.gunFacing=i.aim;
   else{const maxTwist=145*Math.PI/180,deltaAim=Math.atan2(Math.sin(i.aim-moveAngle),Math.cos(i.aim-moveAngle));p.gunFacing=moveAngle+clamp(deltaAim,-maxTwist/2,maxTwist/2)}
   p.fireState=Math.max(0,p.fireState-dt);p.recoil=Math.max(0,p.recoil-dt);p.returnToCover=Math.max(0,p.returnToCover-dt);p.boostState=Math.max(0,p.boostState-dt);p.brakeState=Math.max(0,p.brakeState-dt);
-  stepArsenal37(p,s,n,dt);if(s.time>=(p.recallAt37||0)){p.recallAt37=s.time+.2;p.recallNext37=owned37(s,n).length>=4?arsenalPreview37(p,s,n).next?.arsenalSlot37:undefined;}const beforeEnergy=p.battery;edgeActions(s,n,prev[n]||empty());if(p.battery<beforeEnergy)p.lastEnergyAt=s.time;p.shield=i.shield&&!coverContext&&!p.coverId&&p.battery>0;if(p.shield)debitEnergy31(s,p,3*dt);if(p.timeFieldActive&&p.battery>0)debitEnergy31(s,p,(PROJECTILE_TIME.baseDrain+PROJECTILE_TIME.pelletDrain*(p.timePellets||0))*dt);if(!p.quick36&&(p.gripId||p.gripCoverId||p.orbitIds.length))debitEnergy31(s,p,c.holdEnergy*dt);const constructs=s.covers.filter(cv=>cv.constructOwner===n&&cv.hp>0).length;if(p.shield||p.timeFieldActive||p.gripId||p.gripCoverId||p.orbitIds.length)p.lastEnergyAt=s.time;else if(!p.charging&&!p.godTime&&s.time-(p.lastEnergyAt??-9)>=c.rechargeDelay&&!p.slide&&!p.dash&&!p.kickStage?.match(/burst|step/))p.battery=Math.min(100,p.battery+c.rechargeRate*dt);
+  stepArsenal37(p,s,n,dt);if(s.time>=(p.recallAt37||0)){p.recallAt37=s.time+.2;const preview=owned37(s,n).length>=4?arsenalPreview37(p,s,n):undefined;
+   p.recallNext37=preview?.next?.arsenalSlot37;p.recallGoal37=preview?.goal;}const beforeEnergy=p.battery;edgeActions(s,n,prev[n]||empty());if(p.battery<beforeEnergy)p.lastEnergyAt=s.time;p.shield=i.shield&&!coverContext&&!p.coverId&&p.battery>0;if(p.shield)debitEnergy31(s,p,3*dt);if(p.timeFieldActive&&p.battery>0)debitEnergy31(s,p,(PROJECTILE_TIME.baseDrain+PROJECTILE_TIME.pelletDrain*(p.timePellets||0))*dt);if(!p.quick36&&(p.gripId||p.gripCoverId||p.orbitIds.length))debitEnergy31(s,p,c.holdEnergy*dt);const constructs=s.covers.filter(cv=>cv.constructOwner===n&&cv.hp>0).length;if(p.shield||p.timeFieldActive||p.gripId||p.gripCoverId||p.orbitIds.length)p.lastEnergyAt=s.time;else if(!p.charging&&!p.godTime&&s.time-(p.lastEnergyAt??-9)>=c.rechargeDelay&&!p.slide&&!p.dash&&!p.kickStage?.match(/burst|step/))p.battery=Math.min(100,p.battery+c.rechargeRate*dt);
   if(p.coverMode==="braced"&&prev[n]?.coverAim&&!i.coverAim)p.returnToCover=Math.max(p.returnToCover,.16);
   if(p.battery<=0){p.timeFieldActive=false;releaseOrbit(p,s);if(!p.quick36){if(p.gripId){const held=s.matter.find(m=>m.id===p.gripId);if(held){held.heldBy=null;held.vx=held.vy=0;held.throwOwner=undefined;}p.gripId=null}if(p.gripCoverId){const cv=s.covers.find(cv=>cv.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}}p.gripCoverId=null}}
   p.brake=Math.max(0,p.brake-dt);p.slideCool=Math.max(0,p.slideCool-dt);
@@ -1348,6 +1388,10 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
    const canExpose=coverMuzzleClearance(probe,cv,barrelSocket27d(probe,c.spriteScale),p.gunFacing).allowed;
    const aiming=coverAimRequested(p,cv);
    p.coverState11=coverState11(p,s.time,canExpose,aiming);
+   if(p.coverId&&i.fire&&!prev[n]?.fire&&!canExpose){
+    const socket=barrelSocket27d(probe,c.spriteScale);
+    combatEvent(s,{kind:"muzzle",source:"shotgun",owner:n,damage:0,x:socket.x,y:socket.y,z:socket.z});
+   }
    if(p.coverId&&(i.coverAim||i.fire)&&!canExpose){p.gripHint=cv?.coverClass==='tall'?'TALL COVER · MOVE TO AN EDGE':'EXPOSURE BLOCKED · REPOSITION';p.gripHintUntil=s.time+.2;}
    if(p.coverId&&(!canExpose||p.coverDrive11))p.pendingFireUntil=undefined;
    p.peek=!!p.coverId&&canExpose;
@@ -1368,7 +1412,10 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
    }
    if(shotPose.character==='raptor'&&shotPose.raptorFrame&&raptorShotReady&&!raptorShotReady(shotPose.raptorFrame.key))continue;
    const muzzle=barrelSocket27d(shotPose,c.spriteScale),legacyAimOrigin={x:muzzle.x,y:muzzle.y},physical=coverMuzzleClearance(shotPose,attachedCover,muzzle,p.gunFacing);
-   if(p.character==='raptor'&&!physical.allowed){p.pendingFireUntil=undefined;continue;}
+   if(p.character==='raptor'&&!physical.allowed){
+    if(i.fire&&!prev[n]?.fire)combatEvent(s,{kind:"muzzle",source:"shotgun",owner:n,damage:0,x:muzzle.x,y:muzzle.y,z:muzzle.z});
+    p.pendingFireUntil=undefined;continue;
+   }
    if(shotPose!==p&&shotPose.raptorFrame){
     p.raptorFrame=shotPose.raptorFrame;
     p.raptorCoverShot=(shotPose.raptorFrame.family==='cover-recoil'||shotPose.raptorFrame.family==='cover-sequence')&&p.coverId
@@ -1434,7 +1481,11 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
   const platformTime=surfaceShotTime(from,{x:sh.x,y:sh.y,z});nearest=Math.min(nearest,platformTime);
   const hit=target&&target.hp>0?shotPlayerTime(from,sh,z,{...target,z:playerStarts[1-sh.owner].z+(target.z-playerStarts[1-sh.owner].z)*segment.end,x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.end,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.end},{z:playerStarts[1-sh.owner].z+(target.z-playerStarts[1-sh.owner].z)*segment.start,x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.start,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.start},c.spriteScale,sh.source==="glove-blast"?8:0):null;
   if(hit&&hit.t<nearest){const point={x:from.x+(sh.x-from.x)*hit.t,y:from.y+(sh.y-from.y)*hit.t,z:from.z+(z-from.z)*hit.t};const parry=target.shield&&target.input.shield&&!target.coverId&&target.battery>0&&s.time-(target.shieldAt27g??-9)<=.12;duelContact(s,sh.owner,target,(sh.damage??c.shotDamage)*REGION_DAMAGE[hit.region],sh.vx*.1,sh.vy*.1,hit.region,point,sh.source||"shotgun",sh.attackId||sh.volleyId);if(parry){sh.owner=s.players.indexOf(target);sh.vx=-sh.vx;sh.vy=-sh.vy;sh.vz=-(sh.vz||0);sh.x=point.x;sh.y=point.y;sh.z=point.z;sh.clearanceCoverId=undefined;break;}else sh.life=0;}
-  else if(platformTime<=nearest&&Number.isFinite(platformTime)){sh.life=0;}
+  else if(platformTime<=nearest&&Number.isFinite(platformTime)){
+   combatEvent(s,{kind:"cover",source:sh.source||"shotgun",attackId:sh.attackId||sh.volleyId,owner:sh.owner,damage:0,
+    x:from.x+(sh.x-from.x)*platformTime,y:from.y+(sh.y-from.y)*platformTime,z:from.z+(z-from.z)*platformTime});
+   sh.life=0;
+  }
   else if(block){const point={x:from.x+(sh.x-from.x)*nearest,y:from.y+(sh.y-from.y)*nearest,z:from.z+(z-from.z)*nearest},material=bayObject(block.artId||block.id)?.material==="CONCRETE"?"stone":"metal";damageCover(block,s,sh.damage??c.shotDamage);combatEvent(s,{kind:"cover",source:sh.source||"shotgun",attackId:sh.attackId||sh.volleyId,owner:sh.owner,damage:sh.damage??c.shotDamage,material,...point});sh.life=0;s.fx.push({id:uid(),type:"cover-hit",life:.25,owner:sh.owner,text:material,...point});}
  }
  }
@@ -1479,9 +1530,14 @@ export function startOrRematch(s:GameState,slot:number){
  // A completed private first-to-three starts a new match. Ordinary next-round
  // requests retain scores; bots and ten-round watch reports retain their flow.
  if(s.mode==='duel'&&s.phase==='finished'&&s.players.some(p=>p.score>=3)){
-  s.players.forEach(p=>p.score=0);s.round=0;
+  s.players.forEach(p=>p.score=0);
  }
  respawn(s);
+}
+export function requestRematch(s:GameState,slot:number,round:unknown){
+ if(s.phase!=="finished"||s.round!==round||!s.players[slot]||s.mode==="watch")return;
+ s.players[slot].rematch=true;
+ if(s.mode!=="duel"||s.players.length===2&&s.players.every(p=>p.rematch))startOrRematch(s,0);
 }
 export function safeState(s:GameState){const {actions,actionCounts,energySpent,botExperience,botRound,fightRecording,...publicState}=s;const lab21=repulseView21(s);return{...publicState,...lab21?{lab21}:{},fightMemory:fightMemorySummary(s),players:s.players.map(({token,raptorPose,raptorCoverShot,...p})=>p)}}
 

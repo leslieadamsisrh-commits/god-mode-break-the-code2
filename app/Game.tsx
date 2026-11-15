@@ -4,7 +4,7 @@ import {drawJadeChargeV2,jadeChargeBeat,JADE_PALETTES,type JadePalette} from "..
 import {kineticPose} from "../lib/kineticPose";
 import {jadeCoverFrame11,coverExposed13,coverStride13,type CoverStride13} from "../lib/raptorCover11";
 import {SlideInputEdges} from "../lib/slideInputEdges";
-import {drawSpiral37} from '../lib/spiralPresentation37';
+import {drawSpiral37,drawArsenalMarker} from '../lib/spiralPresentation37';
 import {interpolateCover35} from "../lib/presentation35";
 import {type MatchRules31,PRACTICE_RULES31,validateRules31} from "../lib/matchRules31";
 import {drawCitadel29} from '../lib/citadelPresentation29';
@@ -371,6 +371,20 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  const applyMovementPreset=async(name:string)=>{const preset=MOVEMENT_PRESETS[name];if(!preset)return;const values=movementProfile(name);const saved=session.current;if(!saved)return;try{accept(await post({action:"config",...saved,patch:values}));if(saved.mode==="practice")trainingMovement.current=values;setTestPass({});setNote(name+" APPLIED")}catch(e:any){setNote(e.message||"PRESET FAILED")}};
  const openBuilder=()=>{keys.current={};slideEdges.current.reset();edges.current={CancelGrip34:true};mouse.current.down=false;touchMove.current={x:0,y:0};touchA.current=false;touchAEdge.current=false;touchJump.current=false;touchTime.current=false;touchDirs.current.clear();localCombat.current?.pause();setStudioMenu(false);setGameShell(false);setBuilderOpen(true);};
  const playLayout=async(layout:ArenaLayout27c)=>{const ss=session.current;if(!ss)throw Error("Game is still starting");const reply=await post({action:"arenaLayout",...ss,layout});accept(reply);cameraState.ready=false;setBuilderOpen(false);localCombat.current?.pause();};
+ const startShotDrill=async(drill:string)=>{
+  const ss=session.current;if(!ss?.local||state.current?.mode!=="practice")return;
+  const reply=await post({action:"readability",...ss,drill});
+  drillReplay.current=null;setReplayingDrill(false);setQaMode(false);accept(reply);canvas.current?.focus();
+ };
+ const [rematchBusy,setRematchBusy]=useState(false);
+ const rematch=async()=>{
+  const ss=session.current,current=state.current;
+  if(!ss||current?.phase!=="finished"||rematchBusy)return;
+  setRematchBusy(true);
+  try{accept(await post({action:"rematch",...ss,round:current.round}));}
+  catch(e){setRoomMessage(e instanceof Error?e.message:String(e));}
+  finally{setRematchBusy(false);}
+ };
  const reset=async()=>{drillReplay.current=null;setReplayingDrill(false);const s=session.current;if(!s)return;try{accept(await post({action:"reset",...s}))}catch{}};
  const repulseLab21=async(enabled:boolean,patch:Record<string,number>={})=>{const ss=session.current;if(!ss?.local)return;try{accept(await post({action:"repulse21",...ss,enabled,patch}));setAuditStatus("");}catch(e:any){setAuditStatus(e.message);}};
  const save=()=>{localStorage.setItem("god_mode_studio_combat_preset",JSON.stringify(config));setNote("PRESET SAVED LOCALLY");setTimeout(()=>setNote(""),1200)};
@@ -404,7 +418,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  useEffect(()=>{if(hud?.mode!=="watch")return;const key=session.current?.room+":"+hud.round+":"+hud.fightMemory?.reportReady;if(memoryFetched.current===key)return;memoryFetched.current=key;void refreshFightMemory().catch(e=>setMemoryNotice(e.message));},[hud?.mode,hud?.round,hud?.fightMemory?.reportReady]);
  const memoryControl=async(operation:string)=>{const ss=session.current;if(!ss)return;try{const v=await post({action:"fightMemory",...ss,operation,...operation==="adaptive"?{profiles:readFightMemory()?.profiles}:{}});accept(v);setFightStored(v.memory);try{storeFightMemory(v.memory,v.state?.fightMemory?.mode||"baseline");setMemoryNotice(operation==="record"?"Recording ten completed rounds · download unlocks at10/10":"Saved in this browser · strategy changes start with a fresh round");}catch(e:any){setMemoryNotice(e.message+" · combat continues");}}catch(e:any){setMemoryNotice(e.message);}};
  const downloadReport=async()=>{try{const report=state.current?.fightMemory?.reportReady?(await refreshFightMemory())?.report:fightStored?.report||readFightMemory()?.report;downloadFightReport(report);setMemoryNotice("Fight data downloaded — bring the JSON and video into chat");}catch(e:any){setMemoryNotice(e.message);}};
- const hostFight=async()=>{unlockCombatAudio();try{enterSession(await post({action:"create",name:"Player 1",mode:"duel",rules31}));setStudioMenu(false)}catch(e:any){setRoomMessage(e.message)}};
+ const hostFight=async(fighter:"jade"|"raptor"="jade")=>{unlockCombatAudio();try{if(fighter==="raptor"){if(!await prepareRaptorMatch())throw Error("Raptor pose failed to load");void preloadRaptorSprites();}enterSession(await post({action:"create",name:"Player 1",mode:"duel",fighter,rules31}));setStudioMenu(false)}catch(e:any){setRoomMessage(e.message)}};
  const joinFight=async()=>{unlockCombatAudio();try{enterSession(await post({action:"join",room:joinRoom,code:joinCode,name:"Player 2"}))}catch(e:any){setRoomMessage(e.message)}};
  const shareFight=async()=>{const ss=session.current;if(!ss||ss.slot!==0)return;try{const v=ss.invite?ss:await post({action:"invite",...ss});const link=new URL(location.pathname,location.origin);link.hash=new URLSearchParams({room:ss.room,invite:v.invite}).toString();setInviteLink(link.href);if(navigator.share){try{await navigator.share({title:"Join my GOD MODE fight",url:link.href});return}catch{}}try{await navigator.clipboard.writeText(link.href);setRoomMessage("Invite copied — send it to James");}catch{setRoomMessage("Copy the invite link below");}}catch(e:any){setRoomMessage(e.message)}};
  const activateController=()=>{unlockCombatAudio();canvas.current?.focus();try{const p=[...navigator.getGamepads()].find(Boolean);if(p){setPadStatus(`CONTROLLER: ${p.id||"CONNECTED"}`);setPadGate(false)}else{setPadStatus("CONTROLLER: PRESS A / MOVE STICK");setPadGate(false)}}catch{setPadStatus("CONTROLLER API NOT READY")}};
@@ -447,13 +461,13 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
    </>}
   </div>
   {builderOpen&&<ArenaBuilder27c initial={state.current?.arenaLayout} onClose={()=>{setBuilderOpen(false);localCombat.current?.pause();}} onPlay={playLayout}/>}
-  {gameShell&&<GodModeShell allowRaptor={allowRaptor} onPlay={fighter=>void playFighter(false,fighter)} onTraining={fighter=>void playFighter(true,fighter)} onSettings={()=>{setGameShell(false);setStudioMenu(true)}} onArenaBuilder={openBuilder} onDirector={()=>{setGameShell(false);setDirector(true)}}/>}
+  {gameShell&&<GodModeShell allowRaptor={allowRaptor} onPlay={fighter=>void playFighter(false,fighter)} onTraining={fighter=>void playFighter(true,fighter)} onHost={fighter=>void hostFight(fighter)} onSettings={()=>{setGameShell(false);setStudioMenu(true)}} onArenaBuilder={openBuilder} onDirector={()=>{setGameShell(false);setDirector(true)}}/>}
   {raptorLoading&&<div role="status" style={{position:"fixed",inset:0,zIndex:99999,background:"#080f1a",display:"grid",placeItems:"center"}}>Preparing combat…</div>}
   {raptorLoadError&&gameShell&&<div role="alert" style={{position:"fixed",bottom:16,left:16,zIndex:99999}}>{raptorLoadError}</div>}
   <header><div><small>GOD MODE: BREAK THE CODE</small><b>DIMENSION 33 · THE BARON’S WAR GAMES</b></div><span>{status}</span></header>
   <div className="stageWrap">
    {!bootReady&&<div className="controllerGate" aria-live="polite"><b>GOD HELMET BOOT</b><small>LOADING COMBAT MEMORY · {boot.done}/{boot.total}</small><small>{boot.label}{boot.failed?` · ${boot.failed} FALLBACK${boot.failed===1?"":"S"}`:""}</small><i style={{display:"block",width:"min(320px,70vw)",height:8,border:"1px solid currentColor",marginTop:10}}><span style={{display:"block",height:"100%",width:`${boot.total?boot.done/boot.total*100:0}%`,background:"currentColor"}}/></i></div>}
-   <BayBridgeArena rulesPanel={<section className="rules31" aria-label="Practice and match rules"><b>PLAYTEST RULES · NEXT SESSION</b><label>Battery<select value={rules31.battery} onChange={e=>chooseRules31({...rules31,battery:e.target.value as MatchRules31["battery"]})}><option value="unlimited">UNLIMITED</option><option value="current">CURRENT BALANCE</option></select></label><label>Practice opponent<select value={rules31.opponent} onChange={e=>chooseRules31({...rules31,opponent:e.target.value as MatchRules31["opponent"]})}><option value="target">TARGET</option><option value="sparring">SPARRING</option><option value="full">FULL PRESSURE</option></select></label><label>Extraction capacity<select value={rules31.capacity32===undefined?'auto':'custom'} onChange={e=>{const next={...rules31};if(e.target.value==='auto')delete next.capacity32;else next.capacity32=50;chooseRules31(next);}}><option value="auto">AUTO</option><option value="custom">CUSTOM</option></select></label>{rules31.capacity32!==undefined&&<label>Effective capacity {rules31.capacity32}%<input type="range" min="0" max="100" step="5" value={rules31.capacity32} onChange={e=>chooseRules31({...rules31,capacity32:Number(e.target.value)})}/></label>}<small>Capacity changes chunk selection only; it does not change battery or rip cost. AUTO uses current battery, or full capacity with unlimited battery.</small><small>Unlimited battery removes energy costs. Health, cooldowns, collision, and object limits still apply. Selections apply when starting a new session.</small><button onClick={practiceFight}>START / RESET PRACTICE</button><button onClick={hostFight}>HOST NEW FIGHT · {rules31.battery==="unlimited"?"UNLIMITED":"CURRENT BALANCE"}</button>{hud?.mode==="duel"&&session.current?.slot===0&&<button disabled={hud.phase!=="lobby"&&hud.phase!=="finished"} onClick={async()=>{try{accept(await post({...session.current,action:"rules31",rules31}));setRoomMessage("Rules updated for next round");}catch(e:any){setRoomMessage(e.message);}}}>APPLY TO LOBBY / NEXT ROUND</button>}<small role="status">{roomMessage}</small></section>} diagnostics30={diagnostics30} onDiagnostics30={()=>setDiagnostics30(v=>!v)} onArenaBuilder={openBuilder} s={hud} menuOpen={studioMenu} onMenuToggle={()=>setStudioMenu(v=>!v)} onAnimationQa={()=>setQaMode(v=>!v)} onDirector={()=>setDirector(v=>!v)} onSprites={()=>setSpritePanel(v=>!v)} onReset={reset}/>
+   <BayBridgeArena rulesPanel={<section className="rules31" aria-label="Practice and match rules"><b>PLAYTEST RULES · NEXT SESSION</b><label>Battery<select value={rules31.battery} onChange={e=>chooseRules31({...rules31,battery:e.target.value as MatchRules31["battery"]})}><option value="unlimited">UNLIMITED</option><option value="current">CURRENT BALANCE</option></select></label><label>Practice opponent<select value={rules31.opponent} onChange={e=>chooseRules31({...rules31,opponent:e.target.value as MatchRules31["opponent"]})}><option value="target">TARGET</option><option value="sparring">SPARRING</option><option value="full">FULL PRESSURE</option></select></label><label>Extraction capacity<select value={rules31.capacity32===undefined?'auto':'custom'} onChange={e=>{const next={...rules31};if(e.target.value==='auto')delete next.capacity32;else next.capacity32=50;chooseRules31(next);}}><option value="auto">AUTO</option><option value="custom">CUSTOM</option></select></label>{rules31.capacity32!==undefined&&<label>Effective capacity {rules31.capacity32}%<input type="range" min="0" max="100" step="5" value={rules31.capacity32} onChange={e=>chooseRules31({...rules31,capacity32:Number(e.target.value)})}/></label>}<small>Capacity changes chunk selection only; it does not change battery or rip cost. AUTO uses current battery, or full capacity with unlimited battery.</small><small>Unlimited battery removes energy costs. Health, cooldowns, collision, and object limits still apply. Selections apply when starting a new session.</small><button onClick={practiceFight}>START / RESET PRACTICE</button><button onClick={()=>void hostFight()}>HOST NEW FIGHT · {rules31.battery==="unlimited"?"UNLIMITED":"CURRENT BALANCE"}</button>{hud?.mode==="duel"&&session.current?.slot===0&&<button disabled={hud.phase!=="lobby"&&hud.phase!=="finished"} onClick={async()=>{try{accept(await post({...session.current,action:"rules31",rules31}));setRoomMessage("Rules updated for next round");}catch(e:any){setRoomMessage(e.message);}}}>APPLY TO LOBBY / NEXT ROUND</button>}<small role="status">{roomMessage}</small></section>} diagnostics30={diagnostics30} onDiagnostics30={()=>setDiagnostics30(v=>!v)} onArenaBuilder={openBuilder} s={hud} menuOpen={studioMenu} onMenuToggle={()=>setStudioMenu(v=>!v)} onAnimationQa={()=>setQaMode(v=>!v)} onDirector={()=>setDirector(v=>!v)} onSprites={()=>setSpritePanel(v=>!v)} onReset={reset}/>
    <canvas ref={canvas} width={1400} height={868} onPointerMove={point} onPointerDown={e=>{unlockCombatAudio();if(builderRef.current)return;point(e);mouse.current.down=true;(e.currentTarget as HTMLElement).focus();(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)}} onPointerUp={()=>mouse.current.down=false} onPointerCancel={()=>mouse.current.down=false}/>
    {!gameShell&&!studioMenu&&hud?.mode!=="watch"&&<div className="touchPlaytestPad" aria-label="Touch playtest movement controls">
     <div className="touchActions30" aria-label="Psychic combat touch controls">{[['KeyT','FIRE'],['KeyQ',p?.gripCoverId||p?.gripId?'THROW':'FLICK / HOLD'],['KeyB',p?.gripCoverId?'PLACE':'BUILD'],['KeyE','SHIELD'],...(p?.character==='raptor'&&p.coverMode==='braced'?[['KeyZ','PEEK']]:[]),['KeyF','MELEE'],['ArrowRight','SHAPE'],['KeyY','CHARGE'],['KeyH','DROP']].map(([key,label])=><button key={key} aria-label={label} onPointerDown={e=>{unlockCombatAudio();e.preventDefault();e.currentTarget.setPointerCapture(e.pointerId);keys.current[key]=true;edges.current[key]=true;}} onPointerUp={()=>{keys.current[key]=false;}} onPointerCancel={()=>{if(key==="KeyQ")edges.current.CancelGrip34=true;keys.current[key]=false;}} onLostPointerCapture={()=>{if(key==="KeyQ"&&keys.current[key])edges.current.CancelGrip34=true;keys.current[key]=false;}}>{label}</button>)}</div>
@@ -466,8 +480,23 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
     <button className="touchTime27g" aria-label="Bullet time" onPointerDown={e=>{e.preventDefault();e.currentTarget.setPointerCapture(e.pointerId);touchTime.current=true;}} onPointerUp={()=>touchTime.current=false} onPointerCancel={()=>touchTime.current=false}>X · BULLET TIME</button><button className="touchJump27g" aria-label="Jump" onPointerDown={e=>{e.preventDefault();touchJump.current=true;}}>JUMP · J / L3</button>
     <button className="touchAButton" aria-label="A boost and slide" onPointerDown={touchADown} onPointerUp={touchAUp} onPointerCancel={touchAUp}><b>A</b><small>BOOST · TAP-TAP SLIDE</small></button>
    </div>}
+   {!gameShell&&hud?.phase==="finished"&&hud.mode!=="watch"&&(()=>{
+    const slot=session.current?.slot??0,summary=hud.roundSummary?.[slot];
+    const strongest=Object.entries(summary?.damageTaken??{}).sort((a,b)=>Number(b[1])-Number(a[1]))[0];
+    const stops=summary?.stops;
+    const waiting=hud.mode==="duel"&&hud.players[slot]?.rematch;
+    return <section className="roundResult" aria-label="Round result">
+     <small>THE BARON’S WAR GAMES</small>
+     <h2>{hud.winner===null?"Draw":hud.winner===slot?"You won":hud.players[hud.winner]?.name+" won"}</h2>
+     {strongest&&<p>Most damage taken · {strongest[0].replaceAll("-"," ")} · {Math.round(Number(strongest[1]))}</p>}
+     {stops&&(stops.cover||stops.shield||stops.muzzle)>0&&<p>Shots stopped · {[
+      stops.cover&&stops.cover+" cover",stops.shield&&stops.shield+" shield",stops.muzzle&&stops.muzzle+" muzzle",
+     ].filter(Boolean).join(" · ")}</p>}
+     <button disabled={rematchBusy||waiting} onClick={()=>void rematch()}>{waiting?"Waiting for opponent":"Rematch"}</button>
+    </section>;
+   })()}
    {combatLab&&<button onClick={reset} style={{position:"fixed",bottom:16,right:16,zIndex:1000,padding:12}}>{hud?.phase==="finished"?"REMATCH":"RESTART ROUND"}</button>}
-   <details className="fightRoom"><summary>PRIVATE FIGHT · {hud?.phase||"READY"}</summary><button onClick={watchFight}>WATCH TWO BOTS · NO CONTROLLER</button><button onClick={practiceFight}>THREE-COVER BOT BATTLE</button><button onClick={hostFight}>HOST TWO-PLAYER FIGHT</button>{session.current?.slot===0&&hud?.mode==="duel"&&<button onClick={shareFight}>INVITE PLAYER 2</button>}{inviteLink&&<input aria-label="Private invite link" readOnly value={inviteLink} onFocus={e=>e.target.select()}/>}<small>{netStatus}</small><details><summary>Manual join fallback</summary><input aria-label="Room ID" placeholder="ROOM ID" value={joinRoom} onChange={e=>setJoinRoom(e.target.value.toUpperCase())}/><input aria-label="Room code" placeholder="6-DIGIT CODE" value={joinCode} onChange={e=>setJoinCode(e.target.value)}/><button onClick={joinFight}>JOIN FIGHT</button></details>{session.current?.slot===0&&(hud?.mode==="duel"||hud?.mode==="practice"||hud?.mode==="watch")&&<button disabled={hud.players.length<2} onClick={reset}>START / NEXT ROUND</button>}<small>{roomMessage}</small></details>
+   <details className="fightRoom"><summary>PRIVATE FIGHT · {hud?.phase||"READY"}</summary><button onClick={watchFight}>WATCH TWO BOTS · NO CONTROLLER</button><button onClick={practiceFight}>THREE-COVER BOT BATTLE</button><button onClick={()=>void hostFight()}>HOST TWO-PLAYER FIGHT</button>{session.current?.slot===0&&hud?.mode==="duel"&&<button onClick={shareFight}>INVITE PLAYER 2</button>}{inviteLink&&<input aria-label="Private invite link" readOnly value={inviteLink} onFocus={e=>e.target.select()}/>}<small>{netStatus}</small><details><summary>Manual join fallback</summary><input aria-label="Room ID" placeholder="ROOM ID" value={joinRoom} onChange={e=>setJoinRoom(e.target.value.toUpperCase())}/><input aria-label="Room code" placeholder="6-DIGIT CODE" value={joinCode} onChange={e=>setJoinCode(e.target.value)}/><button onClick={joinFight}>JOIN FIGHT</button></details>{session.current?.slot===0&&(hud?.mode==="duel"||hud?.mode==="practice"||hud?.mode==="watch")&&<button disabled={hud.players.length<2} onClick={reset}>START / NEXT ROUND</button>}<small>{roomMessage}</small></details>
    {(hud?.mode==="duel"||hud?.mode==="practice"||hud?.mode==="watch")?<div className="fightScore" role="status" aria-live="polite">{hud.players.map((f:any,i:number)=><span key={i}>{i===session.current?.slot?"YOU":f.name} · HP {Math.ceil(f.hp)} / {config.maxHealth} · BAT {Math.ceil(f.battery)} · WINS {f.score}</span>)}<b>{hud.phase==="countdown"?Math.ceil(hud.countdown):hud.phase==="finisher"?"FINISHER":hud.phase==="finished"?(hud.winner===null?"DRAW — HOST: NEXT ROUND":`ROUND WON · ${hud.players[hud.winner]?.name||"PLAYER"} — HOST: NEXT ROUND`):hud.phase==="lobby"?"WAITING FOR PLAYER 2 / HOST START":"ROUND "+hud.round}</b></div>:<div className="minimalHud"><b>HP {Math.ceil(p?.hp??config.maxHealth)}</b><span className="padLine">{config.weaveEnabled<.5?"CLASSIC · A SLIDE":"WEAVE · A DOUBLE-TAP SLIDE"}</span><i style={{width:`${p?.battery??100}%`}}/><span>BATTERY {Math.ceil(p?.battery??100)}%</span><span>{p?.charging?`CHARGE ${Math.round((p.godCharge||0)*100)}%`:p?.godTime>0?`TIER I · ${p.godTime.toFixed(1)}s`:"HOLD Y · EVOLVE"}</span><span className="padLine">{padStatus}</span></div>}
    {bootReady&&padGate&&hud?.mode!=="watch"&&<button className="controllerGate" onClick={activateController}>CONNECT CONTROLLER<small>Optional · keyboard and touch are ready</small></button>}
    <details className="combatAudit"><summary>COMBAT AUDIT · FEEDBACK & PERFORMANCE</summary>{p?.character==="raptor"&&<button onClick={()=>setAuditStatus(getRaptorAnimationTrace()+"\n"+JSON.stringify(getRaptorSpriteDiagnostics(),null,2))}>RAPTOR SPRITE TRACE</button>}<label><input type="checkbox" checked={debug21} onChange={e=>{debugRef21.current=e.target.checked;setDebug21(e.target.checked)}}/> Detailed HUD and bot intentions</label><label><input type="checkbox" checked={sound43} onChange={e=>feedbackSettings43(e.target.checked,rumble43)}/> Combat sound</label><label><input type="checkbox" checked={rumble43} onChange={e=>feedbackSettings43(sound43,e.target.checked)}/> Controller vibration (optional; device support required)</label><button onClick={reviewCombat}>REFRESH CONFIRMED OUTCOMES</button><p>{auditStatus}</p>{combatAudit&&<><p>Round {combatAudit.round} · {combatAudit.phase}<br/>Input request RTT: {combatAudit.inputSamples?`${combatAudit.inputRtt.toFixed(0)} ms`:"not sampled"} · snapshot gap {combatAudit.snapshotGap.toFixed(0)} ms<br/>Battery loss: {(combatAudit.energySpent||[]).map((v:number,n:number)=>`P${n+1} ${v.toFixed(1)}`).join(" · ")}</p><pre>{JSON.stringify(combatAudit.holds33||[],null,2)}</pre><ol>{(combatAudit.actions||[]).slice(-12).reverse().map((e:any)=><li key={e.seq}>P{e.owner+1} · {e.action} · {e.status}{e.reason?` · ${e.reason}`:""}{e.amount!==undefined?` · ${e.amount.toFixed(1)}`:""}</li>)}</ol>{combatAudit.frameTimes&&<p>Active frame window: {combatAudit.frameTimes.samples}/300 samples<br/>Frame interval median / p95 / p99 / worst: {[combatAudit.frameTimes.median,combatAudit.frameTimes.p95,combatAudit.frameTimes.p99,combatAudit.frameTimes.worst].map(v=>v==null?"collecting":v.toFixed(1)+" ms").join(" / ")}<br/>Draw CPU median / p95: {[combatAudit.frameTimes.drawMedian,combatAudit.frameTimes.drawP95].map(v=>v==null?"collecting":v.toFixed(1)+" ms").join(" / ")}<br/>Frames over 33 ms: {combatAudit.frameTimes.over33} · over 50 ms: {combatAudit.frameTimes.over50}<br/>Observed long tasks: {combatAudit.frameTimes.longTasks} · {combatAudit.frameTimes.longTaskMs.toFixed(0)} ms total (supported browsers only)</p>}<small>Draw CPU excludes GPU completion; frame intervals are browser measurements, not input latency. Hidden-tab gaps are excluded. Request timings are not controller-to-screen latency. Outcomes are authoritative; captions remain intentions.</small></>}</details>
@@ -478,6 +507,16 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
     <label>Charge palette <select aria-label="Charge palette" value={jadePalette} onChange={e=>setJadePalette(e.target.value as JadePalette)}>
      {Object.keys(JADE_PALETTES).map(name=><option key={name}>{name}</option>)}
     </select></label>
+   </details>}
+   {hud?.mode==="practice"&&<details className="combatAudit combatDrills">
+    <summary>Combat drills</summary>
+    <p>Fire straight ahead from the spawn in each shot drill.</p>
+    {hud.readabilityDrill==="exchange"&&<p>Brake short of the wall. Slide in again, brace, aim past an edge, then shoot and escape. The defender alternates shield and lateral movement.</p>}
+    <button onClick={()=>void startShotDrill("cover")}>Cover impact</button>
+    <button onClick={()=>void startShotDrill("shield")}>Shield absorption</button>
+    <button onClick={()=>void startShotDrill("open")}>Clean hit</button>
+    <button onClick={()=>void startShotDrill("exchange")}>Cover exchange</button>
+    {hud.readabilityDrill&&<button onClick={()=>void startShotDrill(hud.readabilityDrill)}>Repeat drill</button>}
    </details>}
    {hud?.mode==="practice"&&<details className="combatAudit movementCalibration">
     <summary>Movement calibration · {activeMovementProfile(config)}</summary>
@@ -705,8 +744,27 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
 
 
  for(const sh of s.shots||[])withStructureOcclusion27e(g,sh,()=>withCoverOcclusion(g,covers,sh.y,s.time,()=>withWorld46(g,sh.x,sh.y,()=>drawShot(g,sh)),null,false,1/DECK_PITCH));
- for(const [n,p] of s.players.entries())if(p.arsenal37){const t=p.arsenal37;withStructureOcclusion27e(g,t.pose,()=>withCoverOcclusion(g,covers,t.pose.y,s.time,()=>withWorld46(g,t.pose.x,t.pose.y,()=>drawSpiral37(g,t,s.time,n)),null,false,1/DECK_PITCH));}
- for(const f of s.fx||[])if(f.type!=="slide"&&f.type!=="cover-scrape"&&f.type!=="cyber-stain"&&(!f.raptorFrameKey||s.players[f.owner]?.raptorFrame?.key===f.raptorFrameKey))withCoverOcclusion(g,covers,f.y,s.time,()=>withWorld46(g,f.x,f.y,()=>fx(g,f)),null,false,1/DECK_PITCH);
+ for(const [n,p] of s.players.entries()){
+  const t=p.arsenal37;
+  const marker=(object:any,label:string,kind:"solid"|"route"|"source")=>{
+   withStructureOcclusion27e(g,object,()=>withCoverOcclusion(g,covers,object.y,s.time,
+    ()=>withWorld46(g,object.x,object.y,()=>drawArsenalMarker(g,object,label,kind)),null,false,1/DECK_PITCH));
+  };
+  if(t){
+   withStructureOcclusion27e(g,t.pose,()=>withCoverOcclusion(g,covers,t.pose.y,s.time,
+    ()=>withWorld46(g,t.pose.x,t.pose.y,()=>drawSpiral37(g,t,s.time,n)),null,false,1/DECK_PITCH));
+   if(t.kind==="assemble")marker(t.pose,"ASSEMBLING","route");
+   else if(t.phase==="cue")marker(t.object,"RECALL #"+t.slot,"source");
+   else marker(t.pose,t.phase==="return"?"RETURNING":"IN TRANSIT","route");
+   if(n===localSlot&&t.kind==="recall"&&t.goal&&t.phase!=="return")marker(t.goal,"DESTINATION #"+t.slot,"route");
+  }else if(n===localSlot&&p.recallNext37&&!p.gripCoverId){
+   const piece=covers.find((c:any)=>c.constructOwner===n&&c.arsenalSlot37===p.recallNext37&&c.hp>0);
+   if(piece)marker(piece,"NEXT RECALL #"+p.recallNext37,"source");
+  }
+  const held=covers.find((c:any)=>c.id===p.gripCoverId&&c.constructOwner===n&&c.hp>0);
+  if(held)marker(held,"SOLID COVER","solid");
+ }
+ for(const f of s.fx||[])if(f.type!=="slide"&&f.type!=="cover-scrape"&&f.type!=="cyber-stain"&&(!f.raptorFrameKey||s.players[f.owner]?.raptorFrame?.key===f.raptorFrameKey)){const drawFx=()=>withWorld46(g,f.x,f.y,()=>fx(g,f));if(f.type==="shot-result-cover"||f.type==="shot-result-muzzle")withStructureOcclusion27e(g,f,drawFx);else withCoverOcclusion(g,covers,f.y,s.time,drawFx,null,false,1/DECK_PITCH);}
  if(fixedCoverZoom||local.character==="raptor"&&local.coverTall11)drawRaptorCoverLane(g,local,covers,cfg.spriteScale,fixedCoverZoom);
  if(coverDiagnostics)drawRaptorCoverDiagnostics(g,local,covers,s.time,cfg.spriteScale);
  g=finishWarScene46(canvas);drawCombatHelmet(g,s,localSlot);
@@ -1500,6 +1558,22 @@ function fx(g:CanvasRenderingContext2D,f:any){
  const height=f.z??(f.type==="hit"||f.type==="cover-hit"?27:0),v=vertical46(f.x,f.y,height);g.save();g.translate(v.x,v.y);fxBody47(g,{...f,z:0});g.restore();
 }
 function fxBody47(g:CanvasRenderingContext2D,f:any){
+ if(f.type.startsWith("shot-result-")){
+  const kind=f.type.slice("shot-result-".length),age=1-classicClamp(f.life/.32,0,1);
+  withUpright(g,f.x,f.y,()=>{
+   g.save();g.translate(f.x,f.y);g.globalAlpha=1-age;
+   g.lineWidth=1.7;g.strokeStyle=kind==="shield"?"#60edff":kind==="hit"?"#ff698e":"#ffe19d";
+   g.beginPath();
+   if(kind==="shield"){g.arc(0,0,8+age*10,0,Math.PI*2);}
+   else if(kind==="cover"){for(let n=0;n<5;n++){const a=n*1.256;g.moveTo(Math.cos(a)*3,Math.sin(a)*3);g.lineTo(Math.cos(a)*(10+age*9),Math.sin(a)*(10+age*9));}}
+   else if(kind==="muzzle"){g.moveTo(-5,-5);g.lineTo(5,5);g.moveTo(5,-5);g.lineTo(-5,5);}
+   else{g.moveTo(-11,-5);g.lineTo(-11,-10);g.lineTo(-5,-10);g.moveTo(11,5);g.lineTo(11,10);g.lineTo(5,10);}
+   g.stroke();
+   if(kind==="muzzle"){g.fillStyle="#ffe19d";g.font="bold 8px monospace";g.textAlign="center";g.fillText("MUZZLE BLOCKED",0,-12);}
+   g.restore();
+  });
+  return;
+ }
  if(f.type==="repulse21"||f.type==="repulse-windup21"){const windup=f.type==="repulse-windup21",progress=1-classicClamp(f.life/(windup?.12:.22),0,1),r=(f.strength||96)*(windup?.18+.12*progress:.3+.7*progress);g.save();g.translate(f.x,f.y);g.rotate(f.angle||0);g.globalAlpha=(windup?.5:1-progress)*.8;g.strokeStyle="#a4f6ff";g.lineWidth=windup?1:2;g.beginPath();g.arc(0,0,r,-Math.PI/3,Math.PI/3);g.stroke();if(windup){g.beginPath();g.moveTo(0,0);g.lineTo(r*.5,-r*.866);g.moveTo(0,0);g.lineTo(r*.5,r*.866);g.stroke();}g.restore();return;}
  if(f.type==="glove-muzzle"){const a=f.angle||0,k=Math.max(0,Math.min(1,f.life/.25));g.save();g.globalAlpha=k;drawGloveCore(g,f.x+Math.cos(a)*26,f.y+Math.sin(a)*26-(f.z||0)/DECK_PITCH,a,.7+.7*k);g.restore();return;}
  if(f.type==="melee-strike"){const a=f.angle||0,k=Math.max(0,Math.min(1,f.life/.14));g.save();g.translate(f.x,f.y-(f.z||0)/DECK_PITCH);g.rotate(a);g.globalAlpha=k*.6;g.strokeStyle="#111721";g.lineWidth=3;g.beginPath();g.arc(-10,0,13,-.7,.7);g.stroke();g.strokeStyle="#d7eef2";g.lineWidth=1;g.stroke();g.restore();return;}

@@ -8,3 +8,14 @@ export function drawSpiral37(g:CanvasRenderingContext2D,t:any,time:number,owner:
  if(assembly||t.phase==='wait'){g.globalAlpha=.22;g.strokeStyle=owner===0?'#65efff':'#ff82c2';g.lineWidth=1;const w=t.object.w/2,h=t.object.h/2,z=t.object.height27j||48,corners=[[-w,-h],[w,-h],[w,h],[-w,h]];for(const level of [0,z]){g.beginPath();corners.forEach(([x,y],i)=>{const p=point(x,y,level);i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y);});g.closePath();g.stroke();}for(const [x,y] of corners){const a=point(x,y,0),b=point(x,y,z);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke();}}
  g.restore();
 }
+
+type Marker = {x:number;y:number;z?:number;hover?:number;height27j?:number};
+export function drawArsenalMarker(g:CanvasRenderingContext2D,object:Marker,label:string,kind:"solid"|"route"|"source"){
+ const lift=vertical46(object.x,object.y,(object.z||0)+(object.hover||0)+(object.height27j||0)+9);
+ const x=object.x+lift.x,y=object.y+lift.y;
+ g.save();
+ g.font="bold 9px monospace";g.textAlign="center";
+ g.lineWidth=3;g.strokeStyle="#101722";g.strokeText(label,x,y);
+ g.fillStyle=kind==="solid"?"#8ef1cb":kind==="route"?"#b5ddf0":"#ffdc83";g.fillText(label,x,y);
+ g.restore();
+}

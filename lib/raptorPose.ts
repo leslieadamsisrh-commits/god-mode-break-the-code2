@@ -238,7 +238,12 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
   const connectors=movement||available.movementConnectorDirections?.includes(facing);
   const push=connectors||available.movementPushDirections?.includes(facing);
   if(kind==='brake'&&frame===0)return{memory,frame:selected('slide',2,angle)};
-  if(kind==='brake'&&frame===1)return{memory,frame:connectors?selected('movement',6,angle):selected('slide',2,angle)};
+  if(kind==='brake'&&frame===1){
+   if(connectors)return{memory,frame:selected('movement',6,angle)};
+   // Reuse the grounded receiving-foot cel only in this missing diagonal.
+   if(facing==='front-right'&&available.postureDirections.includes(facing))return{memory,frame:selected('stalk',1,angle)};
+   return{memory,frame:selected('slide',2,angle)};
+  }
   if((kind==='brake'||frame===0)&&push)return{memory,frame:selected('movement',1,angle)};
   if(kind==='dash'&&frame<2)return{memory,frame:selected('sprint',frame,angle)};
   const contact=(gait.phase>=.5?2:0)+(gait.phase%.5>=.28?1:0);

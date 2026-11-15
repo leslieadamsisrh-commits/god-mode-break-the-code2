@@ -60,7 +60,7 @@ function drawFlames(g:CanvasRenderingContext2D,atlas:HTMLImageElement,beat:numbe
  const peak=beat>=12&&beat<=14;
  const frame=peak?3+Math.floor(clock*17)%3:beat>=9&&beat<=11?2:beat>=7&&beat<=8?1:0;
  const plumeWidth=(peak?177:beat>=9?155:125)*scale;
- const plumeHeight=(peak?204:beat>=9?167:126)*scale;
+ const plumeHeight=(peak?232:beat>=9?167:126)*scale;
  const release=beat===15;
  const w=release?plumeWidth*1.45:plumeWidth;
  const h=release?plumeHeight*.65:plumeHeight;
@@ -100,9 +100,9 @@ function drawHelix(g:CanvasRenderingContext2D,q:number,t:number,scale:number,pal
    else g.moveTo(p.x,p.y);
    pen=true;
   }
-  g.globalAlpha=front?.95:.46;
+  g.globalAlpha=front?.83:.40;
   g.strokeStyle=color;g.shadowColor=color;g.shadowBlur=front?9:3;
-  g.lineWidth=(front?4.6:2)*scale;
+  g.lineWidth=(front?3.8:1.7)*scale;
   g.stroke();
   if(front){g.shadowBlur=0;g.strokeStyle=colors.hot;g.lineWidth=1.45*scale;g.stroke();}
  }
@@ -113,7 +113,7 @@ function drawHelix(g:CanvasRenderingContext2D,q:number,t:number,scale:number,pal
   const mid={x:0,y:(a.y+b.y)/2,depth:0};
   const end=(a.depth>=0)===front?a:b;
   if(!visible(end)||(front&&end.y<=-39*scale&&end.y>=-95*scale))continue;
-  g.globalAlpha=front?.72:.27;stroke(mid,end);
+  g.globalAlpha=front?.54:.20;stroke(mid,end);
  }
  g.restore();
 }
