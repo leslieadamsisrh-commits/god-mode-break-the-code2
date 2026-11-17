@@ -107,7 +107,7 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
  else if(slide.active){slide.active=false;slide.recoveryUntil=s.time+.12;}
  slide.time=s.time;
  const cover=continuous&&previous.cover?{...previous.cover}:{time:s.time,x:s.x,y:s.y,phase:0,attached:s.attached};
- const movingCover=s.attached&&(s.coverState11==='shuffle'||s.coverState11==='drive');
+ const movingCover=s.attached&&Math.abs(s.coverSpeed11??0)>2;
  const leavingCover=cover.attached&&!s.attached;
  if(!cover.attached&&s.attached)cover.phase=0;
  if(movingCover&&cover.attached&&continuous&&dt>0){
@@ -295,14 +295,18 @@ export function advanceRaptorPose(previous:RaptorPoseMemory|undefined,s:RaptorPo
  return{memory,frame:selected(s.speed>2?'run':'idle',s.speed>2?Math.floor(gait.phase*4):0,s.angle)};
 }
 
-export type RaptorPoseActor={dash?:number;boostState?:number;brakeState?:number;brakeTurn?:KineticBrakeTurn;contact?:number;raptorCoverShot?:RaptorCoverShot;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;x:number;y:number;vx:number;vy:number;aim:number;gunFacing:number;slide:number;pinball:number;slideFacing:number;grounded?:boolean;vz?:number;jumpHeight?:number;knock:number;hitUntil?:number;charging:boolean;coverId:string|null;coverMode?:string|null;coverSpeed?:number;coverAnchor?:RaptorCoverAnchor|null;fireState:number;recoil:number;returnToCover:number;pendingFireUntil?:number;input?:{x?:number;y?:number;fire?:boolean;coverAim?:boolean}};
+export type RaptorPoseActor={dash?:number;boostState?:number;brakeState?:number;brakeTurn?:KineticBrakeTurn;contact?:number;raptorCoverShot?:RaptorCoverShot;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;x:number;y:number;vx:number;vy:number;aim:number;gunFacing:number;slide:number;pinball:number;slideFacing:number;grounded?:boolean;vz?:number;jumpHeight?:number;knock:number;hitUntil?:number;charging:boolean;coverId:string|null;coverMode?:string|null;coverSpeed?:number;coverAnchor?:RaptorCoverAnchor|null;fireState:number;recoil:number;returnToCover:number;pendingFireUntil?:number;input?:{x?:number;y?:number;fire?:boolean;coverAim?:boolean;coverAimActive?:boolean}};
 /** Same facing rules as the original Raptor draw path, independent of a render clock. */
 export function raptorActorFacing(p:RaptorPoseActor){
  const speed=Math.hypot(p.vx,p.vy),sliding=p.slide>0||p.pinball>0;
  if(sliding)return p.slideFacing??p.aim??0;
  if(p.charging&&!p.coverId&&(typeof p.input?.x==='number'||typeof p.input?.y==='number'))return Math.hypot(p.input?.x||0,p.input?.y||0)>.18?Math.atan2(p.input!.y||0,p.input!.x||0):p.gunFacing??p.aim??0;
  if(p.coverId&&p.coverAnchor){
-  if(p.coverState11)return p.coverState11==='expose'||p.coverState11==='fire'?p.gunFacing:Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx);
+  if(p.coverState11){
+   if(p.coverState11==='expose'||p.coverState11==='fire')return p.gunFacing;
+   const a=p.coverAnchor,sign=Math.sign(p.coverSpeed||0);
+   return p.input?.coverAimActive!==undefined&&p.coverState11==='shuffle'&&sign?Math.atan2(a.ty*sign,a.tx*sign):Math.atan2(-a.ny,-a.nx);
+  }
   if(p.coverMode==='soft'){const moving=Math.abs(p.coverSpeed||0)>20;return moving?Math.atan2(p.coverAnchor.ty*Math.sign(p.coverSpeed||1),p.coverAnchor.tx*Math.sign(p.coverSpeed||1)):p.gunFacing??p.aim??Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx);}
   const exposed=p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0;
   return exposed?p.gunFacing??p.aim??0:Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx);

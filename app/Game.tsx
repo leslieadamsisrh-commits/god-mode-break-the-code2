@@ -11,6 +11,7 @@ import {drawCitadel29} from '../lib/citadelPresentation29';
 import {drawSection27j,RAPTOR_TALL_STEEL} from '../lib/psychicPresentation27j';
 import raptorInventory from '../public/assets/raptor-v2/manifest.json';
 import {drawStructures27e,withStructureOcclusion27e,drawConcealedSpark27h} from '../lib/arenaPresentation27e';
+import {ATTACHED_COVER_POSES,attachedCoverPath,type AttachedCoverPose} from "../lib/attachedCoverPose";
 import {barrelSocket27d} from "../lib/ballistics27d";
 import {useCallback,useEffect,useRef,useState} from "react";
 import ArenaBuilder27c from "./ArenaBuilder27c";
@@ -49,7 +50,7 @@ const DEFAULT:Config={...DEFAULT_CONFIG};
 const EMPTY:any={x:0,y:0,aim:0,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false};
 function readController(pad:any,i:any,selectors?:boolean[]){
  const down=(n:number)=>!!(pad.buttons[n]?.pressed||pad.buttons[n]?.value>.25),dz=(v:number)=>Math.abs(v)<.18?0:v;
- i.x=dz(pad.axes[0]||0);i.y=dz(pad.axes[1]||0);const rx=dz(pad.axes[2]||0),ry=dz(pad.axes[3]||0);if(rx||ry)i.aim=Math.atan2(ry,rx);i.gripX=rx;i.gripY=ry;
+ i.x=dz(pad.axes[0]||0);i.y=dz(pad.axes[1]||0);const rx=dz(pad.axes[2]||0),ry=dz(pad.axes[3]||0);if(rx||ry)i.aim=Math.atan2(ry,rx);i.coverAimActive=!!(rx||ry);i.gripX=rx;i.gripY=ry;
  i.dropMatter34||=down(11);i.jump||=down(10);i.slide||=down(0);i.melee||=down(1);i.powerUse||=down(2);i.powerup||=down(3);i.grip||=down(4);i.cover||=down(5);i.shield||=down(6);i.coverAim||=down(6);i.fire||=down(7);
  const selected=selectors??[down(12),down(13),down(14),down(15)];
  i.weaponCycle||=selected[0];i.powerCycle||=selected[1];i.fieldCycle||=selected[2];i.coverShapeCycle||=selected[3]; // Selection never executes.
@@ -129,6 +130,10 @@ function presentation(s:any,now:number){
 const powerAssets=new Map<string,HTMLImageElement>();
 const evolutionAssets=new Map<string,HTMLImageElement>();
 const jadeChargeAssets=new Map<string,HTMLImageElement>();
+const attachedCoverAssets=new Map<AttachedCoverPose,HTMLImageElement>();
+function coverShotAssetReady(key:string){
+ return key.startsWith("attached-cover/")?attachedCoverAssets.has(key.slice("attached-cover/".length) as AttachedCoverPose):requestRaptorShotSprite(key);
+}
 const actorAssets=new Map<string,HTMLImageElement>();
 const environmentAssets=new Map<string,HTMLImageElement>();
 type BootState={done:number;total:number;failed:number;label:string};
@@ -165,6 +170,7 @@ function preload(onProgress?:(s:BootState)=>void){
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...["front-right","rear-left"].map(key=>({label:"melee38-"+key,src:"/assets/melee38/"+key+".webp",ready:(im:HTMLImageElement)=>powerAssets.set("melee38-"+key,im)})),
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
+   ...(Object.keys(ATTACHED_COVER_POSES) as AttachedCoverPose[]).map(pose=>({label:pose,src:attachedCoverPath(pose),ready:(im:HTMLImageElement)=>attachedCoverAssets.set(pose,im)})),
    ...actor.map(([key,path])=>({label:"actor-"+key,src:path,ready:(im:HTMLImageElement)=>actorAssets.set(key,im)})),
    ...classic.map(([key,path])=>({label:key,src:"https://jade-v1-combat-lab-v142.leslieadams-isrh.chatgpt.site"+path,ready:(im:HTMLImageElement)=>classicAssets.set(key,im)})),
    ...sprites.map(x=>({label:x.key,src:x.src,ready:(im:HTMLImageElement)=>jade.set(x.key,im)}))
@@ -305,7 +311,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
   setReplayingDrill(true);
  };
  const trainingMovement=useRef<Partial<Config>>({});
- const post=useCallback(async(body:any)=>{if(body.action==="create"&&isLocalMode(body.mode)){const engine=new LocalCombat(body.name||"Les",body.mode,performance.now(),body.rules31,body.fighter??characterRef.current,requestRaptorShotSprite);if(body.mode==="practice"){
+ const post=useCallback(async(body:any)=>{if(body.action==="create"&&isLocalMode(body.mode)){const engine=new LocalCombat(body.name||"Les",body.mode,performance.now(),body.rules31,body.fighter??characterRef.current,coverShotAssetReady);if(body.mode==="practice"){
   engine.command({action:"config",room:engine.room,token:engine.token,patch:trainingMovement.current});
  }if(body.layout)engine.command({action:"arenaLayout",room:engine.room,token:engine.token,layout:body.layout});if(labCoverDrill)placeRaptorCoverDrill(engine.state,labCoverDrill,labDrillPosition);else if(combatLab&&labLowCover)placeRaptorLowCoverLab(engine.state);localCombat.current=engine;return engine.reply();}if(localCombat.current&&body.room===localCombat.current.room){const engine=localCombat.current,reply=engine.command(body);if(labCoverDrill&&["reset","rematch","start"].includes(body.action)){placeRaptorCoverDrill(engine.state,labCoverDrill,labDrillPosition);return engine.reply();}return reply;}const sentAt=performance.now();const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),2500);try{const r=await fetch("/api/game",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:controller.signal}),v=await r.json();if(!r.ok)throw Error(v.error||"Request failed");if(body.action==="create"||body.action==="join")localCombat.current=null;if(body.action==="input"){inputTiming.current.rtt=performance.now()-sentAt;inputTiming.current.samples++;}return v;}finally{clearTimeout(timeout);}},[combatLab,labLowCover,labCoverDrill,labDrillPosition]);
  const reviewCombat=async()=>{const ss=session.current;if(!ss)return;setAuditStatus("Loading confirmed outcomes…");if(ss.local&&localCombat.current){setCombatAudit({...localCombat.current.diagnostics(),frameTimes:frameSummary43(),requestRtt:0,inputRtt:0,inputSamples:0,snapshotGap:0});setAuditStatus("");return;}try{const at=performance.now(),u=new URL("/api/game",location.origin);u.searchParams.set("room",ss.room);u.searchParams.set("token",ss.token);u.searchParams.set("audit","1");const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(!r.ok)throw Error(v.error||"Audit unavailable");setCombatAudit({...v.diagnostics,frameTimes:frameSummary43(),requestRtt:performance.now()-at,inputRtt:inputTiming.current.rtt,inputSamples:inputTiming.current.samples,snapshotGap});setAuditStatus("");}catch(e:any){setAuditStatus(e.message);}};
@@ -348,9 +354,9 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  else if(s&&g&&bootReady&&!document.hidden){if(owner!==s){owner=s;queue.length=0;previous={...EMPTY};}
  const p=g.players[s.slot]||g.players[0],i:any={...EMPTY};i.x=touchMove.current.x||((keys.current.KeyD?1:0)-(keys.current.KeyA?1:0));i.y=touchMove.current.y||((keys.current.KeyS?1:0)-(keys.current.KeyW?1:0));if(combatLab&&characterRef.current==="raptor"){Object.assign(i,raptorLabMovement(i.x,i.y,labPaceRef.current));}else{i.x*=labPaceRef.current;i.y*=labPaceRef.current;}i.jump=touchJump.current;touchJump.current=false;i.slide=slideEdges.current.pressed;touchAEdge.current=false;const muzzle=barrelSocket27d(p,g.config?.spriteScale||.82),zoom=cameraState.ready?cameraState.zoom:g.config?.cameraZoom||1.85;let aimZ=muzzle.z;
  for(const [slot,target] of g.players.entries()){if(slot===s.slot||target.hp<=0)continue;const feet=projectWorld(target.x,target.y,cameraState,zoom,target.z||0),height=78*(g.config?.spriteScale||.82)*(target.slide>0?.58:1),width=22*zoom*.64;if(Math.abs(mouse.current.x-feet.x)<=width&&mouse.current.y<=feet.y&&mouse.current.y>=feet.y-height*zoom*.64){aimZ=(target.z||0)+(feet.y-mouse.current.y)/(zoom*.64);break;}}
- const pointer=unprojectWorld(mouse.current.x,mouse.current.y+aimZ*zoom*.64,cameraState,zoom);i.aimX=pointer.x;i.aimY=pointer.y;i.aimZ=aimZ;i.aim=Math.atan2(pointer.y-muzzle.y,pointer.x-muzzle.x);i.cancelGrip34=!!edges.current.CancelGrip34;i.fire=mouse.current.down||!!keys.current.KeyT;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!i[a]||!!edges.current[k];edges.current={};i.melee=!!keys.current.KeyF;i.grip=i.grip||!!keys.current.KeyQ;i.gripX=Math.cos(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.gripY=Math.sin(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.slow=!!keys.current.KeyX||touchTime.current;i.powerup=!!keys.current.KeyY||chargePreview.current;
+ const pointer=unprojectWorld(mouse.current.x,mouse.current.y+aimZ*zoom*.64,cameraState,zoom);i.aimX=pointer.x;i.aimY=pointer.y;i.aimZ=aimZ;i.aim=Math.atan2(pointer.y-muzzle.y,pointer.x-muzzle.x);i.cancelGrip34=!!edges.current.CancelGrip34;i.fire=mouse.current.down||!!keys.current.KeyT;i.coverAimActive=i.fire;i.shield=!!keys.current.KeyE;i.coverAim=!!keys.current.KeyZ;for(const[k,a]of Object.entries(keyAction))i[a]=!!i[a]||!!edges.current[k];edges.current={};i.melee=!!keys.current.KeyF;i.grip=i.grip||!!keys.current.KeyQ;i.gripX=Math.cos(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.gripY=Math.sin(i.aim)*Math.min(1,Math.hypot(pointer.x-p.x,pointer.y-p.y)/psychicField(p).radius);i.slow=!!keys.current.KeyX||touchTime.current;i.powerup=!!keys.current.KeyY||chargePreview.current;
   try{const pad=[...navigator.getGamepads()].find(Boolean) as Gamepad|undefined;const selectors=selectorGate22.current.sample(studioMenu?null:pad||null);if(pad&&!studioMenu){delete i.aimX;delete i.aimY;delete i.aimZ;i.aim=p.aim;readController(pad,i,selectors);if(Math.hypot(i.gripX||0,i.gripY||0)>.15){const v=screenVector46(p.x,p.y,i.gripX,i.gripY);i.aim=Math.atan2(v.y,v.x);i.gripX=v.x;i.gripY=v.y;}}}catch{}
-  if(studioMenu||builderRef.current){i.cancelGrip34=true;Object.assign(i,{dropMatter34:false,x:0,y:0,jump:false,fire:false,shield:false,coverAim:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false,fieldCycle:false,powerCycle:false,weaponCycle:false,powerUse:false,coverShapeCycle:false})}
+  if(studioMenu||builderRef.current){i.cancelGrip34=true;Object.assign(i,{dropMatter34:false,x:0,y:0,jump:false,fire:false,shield:false,coverAim:false,coverAimActive:false,slide:false,melee:false,heavy:false,grip:false,throwMatter:false,cover:false,orbit:false,launchOrbit:false,pinball:false,powerup:false,slow:false,fieldCycle:false,powerCycle:false,weaponCycle:false,powerUse:false,coverShapeCycle:false})}
 
  latest=i;const slideTransitions=slideEdges.current.drain();if(!studioMenu&&!builderRef.current){for(const transition of slideTransitions)previous=bufferInput(queue,previous,{...i,...transition});}previous=bufferInput(queue,previous,i);if(s.local&&localCombat.current&&!builderRef.current){accept(localCombat.current.frame(performance.now(),latest,queue));}}
  raf=requestAnimationFrame(sample);};raf=requestAnimationFrame(sample);
@@ -553,7 +559,11 @@ function Director({cfg,patch,applyPreset,save,load,note}:{cfg:Config;applyPreset
 function spriteFacing(p:any,family:string,speed:number,movementThreshold=55){
  if(family==="slide")return p.slideFacing??p.aim??0;
  if(p.charging&&!p.coverId&&(typeof p.input?.x==="number"||typeof p.input?.y==="number"))return Math.hypot(p.input?.x||0,p.input?.y||0)>.18?Math.atan2(p.input.y,p.input.x):(p.gunFacing??p.aim??0);
- if(p.coverId&&p.coverAnchor&&p.coverState11)return coverExposed13(p)?(p.gunFacing??p.aim??0):Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx);
+ if(p.coverId&&p.coverAnchor&&p.coverState11){
+  if(coverExposed13(p))return p.gunFacing??p.aim??0;
+  const a=p.coverAnchor,sign=Math.sign(p.coverSpeed||0);
+  return p.coverState11==='shuffle'&&sign?Math.atan2(a.ty*sign,a.tx*sign):Math.atan2(a.ny,a.nx);
+ }
  if(p.coverId&&p.coverAnchor){if(p.coverMode==="soft"){const moving=Math.abs(p.coverSpeed||0)>20;return moving?Math.atan2(p.coverAnchor.ty*Math.sign(p.coverSpeed||1),p.coverAnchor.tx*Math.sign(p.coverSpeed||1)):(p.gunFacing??p.aim??Math.atan2(-p.coverAnchor.ny,-p.coverAnchor.nx))}const exposed=p.input?.coverAim||p.fireState>0||p.recoil>0||p.returnToCover>0;return exposed?(p.gunFacing??p.aim??0):Math.atan2(p.coverAnchor.ny,p.coverAnchor.nx)}
  if(p.input?.fire||p.fireState>0)return p.gunFacing??p.aim??0;
  return family==="run"&&speed>movementThreshold?Math.atan2(p.vy,p.vx):(p.gunFacing??p.aim??0);
@@ -739,7 +749,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
    drawConcealedSpark27h(g,local,s.time);
    drawConcealedCoverCue(g,covers,(o as any).player,s.time,cfg.spriteScale*(character==="raptor"?1.27:1),1/DECK_PITCH);
   }
-  withStructureOcclusion27e(g,(o as any).player||{x:0,y:o.y,z:0},()=>withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?(o as any).player.coverId:null,o.kind==="player"&&!!((o as any).player.input?.coverAim||(o as any).player.fireState>0||(o as any).player.recoil>0),1/DECK_PITCH));
+  withStructureOcclusion27e(g,(o as any).player||{x:0,y:o.y,z:0},()=>withCoverOcclusion(g,covers,o.y,s.time,o.fn,o.kind==="player"?(o as any).player.coverId:null,o.kind==="player"&&coverExposed13((o as any).player),1/DECK_PITCH));
  });
 
 
@@ -1204,6 +1214,14 @@ function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,ch
  g.restore();
 }
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade",chargeOverlay=false){
+ const pose=p.attachedCoverPose as AttachedCoverPose|undefined;
+ const attached=pose?attachedCoverAssets.get(pose):undefined;
+ if(pose&&attached&&coverExposed13(p)){
+  const registration=ATTACHED_COVER_POSES[pose],scale=.26*cfg.spriteScale*(registration.drawScale??1);
+  const [x,y]=registration.anchor;
+  g.drawImage(attached,p.x-x*scale,p.y-y*scale,512*scale,512*scale);
+  return;
+ }
  if(p.character==="raptor"||character==="raptor"){
   const speed=Math.hypot(p.vx||0,p.vy||0);
   const visual={x:0,y:0};

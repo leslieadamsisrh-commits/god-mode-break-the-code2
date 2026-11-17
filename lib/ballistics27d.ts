@@ -1,12 +1,17 @@
+import {ATTACHED_COVER_POSES,type AttachedCoverPose} from "./attachedCoverPose";
 import {prisms33,rayPoly32,type Fracture32} from './fracture32';
 import {arenaPoint46,arenaInverse46,arenaJacobian46} from './bayBridgePresentation';
 import {raptorBarrelSocket,type RaptorSocketRegistration} from './raptorSocket';
 import raptorInventory from '../public/assets/raptor-v2/manifest.json';
-export type BarrelActor27d={x:number;y:number;z?:number;gunFacing?:number;aim?:number;slide?:number;character?:'jade'|'raptor';raptorFrame?:{key:string}};
-export type BarrelSocket27d={x:number;y:number;z:number;dir:number;raptorAligned?:boolean};
+export type BarrelActor27d={attachedCoverPose?:AttachedCoverPose;x:number;y:number;z?:number;gunFacing?:number;aim?:number;slide?:number;character?:'jade'|'raptor';raptorFrame?:{key:string}};
+export type BarrelSocket27d={x:number;y:number;z:number;dir:number;raptorAligned?:boolean;attachedAligned?:boolean};
 // Upright sprite registration: 125px cell, feet .88, barrel .88/.37.
 // Convert the socket into the floor projection rather than adding sprite pixels to world XY.
 export function barrelSocket27d(p:BarrelActor27d,scale=.82):BarrelSocket27d{
+ if(p.attachedCoverPose){
+  const socket=raptorBarrelSocket(p,ATTACHED_COVER_POSES[p.attachedCoverPose],scale);
+  if(socket)return{x:socket.x,y:socket.y,z:socket.z,dir:socket.dir,attachedAligned:true};
+ }
  if(p.character==='raptor'&&p.raptorFrame){
   const record=(raptorInventory.frames as unknown as Record<string,RaptorSocketRegistration|undefined>)[p.raptorFrame.key];
   const socket=raptorBarrelSocket(p,record,scale);
