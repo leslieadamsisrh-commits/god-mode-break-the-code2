@@ -1,5 +1,5 @@
 "use client";
-import {drawShotContact,poseEase,shootFlash,shootSmoke,shotgunKick,SHOT_FLASH_SECONDS,SHOT_SMOKE_SECONDS} from "../lib/shotgunPresentation";
+import {drawShotCaption,drawShotContact,shotCaption,poseEase,shootFlash,shootSmoke,shotgunKick,SHOT_FLASH_SECONDS,SHOT_SMOKE_SECONDS} from "../lib/shotgunPresentation";
 import {JadeChargeTrails,drawJadeChargeLayer,jadeChargeFrame} from "../lib/jadeChargeVfx";
 import {drawJadeChargeV2,jadeChargeBeat,JADE_PALETTES,type JadePalette} from "../lib/jadeChargeV2";
 import {kineticPose} from "../lib/kineticPose";
@@ -806,10 +806,34 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  for(const f of s.fx||[])if(f.life>0&&f.type!=="slide"&&f.type!=="cover-scrape"&&f.type!=="cyber-stain"){const drawFx=()=>withWorld46(g,f.x,f.y,()=>fx(g,f));if(f.type==="shot-result-cover"||f.type==="shot-result-muzzle")withStructureOcclusion27e(g,f,drawFx);else withCoverOcclusion(g,covers,f.y,s.time,drawFx,null,false,1/DECK_PITCH);}
  if(fixedCoverZoom||local.character==="raptor"&&local.coverTall11)drawRaptorCoverLane(g,local,covers,cfg.spriteScale,fixedCoverZoom);
  if(coverDiagnostics)drawRaptorCoverDiagnostics(g,local,covers,s.time,cfg.spriteScale);
- g=finishWarScene46(canvas);drawCombatHelmet(g,s,localSlot);
+ g=finishWarScene46(canvas);
+ if(s.phase!=="finished")drawShotCaptions(g,s.fx||[],{x:camX,y:camY},zoom);
+ drawCombatHelmet(g,s,localSlot);
  // Broadcast spectacle is reserved for round boundaries, never live exchanges.
  const baron=environmentAssets.get('baron29');
  if(s.phase==='finished'&&baron?.complete&&baron.naturalWidth){g.save();g.fillStyle='#0b1522ed';g.fillRect(365,125,270,210);g.drawImage(baron,380,138,240,160);g.strokeStyle='#bd965d';g.lineWidth=2;g.strokeRect(380,138,240,160);g.fillStyle='#ead7b5';g.font='bold 12px monospace';g.textAlign='center';g.fillText("THE BARON’S WAR GAMES",500,320);g.restore();}
+}
+function drawShotCaptions(g:CanvasRenderingContext2D,effects:any[],camera:{x:number;y:number},zoom:number){
+ const occupied:{x:number;y:number;halfWidth:number}[]=[];
+ let words=0;
+ // Put confirmed damage first, then contacts, then the discharge word.
+ const ordered=effects.filter(f=>f.life>0).reverse();
+ const categories=[ordered.filter(f=>f.type==="shot-result-hit"),ordered.filter(f=>f.type!=="shot-result-hit"&&f.type.startsWith("shot-result-")),ordered.filter(f=>f.type==="shotgun-smoke")];
+ for(const group of categories)for(const f of group){
+  const cue=shotCaption(f.type,f.life,f.surfaceMaterial,f.strength);
+  if(!cue||(!cue.damage&&words>=2))continue;
+  const at=projectWorld(f.x,f.y,camera,zoom,f.z??0);
+  if(at.x<35||at.x>965||at.y<125||at.y>575)continue;
+  const halfWidth=(cue.text.length*cue.size*.64+9)/2;
+  const x=Math.max(halfWidth+12,Math.min(988-halfWidth,at.x));
+  const base=at.y-(cue.damage?24:21)-(1-cue.fade)*9;
+  const y=(cue.damage?[0,-24,24,-48,48]:[0,-24]).map(offset=>base+offset).find(y=>
+   y>=125&&y<=556&&occupied.every(p=>Math.abs(p.x-x)>p.halfWidth+halfWidth||Math.abs(p.y-y)>=23));
+  if(y===undefined)continue;
+  drawShotCaption(g,cue,x,y);
+  occupied.push({x,y,halfWidth});
+  if(!cue.damage)words++;
+ }
 }
 function drawRaptorCoverLane(g:CanvasRenderingContext2D,p:any,covers:any[],scale:number,drill:boolean){
  const clear=raptorCoverLane(p,covers.find(c=>c.id===p.coverId),scale);
@@ -1645,21 +1669,25 @@ function matter(g:CanvasRenderingContext2D,m:any){
 }
 function impactSpray(g:CanvasRenderingContext2D,f:any){const age=1-classicClamp(f.life/.32,0,1),a=f.angle||0,z=f.z??27,cyber=f.material==="cyber";g.save();g.globalAlpha=(1-age)*.95;for(let n=0;n<8;n++){const angle=a+(n%7-3)*.18,speed=18+n%5*9,r=(1-Math.exp(-age*4))*speed,x=f.x+Math.cos(angle)*r,y=f.y+Math.sin(angle)*r-(z+Math.sin(age*Math.PI)*7-age*age*17)/DECK_PITCH;g.fillStyle=cyber?(n%4===0?"#d8e8ef":n%3===0?"#dc74a7":n%2?"#79344f":"#111924"):(n%3?"#72e9ef":"#ed9dc9");g.strokeStyle="#0a1019";g.lineWidth=.65;g.beginPath();if(cyber){g.ellipse(x,y,1.3+n%3,1+n%2,angle,0,Math.PI*2)}else g.rect(x,y,2+n%3,2/DECK_PITCH);g.fill();g.stroke();if(cyber&&n%5===0){g.strokeStyle="#82374f";g.lineWidth=1.5;g.beginPath();g.moveTo(x-Math.cos(angle)*7,y-Math.sin(angle)*7);g.lineTo(x,y);g.stroke();}if(cyber&&n%4===0){g.fillStyle="#e4f6fa";g.fillRect(x,y,1,1/DECK_PITCH);}}g.restore();}
 function fx(g:CanvasRenderingContext2D,f:any){
- const height=f.z??(f.type==="hit"||f.type==="cover-hit"?27:0),v=vertical46(f.x,f.y,height);g.save();g.translate(v.x,v.y);fxBody47(g,{...f,z:0});g.restore();
-}
-function fxBody47(g:CanvasRenderingContext2D,f:any){
  if(f.type==="muzzle"||f.type==="shotgun-smoke"||f.type.startsWith("shot-result-")){
-  withUpright(g,f.x,f.y,()=>{
-   const j=arenaJacobian46(f.x,f.y),angle=f.angle??0,dx=Math.cos(angle),dy=Math.sin(angle);
-   const bearing=Math.atan2(j.y*dy,j.x*dx+j.xy*dy);
-   g.save();g.translate(f.x,f.y);
-   if(f.type==="muzzle"){g.rotate(bearing);shootFlash(g,f.life);}
-   else if(f.type==="shotgun-smoke")shootSmoke(g,f.life,bearing);
-   else drawShotContact(g,f.type.slice("shot-result-".length),f.life,f.surfaceMaterial,bearing,f.strength);
-   g.restore();
-  });
+  drawUprightShotFx(g,f);
   return;
  }
+ const height=f.z??(f.type==="hit"||f.type==="cover-hit"?27:0),v=vertical46(f.x,f.y,height);g.save();g.translate(v.x,v.y);fxBody47(g,{...f,z:0});g.restore();
+}
+function drawUprightShotFx(g:CanvasRenderingContext2D,f:any){
+ withUpright(g,f.x,f.y,()=>{
+  const j=arenaJacobian46(f.x,f.y),angle=f.angle??0,dx=Math.cos(angle),dy=Math.sin(angle);
+  const bearing=Math.atan2(j.y*dy,j.x*dx+j.xy*dy);
+  // Apply height in upright space, after the world transform sets the contact anchor.
+  const hitHeight=f.type==="shot-result-hit"?27:0;
+  g.translate(f.x,f.y-(f.z??hitHeight));
+  if(f.type==="muzzle"){g.rotate(bearing);shootFlash(g,f.life);}
+  else if(f.type==="shotgun-smoke")shootSmoke(g,f.life,bearing);
+  else drawShotContact(g,f.type.slice("shot-result-".length),f.life,f.surfaceMaterial,bearing);
+ });
+}
+function fxBody47(g:CanvasRenderingContext2D,f:any){
  if(f.type==="repulse21"||f.type==="repulse-windup21"){const windup=f.type==="repulse-windup21",progress=1-classicClamp(f.life/(windup?.12:.22),0,1),r=(f.strength||96)*(windup?.18+.12*progress:.3+.7*progress);g.save();g.translate(f.x,f.y);g.rotate(f.angle||0);g.globalAlpha=(windup?.5:1-progress)*.8;g.strokeStyle="#a4f6ff";g.lineWidth=windup?1:2;g.beginPath();g.arc(0,0,r,-Math.PI/3,Math.PI/3);g.stroke();if(windup){g.beginPath();g.moveTo(0,0);g.lineTo(r*.5,-r*.866);g.moveTo(0,0);g.lineTo(r*.5,r*.866);g.stroke();}g.restore();return;}
  if(f.type==="glove-muzzle"){const a=f.angle||0,k=Math.max(0,Math.min(1,f.life/.25));g.save();g.globalAlpha=k;drawGloveCore(g,f.x+Math.cos(a)*26,f.y+Math.sin(a)*26-(f.z||0)/DECK_PITCH,a,.7+.7*k);g.restore();return;}
  if(f.type==="melee-strike"){const a=f.angle||0,k=Math.max(0,Math.min(1,f.life/.14));g.save();g.translate(f.x,f.y-(f.z||0)/DECK_PITCH);g.rotate(a);g.globalAlpha=k*.6;g.strokeStyle="#111721";g.lineWidth=3;g.beginPath();g.arc(-10,0,13,-.7,.7);g.stroke();g.strokeStyle="#d7eef2";g.lineWidth=1;g.stroke();g.restore();return;}
@@ -1710,7 +1738,7 @@ function fxBody47(g:CanvasRenderingContext2D,f:any){
   g.globalAlpha=(1-age)*.85;g.strokeStyle="#fff1a8";g.lineWidth=1.5;for(let i=0;i<4;i++){const a=oa+Math.PI+(i-1.5)*.28;g.beginPath();g.moveTo(0,0);g.lineTo(Math.cos(a)*(8+i*3),Math.sin(a)*(8+i*3));g.stroke()}
   g.restore();
  }
- if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){if(f.type==="brake"&&Number.isFinite(f.oldAngle)){const a=f.oldAngle+Math.PI,near=8+i*4,far=30+i*6;g.beginPath();g.moveTo(f.x+Math.cos(a)*near,f.y+Math.sin(a)*near);g.lineTo(f.x+Math.cos(a)*far,f.y+Math.sin(a)*far);g.stroke()}else{const dir=-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else if(f.type==="muzzle"){const a=Number.isFinite(f.angle)?f.angle:0,k=Math.max(0,Math.min(1,f.life/.18));g.save();g.translate(f.x,f.y);g.rotate(a);g.globalCompositeOperation="lighter";g.strokeStyle="#fff3b0";g.shadowColor="#ffcf62";g.shadowBlur=16;g.lineWidth=4;g.globalAlpha=.35+.65*k;g.beginPath();g.moveTo(-5,0);g.lineTo(34+20*k,0);g.stroke();g.fillStyle="#fff7cf";g.beginPath();g.moveTo(2,-10);g.lineTo(44+18*k,0);g.lineTo(2,10);g.lineTo(13,0);g.closePath();g.fill();g.strokeStyle="#ff5ebd";g.lineWidth=2;for(let j=-2;j<=2;j++){const aa=j*.12,len=30+Math.abs(j)*6+18*k;g.beginPath();g.moveTo(5,0);g.lineTo(Math.cos(aa)*len,Math.sin(aa)*len);g.stroke()}g.restore()}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
+ if(f.type==="slide"||f.type==="dash"||f.type==="brake"){g.strokeStyle=f.type==="dash"?"#63eff1":f.type==="brake"?"#fff1a8":"#ff4aa5";g.shadowColor=g.strokeStyle;g.shadowBlur=f.type==="brake"?14:7;g.lineWidth=f.type==="brake"?4:f.type==="slide"?3:2;const count=f.type==="brake"?6:f.type==="slide"?5:3;for(let i=0;i<count;i++){if(f.type==="brake"&&Number.isFinite(f.oldAngle)){const a=f.oldAngle+Math.PI,near=8+i*4,far=30+i*6;g.beginPath();g.moveTo(f.x+Math.cos(a)*near,f.y+Math.sin(a)*near);g.lineTo(f.x+Math.cos(a)*far,f.y+Math.sin(a)*far);g.stroke()}else{const dir=-1;g.beginPath();g.moveTo(f.x+dir*(8+i*5),f.y+5+i*2);g.lineTo(f.x+dir*((f.type==="slide"?58:42)+i*9),f.y+10+i*3);g.stroke()}}g.shadowBlur=0;if(f.text){g.fillStyle="#d9ffff";g.font="900 italic 18px Arial";g.fillText(f.text,f.x-18,f.y-18)}}else{g.strokeStyle=f.type==="pinball"?"#ff4aaa":"#64edf0";g.lineWidth=3;for(let i=0;i<8;i++){const a=i*Math.PI/4,r=10+(1-f.life)*25;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+Math.cos(a)*r,f.y+Math.sin(a)*r);g.stroke()}}g.restore()}
 
 function arrow(g:CanvasRenderingContext2D,x1:number,y1:number,x2:number,y2:number){const a=Math.atan2(y2-y1,x2-x1);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.beginPath();g.moveTo(x2,y2);g.lineTo(x2-Math.cos(a-.55)*11,y2-Math.sin(a-.55)*11);g.lineTo(x2-Math.cos(a+.55)*11,y2-Math.sin(a+.55)*11);g.closePath();g.fill()}
 
