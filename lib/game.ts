@@ -1468,7 +1468,7 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
     const aimFrame=raptorCoverExposureFrame(p.gunFacing,tall,undefined,raptorCoverEdge(p.coverAnchor,p.gunFacing));
     const recoilFrame=attachedOpenAim(p)||aimFrame.family==='idle'?undefined:raptorCoverRecoilFrame(p.gunFacing,tall);
     shotPose={...p,raptorFrame:aimFrame};
-    if(recoilFrame){
+    if(recoilFrame&&(!raptorShotReady||raptorShotReady(recoilFrame.key))){
      const recoilPose={...p,raptorFrame:recoilFrame};
      if(coverMuzzleClearance(recoilPose,attachedCover,barrelSocket27d(recoilPose,c.spriteScale),p.gunFacing).allowed)shotPose=recoilPose;
     }

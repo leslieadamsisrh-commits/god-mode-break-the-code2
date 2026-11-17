@@ -110,3 +110,19 @@ for (const character of ["jade", "raptor"]) {
   assert.equal(p.shells, 7);
   console.log("PASS", character, "opposite-direction attached fire, barrel match, exits, both tall faces, and waist fire");
 }
+
+{
+ const {s,p,tick}=setup("raptor",0,1,1);
+ tick({aim:0,coverAim:true,fire:true},1,key=>!key.startsWith("cover-recoil/"));
+ assert.equal(p.shells,7,"a cold recoil cel must not block a loaded aim frame");
+ assertMuzzle(s,p);
+}
+for (const fighter of ["jade", "raptor"]) {
+ const {s,p,wall,tick}=setup(fighter);
+ s.covers.push({...wall,id:"next-wall",y:392});
+ tick({y:-1,slide:true},14);
+ assert.equal(p.coverId,null);
+ tick({y:-1});
+ tick({y:-1,slide:true},12);
+ assert.equal(p.coverId,"next-wall");
+}
