@@ -102,7 +102,7 @@ export function loadRaptorSprite(key:string,retry=false):Promise<boolean>{
 }
 
 const openingKeys=Object.keys(frames).filter(key=>
- key.startsWith("idle/")||/^cover-(?:lean|pop|recoil|sequence)\/(?:left|right|front-right)\//.test(key)||key==="movement/front-left/001.png"||(key.startsWith("cover-catch/back/")||key==="cover-hold/back/001.png")||/^movement\/[^/]+\/000\.png$/.test(key)||
+ key.startsWith("idle/")||key==="movement/front-left/001.png"||(key.startsWith("cover-catch/back/")||key==="cover-hold/back/001.png")||/^movement\/[^/]+\/000\.png$/.test(key)||
  /^(?:stalk|jog|sprint|jump|slide|recovery)\/[^/]+\/000\.png$/.test(key));
 async function loadRaptorBatch(keys:string[],retry=false){
  let ready=true;
@@ -117,7 +117,8 @@ let backgroundLoad:Promise<void>|undefined;
 export function preloadRaptorSprites():Promise<void>{
  if(!backgroundLoad){
   const keys=Object.keys(frames).filter(key=>!openingKeys.includes(key)&&!key.startsWith("run/"));
-  const priority=(key:string)=>/^(?:movement|stalk|jog|sprint|jump|slide)\//.test(key)?0:1;
+  const coverAimFrame=/^cover-(?:lean|pop|recoil|sequence)\//;
+  const priority=(key:string)=>coverAimFrame.test(key)?0:/^(?:movement|stalk|jog|sprint|jump|slide)\//.test(key)?1:2;
   keys.sort((a,b)=>priority(a)-priority(b));
   backgroundLoad=loadRaptorBatch(keys,true).then(()=>{}).finally(()=>{backgroundLoad=undefined;});
  }
