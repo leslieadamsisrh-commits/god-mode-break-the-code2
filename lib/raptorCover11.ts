@@ -47,6 +47,5 @@ export function coverStride13(previous:CoverStride13|undefined,p:{x:number;y:num
   const distance=Math.hypot(p.x-previous.x,p.y-previous.y);
   if(distance<=Math.max(12,Math.abs(p.coverSpeed||0)*dt*2))phase+=distance/18;
  }
- if(same&&sign&&previous.sign&&sign!==previous.sign)phase=Math.ceil(phase/4)*4;
  return{phase,time,x:p.x,y:p.y,sign:sign||previous?.sign||1,coverId:p.coverId??null};
 }

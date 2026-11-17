@@ -2,15 +2,16 @@
 export const KINETIC_BRAKE_POSE_SECONDS=.24;
 export type KineticBrakeTurn={from:number;to:number};
 type KineticActor={
- dash?:number;boostState?:number;brakeState?:number;slide?:number;pinball?:number;
+ dash?:number;boostState?:number;coverDashActive?:boolean;brakeState?:number;slide?:number;pinball?:number;
  slideFacing?:number;brakeTurn?:KineticBrakeTurn;aim?:number;
  coverId?:string|null;knock?:number;grounded?:boolean;charging?:boolean;
  fireState?:number;pendingFireUntil?:number;input?:{fire?:boolean};
 };
 
 export function kineticPose(actor:KineticActor,dashDuration:number){
+ const exiting=actor.coverDashActive&&!!(actor.dash||actor.boostState);
  if(actor.coverId||actor.knock||actor.grounded===false||actor.charging||actor.slide||actor.pinball||
-    actor.input?.fire||actor.fireState||actor.pendingFireUntil!==undefined)return undefined;
+    !exiting&&(actor.input?.fire||actor.fireState||actor.pendingFireUntil!==undefined))return undefined;
  if(actor.brakeState&&actor.brakeTurn){
   const phase=1-actor.brakeState/KINETIC_BRAKE_POSE_SECONDS;
   const frame=phase<.28?0:phase<.59?1:2;

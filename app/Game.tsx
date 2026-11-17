@@ -1,4 +1,5 @@
 "use client";
+import {drawShotContact,poseEase,shootFlash,shootSmoke,shotgunKick,SHOT_FLASH_SECONDS,SHOT_SMOKE_SECONDS} from "../lib/shotgunPresentation";
 import {JadeChargeTrails,drawJadeChargeLayer,jadeChargeFrame} from "../lib/jadeChargeVfx";
 import {drawJadeChargeV2,jadeChargeBeat,JADE_PALETTES,type JadePalette} from "../lib/jadeChargeV2";
 import {kineticPose} from "../lib/kineticPose";
@@ -246,6 +247,22 @@ let audioVoices35=0; // At most twelve active oscillator voices, including layer
 function unlockCombatAudio(){try{const C=window.AudioContext||(window as any).webkitAudioContext;if(!combatAudio&&C)combatAudio=new C();void combatAudio?.resume().catch(()=>{});}catch{}}
 function combatTone(kind:string,angle?:number){
  if(!feedbackPrefs43.sound||!combatAudio||combatAudio.state!=="running"||audioVoices35+(kind.startsWith("slam-")?3:1)>12)return;const a=combatAudio,now=a.currentTime;
+ if(kind==="shotgun-report"){
+  audioVoices35++;
+  const source=a.createBufferSource(),duration=.115,length=Math.ceil(a.sampleRate*duration);
+  const buffer=a.createBuffer(1,length,a.sampleRate),wave=buffer.getChannelData(0);
+  for(let i=0;i<length;i++){
+   const t=i/a.sampleRate;
+   wave[i]=(Math.random()*2-1)*Math.exp(-t*75)*.54+Math.sin(2*Math.PI*(92*t-190*t*t))*Math.exp(-t*42)*.66;
+  }
+  const gain=a.createGain();gain.gain.value=.28;source.buffer=buffer;
+  const pan=a.createStereoPanner?.();
+  if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!)*.45:0;gain.connect(pan);pan.connect(a.destination);}
+  else gain.connect(a.destination);
+  source.connect(gain);source.start(now);
+  source.onended=()=>{audioVoices35--;source.disconnect();gain.disconnect();pan?.disconnect();};
+  return;
+ }
  if(kind.startsWith('slam-')){
   // Reuse the existing synthesized audio path: transient, body, then settling.
   const metal=kind==='slam-metal',body=kind==='slam-fighter';
@@ -281,7 +298,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  const [combatAudit,setCombatAudit]=useState<any>(null),[auditStatus,setAuditStatus]=useState("");const inputTiming=useRef({rtt:0,samples:0});
  const hudPhase=useRef("");const configRef=useRef<any>(DEFAULT);
  const hudAt=useRef(0);const streamOpen=useRef(false);const [netStatus,setNetStatus]=useState("CONNECTING");const [inviteLink,setInviteLink]=useState("");
- const feedbackSeen=useRef({room:"",round:0,seq:0,cue:""});
+ const feedbackSeen=useRef({room:"",round:0,seq:0,cue:"",shotSounds:new Set<string>()});
  const coverPreview=useRef(-1);const [previewCover,setPreviewCover]=useState(-1);const psychicPreview=useRef(-1);const [previewPsychic,setPreviewPsychic]=useState(-1);const chargePreview=useRef(false);const [previewCharging,setPreviewCharging]=useState(false);
  const [raptorLoading,setRaptorLoading]=useState(false),[raptorLoadError,setRaptorLoadError]=useState("");
  const raptorEntry=useRef(false);
@@ -316,8 +333,19 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  }if(body.layout)engine.command({action:"arenaLayout",room:engine.room,token:engine.token,layout:body.layout});if(labCoverDrill)placeRaptorCoverDrill(engine.state,labCoverDrill,labDrillPosition);else if(combatLab&&labLowCover)placeRaptorLowCoverLab(engine.state);localCombat.current=engine;return engine.reply();}if(localCombat.current&&body.room===localCombat.current.room){const engine=localCombat.current,reply=engine.command(body);if(labCoverDrill&&["reset","rematch","start"].includes(body.action)){placeRaptorCoverDrill(engine.state,labCoverDrill,labDrillPosition);return engine.reply();}return reply;}const sentAt=performance.now();const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),2500);try{const r=await fetch("/api/game",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:controller.signal}),v=await r.json();if(!r.ok)throw Error(v.error||"Request failed");if(body.action==="create"||body.action==="join")localCombat.current=null;if(body.action==="input"){inputTiming.current.rtt=performance.now()-sentAt;inputTiming.current.samples++;}return v;}finally{clearTimeout(timeout);}},[combatLab,labLowCover,labCoverDrill,labDrillPosition]);
  const reviewCombat=async()=>{const ss=session.current;if(!ss)return;setAuditStatus("Loading confirmed outcomes…");if(ss.local&&localCombat.current){setCombatAudit({...localCombat.current.diagnostics(),frameTimes:frameSummary43(),requestRtt:0,inputRtt:0,inputSamples:0,snapshotGap:0});setAuditStatus("");return;}try{const at=performance.now(),u=new URL("/api/game",location.origin);u.searchParams.set("room",ss.room);u.searchParams.set("token",ss.token);u.searchParams.set("audit","1");const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(!r.ok)throw Error(v.error||"Audit unavailable");setCombatAudit({...v.diagnostics,frameTimes:frameSummary43(),requestRtt:performance.now()-at,inputRtt:inputTiming.current.rtt,inputSamples:inputTiming.current.samples,snapshotGap});setAuditStatus("");}catch(e:any){setAuditStatus(e.message);}};
  const accept=useCallback((v:any)=>{if(v.state){if(state.current&&v.state.round===state.current.round&&v.state.lastAt<=state.current.lastAt)return;const at=performance.now();if(state.current&&v.state.round!==state.current.round){snapshots.length=0;kineticEcho.length=0;hoverWake.length=0;cameraState.ready=false}const incoming=v.state,room=session.current?.room||"",seen=feedbackSeen.current;
- if(seen.room!==room||seen.round!==incoming.round){seen.room=room;seen.round=incoming.round;seen.seq=incoming.eventSeq||0;seen.cue="";}
- else{const fresh=(incoming.events||[]).filter((e:any)=>e.seq>seen.seq&&incoming.time-e.at<.3);seen.seq=Math.max(seen.seq,incoming.eventSeq||0);const cue=pickFeedback43(fresh,session.current?.slot||0,incoming);if(cue){combatTone(cue.kind,cue.angle);hapticFeedback43(cue);}}
+ if(seen.room!==room||seen.round!==incoming.round){seen.room=room;seen.round=incoming.round;seen.seq=incoming.eventSeq||0;seen.cue="";seen.shotSounds.clear();}
+ else{const fresh=(incoming.events||[]).filter((e:any)=>e.seq>seen.seq&&incoming.time-e.at<.3);seen.seq=Math.max(seen.seq,incoming.eventSeq||0);const slot=session.current?.slot||0;
+  const cue=pickFeedback43(fresh,slot,incoming);if(cue)hapticFeedback43(cue);
+  const other=pickFeedback43(fresh.filter((e:any)=>e.source!=="shotgun"),slot,incoming);
+  if(other)combatTone(other.kind,other.angle);
+  for(const f of incoming.fx||[]){
+   if(f.life<=0||!f.blastId||seen.shotSounds.has(f.id))continue;
+   const kind=f.type==="shotgun-smoke"&&f.life>SHOT_SMOKE_SECONDS-.25?"shotgun-report":f.type==="shot-result-cover"?(f.surfaceMaterial==="stone"?"slam-stone":"slam-metal"):
+    f.type==="shot-result-hit"?"slam-fighter":f.type==="shot-result-shield"?"shield":null;
+   if(!kind)continue;
+   seen.shotSounds.add(f.id);combatTone(kind,f.angle);
+  }
+  while(seen.shotSounds.size>256)seen.shotSounds.delete(seen.shotSounds.values().next().value);}
  const cue=incoming.phase==="countdown"?String(Math.ceil(incoming.countdown)):incoming.phase==="playing"&&incoming.time<(incoming.fightUntil||0)?"fight":"";if(cue&&cue!==seen.cue)combatTone(cue);seen.cue=cue;
  const trailKey=v.room+"/"+incoming.round;
  if(chargeTrails.current.key!==trailKey)chargeTrails.current={key:trailKey,trail:new JadeChargeTrails()};
@@ -722,7 +750,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  // Draw solid scenery once, then depth-clip each actor against its actual projected faces.
  // A whole-block Y sort cannot describe a character beside a long or rotated wall.
  const covers=s.covers||[];const ripCandidate30=local.ripTarget27j?s.covers.find((c:any)=>c.id===local.ripTarget27j):gripSelection(local,s).cover;const selectedRip27j=ripCandidate30&&!ripReason27j(local,s,localSlot,ripCandidate30)?ripCandidate30.id:undefined;
- const environmentLights=[...(s.fx||[]).filter((f:any)=>f.type==="muzzle"&&f.life>0).slice(-3).map((f:any)=>({x:f.x,y:f.y,strength:Math.min(1,f.life/.18),color:"#ffd59b"})),...(powerAura(local)>.12?[{x:local.x,y:local.y,strength:Math.min(1,powerAura(local)),color:"#fa64ca"}]:[])];
+ const environmentLights=[...(s.fx||[]).filter((f:any)=>f.type==="muzzle"&&f.life>0).slice(-3).map((f:any)=>({x:f.x,y:f.y,strength:Math.min(1,f.life/SHOT_FLASH_SECONDS),color:"#ffd59b"})),...(powerAura(local)>.12?[{x:local.x,y:local.y,strength:Math.min(1,powerAura(local)),color:"#fa64ca"}]:[])];
  // Ground-projected reach: this ring matches the authoritative Grip center-distance check.
  if(local.hp>0)withStructureOcclusion27e(g,local,()=>withWorld46(g,local.x,local.y,()=>drawPsychicField(g,local,s)));for(const [index,q] of s.players.entries())if(index!==localSlot&&(q.timeFieldActive||q.gripCoverId||q.gripId||q.orbitIds?.length)&&q.hp>0)withStructureOcclusion27e(g,q,()=>withWorld46(g,q.x,q.y,()=>drawPsychicField(g,{...q,fieldTint:"#ff82c2"},s)));
  drawInteractions21(g,s,localSlot);
@@ -731,7 +759,8 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  [...covers].sort((a:any,b:any)=>(a.y+Math.abs(Math.sin(a.a||0))*a.w*.5+Math.abs(Math.cos(a.a||0))*a.h*.5)-(b.y+Math.abs(Math.sin(b.a||0))*b.w*.5+Math.abs(Math.cos(b.a||0))*b.h*.5)).forEach((c:any)=>withStructureOcclusion27e(g,c,()=>withWorld46(g,c.x,c.y,()=>cover(g,{...c,psychicHeld:heldCoverIds.has(c.id),selectedRip27j:selectedRip27j===c.id,gatherProgress36:local.gather34?.source===c.id?Math.max(0,Math.min(1,(s.time-local.gather34.at-.2))):undefined,protective36:local.gather34?.source===c.id&&local.gather34.protective,selectedCells32:(local.ripCommit32?.sourceId===c.id?local.ripCommit32:local.ripPreview32?.sourceId===c.id?local.ripPreview32:undefined)?.cells,heldRelation30:s.players.findIndex((p:any)=>p.gripCoverId===c.id)===localSlot?'local':heldCoverIds.has(c.id)?'opponent':undefined,blocked30:s.time-(c.carryBlockedAt??-9)<.25},s.time,environmentLights))));
  const actors=[
   ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",player:{x:m.x,y:m.y,z:m.height||0},fn:()=>withUpright(g,m.x,m.y,()=>matter(g,m))})),
-  ...s.players.map((raw:any,index:number)=>{const actor={...(index===localSlot?local:{...raw,id:"fighter-"+index}),local30:index===localSlot};return{y:actor.y,kind:"player",player:actor,fn:()=>{const fighterKind=actor.character==="raptor"?"raptor":index===localSlot?character:"jade",auraRear=jadeChargeAssets.get("rear"),auraFront=jadeChargeAssets.get("front"),auraFrame=fighterKind==="jade"&&auraRear&&auraFront?jadeChargeFrame(actor,cfg.powerChargeSeconds):null;
+  ...s.players.map((raw:any,index:number)=>{const confirmed=(s.fx||[]).findLast((f:any)=>f.type==="shot-result-hit"&&f.target===index&&f.life>0);
+   const actor={...(index===localSlot?local:{...raw,id:"fighter-"+index}),local30:index===localSlot,shotgunHit:confirmed};return{y:actor.y,kind:"player",player:actor,fn:()=>{const fighterKind=actor.character==="raptor"?"raptor":index===localSlot?character:"jade",auraRear=jadeChargeAssets.get("rear"),auraFront=jadeChargeAssets.get("front"),auraFrame=fighterKind==="jade"&&auraRear&&auraFront?jadeChargeFrame(actor,cfg.powerChargeSeconds):null;
    const v2=fighterKind==="jade"&&chargeArt&&(actor.charging||actor.powerFlash>0||actor.powerReturn>0);
    if(!v2&&(auraFrame===null||!burnAtlas))drawGodGround(g,actor,s.time);
    withUpright(g,actor.x,actor.y,()=>{g.translate(0,-(actor.z||0));if(actor.hp>0){const footY=actor.y-powerHover(actor)*cfg.spriteScale;
@@ -774,7 +803,7 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
   const held=covers.find((c:any)=>c.id===p.gripCoverId&&c.constructOwner===n&&c.hp>0);
   if(held)marker(held,"SOLID COVER","solid");
  }
- for(const f of s.fx||[])if(f.type!=="slide"&&f.type!=="cover-scrape"&&f.type!=="cyber-stain"&&(!f.raptorFrameKey||s.players[f.owner]?.raptorFrame?.key===f.raptorFrameKey)){const drawFx=()=>withWorld46(g,f.x,f.y,()=>fx(g,f));if(f.type==="shot-result-cover"||f.type==="shot-result-muzzle")withStructureOcclusion27e(g,f,drawFx);else withCoverOcclusion(g,covers,f.y,s.time,drawFx,null,false,1/DECK_PITCH);}
+ for(const f of s.fx||[])if(f.life>0&&f.type!=="slide"&&f.type!=="cover-scrape"&&f.type!=="cyber-stain"){const drawFx=()=>withWorld46(g,f.x,f.y,()=>fx(g,f));if(f.type==="shot-result-cover"||f.type==="shot-result-muzzle")withStructureOcclusion27e(g,f,drawFx);else withCoverOcclusion(g,covers,f.y,s.time,drawFx,null,false,1/DECK_PITCH);}
  if(fixedCoverZoom||local.character==="raptor"&&local.coverTall11)drawRaptorCoverLane(g,local,covers,cfg.spriteScale,fixedCoverZoom);
  if(coverDiagnostics)drawRaptorCoverDiagnostics(g,local,covers,s.time,cfg.spriteScale);
  g=finishWarScene46(canvas);drawCombatHelmet(g,s,localSlot);
@@ -896,9 +925,14 @@ function coverTraversalPresentation(p:any){
  const topology=coverTopology(p),speed=Math.abs(p.coverSpeed||0);
  return{topology,moving:speed>20,edge:topology!=="FACE",corner:topology==="CORNER",speed};
 }
+function sampleCoverStride(p:any,t:number){
+ const key=p.id||p.token||p.name||"local";
+ const stride=coverStride13(coverTravelPhase.get(key),p,t);
+ coverTravelPhase.set(key,stride);
+ return stride;
+}
 function coverLateralFrame(p:any,t:number,total:number){
- const key=p.id||p.token||"local",prev=coverStride13(coverTravelPhase.get(key),p,t);
- coverTravelPhase.set(key,prev);
+ const prev=sampleCoverStride(p,t);
  if(total!==12||Math.abs(p.coverSpeed||0)<=2)return null;
  const travel=coverTraversalPresentation(p),sign=(p.coverSpeed||0)<0?-1:1;
  const phase=Math.floor(prev.phase)%4;
@@ -1214,12 +1248,50 @@ function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,ch
  g.restore();
 }
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade",chargeOverlay=false){
+ const raptor=character==="raptor"||p.character==="raptor",scale=cfg.spriteScale;
+ const recoil=shotgunKick(t-(p.lastShot??-9),raptor);
+ const hit=p.shotgunHit,impact=hit&&p.hitUntil>t?Math.min(1,(p.hitUntil-t)/.13)*Math.min(1,(hit.strength??0)/80+.12)*(p.knock>0?1:.6):0;
+ const moving=Math.abs(p.coverSpeed||0)>2;
+ const pivot=p.coverTall11&&p.coverId&&coverExposed13(p)&&!moving&&p.coverPivotAt!==undefined&&p.lastShot<p.coverPivotAt?
+  poseEase(t-p.coverPivotAt,.085):0;
+ if(!recoil&&!impact&&!pivot||chargeOverlay){
+  drawFighterPose(g,p,t,cfg,character,chargeOverlay);
+  return;
+ }
+ const facing=(world:number)=>{
+  const j=arenaJacobian46(p.x,p.y),x=Math.cos(world),y=Math.sin(world);
+  return Math.atan2(j.y*y,j.x*x+j.xy*y);
+ };
+ const direction=facing(p.shotgunDirection??p.gunFacing??0),hitDirection=facing(p.hitAngle??0),aim=facing(p.gunFacing??0);
+ // Both halves meet at a fixed hip line. Keep the stance/collision anchored.
+ const joint=p.y-(p.slide>0?23:p.coverId?34:43)*scale;
+ const shear=(Math.cos(direction)*recoil*(raptor?.126:.106)-Math.cos(hitDirection)*impact*.16+Math.cos(aim)*pivot*.11);
+ const lift=recoil*.094-Math.sin(hitDirection)*impact*.09-pivot*.054;
+ g.save();
+ g.beginPath();g.rect(p.x-220,joint,440,240);g.clip();
+ drawFighterPose(g,p,t,cfg,character,chargeOverlay);
+ g.restore();
+ g.save();
+ g.translate(0,joint);g.transform(1,0,shear,1+lift,0,0);g.translate(0,-joint);
+ g.beginPath();g.rect(p.x-220,joint-240,440,240);g.clip();
+ drawFighterPose(g,p,t,cfg,character,chargeOverlay);
+ g.restore();
+}
+function drawFighterPose(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor",chargeOverlay:boolean){
  const pose=p.attachedCoverPose as AttachedCoverPose|undefined;
  const attached=pose?attachedCoverAssets.get(pose):undefined;
  if(pose&&attached&&coverExposed13(p)){
   const registration=ATTACHED_COVER_POSES[pose],scale=.26*cfg.spriteScale*(registration.drawScale??1);
   const [x,y]=registration.anchor;
-  g.drawImage(attached,p.x-x*scale,p.y-y*scale,512*scale,512*scale);
+  const stride=sampleCoverStride(p,t);
+  const left=p.x-x*scale,top=p.y-y*scale,cell=512*scale,hips=y-(p.character==="raptor"?105:119);
+  if(Math.abs(p.coverSpeed||0)>2&&hips>0&&hips<512){
+   const phase=Math.sin(stride.phase*Math.PI/2),bottom=512-hips;
+   g.drawImage(attached,0,0,512,hips,left,top,cell,hips*scale);
+   g.save();const joint=top+hips*scale;
+   g.translate(p.x,joint);g.transform(1,0,phase*.085,1-Math.abs(phase)*.034,0,0);g.translate(-p.x,-joint);
+   g.drawImage(attached,0,hips,512,bottom,left,joint,cell,bottom*scale);g.restore();
+  }else g.drawImage(attached,left,top,cell,cell);
   return;
  }
  if(p.character==="raptor"||character==="raptor"){
@@ -1576,18 +1648,14 @@ function fx(g:CanvasRenderingContext2D,f:any){
  const height=f.z??(f.type==="hit"||f.type==="cover-hit"?27:0),v=vertical46(f.x,f.y,height);g.save();g.translate(v.x,v.y);fxBody47(g,{...f,z:0});g.restore();
 }
 function fxBody47(g:CanvasRenderingContext2D,f:any){
- if(f.type.startsWith("shot-result-")){
-  const kind=f.type.slice("shot-result-".length),age=1-classicClamp(f.life/.32,0,1);
+ if(f.type==="muzzle"||f.type==="shotgun-smoke"||f.type.startsWith("shot-result-")){
   withUpright(g,f.x,f.y,()=>{
-   g.save();g.translate(f.x,f.y);g.globalAlpha=1-age;
-   g.lineWidth=1.7;g.strokeStyle=kind==="shield"?"#60edff":kind==="hit"?"#ff698e":"#ffe19d";
-   g.beginPath();
-   if(kind==="shield"){g.arc(0,0,8+age*10,0,Math.PI*2);}
-   else if(kind==="cover"){for(let n=0;n<5;n++){const a=n*1.256;g.moveTo(Math.cos(a)*3,Math.sin(a)*3);g.lineTo(Math.cos(a)*(10+age*9),Math.sin(a)*(10+age*9));}}
-   else if(kind==="muzzle"){g.moveTo(-5,-5);g.lineTo(5,5);g.moveTo(5,-5);g.lineTo(-5,5);}
-   else{g.moveTo(-11,-5);g.lineTo(-11,-10);g.lineTo(-5,-10);g.moveTo(11,5);g.lineTo(11,10);g.lineTo(5,10);}
-   g.stroke();
-   if(kind==="muzzle"){g.fillStyle="#ffe19d";g.font="bold 8px monospace";g.textAlign="center";g.fillText("MUZZLE BLOCKED",0,-12);}
+   const j=arenaJacobian46(f.x,f.y),angle=f.angle??0,dx=Math.cos(angle),dy=Math.sin(angle);
+   const bearing=Math.atan2(j.y*dy,j.x*dx+j.xy*dy);
+   g.save();g.translate(f.x,f.y);
+   if(f.type==="muzzle"){g.rotate(bearing);shootFlash(g,f.life);}
+   else if(f.type==="shotgun-smoke")shootSmoke(g,f.life,bearing);
+   else drawShotContact(g,f.type.slice("shot-result-".length),f.life,f.surfaceMaterial,bearing,f.strength);
    g.restore();
   });
   return;
