@@ -1,3 +1,4 @@
+import {coverCel} from "./jadeCoverCels";
 import {ATTACHED_COVER_POSES,type AttachedCoverPose} from "./attachedCoverPose";
 import {arenaJacobian46,arenaPoint46,ARENA_UPRIGHT_SCALE47} from "./bayBridgePresentation";
 
@@ -70,7 +71,9 @@ export function wrapRig(actor:Actor,aim:WrapAim,spriteScale:number,recoil=0){
   const worldY=screenY*unit/j.y;
   return {x:actor.x+dx+(screenX*unit-j.xy*worldY)/j.x,y:actor.y+dy+worldY,z:(actor.z??0)+height};
  }
- const barrelBase=barrelPoint(bx,by),socket=barrelPoint(mx,my);
+ const jade=pose.startsWith("jade-");
+ const socket=jade?coverCel(actor,aim.angle,spriteScale,1,aim.lean).socket:barrelPoint(mx,my);
+ const barrelBase=jade?{...socket,x:socket.x-Math.cos(aim.angle)*14*spriteScale,y:socket.y-Math.sin(aim.angle)*14*spriteScale}:barrelPoint(bx,by);
  shoulder.x-=Math.cos(bearing)*recoil*2;
  shoulder.y-=Math.sin(bearing)*recoil*2;
 

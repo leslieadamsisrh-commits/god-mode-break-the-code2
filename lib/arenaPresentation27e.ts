@@ -54,6 +54,14 @@ export function withStructureOcclusion27e(g:CanvasRenderingContext2D,actor:{x:nu
  });g.restore();
 }
 
+export function withLocalRampCutaway(g:CanvasRenderingContext2D,actor:{x:number;y:number;z:number;supportSurfaceId?:string|null},draw:()=>void){
+ const hidden=faces.filter(f=>actor.supportSurfaceId!==f.surfaceId&&Math.max(...f.vertices.map(p=>p.z))>actor.z+.1).map(f=>foregroundFace27e(f,actor.y)).filter(p=>p.length>=3);
+ if(!hidden.length)return;
+ withWorld46(g,anchor.x,anchor.y,()=>{
+  g.save();g.beginPath();for(const polygon of hidden)path(g,polygon);
+  g.clip();g.globalAlpha*=.55;draw();g.restore();
+ });
+}
 // Only local, concealed contour points are drawn. No sprite textures or combat effects
 // are replayed. The combined face path clips the cue to architecture, not clear air.
 export function drawConcealedSpark27h(g:CanvasRenderingContext2D,actor:{x:number;y:number;z:number;aim:number;supportSurfaceId?:string|null},time:number){

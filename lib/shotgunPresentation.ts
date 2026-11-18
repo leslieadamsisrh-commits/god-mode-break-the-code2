@@ -88,7 +88,8 @@ export function drawShotContact(g:CanvasRenderingContext2D,kind:string,life:numb
  if(kind==="shield"){
   g.rotate(angle);
   for(const rim of [0,6]){
-   const spread=7+age*13+rim;
+   if(rim)g.globalAlpha*=.45*(1-age);
+   const spread=6+age*8+rim;
    g.beginPath();
    g.moveTo(-4-rim,-spread);g.quadraticCurveTo(14+age*9+rim,0,-4-rim,spread);
    g.strokeStyle=INK;g.lineWidth=5;g.stroke();

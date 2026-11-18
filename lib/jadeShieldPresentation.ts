@@ -135,7 +135,9 @@ export function drawJadeShellDrop(g:Canvas,index:number,angle:number,scale:numbe
  const bottom=Math.min(...shell.strips.flatMap(strip=>strip.front.map(v=>v.z-root.z)));
  g.save();
  g.globalAlpha=Math.min(1,life/.12);
- g.translate(-root.x+Math.cos(angle)*8*phase,-root.y+root.z+bottom*phase*phase);
+ g.translate(Math.cos(angle)*8*phase, bottom*phase*phase);
+ g.rotate((index===1?-1:1)*.4*phase);
+ g.translate(-root.x,-root.y+root.z);
  paintGuard(g,actor,scale,1);
  g.restore();
 }

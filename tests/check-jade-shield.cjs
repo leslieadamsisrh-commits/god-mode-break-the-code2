@@ -37,7 +37,7 @@ for (const mode of ["practice", "bot"]) {
   const first = shot("light",10);
   assert.equal(first.kind,"shield");
   assert.equal(first.contactId,"jade-shield");
-  assert.ok(Math.abs(first.x-(p.x+(34-.012*8*Math.abs(3-8/s.config.spriteScale))*s.config.spriteScale))<.2,"contact is on the projected plate, ahead of body");
+  assert.ok(Math.abs(first.x-(p.x+34*s.config.spriteScale))<.2,"contact is on the projected plate, ahead of body");
   assert.equal(p.jadeShield.plates[1],JADE_PLATE_HP-10);
   assert.equal(p.hp,hp);
   tick(2);
@@ -53,7 +53,7 @@ for (const mode of ["practice", "bot"]) {
   const last = 0;
   tick(20,{...guard,aim:last});
   const beforeBreak=p.hp;
-  assert.equal(shot("final-block",45,p.y,{...guard,aim:last},50).kind,"shield");
+  assert.equal(shot("final-block",45,p.y,{...guard,aim:last},20).kind,"shield");
   assert.equal(p.hp,beforeBreak,"final contact was absorbed");
   assert.equal(p.shield,false);
   assert.equal(shot("after-break",4).kind,"hit");

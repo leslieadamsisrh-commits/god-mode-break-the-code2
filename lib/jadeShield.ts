@@ -1,3 +1,5 @@
+import rims from "../public/assets/jade-floating32/contact.json";
+import {arenaJacobian46,ARENA_UPRIGHT_SCALE47} from "./bayBridgePresentation";
 export function jadeGuardHeading(angle:number){
  return (Math.round((Math.PI/2-angle)*16/Math.PI)%32+32)%32;
 }
@@ -84,15 +86,28 @@ export function jadeShieldContact(from:ShieldPoint,to:ShieldPoint,p:ShieldActor,
  const dx=to.x-origin.x,dy=to.y-origin.y,dz=to.z-origin.z;
  if(dx*Math.cos(guard.angle)+dy*Math.sin(guard.angle)>=0)return null;
  let best:{t:number;index:number;point:ShieldPoint}|null=null;
- for(const plate of jadeShieldPlates(p,scale,time))for(const {front} of plate.strips){
-  const [a,b,lowB,lowA]=front,ux=b.x-a.x,uy=b.y-a.y;
-  const det=dx*uy-dy*ux;
-  if(Math.abs(det)<1e-8)continue;
-  const ax=a.x-origin.x,ay=a.y-origin.y,t=(ax*uy-ay*ux)/det,u=(ax*dy-ay*dx)/det;
-  if(t<0||t>1||u<0||u>1||(best&&best.t<=t))continue;
-  const z=origin.z+t*dz;
-  if(z>a.z+u*(b.z-a.z)||z<lowA.z+u*(lowB.z-lowA.z))continue;
-  best={index:plate.index,t,point:{x:from.x+t*(to.x-from.x),y:from.y+t*(to.y-from.y),z:from.z+t*(to.z-from.z)}};
+ const heading=jadeGuardHeading(guard.angle),wrist=jadeShieldWrist(p,scale,time);
+ const facingX=Math.cos(guard.angle),facingY=Math.sin(guard.angle);
+ const j=arenaJacobian46(p.x,p.y),unit=1.536*ARENA_UPRIGHT_SCALE47;
+ const opening=jadeShieldOpening(guard,time);
+ for(let index=0;index<3;index++){
+  const spread=jadeGuardSpread(opening,[1,0,2][index]);
+  if(!guard.plates[index]||spread<=0)continue;
+  const kick=guard.hitPlate===index?2*jadeShieldRecoil(guard,time):0;
+  const reach=(11-kick)*scale*spread;
+  const cx=wrist.x+facingX*reach,cy=wrist.y+facingY*reach,cz=wrist.z-12*scale*spread;
+  const t=((cx-origin.x)*facingX+(cy-origin.y)*facingY)/(dx*facingX+dy*facingY);
+  if(t<0||t>1||(best&&t>=best.t))continue;
+  const x=origin.x+t*dx-cx,y=origin.y+t*dy-cy,z=origin.z+t*dz-cz;
+  if(Math.abs(-x*facingY+y*facingX)>32*scale*spread)continue;
+  const size=56/124*scale*spread;
+  const col=Math.floor(40+(x*j.x+y*j.xy)/(unit*size)),row=Math.floor(64+(y*j.y/unit-z)/size);
+  const runs=rims[index][heading][row]||"";
+  for(let k=0;k<runs.length;k+=2){
+   if(col<runs.charCodeAt(k)-33||col>=runs.charCodeAt(k+1)-33)continue;
+   best={index,t,point:{x:from.x+t*(to.x-from.x),y:from.y+t*(to.y-from.y),z:from.z+t*(to.z-from.z)}};
+   break;
+  }
  }
  return best;
 }
