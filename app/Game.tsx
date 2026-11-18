@@ -1,6 +1,6 @@
 "use client";
 import {drawJadeLowAim,drawJadeMotion,jadeMotionPath,setJadeMotionAtlas} from "../lib/jadeMotion";
-import {drawJadeShield,drawJadePlateImpact,drawJadeGuardPose} from "../lib/jadeShieldPresentation";
+import {drawJadeShellDrop,drawJadeShield,drawJadePlateImpact,drawJadeGuardPose} from "../lib/jadeShieldPresentation";
 import {drawPlantedWrap,wrapRig} from "../lib/plantedWrap";
 import {CombatAudio} from "../lib/combatAudio";
 import {drawShotCaption,drawShotContact,shotCaption,poseEase,shootFlash,shootSmoke,shotgunKick,SHOT_DAMAGE_SECONDS,SHOT_FLASH_SECONDS,SHOT_SMOKE_SECONDS} from "../lib/shotgunPresentation";
@@ -357,7 +357,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
   }
   for(const f of incoming.fx||[]){
    if(f.life<=0)continue;
-   if(f.type==="jade-plate-contact"){
+ if(f.type==="jade-plate-contact"){
     const key="jade-guard:"+(f.blastId||f.id);
     if(!seen.shotSounds.has(key)){seen.shotSounds.add(key);combatTone("shield",f.angle,soundPan(f.x));}
     continue;
@@ -1747,6 +1747,10 @@ function matter(g:CanvasRenderingContext2D,m:any){
 }
 function impactSpray(g:CanvasRenderingContext2D,f:any){const age=1-classicClamp(f.life/.32,0,1),a=f.angle||0,z=f.z??27,cyber=f.material==="cyber";g.save();g.globalAlpha=(1-age)*.95;for(let n=0;n<8;n++){const angle=a+(n%7-3)*.18,speed=18+n%5*9,r=(1-Math.exp(-age*4))*speed,x=f.x+Math.cos(angle)*r,y=f.y+Math.sin(angle)*r-(z+Math.sin(age*Math.PI)*7-age*age*17)/DECK_PITCH;g.fillStyle=cyber?(n%4===0?"#d8e8ef":n%3===0?"#dc74a7":n%2?"#79344f":"#111924"):(n%3?"#72e9ef":"#ed9dc9");g.strokeStyle="#0a1019";g.lineWidth=.65;g.beginPath();if(cyber){g.ellipse(x,y,1.3+n%3,1+n%2,angle,0,Math.PI*2)}else g.rect(x,y,2+n%3,2/DECK_PITCH);g.fill();g.stroke();if(cyber&&n%5===0){g.strokeStyle="#82374f";g.lineWidth=1.5;g.beginPath();g.moveTo(x-Math.cos(angle)*7,y-Math.sin(angle)*7);g.lineTo(x,y);g.stroke();}if(cyber&&n%4===0){g.fillStyle="#e4f6fa";g.fillRect(x,y,1,1/DECK_PITCH);}}g.restore();}
 function fx(g:CanvasRenderingContext2D,f:any){
+ if(f.type==="jade-shell-drop"){
+  withUpright(g,f.x,f.y,()=>{g.translate(f.x,f.y-(f.z??0));drawJadeShellDrop(g,f.guardPlate,f.angle,f.guardScale,f.life);});
+  return;
+ }
  if(f.type==="jade-plate-contact"){
   withUpright(g,f.x,f.y,()=>{g.translate(f.x,f.y-(f.z??0));drawJadePlateImpact(g,f.life,f.text==="break");});
   return;

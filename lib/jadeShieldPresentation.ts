@@ -1,15 +1,21 @@
-import {drawJadeMotion} from "./jadeMotion";
+import registration from "../public/assets/jade-guard32/registration.json";
 import {ARENA_UPRIGHT_SCALE47, arenaJacobian46, withUpright} from "./bayBridgePresentation";
-import {JADE_PLATE_HP, JADE_SHIELD_IMPACT, jadeShieldOpening, jadeShieldPlates, jadeShieldRecoil, jadeShieldWrist, type JadeShield, type ShieldPoint} from "./jadeShield";
+import {jadeGuardHeading, jadeGuardSpread, JADE_PLATE_HP, JADE_SHIELD_IMPACT, jadeShieldOpening, jadeShieldPlates, jadeShieldRecoil, jadeShieldWrist, type JadeShield, type ShieldPoint} from "./jadeShield";
 
 type Actor = ShieldPoint & {jadeShield?:JadeShield;charging?:boolean;gunFacing?:number};
 type Canvas = CanvasRenderingContext2D;
 type Point = {x:number;y:number};
 
-let glovePose: HTMLImageElement | undefined;
-export const jadeGuardPosePath = "/assets/jade-shield/glove-guard.webp";
-// Keep the helmet-to-floor distance at the shotgun-ready cel's 88½ upright units.
-const guardArt = {rootX:774, rootY:982, cuffX:1104, cuffY:351, shoulderX:926, shoulderY:372, unit:.093};
+const guardLayers:HTMLImageElement[]=[];
+const painted=new WeakSet<Actor>();
+function preloadGuard(){
+ if(guardLayers.length)return;
+ for(let n=0;n<9;n++){
+  const image=new Image();
+  image.src=`/assets/jade-guard32/layer-${n}.webp`;
+  guardLayers.push(image);
+ }
+}
 const mix=(a:Point,b:Point,t:number):Point=>({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t});
 
 function uprightPoint(p:Actor,point:ShieldPoint):Point {
@@ -21,33 +27,31 @@ function uprightPoint(p:Actor,point:ShieldPoint):Point {
 export function drawJadeGuardPose(g:Canvas,p:Actor,scale:number,time:number){
  const guard=p.jadeShield;
  if(!guard)return false;
- if(!glovePose){glovePose=new Image();glovePose.src=jadeGuardPosePath;}
+ preloadGuard();
  const opening=jadeShieldOpening(guard,time);
- if(!glovePose.complete||!glovePose.naturalWidth||opening<.10)return false;
- const cuff=uprightPoint(p,jadeShieldWrist(p,scale,time));
- const side=cuff.x<p.x?-1:1;
- const {rootX,rootY,cuffX,cuffY,shoulderX,shoulderY,unit}=guardArt;
- if(opening<.47&&drawJadeMotion(g,p,scale,"wristTurn",side))return true;
- const size=unit*scale;
- const shoulder={x:p.x+side*(shoulderX-rootX)*size,y:p.y+(shoulderY-rootY)*size};
- const wrist={x:p.x+side*(cuffX-rootX)*size,y:p.y+(cuffY-rootY)*size};
- const turn=Math.atan2(cuff.y+(p.z||0)-shoulder.y,cuff.x-shoulder.x)
-  -Math.atan2(wrist.y-shoulder.y,wrist.x-shoulder.x);
- const arm=[[922,328],[976,336],[1010,355],[1050,337],[1066,289],[1121,225],[1230,232],[1233,340],[1168,408],[1065,447],[965,435]];
- const clipArm=()=>{arm.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));g.closePath();};
- g.save();
- g.translate(p.x,p.y);g.scale(side*size,size);g.translate(-rootX,-rootY);
- g.beginPath();g.rect(0,0,1536,1024);clipArm();g.clip("evenodd");
- g.drawImage(glovePose,0,0,1536,1024);
+ if(opening<=0||!guardLayers.every(image=>image.complete&&image.naturalWidth))return false;
+ const i=jadeGuardHeading(guard.angle);
+ const pose=registration.headings[i],unit=88.5/256*scale;
+ const x=i%8*320,y=Math.floor(i/8)*296;
+ const layer=(n:number)=>g.drawImage(guardLayers[n],x,y,320,296,0,0,320,296);
+ const [cx,cy]=pose.plate_pivot;
+ const plates=()=>{
+  guard.plates.forEach((hp,k)=>{
+   if(hp<=0)return;
+   const spread=jadeGuardSpread(opening,k);
+   if(!spread)return;
+   const kick=guard.hitPlate===k?jadeShieldRecoil(guard,time):0;
+   g.save();g.translate(cx,cy+kick*2);g.scale(spread,spread);
+   g.translate(-cx,-cy);layer(hp<JADE_PLATE_HP*.7?4+k:1+k);g.restore();
+  });
+ };
+ g.save();g.translate(p.x-160*unit,p.y-264*unit);g.scale(unit,unit);
+ if(pose.shells_behind_body)plates();
+ layer(0);
+ if(i===8)layer(opening<.55?7:8);
+ if(!pose.shells_behind_body)plates();
  g.restore();
- g.save();
- // Rigid rotation keeps the glove silhouette intact while the cuff follows the physics socket.
- const dx=wrist.x-shoulder.x,dy=wrist.y-shoulder.y;
- g.translate(cuff.x-dx*Math.cos(turn)+dy*Math.sin(turn),
-  cuff.y+p.z-dx*Math.sin(turn)-dy*Math.cos(turn));g.rotate(turn);
- g.scale(side*size,size);g.translate(-shoulderX,-shoulderY);
- g.beginPath();clipArm();g.clip();g.drawImage(glovePose,0,0,1536,1024);
- g.restore();
+ painted.add(p);
  return true;
 }
 
@@ -76,6 +80,7 @@ function paintPlate(g:Canvas,corners:Point[],hp:number,index:number,hit:number,s
 }
 
 export function drawJadeShield(g:Canvas,p:Actor,scale:number,time:number){
+ if(painted.delete(p))return;
  const guard=p.jadeShield;
  if(!guard)return;
  const opening=jadeShieldOpening(guard,time);
@@ -133,5 +138,20 @@ export function drawJadePlateImpact(g:Canvas,life:number,broken:boolean){
   g.fillStyle=i%3===0?"#ff69b7":"#8996b1";
   g.beginPath();g.moveTo(x,y);g.lineTo(x+4,y+1);g.lineTo(x+1,y+4);g.fill();
  }
+ g.restore();
+}
+
+export function drawJadeShellDrop(g:Canvas,index:number,angle:number,scale:number,life:number){
+ const heading=jadeGuardHeading(angle),image=guardLayers[4+index];
+ if(!image?.naturalWidth)return;
+ const box=registration.headings[heading].shell_boxes[index];
+ const [x,y,r,b]=box,w=r-x,h=b-y,unit=88.5/256*scale;
+ const phase=Math.min(1,(.46-life)/.32);
+ g.save();
+ g.globalAlpha=Math.min(1,life/.12);
+ g.scale(unit,unit);
+ g.translate(x+w/2-160+Math.cos(angle)*12*phase,y+h/2-264+(264-b)*phase*phase);
+ g.rotate(.85*phase);
+ g.drawImage(image,heading%8*320+x,Math.floor(heading/8)*296+y,w,h,-w/2,-h/2,w,h);
  g.restore();
 }

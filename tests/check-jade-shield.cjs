@@ -25,9 +25,9 @@ for (const mode of ["practice", "bot"]) {
       advance(s,s.lastAt + 1000/60);
     }
   };
-  const shot = (id,damage,y=p.y,input=guard) => {
+  const shot = (id,damage,y=p.y-8,input=guard,height=30) => {
     s.events = [];
-    s.shots.push({id,attackId:id,source:"shotgun",owner:1,x:p.x+105,y,z:p.z+38,vx:-2200,vy:0,vz:0,life:.22,damage});
+    s.shots.push({id,attackId:id,source:"shotgun",owner:1,x:p.x+105,y,z:p.z+height,vx:-2200,vy:0,vz:0,life:.22,damage});
     tick(4,input);
     return s.events.find(e=>e.attackId===id);
   };
@@ -37,7 +37,7 @@ for (const mode of ["practice", "bot"]) {
   const first = shot("light",10);
   assert.equal(first.kind,"shield");
   assert.equal(first.contactId,"jade-shield");
-  assert.ok(first.x>p.x+20,"contact is on the projected plate, ahead of body");
+  assert.ok(Math.abs(first.x-(p.x+26*s.config.spriteScale-.42*8))<.2,"contact is on the projected plate, ahead of body");
   assert.equal(p.jadeShield.plates[1],JADE_PLATE_HP-10);
   assert.equal(p.hp,hp);
   tick(2);
@@ -48,12 +48,12 @@ for (const mode of ["practice", "bot"]) {
   assert.equal(shot("open-gap",3).kind,"hit");
   assert.ok(p.hp<hp,"missing middle plate opens a shooting lane");
   tick(25,{...guard,aim:.48});
-  assert.equal(shot("rotate-and-block",60,p.y,{...guard,aim:.48}).kind,"shield");
+  assert.equal(shot("rotate-and-block",60,p.y-8,{...guard,aim:.48}).kind,"shield");
   assert.equal(p.jadeShield.plates.filter(x=>x>0).length,1);
-  const last = p.jadeShield.plates[0]>0?.48:-.48;
+  const last = 0;
   tick(20,{...guard,aim:last});
   const beforeBreak=p.hp;
-  assert.equal(shot("final-block",45,p.y,{...guard,aim:last}).kind,"shield");
+  assert.equal(shot("final-block",45,p.y,{...guard,aim:last},50).kind,"shield");
   assert.equal(p.hp,beforeBreak,"final contact was absorbed");
   assert.equal(p.shield,false);
   assert.equal(shot("after-break",4).kind,"hit");

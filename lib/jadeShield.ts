@@ -1,3 +1,14 @@
+import registration from "../public/assets/jade-guard32/registration.json";
+import silhouettes from "./jadeGuardSilhouettes.json";
+import {arenaJacobian46,ARENA_UPRIGHT_SCALE47} from "./bayBridgePresentation";
+
+export function jadeGuardHeading(angle:number){
+ return (Math.round((Math.PI/2-angle)*16/Math.PI)%32+32)%32;
+}
+export function jadeGuardSpread(opening:number,index:number){
+ const phase=Math.max(0,Math.min(1,(opening-.12*index)/(1-.12*index)));
+ return 1-(1-phase)**3;
+}
 // All dimensions are referenced to the upright Jade sprite's world scale.
 export const JADE_PLATE_HP = 44;
 export const JADE_SHIELD_UNFOLD = .12;
@@ -81,31 +92,35 @@ export function jadeShieldPlates(p:ShieldActor,scale:number,time:number):ShieldP
  });
 }
 
-function containsBand(profile:Vertex[],u:number,v:number){
- let inside=false;
- for(let i=0;i<profile.length;i++){
-  const [x0,y0]=profile[i],[x1,y1]=profile[(i+1)%profile.length];
-  if((y0>v)!==(y1>v)&&u<x0+(x1-x0)*(v-y0)/(y1-y0))inside=!inside;
- }
- return inside;
-}
-
+// Intersect the moving guard plane, then sample the same unfolded shell as the renderer.
 export function jadeShieldContact(from:ShieldPoint,to:ShieldPoint,p:ShieldActor,scale:number,time:number,start:ShieldPoint=p){
- if(!p.jadeShield?.active)return null;
- let first:{t:number;index:number;point:ShieldPoint}|null=null;
- // Trace against the exact visible polygons in the moving fighter's reference frame.
- const a={x:from.x+p.x-start.x,y:from.y+p.y-start.y,z:from.z+p.z-start.z};
- for(const plate of jadeShieldPlates(p,scale,time)){
-  const {center,normal,tx,ty,profile}=plate;
-  const front=(a.x-center.x)*normal.x+(a.y-center.y)*normal.y;
-  const back=(to.x-center.x)*normal.x+(to.y-center.y)*normal.y;
-  if(front<0||back>0||front-back<1e-8)continue;
-  const t=front/(front-back);
-  if(first&&t>=first.t)continue;
-  const x=a.x+(to.x-a.x)*t,y=a.y+(to.y-a.y)*t,z=a.z+(to.z-a.z)*t;
-  const u=((x-center.x)*tx+(y-center.y)*ty)/scale,v=(z-center.z)/scale;
-  if(!containsBand(profile,u,v))continue;
-  first={t,index:plate.index,point:{x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t,z:from.z+(to.z-from.z)*t}};
+ const guard=p.jadeShield;
+ if(!guard?.active)return null;
+ const heading=jadeGuardHeading(guard.angle),pose=registration.headings[heading];
+ const fx=Math.cos(guard.angle),fy=Math.sin(guard.angle);
+ const nx=fx+.42*fy,ny=fy-.42*fx;
+ const depth=26*scale;
+ const ax=from.x-start.x,ay=from.y-start.y,bx=to.x-p.x,by=to.y-p.y;
+ const front=ax*nx+ay*ny-depth,back=bx*nx+by*ny-depth;
+ if(front<0||back>0||front-back<1e-8)return null;
+ const t=front/(front-back),x=ax+(bx-ax)*t,y=ay+(by-ay)*t;
+ const z=(from.z-start.z)*(1-t)+(to.z-p.z)*t;
+ const j=arenaJacobian46(p.x,p.y),upright=1.536*ARENA_UPRIGHT_SCALE47,unit=88.5/256*scale;
+ const px=160+(j.x*x+j.xy*y)/(upright*unit);
+ const py=264+(j.y*y/upright-z)/unit;
+ const [cx,cy]=pose.plate_pivot,opening=jadeShieldOpening(guard,time);
+ for(let index=2;index>=0;index--){
+  const spread=jadeGuardSpread(opening,index);
+  if(!spread||guard.plates[index]<=0)continue;
+  const sx=Math.floor(cx+(px-cx)/spread);
+  const bounce=guard.hitPlate===index?jadeShieldRecoil(guard,time)*2:0;
+  const sy=Math.floor(cy+(py-cy-bounce)/spread);
+  const [top,rows]=silhouettes[heading][index] as [number,number[][]];
+  const spans=rows[sy-top];
+  if(!spans)continue;
+  for(let k=0;k<spans.length;k+=2){
+   if(sx>=spans[k]&&sx<spans[k+1])return {t,index,point:{x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t,z:from.z+(to.z-from.z)*t}};
+  }
  }
- return first;
+ return null;
 }
