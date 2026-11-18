@@ -28,3 +28,21 @@ assert.ok(hunter.battery>34);
 assert.ok(!hunter.charging);
 assert.ok(hunter.botIntent);
 console.log("PASS War full opponent uses active charge, fires its first seated shell on a flank, loads shells and resumes decisions",hunter.botIntent);
+const {newGame,advance}=require("../lib/game.ts");
+for(const mode of ["bot","watch","practice"]){
+ for(const [battery,shells] of [[10,8],[100,0],[10,0]]){
+  const game=newGame("Jade","test",0,mode);game.rules31={version:1,battery:"current",opponent:"full"};
+  const [opponent,bot]=game.players;game.phase="playing";game.covers=[];
+  Object.assign(opponent,{bot:false,x:915,y:500});
+  Object.assign(bot,{bot:true,x:950,y:500,battery,shells});
+
+  let reached=false;
+  for(let frame=1;frame<=330;frame++){
+   advance(game,game.lastAt+1000/60);
+   if(frame===1)assert.ok(bot.charging,mode+" should start charging immediately in sight");
+   if(bot.battery>=80&&bot.shells===8){reached=true;break;}
+  }
+  assert.ok(reached,mode+" should finish recovering in open space");
+ }
+}
+console.log("PASS low power alone, empty gun alone and both depleted at close range in War, full Training and bot playback.");
