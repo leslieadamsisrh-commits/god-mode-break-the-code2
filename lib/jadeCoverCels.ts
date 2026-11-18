@@ -43,3 +43,27 @@ export function drawCoverStage(g:CanvasRenderingContext2D,p:Actor,scale:number,r
  g.save();g.translate(p.x,p.y);g.scale(flip?-size:size,size);
  g.drawImage(coverImage,stage*160,row*160,160,160,-fx,-fy,160,160);g.restore();return true;
 }
+
+// Measured support glove and loading port in each 160px full-body cell.
+const reloadHands=[[82,61,82,55],[103,61,98,55],[126,59,113,54],[121,57,111,53],
+ [58,57,62,54],[36,54,53,52],[43,56,57,54],[48,57,60,54]];
+export function jadeLoadRig(angle:number){
+ const h=((Math.round((Math.PI/2-angle)*4/Math.PI)%8)+8)%8;
+ const [gx,gy,rx,ry]=reloadHands[h],unit=.58;
+ return {h,gx,gy,rx,ry,unit,handX:(gx-80)*unit,handY:(gy-150)*unit,portX:(rx-80)*unit,portY:(ry-150)*unit};
+}
+export function drawLoadPose(g:CanvasRenderingContext2D,p:Actor,foot:number,angle:number,scale:number,phase:number,seatAge:number){
+ if(!aimImage)return false;
+ const {h,gx,gy,rx,unit}=jadeLoadRig(angle),sx=h%4*160,sy=Math.floor(h/4)*160;
+ const reach=seatAge<.09?1-seatAge/.09:Math.max(0,Math.min(1,(phase-.62)/.38));
+ g.save();g.translate(p.x-80*unit*scale,foot-150*unit*scale);g.scale(unit*scale,unit*scale);
+ // Keep the gun and shoulder fixed. Move the support glove with the attached sleeve.
+ const top=gy-4,bottom=gy+10,left=gx-16,right=gx+16;
+ g.drawImage(aimImage,sx,sy,160,top,0,0,160,top);
+ for(let y=top;y<bottom;y++){
+  const move=(rx-gx)*reach*Math.max(0,1-Math.abs(y-gy)/10);
+  const stops=[0,left,gx,right,160],dest=[0,left,gx+move,right,160];
+  for(let i=0;i<4;i++)g.drawImage(aimImage,sx+stops[i],sy+y,stops[i+1]-stops[i],1,dest[i],y,dest[i+1]-dest[i],1);
+ }
+ g.drawImage(aimImage,sx,sy+bottom,160,160-bottom,0,bottom,160,160-bottom);g.restore();return true;
+}
