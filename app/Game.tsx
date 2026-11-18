@@ -1,5 +1,6 @@
 "use client";
-import {drawShotCaption,drawShotContact,shotCaption,poseEase,shootFlash,shootSmoke,shotgunKick,SHOT_FLASH_SECONDS,SHOT_SMOKE_SECONDS} from "../lib/shotgunPresentation";
+import {CombatAudio} from "../lib/combatAudio";
+import {drawShotCaption,drawShotContact,shotCaption,poseEase,shootFlash,shootSmoke,shotgunKick,SHOT_DAMAGE_SECONDS,SHOT_FLASH_SECONDS,SHOT_SMOKE_SECONDS} from "../lib/shotgunPresentation";
 import {JadeChargeTrails,drawJadeChargeLayer,jadeChargeFrame} from "../lib/jadeChargeVfx";
 import {drawJadeChargeV2,jadeChargeBeat,JADE_PALETTES,type JadePalette} from "../lib/jadeChargeV2";
 import {kineticPose} from "../lib/kineticPose";
@@ -243,36 +244,38 @@ function drawDefense43(g:CanvasRenderingContext2D,s:any,slot:number){
 }
 
 let combatAudio:AudioContext|null=null;
-let audioVoices35=0; // At most twelve active oscillator voices, including layered slams.
-function unlockCombatAudio(){try{const C=window.AudioContext||(window as any).webkitAudioContext;if(!combatAudio&&C)combatAudio=new C();void combatAudio?.resume().catch(()=>{});}catch{}}
-function combatTone(kind:string,angle?:number){
- if(!feedbackPrefs43.sound||!combatAudio||combatAudio.state!=="running"||audioVoices35+(kind.startsWith("slam-")?3:1)>12)return;const a=combatAudio,now=a.currentTime;
- if(kind==="shotgun-report"){
-  audioVoices35++;
-  const source=a.createBufferSource(),duration=.115,length=Math.ceil(a.sampleRate*duration);
-  const buffer=a.createBuffer(1,length,a.sampleRate),wave=buffer.getChannelData(0);
-  for(let i=0;i<length;i++){
-   const t=i/a.sampleRate;
-   wave[i]=(Math.random()*2-1)*Math.exp(-t*75)*.54+Math.sin(2*Math.PI*(92*t-190*t*t))*Math.exp(-t*42)*.66;
+let combatMix:CombatAudio|null=null;
+let cueVoices=0;
+function unlockCombatAudio(){
+ try{
+  const Context=window.AudioContext||(window as any).webkitAudioContext;
+  if(!combatAudio&&Context){
+   const context:AudioContext=new Context();
+   combatMix=new CombatAudio(context);
+   combatAudio=context;
   }
-  const gain=a.createGain();gain.gain.value=.28;source.buffer=buffer;
-  const pan=a.createStereoPanner?.();
-  if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!)*.45:0;gain.connect(pan);pan.connect(a.destination);}
-  else gain.connect(a.destination);
-  source.connect(gain);source.start(now);
-  source.onended=()=>{audioVoices35--;source.disconnect();gain.disconnect();pan?.disconnect();};
-  return;
- }
- if(kind.startsWith('slam-')){
-  // Reuse the existing synthesized audio path: transient, body, then settling.
-  const metal=kind==='slam-metal',body=kind==='slam-fighter';
-  for(const [delay,hz,duration,volume] of [[0,metal?690:body?280:180,.045,.035],[.015,metal?105:body?85:65,.2,.055],[.075,metal?360:125,.12,.018]]){
-   audioVoices35++;const o=a.createOscillator(),v=a.createGain();o.type=metal?'triangle':'sine';o.frequency.setValueAtTime(hz,now+delay);o.frequency.exponentialRampToValueAtTime(Math.max(35,hz*.4),now+delay+duration);v.gain.setValueAtTime(volume,now+delay);v.gain.exponentialRampToValueAtTime(.001,now+delay+duration);o.connect(v);v.connect(a.destination);o.start(now+delay);o.stop(now+delay+duration);o.onended=()=>{audioVoices35--;o.disconnect();v.disconnect();};
-  }return;
- }
- audioVoices35++;const osc=a.createOscillator(),gain=a.createGain();
+  if(combatAudio?.state!=="running")void combatAudio?.resume().catch(()=>{});
+ }catch{}
+}
+function combatTone(kind:string,angle?:number,position?:number){
+ if(!feedbackPrefs43.sound||!combatAudio||combatAudio.state!=="running"||!combatMix)return;
+ const a=combatAudio,now=a.currentTime;
+ const panPosition=position??(Number.isFinite(angle)?Math.cos(angle!)*.45:0);
+ if(combatMix.play(kind,panPosition)||cueVoices>=6)return;
+ const osc=a.createOscillator(),gain=a.createGain();
  const frequency=kind==="tear"?210:kind==="parry"?1500:kind==="cover-defense"?155:kind==="damage"?95:kind==="block"?950:kind==="hit"?330:kind==="shield"?780:kind==="cover"?130:kind==="finish"?90:kind==="fight"?660:440;
- osc.type=kind==="tear"?"sawtooth":kind==="cover"?"triangle":"sine";osc.frequency.setValueAtTime(frequency,now);osc.frequency.exponentialRampToValueAtTime(Math.max(40,frequency*.65),now+.09);gain.gain.setValueAtTime(.045,now);gain.gain.exponentialRampToValueAtTime(.001,now+.13);osc.connect(gain);const pan=a.createStereoPanner?.();if(pan){pan.pan.value=Number.isFinite(angle)?Math.cos(angle!):0;gain.connect(pan);pan.connect(a.destination);}else gain.connect(a.destination);osc.start(now);osc.stop(now+.14);osc.onended=()=>{audioVoices35--;osc.disconnect();gain.disconnect();pan?.disconnect()};
+ osc.type=kind==="tear"?"sawtooth":kind==="cover"?"triangle":"sine";
+ osc.frequency.setValueAtTime(frequency,now);
+ osc.frequency.exponentialRampToValueAtTime(Math.max(40,frequency*.65),now+.09);
+ gain.gain.setValueAtTime(.045,now);
+ gain.gain.exponentialRampToValueAtTime(.001,now+.13);
+ osc.connect(gain);
+ const stereo=a.createStereoPanner?.();
+ if(stereo){stereo.pan.value=panPosition;gain.connect(stereo);stereo.connect(combatMix.input);}
+ else gain.connect(combatMix.input);
+ cueVoices++;
+ osc.onended=()=>{cueVoices--;osc.disconnect();gain.disconnect();stereo?.disconnect();};
+ osc.start(now);osc.stop(now+.14);
 }
 export default function Game({character="jade",cameraPreset="default",combatLab=false,allowRaptor=false,labPace=1,labLowCover=false,labCoverDrill,labDrillPosition,labCoverDiagnostics=false}:{character?:"jade"|"raptor";cameraPreset?:"default"|"close"|"kinetic";combatLab?:boolean;allowRaptor?:boolean;labPace?:number;labLowCover?:boolean;labCoverDrill?:RaptorCoverDrill;labDrillPosition?:RaptorDrillPosition;labCoverDiagnostics?:boolean}={}){
  useEffect(()=>{
@@ -290,7 +293,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  const [sound43,setSound43]=useState(true),[rumble43,setRumble43]=useState(false);
  useEffect(()=>{const visibility43=()=>{frames43.last=0;frames43.active=false;};document.addEventListener("visibilitychange",visibility43);return()=>document.removeEventListener("visibilitychange",visibility43);},[]);
  useEffect(()=>{try{const saved=JSON.parse(localStorage.getItem("god-mode-feedback43")||"null");if(saved){feedbackPrefs43.sound=saved.sound!==false;feedbackPrefs43.haptics=saved.haptics===true;setSound43(feedbackPrefs43.sound);setRumble43(feedbackPrefs43.haptics);}}catch{}},[]);
- const feedbackSettings43=(sound:boolean,haptics:boolean)=>{feedbackPrefs43.sound=sound;feedbackPrefs43.haptics=haptics;setSound43(sound);setRumble43(haptics);try{localStorage.setItem("god-mode-feedback43",JSON.stringify({sound,haptics}));}catch{}};
+ const feedbackSettings43=(sound:boolean,haptics:boolean)=>{if(sound)unlockCombatAudio();feedbackPrefs43.sound=sound;feedbackPrefs43.haptics=haptics;setSound43(sound);setRumble43(haptics);try{localStorage.setItem("god-mode-feedback43",JSON.stringify({sound,haptics}));}catch{}};
  useEffect(()=>{if(typeof PerformanceObserver==="undefined"||!PerformanceObserver.supportedEntryTypes?.includes("longtask"))return;const observer=new PerformanceObserver(list=>{if(!frames43.active||document.hidden)return;for(const entry of list.getEntries()){frames43.longTasks++;frames43.longTaskMs+=entry.duration;}});observer.observe({type:"longtask",buffered:false});return()=>observer.disconnect();},[]);
  const [visibleHeight,setVisibleHeight]=useState(0);
  useEffect(()=>{const viewport=window.visualViewport,fit=()=>setVisibleHeight(Math.round(viewport?.height||window.innerHeight));fit();window.addEventListener("resize",fit);viewport?.addEventListener("resize",fit);return()=>{window.removeEventListener("resize",fit);viewport?.removeEventListener("resize",fit);};},[]);
@@ -298,7 +301,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  const [combatAudit,setCombatAudit]=useState<any>(null),[auditStatus,setAuditStatus]=useState("");const inputTiming=useRef({rtt:0,samples:0});
  const hudPhase=useRef("");const configRef=useRef<any>(DEFAULT);
  const hudAt=useRef(0);const streamOpen=useRef(false);const [netStatus,setNetStatus]=useState("CONNECTING");const [inviteLink,setInviteLink]=useState("");
- const feedbackSeen=useRef({room:"",round:0,seq:0,cue:"",shotSounds:new Set<string>()});
+ const feedbackSeen=useRef({room:"",round:0,seq:0,cue:"",shotSounds:new Set<string>(),jadeVoiceAt:new Map<number,number>()});
  const coverPreview=useRef(-1);const [previewCover,setPreviewCover]=useState(-1);const psychicPreview=useRef(-1);const [previewPsychic,setPreviewPsychic]=useState(-1);const chargePreview=useRef(false);const [previewCharging,setPreviewCharging]=useState(false);
  const [raptorLoading,setRaptorLoading]=useState(false),[raptorLoadError,setRaptorLoadError]=useState("");
  const raptorEntry=useRef(false);
@@ -333,17 +336,33 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
  }if(body.layout)engine.command({action:"arenaLayout",room:engine.room,token:engine.token,layout:body.layout});if(labCoverDrill)placeRaptorCoverDrill(engine.state,labCoverDrill,labDrillPosition);else if(combatLab&&labLowCover)placeRaptorLowCoverLab(engine.state);localCombat.current=engine;return engine.reply();}if(localCombat.current&&body.room===localCombat.current.room){const engine=localCombat.current,reply=engine.command(body);if(labCoverDrill&&["reset","rematch","start"].includes(body.action)){placeRaptorCoverDrill(engine.state,labCoverDrill,labDrillPosition);return engine.reply();}return reply;}const sentAt=performance.now();const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),2500);try{const r=await fetch("/api/game",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:controller.signal}),v=await r.json();if(!r.ok)throw Error(v.error||"Request failed");if(body.action==="create"||body.action==="join")localCombat.current=null;if(body.action==="input"){inputTiming.current.rtt=performance.now()-sentAt;inputTiming.current.samples++;}return v;}finally{clearTimeout(timeout);}},[combatLab,labLowCover,labCoverDrill,labDrillPosition]);
  const reviewCombat=async()=>{const ss=session.current;if(!ss)return;setAuditStatus("Loading confirmed outcomes…");if(ss.local&&localCombat.current){setCombatAudit({...localCombat.current.diagnostics(),frameTimes:frameSummary43(),requestRtt:0,inputRtt:0,inputSamples:0,snapshotGap:0});setAuditStatus("");return;}try{const at=performance.now(),u=new URL("/api/game",location.origin);u.searchParams.set("room",ss.room);u.searchParams.set("token",ss.token);u.searchParams.set("audit","1");const r=await fetch(u,{cache:"no-store"}),v=await r.json();if(!r.ok)throw Error(v.error||"Audit unavailable");setCombatAudit({...v.diagnostics,frameTimes:frameSummary43(),requestRtt:performance.now()-at,inputRtt:inputTiming.current.rtt,inputSamples:inputTiming.current.samples,snapshotGap});setAuditStatus("");}catch(e:any){setAuditStatus(e.message);}};
  const accept=useCallback((v:any)=>{if(v.state){if(state.current&&v.state.round===state.current.round&&v.state.lastAt<=state.current.lastAt)return;const at=performance.now();if(state.current&&v.state.round!==state.current.round){snapshots.length=0;kineticEcho.length=0;hoverWake.length=0;cameraState.ready=false}const incoming=v.state,room=session.current?.room||"",seen=feedbackSeen.current;
- if(seen.room!==room||seen.round!==incoming.round){seen.room=room;seen.round=incoming.round;seen.seq=incoming.eventSeq||0;seen.cue="";seen.shotSounds.clear();}
+ if(seen.room!==room||seen.round!==incoming.round){seen.room=room;seen.round=incoming.round;seen.seq=incoming.eventSeq||0;seen.cue="";seen.shotSounds.clear();seen.jadeVoiceAt.clear();}
  else{const fresh=(incoming.events||[]).filter((e:any)=>e.seq>seen.seq&&incoming.time-e.at<.3);seen.seq=Math.max(seen.seq,incoming.eventSeq||0);const slot=session.current?.slot||0;
   const cue=pickFeedback43(fresh,slot,incoming);if(cue)hapticFeedback43(cue);
   const other=pickFeedback43(fresh.filter((e:any)=>e.source!=="shotgun"),slot,incoming);
   if(other)combatTone(other.kind,other.angle);
+  const soundPan=(x:number)=>Math.max(-.65,Math.min(.65,(x-(incoming.players[slot]?.x??x))/380));
+  const jadeReaction=(target:number|undefined,damage:number,x:number)=>{
+   if(target===undefined||incoming.players[target]?.character!=="jade"||damage<18)return;
+   if(incoming.time-(seen.jadeVoiceAt.get(target)??-Infinity)<.8)return;
+   seen.jadeVoiceAt.set(target,incoming.time);
+   combatTone(damage>=55?"jade-cry":"jade-yelp",undefined,soundPan(x));
+  };
+  for(const event of fresh.filter((e:any)=>e.kind==="hit"&&e.source!=="shotgun").sort((a:any,b:any)=>b.damage-a.damage)){
+   jadeReaction(event.target,event.damage,event.x);
+  }
   for(const f of incoming.fx||[]){
-   if(f.life<=0||!f.blastId||seen.shotSounds.has(f.id))continue;
+   if(f.life<=0||!f.blastId)continue;
+   if(f.type==="shot-result-hit"&&!seen.shotSounds.has(f.id+":voice")&&f.life<=SHOT_DAMAGE_SECONDS-.045){
+    seen.shotSounds.add(f.id+":voice");
+    jadeReaction(f.target,f.strength??0,f.x);
+   }
+   if(seen.shotSounds.has(f.id))continue;
    const kind=f.type==="shotgun-smoke"&&f.life>SHOT_SMOKE_SECONDS-.25?"shotgun-report":f.type==="shot-result-cover"?(f.surfaceMaterial==="stone"?"slam-stone":"slam-metal"):
     f.type==="shot-result-hit"?"slam-fighter":f.type==="shot-result-shield"?"shield":null;
    if(!kind)continue;
-   seen.shotSounds.add(f.id);combatTone(kind,f.angle);
+   seen.shotSounds.add(f.id);
+   combatTone(kind,f.angle,soundPan(f.x));
   }
   while(seen.shotSounds.size>256)seen.shotSounds.delete(seen.shotSounds.values().next().value);}
  const cue=incoming.phase==="countdown"?String(Math.ceil(incoming.countdown)):incoming.phase==="playing"&&incoming.time<(incoming.fightUntil||0)?"fight":"";if(cue&&cue!==seen.cue)combatTone(cue);seen.cue=cue;
