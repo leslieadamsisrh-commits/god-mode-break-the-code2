@@ -1,4 +1,5 @@
 "use client";
+import {drawPlantedWrap,wrapRig} from "../lib/plantedWrap";
 import {CombatAudio} from "../lib/combatAudio";
 import {drawShotCaption,drawShotContact,shotCaption,poseEase,shootFlash,shootSmoke,shotgunKick,SHOT_DAMAGE_SECONDS,SHOT_FLASH_SECONDS,SHOT_SMOKE_SECONDS} from "../lib/shotgunPresentation";
 import {JadeChargeTrails,drawJadeChargeLayer,jadeChargeFrame} from "../lib/jadeChargeVfx";
@@ -359,7 +360,7 @@ export default function Game({character="jade",cameraPreset="default",combatLab=
    }
    if(seen.shotSounds.has(f.id))continue;
    const kind=f.type==="shotgun-smoke"&&f.life>SHOT_SMOKE_SECONDS-.25?"shotgun-report":f.type==="shot-result-cover"?(f.surfaceMaterial==="stone"?"slam-stone":"slam-metal"):
-    f.type==="shot-result-hit"?"slam-fighter":f.type==="shot-result-shield"?"shield":null;
+    f.type==="shot-result-hit"?"slam-fighter":f.type==="shot-result-shield"?"shield":f.type==="shot-result-muzzle"?"muzzle-click":null;
    if(!kind)continue;
    seen.shotSounds.add(f.id);
    combatTone(kind,f.angle,soundPan(f.x));
@@ -826,6 +827,31 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
  if(fixedCoverZoom||local.character==="raptor"&&local.coverTall11)drawRaptorCoverLane(g,local,covers,cfg.spriteScale,fixedCoverZoom);
  if(coverDiagnostics)drawRaptorCoverDiagnostics(g,local,covers,s.time,cfg.spriteScale);
  g=finishWarScene46(canvas);
+ const lastWrapShot=local.wrapShotTrace;
+ if(s.mode==="practice"&&(coverDiagnostics||debug21)&&(local.wrapAim||lastWrapShot)){
+  const aim=local.wrapAim,rig=aim&&wrapRig(local,aim,cfg.spriteScale);
+  const camera={x:camX,y:camY};
+  const point=(p:{x:number;y:number;z:number})=>projectWorld(p.x,p.y,camera,zoom,p.z);
+  const base=rig&&point(rig.barrelBase),tip=rig&&point(rig.socket),hit=aim?.blocked&&point(aim.blocked);
+  g.save();
+  g.strokeStyle=aim?.limited||hit?"#ffb27e":"#71f5ff";g.lineWidth=2;
+  if(base&&tip){g.beginPath();g.moveTo(base.x,base.y);g.lineTo(tip.x,tip.y);g.stroke();}
+  for(const mark of [base,tip,hit])if(mark){g.beginPath();g.arc(mark.x,mark.y,4,0,Math.PI*2);g.stroke();}
+  g.fillStyle="#101322ee";g.fillRect(175,145,650,70);
+  g.fillStyle="#f0fbff";g.font="12px monospace";g.textAlign="center";
+  const deg=(value:number)=>Math.round(value*180/Math.PI);
+  const xyz=(p:{x:number;y:number;z:number})=>[p.x,p.y,p.z].map(v=>v.toFixed(1)).join(", ");
+  if(aim&&rig){
+   g.fillText(`WRAP · ${local.coverAnchor?.face}/${aim.end} · ${aim.pose} · STICK ${deg(aim.requested)}° · BARREL ${deg(aim.angle)}°`,500,162);
+   g.fillText(`MUZZLE ${xyz(rig.socket)} · ${aim.limited?"EDGE LIMIT":aim.blocked?.surface??"CLEAR"}`,500,179);
+  }
+  if(lastWrapShot){
+   const rt=lastWrapShot;
+   g.fillText(`RT · ${rt.result} · ${rt.face}/${rt.end??"center"} · ${rt.pose} · ${deg(rt.requested)}° → ${deg(rt.angle)}°`,500,196);
+   g.fillText(`MUZZLE ${xyz(rt.muzzle)} · ${rt.obstruction?`${rt.obstruction.surface} AT ${xyz(rt.obstruction)}`:"NO CONTACT"}`,500,211);
+  }
+  g.restore();
+ }
  if(s.phase!=="finished")drawShotCaptions(g,s.fx||[],{x:camX,y:camY},zoom);
  drawCombatHelmet(g,s,localSlot);
  // Broadcast spectacle is reserved for round boundaries, never live exchanges.
@@ -839,7 +865,7 @@ function drawShotCaptions(g:CanvasRenderingContext2D,effects:any[],camera:{x:num
  const ordered=effects.filter(f=>f.life>0).reverse();
  const categories=[ordered.filter(f=>f.type==="shot-result-hit"),ordered.filter(f=>f.type!=="shot-result-hit"&&f.type.startsWith("shot-result-")),ordered.filter(f=>f.type==="shotgun-smoke")];
  for(const group of categories)for(const f of group){
-  const cue=shotCaption(f.type,f.life,f.surfaceMaterial,f.strength);
+  const cue=shotCaption(f.type,f.life,f.surfaceMaterial,f.strength,f.text);
   if(!cue||(!cue.damage&&words>=2))continue;
   const at=projectWorld(f.x,f.y,camera,zoom,f.z??0);
   if(at.x<35||at.x>965||at.y<125||at.y>575)continue;
@@ -855,7 +881,7 @@ function drawShotCaptions(g:CanvasRenderingContext2D,effects:any[],camera:{x:num
  }
 }
 function drawRaptorCoverLane(g:CanvasRenderingContext2D,p:any,covers:any[],scale:number,drill:boolean){
- const clear=raptorCoverLane(p,covers.find(c=>c.id===p.coverId),scale);
+ const clear=p.wrapAim?!p.wrapAim.blocked&&!p.wrapAim.limited:raptorCoverLane(p,covers.find(c=>c.id===p.coverId),scale);
  if(clear===undefined)return;
  const anchor=p.coverAnchor;
  if(!drill&&(!anchor||Math.min(anchor.t,anchor.length-anchor.t)>=18||p.coverDrive11))return;
@@ -1293,6 +1319,11 @@ function drawGloveWindup(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,ch
 function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:"jade"|"raptor"="jade",chargeOverlay=false){
  const raptor=character==="raptor"||p.character==="raptor",scale=cfg.spriteScale;
  const recoil=shotgunKick(t-(p.lastShot??-9),raptor);
+ const wrap=p.wrapAim;
+ if(wrap){
+  const image=attachedCoverAssets.get(wrap.pose);
+  if(image){drawPlantedWrap(g,image,p,wrap,scale,recoil);return;}
+ }
  const hit=p.shotgunHit,impact=hit&&p.hitUntil>t?Math.min(1,(p.hitUntil-t)/.13)*Math.min(1,(hit.strength??0)/80+.12)*(p.knock>0?1:.6):0;
  const moving=Math.abs(p.coverSpeed||0)>2;
  const pivot=p.coverTall11&&p.coverId&&coverExposed13(p)&&!moving&&p.coverPivotAt!==undefined&&p.lastShot<p.coverPivotAt?
@@ -1703,7 +1734,7 @@ function drawUprightShotFx(g:CanvasRenderingContext2D,f:any){
   g.translate(f.x,f.y-(f.z??hitHeight));
   if(f.type==="muzzle"){g.rotate(bearing);shootFlash(g,f.life);}
   else if(f.type==="shotgun-smoke")shootSmoke(g,f.life,bearing);
-  else drawShotContact(g,f.type.slice("shot-result-".length),f.life,f.surfaceMaterial,bearing);
+  else if(f.text!=="wrap-limit"&&f.text!=="center-tuck")drawShotContact(g,f.type.slice("shot-result-".length),f.life,f.surfaceMaterial,bearing);
  });
 }
 function fxBody47(g:CanvasRenderingContext2D,f:any){

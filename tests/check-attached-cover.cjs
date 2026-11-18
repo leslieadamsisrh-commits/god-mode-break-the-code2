@@ -105,6 +105,39 @@ for (const character of ["jade", "raptor"]) {
     tick({ aim: Math.atan2(-normal.y, -normal.x), coverAimActive: true });
     assert.equal(p.peek, false);
   }
+  // The controller's explicit aim state uses the planted wrap socket.
+  for (const rotation of [0, Math.PI / 12, Math.PI / 2]) for (const face of [-1, 1]) for (const end of [0, 1]) {
+    const aimAt = ({ normal, tangent }, degrees) => {
+      const a = degrees * Math.PI / 180, side = end === 0 ? -1 : 1;
+      return Math.atan2(tangent.y * side * Math.cos(a) + normal.y * Math.sin(a),
+        tangent.x * side * Math.cos(a) + normal.x * Math.sin(a));
+    };
+    for (const degrees of [-55, -35, 0, 35, 90]) {
+      const env = setup(character, rotation, face, end);
+      const { s, p, tick, wall } = env, origin = [p.x, p.y];
+      const aim = aimAt(env, degrees);
+      wall.constructOwner = 0; // An already solid generated panel uses the same sweep.
+      tick({ aim, coverAim: true, coverAimActive: true, fire: true });
+      assert.equal(p.shells, 7, `${character} ${rotation} ${face} ${end} ${degrees}`);
+      assert.deepEqual([p.x, p.y], origin);
+      assert.equal(p.coverId, wall.id);
+      assertMuzzle(s, p);
+      const error = Math.atan2(Math.sin(p.gunFacing - aim), Math.cos(p.gunFacing - aim));
+      assert.ok(Math.abs(error) < 1e-7);
+    }
+    const env = setup(character, rotation, face, end);
+    const { s, p, tick } = env;
+    const wrap = { coverAim: true, coverAimActive: true, fire: true };
+    tick({ ...wrap, aim: aimAt(env, -56) });
+    assert.equal(p.shells, 8);
+    assert.equal(s.events.findLast(e => e.kind === "muzzle")?.reason, "wrap-limit");
+    tick({ ...wrap, aim: aimAt(env, -54) }, 14);
+    assert.equal(p.shells, 8, "a held refused input cannot discharge when aim returns to the arc");
+    tick({ ...wrap, fire: false, aim: aimAt(env, -54) });
+    tick({ ...wrap, aim: aimAt(env, -54) });
+    assertMuzzle(s, p);
+    assert.equal(p.shells, 7);
+  }
   const { p, tick } = setup(character, 0, 1, .5, 48);
   tick({ aim: 0, coverAim: true, fire: true });
   assert.equal(p.shells, 7);
@@ -125,4 +158,61 @@ for (const fighter of ["jade", "raptor"]) {
  tick({y:-1});
  tick({y:-1,slide:true},12);
  assert.equal(p.coverId,"next-wall");
+}
+
+for(const character of ["jade", "raptor"]){
+ const {s,p,wall,tick}=setup(character,0,1,1);
+ s.covers.push({...wall,id:"near-obstruction",x:p.x+16,y:p.y,w:4,h:12});
+ tick({aim:0,coverAim:true,coverAimActive:true,fire:true});
+ assert.equal(p.shells,8);
+ assert.ok(p.wrapAim.blocked);
+ assert.equal(s.events.findLast(e=>e.kind==="muzzle").x,p.wrapAim.blocked.x);
+}
+
+// A shoulder-level obstruction and a distant impact have different outcomes.
+const { wrapRig } = require("../lib/plantedWrap.ts");
+for (const character of ["jade", "raptor"]) {
+  const env = setup(character, 0, 1, 1);
+  const { s, p, wall, tick } = env;
+  tick({ aim: 0, coverAim: true, coverAimActive: true });
+  const rig = wrapRig(p, p.wrapAim, s.config.spriteScale);
+  const target = { ...wall, id: "downrange", x: rig.socket.x + 48, y: rig.socket.y, w: 8, h: 54 };
+  s.covers.push(target);
+  tick({ aim: 0, coverAim: true, coverAimActive: true, fire: true });
+  assert.equal(p.shells, 7);
+  assert.equal(p.wrapShotTrace.result, "FIRED");
+  assertMuzzle(s, p);
+  tick({ aim: 0, coverAimActive: true });
+  assert.equal(p.coverState11, "retract", "LT release retracts even with the stick held");
+  tick({}, 20);
+  assert.equal(p.coverState11, "brace");
+  assert.ok(target.hp < target.maxHp);
+  assert.ok(s.events.some(e => e.kind === "cover" && e.contactId === target.id));
+
+  const center = setup(character);
+  center.tick({ aim: Math.PI / 2, coverAim: true, coverAimActive: true, fire: true });
+  assert.equal(center.p.shells, 8);
+  assert.equal(center.p.wrapShotTrace.result, "CENTER TUCK");
+  assert.equal(center.s.events.findLast(e => e.kind === "muzzle").reason, "center-tuck");
+}
+
+for (const character of ["jade", "raptor"]) {
+  const { s, p, wall, tick } = setup(character, 0, 1, 1);
+  const wrap = { aim: -.3, coverAim: true, coverAimActive: true };
+  tick({ ...wrap, fire: true });
+  assert.equal(p.shells, 7);
+  assert.ok(p.recoil > 0);
+  tick({ ...wrap, x: .6, y: .8, slide: true });
+  assert.equal(p.coverId, null);
+  assert.equal(p.exit?.coverId, wall.id);
+
+  const retreat = setup(character, 0, 1, .95);
+  const { s: round, p: fighter, wall: protection } = retreat;
+  const opponent = round.players[1], hp = fighter.hp;
+  Object.assign(opponent, { x: fighter.x - 15, y: protection.y + 90, gunFacing: -Math.PI / 2 });
+  retreat.tick(wrap);
+  setInput(round, 1, opponent.lastSeq + 1, { aim: -Math.PI / 2, fire: true });
+  retreat.tick({}, 16);
+  assert.equal(fighter.hp, hp);
+  assert.ok(round.events.some(e => e.owner === 1 && e.kind === "cover" && e.contactId === protection.id));
 }

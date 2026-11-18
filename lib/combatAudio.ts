@@ -1,8 +1,8 @@
-export type CombatSound = "shotgun-report" | "slam-stone" | "slam-metal" | "slam-fighter" | "jade-yelp" | "jade-cry";
+export type CombatSound = "muzzle-click" | "shotgun-report" | "slam-stone" | "slam-metal" | "slam-fighter" | "jade-yelp" | "jade-cry";
 
 const TAU = 2 * Math.PI;
 const durations: Record<CombatSound, number> = {
- "shotgun-report": .33, "slam-stone": .26, "slam-metal": .21,
+ "muzzle-click": .07, "shotgun-report": .33, "slam-stone": .26, "slam-metal": .21,
  "slam-fighter": .14, "jade-yelp": .19, "jade-cry": .39,
 };
 
@@ -22,7 +22,9 @@ export function renderCombatSound(kind: CombatSound, rate: number, variant: numb
   previousNoise = noise;
   let value: number;
 
-  if (kind === "shotgun-report") {
+  if (kind === "muzzle-click") {
+   value=(grit*.42+Math.sin(TAU*1180*t)*.37)*Math.exp(-t*117);
+  } else if (kind === "shotgun-report") {
    const crack = (grit * .74 + bass * .42) * Math.exp(-t * 122);
    const thump = Math.sin(TAU * (102 * t - 121 * t * t)) * Math.exp(-t * 23) * .86;
    const tail = bass * (.4 * Math.exp(-t * 13) + (t > .058 ? .21 * Math.exp(-(t - .058) * 14) : 0));
@@ -66,7 +68,7 @@ export function renderCombatSound(kind: CombatSound, rate: number, variant: numb
 }
 
 const levels: Record<CombatSound, number> = {
- "shotgun-report": .68, "slam-stone": .46, "slam-metal": .43,
+ "muzzle-click": .31, "shotgun-report": .68, "slam-stone": .46, "slam-metal": .43,
  "slam-fighter": .30, "jade-yelp": .27, "jade-cry": .37,
 };
 

@@ -122,12 +122,12 @@ export function drawShotContact(g:CanvasRenderingContext2D,kind:string,life:numb
 
 export type ShotCaption={text:string;color:string;size:number;fade:number;damage:boolean};
 
-export function shotCaption(type:string,life:number,material?:string,damage?:number):ShotCaption|undefined{
+export function shotCaption(type:string,life:number,material?:string,damage?:number,reason?:string):ShotCaption|undefined{
  if(type==="shot-result-hit"&&damage!==undefined){
   return {text:Number(damage.toFixed(2)).toString(),color:"#fff2ee",size:19,fade:unit(life/.19),damage:true};
  }
  const cue=type==="shotgun-smoke"?["BLAM!","#ffdb73",20]:
-  type==="shot-result-muzzle"?["KLIK","#ffd3a2",15]:
+  type==="shot-result-muzzle"?[reason==="wrap-limit"?"EDGE LIMIT":reason==="center-tuck"?"MOVE TO EDGE":"KLIK","#ffd3a2",15]:
   type==="shot-result-shield"?["VWOOM","#bcf9ff",17]:
   type==="shot-result-cover"?(material==="stone"?["KRAK!","#f5c8a5",17]:["KLANG!","#ffe391",17]):undefined;
  if(!cue)return;
