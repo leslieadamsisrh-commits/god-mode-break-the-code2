@@ -37,7 +37,7 @@ for (const mode of ["practice", "bot"]) {
   const first = shot("light",10);
   assert.equal(first.kind,"shield");
   assert.equal(first.contactId,"jade-shield");
-  assert.ok(Math.abs(first.x-(p.x+26*s.config.spriteScale-.42*8))<.2,"contact is on the projected plate, ahead of body");
+  assert.ok(Math.abs(first.x-(p.x+(34-.012*8*Math.abs(3-8/s.config.spriteScale))*s.config.spriteScale))<.2,"contact is on the projected plate, ahead of body");
   assert.equal(p.jadeShield.plates[1],JADE_PLATE_HP-10);
   assert.equal(p.hp,hp);
   tick(2);

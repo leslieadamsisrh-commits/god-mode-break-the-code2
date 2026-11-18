@@ -1,7 +1,3 @@
-import registration from "../public/assets/jade-guard32/registration.json";
-import silhouettes from "./jadeGuardSilhouettes.json";
-import {arenaJacobian46,ARENA_UPRIGHT_SCALE47} from "./bayBridgePresentation";
-
 export function jadeGuardHeading(angle:number){
  return (Math.round((Math.PI/2-angle)*16/Math.PI)%32+32)%32;
 }
@@ -32,9 +28,6 @@ export type JadeShield = {
  readyAt:number;
 };
 type ShieldActor = ShieldPoint & {jadeShield?:JadeShield};
-type Vertex = [side:number,height:number];
-type ShieldPlate = {index:number;hp:number;vertices:ShieldPoint[];normal:{x:number;y:number};profile:Vertex[];center:ShieldPoint;tx:number;ty:number;scale:number};
-
 export function newJadeShield(angle:number):JadeShield {
  return {plates:[JADE_PLATE_HP,JADE_PLATE_HP,JADE_PLATE_HP],angle,active:false,openedAt:-9,closedAt:-9,hitAt:-9,
   hitPlate:-1,requireRelease:false,chargeHeld:0,chargeProgress:0,readyAt:-9};
@@ -59,68 +52,47 @@ export function jadeShieldWrist(p:ShieldActor,scale:number,time:number):ShieldPo
  return {x:p.x+Math.cos(angle)*reach,y:p.y+Math.sin(angle)*reach,z:p.z+(53-(guard?jadeShieldRecoil(guard,time):0)*1.6)*scale};
 }
 
-// Design A's three bands, traced as plate outlines in cuff-local coordinates.
-// Their adjacent edges share points so breaking a band leaves its actual opening.
-const BAND_OUTLINES:readonly (readonly Vertex[])[]=[
- [[2,-27],[13,-27],[23,-23],[31,-16],[36,-7],[37,-2],[22,-10],[2,-15]],
- [[-5,-15],[6,-15],[22,-10],[37,-2],[37,4],[35,12],[17,5],[-5,2]],
- [[0,2],[17,5],[35,12],[31,20],[24,26],[16,26],[8,29],[2,30]],
-];
-const TANGENT_LENGTH=Math.hypot(.83,1.6);
-
-export function jadeShieldPlates(p:ShieldActor,scale:number,time:number):ShieldPlate[] {
+// Cross sections of one rigid, curved guard in cuff-local units. The upper
+// edge dips beneath the barrel and each band shares its rim with its neighbor.
+const sections=[-28,-22,-16,-12,-8,0,8,16,22,28];
+export function jadeShieldPlates(p:ShieldActor,scale:number,time:number){
  const guard=p.jadeShield;
  if(!guard)return [];
- const opening=jadeShieldOpening(guard,time);
- if(opening<=0)return [];
- const wrist=jadeShieldWrist(p,scale,time);
- const f=guard.angle,fx=Math.cos(f),fy=Math.sin(f);
+ const opening=jadeShieldOpening(guard,time),wrist=jadeShieldWrist(p,scale,time);
+ const c=Math.cos(guard.angle),s=Math.sin(guard.angle);
  return guard.plates.flatMap((hp,index)=>{
-  if(hp<=0)return [];
-  const side=index-1,delay=side===0?0:side===-1?.16:.30;
-  const phase=clamp01((opening-delay)/(1-delay));
-  if(phase<=0)return [];
-  const spread=1-(1-phase)**3+.065*Math.sin(phase*Math.PI);
-  const fold=f+side*(1-spread)*.90,co=Math.cos(fold),si=Math.sin(fold);
-  const tx=(.83*co-1.6*si)/TANGENT_LENGTH,ty=(.83*si+1.6*co)/TANGENT_LENGTH;
-  const depth=-3*spread;
-  const center={x:wrist.x+(depth*fx+24*spread*fy)*scale,
-   y:wrist.y+(depth*fy-24*spread*fx)*scale,z:wrist.z-32.12*spread*scale};
-  const profile=BAND_OUTLINES[index].map(([u,v]):Vertex=>[u*TANGENT_LENGTH*spread,(u*1.408-v)*spread]);
-  const vertices=profile.map(([u,z])=>({x:center.x+tx*u*scale,y:center.y+ty*u*scale,z:center.z+z*scale}));
-  return [{index,hp,center,normal:{x:ty,y:-tx},tx,ty,profile,vertices,scale}];
+  const spread=jadeGuardSpread(opening,[1,0,2][index]);
+  if(hp<=0||spread<=0)return [];
+  const kick=guard.hitPlate===index?jadeShieldRecoil(guard,time)*2:0;
+  function vertex(u:number,edge:number,back:number){
+   const height=[68-Math.max(0,12-Math.abs(u+12)*1.7),47-.32*u,29-.45*u,13+Math.abs(u)*.15][edge];
+   const forward=(11-.012*u*u-back-kick)*spread*scale,side=(u-3)*spread*scale;
+   return {x:wrist.x+c*forward-s*side,y:wrist.y+s*forward+c*side,z:wrist.z+(height-53)*spread*scale};
+  }
+  const strips=sections.slice(1).map((u,i)=>{
+   const v=sections[i];
+   const face=(back:number)=>[vertex(v,index,back),vertex(u,index,back),vertex(u,index+1,back),vertex(v,index+1,back)];
+   return {front:face(0),back:face(3)};
+  });
+  return [{index,hp,strips}];
  });
 }
-
-// Intersect the moving guard plane, then sample the same unfolded shell as the renderer.
 export function jadeShieldContact(from:ShieldPoint,to:ShieldPoint,p:ShieldActor,scale:number,time:number,start:ShieldPoint=p){
  const guard=p.jadeShield;
  if(!guard?.active)return null;
- const heading=jadeGuardHeading(guard.angle),pose=registration.headings[heading];
- const fx=Math.cos(guard.angle),fy=Math.sin(guard.angle);
- const nx=fx+.42*fy,ny=fy-.42*fx;
- const depth=26*scale;
- const ax=from.x-start.x,ay=from.y-start.y,bx=to.x-p.x,by=to.y-p.y;
- const front=ax*nx+ay*ny-depth,back=bx*nx+by*ny-depth;
- if(front<0||back>0||front-back<1e-8)return null;
- const t=front/(front-back),x=ax+(bx-ax)*t,y=ay+(by-ay)*t;
- const z=(from.z-start.z)*(1-t)+(to.z-p.z)*t;
- const j=arenaJacobian46(p.x,p.y),upright=1.536*ARENA_UPRIGHT_SCALE47,unit=88.5/256*scale;
- const px=160+(j.x*x+j.xy*y)/(upright*unit);
- const py=264+(j.y*y/upright-z)/unit;
- const [cx,cy]=pose.plate_pivot,opening=jadeShieldOpening(guard,time);
- for(let index=2;index>=0;index--){
-  const spread=jadeGuardSpread(opening,index);
-  if(!spread||guard.plates[index]<=0)continue;
-  const sx=Math.floor(cx+(px-cx)/spread);
-  const bounce=guard.hitPlate===index?jadeShieldRecoil(guard,time)*2:0;
-  const sy=Math.floor(cy+(py-cy-bounce)/spread);
-  const [top,rows]=silhouettes[heading][index] as [number,number[][]];
-  const spans=rows[sy-top];
-  if(!spans)continue;
-  for(let k=0;k<spans.length;k+=2){
-   if(sx>=spans[k]&&sx<spans[k+1])return {t,index,point:{x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t,z:from.z+(to.z-from.z)*t}};
-  }
+ const origin={x:from.x+p.x-start.x,y:from.y+p.y-start.y,z:from.z+p.z-start.z};
+ const dx=to.x-origin.x,dy=to.y-origin.y,dz=to.z-origin.z;
+ if(dx*Math.cos(guard.angle)+dy*Math.sin(guard.angle)>=0)return null;
+ let best:{t:number;index:number;point:ShieldPoint}|null=null;
+ for(const plate of jadeShieldPlates(p,scale,time))for(const {front} of plate.strips){
+  const [a,b,lowB,lowA]=front,ux=b.x-a.x,uy=b.y-a.y;
+  const det=dx*uy-dy*ux;
+  if(Math.abs(det)<1e-8)continue;
+  const ax=a.x-origin.x,ay=a.y-origin.y,t=(ax*uy-ay*ux)/det,u=(ax*dy-ay*dx)/det;
+  if(t<0||t>1||u<0||u>1||(best&&best.t<=t))continue;
+  const z=origin.z+t*dz;
+  if(z>a.z+u*(b.z-a.z)||z<lowA.z+u*(lowB.z-lowA.z))continue;
+  best={index:plate.index,t,point:{x:from.x+t*(to.x-from.x),y:from.y+t*(to.y-from.y),z:from.z+t*(to.z-from.z)}};
  }
- return null;
+ return best;
 }
