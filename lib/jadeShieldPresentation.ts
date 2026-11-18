@@ -1,15 +1,19 @@
 import registration from "../public/assets/jade-guard32/registration.json";
 import {ARENA_UPRIGHT_SCALE47, arenaJacobian46, withUpright} from "./bayBridgePresentation";
-import {jadeGuardHeading, newJadeShield, JADE_PLATE_HP, JADE_SHIELD_IMPACT, jadeShieldOpening, jadeShieldPlates, jadeShieldWrist, type JadeShield, type ShieldPoint} from "./jadeShield";
+import {jadeGuardHeading, jadeGuardSpread, jadeShieldRecoil, newJadeShield, JADE_PLATE_HP, JADE_SHIELD_IMPACT, jadeShieldOpening, jadeShieldPlates, jadeShieldWrist, type JadeShield, type ShieldPoint} from "./jadeShield";
 
 type Actor = ShieldPoint & {jadeShield?:JadeShield;charging?:boolean;gunFacing?:number};
 type Canvas = CanvasRenderingContext2D;
 type Point = {x:number;y:number};
 
 const guardLayers:HTMLImageElement[]=[];
+const plateImages:HTMLImageElement[]=[];
 const painted=new WeakSet<Actor>();
 function preloadGuard(){
  if(guardLayers.length)return;
+ for(let i=0;i<3;i++){
+  const image=new Image();image.src=`/assets/jade-floating32/plate-${i}.webp`;plateImages.push(image);
+ }
  for(const n of [0,7,8]){
   const image=new Image();
   image.src=`/assets/jade-guard32/layer-${n}.webp`;
@@ -48,28 +52,27 @@ export function drawJadeGuardPose(g:Canvas,p:Actor,scale:number,time:number){
 }
 
 function paintGuard(g:Canvas,p:Actor,scale:number,time:number){
- const faces:{points:ShieldPoint[];color:string;depth:number;seam:boolean;crack:boolean}[]=[];
- for(const plate of jadeShieldPlates(p,scale,time)){
-  function add(points:ShieldPoint[],color:string,seam=false,crack=false){
-   faces.push({points,color,seam,crack,depth:points.reduce((n,v)=>n+v.y,0)/points.length});
+ const guard=p.jadeShield;
+ if(!guard)return;
+ preloadGuard();
+ const heading=jadeGuardHeading(guard.angle),opening=jadeShieldOpening(guard,time);
+ const wrist=jadeShieldWrist(p,scale,time),anchor=uprightPoint(p,wrist);
+ const forward={x:Math.cos(guard.angle),y:Math.sin(guard.angle)};
+ for(let i=0;i<3;i++){
+  const hp=guard.plates[i],image=plateImages[i];
+  if(!hp||!image?.naturalWidth)continue;
+  const spread=jadeGuardSpread(opening,[1,0,2][i]);
+  if(!spread)continue;
+  const kick=guard.hitPlate===i?2*jadeShieldRecoil(guard,time):0;
+  const center=uprightPoint(p,{x:wrist.x+forward.x*(11-kick)*scale,y:wrist.y+forward.y*(11-kick)*scale,z:wrist.z-12*scale});
+  const size=56/124*scale*spread,at=mix(anchor,center,spread);
+  g.save();g.translate(at.x,at.y);g.scale(size,size);
+  g.drawImage(image,heading%8*80,Math.floor(heading/8)*128,80,128,-40,-64,80,128);
+  if(hp<JADE_PLATE_HP*.7){
+   const y=[-33,0,34][i];
+   g.strokeStyle="#332538";g.lineWidth=1.8;g.beginPath();g.moveTo(-4,y-5);g.lineTo(1,y-1);g.lineTo(-1,y+1);g.lineTo(4,y+5);g.stroke();
   }
-  plate.strips.forEach(({front,back},i)=>{
-   add(front,plate.index===1?"#b8acb8":"#cec4c8",i>=2&&i<=6,plate.hp<JADE_PLATE_HP*.7&&i===4);
-   add(back,"#51425c");
-   for(const edge of [0,2,...(i===0?[3]:[]),...(i===plate.strips.length-1?[1]:[])]){
-    const j=(edge+1)%4;
-    add([front[edge],front[j],back[j],back[edge]],plate.index===0&&edge===0?"#914bab":"#594d62");
-   }
-  });
- }
- for(const face of faces.sort((a,b)=>a.depth-b.depth)){
-  const q=face.points.map(v=>uprightPoint(p,v));
-  g.beginPath();q.forEach((v,i)=>i?g.lineTo(v.x,v.y):g.moveTo(v.x,v.y));g.closePath();g.fillStyle=face.color;g.fill();
-  if(face.seam||face.crack){
-   const a=mix(q[0],q[3],.42),b=mix(q[1],q[2],.52);
-   g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle="#e91a92";g.lineWidth=scale*1.7;g.stroke();
-   if(face.crack){g.beginPath();g.moveTo(q[0].x,q[0].y);g.lineTo(b.x,b.y);g.lineTo(q[3].x,q[3].y);g.strokeStyle="#322936";g.lineWidth=scale;g.stroke();}
-  }
+  g.restore();
  }
 }
 
