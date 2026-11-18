@@ -1,15 +1,20 @@
+import {jadeLowRig,type JadeLowAim} from "./jadeMotion";
 import {wrapRig,type WrapAim} from "./plantedWrap";
 import {ATTACHED_COVER_POSES,type AttachedCoverPose} from "./attachedCoverPose";
 import {prisms33,rayPoly32,type Fracture32} from './fracture32';
 import {arenaPoint46,arenaInverse46,arenaJacobian46} from './bayBridgePresentation';
 import {raptorBarrelSocket,type RaptorSocketRegistration} from './raptorSocket';
 import raptorInventory from '../public/assets/raptor-v2/manifest.json';
-export type BarrelActor27d={wrapAim?:WrapAim;attachedCoverPose?:AttachedCoverPose;x:number;y:number;z?:number;gunFacing?:number;aim?:number;slide?:number;character?:'jade'|'raptor';raptorFrame?:{key:string}};
+export type BarrelActor27d={jadeLowAim?:JadeLowAim;wrapAim?:WrapAim;attachedCoverPose?:AttachedCoverPose;x:number;y:number;z?:number;gunFacing?:number;aim?:number;slide?:number;character?:'jade'|'raptor';raptorFrame?:{key:string}};
 export type BarrelSocket27d={x:number;y:number;z:number;dir:number;raptorAligned?:boolean;attachedAligned?:boolean};
 // Upright sprite registration: 125px cell, feet .88, barrel .88/.37.
 // Convert the socket into the floor projection rather than adding sprite pixels to world XY.
 export function barrelSocket27d(p:BarrelActor27d,scale=.82):BarrelSocket27d{
  if(p.wrapAim)return {...wrapRig(p,p.wrapAim,scale).socket,dir:((Math.round(p.wrapAim.angle/(Math.PI*2)*24)%24)+24)%24,attachedAligned:true};
+ if(p.jadeLowAim){
+  const {angle}=p.jadeLowAim;
+  return {...jadeLowRig(p,p.jadeLowAim,scale).socket,dir:((Math.round(angle/(Math.PI*2)*24)%24)+24)%24,attachedAligned:true};
+ }
  if(p.attachedCoverPose){
   const socket=raptorBarrelSocket(p,ATTACHED_COVER_POSES[p.attachedCoverPose],scale);
   if(socket)return{x:socket.x,y:socket.y,z:socket.z,dir:socket.dir,attachedAligned:true};

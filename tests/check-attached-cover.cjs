@@ -216,3 +216,26 @@ for (const character of ["jade", "raptor"]) {
   assert.equal(fighter.hp, hp);
   assert.ok(round.events.some(e => e.owner === 1 && e.kind === "cover" && e.contactId === protection.id));
 }
+
+for (const rotation of [0, Math.PI/12]) for (const face of [-1, 1]) {
+  const {s,p,tick,normal,wall}=setup("jade",rotation,face,.5,45);
+  const aim=Math.atan2(-normal.y,-normal.x);
+  const input={aim,coverAim:true,coverAimActive:true};
+  tick({...input,fire:true});
+  assert.equal(p.shells,8,"rising barrel cannot fire through the lip");
+  assert.equal(p.fireBlocked,true);
+  tick({...input,fire:true},12);
+  assert.equal(p.shells,8,"refused input does not fire as the barrel clears");
+  assert.equal(p.jadeLowAim.rise,1);
+  assert.ok(barrelSocket27d(p,s.config.spriteScale).z>wall.height27j);
+  tick(input);
+  tick({...input,fire:true});
+  assert.equal(p.shells,7,"a fresh press fires above the actual lip");
+  assertMuzzle(s,p);
+  tick({});
+  assert.ok(p.jadeLowAim.rise<1,"release starts the authored sink");
+  tick({slide:true,x:normal.x,y:normal.y});
+  assert.equal(p.coverId,null,"first directional exit wins during sink");
+  assert.equal(p.jadeLowAim,undefined);
+}
+console.log("PASS Jade waist rise, held refusals, actual clearance, registered discharge and exit during sink");

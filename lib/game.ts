@@ -1,4 +1,5 @@
-import {jadeShieldContact, newJadeShield, JADE_PLATE_HP, JADE_SHIELD_IMPACT, type JadeShield, type ShieldPoint} from "./jadeShield";
+import {jadeLowRig,type JadeLowAim} from "./jadeMotion";
+import {jadeShieldContact, jadeShieldOpening, newJadeShield, JADE_PLATE_HP, JADE_SHIELD_IMPACT, type JadeShield, type ShieldPoint} from "./jadeShield";
 import {plantedWrapAim,wrapRig,type WrapAim,type WrapObstruction} from "./plantedWrap";
 import {SHOT_CONTACT_SECONDS,SHOT_DAMAGE_SECONDS,SHOT_FLASH_SECONDS,SHOT_SMOKE_SECONDS} from "./shotgunPresentation";
 import {selectAttachedCoverPose,type AttachedCoverPose} from "./attachedCoverPose";
@@ -57,7 +58,7 @@ type WrapShotTrace={
  pose:string;muzzle:{x:number;y:number;z:number};obstruction?:WrapObstruction;
  result:"FIRED"|"EDGE LIMIT"|"MUZZLE OBSTRUCTED"|"CENTER TUCK"|"WAITING";at:number;
 };
-export type Player=ElevationState & {jadeShield?:JadeShield;wrapAim?:WrapAim;wrapRetractUntil?:number;wrapShotTrace?:WrapShotTrace;shotgunDirection?:number;coverPivotAt?:number;coverDashActive?:boolean;attachedCoverPose?:AttachedCoverPose;brakeTurn?:KineticBrakeTurn;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;coverDrive11?:boolean;interceptReady11?:number;character?:'jade'|'raptor';raptorPose?:RaptorPoseMemory;raptorCoverShot?:{at:number;coverId:string;frame:RaptorPoseFrame};raptorFrame?:RaptorPoseFrame;arsenal37?:Transit37;recallCursor37?:number;recallNext37?:number;recallGoal37?:Transit37["pose"];recallAt37?:number;coverGate37?:boolean;gripGate37?:boolean;quick36?:{until:number;paid:number;source:string};gripEdges34?:boolean[];gripDesired34?:boolean;gather34?:{kind?:"cover"|"matter";source:string;at:number;revision:number;protective?:boolean;plan?:Rip32};throwBuffer34?:number;avoidSide34?:number;avoidMode34?:string;throwTarget34?:number;hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player=ElevationState & {jadeLowAim?:JadeLowAim;jadeWrapVisual?:{aim:WrapAim;at:number;retract?:boolean};jadeShield?:JadeShield;wrapAim?:WrapAim;wrapRetractUntil?:number;wrapShotTrace?:WrapShotTrace;shotgunDirection?:number;coverPivotAt?:number;coverDashActive?:boolean;attachedCoverPose?:AttachedCoverPose;brakeTurn?:KineticBrakeTurn;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;coverDrive11?:boolean;interceptReady11?:number;character?:'jade'|'raptor';raptorPose?:RaptorPoseMemory;raptorCoverShot?:{at:number;coverId:string;frame:RaptorPoseFrame};raptorFrame?:RaptorPoseFrame;arsenal37?:Transit37;recallCursor37?:number;recallNext37?:number;recallGoal37?:Transit37["pose"];recallAt37?:number;coverGate37?:boolean;gripGate37?:boolean;quick36?:{until:number;paid:number;source:string};gripEdges34?:boolean[];gripDesired34?:boolean;gather34?:{kind?:"cover"|"matter";source:string;at:number;revision:number;protective?:boolean;plan?:Rip32};throwBuffer34?:number;avoidSide34?:number;avoidMode34?:string;throwTarget34?:number;hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type FloorSlab46={floorPanel46?:{sourceId:string;originX:number;originY:number;creator:number}};
 export type Cover=FloorSlab46 & {interceptUntil11?:number;arsenalSlot37?:number;placed34?:boolean;acquire32?:{x:number;y:number;z:number};acquireQueue32?:{x:number;y:number;z:number}[];fracture32?:Fracture32;height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={unitId?:string;groundId?:string;groundScatter?:boolean;spin?:number;spinVelocity?:number;height?:number;liftVelocity?:number;scatterAt?:number;attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
@@ -265,7 +266,7 @@ export function placeRaptorCoverDrill(s:GameState,drill:RaptorCoverDrill,positio
  s.phase="playing";s.countdown=0;
  refreshRaptorPose(raptor,s.time,s.config.slideDuration);
 }
-function releaseCover(p:Player,s:GameState,lock=.18){p.raptorCoverShot=undefined;p.attachedCoverPose=undefined;p.wrapAim=undefined;p.wrapRetractUntil=undefined;p.coverDrive11=false;p.coverEntryAngle=undefined;p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
+function releaseCover(p:Player,s:GameState,lock=.18){p.raptorCoverShot=undefined;p.attachedCoverPose=undefined;p.wrapAim=undefined;p.jadeLowAim=undefined;p.jadeWrapVisual=undefined;p.wrapRetractUntil=undefined;p.coverDrive11=false;p.coverEntryAngle=undefined;p.coverId=null;p.coverMode=null;p.coverAnchor=null;p.coverSpeed=0;p.peek=false;p.peekEdge=false;p.coverLock=s.time+lock}
 export function driveEligible11(p:Player,cv:Cover,s:GameState){
  return p.hp>0&&p.grounded&&p.knock<=0&&stableCoverFace(cv,s)&&cv.generated&&!cv.anchored27j&&!cv.section27j?.anchored&&!cv.protected45&&!p.gripId&&!p.gripCoverId&&!p.arsenal37&&!s.players.some(q=>q!==p&&q.coverId===cv.id)&&canPay31(s,p,s.config.holdEnergy/60);
 }
@@ -483,8 +484,8 @@ function updateJadeGuard(p:Player,enabled:boolean,rawShield:boolean,time:number,
  const guard=p.jadeShield??=newJadeShield(p.input.aim);
  if(!rawShield)guard.requireRelease=false;
  const active=enabled&&!guard.requireRelease&&guard.plates.some(hp=>hp>0);
- if(active&&!guard.active){guard.openedAt=time;guard.angle=p.input.aim;}
- if(!active&&guard.active)guard.closedAt=time;
+ if(active&&!guard.active){guard.openingFrom=jadeShieldOpening(guard,time);guard.openedAt=time;guard.angle=p.input.aim;}
+ if(!active&&guard.active){guard.closingFrom=jadeShieldOpening(guard,time);guard.closedAt=time;}
  if(active&&(p.input.coverAimActive!==false||p.input.aimX!==undefined)){
   const step=18*dt;
   guard.angle=wrap(guard.angle+clamp(wrap(p.input.aim-guard.angle),-step,step));
@@ -520,6 +521,7 @@ function hitJadePlate(s:GameState,target:Player,hit:{index:number;point:ShieldPo
  guard.hitAt=s.time;
  guard.hitPlate=hit.index;
  if(guard.plates.every(hp=>hp===0)){
+  guard.closingFrom=jadeShieldOpening(guard,s.time);
   guard.active=target.shield=false;
   guard.requireRelease=true;
   guard.closedAt=s.time;
@@ -1106,6 +1108,16 @@ function traceWrapShot(s:GameState,p:Player,muzzle:WrapShotTrace["muzzle"],resul
 }
 export function coverMuzzleClearance(p:Player,cv:Cover|undefined,muzzle:{x:number;y:number},aim:number,aiming=coverAimRequested(p,cv)){
  if(!cv||!p.coverAnchor)return{allowed:true,clearance:undefined as string|undefined,mode:"FREE"};
+ if(p.jadeLowAim){
+  const socket=muzzle as {x:number;y:number;z:number};
+  const z=socket.z-(cv.z||0)-(cv.hover||0);
+  const from={x:p.x,y:p.y,z},to={x:socket.x+Math.cos(aim)*3,y:socket.y+Math.sin(aim)*3,z};
+  const geometryClear=coverTime27d(from,to,cv,shotCoverHeight(cv))===null&&
+   !Number.isFinite(surfaceShotTime({...from,z:socket.z},{...to,z:socket.z}));
+  const acrossFace=Math.cos(aim)*p.coverAnchor.nx+Math.sin(aim)*p.coverAnchor.ny<-.035;
+  const allowed=aiming&&geometryClear&&(!acrossFace||p.jadeLowAim.rise>=.46);
+  return {allowed,clearance:undefined,mode:allowed?"OVER":"BLOCKED"};
+ }
  if(p.wrapAim)return {allowed:!p.wrapAim.limited&&!p.wrapAim.blocked,clearance:undefined,mode:p.wrapAim.limited?"WRAP LIMIT":p.wrapAim.blocked?"BLOCKED":"SIDE"};
  const registeredJadeAim=p.character!=="raptor"&&p.input.coverAimActive!==undefined&&p.input.coverAim&&
   p.coverMode==="braced"&&(cv.coverClass!=="tall"||!!raptorCoverEdge(p.coverAnchor,aim));
@@ -1539,7 +1551,7 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
     p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);slideCapture(p,s);collide(p,s)
   }
   else{const chargeMove=p.chargeMotion??1,r=1-Math.exp(-c.response*d),m=Math.hypot(i.x,i.y);p.vx+=(i.x*c.moveSpeed*chargeMove-p.vx)*r;p.vy+=(i.y*c.moveSpeed*chargeMove-p.vy)*r;if(m<.05){p.vx*=Math.pow(c.stopDrag,d);p.vy*=Math.pow(c.stopDrag,d)}p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)}
-  if(p.coverId&&p.jadeShield?.active){p.jadeShield.active=p.shield=false;p.jadeShield.closedAt=s.time;}
+  if(p.coverId&&p.jadeShield?.active){updateJadeGuard(p,false,i.shield,s.time,d);}
   const holding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(holding&&!wasHolding){p.psychicStartedAt=s.time;p.psychicReturnUntil=0}else if(!holding&&wasHolding)p.psychicReturnUntil=s.time+.16;
   resolveSupports27e(p);
   Object.assign(p,integrateVertical(p,playerStarts[n],jump,dt));
@@ -1549,6 +1561,12 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
   {
    const cv=s.covers.find(q=>q.id===p.coverId);
    const oldWrap=p.wrapAim;
+   if(cv&&cv.coverClass!=="tall"&&p.character!=="raptor"&&p.coverMode==="braced"&&
+     i.coverAimActive!==undefined&&!p.coverDrive11&&!p.charging&&!p.gripId&&!p.gripCoverId&&!p.orbitIds.length){
+    const old=p.jadeLowAim;
+    const rise=clamp((old?.rise??0)+(i.coverAim?d/.14:-d/.17),0,1);
+    p.jadeLowAim=rise>0?{angle:i.coverAim?p.gunFacing:old!.angle,rise}:undefined;
+   }else p.jadeLowAim=undefined;
    p.wrapAim=undefined;
    p.attachedCoverPose=undefined;
    if(cv?.coverClass==="tall"&&p.coverMode==="braced"&&p.coverAnchor&&i.coverAim&&i.coverAimActive!==undefined&&!p.coverDrive11&&
@@ -1563,7 +1581,13 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
      p.gunFacing=aim.angle;
     }
    }
-   if(cv&&!p.coverDrive11&&!p.wrapAim){
+   if(p.character!=="raptor"&&cv&&p.coverMode==="braced"){
+    const visual=p.jadeWrapVisual;
+    if(p.wrapAim)p.jadeWrapVisual={aim:p.wrapAim,at:!visual||visual.retract?s.time:visual.at};
+    else if(oldWrap&&!i.coverAim)p.jadeWrapVisual={aim:oldWrap,at:s.time,retract:true};
+    else if(!visual?.retract||s.time-visual.at>=.16)p.jadeWrapVisual=undefined;
+   }else p.jadeWrapVisual=undefined;
+   if(cv&&!p.coverDrive11&&!p.wrapAim&&!p.jadeLowAim){
     if(attachedOpenAim(p))p.attachedCoverPose=selectAttachedCoverPose(p.character,p.gunFacing,p.vx,p.vy);
     else if(p.character!=="raptor"&&p.coverMode==="braced"&&i.coverAim&&cv.coverClass==="tall"&&
       Math.abs(Math.sin(p.gunFacing))<=.38&&raptorCoverEdge(p.coverAnchor,p.gunFacing)){
@@ -1587,11 +1611,12 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
     traceWrapShot(s,p,socket,canExpose?"WAITING":aim?.limited?"EDGE LIMIT":aim?"MUZZLE OBSTRUCTED":"CENTER TUCK");
     if(!canExpose){
      const reason=aim?.limited?"wrap-limit":center?"center-tuck":undefined;
-     const at=aim?.limited?socket:aim?.blocked??socket;
+     const low=p.jadeLowAim,lowBlock=low?firstShotObstruction(s,{x:p.x,y:p.y,z:socket.z},jadeLowRig(p,low,c.spriteScale).socket):undefined;
+    const at=aim?.limited?socket:aim?.blocked??lowBlock??socket;
      combatEvent(s,{kind:"muzzle",source:"shotgun",attackId:uid(),owner:n,damage:0,x:at.x,y:at.y,z:at.z,reason});
-     if(aim||center){
+     if(aim||center||low){
       p.fireBlocked=true;
-      actionOutcome(s,n,"shotgun","rejected",aim?.limited?"wrap limit":center?"center tuck":"muzzle obstructed",aim?.blocked?.surface??cv?.id);
+      actionOutcome(s,n,"shotgun","rejected",aim?.limited?"wrap limit":center?"center tuck":"muzzle obstructed",aim?.blocked?.surface??lowBlock?.surface??cv?.id);
      }
     }
    }

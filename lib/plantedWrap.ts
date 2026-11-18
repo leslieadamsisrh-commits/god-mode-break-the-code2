@@ -85,18 +85,47 @@ export function drawPlantedWrap(g:CanvasRenderingContext2D,image:HTMLImageElemen
   for(const [x,y] of cel.mask.slice(1))g.lineTo(left+x*unit,top+y*unit);
   g.closePath();
  };
- // Keep the foot registration fixed and spread the upper-body lean across the
- // entire stance so the low Raptor shoulder does not stretch the head.
- g.save();
- g.translate(actor.x,actor.y);
- g.transform(1,0,rig.shear,rig.stretch,0,0);
- g.translate(-actor.x,-actor.y);
- g.beginPath();g.rect(left,top,512*unit,512*unit);mask();g.clip("evenodd");
- g.drawImage(image,left,top,512*unit,512*unit);g.restore();
+ const bodyClip=(y:number,height:number)=>{
+  g.beginPath();g.rect(left,y,512*unit,height);g.clip();
+  g.beginPath();g.rect(left,top,512*unit,512*unit);mask();g.clip("evenodd");
+ };
+ const [sx,sy]=cel.shoulder;
+ if(aim.pose==="jade-left"||aim.pose==="jade-right"){
+  const side=aim.pose==="jade-left"?-1:1;
+  // Authored shoulder rolls for the open-side, along-edge, and far-side poses.
+  const relative=Math.max(-FAR_LIMIT,Math.min(Math.PI/2,aim.relative));
+  const roll=side*(relative>=0?.04+.045*Math.cos(relative):.085-.055*relative/FAR_LIMIT);
+  const hipY=top+(side===1?258:281)*unit;
+  const naturalX=left+sx*unit,naturalY=top+sy*unit;
+  const hipLength=hipY-naturalY,hipX=naturalX+side*8*unit;
+  const jointX=shoulder.x+(hipX-naturalX)*Math.cos(roll)-hipLength*Math.sin(roll);
+  const jointY=shoulder.y+(hipX-naturalX)*Math.sin(roll)+hipLength*Math.cos(roll);
+  const legLength=actor.y-hipY;
+  // Match the waist seam on both pieces while the support boot stays fixed.
+  g.save();
+  g.translate(actor.x,actor.y);
+  g.transform(1,0,(hipX-jointX)/legLength,(actor.y-jointY)/legLength,0,0);
+  g.translate(-actor.x,-actor.y);
+  bodyClip(hipY-3*unit,top+512*unit-hipY+3*unit);
+  g.drawImage(image,left,top,512*unit,512*unit);
+  g.restore();
+  g.save();
+  g.translate(shoulder.x,shoulder.y);g.rotate(roll);g.translate(-naturalX,-naturalY);
+  bodyClip(top,hipY-top+3*unit);
+  g.drawImage(image,left,top,512*unit,512*unit);
+  g.restore();
+ }else{
+  g.save();
+  g.translate(actor.x,actor.y);
+  g.transform(1,0,rig.shear,rig.stretch,0,0);
+  g.translate(-actor.x,-actor.y);
+  bodyClip(top,512*unit);
+  g.drawImage(image,left,top,512*unit,512*unit);
+  g.restore();
+ }
  g.save();
  g.translate(shoulder.x,shoulder.y);
  g.rotate(rotation);
- const [sx,sy]=cel.shoulder;
  g.rotate(rig.axis);g.scale(foreshorten,1);g.rotate(-rig.axis);
  g.translate(-left-sx*unit,-top-sy*unit);
  g.beginPath();mask();g.clip();

@@ -11,6 +11,8 @@ export type JadeShield = {
  active:boolean;
  openedAt:number;
  closedAt:number;
+ openingFrom?:number;
+ closingFrom?:number;
  hitAt:number;
  hitPlate:number;
  requireRelease:boolean;
@@ -29,31 +31,63 @@ export function newJadeShield(angle:number):JadeShield {
 
 const clamp01=(n:number)=>Math.min(1,Math.max(0,n));
 
-export function jadeShieldWrist(p:ShieldActor,scale:number):ShieldPoint {
- const angle=p.jadeShield?.angle??0;
- return {x:p.x+Math.cos(angle)*23*scale,y:p.y+Math.sin(angle)*23*scale,z:p.z+46*scale};
+export function jadeShieldOpening(guard:JadeShield,time:number){
+ return guard.active
+  ? Math.min(1,(guard.openingFrom??0)+clamp01((time-guard.openedAt)/JADE_SHIELD_UNFOLD))
+  : Math.max(0,(guard.closingFrom??1)-clamp01((time-guard.closedAt)/JADE_SHIELD_FOLD));
 }
+
+export function jadeShieldRecoil(guard:JadeShield,time:number){
+ const age=(time-guard.hitAt)/JADE_SHIELD_IMPACT;
+ return age>=0&&age<1?Math.pow(1-age,3):0;
+}
+
+export function jadeShieldWrist(p:ShieldActor,scale:number,time:number):ShieldPoint {
+ const guard=p.jadeShield,angle=guard?.angle??0;
+ const reach=23*scale;
+ return {x:p.x+Math.cos(angle)*reach,y:p.y+Math.sin(angle)*reach,z:p.z+(53-(guard?jadeShieldRecoil(guard,time):0)*1.6)*scale};
+}
+
+// Design A's three bands, traced as plate outlines in cuff-local coordinates.
+// Their adjacent edges share points so breaking a band leaves its actual opening.
+const BAND_OUTLINES:readonly (readonly Vertex[])[]=[
+ [[2,-27],[13,-27],[23,-23],[31,-16],[36,-7],[37,-2],[22,-10],[2,-15]],
+ [[-5,-15],[6,-15],[22,-10],[37,-2],[37,4],[35,12],[17,5],[-5,2]],
+ [[0,2],[17,5],[35,12],[31,20],[24,26],[16,26],[8,29],[2,30]],
+];
+const TANGENT_LENGTH=Math.hypot(.83,1.6);
 
 export function jadeShieldPlates(p:ShieldActor,scale:number,time:number):ShieldPlate[] {
  const guard=p.jadeShield;
  if(!guard)return [];
- const opening=guard.active?Math.max(.24,clamp01((time-guard.openedAt)/JADE_SHIELD_UNFOLD)):
-  1-clamp01((time-guard.closedAt)/JADE_SHIELD_FOLD);
+ const opening=jadeShieldOpening(guard,time);
  if(opening<=0)return [];
- const f=guard.angle, fx=Math.cos(f),fy=Math.sin(f),sx=-fy,sy=fx,wrist=jadeShieldWrist(p,scale);
- const spread=1-(1-opening)**3+.075*Math.sin(Math.PI*opening);
+ const wrist=jadeShieldWrist(p,scale,time);
+ const f=guard.angle,fx=Math.cos(f),fy=Math.sin(f);
  return guard.plates.flatMap((hp,index)=>{
   if(hp<=0)return [];
-  const side=index-1, angle=f+(.29+side*.23)*spread;
-  const nx=Math.cos(angle),ny=Math.sin(angle),tx=-ny,ty=nx;
-  const depth=(14+side*8)*spread;
-  const center={x:wrist.x+(fx*depth+sx*side*20*spread)*scale,y:wrist.y+(fy*depth+sy*side*20*spread)*scale,z:p.z+40*scale};
-  const half=13.8*spread, top=(index===1?37:33)*spread, bottom=-32*spread;
-  const profile:Vertex[]=[[-half,bottom+4*spread],[-half*.6,bottom],[half*.72,bottom],[half,bottom+5*spread],
-   [half,top-6*spread],[half*.66,top],[-half*.68,top],[-half,top-4*spread]];
-  const vertices=profile.map(([x,z])=>({x:center.x+tx*x*scale,y:center.y+ty*x*scale,z:center.z+z*scale}));
-  return [{index,hp,center,normal:{x:nx,y:ny},tx,ty,profile,vertices,scale}];
+  const side=index-1,delay=side===0?0:side===-1?.16:.30;
+  const phase=clamp01((opening-delay)/(1-delay));
+  if(phase<=0)return [];
+  const spread=1-(1-phase)**3+.065*Math.sin(phase*Math.PI);
+  const fold=f+side*(1-spread)*.90,co=Math.cos(fold),si=Math.sin(fold);
+  const tx=(.83*co-1.6*si)/TANGENT_LENGTH,ty=(.83*si+1.6*co)/TANGENT_LENGTH;
+  const depth=-3*spread;
+  const center={x:wrist.x+(depth*fx+24*spread*fy)*scale,
+   y:wrist.y+(depth*fy-24*spread*fx)*scale,z:wrist.z-32.12*spread*scale};
+  const profile=BAND_OUTLINES[index].map(([u,v]):Vertex=>[u*TANGENT_LENGTH*spread,(u*1.408-v)*spread]);
+  const vertices=profile.map(([u,z])=>({x:center.x+tx*u*scale,y:center.y+ty*u*scale,z:center.z+z*scale}));
+  return [{index,hp,center,normal:{x:ty,y:-tx},tx,ty,profile,vertices,scale}];
  });
+}
+
+function containsBand(profile:Vertex[],u:number,v:number){
+ let inside=false;
+ for(let i=0;i<profile.length;i++){
+  const [x0,y0]=profile[i],[x1,y1]=profile[(i+1)%profile.length];
+  if((y0>v)!==(y1>v)&&u<x0+(x1-x0)*(v-y0)/(y1-y0))inside=!inside;
+ }
+ return inside;
 }
 
 export function jadeShieldContact(from:ShieldPoint,to:ShieldPoint,p:ShieldActor,scale:number,time:number,start:ShieldPoint=p){
@@ -70,7 +104,7 @@ export function jadeShieldContact(from:ShieldPoint,to:ShieldPoint,p:ShieldActor,
   if(first&&t>=first.t)continue;
   const x=a.x+(to.x-a.x)*t,y=a.y+(to.y-a.y)*t,z=a.z+(to.z-a.z)*t;
   const u=((x-center.x)*tx+(y-center.y)*ty)/scale,v=(z-center.z)/scale;
-  if(profile.some(([x0,y0],i)=>{const [x1,y1]=profile[(i+1)%profile.length];return (x1-x0)*(v-y0)-(y1-y0)*(u-x0)<-1e-6;}))continue;
+  if(!containsBand(profile,u,v))continue;
   first={t,index:plate.index,point:{x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t,z:from.z+(to.z-from.z)*t}};
  }
  return first;

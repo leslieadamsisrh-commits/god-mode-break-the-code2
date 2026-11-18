@@ -1,4 +1,5 @@
 "use client";
+import {drawJadeLowAim,drawJadeMotion,jadeMotionPath,setJadeMotionAtlas} from "../lib/jadeMotion";
 import {drawJadeShield,drawJadePlateImpact,drawJadeGuardPose} from "../lib/jadeShieldPresentation";
 import {drawPlantedWrap,wrapRig} from "../lib/plantedWrap";
 import {CombatAudio} from "../lib/combatAudio";
@@ -174,6 +175,7 @@ function preload(onProgress?:(s:BootState)=>void){
    ...evolution.map(([key,path])=>({label:"evo-"+key,src:path,ready:(im:HTMLImageElement)=>evolutionAssets.set(key,im)})),
    ...["front-right","rear-left"].map(key=>({label:"melee38-"+key,src:"/assets/melee38/"+key+".webp",ready:(im:HTMLImageElement)=>powerAssets.set("melee38-"+key,im)})),
    ...power.map(key=>({label:key,src:"/assets/god-frame/"+key+".png",ready:(im:HTMLImageElement)=>powerAssets.set(key,im)})),
+   {label:"jade-motion",src:jadeMotionPath,ready:setJadeMotionAtlas},
    ...(Object.keys(ATTACHED_COVER_POSES) as AttachedCoverPose[]).map(pose=>({label:pose,src:attachedCoverPath(pose),ready:(im:HTMLImageElement)=>attachedCoverAssets.set(pose,im)})),
    ...actor.map(([key,path])=>({label:"actor-"+key,src:path,ready:(im:HTMLImageElement)=>actorAssets.set(key,im)})),
    ...classic.map(([key,path])=>({label:key,src:"https://jade-v1-combat-lab-v142.leslieadams-isrh.chatgpt.site"+path,ready:(im:HTMLImageElement)=>classicAssets.set(key,im)})),
@@ -788,7 +790,6 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
   ...(s.matter||[]).map((m:any)=>({y:m.y,kind:"matter",player:{x:m.x,y:m.y,z:m.height||0},fn:()=>withUpright(g,m.x,m.y,()=>matter(g,m))})),
   ...s.players.map((raw:any,index:number)=>{const confirmed=(s.fx||[]).findLast((f:any)=>f.type==="shot-result-hit"&&f.target===index&&f.life>0);
    const actor={...(index===localSlot?local:{...raw,id:"fighter-"+index}),local30:index===localSlot,shotgunHit:confirmed};return{y:actor.y,kind:"player",player:actor,fn:()=>{const fighterKind=actor.character==="raptor"?"raptor":index===localSlot?character:"jade",auraRear=jadeChargeAssets.get("rear"),auraFront=jadeChargeAssets.get("front"),auraFrame=fighterKind==="jade"&&auraRear&&auraFront?jadeChargeFrame(actor,cfg.powerChargeSeconds):null;
-   let usesGuardPose=false;
    const v2=fighterKind==="jade"&&chargeArt&&(actor.charging||actor.powerFlash>0||actor.powerReturn>0);
    if(!v2&&(auraFrame===null||!burnAtlas))drawGodGround(g,actor,s.time);
    withUpright(g,actor.x,actor.y,()=>{g.translate(0,-(actor.z||0));if(actor.hp>0){const footY=actor.y-powerHover(actor)*cfg.spriteScale;
@@ -796,10 +797,10 @@ function draw(canvas:HTMLCanvasElement|null,s:any,received:number,mouseState:{x:
     if(v2)drawJadeChargeV2(g,chargeArt,actor,actor.x,actor.y,footY,cfg.spriteScale,cfg.powerChargeSeconds,jadePalette,false);
     else if(auraFrame!==null)drawJadeChargeLayer(g,auraRear!,auraFrame,actor.x,footY,cfg.spriteScale,opacity);
     else drawGodRear(g,actor,s.time);
-    usesGuardPose=fighter(g,actor,s.time,cfg,fighterKind,!!v2||auraFrame!==null)===true;
+    fighter(g,actor,s.time,cfg,fighterKind,!!v2||auraFrame!==null);
     if(v2)drawJadeChargeV2(g,chargeArt,actor,actor.x,actor.y,footY,cfg.spriteScale,cfg.powerChargeSeconds,jadePalette,true);
     else if(auraFrame!==null)drawJadeChargeLayer(g,auraFront!,auraFrame,actor.x,footY,cfg.spriteScale,opacity);
-    else drawGodFront(g,actor,s.time)}else{g.save();const age=Math.max(0,s.time-(actor.deathAt??s.time)),fade=Math.max(.12,1-age/1.5);g.globalAlpha=fade;for(let n=0;n<28;n++){const a=n*2.399,r=8+age*(15+n%5*9);g.fillStyle=actor.bot?(n%3===0?"#d9e1e7":n%2?"#84324f":"#151b26"):(n%3===0?"#f0eaff":n%2?"#65efff":"#ff69bd");const x=actor.x+Math.cos(a)*r,y=actor.y-12-n*1.7+Math.sin(a)*r*.5+age*age*17;if(actor.bot){g.beginPath();g.ellipse(x,y,2+n%3,1+n%2,a,0,Math.PI*2);g.fill()}else g.fillRect(x,y,2+n%3,2+n%2)}g.restore();}g.save();g.fillStyle=index===localSlot?"#65efff":"#ff69bd";g.font="bold 8px monospace";g.textAlign="center";g.fillText(s.mode==="watch"?actor.name:index===localSlot?"YOU":actor.name,actor.x,actor.y-84);g.restore()});if(fighterKind==="jade"&&actor.hp>0)drawJadeShield(g,actor,cfg.spriteScale,s.time,usesGuardPose);}}})
+    else drawGodFront(g,actor,s.time)}else{g.save();const age=Math.max(0,s.time-(actor.deathAt??s.time)),fade=Math.max(.12,1-age/1.5);g.globalAlpha=fade;for(let n=0;n<28;n++){const a=n*2.399,r=8+age*(15+n%5*9);g.fillStyle=actor.bot?(n%3===0?"#d9e1e7":n%2?"#84324f":"#151b26"):(n%3===0?"#f0eaff":n%2?"#65efff":"#ff69bd");const x=actor.x+Math.cos(a)*r,y=actor.y-12-n*1.7+Math.sin(a)*r*.5+age*age*17;if(actor.bot){g.beginPath();g.ellipse(x,y,2+n%3,1+n%2,a,0,Math.PI*2);g.fill()}else g.fillRect(x,y,2+n%3,2+n%2)}g.restore();}g.save();g.fillStyle=index===localSlot?"#65efff":"#ff69bd";g.font="bold 8px monospace";g.textAlign="center";g.fillText(s.mode==="watch"?actor.name:index===localSlot?"YOU":actor.name,actor.x,actor.y-84);g.restore()});if(fighterKind==="jade"&&actor.hp>0)drawJadeShield(g,actor,cfg.spriteScale,s.time);}}})
  ].sort((a,b)=>a.y-b.y);
  actors.forEach(o=>{
   if(o.kind==="player"&&(o as any).player.local30&&local.hp>0){
@@ -1328,11 +1329,27 @@ function fighter(g:CanvasRenderingContext2D,p:any,t:number,cfg:Config,character:
  const raptor=character==="raptor"||p.character==="raptor",scale=cfg.spriteScale;
  const recoil=shotgunKick(t-(p.lastShot??-9),raptor);
  const wrap=p.wrapAim;
+ if(!raptor&&p.jadeLowAim&&drawJadeLowAim(g,p,p.jadeLowAim,scale,recoil,p.fireState>0))return;
+ const side=Math.cos(p.gunFacing)<0?-1:1;
+ if(!raptor&&p.coverId&&p.coverMode==="braced"&&!p.coverDrive11&&!p.charging&&Math.abs(p.coverSpeed||0)<2&&p.coverState11!=="catch"){
+  const visual=p.jadeWrapVisual;
+  if(visual){
+   const alpha=Math.max(0,Math.min(1,visual.retract?1-(t-visual.at)/.16:(t-visual.at)/.075));
+   const opacity=recoil||p.input?.fire||alpha>=.45?1:0;
+   const image=attachedCoverAssets.get(visual.aim.pose);
+   if(image&&opacity<1)drawJadeMotion(g,p,scale,"tallTuck",visual.aim.pose==="jade-left"?-1:1,1-opacity);
+   if(image){
+    g.save();g.globalAlpha*=opacity;drawPlantedWrap(g,image,p,visual.aim,scale,recoil);g.restore();return;
+   }
+  }
+  if(!wrap&&!coverExposed13(p)&&(!p.input?.coverAim||p.coverTall11)&&
+   drawJadeMotion(g,p,scale,p.coverTall11?"tallTuck":"lowTuck",side))return;
+ }
  if(wrap){
   const image=attachedCoverAssets.get(wrap.pose);
   if(image){drawPlantedWrap(g,image,p,wrap,scale,recoil);return;}
  }
- if(!raptor&&!p.coverId&&!p.charging&&!p.input?.fire&&!recoil&&!p.slide&&!p.dash&&!p.meleeCombo&&!p.knock&&drawJadeGuardPose(g,p,scale,t)){
+ if(!raptor&&!p.coverId&&!p.charging&&!p.input?.fire&&!recoil&&!p.slide&&!p.dash&&!p.meleeCombo&&(!p.knock||p.jadeShield?.active)&&drawJadeGuardPose(g,p,scale,t)){
   g.strokeStyle=p.local30?"#65efff":"#ff69bd";g.lineWidth=2;g.beginPath();g.ellipse(p.x,p.y+5*DECK_PITCH,25,8*DECK_PITCH,0,0,Math.PI*2);g.stroke();return true;
  }
  const hit=p.shotgunHit,impact=hit&&p.hitUntil>t?Math.min(1,(p.hitUntil-t)/.13)*Math.min(1,(hit.strength??0)/80+.12)*(p.knock>0?1:.6):0;
