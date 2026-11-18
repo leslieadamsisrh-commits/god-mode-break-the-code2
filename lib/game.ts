@@ -1,3 +1,4 @@
+import {jadeShieldContact, newJadeShield, JADE_PLATE_HP, JADE_SHIELD_IMPACT, type JadeShield, type ShieldPoint} from "./jadeShield";
 import {plantedWrapAim,wrapRig,type WrapAim,type WrapObstruction} from "./plantedWrap";
 import {SHOT_CONTACT_SECONDS,SHOT_DAMAGE_SECONDS,SHOT_FLASH_SECONDS,SHOT_SMOKE_SECONDS} from "./shotgunPresentation";
 import {selectAttachedCoverPose,type AttachedCoverPose} from "./attachedCoverPose";
@@ -56,7 +57,7 @@ type WrapShotTrace={
  pose:string;muzzle:{x:number;y:number;z:number};obstruction?:WrapObstruction;
  result:"FIRED"|"EDGE LIMIT"|"MUZZLE OBSTRUCTED"|"CENTER TUCK"|"WAITING";at:number;
 };
-export type Player=ElevationState & {wrapAim?:WrapAim;wrapRetractUntil?:number;wrapShotTrace?:WrapShotTrace;shotgunDirection?:number;coverPivotAt?:number;coverDashActive?:boolean;attachedCoverPose?:AttachedCoverPose;brakeTurn?:KineticBrakeTurn;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;coverDrive11?:boolean;interceptReady11?:number;character?:'jade'|'raptor';raptorPose?:RaptorPoseMemory;raptorCoverShot?:{at:number;coverId:string;frame:RaptorPoseFrame};raptorFrame?:RaptorPoseFrame;arsenal37?:Transit37;recallCursor37?:number;recallNext37?:number;recallGoal37?:Transit37["pose"];recallAt37?:number;coverGate37?:boolean;gripGate37?:boolean;quick36?:{until:number;paid:number;source:string};gripEdges34?:boolean[];gripDesired34?:boolean;gather34?:{kind?:"cover"|"matter";source:string;at:number;revision:number;protective?:boolean;plan?:Rip32};throwBuffer34?:number;avoidSide34?:number;avoidMode34?:string;throwTarget34?:number;hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
+export type Player=ElevationState & {jadeShield?:JadeShield;wrapAim?:WrapAim;wrapRetractUntil?:number;wrapShotTrace?:WrapShotTrace;shotgunDirection?:number;coverPivotAt?:number;coverDashActive?:boolean;attachedCoverPose?:AttachedCoverPose;brakeTurn?:KineticBrakeTurn;coverState11?:RaptorCoverState11;coverTall11?:boolean;coverEntryAngle?:number;coverDrive11?:boolean;interceptReady11?:number;character?:'jade'|'raptor';raptorPose?:RaptorPoseMemory;raptorCoverShot?:{at:number;coverId:string;frame:RaptorPoseFrame};raptorFrame?:RaptorPoseFrame;arsenal37?:Transit37;recallCursor37?:number;recallNext37?:number;recallGoal37?:Transit37["pose"];recallAt37?:number;coverGate37?:boolean;gripGate37?:boolean;quick36?:{until:number;paid:number;source:string};gripEdges34?:boolean[];gripDesired34?:boolean;gather34?:{kind?:"cover"|"matter";source:string;at:number;revision:number;protective?:boolean;plan?:Rip32};throwBuffer34?:number;avoidSide34?:number;avoidMode34?:string;throwTarget34?:number;hold33?:{aim:number;intent:{x:number;y:number;a:number};actual:{x:number;y:number;z:number;a:number};distanceError:number;angleError:number;acquiring:boolean;blocked:string|null};ripPreview32?:Rip32;ripCommit32?:Rip32;previewAt32?:number;sparDecision31?:number;ripTarget27j?:string;timeUntil27g?:number;timeReady27g?:number;shieldAt27g?:number;shieldReady27g?:number;followUntil27g?:number;followTarget27g?:number;bufferMelee27g?:number;staggerReady27g?:number;gloveHoldStarted?:number;gloveCharge?:number;coverShape?:number;meleeCombo?:MeleeCombo;meleeNextUntil?:number;meleeNextStage?:number;blastCharge?:number;blastChargeProgress?:number;blastUntil?:number;blastPoseAt?:number;botRecoverAfter?:number;botMeleeUntil?:number;gripCancelRelease?:boolean;gripGesture?:boolean;gripDrive?:number;gripDriveAt?:number;gripReleaseKind?:string;gripReleaseUntil?:number;botAvoidGrabUntil?:number;botGripStyle?:number;botGuardUntil?:number;botNextGuard?:number;pendingFireUntil?:number;botBuildFailures?:number;botSeenAction?:number;botCounterUntil?:number;botBuildId?:string;botBuildAt?:number;botNextBuild?:number;botRechargeUntil?:number;botProbeAt?:number;botProbeX?:number;botProbeY?:number;botEscapeUntil?:number;botIntent?:string;botTimeEnd?:number;botFollowUntil?:number;botReleaseUntil?:number;selectedPower?:number;selectedWeapon?:number;timeFieldActive?:boolean;timePellets?:number;timeVolleys?:number;timeAgeRemaining?:number;pendingMelee?:{heavy:boolean;until:number};reactionDeadline?:number;lastContactAt?:number;fieldLevel?:number;gripHint?:string;gripHintUntil?:number;botRouteSide?:number;botGripSince?:number;hitUntil?:number;hitAngle?:number;deathAt?:number;shells?:number;maxShells?:number;reserveShells?:number;weaponState?:"READY"|"FIRE"|"RECOIL"|"PUMP"|"EMPTY"|"RELOAD";psychicStartedAt?:number;psychicReturnUntil?:number;chargeSuppressed?:string[];x:number;y:number;vx:number;vy:number;aim:number;hp:number;battery:number;charging:boolean;chargeMotion:number;chargeAge:number;godCharge:number;godTime:number;godDuration:number;powerFlash:number;powerReturn:number;powerReleaseAge:number;powerReleaseCharge:number;godFade:number;godFadeStrength:number;powerBlocked:boolean;lastEnergyAt:number;dash:number;brake:number;slideSteerCurrent:number;lastSlideTap:number;slide:number;slideFacing:number;slideCool:number;kickScale?:number;kickStage:"none"|"burst"|"step";kickTime:number;kickAngle:number;kickNx:number;kickNy:number;coverId:string|null;coverMode:"soft"|"braced"|null;coverAnchor:CoverAnchor|null;coverLock:number;coverSpeed:number;softImpact?:number;softImpactAt?:number;peek:boolean;peekEdge:boolean;contact:number;exit:CoverExit|null;shield:boolean;gripId:string|null;gripCoverId:string|null;coverGripAngle:number;coverGripDist:number;orbitIds:string[];knock:number;pinball:number;lastShot:number;fireBlocked:boolean;fireState:number;recoil:number;returnToCover:number;boostState:number;brakeState:number;diagAuthCorrection?:number;diagNetAge?:number;gunFacing:number;lastMelee:number;score:number;rematch:boolean;input:InputState;processedInput:InputState;lastSeq:number;name:string;token:string;bot:boolean};
 export type FloorSlab46={floorPanel46?:{sourceId:string;originX:number;originY:number;creator:number}};
 export type Cover=FloorSlab46 & {interceptUntil11?:number;arsenalSlot37?:number;placed34?:boolean;acquire32?:{x:number;y:number;z:number};acquireQueue32?:{x:number;y:number;z:number}[];fracture32?:Fracture32;height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={unitId?:string;groundId?:string;groundScatter?:boolean;spin?:number;spinVelocity?:number;height?:number;liftVelocity?:number;scatterAt?:number;attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
@@ -477,6 +478,58 @@ function settleCover(cv:Cover,s:GameState){
  cv.x=clamp(cv.x,A.left+ex,A.right-ex);cv.y=clamp(cv.y,A.top+ey,A.bottom-ey);
 }
 function spendEnergy(p:Player,s:GameState,cost:number){if(!canPay31(s,p,cost)){s.fx.push({id:uid(),type:"low-energy",x:p.x,y:p.y,life:.3,text:"LOW CHARGE"});p.gripHint="LOW BATTERY · HOLD Y";p.gripHintUntil=s.time+1.5;return false}debitEnergy31(s,p,cost);p.lastEnergyAt=s.time;return true}
+function updateJadeGuard(p:Player,enabled:boolean,rawShield:boolean,time:number,dt:number){
+ if(p.character==="raptor"){p.shield=enabled;return;}
+ const guard=p.jadeShield??=newJadeShield(p.input.aim);
+ if(!rawShield)guard.requireRelease=false;
+ const active=enabled&&!guard.requireRelease&&guard.plates.some(hp=>hp>0);
+ if(active&&!guard.active){guard.openedAt=time;guard.angle=p.input.aim;}
+ if(!active&&guard.active)guard.closedAt=time;
+ if(active&&(p.input.coverAimActive!==false||p.input.aimX!==undefined)){
+  const step=18*dt;
+  guard.angle=wrap(guard.angle+clamp(wrap(p.input.aim-guard.angle),-step,step));
+ }
+ guard.active=p.shield=active;
+}
+
+function chargeJadeShield(p:Player,s:GameState,dt:number){
+ const guard=p.jadeShield;
+ if(!guard)return;
+ if(!p.charging){guard.chargeHeld=guard.chargeProgress=0;return;}
+ if(guard.plates.every(hp=>hp===JADE_PLATE_HP))return;
+ // The existing charge can inherit battery progress. Shield repair requires a full held cycle.
+ const duration=.35+Math.max(.1,s.config.powerChargeSeconds);
+ guard.chargeHeld+=dt;
+ guard.chargeProgress=Math.min(p.godCharge,guard.chargeHeld/duration);
+ if(guard.chargeProgress>=1-1e-8){
+  guard.plates=[JADE_PLATE_HP,JADE_PLATE_HP,JADE_PLATE_HP];
+  guard.requireRelease=true;
+  guard.readyAt=s.time;
+  guard.chargeHeld=guard.chargeProgress=0;
+ }
+}
+
+function guardContact(s:GameState,p:Player,from:ShieldPoint,to:ShieldPoint,start?:ShieldPoint){
+ return p.shield&&p.battery>0&&!p.coverId?jadeShieldContact(from,to,p,s.config.spriteScale,s.time,start):null;
+}
+
+function hitJadePlate(s:GameState,target:Player,hit:{index:number;point:ShieldPoint},damage:number,source:string,owner:number,attackId:string|undefined,incomingAngle:number,parry=false){
+ const guard=target.jadeShield!;
+ const remaining=Math.max(0,guard.plates[hit.index]-damage);
+ guard.plates[hit.index]=remaining;
+ guard.hitAt=s.time;
+ guard.hitPlate=hit.index;
+ if(guard.plates.every(hp=>hp===0)){
+  guard.active=target.shield=false;
+  guard.requireRelease=true;
+  guard.closedAt=s.time;
+ }
+ const targetId=s.players.indexOf(target);
+ combatEvent(s,{kind:"shield",source,owner,target:targetId,incomingAngle,attackId,parry,contactId:"jade-shield",damage:0,...hit.point});
+ s.fx.push({id:uid(),type:"jade-plate-contact",...hit.point,life:JADE_SHIELD_IMPACT,angle:incomingAngle,
+  owner,target:targetId,text:remaining<=0?"break":"block",blastId:attackId});
+}
+
 // Charge is vulnerable; timers use real time, never slow-time simulation time.
 function powerStep(p:Player,s:GameState,dt:number){
  const i=p.input,c=s.config;
@@ -585,7 +638,11 @@ function meleeStep(s:GameState,n:number){const p=s.players[n],m=p.meleeCombo;if(
  if(!m.tested&&age>=spec.startup&&age<=spec.startup+spec.active+.025){m.tested=true;const end={x:p.x+Math.cos(m.angle)*(spec.range+charge*12),y:p.y+Math.sin(m.angle)*(spec.range+charge*12)},t=s.players[1-n];let block:Cover|undefined,nearest=Infinity;
   for(const cv of s.covers){if(cv.hp<=0||p.z+32<(cv.z||0)||p.z+32>(cv.z||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78))continue;const q=coverTime27d({x:p.x,y:p.y,z:p.z+32-(cv.z||0)-(cv.hover||0)},{...end,z:p.z+32-(cv.z||0)-(cv.hover||0)},cv,cv.height27j??78);if(q!==null&&q<nearest){nearest=q;block=cv;}}
   const structureT=surfaceShotTime({x:p.x,y:p.y,z:p.z+32},{...end,z:p.z+32});if(structureT<nearest){nearest=structureT;block=undefined;}const contact=t&&t.hp>0&&Math.abs(t.z-p.z)<48?sweptCircle(p,end,t,t,20):null;
-  if(contact!==null&&contact<nearest){const hp=t.hp;duelContact(s,n,t,spec.damage+charge*28,Math.cos(m.angle)*(spec.push+charge*175),Math.sin(m.angle)*(spec.push+charge*175),"torso",undefined,"melee",m.attackId);m.hit27g=t.hp<hp;if(charge>.85&&t.hp<hp){p.blastUntil=s.time+GLOVE_BLAST_38.window;}}
+  const plate=t&&t.hp>0?guardContact(s,t,{...p,z:p.z+32},{...end,z:p.z+32}):null;
+  if(plate&&plate.t<nearest&&(contact===null||plate.t<=contact)){
+   hitJadePlate(s,t,plate,spec.damage+charge*28,"melee",n,m.attackId,m.angle+Math.PI);
+  }
+  else if(contact!==null&&contact<nearest){const hp=t.hp;duelContact(s,n,t,spec.damage+charge*28,Math.cos(m.angle)*(spec.push+charge*175),Math.sin(m.angle)*(spec.push+charge*175),"torso",undefined,"melee",m.attackId);m.hit27g=t.hp<hp;if(charge>.85&&t.hp<hp){p.blastUntil=s.time+GLOVE_BLAST_38.window;}}
   else if(block){damageCover(block,s,spec.damage+charge*28);combatEvent(s,{kind:"cover",source:"melee",attackId:m.attackId,owner:n,damage:spec.damage+charge*28,x:end.x,y:end.y,z:25,material:bayObject(block.artId||block.id)?.material==="CONCRETE"?"stone":"metal"});}
   else actionOutcome(s,n,"melee","missed","whiff",undefined,undefined,m.attackId);
   s.fx.push({id:uid(),type:"melee-strike",x:end.x,y:end.y,z:30,angle:m.angle,life:.14+charge*.22,owner:n,text:charge>.8?"GOD FIST":charge>.3?"POWER HIT":spec.name});
@@ -615,7 +672,7 @@ function combatEvent(s:GameState,event:Omit<CombatEvent,"seq"|"round"|"at">){
    previous.life=duration;
   }else if(!previous){
    s.fx.push({id:uid(),type:"shot-result-"+event.kind,blastId,summaryKey,outcomeKey,x:event.x,y:event.y,z:event.z,
-    life:duration,owner:event.owner,target:event.target,surfaceMaterial:event.material,angle:event.incomingAngle,strength:event.damage,text:event.reason});
+    life:duration,owner:event.owner,target:event.target,surfaceMaterial:event.material,angle:event.incomingAngle,strength:event.damage,text:event.contactId==="jade-shield"?"jade-shield":event.reason});
   }
  }
  const e={...event,seq:(s.eventSeq||0)+1,round:s.round,at:s.time};s.eventSeq=e.seq;(s.events??=[]).push(e);s.events=s.events.slice(-64);return e;
@@ -623,7 +680,7 @@ function combatEvent(s:GameState,event:Omit<CombatEvent,"seq"|"round"|"at">){
 function duelContact(s:GameState,owner:number,target:Player,damage:number,vx=0,vy=0,region:HitRegion="torso",point?:{x:number;y:number;z:number},source="contact",attackId?:string){
  if(target.hp<=0)return;
  const pos=point||{x:target.x,y:target.y,z:target.z+36*s.config.spriteScale},targetId=s.players.indexOf(target),attacker=s.players[owner],incomingAngle=Math.hypot(vx,vy)>.001?Math.atan2(-vy,-vx):attacker?Math.atan2(attacker.y-target.y,attacker.x-target.x):undefined;
- if(target.shield&&target.input.shield&&!target.coverId&&target.battery>0){combatEvent(s,{kind:"shield",parry:s.time-(target.shieldAt27g??-9)<=.12,incomingAngle,source,attackId,owner,target:targetId,damage:0,...pos});if(source!=="shotgun")s.fx.push({id:uid(),type:s.time-(target.shieldAt27g??-9)<=.12?"parry27g":"shield-block",x:pos.x,y:pos.y,z:pos.z,life:.22,owner});return;}
+ if(target.character==="raptor"&&target.shield&&target.input.shield&&!target.coverId&&target.battery>0){combatEvent(s,{kind:"shield",parry:s.time-(target.shieldAt27g??-9)<=.12,incomingAngle,source,attackId,owner,target:targetId,damage:0,...pos});if(source!=="shotgun")s.fx.push({id:uid(),type:s.time-(target.shieldAt27g??-9)<=.12?"parry27g":"shield-block",x:pos.x,y:pos.y,z:pos.z,life:.22,owner});return;}
  if(attacker&&source==="shotgun"&&dist(attacker,target)<=120&&Math.abs(attacker.z-target.z)<48){attacker.followUntil27g=s.time+.30;attacker.followTarget27g=targetId;}const dealt=Math.min(target.hp,damage);target.hp=Math.max(0,target.hp-damage);if(s.time>=(target.staggerReady27g||0)){target.reactionDeadline=s.time+.35;target.staggerReady27g=s.time+.70;}target.lastContactAt=s.time;target.knock=Math.min(.18,Math.max(0,(target.reactionDeadline??s.time)-s.time));target.vx+=vx*(target.knock>0?1:.15);target.vy+=vy*(target.knock>0?1:.15);target.hitUntil=s.time+.18;target.hitAngle=Math.atan2(vy,vx);if(!target.hp)target.deathAt=s.time;
  combatEvent(s,{kind:"hit",incomingAngle,source,attackId,owner,target:targetId,region,damage:dealt,...pos});const burst=s.fx.find(f=>f.type==="hit"&&f.owner===owner&&f.life>=.319&&dist(f,pos)<35);if(burst)burst.strength=Math.min(100,(burst.strength||0)+dealt);else if(source!=="shotgun")s.fx.push({id:uid(),type:"hit",x:pos.x,y:pos.y,z:pos.z,life:.32,owner,text:region,material:target.bot?"cyber":"digital",angle:Math.atan2(vy,vx),strength:dealt});
  // One bounded floor stain per confirmed burst; shields never reach this branch.
@@ -884,7 +941,11 @@ function edgeActions(s:GameState,n:number,prev:InputState){const p=s.players[n],
  else if(pending&&!p.charging&&p.knock<=0&&!p.meleeCombo&&s.time-p.lastMelee>.85){
   p.pendingMelee=undefined;p.lastMelee=s.time;const strike={x:p.x+Math.cos(p.aim)*40,y:p.y+Math.sin(p.aim)*40},target=s.players[1-n];
   s.fx.push({id:uid(),type:"heavy",...strike,life:.22,owner:n});
-  if(target&&dist(strike,target)<=21&&!s.covers.some(cv=>segmentCover(p,strike,cv)))duelContact(s,n,target,34,Math.cos(p.aim)*520,Math.sin(p.aim)*520,"torso",undefined,"heavy",uid());
+  if(target&&!s.covers.some(cv=>segmentCover(p,strike,cv))){
+   const plate=guardContact(s,target,{...p,z:p.z+32},{...strike,z:p.z+32});
+   if(plate)hitJadePlate(s,target,plate,34,"heavy",n,uid(),p.aim+Math.PI);
+   else if(dist(strike,target)<=21)duelContact(s,n,target,34,Math.cos(p.aim)*520,Math.sin(p.aim)*520,"torso",undefined,"heavy",uid());
+  }
  }
  // Contextual floor restoration: LB + RB while aiming at a depleted nearby cell.
  // No new button. Never override a held object or ordinary RB construction.
@@ -1118,7 +1179,7 @@ function sweptCircle(from:{x:number;y:number},to:{x:number;y:number},start:{x:nu
  if(c<=0)return 0;const a=dx*dx+dy*dy;if(a<1e-12)return null;const b=2*(x*dx+y*dy),disc=b*b-4*a*c;if(disc<0)return null;const t=(-b-Math.sqrt(disc))/(2*a);return t>=0&&t<=1?t:null;
 }
 export function shotPlayerTime(from:{x:number;y:number;z?:number},to:{x:number;y:number},z:number,p:Player,start:{x:number;y:number;z?:number},scale=.82,radius=0){
- const shield=p.shield&&p.input.shield&&!p.coverId&&p.battery>0;
+ const shield=p.character==="raptor"&&p.shield&&p.input.shield&&!p.coverId&&p.battery>0;
  let first:{t:number;region:HitRegion}|null=null;
  for(const r of bodyRegions(p,scale)){
   const t=cylinderTime27d({...from,z:from.z??z},{...to,z},{...start,z:start.z??p.z},p,(shield?30:r.r)+radius,r.min-radius,r.max+radius);if(t!==null&&(!first||t<first.t))first={t,region:r.region};
@@ -1237,12 +1298,18 @@ function scatterMatter42(m:Matter,s:GameState,starts:{x:number;y:number}[],dt:nu
 // Brother Build 768e3c3: flying matter deals 22 to fighters, 28 to cover,
 // with 360 impulse and .45 cover rebound. Sweeps/ownership make that port safe.
 function matterContactSwept(m:Matter,from:{x:number;y:number},s:GameState,starts:{x:number;y:number}[]){
- const speed=Math.hypot(m.vx,m.vy);if(speed<=140)return;let nearest=surfaceShotTime({...from,z:Math.max(1,m.height||8)},{x:m.x,y:m.y,z:Math.max(1,m.height||8)}),cv:Cover|undefined,target:Player|undefined,slot=-1;
+ const speed=Math.hypot(m.vx,m.vy);if(speed<=140)return;let nearest=surfaceShotTime({...from,z:Math.max(1,m.height||8)},{x:m.x,y:m.y,z:Math.max(1,m.height||8)}),cv:Cover|undefined,target:Player|undefined,slot=-1,plate:ReturnType<typeof guardContact>=null;
  for(const c of s.covers){if(c.hp<=0||m.hitIds?.includes(c.id))continue;const t=coverTime27d({...from,z:(m.height||8)-(c.z||0)-(c.hover||0)},{x:m.x,y:m.y,z:(m.height||8)-(c.z||0)-(c.hover||0)},c,c.height27j??78,m.r);if(t!==null&&t<nearest){nearest=t;cv=c;}}
- if(speed>170)for(let n=0;n<s.players.length;n++){const p=s.players[n];if(n===m.throwOwner||p.hp<=0||(p.z||0)>24||m.hitIds?.includes("player-"+n))continue;const t=sweptCircle(from,m,starts[n],p,m.r+19);if(t!==null&&t<nearest){nearest=t;target=p;slot=n;cv=undefined;}}
+ if(speed>170)for(let n=0;n<s.players.length;n++){const p=s.players[n];if(n===m.throwOwner||p.hp<=0||(p.z||0)>24||m.hitIds?.includes("player-"+n))continue;const z=Math.max(1,m.height||8),guard=guardContact(s,p,{...from,z},{...m,z},{...starts[n],z:p.z});
+  const body=sweptCircle(from,m,starts[n],p,m.r+19);
+  // Legacy matter radius may reach the body before its center reaches the face.
+  const blocked=guard&&(body===null||guard.t<=body);
+  const t=blocked?guard.t:body;
+  if(t!==null&&t<nearest){nearest=t;target=p;slot=n;cv=undefined;plate=blocked?guard:null;}}
  if(!Number.isFinite(nearest))return;m.x=from.x+(m.x-from.x)*nearest;m.y=from.y+(m.y-from.y)*nearest;
  if(!target&&!cv){m.vx*=-.45;m.vy*=-.45;}
- if(target){(m.hitIds??=[]).push("player-"+slot);duelContact(s,m.throwOwner??-1,target,22,m.vx/speed*360,m.vy/speed*360,"low",{x:m.x,y:m.y,z:8},"matter-throw",m.attackId);m.vx*=.25;m.vy*=.25;}
+ if(target){(m.hitIds??=[]).push("player-"+slot);if(plate)hitJadePlate(s,target,plate,22,"matter-throw",m.throwOwner??-1,m.attackId,Math.atan2(-m.vy,-m.vx));
+  else duelContact(s,m.throwOwner??-1,target,22,m.vx/speed*360,m.vy/speed*360,"low",{x:m.x,y:m.y,z:8},"matter-throw",m.attackId);m.vx*=.25;m.vy*=.25;}
  else if(cv){(m.hitIds??=[]).push(cv.id);damageCover(cv,s,28);m.vx*=-.45;m.vy*=-.45;const material=m.kind;combatEvent(s,{kind:"cover",source:"matter-throw",attackId:m.attackId,owner:m.throwOwner??-1,damage:28,x:m.x,y:m.y,z:8,material});s.fx.push({id:uid(),type:"cover-hit",x:m.x,y:m.y,z:8,life:.25,text:material});}
 }
 // Spectator bots issue ordinary authoritative inputs, never fabricated damage or teleports.
@@ -1386,11 +1453,11 @@ function chargeIntent(p:Player,s:GameState,raw:InputState,dt:number){
 function repulseHooks21(s:GameState){return{blocked:(a:{x:number;y:number},b:{x:number;y:number})=>s.covers.some(c=>c.hp>0&&segmentCover(a,b,c)),emit:(owner:number,status:ActionOutcome['status'],reason:string)=>{actionOutcome(s,owner,'repulse',status,reason);},spend:(owner:number,amount:number)=>spendEnergy(s.players[owner],s,amount)};}
 function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:string)=>boolean){for(const p of s.players)if(!p.bot&&p.gripDesired34!==undefined)p.input.grip=p.gripEdges34?.length?p.gripEdges34.shift()!:p.gripDesired34;const before=s.players.map(p=>({...p,orbitIds:[...p.orbitIds]})),requests=s.players.map((p,n)=>actionRequests(p,p.input,prev[n]||empty(),s.time,!!s.config.legacyPowers)),firstSeq=s.actionSeq||0;requests.forEach((xs,n)=>xs.forEach(action=>actionOutcome(s,n,action,"attempted")));const c=s.config,rawInputs=s.players.map(p=>p.input),playerStarts=s.players.map(p=>({x:p.x,y:p.y,z:p.z}));
  s.players.forEach((p,n)=>p.input=repulseInput21(s,n,chargeIntent(p,s,rawInputs[n],dt)));
- if(combatFight(s))s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0);
+ if(combatFight(s))s.players.forEach(p=>p.shield=p.input.shield&&!p.coverId&&p.battery>0&&(p.character==="raptor"||!!p.jadeShield?.active));
  stepRepulse21(s,repulseHooks21(s));
  for(const cv of s.covers)if(cv.reshapePending27j!==undefined&&!s.players.some(p=>p.hp>0&&p.gripCoverId===cv.id)){cv.reshapePending27j=undefined;cv.reshapeFrom27j=undefined;}
  const d=dt;s.timeScale=1; // Projectile time never slows bodies or action timers.
- for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(p.hp<=0)p.timeFieldActive=false;if(unlimited31(s)&&p.timeFieldActive&&p.timeUntil27g===undefined)p.timeUntil27g=s.time+PROJECTILE_TIME.duration;if(p.timeFieldActive&&s.time>=(p.timeUntil27g??Infinity)){p.timeFieldActive=false;p.timeReady27g=s.time+PROJECTILE_TIME.cooldown;}if(i.shield&&!prev[n]?.shield&&s.time>=(p.shieldReady27g||0)){p.shieldAt27g=s.time;p.shieldReady27g=s.time+.65;}p.aim=i.aim;powerStep(p,s,dt);
+ for(let n=0;n<s.players.length;n++){const p=s.players[n],i=p.input,wasHolding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(p.hp<=0)p.timeFieldActive=false;if(unlimited31(s)&&p.timeFieldActive&&p.timeUntil27g===undefined)p.timeUntil27g=s.time+PROJECTILE_TIME.duration;if(p.timeFieldActive&&s.time>=(p.timeUntil27g??Infinity)){p.timeFieldActive=false;p.timeReady27g=s.time+PROJECTILE_TIME.cooldown;}if(i.shield&&!prev[n]?.shield&&s.time>=(p.shieldReady27g||0)){p.shieldAt27g=s.time;p.shieldReady27g=s.time+.65;}p.aim=i.aim;powerStep(p,s,dt);chargeJadeShield(p,s,dt);
   if(p.hp<=0||p.gripCancelRelease){cancelQuick36(p,s,'owner inactive');p.gather34=undefined;p.throwBuffer34=undefined;}if(p.gripCoverId){const held=s.covers.find(c=>c.id===p.gripCoverId);if(held)throwAim34(p,s,n,held);}else p.throwTarget34=undefined;if(!p.gripCoverId)p.hold33=undefined;updatePreview32(p,s);stepRip27j(p,s,n);
   const reshaping=s.covers.find(cv=>cv.id===p.gripCoverId&&cv.reshapePending27j!==undefined);
   if(reshaping){
@@ -1417,7 +1484,7 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
   else{const maxTwist=145*Math.PI/180,deltaAim=Math.atan2(Math.sin(i.aim-moveAngle),Math.cos(i.aim-moveAngle));p.gunFacing=moveAngle+clamp(deltaAim,-maxTwist/2,maxTwist/2)}
   p.fireState=Math.max(0,p.fireState-dt);p.recoil=Math.max(0,p.recoil-dt);p.returnToCover=Math.max(0,p.returnToCover-dt);p.boostState=Math.max(0,p.boostState-dt);p.brakeState=Math.max(0,p.brakeState-dt);
   stepArsenal37(p,s,n,dt);if(s.time>=(p.recallAt37||0)){p.recallAt37=s.time+.2;const preview=owned37(s,n).length>=4?arsenalPreview37(p,s,n):undefined;
-   p.recallNext37=preview?.next?.arsenalSlot37;p.recallGoal37=preview?.goal;}const beforeEnergy=p.battery;edgeActions(s,n,prev[n]||empty());if(p.battery<beforeEnergy)p.lastEnergyAt=s.time;p.shield=i.shield&&!coverContext&&!p.coverId&&p.battery>0;if(p.shield)debitEnergy31(s,p,3*dt);if(p.timeFieldActive&&p.battery>0)debitEnergy31(s,p,(PROJECTILE_TIME.baseDrain+PROJECTILE_TIME.pelletDrain*(p.timePellets||0))*dt);if(!p.quick36&&(p.gripId||p.gripCoverId||p.orbitIds.length))debitEnergy31(s,p,c.holdEnergy*dt);const constructs=s.covers.filter(cv=>cv.constructOwner===n&&cv.hp>0).length;if(p.shield||p.timeFieldActive||p.gripId||p.gripCoverId||p.orbitIds.length)p.lastEnergyAt=s.time;else if(!p.charging&&!p.godTime&&s.time-(p.lastEnergyAt??-9)>=c.rechargeDelay&&!p.slide&&!p.dash&&!p.kickStage?.match(/burst|step/))p.battery=Math.min(100,p.battery+c.rechargeRate*dt);
+   p.recallNext37=preview?.next?.arsenalSlot37;p.recallGoal37=preview?.goal;}const beforeEnergy=p.battery;edgeActions(s,n,prev[n]||empty());if(p.battery<beforeEnergy)p.lastEnergyAt=s.time;updateJadeGuard(p,i.shield&&!coverContext&&!p.coverId&&p.battery>0&&p.hp>0,rawInputs[n].shield,s.time,dt);if(p.shield)debitEnergy31(s,p,3*dt);if(p.timeFieldActive&&p.battery>0)debitEnergy31(s,p,(PROJECTILE_TIME.baseDrain+PROJECTILE_TIME.pelletDrain*(p.timePellets||0))*dt);if(!p.quick36&&(p.gripId||p.gripCoverId||p.orbitIds.length))debitEnergy31(s,p,c.holdEnergy*dt);const constructs=s.covers.filter(cv=>cv.constructOwner===n&&cv.hp>0).length;if(p.shield||p.timeFieldActive||p.gripId||p.gripCoverId||p.orbitIds.length)p.lastEnergyAt=s.time;else if(!p.charging&&!p.godTime&&s.time-(p.lastEnergyAt??-9)>=c.rechargeDelay&&!p.slide&&!p.dash&&!p.kickStage?.match(/burst|step/))p.battery=Math.min(100,p.battery+c.rechargeRate*dt);
   if(p.wrapRetractUntil!==undefined&&s.time>=p.wrapRetractUntil)p.wrapRetractUntil=undefined;
   if(p.coverMode==="braced"&&prev[n]?.coverAim&&!i.coverAim){
    p.returnToCover=Math.max(p.returnToCover,.16);
@@ -1472,6 +1539,7 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
     p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);slideCapture(p,s);collide(p,s)
   }
   else{const chargeMove=p.chargeMotion??1,r=1-Math.exp(-c.response*d),m=Math.hypot(i.x,i.y);p.vx+=(i.x*c.moveSpeed*chargeMove-p.vx)*r;p.vy+=(i.y*c.moveSpeed*chargeMove-p.vy)*r;if(m<.05){p.vx*=Math.pow(c.stopDrag,d);p.vy*=Math.pow(c.stopDrag,d)}p.x=clamp(p.x+p.vx*d,A.left,A.right);p.y=clamp(p.y+p.vy*d,A.top,A.bottom);collide(p,s)}
+  if(p.coverId&&p.jadeShield?.active){p.jadeShield.active=p.shield=false;p.jadeShield.closedAt=s.time;}
   const holding=!!(p.gripId||p.gripCoverId||p.orbitIds.length);if(holding&&!wasHolding){p.psychicStartedAt=s.time;p.psychicReturnUntil=0}else if(!holding&&wasHolding)p.psychicReturnUntil=s.time+.16;
   resolveSupports27e(p);
   Object.assign(p,integrateVertical(p,playerStarts[n],jump,dt));
@@ -1596,9 +1664,14 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
    const parts=Math.max(1,Math.ceil(Math.hypot(cv.vx,cv.vy,cv.vz||0)*d/2));
    for(let k=0;k<parts&&cv.hp>0;k++){const ox=cv.x,oy=cv.y,oz=cv.z||0;cv.z=Math.max(0,oz+(cv.vz||0)*d/parts);cv.x+=cv.vx*d/parts;cv.y+=cv.vy*d/parts;if(coverStructureBlocked27f(cv,(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)+(cv.hover||0))){cv.x=ox;cv.y=oy;cv.z=oz;cv.vz=0;coverImpact(cv,s,'structure');cv.vx=cv.vy=0;}settleCover(cv,s);if(combatFight(s)&&cv.hp>0&&Math.hypot(cv.vx||0,cv.vy||0)>160)for(let n=0;n<s.players.length;n++){
     if(n===cv.throwOwner||s.players[n].hp<=0||(s.players[n].z||0)>(cv.z||0)+(cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??78)||s.players[n].z+64<(cv.z||0)||cv.hitIds?.includes("player-"+n))continue;const target=s.players[n],q=localPoint(cv,target.x,target.y);
-    if(circleBox(target,17,cv).hit){const hitPoint35=contactPoint35(cv,{x:target.x,y:target.y,z:target.z+32});(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0,cost=damage*.22,available=availableEnergy31(s,target,cost);
+    if(circleBox(target,17,cv).hit){const hitPoint35=contactPoint35(cv,{x:target.x,y:target.y,z:target.z+32});(cv.hitIds??=[]).push("player-"+n);const speed=Math.hypot(cv.vx||0,cv.vy||0),damage=Math.min(100,speed*coverMass28(cv)/90),cost=damage*.22,available=availableEnergy31(s,target,cost);
+     const angle=Math.atan2(-(cv.vy||0),-(cv.vx||0)),z=hitPoint35.z;
+     const reach=Math.hypot(cv.w,cv.h)*.5+32;
+     const plate=guardContact(s,target,{x:hitPoint35.x+Math.cos(angle)*reach,y:hitPoint35.y+Math.sin(angle)*reach,z},{x:target.x,y:target.y,z});
+     const shielding=target.shield&&target.input.shield&&!target.coverId&&target.battery>0&&(target.character==="raptor"||!!plate);
      // One shield contest per release: impact consumes energy; an overwhelmed block passes residual force.
-     if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",incomingAngle:Math.atan2(-(cv.vy||0),-(cv.vx||0)),source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??1-n,target:n,damage:0,...hitPoint35});s.fx.push({id:uid(),type:"shield-block",...hitPoint35,life:.22,owner:cv.throwOwner});}
+     if(shielding&&available>=cost&&plate){spendEnergy(target,s,cost);hitJadePlate(s,target,plate,damage,"cover-throw",cv.throwOwner??1-n,cv.attackId,angle);}
+     else if(shielding&&available>=cost){spendEnergy(target,s,cost);combatEvent(s,{kind:"shield",incomingAngle:Math.atan2(-(cv.vy||0),-(cv.vx||0)),source:"cover-throw",attackId:cv.attackId,owner:cv.throwOwner??1-n,target:n,damage:0,...hitPoint35});s.fx.push({id:uid(),type:"shield-block",...hitPoint35,life:.22,owner:cv.throwOwner});}
      else{const residual=shielding?1-available/Math.max(.001,cost):1;if(shielding){target.battery=0;target.lastEnergyAt=s.time;target.shield=false;s.fx.push({id:uid(),type:"shield-block",x:target.x,y:target.y,z:target.z+28,life:.22,owner:cv.throwOwner});}duelContact(s,cv.throwOwner??1-n,target,damage*residual,(cv.vx||0)*.25*residual,(cv.vy||0)*.25*residual,"torso",hitPoint35,"cover-throw",cv.attackId);}
      damageCover(cv,s,damage);cv.vx*=shielding?.2:.35;cv.vy*=shielding?.2:.35;}
    }}
@@ -1624,8 +1697,25 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
   const z=sh.z??36*c.spriteScale,target=s.players[1-sh.owner];let nearest=Infinity,block:Cover|undefined;
   for(const cv of s.covers){if(cv.hp<=0||cv.id===sh.clearanceCoverId)continue;const height=shotCoverHeight(cv);const base=(cv.z||0)+(cv.hover||0);const t=coverTime27d({...from,z:from.z-base},{...sh,z:z-base},cv,height,sh.source==="glove-blast"?8:0);if(t!==null&&t<nearest){nearest=t;block=cv}}
   const platformTime=surfaceShotTime(from,{x:sh.x,y:sh.y,z});nearest=Math.min(nearest,platformTime);
-  const hit=target&&target.hp>0?shotPlayerTime(from,sh,z,{...target,z:playerStarts[1-sh.owner].z+(target.z-playerStarts[1-sh.owner].z)*segment.end,x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.end,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.end},{z:playerStarts[1-sh.owner].z+(target.z-playerStarts[1-sh.owner].z)*segment.start,x:playerStarts[1-sh.owner].x+(target.x-playerStarts[1-sh.owner].x)*segment.start,y:playerStarts[1-sh.owner].y+(target.y-playerStarts[1-sh.owner].y)*segment.start},c.spriteScale,sh.source==="glove-blast"?8:0):null;
-  if(hit&&hit.t<nearest){const point={x:from.x+(sh.x-from.x)*hit.t,y:from.y+(sh.y-from.y)*hit.t,z:from.z+(z-from.z)*hit.t};const parry=target.shield&&target.input.shield&&!target.coverId&&target.battery>0&&s.time-(target.shieldAt27g??-9)<=.12;duelContact(s,sh.owner,target,(sh.damage??c.shotDamage)*REGION_DAMAGE[hit.region],sh.vx*.1,sh.vy*.1,hit.region,point,sh.source||"shotgun",sh.attackId||sh.volleyId);if(parry){sh.owner=s.players.indexOf(target);sh.vx=-sh.vx;sh.vy=-sh.vy;sh.vz=-(sh.vz||0);sh.x=point.x;sh.y=point.y;sh.z=point.z;sh.clearanceCoverId=undefined;break;}else sh.life=0;}
+  const end={x:sh.x,y:sh.y,z},start=playerStarts[1-sh.owner];
+  const targetAt=(fraction:number)=>({x:start.x+(target.x-start.x)*fraction,y:start.y+(target.y-start.y)*fraction,z:start.z+(target.z-start.z)*fraction});
+  const bodyStart=target&&target.hp>0?targetAt(segment.start):undefined;
+  const bodyEnd=bodyStart?{...target,...targetAt(segment.end)}:undefined;
+  const hit=bodyEnd?shotPlayerTime(from,sh,z,bodyEnd,bodyStart!,c.spriteScale,sh.source==="glove-blast"?8:0):null;
+  const plate=bodyEnd?guardContact(s,bodyEnd,from,end,bodyStart):null;
+  if(plate&&plate.t<nearest&&(!hit||plate.t<=hit.t)){
+   const parry=s.time-(target.shieldAt27g??-9)<=.12;
+   hitJadePlate(s,target,plate,sh.damage??c.shotDamage,sh.source||"shotgun",sh.owner,sh.attackId||sh.volleyId,Math.atan2(-sh.vy,-sh.vx),parry);
+   if(parry){sh.owner=s.players.indexOf(target);sh.vx=-sh.vx;sh.vy=-sh.vy;sh.vz=-(sh.vz||0);Object.assign(sh,plate.point);sh.clearanceCoverId=undefined;break;}
+   sh.life=0;
+  }
+  else if(hit&&hit.t<nearest){
+   const point={x:from.x+(sh.x-from.x)*hit.t,y:from.y+(sh.y-from.y)*hit.t,z:from.z+(z-from.z)*hit.t};
+   const parry=target.character==="raptor"&&target.shield&&target.input.shield&&!target.coverId&&target.battery>0&&s.time-(target.shieldAt27g??-9)<=.12;
+   duelContact(s,sh.owner,target,(sh.damage??c.shotDamage)*REGION_DAMAGE[hit.region],sh.vx*.1,sh.vy*.1,hit.region,point,sh.source||"shotgun",sh.attackId||sh.volleyId);
+   if(parry){sh.owner=s.players.indexOf(target);sh.vx=-sh.vx;sh.vy=-sh.vy;sh.vz=-(sh.vz||0);Object.assign(sh,point);sh.clearanceCoverId=undefined;break;}
+   sh.life=0;
+  }
   else if(platformTime<=nearest&&Number.isFinite(platformTime)){
    combatEvent(s,{kind:"cover",source:sh.source||"shotgun",attackId:sh.attackId||sh.volleyId,owner:sh.owner,damage:0,
     x:from.x+(sh.x-from.x)*platformTime,y:from.y+(sh.y-from.y)*platformTime,z:from.z+(z-from.z)*platformTime});
@@ -1640,7 +1730,7 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
   if(s.winner!==null)s.players[s.winner].score++;s.phase="finisher";s.finisher=FINISHER_SECONDS;s.timeScale=1;s.shots=[];
   const dead=s.players.find(p=>p.hp<=0)!;combatEvent(s,{kind:"finish",owner:s.winner??-1,damage:0,x:dead.x,y:dead.y,z:30});
   for(const cv of s.covers)if(cv.constructOwner!==undefined&&s.players[cv.constructOwner]?.hp<=0&&cv.hp>0)dissolveFieldCover(cv,s);
-  for(const p of s.players){if(p.arsenal37){if(p.arsenal37.kind==='recall'&&p.arsenal37.phase!=='cue')s.fx.push({id:uid(),type:'cover-dissolve',...p.arsenal37.pose,life:.35});p.arsenal37=undefined;}cancelQuick36(p,s,'round ended');p.timeFieldActive=false;p.timePellets=p.timeVolleys=0;p.meleeCombo=undefined;p.meleeNextStage=undefined;p.blastUntil=0;p.pendingMelee=undefined;p.pendingFireUntil=undefined;p.gripEdges34=[];p.gripDesired34=false;p.gather34=undefined;p.throwBuffer34=undefined;p.input=empty();p.processedInput=empty();p.shield=false;if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}}p.gripCoverId=null;p.gripId=null;p.orbitIds=[];}
+  for(const p of s.players){if(p.arsenal37){if(p.arsenal37.kind==='recall'&&p.arsenal37.phase!=='cue')s.fx.push({id:uid(),type:'cover-dissolve',...p.arsenal37.pose,life:.35});p.arsenal37=undefined;}cancelQuick36(p,s,'round ended');p.timeFieldActive=false;p.timePellets=p.timeVolleys=0;p.meleeCombo=undefined;p.meleeNextStage=undefined;p.blastUntil=0;p.pendingMelee=undefined;p.pendingFireUntil=undefined;p.gripEdges34=[];p.gripDesired34=false;p.gather34=undefined;p.throwBuffer34=undefined;p.input=empty();p.processedInput=empty();p.shield=false;if(p.jadeShield){p.jadeShield.active=false;p.jadeShield.closedAt=s.time;}if(p.gripCoverId){const cv=s.covers.find(c=>c.id===p.gripCoverId);if(cv){cv.build=0;cv.vx=cv.vy=0}}p.gripCoverId=null;p.gripId=null;p.orbitIds=[];}
   for(const m of s.matter){m.heldBy=null;m.orbitBy=null;}
  }
  // Cover support and falling share arena surfaces; hover is also included in projectile collision.
