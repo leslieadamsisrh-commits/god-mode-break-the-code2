@@ -35,6 +35,6 @@ export function jadeLowRig(p:Actor,aim:JadeLowAim,scale:number){
  return {socket:cel.socket,barrelBase:{...cel.socket,x:cel.socket.x-Math.cos(aim.angle)*12*scale,y:cel.socket.y-Math.sin(aim.angle)*12*scale}};
 }
 export function drawJadeLowAim(g:Canvas,p:Actor,aim:JadeLowAim,scale:number,recoil:number,fired=false){
- if(!fired&&aim.rise<.55)return drawCoverStage(g,p,scale,2,aim.rise<.25?0:1,Math.cos(aim.angle)<0);
+ if(!fired&&aim.rise<.45)return drawCoverStage(g,p,scale,2,aim.rise<.13?0:aim.rise<.31?1:2,Math.cos(aim.angle)<0);
  return drawCoverAim(g,p,aim.angle,scale,aim.rise,[0,0],recoil);
 }

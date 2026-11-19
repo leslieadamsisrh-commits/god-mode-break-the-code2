@@ -63,7 +63,7 @@ export type FloorSlab46={floorPanel46?:{sourceId:string;originX:number;originY:n
 export type Cover=FloorSlab46 & {interceptUntil11?:number;arsenalSlot37?:number;placed34?:boolean;acquire32?:{x:number;y:number;z:number};acquireQueue32?:{x:number;y:number;z:number}[];fracture32?:Fracture32;height27j?:number;anchored27j?:boolean;section27j?:Section27j;ripOwner27j?:number;ripAt27j?:number;reshapeFrom27j?:{w:number;h:number;height27j:number};reshapePending27j?:number;reshapeAt27j?:number;z?:number;vz?:number;protected45?:boolean;stamp44?:number;construction44?:"peel"|"salvage";assembly44?:ConstructMatter44[];attackId?:string;hover?:number;carryRadialSpeed?:number;carryAngularSpeed?:number;carryRotationSpeed?:number;carryBlockedAt?:number;constructOwner?:number;matterSources?:ConstructMatter44[];scarAt?:number;id:string;x:number;y:number;w:number;h:number;a:number;hp:number;maxHp:number;generated:boolean;build:number;variant:number;artId?:string;coverClass?:"waist"|"tall";born?:number;vx?:number;vy?:number;throwOwner?:number;hitIds?:string[]};
 export type Matter={unitId?:string;groundId?:string;groundScatter?:boolean;spin?:number;spinVelocity?:number;height?:number;liftVelocity?:number;scatterAt?:number;attackId?:string;throwOwner?:number;hitIds?:string[];sourceArt?:string;fragment?:number;id:string;x:number;y:number;vx:number;vy:number;r:number;kind:"metal"|"stone";heldBy:number|null;orbitBy:number|null;life:number};
 export type Shot={vz?:number;attackId?:string;source?:string;radius?:number;realAge?:number;volleyId?:string;fieldOwners?:number[];projectileScale?:number;id:string;owner:number;x:number;y:number;vx:number;vy:number;life:number;damage?:number;z?:number;renderOffsetX?:number;clearanceCoverId?:string};
-export type Fx={guardPlate?:number;guardScale?:number;blastId?:string;summaryKey?:string;target?:number;surfaceMaterial?:"stone"|"metal";material?:"digital"|"cyber";strength?:number;outcomeKey?:string;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number;raptorFrameKey?:string};
+export type Fx={confirmedAt?:number;guardPlate?:number;guardScale?:number;blastId?:string;summaryKey?:string;target?:number;surfaceMaterial?:"stone"|"metal";material?:"digital"|"cyber";strength?:number;outcomeKey?:string;id:string;type:string;x:number;y:number;life:number;owner?:number;text?:string;z?:number;renderOffsetX?:number;angle?:number;raptorFrameKey?:string};
 export type HitRegion="low"|"torso"|"head";
 export type CombatEvent={reason?:"wrap-limit"|"center-tuck";contactId?:string;parry?:boolean;incomingAngle?:number;attackId?:string;source?:string;seq:number;round:number;at:number;kind:"hit"|"shield"|"cover"|"muzzle"|"finish";owner:number;target?:number;region?:HitRegion;damage:number;x:number;y:number;z:number;material?:"stone"|"metal"};
 export const REGION_DAMAGE={low:.75,torso:1,head:1.25};
@@ -1700,7 +1700,7 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
     p.shells=(p.shells??0)+1;
     p.shellLoad=p.shells===8?0:Math.max(0,p.shellLoad-.5);
     p.lastShellAt=s.time;
-    s.fx.push({id:uid(),type:"shell-insert",owner:n,x:p.x,y:p.y,z:p.z+44,life:.16});
+    s.fx.push({id:uid(),type:"shell-insert",confirmedAt:s.time,owner:n,x:p.x,y:p.y,z:p.z+44,life:.16});
    }
   }else p.shellLoad=0;
   if(!trainingAmmo&&p.shells===0&&i.fire&&!prev[n]?.fire&&!p.gripId&&!p.gripCoverId&&!p.orbitIds.length){
@@ -1750,7 +1750,7 @@ function step(s:GameState,dt:number,prev:InputState[],raptorShotReady?:(key:stri
    if(!trainingAmmo)p.shells=Math.max(0,(p.shells??8)-1);
    if(p.coverId)p.returnToCover=.28;
    for(let j=-3;j<=3;j++){const a=p.gunFacing+j*c.shotSpread;s.shots.push({id:uid(),attackId:volleyId,source:"shotgun",volleyId,realAge:0,owner:n,x:muzzle.x,y:muzzle.y,vx:Math.cos(a)*c.shotSpeed,vy:Math.sin(a)*c.shotSpeed,life:.5,damage:c.shotDamage*(p.godTime>0?c.godDamage:1),z:p.z+shotHeight,vz:verticalAim27b(s,n,p.z+shotHeight,c.shotSpeed,muzzle.raptorAligned||muzzle.attachedAligned?muzzle:legacyAimOrigin),renderOffsetX,clearanceCoverId:clearance})}
-   const discharge={x:muzzle.x,y:muzzle.y,owner:n,z:p.z+shotHeight,renderOffsetX,angle:p.gunFacing,blastId:volleyId};
+   const discharge={confirmedAt:s.time,x:muzzle.x,y:muzzle.y,owner:n,z:p.z+shotHeight,renderOffsetX,angle:p.gunFacing,blastId:volleyId};
    s.fx.push({id:uid(),type:"muzzle",life:SHOT_FLASH_SECONDS,raptorFrameKey:muzzle.raptorAligned?p.raptorFrame?.key:undefined,...discharge},
     {id:uid(),type:"shotgun-smoke",life:SHOT_SMOKE_SECONDS,...discharge});
   }

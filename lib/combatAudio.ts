@@ -23,8 +23,8 @@ export function renderCombatSound(kind: CombatSound, rate: number, variant: numb
   let value: number;
 
   if (kind === "shell-insert") {
-   const latch=Math.max(0,t-.044);
-   value=bass*.85*Math.exp(-t*43)+(t>.044?(grit*.4+Math.sin(TAU*620*latch)*.28)*Math.exp(-latch*90):0);
+   const latch=Math.max(0,t-.024);
+   value=(grit*.32+Math.sin(TAU*740*t)*.50)*Math.exp(-t*91)+(t>.024?(bass*.46+Math.sin(TAU*380*latch)*.32)*Math.exp(-latch*66):0);
   } else if (kind === "muzzle-click") {
    value=(grit*.42+Math.sin(TAU*1180*t)*.37)*Math.exp(-t*117);
   } else if (kind === "shotgun-report") {
@@ -71,7 +71,7 @@ export function renderCombatSound(kind: CombatSound, rate: number, variant: numb
 }
 
 const levels: Record<CombatSound, number> = {
- "shell-insert": .26, "muzzle-click": .31, "shotgun-report": .68, "slam-stone": .46, "slam-metal": .43,
+ "shell-insert": .36, "muzzle-click": .31, "shotgun-report": .68, "slam-stone": .46, "slam-metal": .43,
  "slam-fighter": .30, "jade-yelp": .27, "jade-cry": .37,
 };
 

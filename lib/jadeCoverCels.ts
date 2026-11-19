@@ -17,23 +17,36 @@ export function coverCel(p:Actor,angle:number,scale:number,rise:number,lean:read
  const fx=lean[0]>1?left:right;
  const offsetX=(j.x*lean[0]+j.xy*lean[1])/unit,offsetY=j.y*lean[1]/unit;
  const lift=(1-rise)*18*scale;
- const height=(fy-my)*size-lift;
- const dx=(mx-fx)*size+offsetX,dy=offsetY;
+ // Rotate the connected upper body around the hips between authored headings.
+ const keyAngle=Math.PI/2-heading*Math.PI/4;
+ const bearing=(a:number)=>Math.atan2(j.y*Math.sin(a),j.x*Math.cos(a)+j.xy*Math.sin(a));
+ const delta=bearing(angle)-bearing(keyAngle),turn=Math.atan2(Math.sin(delta),Math.cos(delta));
+ const hip=85,armX=(mx-fx)*size,armY=(my-hip)*size;
+ const dx=armX*Math.cos(turn)-armY*Math.sin(turn)+offsetX;
+ const height=(fy-hip)*size-armX*Math.sin(turn)-armY*Math.cos(turn)-lift;
+ const dy=offsetY;
  // Calibrate the low pop-up to a level shouldered gun across the turn.
  // Invert the drawn muzzle pixel at that elevation to recover its floor depth.
  const low=lean[0]===0&&lean[1]===0;
  const reach=low?(62*scale-lift-height)*unit/j.y:Math.sin(angle)*22*scale;
  const worldY=dy*unit/j.y+reach;
  const socket={x:p.x+(dx*unit-j.xy*worldY)/j.x,y:p.y+worldY,z:(p.z??0)+height+reach*j.y/unit};
- return {heading,size,fx,fy,offsetX,offsetY,lift,socket};
+ return {heading,size,fx,fy,offsetX,offsetY,lift,turn,hip,socket};
 }
 export function drawCoverAim(g:CanvasRenderingContext2D,p:Actor,angle:number,scale:number,rise:number,lean:readonly number[],kick:number){
  if(!aimImage)return false;
  const c=coverCel(p,angle,scale,rise,lean);
  g.save();g.translate(p.x,p.y);
- const height=(c.fy-tips[c.heading][1])*c.size;
- g.transform(1,0,(-c.offsetX+Math.cos(angle)*kick)/height,1-(c.offsetY+c.lift)/height,0,0);
- g.drawImage(aimImage,c.heading%4*160,Math.floor(c.heading/4)*160,160,160,-c.fx*c.size,-c.fy*c.size,160*c.size,160*c.size);
+ const sx=c.heading%4*160,sy=Math.floor(c.heading/4)*160;
+ const hipY=(c.hip-c.fy)*c.size;
+ const x=c.offsetX-Math.cos(angle)*kick*2*scale,y=c.offsetY+c.lift;
+ const left=-c.fx*c.size;
+ // Flex the legs from the planted sole. Both pieces share the hip position
+ // and tangent at their seam; stock, hands and helmet move as one rigid unit.
+ g.save();g.transform(Math.cos(c.turn),Math.sin(c.turn),x/hipY,(hipY+y)/hipY,0,0);
+ g.drawImage(aimImage,sx,sy+c.hip,160,160-c.hip,left,hipY,160*c.size,(160-c.hip)*c.size);g.restore();
+ g.translate(x,hipY+y);g.rotate(c.turn);
+ g.drawImage(aimImage,sx,sy,160,c.hip,left,-c.hip*c.size,160*c.size,c.hip*c.size);
  g.restore();return true;
 }
 const boots=[[70,140],[103,140],[109,140],[112,140],[60,138],[45,138],[39,138],[38,138],[108,144],[105,144],[113,144],[114,144]];
