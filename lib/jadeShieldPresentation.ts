@@ -1,6 +1,6 @@
 import registration from "../public/assets/jade-guard32/registration.json";
 import {ARENA_UPRIGHT_SCALE47, arenaJacobian46, withUpright} from "./bayBridgePresentation";
-import {jadeGuardHeading, jadeGuardSpread, jadeShieldRecoil, newJadeShield, JADE_PLATE_HP, JADE_SHIELD_IMPACT, jadeShieldOpening, jadeShieldPlates, jadeShieldWrist, type JadeShield, type ShieldPoint} from "./jadeShield";
+import {jadeGuardHeading, jadePlateFrame, jadePlatePivot, newJadeShield, JADE_SHIELD_UNFOLD, JADE_PLATE_HP, JADE_SHIELD_IMPACT, jadeShieldOpening, jadeShieldWrist, type JadeShield, type ShieldPoint} from "./jadeShield";
 
 type Actor = ShieldPoint & {jadeShield?:JadeShield;charging?:boolean;gunFacing?:number};
 type Canvas = CanvasRenderingContext2D;
@@ -55,21 +55,16 @@ function paintGuard(g:Canvas,p:Actor,scale:number,time:number){
  const guard=p.jadeShield;
  if(!guard)return;
  preloadGuard();
- const heading=jadeGuardHeading(guard.angle),opening=jadeShieldOpening(guard,time);
- const wrist=jadeShieldWrist(p,scale,time),anchor=uprightPoint(p,wrist);
- const forward={x:Math.cos(guard.angle),y:Math.sin(guard.angle)};
  for(let i=0;i<3;i++){
   const hp=guard.plates[i],image=plateImages[i];
   if(!hp||!image?.naturalWidth)continue;
-  const spread=jadeGuardSpread(opening,[1,0,2][i]);
+  const {spread,heading,size,center}=jadePlateFrame(p,scale,time,i);
   if(!spread)continue;
-  const kick=guard.hitPlate===i?2*jadeShieldRecoil(guard,time):0;
-  const center=uprightPoint(p,{x:wrist.x+forward.x*(11-kick)*scale,y:wrist.y+forward.y*(11-kick)*scale,z:wrist.z-12*scale});
-  const size=56/124*scale*spread,at=mix(anchor,center,spread);
+  const at=uprightPoint(p,center);
   g.save();g.translate(at.x,at.y);g.scale(size,size);
   g.drawImage(image,heading%8*80,Math.floor(heading/8)*128,80,128,-40,-64,80,128);
   if(hp<JADE_PLATE_HP*.7){
-   const y=[-33,0,34][i];
+   const pivot=jadePlatePivot(i,heading);g.translate(pivot.x,pivot.y);const y=0;
    g.strokeStyle="#332538";g.lineWidth=1.8;g.beginPath();g.moveTo(-4,y-5);g.lineTo(1,y-1);g.lineTo(-1,y+1);g.lineTo(4,y+5);g.stroke();
   }
   g.restore();
@@ -124,20 +119,23 @@ export function drawJadePlateImpact(g:Canvas,life:number,broken:boolean){
  g.restore();
 }
 
-export function drawJadeShellDrop(g:Canvas,index:number,angle:number,scale:number,life:number,root:ShieldPoint){
+export function drawJadeShellDrop(g:Canvas,index:number,angle:number,scale:number,life:number,root:ShieldPoint,opening=1,kick?:number,wristKick=-9){
  const phase=Math.min(1,Math.max(0,(.46-life)/.32));
  const guard=newJadeShield(angle);
  guard.active=true;
+ guard.openedAt=1-opening*JADE_SHIELD_UNFOLD;
+ guard.hitAt=1+wristKick;
+ guard.hitPlate=kick===undefined?-1:index;
  guard.plates=guard.plates.map((hp,i)=>i===index?hp*.4:0);
  const actor={...root,jadeShield:guard};
- const shell=jadeShieldPlates(actor,scale,1)[0];
- if(!shell)return;
- const bottom=Math.min(...shell.strips.flatMap(strip=>strip.front.map(v=>v.z-root.z)));
+ const frame=jadePlateFrame(actor,scale,1,index);
+ const center=uprightPoint(actor,frame.center),pivot=jadePlatePivot(index,frame.heading);
+ const x=center.x-root.x+pivot.x*frame.size,y=center.y-root.y+root.z+pivot.y*frame.size;
  g.save();
  g.globalAlpha=Math.min(1,life/.12);
- g.translate(Math.cos(angle)*8*phase, bottom*phase*phase);
+ g.translate(x+Math.cos(angle)*8*scale*phase,y+Math.max(0,-y)*phase*phase);
  g.rotate((index===1?-1:1)*.4*phase);
- g.translate(-root.x,-root.y+root.z);
+ g.translate(-x-root.x,-y-root.y+root.z);
  paintGuard(g,actor,scale,1);
  g.restore();
 }

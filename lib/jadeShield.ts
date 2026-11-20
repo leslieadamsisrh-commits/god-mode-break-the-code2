@@ -79,6 +79,31 @@ export function jadeShieldPlates(p:ShieldActor,scale:number,time:number){
   return [{index,hp,strips}];
  });
 }
+// The sprite and pellet test use the same plane, origin and atlas pixel size.
+export function jadePlateFrame(p:ShieldActor,scale:number,time:number,index:number){
+ const guard=p.jadeShield!;
+ const spread=jadeGuardSpread(jadeShieldOpening(guard,time),[1,0,2][index]);
+ const wrist=jadeShieldWrist(p,scale,time);
+ const kick=guard.hitPlate===index?2*jadeShieldRecoil(guard,time):0;
+ const reach=(11-kick)*scale*spread;
+ return {heading:jadeGuardHeading(guard.angle),spread,size:56/124*scale*spread,
+  center:{x:wrist.x+Math.cos(guard.angle)*reach,y:wrist.y+Math.sin(guard.angle)*reach,z:wrist.z-12*scale*spread}};
+}
+
+// Use a solid interior pixel for a shell's spin pivot and fracture mark.
+export function jadePlatePivot(index:number,heading:number){
+ const rows=rims[index][heading];
+ const first=rows.findIndex(row=>row.length>0);
+ let last=rows.length-1;
+ while(last>first&&!rows[last])last--;
+ const y=Math.floor((first+last)/2),runs=rows[y];
+ let left=0,right=0;
+ for(let k=0;k<runs.length;k+=2){
+  const a=runs.charCodeAt(k)-33,b=runs.charCodeAt(k+1)-33;
+  if(b-a>right-left){left=a;right=b;}
+ }
+ return {x:(left+right)/2-40,y:y+.5-64};
+}
 export function jadeShieldContact(from:ShieldPoint,to:ShieldPoint,p:ShieldActor,scale:number,time:number,start:ShieldPoint=p){
  const guard=p.jadeShield;
  if(!guard?.active)return null;
@@ -86,21 +111,21 @@ export function jadeShieldContact(from:ShieldPoint,to:ShieldPoint,p:ShieldActor,
  const dx=to.x-origin.x,dy=to.y-origin.y,dz=to.z-origin.z;
  if(dx*Math.cos(guard.angle)+dy*Math.sin(guard.angle)>=0)return null;
  let best:{t:number;index:number;point:ShieldPoint}|null=null;
- const heading=jadeGuardHeading(guard.angle),wrist=jadeShieldWrist(p,scale,time);
+
  const facingX=Math.cos(guard.angle),facingY=Math.sin(guard.angle);
  const j=arenaJacobian46(p.x,p.y),unit=1.536*ARENA_UPRIGHT_SCALE47;
- const opening=jadeShieldOpening(guard,time);
- for(let index=0;index<3;index++){
-  const spread=jadeGuardSpread(opening,[1,0,2][index]);
-  if(!guard.plates[index]||spread<=0)continue;
-  const kick=guard.hitPlate===index?2*jadeShieldRecoil(guard,time):0;
-  const reach=(11-kick)*scale*spread;
-  const cx=wrist.x+facingX*reach,cy=wrist.y+facingY*reach,cz=wrist.z-12*scale*spread;
+ // The renderer paints lower-index plates first. At coplanar overlapping
+ // pixels the last painted shell is the visible one.
+ for(let index=2;index>=0;index--){
+  if(!guard.plates[index])continue;
+  const {heading,center,size,spread}=jadePlateFrame(p,scale,time,index);
+  if(spread<=0)continue;
+  const {x:cx,y:cy,z:cz}=center;
   const t=((cx-origin.x)*facingX+(cy-origin.y)*facingY)/(dx*facingX+dy*facingY);
   if(t<0||t>1||(best&&t>=best.t))continue;
   const x=origin.x+t*dx-cx,y=origin.y+t*dy-cy,z=origin.z+t*dz-cz;
   if(Math.abs(-x*facingY+y*facingX)>32*scale*spread)continue;
-  const size=56/124*scale*spread;
+
   const col=Math.floor(40+(x*j.x+y*j.xy)/(unit*size)),row=Math.floor(64+(y*j.y/unit-z)/size);
   const runs=rims[index][heading][row]||"";
   for(let k=0;k<runs.length;k+=2){

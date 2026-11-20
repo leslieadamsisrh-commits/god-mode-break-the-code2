@@ -84,3 +84,46 @@ for (const mode of ["practice", "bot"]) {
   assert.equal(p.shells,shells-1,"shield release returns to existing RT");
   console.log(mode+" passed: chip, gap, turn, final block, hold-Y lockout, fresh LT, RT");
 }
+
+// Sweep incoming rays over the rendered atlas, including interior holes and
+// partially deployed plates. Keep the expected pixel lookup independent.
+const rims=require("../public/assets/jade-floating32/contact.json");
+const {jadePlateFrame,newJadeShield,jadePlatePivot}=require("../lib/jadeShield.ts");
+const {arenaJacobian46,ARENA_UPRIGHT_SCALE47}=require("../lib/bayBridgePresentation.ts");
+const actor={x:930,y:520,z:24,jadeShield:newJadeShield(0)};
+const shield=actor.jadeShield;
+shield.active=true;
+shield.openedAt=0;
+const j=arenaJacobian46(actor.x,actor.y),unit=1.536*ARENA_UPRIGHT_SCALE47;
+let samples=0;
+for(let heading=0;heading<32;heading++){
+ shield.angle=Math.PI/2-heading*Math.PI/16;
+ const c=Math.cos(shield.angle),s=Math.sin(shield.angle);
+ for(const time of [.075,1]){
+  for(const mask of [7,5]){
+   shield.plates=[0,1,2].map(i=>(mask>>i)&1?44:0);
+   for(const lateral of [-10.17,.23,10.19])for(let height=12.23;height<76;height+=.47){
+    const point=d=>({x:actor.x+c*d-s*lateral,y:actor.y+s*d+c*lateral,z:actor.z+height});
+    let best=null;
+    for(let index=0;index<3;index++){
+     if(!shield.plates[index])continue;
+     const f=jadePlateFrame(actor,1,time,index);
+     const distance=(f.center.x-actor.x)*c+(f.center.y-actor.y)*s;
+     const ray=point(distance),x=ray.x-f.center.x,y=ray.y-f.center.y;
+     const col=Math.floor(40+(x*j.x+y*j.xy)/(unit*f.size));
+     const row=Math.floor(64+(y*j.y/unit-ray.z+f.center.z)/f.size);
+     const spans=rims[index][heading][row]||"";
+     for(let k=0;k<spans.length;k+=2)if(col>=spans.charCodeAt(k)-33&&col<spans.charCodeAt(k+1)-33&&(!best||distance>=best.distance))best={index,distance};
+    }
+    const contact=jadeShieldContact(point(100),point(0),actor,1,time);
+    assert.equal(contact?.index,best?.index,"rendered rim at heading "+heading);
+    samples++;
+   }
+  }
+ }
+ for(let i=0;i<3;i++){
+  const pivot=jadePlatePivot(i,heading),runs=rims[i][heading][Math.floor(pivot.y+64)];
+  assert.ok(Array.from({length:runs.length/2},(_,k)=>pivot.x+40>=runs.charCodeAt(2*k)-33&&pivot.x+40<runs.charCodeAt(2*k+1)-33).some(Boolean));
+ }
+}
+console.log("PASS",samples,"shield probes across 32 headings, intact and middle missing");

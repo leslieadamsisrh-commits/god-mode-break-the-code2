@@ -1786,7 +1786,7 @@ function matter(g:CanvasRenderingContext2D,m:any){
 function impactSpray(g:CanvasRenderingContext2D,f:any){const age=1-classicClamp(f.life/.32,0,1),a=f.angle||0,z=f.z??27,cyber=f.material==="cyber";g.save();g.globalAlpha=(1-age)*.95;for(let n=0;n<8;n++){const angle=a+(n%7-3)*.18,speed=18+n%5*9,r=(1-Math.exp(-age*4))*speed,x=f.x+Math.cos(angle)*r,y=f.y+Math.sin(angle)*r-(z+Math.sin(age*Math.PI)*7-age*age*17)/DECK_PITCH;g.fillStyle=cyber?(n%4===0?"#d8e8ef":n%3===0?"#dc74a7":n%2?"#79344f":"#111924"):(n%3?"#72e9ef":"#ed9dc9");g.strokeStyle="#0a1019";g.lineWidth=.65;g.beginPath();if(cyber){g.ellipse(x,y,1.3+n%3,1+n%2,angle,0,Math.PI*2)}else g.rect(x,y,2+n%3,2/DECK_PITCH);g.fill();g.stroke();if(cyber&&n%5===0){g.strokeStyle="#82374f";g.lineWidth=1.5;g.beginPath();g.moveTo(x-Math.cos(angle)*7,y-Math.sin(angle)*7);g.lineTo(x,y);g.stroke();}if(cyber&&n%4===0){g.fillStyle="#e4f6fa";g.fillRect(x,y,1,1/DECK_PITCH);}}g.restore();}
 function fx(g:CanvasRenderingContext2D,f:any){
  if(f.type==="jade-shell-drop"){
-  withUpright(g,f.x,f.y,()=>{g.translate(f.x,f.y-(f.z??0));drawJadeShellDrop(g,f.guardPlate,f.angle,f.guardScale,f.life,{x:f.x,y:f.y,z:f.z??0});});
+  withUpright(g,f.x,f.y,()=>{g.translate(f.x,f.y-(f.z??0));drawJadeShellDrop(g,f.guardPlate,f.angle,f.guardScale,f.life,{x:f.x,y:f.y,z:f.z??0},f.guardOpening,f.guardKick,f.guardWristKick);});
   return;
  }
  if(f.type==="jade-plate-contact"){
