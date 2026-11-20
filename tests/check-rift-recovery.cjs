@@ -46,3 +46,53 @@ for(const mode of ["bot","watch","practice"]){
  }
 }
 console.log("PASS low power alone, empty gun alone and both depleted at close range in War, full Training and bot playback.");
+
+// Seed a finite Training corner. The bot makes its own trigger and charge
+// decisions; only Jade's exposure and flank timing change between runs.
+for(const branch of ['early','late','hold']){
+ const drill=new LocalCombat('Jade','practice',0,{version:1,battery:'current',opponent:'full'});
+ const state=drill.state,[player,enemy]=state.players;state.phase='playing';state.covers=[{...wall}];
+ Object.assign(player,{x:1013,y:492});enemy.bot=false;
+ let clock=0;drill.frame(0,{},[]);
+ const step=(n,input={})=>{while(n--)drill.frame(++clock*1000/60,{aim:Math.PI/2,...input},[])};
+ step(1,{y:1,slide:true});step(18);step(1,{slide:true});step(22);
+ Object.assign(enemy,{bot:true,x:1020,y:595,shells:0,battery:15,aim:-Math.PI/2,gunFacing:-Math.PI/2});
+ const peek={aim:.36,coverAim:true,coverAimActive:true};
+ step(30);assert.equal(enemy.shells,1);
+ step(2,peek);assert.equal(enemy.shells,0);
+ step(2);assert.ok(state.events.some(e=>e.owner===1&&e.kind==='cover'&&e.contactId===wall.id));
+ if(branch==='hold'){
+  let last=0,clicks=0;
+  for(let i=0;i<245;i++){step(1);if(enemy.shells>last){assert.ok(state.fx.some(f=>f.type==='shell-insert'&&f.owner===1&&f.confirmedAt===state.time));clicks++;}last=enemy.shells;}
+  assert.equal(clicks,8);assert.equal(enemy.shells,8);
+ }else{
+  step(branch==='early'?10:29);assert.equal(enemy.shells,branch==='early'?0:1);
+  const before=enemy.lastShot;
+  player.coverId=null;player.coverMode='free';player.x=enemy.x+100;player.y=enemy.y;
+  step(1);assert.equal(enemy.charging,false);assert.equal(enemy.shells,0);
+  assert.equal(enemy.lastShot>before,branch==='late');assert.equal(enemy.shellLoad,0);
+ }
+ console.log('PASS Training last shot into wall:',branch);
+}
+
+{
+ const battle=new LocalCombat('Jade','bot',0),round=battle.state;
+ battle.command({action:'start',room:battle.room,token:battle.token});
+ const bot=round.players[1];
+ let clock=0;
+ const frame=()=>battle.frame(clock++*1000/60,{aim:0},[]);
+ while(!bot.botRecoveryGoal&&clock<1800)frame();
+ assert.ok(bot.botRecoveryGoal,'ordinary arena produces a reachable recovery goal');
+ const goal=bot.botRecoveryGoal,dx=goal.x-bot.x,dy=goal.y-bot.y,shells=bot.shells;
+ round.covers.push({...wall,id:'route-panel',x:bot.x+dx*.45,y:bot.y+dy*.45,w:100,h:16,a:Math.atan2(dy,dx)+Math.PI/2});
+ frame();
+ assert.notDeepEqual(bot.botRecoveryGoal,goal,'panel obstructs the chosen approach');
+ assert.equal(bot.shells,shells);
+ let protectedCharge=false;
+ for(let i=0;i<190&&bot.shells===shells;i++){
+  frame();protectedCharge||=bot.charging&&bot.botChargeConcealed;
+ }
+ assert.ok(protectedCharge);
+ assert.equal(bot.shells,shells+1);
+ console.log('PASS reroute around constructed panel into protected hold-Y');
+}
