@@ -292,3 +292,13 @@ body:has(.arenaBuilder27c) nav[aria-label="Studio access"]{display:none}
 .roundResult small { color: #f4b1d8; }
 .roundResult button { margin-top: .45rem; min-height: 2.6rem; padding: .4rem 1rem; }
 .play30 .combatAudit.combatDrills { display: block !important; bottom: 47px; }
+
+.studio.visorGame.play30:not(.studioWatch){display:block;height:100dvh}
+.visorGame .stageWrap{height:100%;width:100%}
+.visorLab{position:fixed;inset:0;z-index:2147483100;display:grid;place-items:center;background:#10111ca3;color:#e5e2f0;font:15px monospace}
+.visorLab>div{width:min(410px,92vw);max-height:90dvh;overflow:auto;padding:22px;background:#232231;border:2px solid #716580;border-top:5px solid #9170ba;box-shadow:4px 5px #0c0c13}
+.visorLab h2{margin:0 0 16px;color:#acf2f3;font:700 20px monospace}
+.visorLab button{display:block;width:100%;margin:5px 0;text-align:left;padding:9px 12px;background:#353247;color:#f0eaf8;border:1px solid #655e77}
+.visorLab button:focus,.gmMenu button:focus,.gmTitle button:focus,.roundResult button:focus{outline:3px solid #85f2ec;outline-offset:-2px;background:#514268}
+.visorLab canvas{display:block;background:#171724;width:280px;height:150px;max-width:100%}
+.visorLab pre{white-space:pre-wrap;max-height:45vh;overflow:auto;color:#b2dadd;font-size:12px}

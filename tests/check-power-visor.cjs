@@ -1,0 +1,23 @@
+const assert = require("node:assert/strict");
+const fs = require("node:fs"), ts = require("typescript");
+require.extensions[".ts"] = (module,file) => module._compile(ts.transpileModule(fs.readFileSync(file,"utf8"), {compilerOptions:{module:1,target:9,esModuleInterop:true}}).outputText,file);
+const {drawVisor,VisorContact,hearsInsertion} = require("../lib/powerVisor.ts");
+const {newGame} = require("../lib/game.ts");
+const {bayRenderCamera:camera} = require("../lib/bayBridgePresentation.ts");
+const s=newGame("Jade","test",0,"bot"), [me,hunter]=s.players, memory=new VisorContact();
+s.phase="playing"; s.covers=[]; Object.assign(me,{x:700,y:563,z:0});Object.assign(camera,{x:700,y:563,zoom:2});
+const dims=[],labels=[];
+const ctx=new Proxy({}, {get(_,key){if(key==="fillRect")return (...args)=>dims.push(args);
+ if(key==="fillText")return label=>labels.push(label);return ()=>{};},set(){return true;}});
+function paint(){dims.length=labels.length=0;drawVisor(ctx,s,0,memory,true);return dims.some(([x,y,w,h])=>x===-12&&y===-2&&w===9&&h===4);}
+Object.assign(hunter,{x:735,y:563,z:0});paint();
+assert.equal(memory.position.x,735);
+hunter.x=1450;s.time+=.1;assert.equal(paint(),false);assert.equal(memory.position.x,735);
+memory.observe({x:1250,y:563,z:44},s.time,true);assert.equal(paint(),true);
+hunter.y+=75; s.time+=.25;assert.equal(paint(),false);assert.equal(memory.position.y,563);
+assert.ok(hearsInsertion(me,{x:1250,y:563,z:44}));assert.ok(!hearsInsertion(me,{x:1500,y:563,z:44}));
+hunter.x=735;hunter.y=563;assert.equal(paint(),false);assert.equal(memory.insertedAt,-Infinity);
+memory.reset();assert.equal(memory.position,undefined);
+me.shells=3;paint();assert.ok(labels.includes("3/8"));assert.ok(!labels.includes("8/8"));
+s.mode="practice";s.rules31={version:1,battery:"unlimited",opponent:"target"};paint();assert.ok(labels.includes("∞"));
+console.log("PASS last visible origin, silent off-screen movement, hearing radius, pulse decay, reacquisition, round reset and finite/unlimited meter");

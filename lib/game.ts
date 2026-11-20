@@ -1087,7 +1087,7 @@ function coverAimRequested(p:Player,cv:Cover|undefined){
  return attachedOpenAim(p)||p.input.coverAim||(p.input.coverAimActive===undefined&&p.input.fire&&raptorReadyExposure(p,cv));
 }
 function shotCoverHeight(cv:Cover){return cv.height27j??bayObject(cv.artId||cv.id)?.dimensions.z??(cv.coverClass==="tall"?78:15616/332);}
-function firstShotObstruction(s:GameState,from:{x:number;y:number;z:number},to:typeof from):WrapObstruction|undefined{
+export function firstShotObstruction(s:GameState,from:{x:number;y:number;z:number},to:typeof from):WrapObstruction|undefined{
   let first=surfaceShotTime(from,to),surface="arena structure";
   for(const c of s.covers){
    if(c.hp<=0)continue;
