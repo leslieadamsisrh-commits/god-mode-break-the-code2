@@ -12,12 +12,14 @@ const ctx=new Proxy({}, {get(_,key){if(key==="fillRect")return (...args)=>dims.p
 function paint(){dims.length=labels.length=0;drawVisor(ctx,s,0,memory,true);return dims.some(([x,y,w,h])=>x===-12&&y===-2&&w===9&&h===4);}
 Object.assign(hunter,{x:735,y:563,z:0});paint();
 assert.equal(memory.position.x,735);
-hunter.x=1450;s.time+=.1;assert.equal(paint(),false);assert.equal(memory.position.x,735);
-memory.observe({x:1250,y:563,z:44},s.time,true);assert.equal(paint(),true);
+hunter.x=1450;s.time+=.1;assert.equal(paint(),false);assert.ok(labels.includes("LAST SEEN →"));assert.equal(memory.position.x,735);
+memory.observe({x:1250,y:563,z:44},s.time,true);assert.equal(paint(),true);assert.ok(labels.includes("RELOAD HEARD →"));
 hunter.y+=75; s.time+=.25;assert.equal(paint(),false);assert.equal(memory.position.y,563);
 assert.ok(hearsInsertion(me,{x:1250,y:563,z:44}));assert.ok(!hearsInsertion(me,{x:1500,y:563,z:44}));
 hunter.x=735;hunter.y=563;assert.equal(paint(),false);assert.equal(memory.insertedAt,-Infinity);
 memory.reset();assert.equal(memory.position,undefined);
 me.shells=3;paint();assert.ok(labels.includes("3/8"));assert.ok(!labels.includes("8/8"));
+assert.equal(dims.filter(([x,y,w,h])=>(x===17||x===32)&&y>=92&&y<=145&&w===11&&h===11).length,11); // eight dark windows and three seated fills
+assert.ok(!labels.some(label=>/LAST SEEN|RELOAD HEARD|POWER|RESET/.test(label)));
 s.mode="practice";s.rules31={version:1,battery:"unlimited",opponent:"target"};paint();assert.ok(labels.includes("∞"));
 console.log("PASS last visible origin, silent off-screen movement, hearing radius, pulse decay, reacquisition, round reset and finite/unlimited meter");
